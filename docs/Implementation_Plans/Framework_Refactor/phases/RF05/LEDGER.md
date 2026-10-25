@@ -20,6 +20,10 @@
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
+### RF05-F04 C07 — Narrative GM-world contract
+
+The schema and prompt were isolated under Narrative ownership and exposed through its public API; the application GM now imports that contract publicly while the native renderer and compatibility exports remain intact. One frozen blocking fresh batch covering C07 and six affected current-GM tests passed **13/13**, exit **0**, in **3,956.3878 ms**. Changed JavaScript syntax passed **5/5**. The phase architecture ratchet remains failed on **955** prior groups/errors: 576 modules, zero unowned, 2,739 imports. C07 changed paths have no boundary findings. The exact retired transition is preserved in the feature evidence; **56** F04 assignments remain. See `features/RF05-F04/C07-RUN.json`. RF05 remains incomplete; release is NOT AUTHORIZED.
+
 ## Phase closeout
 
 - Phase status: INCOMPLETE / IN PROGRESS.
@@ -68,3 +72,7 @@ The subsequent C06 public-schema adoption refreshed the affected-GM union once: 
 The self-contained schema module moved byte-for-byte into Narrative and the GM now imports its two schema contracts via Narrative public API. A single frozen fresh batch ran the new C06 test and five existing fresh tests whose shared `GMService` dependency changed: **12/12** passed, exit **0**, duration **3,381.2046 ms**; changed JavaScript syntax passed **5/5**. The current RF05 ratchet exits **1** with 575 modules, zero unowned, 2,738 imports, and 955 existing active groups/errors. The GM schema edge is absent; two root compatibility consumers remain. Exact transition is preserved in C06 retired evidence; 57 RF05-F04 entries remain. RF05 remains incomplete and release is NOT AUTHORIZED.
 
 Because `gm.js` changed after the earlier RF05-F06 checkpoint, its recorded changed-code union does not qualify the current bytes. The targeted affected tests above are current evidence; the phase-wide changed-code union must be frozen and run at the next RF05-F06 qualification attempt after implementation work is complete.
+
+### RF05-F04 C07 — Narrative GM-world contract
+
+The schema and prompt were isolated under Narrative ownership and exposed through its public API; the application GM now imports that contract publicly while the native renderer and compatibility exports remain intact. One frozen blocking fresh batch covering C07 and six affected current-GM tests passed **13/13**, exit **0**, in **3,956.3878 ms**. Changed JavaScript syntax passed **5/5**. The phase architecture ratchet remains failed on **955** prior groups/errors: 576 modules, zero unowned, 2,739 imports. C07 changed paths have no boundary findings. The exact retired transition is preserved in the feature evidence; **56** F04 assignments remain. See `features/RF05-F04/C07-RUN.json`. RF05 remains incomplete; release is NOT AUTHORIZED.

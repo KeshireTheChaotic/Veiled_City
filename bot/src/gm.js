@@ -44,7 +44,7 @@ import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./authority-projection.js";
 import { operationalMetrics, measureStage, measureNative } from "./operational-metrics.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
-import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from "./gm-world-narrative.js";
+import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/public.js';
 import {turnTraceFor} from './turn-trace-context.js';
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
 import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './frameworks/daggerheart/public.js';

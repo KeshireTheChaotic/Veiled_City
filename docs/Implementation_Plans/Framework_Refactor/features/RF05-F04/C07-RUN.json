@@ -1,0 +1,37 @@
+{
+  "feature": "RF05-F04-C07",
+  "status": "SCOPED_GM_IMPORT_SLICE_QUALIFIED",
+  "base_head": "c227a66763839d4132e767665e0ee02fa8bb3534",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "tests": {
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 13,
+    "failed": 0,
+    "duration_ms": 3956.3878,
+    "test_files": 7,
+    "files": [
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"},
+      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs","sha256":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"}
+    ]
+  },
+  "syntax": {"exit_code":0,"passed":5,"failed":0},
+  "changed_source_sha256": {
+    "bot/src/gm.js":"87CDB6D6F4A516848CC98046EAF385CAD1AB44D32987332B1A2FAA0D23183A52",
+    "bot/src/gm-world-narrative.js":"2DFF3B5FBB7EB5B38033110056B1CA7928548C48F9C4C6F9B94CE95DEB59A6D8",
+    "bot/src/frameworks/narrative/gm-world-contract.js":"2E44A5987AF95592C77A6B8BCBB87CE45C9CE296073B83A1DDA61474CB3B5DA3",
+    "bot/src/frameworks/narrative/public.js":"6A37CD836D41AB91BA6792CE12E5F48B53AAC626D929CC051A3FD00BEA8F0CAA",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs":"DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json":"52B3BB927009151EFB22C4570990C01E2729EAA93166CAB3B5C8DC42D8D2A3F5"
+  },
+  "transition": {"retired_id":"cc8076bdca29df6585e651bdf86e712bcfbf8fbf7bbc52f37b0a30f248a87f7d","original_manifest_sha256":"5023F3AFE63B4E48F870526B872018858117A404EC8680CE1716C9458ADE016E","retired_record":"C07-RETIRED.json","remaining_rf05_f04_entries":56},
+  "architecture": {"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":576,"unowned":0,"imports":2739,"internal_imports":2562,"largest_cycle":181,"raw_violations":2428,"accepted_legacy":1468,"active_violation_groups":955,"transition_errors":955,"new_gm_edge_findings":0,"new_contract_findings":0,"changed_path_transition_errors":0},
+  "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+  "qualification":"C07 scoped import qualified; RF05-F04 incomplete; RF05 architecture gate failed; release NOT AUTHORIZED",
+  "rollback":"Revert only the C07 implementation/evidence commit; preserve prior feature commits and all pre-existing user edits."
+}

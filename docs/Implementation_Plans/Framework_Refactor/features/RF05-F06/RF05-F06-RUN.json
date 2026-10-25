@@ -17,11 +17,41 @@
       "test_source_sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
     },
     "carried_forward": [
-      {"feature":"RF05-F01","passed":4,"exit_code":0,"duration_ms":65.9672,"test":"features/RF05-F01/RF05-F01-RUN.json"},
-      {"feature":"RF05-F02","passed":7,"exit_code":0,"duration_ms":657.8748,"test":"features/RF05-F02/RF05-F02-RUN.json"},
-      {"feature":"RF05-F03","passed":9,"exit_code":0,"duration_ms":95.8206,"test":"features/RF05-F03/RF05-F03-RUN.json"},
-      {"feature":"RF05-F04","passed":3,"exit_code":0,"duration_ms":65.2965,"test":"features/RF05-F04/RF05-F04-RUN.json"},
-      {"feature":"RF05-F05","passed":3,"exit_code":0,"duration_ms":63.5937,"test":"features/RF05-F05/RF05-F05-RUN.json"}
+      {
+        "feature": "RF05-F01",
+        "passed": 4,
+        "exit_code": 0,
+        "duration_ms": 65.9672,
+        "test": "features/RF05-F01/RF05-F01-RUN.json"
+      },
+      {
+        "feature": "RF05-F02",
+        "passed": 7,
+        "exit_code": 0,
+        "duration_ms": 657.8748,
+        "test": "features/RF05-F02/RF05-F02-RUN.json"
+      },
+      {
+        "feature": "RF05-F03",
+        "passed": 9,
+        "exit_code": 0,
+        "duration_ms": 95.8206,
+        "test": "features/RF05-F03/RF05-F03-RUN.json"
+      },
+      {
+        "feature": "RF05-F04",
+        "passed": 3,
+        "exit_code": 0,
+        "duration_ms": 65.2965,
+        "test": "features/RF05-F04/RF05-F04-RUN.json"
+      },
+      {
+        "feature": "RF05-F05",
+        "passed": 3,
+        "exit_code": 0,
+        "duration_ms": 63.5937,
+        "test": "features/RF05-F05/RF05-F05-RUN.json"
+      }
     ]
   },
   "syntax": {
@@ -50,7 +80,7 @@
   "phase_holds": {
     "rf04_incomplete": true,
     "rf05_f03_transition_entries": 289,
-    "rf05_f04_transition_entries": 57,
+    "rf05_f04_transition_entries": 56,
     "rf05_f05_transition_entries": 442,
     "release": "NOT_AUTHORIZED"
   },
@@ -74,34 +104,147 @@
     "implementation_head": "4441c04985cff70a34bcae0ac455f8353d431307",
     "current_gm_sha256": "A1FDDA0B93E77867F1DA15D1E4D02759AA7CA32FDE9C0656454B5980E1D5F8A6",
     "fresh_current_gm_tests": [
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A","launches":1,"exit_code":0,"passed":7,"failed":0,"duration_ms":559.3211},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5","launches":1,"shared_batch_exit_code":0,"passed":1,"failed":0,"shared_batch_passed":3,"shared_batch_duration_ms":794.1741},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5","launches":1,"shared_batch_exit_code":0,"passed":1,"failed":0,"shared_batch_passed":3,"shared_batch_duration_ms":794.1741},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5","launches":1,"shared_batch_exit_code":0,"passed":1,"failed":0,"shared_batch_passed":3,"shared_batch_duration_ms":794.1741},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845","launches":1,"exit_code":0,"passed":1,"failed":0,"duration_ms":550.7978}
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+        "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A",
+        "launches": 1,
+        "exit_code": 0,
+        "passed": 7,
+        "failed": 0,
+        "duration_ms": 559.3211
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5",
+        "launches": 1,
+        "shared_batch_exit_code": 0,
+        "passed": 1,
+        "failed": 0,
+        "shared_batch_passed": 3,
+        "shared_batch_duration_ms": 794.1741
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5",
+        "launches": 1,
+        "shared_batch_exit_code": 0,
+        "passed": 1,
+        "failed": 0,
+        "shared_batch_passed": 3,
+        "shared_batch_duration_ms": 794.1741
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5",
+        "launches": 1,
+        "shared_batch_exit_code": 0,
+        "passed": 1,
+        "failed": 0,
+        "shared_batch_passed": 3,
+        "shared_batch_duration_ms": 794.1741
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845",
+        "launches": 1,
+        "exit_code": 0,
+        "passed": 1,
+        "failed": 0,
+        "duration_ms": 550.7978
+      }
     ],
-    "fresh_changed_javascript_syntax": {"exit_code":0,"passed":5,"failed":0,"source":"RF05-F04 C05 frozen changed-code syntax batch"},
-    "architecture": {"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":574,"unowned":0,"imports":2736,"active_violation_groups":955,"transition_errors":955,"largest_cycle":181,"new_intent_public_import_findings":0,"retained_compatibility_consumer_findings":4},
-    "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
+    "fresh_changed_javascript_syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0,
+      "source": "RF05-F04 C05 frozen changed-code syntax batch"
+    },
+    "architecture": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "source_modules": 574,
+      "unowned": 0,
+      "imports": 2736,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "largest_cycle": 181,
+      "new_intent_public_import_findings": 0,
+      "retained_compatibility_consumer_findings": 4
+    },
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    },
     "qualification": "CURRENT GM CONSUMER TESTS QUALIFIED; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED"
   },
   "after_c06_refresh": {
     "implementation_head_before_evidence_commit": "b3e205947e088a98f2043761abf5f7c4c05995dd",
     "current_gm_sha256": "C2C5596695D0D462263F540A206431FD096692CB5D61C6A486583630E4E584FA",
-    "frozen_affected_gm_batch": {"launches":1,"exit_code":0,"passed":12,"failed":0,"duration_ms":3381.2046,"test_files":6},
+    "frozen_affected_gm_batch": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "duration_ms": 3381.2046,
+      "test_files": 6
+    },
     "tests": [
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs","sha256":"61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs","sha256":"4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs","sha256":"46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs","sha256":"70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs","sha256":"C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"},
-      {"path":"bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs","sha256":"5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"}
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+        "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      }
     ],
-    "changed_javascript_syntax": {"exit_code":0,"passed":5,"failed":0},
-    "architecture": {"command":"node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05","exit_code":1,"source_modules":575,"unowned":0,"imports":2738,"active_violation_groups":955,"transition_errors":955,"largest_cycle":181,"gm_schema_import_findings":0,"root_schema_consumer_findings":2},
-    "cost": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"database_access":0,"codex_usage":"UNMEASURED"},
-    "remaining_rf05_f04_transition_entries":57,
-    "qualification":"CURRENT AFFECTED-GM TEST UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED"
+    "changed_javascript_syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    "architecture": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "source_modules": 575,
+      "unowned": 0,
+      "imports": 2738,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "largest_cycle": 181,
+      "gm_schema_import_findings": 0,
+      "root_schema_consumer_findings": 2
+    },
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    },
+    "remaining_rf05_f04_transition_entries": 57,
+    "qualification": "CURRENT AFFECTED-GM TEST UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED"
   },
   "cost": {
     "provider_calls": 0,
@@ -110,5 +253,75 @@
     "codex_usage": "UNMEASURED"
   },
   "rollback": "Revert only RF05-F06 evidence if needed; preserve implementation commits and all pre-existing edits.",
-  "release": "NOT_AUTHORIZED"
+  "release": "NOT_AUTHORIZED",
+  "after_c07_refresh": {
+    "implementation_head_before_evidence_commit": "c227a66763839d4132e767665e0ee02fa8bb3534",
+    "current_gm_sha256": "87CDB6D6F4A516848CC98046EAF385CAD1AB44D32987332B1A2FAA0D23183A52",
+    "frozen_affected_gm_batch": {
+      "launches": 1,
+      "exit_code": 0,
+      "passed": 13,
+      "failed": 0,
+      "duration_ms": 3956.3878,
+      "test_files": 7
+    },
+    "tests": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+        "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "C2D1CB13B322E1EA2C2F5E468D88E2D7903E2EA30C0A17EE7826EE74D3DAD845"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+        "sha256": "DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"
+      }
+    ],
+    "changed_javascript_syntax": {
+      "exit_code": 0,
+      "passed": 5,
+      "failed": 0
+    },
+    "architecture": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "source_modules": 576,
+      "unowned": 0,
+      "imports": 2739,
+      "internal_imports": 2562,
+      "largest_cycle": 181,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "changed_path_violations": [],
+      "changed_path_transition_errors": []
+    },
+    "remaining_rf05_f04_transition_entries": 56,
+    "qualification": "CURRENT AFFECTED-GM UNION PASSES; RF05 PHASE INCOMPLETE / ARCHITECTURE GATE FAILED",
+    "cost": {
+      "provider_calls": 0,
+      "provider_tokens": 0,
+      "provider_usd": 0,
+      "network": 0,
+      "database_access": 0,
+      "codex_usage": "UNMEASURED"
+    }
+  }
 }

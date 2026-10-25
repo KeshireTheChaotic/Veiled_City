@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and five public-API import slices qualified; 57 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and six public-API import slices qualified; 56 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -47,3 +47,7 @@ After C05 changed `gm.js`, the fresh C02 and C03 import tests and the shared C04
 ## C06 — Narrative proposal-schema public API
 
 Moved the unchanged, data-only Narrative schema module into the Narrative framework, explicitly exported all 19 contracts, retained the root compatibility re-export, and switched the two GM schema imports to Narrative public API. The new fresh test plus the five existing fresh tests importing current `GMService` passed **12/12** in one frozen batch (exit **0**, **3,381.2046 ms**); changed JavaScript syntax passed **5/5**. RF05 ratchet remains failed on **955** existing groups/errors, with 575 modules and zero unowned. The exact GM import finding/error is gone; two existing consumers still use the compatibility path. Exact transition `eba1e3e1be87a71d8f22b88a6c02da7e495f5ce53f41f75c699bab80934481b1` is retired and preserved. **57** RF05-F04 assignments remain. See `C06-SCOPE.md`, `C06-LEDGER.md`, `C06-RETIRED.json`, and `C06-RUN.json`. No provider/network/database use; release remains NOT AUTHORIZED.
+
+## C07 — Narrative GM-world contract public API
+
+The existing closed GM-world schema and prompt now live under Narrative ownership and are published through its public API. `gm.js` imports that API; the native renderer retains rendering, validation, storage, receipts, and compatibility exports. The fresh C07 regression plus six tests affected by the shared GM service passed **13/13**, exit **0**, in one blocking launch (**3,956.3878 ms**). Changed JavaScript syntax passed **5/5**. The RF05 ratchet remains failed on 955 existing groups/errors with 576 modules and zero unowned; changed paths have no findings. Transition `cc8076bdca29df6585e651bdf86e712bcfbf8fbf7bbc52f37b0a30f248a87f7d` was retired and preserved. **56** F04 assignments remain. Details and hashes: `C07-SCOPE.md`, `C07-RUN.json`, `C07-RETIRED.json`. Release remains NOT AUTHORIZED.
