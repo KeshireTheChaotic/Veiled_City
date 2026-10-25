@@ -23,7 +23,67 @@
     "F04: unqualified Session/action-window and complete opening/publication workflows remain.",
     "F05-C03: Narrative--World bootstrap composition and actual consumer adoption remain locally held."
   ],
-  "cost": {"provider_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
-  "rollback": "Remove only the F07 audit scope, ledger, acceptance matrix and run record.",
-  "release": "NOT_AUTHORIZED"
+  "cost": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore the original remove_in_feature and expires_after values for only the 12 listed IDs in phases/RF04/DEADLINE-REASSIGNMENT.json; leave all other transitions, owner edits and source files unchanged.",
+  "release": "NOT_AUTHORIZED",
+  "option_b_deadline_reconciliation": {
+    "base_head": "d5f2d2809fc248c36d047589796b44a231258bd0",
+    "status": "SCOPED_METADATA_REASSIGNMENT_COMPLETE",
+    "reassigned_count": 12,
+    "target_feature": "RF06-F03",
+    "audit": "phases/RF04/DEADLINE-REASSIGNMENT.json",
+    "audit_sha256": "2188009ef5070c0879dbb41b5038b7565e40e812d3f740df1f6a6791d018e87f",
+    "manifest_sha256": "acaebfc62cdbe5f85a76f962c1dcb1647fa43ad090b8aa5ae22637662652bbbf",
+    "tests_run": 0,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED",
+    "release": "NOT_AUTHORIZED",
+    "scope_sha256": "86e0ff9d2c4fa1fef83d9ec2fcfbf6e54ffe0fb83e5ceae8d5d8d011f805b843",
+    "ledger_sha256": "fd0b47ae776c29f75aea2c57d9f65b694e59b36129cc1d92f80bdcb1898e1d58"
+  },
+  "architecture_after_reconciliation": {
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "pass": true,
+      "source_modules": 572,
+      "unowned": 0,
+      "imports": 2732,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/deadline-reassignment-rf04-architecture.log",
+      "log_sha256": "590a2dc035101822968e39c6a2ac196fb032bcd0f6545dba1fcdfff7d5b214ae"
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 572,
+      "unowned": 0,
+      "imports": 2732,
+      "active_violation_groups": 955,
+      "transition_errors": 955,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/deadline-reassignment-rf05-architecture.log",
+      "log_sha256": "09505904edd9bb1d55d501320a357fda86a85190c61c8f8310d9dd0e9a40f684"
+    },
+    "RF06": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF06",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 572,
+      "unowned": 0,
+      "imports": 2732,
+      "active_violation_groups": 1997,
+      "transition_errors": 1997,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/deadline-reassignment-rf06-architecture.log",
+      "log_sha256": "e7e597eeb04a4b433046c6553b2b12698800a6606bccec7ad95b4b66a1d10396"
+    }
+  }
 }

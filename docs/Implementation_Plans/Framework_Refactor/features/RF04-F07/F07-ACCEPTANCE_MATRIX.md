@@ -13,3 +13,7 @@
 Current enforcement evidence: RF04 architecture ratchet passes with 566 modules, 0 unowned, 2722 imports, largest SCC 181, 2442 accepted legacy occurrences, 0 active violations and 0 transition errors. This ratchet result does not prove full isolation or behavior beyond the scoped tests.
 
 **RF04 status: INCOMPLETE.** Narrative–World composition and the F01–F04 source-adoption obligations remain open; this audit does not show a critical runtime blocker. The exact next C03 prerequisite is to expose the existing Narrative audience grant/source revalidation instance through a Narrative-owned public API without changing its identity, then compose and test a real World consumer. **RELEASE NOT AUTHORIZED.**
+
+**Option B deadline reconciliation:** 12 exact Publication-owned target edges were reassigned to RF06-F03 under the owner's decision; see `../../phases/RF04/DEADLINE-REASSIGNMENT.json` and `DEADLINE-REASSIGNMENT-LEDGER.md`. RF04 architecture still passes, RF05 retains 955 active transition errors, and RF06 remains gated. This metadata correction does not qualify RF04 source adoption or complete RF04.
+
+**Option B deadline reconciliation:** 12 exact Publication-owned target edges were reassigned to RF06-F03 under the owner's decision; see `../RF04/DEADLINE-REASSIGNMENT.json` and `DEADLINE-REASSIGNMENT-LEDGER.md`. RF04 architecture still passes, RF05 retains 955 active transition errors, and RF06 remains gated. This metadata correction does not qualify RF04 source adoption or complete RF04.

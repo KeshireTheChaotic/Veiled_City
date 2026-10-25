@@ -26,3 +26,7 @@ Do not start RF06 source migration until RF03–RF05 interfaces and the exact na
 ## Next step
 
 Complete the held RF05-owned boundaries or obtain a separately recorded owner decision that changes the phase dependency. Then write RF06-F01's active scope and ledger from the verified feature assignments before any RF06 source edit.
+
+## Owner-authorized Option B publication dependencies
+
+The RF04 owner-authorized deadline reconciliation assigns 12 existing consumer edges to RF06-F03 because their exact targets are Publication-owned output, outbox, transport or handout modules in the relocation crosswalk. RF06-F03's manifest count is now 191 (179 prior + 12 reassigned); this is assignment evidence, not implementation or phase entry. The source edges remain active and require RF06 publication API adoption and fresh affected-code tests before retirement. No RF06 production source or test changed. The RF06 entry gate remains held until RF03–RF05 interfaces and commit semantics qualify. Exact original/updated records and RF04/RF05/RF06 gate results: `../RF04/DEADLINE-REASSIGNMENT.json`. Release remains NOT AUTHORIZED.

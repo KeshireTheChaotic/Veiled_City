@@ -40,3 +40,7 @@ At base `e0bdf443a148b89f6642bbbd1c6d78e8b69576ec`, the application GM module no
 ## Architecture gate correction — RF05-F03 test path
 
 The bridge registry's `ai-provider--knowledge` entry referenced `rf05-f03-prompt-budget.test.mjs`, which the checker does not recognize as a fresh feature-test path. The test was renamed without content edits to `rf05-f03-c01.test.mjs`; registry, scope, and evidence references were updated. The test was not rerun because its contents and production dependencies are unchanged. Current RF03 and RF04 ratchets pass with zero active groups/errors. Current RF05 ratchet remains failed on **967** prior-phase groups and **967** transition errors (not 968); the extra group is removed. Exact outputs are the three `*-prompt-budget-path-correction-architecture.log` records under `phases/RF03`, `RF04`, and `RF05`. This correction does not resolve RF05 transition debt or complete RF04/RF05. Release remains NOT AUTHORIZED.
+
+### RF05 gate update after RF04 Option B reassignment
+
+The owner-approved metadata-only correction reassigned 12 exact Publication-owned consumer edges from RF04 to RF06-F03. The current RF05 ratchet now fails with 955 active violation groups and 955 transition errors (exit 1), down from 967. This is not RF05 completion: remaining RF04-era debt and RF05 feature obligations still fail the gate. No RF05 source or tests changed in this reconciliation; no tests were rerun.
