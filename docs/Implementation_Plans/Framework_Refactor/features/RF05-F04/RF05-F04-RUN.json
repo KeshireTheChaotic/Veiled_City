@@ -1,0 +1,75 @@
+{
+  "feature": "RF05-F04",
+  "status": "PARTIAL_MODEL_SELECTION_SLICE_QUALIFIED_62_TRANSITIONS_REMAIN",
+  "base_head": "b515fdb1f48da98b66564010ed87930e07cf7338",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_modules": [
+    "bot/src/gm.js",
+    "bot/src/narrative-delegation.js",
+    "bot/src/frameworks/narrative/model-selection.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/frameworks/narrative/README.md"
+  ],
+  "ownership": {
+    "lane_aware_model_selection": "narrative",
+    "player_intent_and_task_coordination": "application workflow in narrative-delegation.js",
+    "composition_consumer": "gm.js"
+  },
+  "tests": {
+    "files": ["bot/tests/ai-gm-2026-10/rf05-f04-model-selection.test.mjs"],
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "duration_ms": 65.2965,
+    "log": "phases/RF05/rf05-f04-model-selection-test.log",
+    "sha256": "D228133C874004D8ADA0F47165097CEA2B32CCBC8CDE31F59D4B0151B603931A",
+    "test_source_sha256": "4FFE8F8E228FA68128C0BF85C2C20563D93D98D8118918A154AFD0E02BA9148E"
+  },
+  "syntax": {
+    "files_checked": 5,
+    "exit_codes": [0, 0, 0, 0, 0],
+    "log": "phases/RF05/rf05-f04-model-selection-syntax.log",
+    "sha256": "1C89A694EAFFF15363F2D4F67012125AAC87F1AF5843CFDBE9FA0721BA57DD8B"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "source_modules": 571,
+    "unowned": 0,
+    "imports": 2731,
+    "internal_imports": 2554,
+    "largest_cycle": 181,
+    "active_violation_groups": 968,
+    "transition_errors": 967,
+    "changed_path_violations": [],
+    "changed_path_transition_errors": [],
+    "result": "Whole phase gate remains failed on existing transition debt; this slice has no changed-path violations or transition errors.",
+    "log": "phases/RF05/rf05-f04-model-selection-architecture.log",
+    "sha256": "376A772A0FA4FA362CDC313F8075B5DEA0193A4B3AA72CD32DF35CAF4E1AC482"
+  },
+  "transitions": {
+    "removed_ids": [],
+    "remaining_rf05_f04_entries": 62,
+    "remaining_by_code": {
+      "LEGACY_MODULE_LOCATION": 1,
+      "EXTERNAL_CAPABILITY_OWNER": 1,
+      "IMPORTS_PRIVATE_API": 60
+    }
+  },
+  "source_sha256": {
+    "bot/src/gm.js": "86660D1C51973F9790BAAC114721A03F7D72694354C93AB325D0816B84B1A59E",
+    "bot/src/narrative-delegation.js": "707EBB1B9331926B30980E446EA8148388D1C94834C92BA8F0E651DC80B8744E",
+    "bot/src/frameworks/narrative/model-selection.js": "1E6EE6C823C00E84D67FC3EB731BCD59D42B7A3D7864B47C58BAE0CCAAD14E6A",
+    "bot/src/frameworks/narrative/public.js": "49B1915A4E98C725E0CF630B80DF282A3DD382F80422BCF5B103D187CB915751",
+    "bot/src/frameworks/narrative/README.md": "232451DE95B5A51CE12F2DA937AB9B2EB6A979BD1ED25F8C6F8A4B557FA40147"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only the RF05-F04 model-selection checkpoint; preserve RF05-F01 through F03, pre-existing user edits and RF04 diagnostic logs."
+}

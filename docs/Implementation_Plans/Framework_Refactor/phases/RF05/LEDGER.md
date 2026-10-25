@@ -16,7 +16,7 @@
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; no changed-path violations. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | NEXT | Create its scope and ledger before workflow decomposition. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION SLICE QUALIFIED; 62 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 5/5 pass; no changed-path findings. See `features/RF05-F04/LEDGER.md` and `RF05-F04-RUN.json`. |
 | RF05-F05–F06 | NOT STARTED | Create each feature's scope and ledger immediately before its work. |
 
 ## Phase closeout
@@ -29,4 +29,4 @@
 - Architecture and changed-code evidence: recorded per feature; the final union is reserved for RF05-F06.
 - Release: NOT AUTHORIZED.
 - Rollback: revert only RF05-specific commits in reverse order; do not reset or clean the checkout and do not revert pre-existing user changes.
-- Next independent feature: RF05-F04. RF05-F03 remains locally incomplete; its held transitions are not treated as resolved by later-phase work.
+- RF05-F04 has a qualified model-selection slice; continue its workflow decomposition and retain its 62 exact assigned transition obligations. RF05-F03 remains locally incomplete; its held transitions are not treated as resolved by later-phase work.

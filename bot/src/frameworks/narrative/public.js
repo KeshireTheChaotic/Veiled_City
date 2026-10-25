@@ -5,3 +5,4 @@ export {AUDIENCES,createAudienceAuthority,audienceSurface} from './audience-auth
 export {createNativeAudienceGrantAdapter} from './native-audience-grant.js';
 export {createNarrativeContextBuilder} from './context-builder.js';
 export {sceneObservationOperation} from './scene-observation-route.js';
+export {narrativeModel} from './model-selection.js';

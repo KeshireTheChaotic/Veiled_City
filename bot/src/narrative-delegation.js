@@ -38,8 +38,3 @@ export function creativeBrief(ctx,result,input){
     response_obligation:'Address every requested task coherently in ONE response; preserve uncertainty and leave player decisions open.',
     constraints:['No new native outcomes.','No PC or proxy agency.','No hidden or cross-audience knowledge.']};
 }
-export function narrativeModel(config,packet,lane='combined'){
-  const lightweight=lane==='observation'&&!packet.protected_scene;
-  return (lightweight&&config.narrativeFastModel)||config.narrativeModel
-    ||(lane==='combined'?(config.routineGmModel||config.gmModel):lane==='downtime'?(config.downtimeModel||config.gmModel):config.gmModel);
-}
