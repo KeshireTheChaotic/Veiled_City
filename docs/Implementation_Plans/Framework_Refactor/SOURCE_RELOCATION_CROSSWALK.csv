@@ -307,7 +307,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/scene-intent-board.js","bot/src/frameworks/intent/scene-intent-board.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","18","17"
 "bot/src/scene-observation-route.js","bot/src/frameworks/narrative/scene-observation-route.js","narrative","RF05","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/scene-setup.js","bot/src/frameworks/session/scene-setup.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","1"
-"bot/src/scoped-memory.js","bot/src/frameworks/knowledge/scoped-memory.js","knowledge","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","1"
+"bot/src/scoped-memory.js","bot/src/frameworks/knowledge/scoped-memory.js","knowledge","RF04","SCOPED_MEMORY_POLICY_EXTRACTED_SESSION_PORTS_PENDING","2","1"
 "bot/src/scoped-query.js","bot/src/frameworks/knowledge/scoped-query.js","knowledge","RF04","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/seed-commands.js","bot/src/application/workflows/seed-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","3"
 "bot/src/seed-data.js","bot/src/frameworks/world/seed-data.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","1","1"

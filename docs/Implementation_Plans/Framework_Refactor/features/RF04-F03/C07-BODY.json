@@ -1,0 +1,12 @@
+{
+  "base_sha": "cc0e6c9ca7b63f709d38bef2a185ed8f0a855943",
+  "original_source_sha256": "54a80e6971f6b11b3d4d6a34d40b5beeea5ec79b9b5abbf5ad95524378bf053d",
+  "policy_body_sha256": "49792b209db7eaca2586134d66ceef3535fd1a83fefd657ea00f1c036ce1503e",
+  "body_unchanged": true,
+  "dependencies": [
+    "contextMemoriesForScope",
+    "retrieveMemoryRevisions",
+    "currentScene",
+    "sceneView"
+  ]
+}

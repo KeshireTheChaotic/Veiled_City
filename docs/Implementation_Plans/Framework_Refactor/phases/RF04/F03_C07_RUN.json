@@ -1,0 +1,32 @@
+{
+  "start": "2026-10-24T21:15:02.0430142-05:00",
+  "base_sha": "cc0e6c9ca7b63f709d38bef2a185ed8f0a855943",
+  "test_exit": 0,
+  "run_id": "RF04_F03_C07",
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/knowledge/scoped-memory.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/scoped-memory.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+      "exit": 0
+    }
+  ],
+  "architecture_exit": 0,
+  "hashes": {
+    "bot/src/scoped-memory.js": "71e540d8bb8e20cb0c629cc20ac9eb05b330689cb48525101779543bfc286b5b",
+    "bot/src/frameworks/knowledge/public.js": "56cc508a3e394ad14ecdae76c38b8aee66bdbe8546005de0e3f17cabd0216e42",
+    "bot/src/frameworks/knowledge/scoped-memory.js": "d027f38b841ae0d1e890f8b3cb13b098f9ae6b946620696cb8b823490d9e7c98",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs": "cc7734c7e03c4e99337ea40550d9f6c3055df023652095107a68dd77c2c56c80"
+  },
+  "end": "2026-10-24T21:15:05.3332826-05:00"
+}

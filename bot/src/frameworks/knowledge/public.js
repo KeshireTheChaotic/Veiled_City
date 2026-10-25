@@ -11,3 +11,4 @@ export {createEvidenceRules,epistemicSchema} from './epistemic.js';
 export {createMemoryLifecycle} from './memory-lifecycle.js';
 export * from './historical-archive.js';
 export {createContextMemory} from './context-memory.js';
+export {createScopedMemory} from './scoped-memory.js';
