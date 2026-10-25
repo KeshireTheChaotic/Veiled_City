@@ -1,0 +1,15 @@
+{
+  "base_sha": "535ee5c124273f1c202dacb3d0c3a7c9a0adf928",
+  "original_source_sha256": "ac43a41cae767d3940af7235631315094e38d5e42096d57ce454a7235bdc0919",
+  "policy_body_sha256": "16aa6a8506b2511d34b12123bfae84f0782be7771664699a0cf649fd890b3186",
+  "body_unchanged": true,
+  "dependencies": [
+    "cityObject",
+    "cityKey",
+    "cityAudit",
+    "requireCitySource",
+    "personalCharacter",
+    "scenePresence"
+  ],
+  "hash_substitution": "Original full row SHA256 or absent and existing JSON SHA256 truncated to 32 hex characters; no domain policy duplicated"
+}

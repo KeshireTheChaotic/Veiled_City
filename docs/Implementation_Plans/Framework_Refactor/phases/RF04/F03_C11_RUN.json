@@ -1,0 +1,32 @@
+{
+  "architecture_exit": 1,
+  "base_sha": "535ee5c124273f1c202dacb3d0c3a7c9a0adf928",
+  "run_id": "RF04_F03_C11",
+  "start": "2026-10-24T21:21:33.9925089-05:00",
+  "test_exit": 0,
+  "syntax": [
+    {
+      "path": "bot/src/frameworks/knowledge/evidence-custody.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/src/evidence-custody.js",
+      "exit": 0
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+      "exit": 0
+    }
+  ],
+  "end": "2026-10-24T21:21:38.7533902-05:00",
+  "hashes": {
+    "bot/src/frameworks/knowledge/public.js": "296f13b7100affc34f302c35b916a116f79aca800fd6cf33a1af01d97fca6134",
+    "bot/src/frameworks/knowledge/evidence-custody.js": "e25258e791f84031eceaea8342965f1150cfc234ae4652fc68bafef577335745",
+    "bot/src/evidence-custody.js": "9e04d06147fe67b93e2f96bfff37dfa8a3ef330c70922740614f716eb469ee52",
+    "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs": "6b27afcf91d51086407009ad224ab9069bf665dc6675e2516e157b8d530c0226"
+  }
+}

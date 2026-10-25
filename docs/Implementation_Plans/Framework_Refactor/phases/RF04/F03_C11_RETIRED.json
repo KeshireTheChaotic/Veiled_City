@@ -1,0 +1,61 @@
+{
+  "reason": "Exact source imports solely for generic row/full JSON truncated hashes removed; old key/receipt bytes freshly qualified.",
+  "entries": [
+    {
+      "id": "45e5d3a2be8bf66b6869a23dff2af777e5e10350bc5c55b6d294a23f4115cdee",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/evidence-custody.js",
+      "to": "bot/src/ai-intents.js",
+      "kind": "static",
+      "specifier": "./ai-intents.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "44b875871f0a25e09885861a4ec35daeab581bf3b39b49ce660074289c38b1ec",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/evidence-custody.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "9c6676608cb655fb79695c2e097fa1e5a3bcffdf792c1579d92180e5679d3e2f",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/evidence-custody.js",
+      "to": "bot/src/ai-intents.js",
+      "kind": "static",
+      "specifier": "./ai-intents.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "f3479fbffaeed5f5f9ce752a2e5a078cf174b7bc5043ec0a8057e2277e9f55e2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/evidence-custody.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

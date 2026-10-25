@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: registration needs explicit human GM grounded non-PC custody and preserves original content without canon
+ok 1 - registration needs explicit human GM grounded non-PC custody and preserves original content without canon
+  ---
+  duration_ms: 190.5447
+  type: 'test'
+  ...
+# Subtest: owner collection requires actual presence and existing native owner assignment/attendance
+ok 2 - owner collection requires actual presence and existing native owner assignment/attendance
+  ---
+  duration_ms: 186.3139
+  type: 'test'
+  ...
+# Subtest: transfer to another PC stays pending until that exact recipient explicitly accepts its source
+ok 3 - transfer to another PC stays pending until that exact recipient explicitly accepts its source
+  ---
+  duration_ms: 201.6076
+  type: 'test'
+  ...
+# Subtest: recipient decline keeps original custodian and is not treated as consent or a physical transfer
+ok 4 - recipient decline keeps original custodian and is not treated as consent or a physical transfer
+  ---
+  duration_ms: 205.2744
+  type: 'test'
+  ...
+# Subtest: human GM cannot assent for a PC transfer or duplicate a PC-held original
+ok 5 - human GM cannot assent for a PC transfer or duplicate a PC-held original
+  ---
+  duration_ms: 193.9655
+  type: 'test'
+  ...
+# Subtest: copy has its own label and old physical source cannot execute again under a new request key
+ok 6 - copy has its own label and old physical source cannot execute again under a new request key
+  ---
+  duration_ms: 199.854
+  type: 'test'
+  ...
+# Subtest: same-controller custody receipt replays across restart while a different controller cannot reuse it
+ok 7 - same-controller custody receipt replays across restart while a different controller cannot reuse it
+  ---
+  duration_ms: 211.6163
+  type: 'test'
+  ...
+# Subtest: stale revision, retracted source and caller-supplied authority fields fail before custody changes
+ok 8 - stale revision, retracted source and caller-supplied authority fields fail before custody changes
+  ---
+  duration_ms: 193.4949
+  type: 'test'
+  ...
+# Subtest: custody audit failure rolls handout metadata, effect and receipt back together without editing original text
+ok 9 - custody audit failure rolls handout metadata, effect and receipt back together without editing original text
+  ---
+  duration_ms: 199.7484
+  type: 'test'
+  ...
+# Subtest: private custody history returns only current actor or independently visible source excerpts, never global hidden truth
+ok 10 - private custody history returns only current actor or independently visible source excerpts, never global hidden truth
+  ---
+  duration_ms: 195.3455
+  type: 'test'
+  ...
+# Subtest: original evidence provider reaches extracted registration and private view using real native source proof
+ok 11 - original evidence provider reaches extracted registration and private view using real native source proof
+  ---
+  duration_ms: 1282.5949
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3758.9993
