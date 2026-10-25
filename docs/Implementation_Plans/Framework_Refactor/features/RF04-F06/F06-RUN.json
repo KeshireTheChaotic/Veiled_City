@@ -1,0 +1,53 @@
+{
+  "feature": "RF04-F06",
+  "status": "SCOPED_OFFLINE_PRIVACY_ACCEPTANCE_QUALIFIED",
+  "base_head": "a7d9eebda21fce4a4065f1da638e23108950cf8c",
+  "changed_production_modules": [],
+  "production_under_test": {
+    "bot/src/frameworks/narrative/context-builder.js": "110360D7FCA918315D980C2583F33AA695DFECF14914C0073DEECBAEAA625FBA",
+    "bot/src/frameworks/narrative/native-audience-grant.js": "546441B39852A18A3B1C3067F0717E62AC50C3E4F06B74B80802DE1027FCD0D2"
+  },
+  "sha256": {
+    "test": "1E76D38F2D2ED5314E96B61547A025F639D9E88D8B65E95DC74A88E4AA60633F",
+    "test_log": "48EE8956E6DAF90FA312B37A05543EFEFC087E874C6EC3C98A5D3592E31968D5",
+    "architecture_log": "A5DF253D0360DE8AC610AFAEEFEC4642132A254E7E65AC8DDAF4A6988F738E8C"
+  },
+  "test": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+    "command": "node --test bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "tap_duration_ms": 717.5207,
+    "case_duration_ms": 206.4287
+  },
+  "syntax": {"command": "node --check bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs", "exit_code": 0, "files": 1},
+  "diff_check_exit_code": 0,
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+    "exit_code": 0,
+    "source_modules": 566,
+    "unowned": 0,
+    "imports": 2722,
+    "largest_scc": 181,
+    "accepted_legacy_occurrences": 2442,
+    "active_violation_groups": 0,
+    "transition_errors": 0
+  },
+  "assertions": [
+    "Owner-private fact is present only in its recipient's packet.",
+    "Another present owner cannot use the first owner's native private source.",
+    "GM-only fact does not enter the player-facing packet.",
+    "Audience grant recipient is bound to the current owner and character.",
+    "Source retraction prevents grant revalidation.",
+    "Neither character's canonical data changes."
+  ],
+  "cost": {"provider_calls": 0, "discord_calls": 0, "tokens": 0, "usd": 0, "codex_usage": "UNMEASURED"},
+  "remaining_gaps": [
+    "No live provider, Discord publication or production data was used.",
+    "The case does not qualify every native source type or all semantic narrative quality.",
+    "RF04-F05 Narrative--World application composition remains held."
+  ],
+  "rollback": "Remove the new F06 test and evidence; no production changes were made.",
+  "release": "NOT_AUTHORIZED"
+}

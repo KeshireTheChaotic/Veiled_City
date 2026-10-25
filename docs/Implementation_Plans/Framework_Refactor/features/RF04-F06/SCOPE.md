@@ -1,0 +1,7 @@
+# RF04-F06 — Private and hidden source-boundary qualification
+
+Qualify the newly Narrative-owned context builder and audience grant path for recipient isolation. Use a new disposable-SQLite fixture with two present character owners, one owner-authored private source, recipient-specific private facts for both characters and a GM-only fact. Verify that the current owner receives only their own entitled private facts, that another present owner cannot build from the first owner's private source, that GM-only material does not enter the player packet, and that the native grant/revalidation remains bound to the current source and owner.
+
+This feature adds no new narrative restriction and changes no gameplay or audience rule. Existing privacy policy and native source checks are the authority. Do not add arbitrary/private-data fixtures to generated prompts or use legacy tests, fixtures, goldens or suite registries. If the test demonstrates a material disclosure path, fix that exact production contract and rerun only changed-code tests; otherwise this is qualification evidence for the P03 extraction.
+
+Add one wholly new test under `bot/tests/ai-gm-2026-10/`, freeze the case, and run it once as a blocking targeted command. Syntax-check changed JS/MJS and run the RF04 architecture ratchet. Record exact hashes, all actual test attempts, owner boundary coverage, architecture counts, rollback, gaps, costs and RELEASE NOT AUTHORIZED.
