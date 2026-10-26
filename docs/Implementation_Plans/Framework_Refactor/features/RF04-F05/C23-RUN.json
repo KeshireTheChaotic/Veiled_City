@@ -1,0 +1,347 @@
+{
+  "feature": "RF04-F05-C23",
+  "status": "SCOPED_NPC_EVIDENCE_PROJECTION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+  "base_head": "3374db6b507b4488978fc93a02f62a7da6dcd91c",
+  "frozen": {
+    "base_head": "3374db6b507b4488978fc93a02f62a7da6dcd91c",
+    "syntax_checked": 13,
+    "files": [
+      {
+        "path": "bot/src/frameworks/npc/contracts/narrative-visibility.js",
+        "sha256": "b19521958371a2da487df13437d8642934b3f2491df56998d974ee90f7ae3fe5"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/session-principal.js",
+        "sha256": "f0ec0ffd7cad14b0654928325f135e1ffa0469bafc127dac97163fe1c7827f46"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/world-evidence-event.js",
+        "sha256": "3c2f5241df04d89bffc91be0aa8aaf8450c8a9b7e423692a42ebf60b1642850d"
+      },
+      {
+        "path": "bot/src/frameworks/npc/evidence-projection-source.js",
+        "sha256": "abdd8b516e22c55086191e42e6e501fc727f6a3c7cda69bf2982fd1c4bd0cd77"
+      },
+      {
+        "path": "bot/src/frameworks/npc/public.js",
+        "sha256": "a88622bd81f20c1cf72247671090de4c2770e9c210bd20d7ccd7254e97d255a2"
+      },
+      {
+        "path": "bot/src/npc-cognition-projection.js",
+        "sha256": "4c3fa3e7ab573791ea04066afb87e29be76285fac9eea0f44f1b92926efddafd"
+      },
+      {
+        "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+        "sha256": "ab1ed9b5882ce8ff83b57803b035157d26e3b943b9fb97a57d5ec91c9e8625ec"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--session/public.js",
+        "sha256": "8d86d6d501c7271a43f31315c7a958ef33df06eae19aa05ffcdb9aec57c7457a"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "388585f440161963a1d05ecab874e9394ae758822fdc0f337a10eea480b4fdb1"
+      },
+      {
+        "path": "bot/src/application/composition/npc-evidence-projection.js",
+        "sha256": "1568e5a509684cfeb93a5f0c83c4aff8e79e8d9e8f4a77cc44df28baf5a935ae"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "2801b26bcdad82d0897795d7973788c110f27d488d46cee5c66470e47b08869d"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "3dd879c7d0d166cf019fafec76211d1f361f3abaf5853eea23f4a5044d1bc538"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "sha256": "0f4dfc8ffc52c73b52b9111a8b7131a8a04f5a163b5a013a3d3639bfc77f832b"
+      },
+      {
+        "path": "bot/src/frameworks/npc/evidence-projection.js",
+        "sha256": "0d1ad6374828d28fdeac9951b92eb16cdb90db9be843e62666b2239cdd63b54e"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "a3e441ca898ba9592b94353b9e2fd0faeb1802239eee4f2076181158e5972c07"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+        "sha256": "ec6725d4a32e0220481febb21fc302b8cf0d5f8a73c31b5364cfff2422f2e8b5"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json",
+        "sha256": "7246dcb19aba9151212d577a1d9a2a1f4df93fa66b5e0c9ff0dae2a3b1944899"
+      }
+    ]
+  },
+  "final_test_sha256": "69873c10c3cb8813a9c2bd5b3c2921bc3fd34c51e83b247cd3f3f63c11366050",
+  "unchanged_native_policy_sha256": "0d1ad6374828d28fdeac9951b92eb16cdb90db9be843e62666b2239cdd63b54e",
+  "tests": {
+    "initial": {
+      "start": "2026-10-26T15:55:02.8770638-05:00",
+      "exit_code": 1,
+      "duration_ms": 1918.2635,
+      "end": "2026-10-26T15:55:04.7953273-05:00",
+      "run_id": "rf04-f05-c23-frozen",
+      "tests": 7,
+      "passed": 6,
+      "failed": 1,
+      "tap_duration_ms": 1865.699
+    },
+    "repair": {
+      "exit_code": 0,
+      "start": "2026-10-26T15:55:21.0630716-05:00",
+      "run_id": "rf04-f05-c23-fixture-repair",
+      "end": "2026-10-26T15:55:22.1533396-05:00",
+      "duration_ms": 1090.268,
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "tap_duration_ms": 1037.5471
+    },
+    "reason": "Malformed rejection fixture lacked typed_intent key, so SQLite rejected undefined before predicate. Added nonexistent intent reference only. Six earlier cases not rerun; no whole-final-file claim."
+  },
+  "syntax": {
+    "checked": 13,
+    "passed": 13,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 672,
+      "unowned": 0,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
+      "cycleComponents": 2,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
+      "acceptedLegacyOccurrences": 2095,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 672,
+      "unowned": 0,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
+      "cycleComponents": 2,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
+      "acceptedLegacyOccurrences": 1353,
+      "activeViolationGroups": 738,
+      "transitionErrors": 738,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "3291705564aec1470226a6937a2d908955d7cb88c088c3a843389f5cdde64865",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "e9cc7346ef6013bd3afdc245fe28a3d22ca085b44a60b739d0a71c9c1e176a19",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/conversation-principal.js",
+      "kind": "static",
+      "specifier": "./conversation-principal.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "af2d2e1a41023333617cbd7010e26e9562c0e1d067a88d41ab86d3d54ba119ac",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "4dd51945af908d07f9df7af5d8005a422898ade47e8fbbb902588b39cd786640",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/gm-action-capability.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "4452ae7d0ed57596c790c2641ef4ec1e041cd2f6269ad713368bf00834063813",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/narrative-authority.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "1e13992892c91d7cb1bf59387ce4a5bd5b764f30e32fabaa2cc5e7a5aff62df8",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/narrative-speakers.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "92bbe513ea7bbf0015c714124d049061aa49ba03825948c57876ede58504465f",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "d803af7e662d0ae305f7d61788c0688e42743f56c21136f55e23b50b35d54fc2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "5f192386cc95bb1a0cce9848c869b05ed0a39b6f783f3b4553f8a8137bc07066",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "5d43886956050b891e35c6ca7bd9f80e519febf458fa611b3859cdd224b91b36",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/scene-fiction-context.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "2dcb8a0563c831e6a9259dba48e10f99db61bde4f8a465908fda49792867bf92",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "24059951b6f68980b2fb3e899d62242996307c321c73cd07ba4f81d7338365b5",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "NPC owns same evidence runtime, consumes exact Narrative closure, Session principal and World producer via three fixed own consumers and pair adapters. Historical functions are same service identities. Real bootstrap after native Narrative registration.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Current typed human speech positive producer not freshly qualified; malformed proof rejection only. No weakened original human authority checks.",
+    "Whole cognition composition and Narrative context producer remain mixed; standalone calls require explicit bootstrap. C23 split final-file fixture evidence disclosed.",
+    "No live providers, Discord, production recovery, semantic narrative-quality or release qualification."
+  ],
+  "rollback": "Revert C23 source/consumer/pair/bootstrap/root aliases and restore12exact original records together. Preserve all native source/knowledge/history/player/receipt state.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c23-tests.log",
+      "sha256": "331d4783ddbf1e6b0d6b32526f00ac4da3a197e83a9bcd9e6f6d97da73ac8adf"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c23-repair.log",
+      "sha256": "8720a95104f2a01827c248a7b87f4b8b2f6153d2d55e508fb94c2e88be6ea3d2"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c23-architecture-initial.log",
+      "sha256": "fa556940f94518c553d40b614ef18754d3238902ae87fbafabfbff35a2d8bbd5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c23-rf04-final.log",
+      "sha256": "fe7f5f71dc51dcef3fa5ba1c6d70b55e42b3d26013093fcbbb1b8a2fb6a5fe39"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c23-rf05-final.log",
+      "sha256": "69353803036e1cb46a84ef0dfbea72650d08f3c9322b1341307288591c03cdb6"
+    }
+  ]
+}

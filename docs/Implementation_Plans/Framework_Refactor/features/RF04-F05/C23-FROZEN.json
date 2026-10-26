@@ -1,0 +1,74 @@
+{
+  "base_head": "3374db6b507b4488978fc93a02f62a7da6dcd91c",
+  "syntax_checked": 13,
+  "files": [
+    {
+      "path": "bot/src/frameworks/npc/contracts/narrative-visibility.js",
+      "sha256": "b19521958371a2da487df13437d8642934b3f2491df56998d974ee90f7ae3fe5"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/session-principal.js",
+      "sha256": "f0ec0ffd7cad14b0654928325f135e1ffa0469bafc127dac97163fe1c7827f46"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-evidence-event.js",
+      "sha256": "3c2f5241df04d89bffc91be0aa8aaf8450c8a9b7e423692a42ebf60b1642850d"
+    },
+    {
+      "path": "bot/src/frameworks/npc/evidence-projection-source.js",
+      "sha256": "abdd8b516e22c55086191e42e6e501fc727f6a3c7cda69bf2982fd1c4bd0cd77"
+    },
+    {
+      "path": "bot/src/frameworks/npc/public.js",
+      "sha256": "a88622bd81f20c1cf72247671090de4c2770e9c210bd20d7ccd7254e97d255a2"
+    },
+    {
+      "path": "bot/src/npc-cognition-projection.js",
+      "sha256": "4c3fa3e7ab573791ea04066afb87e29be76285fac9eea0f44f1b92926efddafd"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+      "sha256": "ab1ed9b5882ce8ff83b57803b035157d26e3b943b9fb97a57d5ec91c9e8625ec"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--session/public.js",
+      "sha256": "8d86d6d501c7271a43f31315c7a958ef33df06eae19aa05ffcdb9aec57c7457a"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "388585f440161963a1d05ecab874e9394ae758822fdc0f337a10eea480b4fdb1"
+    },
+    {
+      "path": "bot/src/application/composition/npc-evidence-projection.js",
+      "sha256": "1568e5a509684cfeb93a5f0c83c4aff8e79e8d9e8f4a77cc44df28baf5a935ae"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "2801b26bcdad82d0897795d7973788c110f27d488d46cee5c66470e47b08869d"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "3dd879c7d0d166cf019fafec76211d1f361f3abaf5853eea23f4a5044d1bc538"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+      "sha256": "0f4dfc8ffc52c73b52b9111a8b7131a8a04f5a163b5a013a3d3639bfc77f832b"
+    },
+    {
+      "path": "bot/src/frameworks/npc/evidence-projection.js",
+      "sha256": "0d1ad6374828d28fdeac9951b92eb16cdb90db9be843e62666b2239cdd63b54e"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "a3e441ca898ba9592b94353b9e2fd0faeb1802239eee4f2076181158e5972c07"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+      "sha256": "ec6725d4a32e0220481febb21fc302b8cf0d5f8a73c31b5364cfff2422f2e8b5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json",
+      "sha256": "7246dcb19aba9151212d577a1d9a2a1f4df93fa66b5e0c9ff0dae2a3b1944899"
+    }
+  ]
+}

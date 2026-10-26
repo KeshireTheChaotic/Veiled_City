@@ -115,6 +115,9 @@
     ],
     "intent--npc": [
       "bot/src/framework-to-framework/intent--npc/public.js"
+    ],
+    "narrative--npc": [
+      "bot/src/framework-to-framework/narrative--npc/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -14,3 +14,7 @@ export {npcEvidenceActive,assertNpcObservation} from './observation-source.js';
 export {createNpcWorldStrategyConsumer,npcWorldStrategy} from './contracts/world-strategy.js';
 export {createNpcIntentStrategyConsumer,npcIntentStrategy} from './contracts/intent-strategy.js';
 export {manageStrategy,executeStrategyStep,runStrategyOpportunity} from './strategy-source.js';
+export {createNpcNarrativeVisibilityConsumer,npcNarrativeVisibility} from './contracts/narrative-visibility.js';
+export {createNpcSessionPrincipalConsumer,npcSessionPrincipal} from './contracts/session-principal.js';
+export {createNpcWorldEvidenceEventConsumer,npcWorldEvidenceEvent} from './contracts/world-evidence-event.js';
+export {recordImportedNpcKnowledge,actorEvidenceVisible,actorReferenceVisible} from './evidence-projection-source.js';

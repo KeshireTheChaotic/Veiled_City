@@ -1,24 +1,24 @@
 {
-  "checkpoint": "after C22 Knowledge reversible memory source",
-  "timestamp": "2026-10-26T20:44:24.936Z",
+  "checkpoint": "RF04-F05 C23 NPC evidence projection source",
+  "timestamp": "2026-10-26T20:55:29.628Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "fd225f793cd5ab3bb7ae74b153c856db5a4ca492b1188da968804986ec11873c",
-  "open_exact_records": 2090,
+  "manifest_sha256": "7246dcb19aba9151212d577a1d9a2a1f4df93fa66b5e0c9ff0dae2a3b1944899",
+  "open_exact_records": 2078,
   "by_feature": {
     "RF05-F05": 420,
     "RF04-F04": 204,
-    "RF05-F02": 218,
-    "RF05-F03": 259,
+    "RF05-F02": 217,
+    "RF05-F03": 256,
     "RF04-F03": 102,
     "RF04-F01": 306,
     "RF06-F02": 17,
-    "RF04-F05": 108,
+    "RF04-F05": 107,
     "RF06-F07": 5,
     "RF06-F04": 160,
     "RF06-F05": 43,
     "RF06-F03": 179,
     "RF05-F04": 43,
-    "RF04-F02": 26
+    "RF04-F02": 19
   },
   "resolved_since_audit": [
     {
@@ -214,6 +214,48 @@
       "max_occurrences": 1,
       "source_sha256": "6c1ed0ffc7df1ce3a73808a5630eab87b2f57b69dcac70ff3bf808736d6a6c98",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "3291705564aec1470226a6937a2d908955d7cb88c088c3a843389f5cdde64865",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "e9cc7346ef6013bd3afdc245fe28a3d22ca085b44a60b739d0a71c9c1e176a19",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/conversation-principal.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084",
+      "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "af2d2e1a41023333617cbd7010e26e9562c0e1d067a88d41ab86d3d54ba119ac",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/city-calendar.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084",
+      "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -1506,6 +1548,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "4dd51945af908d07f9df7af5d8005a422898ade47e8fbbb902588b39cd786640",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/gm-action-capability.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "f27ff0ea45ff0180fca6fd2adf21d0f4936ba5fb833f17ad0009d13348156667",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "718c2175835ed9cf31f3cd09ab5a688ca36661ce4cacf38fbf634e8d530e2bb4",
       "feature": "RF05-F05",
       "deadline": "RF05",
@@ -1786,6 +1842,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "4452ae7d0ed57596c790c2641ef4ec1e041cd2f6269ad713368bf00834063813",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/narrative-authority.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "8da098277e25d547cc9e6ae4443d56838481cde6632ec672c5fdb979444827ff",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "1b7738e3de2fbb6cfc73baa4643c5603f96d575e9ce1a7fed1b624f1d43175b3",
       "feature": "RF05-F03",
       "deadline": "RF05",
@@ -1936,6 +2006,20 @@
       "max_occurrences": 1,
       "source_sha256": "807596235f40a1787038dedb61f3fa956e1cbf8814566b3980e72f462d64c565",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "1e13992892c91d7cb1bf59387ce4a5bd5b764f30e32fabaa2cc5e7a5aff62df8",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/narrative-speakers.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "807596235f40a1787038dedb61f3fa956e1cbf8814566b3980e72f462d64c565",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -2258,6 +2342,20 @@
       "max_occurrences": 1,
       "source_sha256": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "92bbe513ea7bbf0015c714124d049061aa49ba03825948c57876ede58504465f",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -2696,6 +2794,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "d803af7e662d0ae305f7d61788c0688e42743f56c21136f55e23b50b35d54fc2",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition-projection.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "npc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "9f8a45682d518aca96321d464c2045bc1168c8c87fa002ff3b50ad84d5bbf6a1",
       "feature": "RF04-F02",
       "deadline": "RF04",
@@ -2720,6 +2832,20 @@
       "max_occurrences": 1,
       "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "5f192386cc95bb1a0cce9848c869b05ed0a39b6f783f3b4553f8a8137bc07066",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "npc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -3424,6 +3550,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "5d43886956050b891e35c6ca7bd9f80e519febf458fa611b3859cdd224b91b36",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/scene-fiction-context.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "752912da6dbe45c8d50cae2b3af8d1e6ec98ac3961bc552140ee11f7d8b35270",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "c05ce7befca45b7c550d205dc4005aa0e776df44d4004c08b846aa84963a8c54",
       "feature": "RF05-F02",
       "deadline": "RF05",
@@ -3448,6 +3588,20 @@
       "max_occurrences": 1,
       "source_sha256": "5e22d2403e21107dc81bafaab67964f8d62a9752908c3ef1f552532f5f3639db",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "2dcb8a0563c831e6a9259dba48e10f99db61bde4f8a465908fda49792867bf92",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "5e22d2403e21107dc81bafaab67964f8d62a9752908c3ef1f552532f5f3639db",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -4124,6 +4278,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "24059951b6f68980b2fb3e899d62242996307c321c73cd07ba4f81d7338365b5",
+      "feature": "RF04-F05",
+      "deadline": "RF04",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative--world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "aab5ad6f0e970eaa32a09ee711b33f3fd8a3ec0060d75575a9c52fe9554ac2f6",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "8bee41e72d21686f29404af5283d9e725290a73789e8a4782744988935605aa4",
       "feature": "RF04-F05",
       "deadline": "RF04",
@@ -4238,68 +4406,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 666,
+      "sourceModules": 672,
       "unowned": 0,
-      "importOccurrences": 2940,
-      "internalImportOccurrences": 2761,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
       "cycleComponents": 2,
-      "largestCycle": 146,
-      "rawViolationOccurrences": 2107,
-      "acceptedLegacyOccurrences": 2107,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
+      "acceptedLegacyOccurrences": 2095,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 666,
+      "sourceModules": 672,
       "unowned": 0,
-      "importOccurrences": 2940,
-      "internalImportOccurrences": 2761,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
       "cycleComponents": 2,
-      "largestCycle": 146,
-      "rawViolationOccurrences": 2107,
-      "acceptedLegacyOccurrences": 2107,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
+      "acceptedLegacyOccurrences": 2095,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 666,
+      "sourceModules": 672,
       "unowned": 0,
-      "importOccurrences": 2940,
-      "internalImportOccurrences": 2761,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
       "cycleComponents": 2,
-      "largestCycle": 146,
-      "rawViolationOccurrences": 2107,
-      "acceptedLegacyOccurrences": 1357,
-      "activeViolationGroups": 746,
-      "transitionErrors": 746,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
+      "acceptedLegacyOccurrences": 1353,
+      "activeViolationGroups": 738,
+      "transitionErrors": 738,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 666,
+      "sourceModules": 672,
       "unowned": 0,
-      "importOccurrences": 2940,
-      "internalImportOccurrences": 2761,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
       "cycleComponents": 2,
-      "largestCycle": 146,
-      "rawViolationOccurrences": 2107,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1686,
-      "transitionErrors": 1686,
+      "activeViolationGroups": 1674,
+      "transitionErrors": 1674,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 666,
+      "sourceModules": 672,
       "unowned": 0,
-      "importOccurrences": 2940,
-      "internalImportOccurrences": 2761,
+      "importOccurrences": 2955,
+      "internalImportOccurrences": 2776,
       "cycleComponents": 2,
-      "largestCycle": 146,
-      "rawViolationOccurrences": 2107,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2095,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2090,
-      "transitionErrors": 2090,
+      "activeViolationGroups": 2078,
+      "transitionErrors": 2078,
       "pass": false
     }
   },
@@ -4394,6 +4562,11 @@
       "sha256": "1e8ef413740a4668102705a4751ce5a5c76b56c5799f9d7e23fc8f0512a11613"
     },
     {
+      "path": "bot/src/application/composition/npc-evidence-projection.js",
+      "owner": "application",
+      "sha256": "1568e5a509684cfeb93a5f0c83c4aff8e79e8d9e8f4a77cc44df28baf5a935ae"
+    },
+    {
       "path": "bot/src/application/composition/npc-observations.js",
       "owner": "application",
       "sha256": "a91dda49590ff6c013ffb08c9be04b889456ceb00e8ebe1c65865fdf8d7c04aa"
@@ -4411,7 +4584,7 @@
     {
       "path": "bot/src/application/composition/public.js",
       "owner": "application",
-      "sha256": "cb22df64c2896ca58eb0b75f35ee8a30ce5335ebd3aefd16f2860c8d5ac04fdb"
+      "sha256": "2801b26bcdad82d0897795d7973788c110f27d488d46cee5c66470e47b08869d"
     },
     {
       "path": "bot/src/application/composition/pvp-agreements.js",
@@ -4804,6 +4977,11 @@
       "sha256": "2bbc12159ca4dcdaf77978d1901ec63ed81b9b6f82d4427f6728fbe1cabc5840"
     },
     {
+      "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+      "owner": "narrative--npc",
+      "sha256": "ab1ed9b5882ce8ff83b57803b035157d26e3b943b9fb97a57d5ec91c9e8625ec"
+    },
+    {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
       "owner": "narrative--session",
       "sha256": "8cd417a623f9f2c726ce29e1aaa9658466a228e668bd2965b4dd4c72d75b760f"
@@ -4816,12 +4994,12 @@
     {
       "path": "bot/src/framework-to-framework/npc--session/public.js",
       "owner": "npc--session",
-      "sha256": "467abdac11efad307ac55f2099636588549592f65d6761af3c425d8813d0a6a2"
+      "sha256": "8d86d6d501c7271a43f31315c7a958ef33df06eae19aa05ffcdb9aec57c7457a"
     },
     {
       "path": "bot/src/framework-to-framework/npc--world/public.js",
       "owner": "npc--world",
-      "sha256": "0ca1c84d12e449522444d27f2e7176cf0c729e280283327431b46a3597016a9e"
+      "sha256": "388585f440161963a1d05ecab874e9394ae758822fdc0f337a10eea480b4fdb1"
     },
     {
       "path": "bot/src/framework-to-framework/session--world/public.js",
@@ -5894,9 +6072,24 @@
       "sha256": "5ae27ac1ac4d6ec83d9f3ac5104cda91024820776151e339d7e073854199f630"
     },
     {
+      "path": "bot/src/frameworks/npc/contracts/narrative-visibility.js",
+      "owner": "npc",
+      "sha256": "b19521958371a2da487df13437d8642934b3f2491df56998d974ee90f7ae3fe5"
+    },
+    {
       "path": "bot/src/frameworks/npc/contracts/scene-access.js",
       "owner": "npc",
       "sha256": "34c926b8ee67d84a0fd4747dc536ca73306692f5b47109d2b169ca8f44022778"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/session-principal.js",
+      "owner": "npc",
+      "sha256": "f0ec0ffd7cad14b0654928325f135e1ffa0469bafc127dac97163fe1c7827f46"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-evidence-event.js",
+      "owner": "npc",
+      "sha256": "3c2f5241df04d89bffc91be0aa8aaf8450c8a9b7e423692a42ebf60b1642850d"
     },
     {
       "path": "bot/src/frameworks/npc/contracts/world-evidence-source.js",
@@ -5917,6 +6110,11 @@
       "path": "bot/src/frameworks/npc/conversations.js",
       "owner": "npc",
       "sha256": "6bc29c6eae2ac5677223d1867caed24624f98426ffc6bc18d439402c9bd2630a"
+    },
+    {
+      "path": "bot/src/frameworks/npc/evidence-projection-source.js",
+      "owner": "npc",
+      "sha256": "abdd8b516e22c55086191e42e6e501fc727f6a3c7cda69bf2982fd1c4bd0cd77"
     },
     {
       "path": "bot/src/frameworks/npc/evidence-projection.js",
@@ -5951,7 +6149,7 @@
     {
       "path": "bot/src/frameworks/npc/public.js",
       "owner": "npc",
-      "sha256": "b278fa868e764769c3f3725f56d566028a5afa91af84b98042acabe3fda27cd4"
+      "sha256": "a88622bd81f20c1cf72247671090de4c2770e9c210bd20d7ccd7254e97d255a2"
     },
     {
       "path": "bot/src/frameworks/npc/strategy-source.js",
@@ -6471,7 +6669,7 @@
     {
       "path": "bot/src/index.js",
       "owner": "bootstrap",
-      "sha256": "643832f2c992536aa61a194457b2bf47f25fe06a2a4dccfea076e7c1267ff377"
+      "sha256": "3dd879c7d0d166cf019fafec76211d1f361f3abaf5853eea23f4a5044d1bc538"
     },
     {
       "path": "bot/src/kernel/application-authority.js",
@@ -7011,7 +7209,7 @@
     {
       "path": "bot/src/npc-cognition-projection.js",
       "owner": "npc",
-      "sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084"
+      "sha256": "4c3fa3e7ab573791ea04066afb87e29be76285fac9eea0f44f1b92926efddafd"
     },
     {
       "path": "bot/src/npc-cognition.js",

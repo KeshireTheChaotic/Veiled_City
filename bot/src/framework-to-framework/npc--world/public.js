@@ -10,3 +10,7 @@ export function connectNpcWorldEvidence({consumer=createNpcEvidenceConsumer(),so
 import {npcWorldStrategy} from '../../frameworks/npc/public.js';
 import {submitInstitutionAction,reviewInstitutionAction,actorState,submitNpcAction,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution,ACTION_TYPES,ACTION_COSTS} from '../../frameworks/world/public.js';
 export function connectNpcWorldStrategy(){return npcWorldStrategy.bind({cityObject,cityKey,cityInteger,cityAudit,submitInstitutionAction,reviewInstitutionAction,actorState,submitNpcAction,nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution,ACTION_TYPES,ACTION_COSTS});}
+
+import {npcWorldEvidenceEvent} from '../../frameworks/npc/public.js';
+import {indexWorldEvent} from '../../frameworks/world/public.js';
+export function connectNpcWorldEvidenceEvent(){return npcWorldEvidenceEvent.bind(indexWorldEvent);}

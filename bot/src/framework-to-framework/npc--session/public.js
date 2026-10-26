@@ -5,3 +5,7 @@ export function connectNpcSessionObservation(){
  npcSceneAccess.bind(sceneAccess);
  return sessionNpcObservations.bind({npcEvidenceActive,assertNpcObservation});
 }
+
+import {npcSessionPrincipal} from '../../frameworks/npc/public.js';
+import {conversationPrincipal} from '../../frameworks/session/public.js';
+export function connectNpcSessionPrincipal(){return npcSessionPrincipal.bind(conversationPrincipal);}
