@@ -10,4 +10,4 @@ export function assertWorldIdentityNames(...args){return authorship().assertWorl
 export function assertIndependentWorldIdentity(...args){return authorship().assertIndependentWorldIdentity(...args);}
 export function verifiedWorldAuthoringContext(...args){return authorship().verifiedWorldAuthoringContext(...args);}
 export function privateWorldIdentityForGm(...args){return authorship().privateWorldIdentityForGm(...args);}
-export function worldIdentityOrigin(...args){return authorship().worldIdentityOrigin(...args);}
+export {worldIdentityOrigin} from './frameworks/world/public.js';

@@ -1,6 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled after C05. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 12 ADOPTED, 49 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the current C07 checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 13 ADOPTED, 48 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -40,13 +40,13 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |
 | intent--session | PROPOSED_NO_API | session → intent; intent → session | 0 / 0 | RF05 |
 | intent--world | ADOPTED | world → intent | 1 / 1 | RF05-F04 |
-| knowledge--narrative | PROPOSED_NO_API | knowledge → narrative; narrative → knowledge | 0 / 0 | RF05 |
+| knowledge--narrative | ADOPTED | knowledge → narrative | 1 / 1 | RF04-F05 |
 | knowledge--npc | PROPOSED_NO_API | knowledge → npc; npc → knowledge | 0 / 0 | RF04 |
 | knowledge--operations | PROPOSED_NO_API | operations → knowledge; knowledge → operations | 0 / 0 | RF04 |
 | knowledge--persistence | PROPOSED_NO_API | persistence → knowledge; knowledge → persistence | 0 / 0 | RF06 |
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
-| knowledge--world | ADOPTED | knowledge → world; world → knowledge | 1 / 2 | RF04-F05 |
+| knowledge--world | ADOPTED | knowledge → world; world → knowledge | 1 / 3 | RF04-F05 |
 | narrative--npc | PROPOSED_NO_API | narrative → npc; npc → narrative | 0 / 0 | RF05 |
 | narrative--operations | PROPOSED_NO_API | narrative → operations | 0 / 0 | RF05 |
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |

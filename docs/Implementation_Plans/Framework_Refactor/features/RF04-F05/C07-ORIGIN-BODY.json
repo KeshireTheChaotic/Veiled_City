@@ -1,0 +1,6 @@
+{
+  "from": "bot/src/frameworks/world/authorship.js",
+  "to": "bot/src/frameworks/world/identity-origin.js",
+  "method_sha256": "22bbb42445c043d9133d0ebd730cf2bcc9dd526cd529d859e17ca2bdeea2545b",
+  "exact_method_preserved": true
+}

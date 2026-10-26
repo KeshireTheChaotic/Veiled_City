@@ -1,6 +1,6 @@
 # Reconciled local holds and reopened work
 
-Audit baseline: `87be9d2eb4f57b97c680d1b60f3117e1a5a594b7`, with preserved working edits. Each of the original **2,391** exact obligations is in [HOLD_REGISTER.json](HOLD_REGISTER.json). The [current delta and graph](CURRENT.json) now record **2,380 open records**, **11 resolved since audit**, **609 modules**, zero unowned, and **941 expired RF04 groups/errors** at the RF05 gate. The current-source crosswalk is refreshed; `BEFORE.json` remains the audit snapshot. These are migration obligations, not demonstrated runtime defects. No deadline extension, baseline change or new allowance is authorized by this audit.
+Audit baseline: `87be9d2eb4f57b97c680d1b60f3117e1a5a594b7`, with preserved working edits. Each of the original **2,391** exact obligations is in [HOLD_REGISTER.json](HOLD_REGISTER.json). The [current delta and graph](CURRENT.json) now record **2,376 open records**, **15 resolved since audit**, **615 modules**, zero unowned, and **938 expired RF04 groups/errors** at the RF05 gate. The current-source crosswalk is refreshed; `BEFORE.json` remains the audit snapshot. These are migration obligations, not demonstrated runtime defects. No deadline extension, baseline change or new allowance is authorized by this audit.
 
 | Hold / previous disposition | Current source finding | Reopened work and acceptance |
 |---|---|---|
@@ -20,3 +20,7 @@ Audit baseline: `87be9d2eb4f57b97c680d1b60f3117e1a5a594b7`, with preserved worki
 | `c13-wip` | All four stashed files equal current source; C13 is already implemented. | Owner authorized disposal. Redundant stash `c16770914ee64c2865d3f195024eb5c5ecfbbad3` dropped successfully; other stash preserved. |
 
 No critical blocker currently requires owner input. Untested live Discord delivery, production recovery, provider speed and semantic narrative quality remain unqualified; release remains **NOT AUTHORIZED**.
+
+## 2026-10-26 C07 existing-identity retrieval
+
+Scoped implementation qualified: Knowledge retrieves only existing source-visible identities through fixed World and Narrative consumers. Original World origin method extracted byte-for-byte (SHA25622bbb42445c043d9133d0ebd730cf2bcc9dd526cd529d859e17ca2bdeea2545b); original authoring engine retains its private seeded-context authority. Actual GM uses Knowledge public API; startup binds the original shared native Narrative closure. Six new SQLite cases plus20affected cases pass26/26 in one blocking batch, exit0, TAP3616.4761ms; syntax17/17. Source privacy, recipient/campaign separation, stale/retracted source, restart, provisional unsupported proposal and no invented PC movement/resource effects exercised. Four original transition records retired, no baseline/deadline expansion. RF04 gate0 at615modules/0unowned/2820imports/2396rawaccepted/SCC181; RF05 remains938expiredgroups/errors. Current exact open obligations2376, resolved15since audit. Evidence C07-RUN.json includes hashes, terminal outcome and rollback. Broad native control/availability and source-field mappings remain reopened; RF04/RF05 incomplete. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

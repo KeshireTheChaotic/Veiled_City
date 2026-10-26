@@ -1,0 +1,70 @@
+[
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\identity-origin.js",
+    "Hash": "C9EBC4FA9FF88E34E22F40CB65D1A5242983B180B84F057FB654E5B8B5BD6591"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\authorship.js",
+    "Hash": "EFD4A4965E17FC7F7898C81FFA815C0335776D6FCC987CDFBE52CB8D8FDE7375"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\public.js",
+    "Hash": "73C4B4D636670A7B97AEA2DAFEE915F966D123289B46E97C474A20CF5B73EB88"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\world-authorship.js",
+    "Hash": "2A0ECFDE0D5472C8E6948C5673454A9BEACD598C9A83D4646566F9ACDC6D3967"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\contracts\\world-identities.js",
+    "Hash": "31FF0A4069C8E9E37F8A26F35FFB24E195482F0694D91B738D2703534FA7220F"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\contracts\\narrative-visibility.js",
+    "Hash": "7B53217CBA0449B3381D8698C5AB0C7041D6E650B02A16988086643A430354C5"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\entity-memory-source.js",
+    "Hash": "B39EC43F0F3D6A5719103AA5FC70B16717BAA5BFBBA113790232E2C76191D75A"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\public.js",
+    "Hash": "4C67251351E6FC7AFA480EA4CDEF8DE77794DF8ABC5E325829C26019D4B4F328"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\entity-memory.js",
+    "Hash": "58383FACFD91A8CAF27C9621E7307EB13B0FC3FF9917538E1D0C66CF4AE84620"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--world\\public.js",
+    "Hash": "8CEF436860BC33CA1C25E590B82B7D7C19775515C1E6721D8B80BBE3116FE2B4"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--narrative\\public.js",
+    "Hash": "15BE25776207E339CCD3D942336D10BA45B22D1E54DC811206D2729BF9A54194"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-world.js",
+    "Hash": "2787332387C22A67F8806B242047B0928246F968D68D10437143E3688C625EB9"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-narrative.js",
+    "Hash": "C2C1002BFA0B670CEEFC35D00313BE6A89ADC66A2590D47298EBD7CFFB314980"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\public.js",
+    "Hash": "24703E0CCC685D7120986F7AABD5B9A95E45977C4B7D68CED671B02428505070"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\index.js",
+    "Hash": "39C63A14CBFC2D7E1E24C80310527264366C6E88F9EA7218AD455050B85FE1F3"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\gm.js",
+    "Hash": "126ED146F1965DE3B80C8F678F3F2930EAC90CBD94B03E8CF69EF3887D2A8E96"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c07.test.mjs",
+    "Hash": "820A3EFF204109F6066CF3B0DD5B244E72EAC26EA3A7942875A5EC0CF04CF1CC"
+  }
+]

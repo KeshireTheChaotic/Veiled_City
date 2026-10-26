@@ -1,0 +1,236 @@
+{
+  "feature": "RF04-F05-C07",
+  "status": "SCOPED_EXISTING_IDENTITY_RETRIEVAL_QUALIFIED",
+  "base_head": "463be846b8d0fedd8055d877c30a5c11f0f4f14d",
+  "changed_files": [
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\identity-origin.js",
+      "Hash": "C9EBC4FA9FF88E34E22F40CB65D1A5242983B180B84F057FB654E5B8B5BD6591"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\authorship.js",
+      "Hash": "EFD4A4965E17FC7F7898C81FFA815C0335776D6FCC987CDFBE52CB8D8FDE7375"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\public.js",
+      "Hash": "73C4B4D636670A7B97AEA2DAFEE915F966D123289B46E97C474A20CF5B73EB88"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\world-authorship.js",
+      "Hash": "2A0ECFDE0D5472C8E6948C5673454A9BEACD598C9A83D4646566F9ACDC6D3967"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\contracts\\world-identities.js",
+      "Hash": "31FF0A4069C8E9E37F8A26F35FFB24E195482F0694D91B738D2703534FA7220F"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\contracts\\narrative-visibility.js",
+      "Hash": "7B53217CBA0449B3381D8698C5AB0C7041D6E650B02A16988086643A430354C5"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\entity-memory-source.js",
+      "Hash": "B39EC43F0F3D6A5719103AA5FC70B16717BAA5BFBBA113790232E2C76191D75A"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\public.js",
+      "Hash": "4C67251351E6FC7AFA480EA4CDEF8DE77794DF8ABC5E325829C26019D4B4F328"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\entity-memory.js",
+      "Hash": "58383FACFD91A8CAF27C9621E7307EB13B0FC3FF9917538E1D0C66CF4AE84620"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--world\\public.js",
+      "Hash": "8CEF436860BC33CA1C25E590B82B7D7C19775515C1E6721D8B80BBE3116FE2B4"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--narrative\\public.js",
+      "Hash": "15BE25776207E339CCD3D942336D10BA45B22D1E54DC811206D2729BF9A54194"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-world.js",
+      "Hash": "2787332387C22A67F8806B242047B0928246F968D68D10437143E3688C625EB9"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-narrative.js",
+      "Hash": "C2C1002BFA0B670CEEFC35D00313BE6A89ADC66A2590D47298EBD7CFFB314980"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\public.js",
+      "Hash": "24703E0CCC685D7120986F7AABD5B9A95E45977C4B7D68CED671B02428505070"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\index.js",
+      "Hash": "39C63A14CBFC2D7E1E24C80310527264366C6E88F9EA7218AD455050B85FE1F3"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\gm.js",
+      "Hash": "126ED146F1965DE3B80C8F678F3F2930EAC90CBD94B03E8CF69EF3887D2A8E96"
+    },
+    {
+      "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c07.test.mjs",
+      "Hash": "820A3EFF204109F6066CF3B0DD5B244E72EAC26EA3A7942875A5EC0CF04CF1CC"
+    }
+  ],
+  "tests": {
+    "duration_ms": 3665.5369,
+    "end": "2026-10-26T18:22:43.2720767Z",
+    "run_id": "RF04-F05-C07-20261026-1",
+    "start": "2026-10-26T18:22:39.6065398Z",
+    "exit_code": 0,
+    "tests": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 3616.4761,
+    "members": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "820a3eff204109f6066cf3b0dd5b244e72eac26ea3a7942875a5ec0cf04cf1cc"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "sha256": "46f8751fda7886dfadaafeca9d7e879e85f2081dbf2fdf9b37a397e34847399f"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "sha256": "6b6b02cfd7aa5125142e336c5da46a035fb9ca213b6c3f22a8d4eda0ec5b6789"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "sha256": "da6bb160de83ec6e8980d09c3ad484a2b95db4a8b33e4a95d5ba0bee8ea2c854"
+      }
+    ],
+    "reason": "World origin reader, Knowledge retrieval source and real composition changed; affected C04/C05/C06 files rerun once against those changed contracts."
+  },
+  "syntax": {
+    "checked": 17,
+    "passed": 17
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 615,
+      "unowned": 0,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2396,
+      "acceptedLegacyOccurrences": 2396,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 615,
+      "unowned": 0,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2396,
+      "acceptedLegacyOccurrences": 1453,
+      "activeViolationGroups": 938,
+      "transitionErrors": 938,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "472df6a4c3b965f94de31e10addf52f3a021843310becaab3c25f49691cf2d60",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/location-language.js",
+      "kind": "static",
+      "specifier": "./location-language.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8983addc6733780fc6a3e68b042409257bf10faf3bddbca87cc981cc56b73c87",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "2d12837546c4901498e655d4237e9f7c7655a0a042efeba3a15390439eae9c6f",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/world-authorship.js",
+      "kind": "static",
+      "specifier": "./world-authorship.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "9b8c60f370134fe4c5da53e7fb5f264f19b421cf4003808d9e77d05b9f23f15d",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/entity-memory.js",
+      "kind": "static",
+      "specifier": "./entity-memory.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "origin_body": {
+    "from": "bot/src/frameworks/world/authorship.js",
+    "to": "bot/src/frameworks/world/identity-origin.js",
+    "method_sha256": "22bbb42445c043d9133d0ebd730cf2bcc9dd526cd529d859e17ca2bdeea2545b",
+    "exact_method_preserved": true
+  },
+  "ownership": "Knowledge owns existing-identity retrieval; World owns pure origin proof and identity lookups; Narrative owns shared visibility authority. Exact two-owner integrations and thin startup bind fixed callbacks.",
+  "limits": [
+    "No whole-phase isolation: source/canon/private-hook mappings and large dependency cycle remain.",
+    "No live Discord/provider/production-recovery or narrative-quality qualification."
+  ],
+  "rollback": "Revert this reader/consumer/composition slice and restore its four exact records together; preserve saved origins, receipts and previous source WeakMaps.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c07-affected-union.log",
+      "sha256": "3871153921a3ed9b151a47d45de60fbe9955122ae8f97f2c60702d9e7c8f93fe"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c07-architecture-initial.log",
+      "sha256": "c8efed331efbd54e147e1c9360b57f9fd7addc708d587c09ae7b921ff1670f0d"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c07-rf04-final.log",
+      "sha256": "c7e926e6a1a14fd184dd4f9fba1a8b278815ccb38a4bc4c9ec67f886b4c037ae"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c07-rf05-final.log",
+      "sha256": "09addceb9fdd7862a61436ac52cba4926696fc04d32d6a0df4770a88d6cede42"
+    }
+  ]
+}

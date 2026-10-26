@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+ok 1 - unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+  ---
+  duration_ms: 1.0274
+  type: 'test'
+  ...
+# Subtest: legacy registration, public runtime and actual World verification share the original opaque grant store
+ok 2 - legacy registration, public runtime and actual World verification share the original opaque grant store
+  ---
+  duration_ms: 582.0547
+  type: 'test'
+  ...
+# Subtest: private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+ok 3 - private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+  ---
+  duration_ms: 587.511
+  type: 'test'
+  ...
+# Subtest: real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+ok 4 - real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+  ---
+  duration_ms: 584.9884
+  type: 'test'
+  ...
+# Subtest: saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+ok 5 - saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+  ---
+  duration_ms: 447.8487
+  type: 'test'
+  ...
+# Subtest: source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+ok 6 - source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+  ---
+  duration_ms: 254.572
+  type: 'test'
+  ...
+# Subtest: real World transaction rolls identity and receipt back on audit failure before a safe retry
+ok 7 - real World transaction rolls identity and receipt back on audit failure before a safe retry
+  ---
+  duration_ms: 187.1889
+  type: 'test'
+  ...
+# Subtest: actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+ok 8 - actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+  ---
+  duration_ms: 0.6788
+  type: 'test'
+  ...
+# Subtest: original and public evidence functions are identical; pure saved-source reads work before composition
+ok 9 - original and public evidence functions are identical; pure saved-source reads work before composition
+  ---
+  duration_ms: 512.3012
+  type: 'test'
+  ...
+# Subtest: a native write before World binding fails closed and rolls back without blocking historical reads
+ok 10 - a native write before World binding fails closed and rolls back without blocking historical reads
+  ---
+  duration_ms: 499.723
+  type: 'test'
+  ...
+# Subtest: fixed pair binds exact native functions, rejects replacement and preserves forwarded error identity
+ok 11 - fixed pair binds exact native functions, rejects replacement and preserves forwarded error identity
+  ---
+  duration_ms: 0.7423
+  type: 'test'
+  ...
+# Subtest: real native fact ruling preserves recipient scope and source ancestry; model drafts cannot promote it
+ok 12 - real native fact ruling preserves recipient scope and source ancestry; model drafts cannot promote it
+  ---
+  duration_ms: 550.6623
+  type: 'test'
+  ...
+# Subtest: failure after event issuance rolls native fact and event back before one successful retry
+ok 13 - failure after event issuance rolls native fact and event back before one successful retry
+  ---
+  duration_ms: 424.1656
+  type: 'test'
+  ...
+# Subtest: saved evidence remains readable after SQLite reopen and source retraction invalidates it without rewriting the fact
+ok 14 - saved evidence remains readable after SQLite reopen and source retraction invalidates it without rewriting the fact
+  ---
+  duration_ms: 348.4081
+  type: 'test'
+  ...
+# Subtest: real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners
+ok 15 - real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners
+  ---
+  duration_ms: 0.6381
+  type: 'test'
+  ...
+# Subtest: World consumer rejects missing or replaced sources and forwards original values/errors exactly
+ok 16 - World consumer rejects missing or replaced sources and forwards original values/errors exactly
+  ---
+  duration_ms: 1.1688
+  type: 'test'
+  ...
+# Subtest: the actual pair supplies exactly the existing Knowledge functions and retains initializer identity
+ok 17 - the actual pair supplies exactly the existing Knowledge functions and retains initializer identity
+  ---
+  duration_ms: 0.1109
+  type: 'test'
+  ...
+# Subtest: real World historical origin reader preserves private/campaign/retraction boundaries across SQLite reopen without new grants
+ok 18 - real World historical origin reader preserves private/campaign/retraction boundaries across SQLite reopen without new grants
+  ---
+  duration_ms: 556.0836
+  type: 'test'
+  ...
+# Subtest: real Knowledge paging remains native GM retrieval, same kind/campaign/order and no writes
+ok 19 - real Knowledge paging remains native GM retrieval, same kind/campaign/order and no writes
+  ---
+  duration_ms: 1051.5604
+  type: 'test'
+  ...
+# Subtest: actual World composition has no Knowledge deep imports and existing pair has only its two public owners
+ok 20 - actual World composition has no Knowledge deep imports and existing pair has only its two public owners
+  ---
+  duration_ms: 0.4361
+  type: 'test'
+  ...
+# Subtest: fixed identity/visibility ports fail closed and pairs supply the original native functions
+ok 21 - fixed identity/visibility ports fail closed and pairs supply the original native functions
+  ---
+  duration_ms: 1.037
+  type: 'test'
+  ...
+# Subtest: actual native-created identity is retrieved without promoting an unsupported proposal or changing PC/native state
+ok 22 - actual native-created identity is retrieved without promoting an unsupported proposal or changing PC/native state
+  ---
+  duration_ms: 573.416
+  type: 'test'
+  ...
+# Subtest: private native identity is reusable only by its entitled audience and cannot cross campaign or party scope
+ok 23 - private native identity is reusable only by its entitled audience and cannot cross campaign or party scope
+  ---
+  duration_ms: 615.7997
+  type: 'test'
+  ...
+# Subtest: receipt/source retraction across SQLite restart holds retrieval and leaves saved identity rows unchanged
+ok 24 - receipt/source retraction across SQLite restart holds retrieval and leaves saved identity rows unchanged
+  ---
+  duration_ms: 557.2899
+  type: 'test'
+  ...
+# Subtest: legacy established NPC references remain reusable without inventing presence, knowledge or cooperation
+ok 25 - legacy established NPC references remain reusable without inventing presence, knowledge or cooperation
+  ---
+  duration_ms: 432.4355
+  type: 'test'
+  ...
+# Subtest: actual GM and startup use public contracts; both integrations import exactly their two owners
+ok 26 - actual GM and startup use public contracts; both integrations import exactly their two owners
+  ---
+  duration_ms: 1.2493
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3616.4761

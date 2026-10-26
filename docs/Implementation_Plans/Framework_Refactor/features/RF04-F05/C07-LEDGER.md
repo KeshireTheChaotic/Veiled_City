@@ -1,0 +1,9 @@
+# RF04-F05 C07 execution ledger
+
+Status: IMPLEMENTATION IN PROGRESS. Existing-identity retrieval belongs to Knowledge, pure saved World origin validation to World, source visibility to Narrative. Exact two-framework adapters and thin startup wire them. Base `463be846b8d0fedd8055d877c30a5c11f0f4f14d`; preserve all prior edits. No new policy, receipt or player-authority behavior planned.
+
+Qualification pending. Provider0tokens0cost$0; Codex UNMEASURED. Rollback reader extraction/factory delegation, new fixed ports/source/pair, startup/GM/old-reader/public/registry edits and exact retired transitions together; preserve all saved formats and original seeded-context authority. RELEASE NOT AUTHORIZED.
+
+## 2026-10-26 C07 existing-identity retrieval
+
+Scoped implementation qualified: Knowledge retrieves only existing source-visible identities through fixed World and Narrative consumers. Original World origin method extracted byte-for-byte (SHA25622bbb42445c043d9133d0ebd730cf2bcc9dd526cd529d859e17ca2bdeea2545b); original authoring engine retains its private seeded-context authority. Actual GM uses Knowledge public API; startup binds the original shared native Narrative closure. Six new SQLite cases plus20affected cases pass26/26 in one blocking batch, exit0, TAP3616.4761ms; syntax17/17. Source privacy, recipient/campaign separation, stale/retracted source, restart, provisional unsupported proposal and no invented PC movement/resource effects exercised. Four original transition records retired, no baseline/deadline expansion. RF04 gate0 at615modules/0unowned/2820imports/2396rawaccepted/SCC181; RF05 remains938expiredgroups/errors. Current exact open obligations2376, resolved15since audit. Evidence C07-RUN.json includes hashes, terminal outcome and rollback. Broad native control/availability and source-field mappings remain reopened; RF04/RF05 incomplete. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

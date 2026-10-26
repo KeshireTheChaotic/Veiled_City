@@ -1,15 +1,15 @@
 {
-  "checkpoint": "after C03-P04, C23, C05, Intent C03 and C06",
-  "timestamp": "2026-10-26T18:14:16.791Z",
+  "checkpoint": "after C07 existing-identity retrieval",
+  "timestamp": "2026-10-26T19:36:36.963Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "e49834542d22eafa09b39a19e217a737da35a4b72dab8ba693789ab1b09775a7",
-  "open_exact_records": 2380,
+  "manifest_sha256": "c50625541745f264cba035d92185fcbc56a5d8c319b925ba325e2e80afad8d0f",
+  "open_exact_records": 2376,
   "by_feature": {
     "RF05-F05": 440,
     "RF04-F04": 268,
     "RF05-F02": 250,
     "RF05-F03": 289,
-    "RF04-F03": 120,
+    "RF04-F03": 117,
     "RF04-F01": 390,
     "RF06-F02": 17,
     "RF04-F05": 115,
@@ -17,7 +17,7 @@
     "RF06-F04": 160,
     "RF06-F05": 43,
     "RF06-F03": 191,
-    "RF05-F04": 44,
+    "RF05-F04": 43,
     "RF04-F02": 48
   },
   "resolved_since_audit": [
@@ -36,6 +36,48 @@
       "action": "LEGACY_MODULE_LOCATION"
     },
     {
+      "id": "472df6a4c3b965f94de31e10addf52f3a021843310becaab3c25f49691cf2d60",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/location-language.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "07cfa39366cb6d24833b94a4208cd31009fdee206326fe89df960889f9d44830",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "8983addc6733780fc6a3e68b042409257bf10faf3bddbca87cc981cc56b73c87",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "07cfa39366cb6d24833b94a4208cd31009fdee206326fe89df960889f9d44830",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "2d12837546c4901498e655d4237e9f7c7655a0a042efeba3a15390439eae9c6f",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/entity-memory.js",
+      "to": "bot/src/world-authorship.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "07cfa39366cb6d24833b94a4208cd31009fdee206326fe89df960889f9d44830",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
       "id": "3c67bf074b870fafb406d25e44c3b7aaeb0a6811c5261866a80a272fc6b1cb94",
       "feature": "RF04-F03",
       "deadline": "RF04",
@@ -48,6 +90,20 @@
       "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "9b8c60f370134fe4c5da53e7fb5f264f19b421cf4003808d9e77d05b9f23f15d",
+      "feature": "RF05-F04",
+      "deadline": "RF05",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/entity-memory.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "1fa8141917d32cc9871fd05f0c9e7f1b1b40b1871377e0a4fe6ddcc326f85a49",
+      "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
     },
     {
       "id": "3fe8ae5ab6c425548a6689a53fe4ffd6fcb4c63bad133889a9a501ef610acf01",
@@ -178,68 +234,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 609,
+      "sourceModules": 615,
       "unowned": 0,
-      "importOccurrences": 2806,
-      "internalImportOccurrences": 2629,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2400,
-      "acceptedLegacyOccurrences": 2400,
+      "rawViolationOccurrences": 2396,
+      "acceptedLegacyOccurrences": 2396,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 609,
+      "sourceModules": 615,
       "unowned": 0,
-      "importOccurrences": 2806,
-      "internalImportOccurrences": 2629,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2400,
-      "acceptedLegacyOccurrences": 2400,
+      "rawViolationOccurrences": 2396,
+      "acceptedLegacyOccurrences": 2396,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 609,
+      "sourceModules": 615,
       "unowned": 0,
-      "importOccurrences": 2806,
-      "internalImportOccurrences": 2629,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2400,
-      "acceptedLegacyOccurrences": 1454,
-      "activeViolationGroups": 941,
-      "transitionErrors": 941,
+      "rawViolationOccurrences": 2396,
+      "acceptedLegacyOccurrences": 1453,
+      "activeViolationGroups": 938,
+      "transitionErrors": 938,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 609,
+      "sourceModules": 615,
       "unowned": 0,
-      "importOccurrences": 2806,
-      "internalImportOccurrences": 2629,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2400,
+      "rawViolationOccurrences": 2396,
       "acceptedLegacyOccurrences": 421,
-      "activeViolationGroups": 1964,
-      "transitionErrors": 1964,
+      "activeViolationGroups": 1960,
+      "transitionErrors": 1960,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 609,
+      "sourceModules": 615,
       "unowned": 0,
-      "importOccurrences": 2806,
-      "internalImportOccurrences": 2629,
+      "importOccurrences": 2820,
+      "internalImportOccurrences": 2643,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2400,
+      "rawViolationOccurrences": 2396,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2380,
-      "transitionErrors": 2380,
+      "activeViolationGroups": 2376,
+      "transitionErrors": 2376,
       "pass": false
     }
   },
@@ -309,9 +365,14 @@
       "sha256": "a2b36a06d9395562b703d9b05e75813379d7f1b8f3c58a6daf638014508f78c0"
     },
     {
+      "path": "bot/src/application/composition/knowledge-narrative.js",
+      "owner": "application",
+      "sha256": "c2c1002bfa0b670ceefc35d00313be6a89adc66a2590d47298ebd7cffb314980"
+    },
+    {
       "path": "bot/src/application/composition/knowledge-world.js",
       "owner": "application",
-      "sha256": "59ddd61100d8d68c64ade53da0b9761d6cc867e58b2939346c6144525ddf4e2c"
+      "sha256": "2787332387c22a67f8806b242047b0928246f968d68d10437143e3688c625eb9"
     },
     {
       "path": "bot/src/application/composition/narrative-world.js",
@@ -331,7 +392,7 @@
     {
       "path": "bot/src/application/composition/public.js",
       "owner": "application",
-      "sha256": "ea4c6da5b91d82c4c1518bf1bb8eaa3513a9fa8aa6dab2b9f9b19a84d8988523"
+      "sha256": "24703e0ccc685d7120986f7aabd5b9a95e45977c4b7d68ced671b02428505070"
     },
     {
       "path": "bot/src/application/composition/pvp-agreements.js",
@@ -591,7 +652,7 @@
     {
       "path": "bot/src/entity-memory.js",
       "owner": "knowledge",
-      "sha256": "07cfa39366cb6d24833b94a4208cd31009fdee206326fe89df960889f9d44830"
+      "sha256": "58383facfd91a8caf27c9621e7307eb13b0fc3ff9917538e1d0c66cf4ae84620"
     },
     {
       "path": "bot/src/environment-observation.js",
@@ -679,9 +740,14 @@
       "sha256": "20683fc0895552b1ee4d46043851f298b2cb11f25abf63aa3abc85424a6220b2"
     },
     {
+      "path": "bot/src/framework-to-framework/knowledge--narrative/public.js",
+      "owner": "knowledge--narrative",
+      "sha256": "15be25776207e339ccd3d942336d10ba45b22d1e54dc811206d2729bf9a54194"
+    },
+    {
       "path": "bot/src/framework-to-framework/knowledge--world/public.js",
       "owner": "knowledge--world",
-      "sha256": "6a7674803b20e98af86bc22e31c2cf03beb791ff4ff0c3ec29010fa649ff164f"
+      "sha256": "8cef436860bc33ca1c25e590b82b7d7c19775515c1e6721d8b80bbe3116fe2b4"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -1479,14 +1545,29 @@
       "sha256": "ef5eca716351c7b756ef2d5be80bb60470f141916fa08cb2bc5de68933f5bf70"
     },
     {
+      "path": "bot/src/frameworks/knowledge/contracts/narrative-visibility.js",
+      "owner": "knowledge",
+      "sha256": "7b53217cba0449b3381d8698c5ab0c7041d6e650b02a16988086643a430354c5"
+    },
+    {
       "path": "bot/src/frameworks/knowledge/contracts/world-events.js",
       "owner": "knowledge",
       "sha256": "e1785951aae7a8d54bcd3cf932e6e3b9ba0bf62dd1acadabc54bf3b7258320a2"
     },
     {
+      "path": "bot/src/frameworks/knowledge/contracts/world-identities.js",
+      "owner": "knowledge",
+      "sha256": "31ff0a4069c8e9e37f8a26f35ffb24e195482f0694d91b738d2703534fa7220f"
+    },
+    {
       "path": "bot/src/frameworks/knowledge/disclosure-authority.js",
       "owner": "knowledge",
       "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/entity-memory-source.js",
+      "owner": "knowledge",
+      "sha256": "b39ec43f0f3d6a5719103aa5fc70b16717baa5bfbba113790232e2c76191d75a"
     },
     {
       "path": "bot/src/frameworks/knowledge/entity-memory.js",
@@ -1571,7 +1652,7 @@
     {
       "path": "bot/src/frameworks/knowledge/public.js",
       "owner": "knowledge",
-      "sha256": "9982cff2970d898dee6f08b2333e97b7f1bcb6be7d3354483981fa7f829d779e"
+      "sha256": "4c67251351e6fc7afa480ea4cdef8de77794df8abc5e325829c26019d4b4f328"
     },
     {
       "path": "bot/src/frameworks/knowledge/relationship-state.js",
@@ -1871,7 +1952,7 @@
     {
       "path": "bot/src/frameworks/world/authorship.js",
       "owner": "world",
-      "sha256": "149c87b4ab75a740bde20d84280c85333133fd06a058ae164d13985cb2b47dd2"
+      "sha256": "efd4a4965e17fc7f7898c81ffa815c0335776d6fcc987cdfbe52cb8d8fde7375"
     },
     {
       "path": "bot/src/frameworks/world/autonomous-world-contract.js",
@@ -1954,6 +2035,11 @@
       "sha256": "f26034d0544ff583b0d873b122b6a7e488ed34b27d9c1a2400a2e6519a93a9a0"
     },
     {
+      "path": "bot/src/frameworks/world/identity-origin.js",
+      "owner": "world",
+      "sha256": "c9ebc4fa9ff88e34e22f40cb65d1a5242983b180b84f057fb654e5b8b5bd6591"
+    },
+    {
       "path": "bot/src/frameworks/world/identity-rules.js",
       "owner": "world",
       "sha256": "98ccb98bdd0368f4f3b6216c97bafa7e33b65da8f929ced5b47120c8c385d9b0"
@@ -1991,7 +2077,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "7e1cca121cc474edbd673be3d66bdc573148c1ce304da205f62696fe11cfb207"
+      "sha256": "73c4b4d636670a7b97aea2dafee915f966d123289b46e97c474a20cf5b73eb88"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -2101,7 +2187,7 @@
     {
       "path": "bot/src/gm.js",
       "owner": "application",
-      "sha256": "9e1bb4fd2deab5e15cb22d41a3c8b148c6e4e59de89a0ecc4252f6ac46267c98"
+      "sha256": "126ed146f1965de3b80c8f678f3f2930eac90cbd94b03e8cf69ef3887d2a8e96"
     },
     {
       "path": "bot/src/handout.js",
@@ -2126,7 +2212,7 @@
     {
       "path": "bot/src/index.js",
       "owner": "bootstrap",
-      "sha256": "7776eb2de3a05b834c75424c286415edfc90d1dc64e39a953f72a64d20658582"
+      "sha256": "39c63a14cbfc2d7e1e24c80310527264366c6e88f9ea7218ad455050b85fe1f3"
     },
     {
       "path": "bot/src/kernel/application-authority.js",
@@ -3201,7 +3287,7 @@
     {
       "path": "bot/src/world-authorship.js",
       "owner": "world",
-      "sha256": "6d6463206fdda1c6cc1d77c42284142f4abcebbb857afaf233d439b2a101e237"
+      "sha256": "2a0ecfde0d5472c8e6948c5673454a9beacd598c9a83d4646566f9acdc6d3967"
     },
     {
       "path": "bot/src/world-background-identities.js",

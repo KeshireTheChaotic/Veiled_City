@@ -7,7 +7,7 @@ import {continuationInbox} from "./action-continuation.js";
 import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./authored-candidates.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
-import { tierWorldAdditions } from "./entity-memory.js";
+import { tierWorldAdditions } from "./frameworks/knowledge/public.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./frameworks/knowledge/public.js";
 import { presentationContext } from "./presentation-evidence.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
