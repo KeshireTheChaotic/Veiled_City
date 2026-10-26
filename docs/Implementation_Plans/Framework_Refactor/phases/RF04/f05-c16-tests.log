@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: real resolver and historical/public reader share exact cost table and verifier identities
+ok 1 - real resolver and historical/public reader share exact cost table and verifier identities
+  ---
+  duration_ms: 0.5459
+  type: 'test'
+  ...
+# Subtest: actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+ok 2 - actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+  ---
+  duration_ms: 412.7544
+  type: 'test'
+  ...
+# Subtest: native resolver replay and repeated receipt reads neither spend twice nor append mutations
+ok 3 - native resolver replay and repeated receipt reads neither spend twice nor append mutations
+  ---
+  duration_ms: 386.9861
+  type: 'test'
+  ...
+# Subtest: restart and later resource changes preserve read-only committed history without fresh execution entitlement
+ok 4 - restart and later resource changes preserve read-only committed history without fresh execution entitlement
+  ---
+  duration_ms: 401.4975
+  type: 'test'
+  ...
+# Subtest: modified completed after-state is held instead of accepting stale native receipt ancestry
+ok 5 - modified completed after-state is held instead of accepting stale native receipt ancestry
+  ---
+  duration_ms: 386.5842
+  type: 'test'
+  ...
+# Subtest: duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+ok 6 - duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+  ---
+  duration_ms: 376.4803
+  type: 'test'
+  ...
+# Subtest: native invalid dice and PC target fail transactionally before a successful action or receipt exists
+ok 7 - native invalid dice and PC target fail transactionally before a successful action or receipt exists
+  ---
+  duration_ms: 276.8812
+  type: 'test'
+  ...
+# Subtest: fixed NPC attribution consumer and old/public World transfers preserve native identities
+ok 8 - fixed NPC attribution consumer and old/public World transfers preserve native identities
+  ---
+  duration_ms: 421.1366
+  type: 'test'
+  ...
+# Subtest: actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+ok 9 - actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+  ---
+  duration_ms: 423.5174
+  type: 'test'
+  ...
+# Subtest: native contact replay and read-only transfer restart do not resend information or spend twice
+ok 10 - native contact replay and read-only transfer restart do not resend information or spend twice
+  ---
+  duration_ms: 415.0722
+  type: 'test'
+  ...
+# Subtest: cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+ok 11 - cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+  ---
+  duration_ms: 421.2073
+  type: 'test'
+  ...
+# Subtest: retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+ok 12 - retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+  ---
+  duration_ms: 358.9082
+  type: 'test'
+  ...
+# Subtest: failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+ok 13 - failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+  ---
+  duration_ms: 264.3374
+  type: 'test'
+  ...
+# Subtest: changed sender source-content cannot retroactively change what the native action captured
+ok 14 - changed sender source-content cannot retroactively change what the native action captured
+  ---
+  duration_ms: 178.4697
+  type: 'test'
+  ...
+# Subtest: original resolver/public state and configuration are the same native World functions
+ok 15 - original resolver/public state and configuration are the same native World functions
+  ---
+  duration_ms: 0.5261
+  type: 'test'
+  ...
+# Subtest: default actor projections are read-only fresh overlays, never new native identities or resource grants
+ok 16 - default actor projections are read-only fresh overlays, never new native identities or resource grants
+  ---
+  duration_ms: 396.0619
+  type: 'test'
+  ...
+# Subtest: explicit GM configuration retains original normalization, resource bounds and native trait clamping
+ok 17 - explicit GM configuration retains original normalization, resource bounds and native trait clamping
+  ---
+  duration_ms: 378.0215
+  type: 'test'
+  ...
+# Subtest: existing state overlays preserve authored ordinary details and location keys without invented actor presence
+ok 18 - existing state overlays preserve authored ordinary details and location keys without invented actor presence
+  ---
+  duration_ms: 372.9453
+  type: 'test'
+  ...
+# Subtest: configuration rollback/retry and database restart preserve one original actor state projection
+ok 19 - configuration rollback/retry and database restart preserve one original actor state projection
+  ---
+  duration_ms: 400.6862
+  type: 'test'
+  ...
+# Subtest: native configuration cannot mutate a PC and native ownership still overrides a lookalike NPC record
+ok 20 - native configuration cannot mutate a PC and native ownership still overrides a lookalike NPC record
+  ---
+  duration_ms: 375.3756
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3432.785

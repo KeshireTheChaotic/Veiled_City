@@ -1,0 +1,118 @@
+{
+  "feature": "RF04-F05-C16",
+  "status": "SCOPED_WORLD_ACTOR_STATE_PROVIDER_QUALIFIED",
+  "base_head": "7e74eda58106c4dcbc6226920c96296a7ab55ab3",
+  "changed_files": {
+    "base_head": "7e74eda58106c4dcbc6226920c96296a7ab55ab3",
+    "syntax_checked": 4,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/actor-state.js",
+        "sha256": "8a06a7d69e04a0fea0c884f58e4616abf0a411bbccb1ba700a809477e1480dcd"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "6a2ff47eb1494de4f8ce87772292b321c623b621af0ea0143cf7f6d3ff201ee3"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "df950373d846e637a5026d24261c2f5b43b4e8a4432e6db5836b09e8c35a285a"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+        "sha256": "1bd1153331ac693bb3e8a669ef4e2bfa57cf73c6aec0262d4699becda3ccd892"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "6923de2b008bc6e79074511cc600bda0cbedfb462585d3f71db88b975860a642"
+      }
+    ]
+  },
+  "body": {
+    "exact_body_preserved": true,
+    "body_sha256": "da4db7b59d614174c187d066da91ceb008e00ec1a30d899bfce4aab14019d595",
+    "constants_sha256": "0299f2ffc2220fedc83ca72375209028c9e3e82122d096b1a60cff0ad30bf120"
+  },
+  "tests": {
+    "exit_code": 0,
+    "start": "2026-10-26T20:08:47.1980818Z",
+    "end": "2026-10-26T20:08:50.6876742Z",
+    "run_id": "RF04-F05-C16-20261026-1",
+    "duration_ms": 3489.5924,
+    "files": 3,
+    "tests": 20,
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 3432.785,
+    "reason": "World actor-state and actual native resolver changed. New six cases plus affected C13/C14 fourteen cases run once on frozen production bytes."
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 641,
+      "unowned": 0,
+      "importOccurrences": 2879,
+      "internalImportOccurrences": 2701,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 641,
+      "unowned": 0,
+      "importOccurrences": 2879,
+      "internalImportOccurrences": 2701,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 1418,
+      "activeViolationGroups": 834,
+      "transitionErrors": 834,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "ownership": "Original World state projection/configuration and resource defaults moved verbatim to own module. Actual resolver and owner public use same function identities.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Independent state provider is complete; native action executor and NPC strategy integration are not thereby isolated. No raw transition reduction for this step.",
+    "No new GM authentication, PC gameplay rule or resource grant introduced; existing native ownership remains decisive.",
+    "No live service/provider/Discord/production recovery or narrative-quality qualification."
+  ],
+  "rollback": "Revert C16 actor-state extraction/public/real resolver references together; preserve saved native actor/resource/receipt rows. No transition restore required.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c16-tests.log",
+      "sha256": "24653e1794a4343d9fb48f0c1122abb94c6e22f494be26541858d8a9aeccd8f7"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c16-rf04-final.log",
+      "sha256": "1f303764b0937ec70782b0f57403532650d19360b3e40634f4fddb9af332b6be"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c16-rf05-final.log",
+      "sha256": "c0e54ea0faaae1c9131e0f04705173ec623588c633ee8b3e71803d42084b3958"
+    }
+  ]
+}

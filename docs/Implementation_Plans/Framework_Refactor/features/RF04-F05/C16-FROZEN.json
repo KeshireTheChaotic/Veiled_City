@@ -1,0 +1,30 @@
+{
+  "base_head": "7e74eda58106c4dcbc6226920c96296a7ab55ab3",
+  "syntax_checked": 4,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/actor-state.js",
+      "sha256": "8a06a7d69e04a0fea0c884f58e4616abf0a411bbccb1ba700a809477e1480dcd"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "6a2ff47eb1494de4f8ce87772292b321c623b621af0ea0143cf7f6d3ff201ee3"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "df950373d846e637a5026d24261c2f5b43b4e8a4432e6db5836b09e8c35a285a"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+      "sha256": "1bd1153331ac693bb3e8a669ef4e2bfa57cf73c6aec0262d4699becda3ccd892"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+      "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+      "sha256": "6923de2b008bc6e79074511cc600bda0cbedfb462585d3f71db88b975860a642"
+    }
+  ]
+}
