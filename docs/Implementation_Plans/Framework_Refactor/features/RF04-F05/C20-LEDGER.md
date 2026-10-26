@@ -1,3 +1,9 @@
+# C20 current scoped status
+
+Implementation commit 4b3a1c9708a45b281654dbbe1412314a225b36ba. Status SCOPED_ACTUAL_NATIVE_WORLD_ACTION_EXECUTION_QUALIFIED; see C20-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C20 ledger
 
 IMPLEMENTATION IN PROGRESS. World owns actual native NPC/faction outcome/cost/receipt execution; Session owns scene arrival. No rule changes intended. Wider orchestration remains separately accountable. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

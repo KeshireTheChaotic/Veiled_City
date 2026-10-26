@@ -1,3 +1,9 @@
+# C22 current scoped status
+
+Implementation commit 3374db6b507b4488978fc93a02f62a7da6dcd91c. Status SCOPED_KNOWLEDGE_MEMORY_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C22-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C22 ledger
 
 IMPLEMENTATION IN PROGRESS. Knowledge owns original reversible source-index semantics; World owns original source/event/audit checks. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

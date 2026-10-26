@@ -1,3 +1,9 @@
+# C19 current scoped status
+
+Implementation commit 38b589d2caea8df0018b8fa4723c7563f4b337e8. Status SCOPED_NPC_OBSERVATION_KNOWLEDGE_SESSION_INTEGRATION_QUALIFIED; see C19-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C19 ledger
 
 IMPLEMENTATION IN PROGRESS. NPC owns observation policy, Knowledge active-source classification, Session scene accessibility. Root is temporary compatibility consumer, not independent policy. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

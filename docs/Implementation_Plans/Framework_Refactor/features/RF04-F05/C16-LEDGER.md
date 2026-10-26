@@ -1,3 +1,9 @@
+# C16 current scoped status
+
+Implementation commit df1033f5b639f5a660ae526a02ace4e178c5f6db. Status SCOPED_WORLD_ACTOR_STATE_PROVIDER_QUALIFIED; see C16-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C16 ledger
 
 IMPLEMENTATION IN PROGRESS. World actor-state projection/configuration only. Resolver executor source and NPC strategy integration remain open. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

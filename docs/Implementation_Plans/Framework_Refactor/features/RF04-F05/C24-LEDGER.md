@@ -1,3 +1,9 @@
+# C24 current scoped status
+
+Implementation commit ab67faf7100acd41029ea69315852518617cc21c. Status SCOPED_NARRATIVE_VISIBILITY_SOURCE_QUALIFIED; see C24-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C24 ledger
 
 In progress; no test evidence yet. Confirmed scene context calls undefined closure when source-qualified authored detail is present. Restore binding to original rule, no new authority.

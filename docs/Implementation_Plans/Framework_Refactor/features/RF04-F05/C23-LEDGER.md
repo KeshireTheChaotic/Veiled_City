@@ -1,3 +1,9 @@
+# C23 current scoped status
+
+Implementation commit 459242ac4698da6dac8bd3e7a593bea876e9b046. Status SCOPED_NPC_EVIDENCE_PROJECTION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C23-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C23 evidence ledger
 
 Implementation in progress; no test result yet. Original native evidence-projection rule body remains unchanged.

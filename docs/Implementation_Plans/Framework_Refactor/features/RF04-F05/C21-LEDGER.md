@@ -1,3 +1,9 @@
+# C21 current scoped status
+
+Implementation commit a4bb6b4844fed100688df96c31ad211fbec12f73. Status SCOPED_NPC_STRATEGY_WORLD_INTENT_INTEGRATION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C21-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C21 ledger
 
 IMPLEMENTATION IN PROGRESS. NPC owns original plan policy; World original effects/native authority; Intent original registry/delegation receipts. Intent producer remains mixed with exact debt retained. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

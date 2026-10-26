@@ -1,3 +1,9 @@
+# C18 current scoped status
+
+Implementation commit ac24e1aaf726d0ed7cb7d8182cfb665a6973fc0b. Status SCOPED_SESSION_SCENE_AND_ORIGINAL_NATIVE_MOVEMENT_READER_QUALIFIED; see C18-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C18 ledger
 
 IMPLEMENTATION IN PROGRESS. Session owns descriptive scene runtime; original Daggerheart cached group-feature engine retains movement condition validation and all ancestry. Native source producer remains unisolated; no full native-group qualification claimed. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

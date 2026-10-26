@@ -1,3 +1,9 @@
+# C17 current scoped status
+
+Implementation commit a9a6a56b963848473e48634e51bc3f6e20e6c55a. Status SCOPED_WORLD_NATIVE_ACTION_ELIGIBILITY_QUALIFIED; see C17-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # RF04-F05 C17 ledger
 
 IMPLEMENTATION IN PROGRESS. World owns original validators and information lookup. Native effect/receipt executor remains separately accountable. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

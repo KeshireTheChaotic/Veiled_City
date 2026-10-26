@@ -1,3 +1,9 @@
+# C25 current scoped status
+
+Implementation commit b56c60e97a99ad90b24225be427515bdb02c6786. Status SCOPED_NPC_COGNITION_SOURCE_QUALIFIED; see C25-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C25 ledger
 
 In progress; no test result. Original narrativeImportance ranking source remains unisolated with original exact debt; eligible selection rule will be extracted without inventing source authority.
