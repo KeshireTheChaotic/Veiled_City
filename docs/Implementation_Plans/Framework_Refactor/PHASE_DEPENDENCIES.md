@@ -1,6 +1,6 @@
 # Incremental migration and risk gates
 
-The supplied RF roadmap has 50 features. RF00 inventory and RF01 evidence are retained as history. RF02's separately authorized representative moves/extractions now pass fresh tests and RF02 enforcement; its [held candidate boundaries](RF02/LOCAL_HOLDS.md) remain unresolved, with 75 original RF02-deadline records blocking a later-phase gate. RF03 has **not** begun. Future rows are dependencies, not completion records or generated empty framework directories.
+The supplied RF roadmap has 50 features. Current status is reconciled in the [2026-10-26 audit and adjusted plan](AUDIT-20261026/PLAN.md) and [local-hold register](AUDIT-20261026/LOCAL_HOLDS.md). RF02's old 75-record prerequisite hold was already resolved under owner authorization. RF03 reached scoped native extraction qualification with later-phase runtime adoption still accountable. RF04 and RF05 remain incomplete. Current graph: 599 modules, zero unowned, 2,391 exact transitions, largest cycle 181. RF03/RF04 phase-aware checks pass with accepted debt; RF05 fails on 950 expired RF04 records. None of those checks proves full isolation. Phase order expresses concrete interface dependencies; a local prerequisite does not stop independently safe authorized work.
 
 | Phase | Features | Preconditions | Exit evidence |
 |---|---:|---|---|

@@ -1,6 +1,6 @@
 # Veiled City framework isolation
 
-> Current checkpoint: RF03 scoped corrective completion with individually documented later-phase source adoption. See [current acceptance](phases/RF03/ACCEPTANCE_MATRIX.md), [exact residual obligations](phases/RF03/FINAL_QUALIFIED_RESIDUALS.json) and [qualification](phases/RF03/CURRENT_QUALIFICATION.json). Full isolation/live deployment remain unqualified; RF04 not started; RELEASE NOT AUTHORIZED. Historical RF00–RF02 snapshots below retain original counts and statuses.
+> Current checkpoint (2026-10-26): RF04 and RF05 are implemented in part and remain open. The current-code [audit](AUDIT-20261026/BEFORE.json), [reopened local holds](AUDIT-20261026/LOCAL_HOLDS.md), [adjusted execution plan](AUDIT-20261026/PLAN.md), and [current source crosswalk](AUDIT-20261026/CURRENT_SOURCE_CROSSWALK.csv) supersede the historical checkpoint summaries below. At the audit baseline: 599 source modules, zero unowned, 2,391 exact transitions, a 181-module cycle, RF03/RF04 ratchets pass with accepted debt, RF05 fails on 950 expired RF04 records. No baseline expansion or deadline renewal. RELEASE NOT AUTHORIZED.
 
 RF00 is an offline inventory and migration design, anchored to `f43d002693cb4ee38038b5dbb2c1049de95b3ffd` on `codex/clean-ai-gm-2026-10`. It does not relocate or modify application implementation. The owner handoff is preserved at [its supplied path](../phases/RF00/Veiled_City_RF00_Framework_Isolation_Sol_6_1_Medium_Handoff.md).
 
@@ -17,7 +17,7 @@ Read root AGENTS.md first, then the [owner behavior specification](../OWNER_AI_G
 
 355 tracked `bot/src` paths have exclusive accountable owners. Two supported non-test CLI wrappers and two new offline audit modules are also source-classified. Initial graph: 2,283 import occurrences, 2,121 internal import occurrences, 1,374 projected ownership/public-contract obligations; one strongly connected component includes 211 modules. All individual edges are retained. These unresolved obligations explicitly prevent a claim of architectural isolation. The 63 proposed pairs are evidence-backed planning records, not 63 empty packages or established contracts.
 
-## Current checkpoint — RF02
+## Historical checkpoint — RF02
 
 The owner lifted RF02's hold in the [kickoff](RF02/KICKOFF.md). Six old implementation paths are retired through actual moves/splits; two mixed character files have pure slices extracted. [Acceptance](RF02/ACCEPTANCE_MATRIX.md), [relocation crosswalk](RF02/RELOCATION_CROSSWALK.csv), [current ownership](RF02/CURRENT_OWNERSHIP.csv), [graph](RF02/CURRENT_DEPENDENCY_GRAPH.json), [bridge status](RF02/CURRENT_BRIDGE_REGISTRY.md) and [phase ledger](phases/RF02/LEDGER.md) record the actual scope and evidence.
 

@@ -15,7 +15,12 @@ The roadmap requires domain interfaces and the exact commit contract from RF03â€
 - `publishing.js` transport sends and private messages: Discord/publication pair; preserve acknowledgment versus uncertain outcomes.
 - `commands.js` and command-family handlers: application workflows with controller/privacy checks intact.
 - `index.js` bootstrap and `voice.js`: bootstrap/application composition; no eager DB connection or login on import.
-- RF06-F06 and RF06-F07 do not have distinct objectives recorded in the currently inspected roadmap or ownership crosswalk; define them from authoritative source assignments before entering either feature.
+- RF06-F06: fresh synthetic SQLite transaction/recovery, retry/restart/outbox acknowledgment, duplicate interaction, private delivery and command dispatch tests. This objective is explicitly defined in the original RF00 owner handoff.
+- RF06-F07: retire facades/shims only after the current reverse graph proves zero active callers; retain externally significant interfaces and historical saved readers. This objective is explicitly defined in the original handoff.
+
+## 2026-10-26 audit correction
+
+The previous counts and blanket phase-entry statement above are historical. Current exact obligations are in `../../AUDIT-20261026/HOLD_REGISTER.json`; RF04 has 950, RF05 has 1,025, and RF06 has 416 records. The missing-feature-definition hold is resolved by the original handoff. Independent inventory and source-contract work can proceed when its specific prerequisites exist. Storage/native commit migrations remain held until their actual domain and synchronous unit-of-work contracts are qualified. No phase-level or release qualification follows from this planning correction.
 
 ## Execution order
 
