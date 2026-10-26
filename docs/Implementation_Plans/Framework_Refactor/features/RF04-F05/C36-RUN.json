@@ -1,0 +1,171 @@
+{
+  "feature": "RF04-F05-C36",
+  "status": "SCOPED_INTENT_NATIVE_NPC_POLICY_INTERFACE_QUALIFIED",
+  "frozen": {
+    "base_head": "c196c8df53dc387352e05ec8aff7c91e9b646733",
+    "syntax_checked": 6,
+    "files": [
+      {
+        "path": "bot/src/frameworks/intent/contracts/npc-policy.js",
+        "sha256": "1f7ba7c8042418b41fc549290466e332ebe04efaa5877fba746a280c5cd35dde"
+      },
+      {
+        "path": "bot/src/frameworks/intent/public.js",
+        "sha256": "3e50f71a210c7f37b63251c7a8e5512d320148141b477359bd6288f6d2fc262b"
+      },
+      {
+        "path": "bot/src/framework-to-framework/intent--npc/public.js",
+        "sha256": "46de26717b472dfeddba312dab233928e19c05cdafe5c41a1d0baa72822581ca"
+      },
+      {
+        "path": "bot/src/application/composition/npc-strategy.js",
+        "sha256": "13746aa88a25afc5b6ff5b22c42c5b5b18acf9a9296f3a9afa22a5f298633048"
+      },
+      {
+        "path": "bot/src/ai-intents.js",
+        "sha256": "c099e52ee0e71a235d0b25f6a354a582d94f7471af35acfc0dcb7372a354c16c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs",
+        "sha256": "4fed9ffd3ae0d9c805c0f5444584cfefe14b88039ba7ab0a9075c6ce5e4c42ae"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "588fe1aa1365c7aa73c222295ce9cac172a56d0d3805e1b26c90d0fcbdbc0441"
+      },
+      {
+        "path": "bot/src/frameworks/npc/motivation.js",
+        "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+      },
+      {
+        "path": "bot/src/frameworks/npc/strategy.js",
+        "sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "d09540ff2631691916beff3c8359ea2a08cd9227602f458f8e0d3f809fd070d7"
+      }
+    ]
+  },
+  "unchanged_dispatcher_body_sha256": "2d73661ec9af647ed8d01ef3bcbf0d840a1599d8a806f40a4bf6cadd55410efa",
+  "unchanged_native_rules": [
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+    },
+    {
+      "path": "bot/src/frameworks/npc/strategy.js",
+      "sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d"
+    }
+  ],
+  "tests": {
+    "run_id": "rf04-f05-c36-frozen",
+    "duration_ms": 2860.1375,
+    "start": "2026-10-26T17:03:04.5536104-05:00",
+    "exit_code": 0,
+    "end": "2026-10-26T17:03:07.4137479-05:00",
+    "files": 2,
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "tap_duration_ms": 2806.3685,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c36.test.mjs tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+    "affected_rerun": "Original actual dispatcher NPC goal/strategy adapter sources changed to fixed consumer. Whole unchanged current C21 actual native dispatcher file8/8passed; no test file changes there."
+  },
+  "syntax": {
+    "checked": 6,
+    "passed": 6
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 705,
+      "unowned": 0,
+      "importOccurrences": 3039,
+      "internalImportOccurrences": 2860,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1982,
+      "acceptedLegacyOccurrences": 1982,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 705,
+      "unowned": 0,
+      "importOccurrences": 3039,
+      "internalImportOccurrences": 2860,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1982,
+      "acceptedLegacyOccurrences": 1308,
+      "activeViolationGroups": 670,
+      "transitionErrors": 670,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "d9dc1d972070ff0fdc204771be698617e1ad9d3df2badbed833d9a6e26bcba06",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "intent",
+      "max_occurrences": 2,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "c71d836c71e9492ae7b4aead29870d6624fb73f77c9901ce76bf2fbf2603a3e6",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Intent-owned fixed NPC policy consumer receives original actorSource/goal proposal-review/strategy methods through existing duplex pair. Original strategy delegate direction/source and original dispatcher registry/bodies/grant and receipt semantics retained. Native options forwarded by object identity.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Source integration does not isolate all original dispatcher/domain adapters or constitute full phase certification. Explicit native GM fixture calls are internal API tests, not Discord authorization proof.",
+    "Original producer registration imported explicitly in fresh fixture as real application reaches it; no fake native dispatcher or fabricated positive receipt.",
+    "No live provider, Discord, production recovery, narrative-quality or release qualification."
+  ],
+  "rollback": "Revert C36 consumer/pair/bootstrap/dispatcher NPC imports and restore2exact records covering3original import occurrences. Preserve original dirty Intent public exports and native source/goal/strategy/cost/receipt data.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c36-tests.log",
+      "sha256": "e39830e75a0089cc2809b09b149cbbe7e9fc8cebbd8528d0f9a0fc15de7244e1"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c36-architecture-initial.log",
+      "sha256": "37d3a6fd91589172c8132a61f2ce829eb54f66e22fbdd05b67560051ca91ca67"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c36-rf04-final.log",
+      "sha256": "2534551e5fc57f11308e32f018a52cadb37a3273a656cc20f16723bbbfaf29af"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c36-rf05-final.log",
+      "sha256": "65dfb1ccacfa938f05f5d54bf56cf2b6639fc3bc71d9833825411cfb9c318ca2"
+    }
+  ]
+}

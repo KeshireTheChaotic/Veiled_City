@@ -8,3 +8,4 @@ export {delegationPolicy} from './delegation-policy.js';
 export {createNativeStrategyDelegateSource,nativeStrategyDelegateSource} from './contracts/strategy-delegate-source.js';
 export {createIntentWorldPrimitivesConsumer,intentWorldPrimitives} from './contracts/world-primitives.js';
 export {createIntentWorldActionsConsumer,intentWorldActions} from './contracts/world-actions.js';
+export {createIntentNpcPolicyConsumer,intentNpcPolicy} from './contracts/npc-policy.js';

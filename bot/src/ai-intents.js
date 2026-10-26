@@ -1,16 +1,15 @@
+import {intentNpcPolicy} from './frameworks/intent/public.js';
+const {actorSource,proposeGoalTransition,reviewGoalTransition,manageStrategy}=intentNpcPolicy;
 import {intentWorldPrimitives,intentWorldActions} from './frameworks/intent/public.js';
 const {requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent}=intentWorldPrimitives;
 const {inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction}=intentWorldActions;
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
 import { validateIntent } from "./ai-intent-contracts.js";
-import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motivation.js";
 import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
 import { subscribeConsequence, reviewConsequence } from "./city-consequences.js";
-import { actorSource } from "./simulation-motivation.js";
 import { manageGroup } from "./city-groups.js";
-import { manageStrategy } from "./simulation-strategy.js";
 import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";

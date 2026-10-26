@@ -1532,6 +1532,11 @@
           "from": "npc",
           "to": "intent",
           "contract": "Original native delegateStrategy function from original Intent source; same adapter registry, scope, budget and transaction receipts. No copied dispatch policy."
+        },
+        {
+          "from": "intent",
+          "to": "npc",
+          "contract": "C36 exact original acquired actor source, native goal proposal/review and strategy policy. Preserve native authority objects/options; no new grants or copied rules."
         }
       ],
       "source_evidence": [
@@ -1549,7 +1554,8 @@
         "bot/src/application/composition/npc-strategy.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1572,7 +1578,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/intent--npc/public.js",
-      "scope": "Strategy delegation direction only. Original Intent producer/other native dispatch dependencies remain mixed exact transition obligations."
+      "scope": "Strategy delegation direction only. Original Intent producer/other native dispatch dependencies remain mixed exact transition obligations. C36 original dispatcher uses fixed own NPC policy consumer; reverse native strategy delegate still one original source. Remaining dispatcher/source/caller decomposition stays accountable."
     },
     {
       "pair": "intent--operations",

@@ -1,0 +1,7 @@
+# C36 ledger
+
+In progress; no tests yet. Original NPC native policy and Intent registry remain single source.
+
+## 2026-10-26 C36 original Intent native NPC policy integration
+
+Original single Intent dispatcher now consumes actorSource/proposeGoalTransition/reviewGoalTransition/manageStrategy through fixed own NPC policy consumer and existing Intent–NPC pair. Reverse original strategy delegate and registry/grants/dispatch/native policy bodies unchanged; opaque options forwarded by reference. Real strategy initializer composes both directions. Six new plus affected whole C21 eight14/14pass exit0 TAP2806.3685ms; syntax6/6; one frozen batch/no repairs. Actual native source→NPC goal proposal/explicit native review with no PC/canon/cost effects, stale-source approval rejection, PC/unacquired source rejection, delayed strategy native one-cost receipt, approval audit rollback/retry and actual original dispatcher native accepted receipt/replay/source boundaries exercised. Fixture imports original producer registration explicitly, no fabricated native grant or receipt.2exact records retire3original imports (one original recordmax2preserved). RF04 passes705modules/0unowned/3039imports/1982rawaccepted/3cycles/largest135/0activeerrors; RF05 remains670expiredgroups/errors.1967exact open/424resolved since audit. Broader dispatcher/source/caller/phase/live qualification remains open. Evidence C36-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

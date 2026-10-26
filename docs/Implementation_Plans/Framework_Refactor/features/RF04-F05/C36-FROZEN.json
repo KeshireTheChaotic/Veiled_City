@@ -1,0 +1,46 @@
+{
+  "base_head": "c196c8df53dc387352e05ec8aff7c91e9b646733",
+  "syntax_checked": 6,
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/contracts/npc-policy.js",
+      "sha256": "1f7ba7c8042418b41fc549290466e332ebe04efaa5877fba746a280c5cd35dde"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "3e50f71a210c7f37b63251c7a8e5512d320148141b477359bd6288f6d2fc262b"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--npc/public.js",
+      "sha256": "46de26717b472dfeddba312dab233928e19c05cdafe5c41a1d0baa72822581ca"
+    },
+    {
+      "path": "bot/src/application/composition/npc-strategy.js",
+      "sha256": "13746aa88a25afc5b6ff5b22c42c5b5b18acf9a9296f3a9afa22a5f298633048"
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "sha256": "c099e52ee0e71a235d0b25f6a354a582d94f7471af35acfc0dcb7372a354c16c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs",
+      "sha256": "4fed9ffd3ae0d9c805c0f5444584cfefe14b88039ba7ab0a9075c6ce5e4c42ae"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+      "sha256": "588fe1aa1365c7aa73c222295ce9cac172a56d0d3805e1b26c90d0fcbdbc0441"
+    },
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+    },
+    {
+      "path": "bot/src/frameworks/npc/strategy.js",
+      "sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "d09540ff2631691916beff3c8359ea2a08cd9227602f458f8e0d3f809fd070d7"
+    }
+  ]
+}
