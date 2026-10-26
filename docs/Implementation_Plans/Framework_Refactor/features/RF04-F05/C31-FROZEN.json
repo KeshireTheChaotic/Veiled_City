@@ -1,0 +1,54 @@
+{
+  "base_head": "a947fe9d21243b57ef1d6c220fdb5204789d9eec",
+  "syntax_checked": 10,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/action-diagnostics.js",
+      "sha256": "93d0ea95338d12eb14809c85b7b383d7b70c8c3993ecae2e2452d2cf5eb17ee5"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "a0aaf8244df36306cde46bddcf6ad7300049bb51c4298c52a512e165af52117f"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "d5d83cd47712acd5331aa1c68714ae38eff1428a2f2c79d57f781bd1e265bacf"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/world-primitives.js",
+      "sha256": "6ba399ec426d9c457b0ec3841bf92fcdc517e8c8a2cb0af04fbfc21b9f5ec45a"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/world-actions.js",
+      "sha256": "e3d386f4ce6269af5468b06f59032f7a6cc0b4a6ffa2b75e8ae2e7627da025e2"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "72e576cd657261665dbca18b5fc55b7ecdd2deed0cb741bdbcff1cd26698e0d6"
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "sha256": "a34dbc2dd654a9a621f56333f450d19cbd54bfa6da6620c254fe2f2afe86b862"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--world/public.js",
+      "sha256": "051f88c621bffc1779cbeb4c1ac33e3554816ad9c6428ac5b87193f52df40c2f"
+    },
+    {
+      "path": "bot/src/application/composition/world-execution.js",
+      "sha256": "3c86d63ef6aefe978b8d70bbf30c1ea1dadc4f63fec7636dd5d03ec0b29f36a9"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+      "sha256": "2c5a22a80cf13d96c664a228c23efbab708ba938018537856d84be440c8eb230"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+      "sha256": "588fe1aa1365c7aa73c222295ce9cac172a56d0d3805e1b26c90d0fcbdbc0441"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "fc35d016c67279f1290dcc74a5567f997bbb894c11df482cbb2538c808696a1a"
+    }
+  ]
+}

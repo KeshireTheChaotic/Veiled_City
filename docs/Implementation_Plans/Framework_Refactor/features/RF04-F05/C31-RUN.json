@@ -1,0 +1,224 @@
+{
+  "feature": "RF04-F05-C31",
+  "status": "SCOPED_INTENT_WORLD_CAPABILITIES_QUALIFIED_WITH_EXISTING_DIAGNOSTIC_HOLD_AND_SPLIT_FIXTURE_EVIDENCE",
+  "frozen": {
+    "base_head": "a947fe9d21243b57ef1d6c220fdb5204789d9eec",
+    "syntax_checked": 10,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/action-diagnostics.js",
+        "sha256": "93d0ea95338d12eb14809c85b7b383d7b70c8c3993ecae2e2452d2cf5eb17ee5"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "a0aaf8244df36306cde46bddcf6ad7300049bb51c4298c52a512e165af52117f"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "d5d83cd47712acd5331aa1c68714ae38eff1428a2f2c79d57f781bd1e265bacf"
+      },
+      {
+        "path": "bot/src/frameworks/intent/contracts/world-primitives.js",
+        "sha256": "6ba399ec426d9c457b0ec3841bf92fcdc517e8c8a2cb0af04fbfc21b9f5ec45a"
+      },
+      {
+        "path": "bot/src/frameworks/intent/contracts/world-actions.js",
+        "sha256": "e3d386f4ce6269af5468b06f59032f7a6cc0b4a6ffa2b75e8ae2e7627da025e2"
+      },
+      {
+        "path": "bot/src/frameworks/intent/public.js",
+        "sha256": "72e576cd657261665dbca18b5fc55b7ecdd2deed0cb741bdbcff1cd26698e0d6"
+      },
+      {
+        "path": "bot/src/ai-intents.js",
+        "sha256": "a34dbc2dd654a9a621f56333f450d19cbd54bfa6da6620c254fe2f2afe86b862"
+      },
+      {
+        "path": "bot/src/framework-to-framework/intent--world/public.js",
+        "sha256": "051f88c621bffc1779cbeb4c1ac33e3554816ad9c6428ac5b87193f52df40c2f"
+      },
+      {
+        "path": "bot/src/application/composition/world-execution.js",
+        "sha256": "3c86d63ef6aefe978b8d70bbf30c1ea1dadc4f63fec7636dd5d03ec0b29f36a9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "sha256": "2c5a22a80cf13d96c664a228c23efbab708ba938018537856d84be440c8eb230"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "588fe1aa1365c7aa73c222295ce9cac172a56d0d3805e1b26c90d0fcbdbc0441"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "fc35d016c67279f1290dcc74a5567f997bbb894c11df482cbb2538c808696a1a"
+      }
+    ]
+  },
+  "unchanged_dispatcher_body_sha256": "2d73661ec9af647ed8d01ef3bcbf0d840a1599d8a806f40a4bf6cadd55410efa",
+  "final_test_sha256": "d876684070eb90bba7ff5c1ebe78974570019f5608434fd329904285b8220d8e",
+  "tests": {
+    "initial": {
+      "duration_ms": 3337.7524,
+      "run_id": "rf04-f05-c31-frozen",
+      "end": "2026-10-26T16:30:04.8254776-05:00",
+      "start": "2026-10-26T16:30:01.4877252-05:00",
+      "exit_code": 1,
+      "files": 2,
+      "tests": 14,
+      "passed": 12,
+      "failed": 2,
+      "tap_duration_ms": 3284.8456
+    },
+    "repair": {
+      "start": "2026-10-26T16:31:10.9457335-05:00",
+      "exit_code": 0,
+      "run_id": "rf04-f05-c31-fixture-repair",
+      "end": "2026-10-26T16:31:12.2679877-05:00",
+      "duration_ms": 1322.2542,
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "tap_duration_ms": 1266.7148
+    },
+    "reason": "Institution fixture missing existing institutions enablement flag; added it. Existing inspectInstitutionAction rejects native proposed status due requireCityRecord(active); assert current denial and record local C32 correction. Four other C31 cases passed previous bytes; no whole-final-file C31 claim. Entire current C21 file8/8passed after actual original dispatcher native dependency integration changed, closing its prior final-file gap."
+  },
+  "syntax": {
+    "checked": 10,
+    "passed": 10,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 700,
+      "unowned": 0,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 700,
+      "unowned": 0,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 1343,
+      "activeViolationGroups": 723,
+      "transitionErrors": 723,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "dbe1f66303f3a41f6ad69aad23800f58bd0bc54ab15bd42578c81a880632d913",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "intent",
+      "max_occurrences": 2,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "86c03edf3c05e38106b70310300352be37da55cdd21d36d6d4fdc2e3c6367365",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "de5c1797a653b06617bc43c483725f8a0f2978f948c9423a5456fdcf9aca85d5",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "14b5c729e2c646267e57ff3f5dd2e8d46e9221f1c00d2d4190fbb5f6760dbb17",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "Intent dispatcher uses fixed own World primitive/native action consumers through existing pair; original registry/grants/dispatcher receipt logic unchanged. Original NPC diagnostic extracted to World, same historical service.",
+  "local_holds": [
+    {
+      "id": "C32_INSTITUTION_DIAGNOSTIC_NATIVE_STATUS",
+      "critical": false,
+      "trigger": "Actual native submitted/human-reviewed institutional action has proposed status. Inspector requires active action record and throws before diagnostic.",
+      "impact": "Supported native institutional diagnostic/mediation preflight cannot inspect legitimate action; direct native reviewed execution remains separately qualified.",
+      "next": "Separate RF04-F05 C32 correction; retain native institution/source/control/delegation validation, diagnostic only, no new execution authority."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "C31 final-file fixture gap remains until associated production change warrants whole-file qualification. Existing institutional diagnostic failure explicitly held; no false positive diagnostic claim.",
+    "C21 entire current final file passes after substantive associated dispatcher change; no test file edits there. Native Strategy original receipt positive remains actual producer, not invented source.",
+    "Broader Intent/source/caller decomposition and clean-checkout/live/provider/Discord/release qualification remain open."
+  ],
+  "rollback": "Revert C31 primitive/action ports, pair/bootstrap/dispatcher imports and native diagnostic extraction, restore4exact records; preserve original dirty Intent/World public exports and immutable native/receipt data.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c31-tests.log",
+      "sha256": "d774aec2374a05ebf6075858c2a16c25adb685ba3142247729c0a5e499ab6cf3"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c31-repair.log",
+      "sha256": "8573a78dbb7809627f7d425283a05ecac8f274f449c28f9a5b87ca2590542750"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c31-architecture-initial.log",
+      "sha256": "73569839b75f9af9a7704dcbaa2e977fc8c48489249d28961c1046c5de7c60e9"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c31-rf04-final.log",
+      "sha256": "fa9804f8fe7959484c563599c350121260e0766a5744290ee2823dae3f4ab7bf"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c31-rf05-final.log",
+      "sha256": "2437d7f9f93a984c06b1157ffe46dc352b71e79f4a568c59a481c3bef51d2d16"
+    }
+  ]
+}

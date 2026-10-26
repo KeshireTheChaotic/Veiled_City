@@ -1,8 +1,9 @@
+import {intentWorldPrimitives,intentWorldActions} from './frameworks/intent/public.js';
+const {requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent}=intentWorldPrimitives;
+const {inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction}=intentWorldActions;
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
 import { validateIntent } from "./ai-intent-contracts.js";
-import { requireCitySource } from "./city-core.js";
-import { cityObject, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { proposeGoalTransition, reviewGoalTransition } from "./simulation-motivation.js";
 import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
@@ -14,8 +15,6 @@ import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
 import { applicationPrincipal } from "./kernel/application-authority.js";
-import { inspectNpcAction } from "./simulation.js";
-import { inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction } from "./city-core.js";
 import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 import { interpretDialogue } from "./dialogue-continuity.js";

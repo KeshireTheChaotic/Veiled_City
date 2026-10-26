@@ -8,3 +8,7 @@ export const npcDirectorSchema={type:'object',additionalProperties:false,
 import {delegationPolicy} from '../../frameworks/intent/public.js';
 import {worldDelegationPolicy} from '../../frameworks/world/public.js';
 export function connectWorldDelegation(){return worldDelegationPolicy.bind(delegationPolicy);}
+
+import {intentWorldPrimitives,intentWorldActions} from '../../frameworks/intent/public.js';
+import {requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent,inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction} from '../../frameworks/world/public.js';
+export function connectIntentWorldNative(){intentWorldPrimitives.bind({requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent});return intentWorldActions.bind({inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction});}

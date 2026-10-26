@@ -1805,11 +1805,13 @@
       "adoption_feature": "RF05-F04",
       "consumers": [
         "bot/src/gm.js",
+        "bot/src/application/composition/world-execution.js",
         "bot/src/application/composition/world-execution.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1832,7 +1834,7 @@
         "occurrences": 29
       },
       "public_api": "bot/src/framework-to-framework/intent--world/public.js",
-      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open."
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open."
     },
     {
       "pair": "knowledge--narrative",

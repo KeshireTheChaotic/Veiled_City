@@ -1,0 +1,141 @@
+TAP version 13
+# Subtest: native delegate source and NPC consumer preserve exact original function identity and reject replacement
+ok 1 - native delegate source and NPC consumer preserve exact original function identity and reject replacement
+  ---
+  duration_ms: 0.8911
+  type: 'test'
+  ...
+# Subtest: actual NPC reviewed plan calls actual World executor and native receipt without player actions or resources
+ok 2 - actual NPC reviewed plan calls actual World executor and native receipt without player actions or resources
+  ---
+  duration_ms: 741.8865
+  type: 'test'
+  ...
+# Subtest: step reconciliation accounts native cost once; restart and completed replay never submit or roll again
+ok 3 - step reconciliation accounts native cost once; restart and completed replay never submit or roll again
+  ---
+  duration_ms: 314.871
+  type: 'test'
+  ...
+# Subtest: original Intent delegate denial writes actual native decision evidence while leaving plan, action and budget unchanged
+ok 4 - original Intent delegate denial writes actual native decision evidence while leaving plan, action and budget unchanged
+  ---
+  duration_ms: 333.9717
+  type: 'test'
+  ...
+# Subtest: real original native Intent dispatcher accepts exact delegated strategy with native source/policy receipts
+ok 5 - real original native Intent dispatcher accepts exact delegated strategy with native source/policy receipts
+  ---
+  duration_ms: 328.081
+  type: 'test'
+  ...
+# Subtest: original source/proxy/resource and Director pause checks remain local holds without forced native effects
+ok 6 - original source/proxy/resource and Director pause checks remain local holds without forced native effects
+  ---
+  duration_ms: 274.6056
+  type: 'test'
+  ...
+# Subtest: retracted plan evidence blocks execution without changing original accepted definition or charging resources
+ok 7 - retracted plan evidence blocks execution without changing original accepted definition or charging resources
+  ---
+  duration_ms: 186.1875
+  type: 'test'
+  ...
+# Subtest: outer strategy audit failure rolls back nested native action/cost/receipt and records truthful blocked plan
+ok 8 - outer strategy audit failure rolls back nested native action/cost/receipt and records truthful blocked plan
+  ---
+  duration_ms: 191.7976
+  type: 'test'
+  ...
+# Subtest: Intent native World consumers preserve exact source arguments errors and reject incomplete replacement
+ok 9 - Intent native World consumers preserve exact source arguments errors and reject incomplete replacement
+  ---
+  duration_ms: 1.341
+  type: 'test'
+  ...
+# Subtest: actual Intent World primitives retain native source status validation and immutable source identity
+ok 10 - actual Intent World primitives retain native source status validation and immutable source identity
+  ---
+  duration_ms: 715.3559
+  type: 'test'
+  ...
+# Subtest: native NPC action inspector is same original service and spends no resource or dice
+ok 11 - native NPC action inspector is same original service and spends no resource or dice
+  ---
+  duration_ms: 278.9895
+  type: 'test'
+  ...
+# Subtest: native diagnostic rechecks resources and player control without granting execution
+ok 12 - native diagnostic rechecks resources and player control without granting execution
+  ---
+  duration_ms: 313.3814
+  type: 'test'
+  ...
+# Subtest: exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+not ok 13 - exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+  ---
+  duration_ms: 299.064
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c31.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'Active action not found in this campaign.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    requireCityRecord (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/city-source.js:14:41)
+    Object.inspectInstitutionAction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/city-core-rules.js:85:13)
+    Object.inspectInstitutionAction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/contracts/world-actions.js:5:53)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs:25:107)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: native institutional audit failure atomically restores capacity and request before retry
+not ok 14 - native institutional audit failure atomically restores capacity and request before retry
+  ---
+  duration_ms: 286.6597
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c31.test.mjs:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /fresh C31 native audit failure/. Input:
+    
+    'Error: Current native institutional execution authority required.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Current native institutional execution authority required.'
+  stack: |-
+    file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/city-core-rules.js:122:82
+    VeiledDB.transaction (file:///D:/Library/Development/Veiled_City/bot/src/db.js:615:19)
+    Object.executeInstitutionAction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/city-core-rules.js:114:13)
+    Object.executeInstitutionAction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/contracts/world-actions.js:7:53)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs:30:308
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs:30:271)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs:30:271)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 12
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3284.8456

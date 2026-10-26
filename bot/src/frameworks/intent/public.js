@@ -6,3 +6,5 @@ export {ARBITRATION_DISPOSITIONS,npcSceneIntentSchema,gmArbitrationProposalSchem
 export {buildActionPlan,executableActionSpans,transitionAction,signalActionContinuation} from './action-dependency.js';
 export {delegationPolicy} from './delegation-policy.js';
 export {createNativeStrategyDelegateSource,nativeStrategyDelegateSource} from './contracts/strategy-delegate-source.js';
+export {createIntentWorldPrimitivesConsumer,intentWorldPrimitives} from './contracts/world-primitives.js';
+export {createIntentWorldActionsConsumer,intentWorldActions} from './contracts/world-actions.js';

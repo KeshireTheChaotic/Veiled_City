@@ -1,0 +1,58 @@
+[
+  {
+    "id": "dbe1f66303f3a41f6ad69aad23800f58bd0bc54ab15bd42578c81a880632d913",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/ai-intents.js",
+    "to": "bot/src/city-core.js",
+    "kind": "static",
+    "specifier": "./city-core.js",
+    "owner": "intent",
+    "max_occurrences": 2,
+    "remove_in_feature": "RF05-F02",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "86c03edf3c05e38106b70310300352be37da55cdd21d36d6d4fdc2e3c6367365",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/ai-intents.js",
+    "to": "bot/src/city-calendar.js",
+    "kind": "static",
+    "specifier": "./city-calendar.js",
+    "owner": "intent",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F02",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "de5c1797a653b06617bc43c483725f8a0f2978f948c9423a5456fdcf9aca85d5",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/ai-intents.js",
+    "to": "bot/src/simulation.js",
+    "kind": "static",
+    "specifier": "./simulation.js",
+    "owner": "intent",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F02",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "14b5c729e2c646267e57ff3f5dd2e8d46e9221f1c00d2d4190fbb5f6760dbb17",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/ai-intents.js",
+    "to": "bot/src/simulation.js",
+    "kind": "static",
+    "specifier": "./simulation.js",
+    "owner": "intent",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F02",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  }
+]

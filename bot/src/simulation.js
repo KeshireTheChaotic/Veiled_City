@@ -10,7 +10,6 @@ import { randomUUID } from "node:crypto";
 import {ACTION_TYPES,MAJOR_IMPACTS} from './frameworks/world/action-catalog.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
-import { npcAvailability, activeCityProxy, assertQueuedCompatibility, worldActorControl } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
 import { coordinateConsequences } from "./city-consequences.js";
@@ -23,7 +22,6 @@ import {nativeWorldStrategyAllowed} from './native-world-operations.js';
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export {ACTION_TYPES,MAJOR_IMPACTS};
-import {ACTION_COSTS as COSTS} from './frameworks/world/public.js';
 export {ACTION_COSTS} from './frameworks/world/public.js';
 
 const bounded=(value,min,max)=>Math.max(min,Math.min(max,Number(value)||0));
@@ -35,7 +33,7 @@ export {actorState,configureSimulationEntity} from './frameworks/world/public.js
 
 
 
-import {knownWorldInformation as knownInformation,validateNpcAction as validateAction} from './frameworks/world/public.js';
+import {knownWorldInformation as knownInformation} from './frameworks/world/public.js';
 
 /** Native communication persists a subjective source, never upgrades hearsay into an established fact. */
 
@@ -169,14 +167,7 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
 
 
 
-export function inspectNpcAction(db,guildId,id){
-  const row=db.getSimulationRecord(guildId,id);
-  if(!row||row.kind!=="action") throw new Error("Existing NPC action required.");
-  assertQueuedCompatibility(db,guildId,row);
-  const {state}=validateAction(db,guildId,row.data);
-  if(state.resources[COSTS[row.data.type]]<1) throw new Error("Insufficient native action resources.");
-  return {action_id:id,status:row.status,cost_resource:COSTS[row.data.type],cost:1,authority:"diagnostic_only_no_roll_or_spending"};
-}
+export {inspectNpcAction} from './frameworks/world/public.js';
 
 /** Called only by fictional round/scene/downtime triggers, with a stable retry key. */
 function quietOpportunity(db,guild,query,engagement=null){

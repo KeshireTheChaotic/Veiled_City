@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+ok 1 - exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+  ---
+  duration_ms: 194.3711
+  type: 'test'
+  ...
+# Subtest: native institutional audit failure atomically restores capacity and request before retry
+ok 2 - native institutional audit failure atomically restores capacity and request before retry
+  ---
+  duration_ms: 189.0072
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1266.7148

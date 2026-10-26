@@ -1,13 +1,13 @@
 {
-  "checkpoint": "RF04-F05 C30 native World action ranking and capacity contention",
-  "timestamp": "2026-10-26T21:26:36.383Z",
+  "checkpoint": "RF04-F05 C31 Intent native World capability adoption",
+  "timestamp": "2026-10-26T21:31:29.197Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "54fc3e4e7a97177294f596783147ec41f94f93f7d2c486abb8094b38e1b5b788",
-  "open_exact_records": 2058,
+  "manifest_sha256": "0df4feac75eb5a0f14d1d91bf0f04caef43fcc9a269f2c71c204f01ba61a1fce",
+  "open_exact_records": 2054,
   "by_feature": {
     "RF05-F05": 416,
     "RF04-F04": 204,
-    "RF05-F02": 217,
+    "RF05-F02": 213,
     "RF05-F03": 255,
     "RF04-F03": 102,
     "RF04-F01": 301,
@@ -34,6 +34,48 @@
       "target_owner": null,
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "LEGACY_MODULE_LOCATION"
+    },
+    {
+      "id": "dbe1f66303f3a41f6ad69aad23800f58bd0bc54ab15bd42578c81a880632d913",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-core.js",
+      "owner": "intent",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 2,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "86c03edf3c05e38106b70310300352be37da55cdd21d36d6d4fdc2e3c6367365",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-calendar.js",
+      "owner": "intent",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "de5c1797a653b06617bc43c483725f8a0f2978f948c9423a5456fdcf9aca85d5",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation.js",
+      "owner": "intent",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
       "id": "2b13aedd73d40b39ea66088ab7d6653c316751719c8c29ad8d071dd93f951837",
@@ -1012,6 +1054,20 @@
       "max_occurrences": 1,
       "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
       "target_owner": "application",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "14b5c729e2c646267e57ff3f5dd2e8d46e9221f1c00d2d4190fbb5f6760dbb17",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -4686,68 +4742,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 697,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 3028,
-      "internalImportOccurrences": 2849,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2075,
-      "acceptedLegacyOccurrences": 2075,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 697,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 3028,
-      "internalImportOccurrences": 2849,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2075,
-      "acceptedLegacyOccurrences": 2075,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 697,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 3028,
-      "internalImportOccurrences": 2849,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2075,
-      "acceptedLegacyOccurrences": 1348,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 1343,
       "activeViolationGroups": 723,
       "transitionErrors": 723,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 697,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 3028,
-      "internalImportOccurrences": 2849,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2075,
+      "rawViolationOccurrences": 2070,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1654,
-      "transitionErrors": 1654,
+      "activeViolationGroups": 1650,
+      "transitionErrors": 1650,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 697,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 3028,
-      "internalImportOccurrences": 2849,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2075,
+      "rawViolationOccurrences": 2070,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2058,
-      "transitionErrors": 2058,
+      "activeViolationGroups": 2054,
+      "transitionErrors": 2054,
       "pass": false
     }
   },
@@ -4789,7 +4845,7 @@
     {
       "path": "bot/src/ai-intents.js",
       "owner": "intent",
-      "sha256": "035dc5056214d582bb7a3a97d36b797a93153ead1b9e91d1fcda4e64d8cd473b"
+      "sha256": "a34dbc2dd654a9a621f56333f450d19cbd54bfa6da6620c254fe2f2afe86b862"
     },
     {
       "path": "bot/src/ai-review.js",
@@ -4904,7 +4960,7 @@
     {
       "path": "bot/src/application/composition/world-execution.js",
       "owner": "application",
-      "sha256": "3d59b06a8ab8eb9171c000c59eb8475b2757ba605ffce992a78803d7790baf5a"
+      "sha256": "3c86d63ef6aefe978b8d70bbf30c1ea1dadc4f63fec7636dd5d03ec0b29f36a9"
     },
     {
       "path": "bot/src/application/composition/world-npc-opportunity.js",
@@ -5259,7 +5315,7 @@
     {
       "path": "bot/src/framework-to-framework/intent--world/public.js",
       "owner": "intent--world",
-      "sha256": "9d7fe6944659fa372f2479047dbf4b8ed60f53316a97c56402d930f5855dcc73"
+      "sha256": "051f88c621bffc1779cbeb4c1ac33e3554816ad9c6428ac5b87193f52df40c2f"
     },
     {
       "path": "bot/src/framework-to-framework/knowledge--narrative/public.js",
@@ -6082,6 +6138,16 @@
       "sha256": "a8c7c89d3037fa2eeeb923713c26fd680919f10c960970b8e7eecacd1df39f56"
     },
     {
+      "path": "bot/src/frameworks/intent/contracts/world-actions.js",
+      "owner": "intent",
+      "sha256": "e3d386f4ce6269af5468b06f59032f7a6cc0b4a6ffa2b75e8ae2e7627da025e2"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/world-primitives.js",
+      "owner": "intent",
+      "sha256": "6ba399ec426d9c457b0ec3841bf92fcdc517e8c8a2cb0af04fbfc21b9f5ec45a"
+    },
+    {
       "path": "bot/src/frameworks/intent/decision-advisory.js",
       "owner": "intent",
       "sha256": "c266582463f08077a42ef47225a6c59e6b5564847b2943f8654f2e716eb7d7e3"
@@ -6099,7 +6165,7 @@
     {
       "path": "bot/src/frameworks/intent/public.js",
       "owner": "intent",
-      "sha256": "119ca01a269f6f9bcb53e7ea944781da8629f993701fe7e8240377ca3763394d"
+      "sha256": "72e576cd657261665dbca18b5fc55b7ecdd2deed0cb741bdbcff1cd26698e0d6"
     },
     {
       "path": "bot/src/frameworks/knowledge/authority-projection.js",
@@ -6697,6 +6763,11 @@
       "sha256": "337128a616ecd16e39225d57811be4028d67edf36dfcd4e8ffa5d8def75a09fe"
     },
     {
+      "path": "bot/src/frameworks/world/action-diagnostics.js",
+      "owner": "world",
+      "sha256": "93d0ea95338d12eb14809c85b7b383d7b70c8c3993ecae2e2452d2cf5eb17ee5"
+    },
+    {
       "path": "bot/src/frameworks/world/action-eligibility.js",
       "owner": "world",
       "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
@@ -6919,7 +6990,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "791d13dab3df51e995d5d262aa984df14a478f6e969262144697d7cc501c4f9b"
+      "sha256": "a0aaf8244df36306cde46bddcf6ad7300049bb51c4298c52a512e165af52117f"
     },
     {
       "path": "bot/src/frameworks/world/simulation-candidates.js",
@@ -8049,7 +8120,7 @@
     {
       "path": "bot/src/simulation.js",
       "owner": "world",
-      "sha256": "55f4ad8e6a236878a832d8e2aaee2688b5527f2187dbca53f87c1e7e9aff96b3"
+      "sha256": "d5d83cd47712acd5331aa1c68714ae38eff1428a2f2c79d57f781bd1e265bacf"
     },
     {
       "path": "bot/src/source-communication.js",
@@ -8246,7 +8317,7 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C30-RUN.json"
+    "features/RF04-F05/C31-RUN.json"
   ],
   "release": "NOT_AUTHORIZED"
 }
