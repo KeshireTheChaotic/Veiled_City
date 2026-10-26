@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: native reader and World fixed consumer share exact terms/results and reject source replacement
+ok 1 - native reader and World fixed consumer share exact terms/results and reject source replacement
+  ---
+  duration_ms: 0.9536
+  type: 'test'
+  ...
+# Subtest: World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+ok 2 - World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+  ---
+  duration_ms: 304.0691
+  type: 'test'
+  ...
+# Subtest: actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+ok 3 - actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+  ---
+  duration_ms: 172.9269
+  type: 'test'
+  ...
+# Subtest: only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+ok 4 - only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+  ---
+  duration_ms: 179.0729
+  type: 'test'
+  ...
+# Subtest: latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+ok 5 - latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+  ---
+  duration_ms: 172.1142
+  type: 'test'
+  ...
+# Subtest: audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+ok 6 - audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+  ---
+  duration_ms: 195.7849
+  type: 'test'
+  ...
+# Subtest: owner consent terms/revision remain exact neutral native hashes and read-only across restart
+ok 7 - owner consent terms/revision remain exact neutral native hashes and read-only across restart
+  ---
+  duration_ms: 181.5946
+  type: 'test'
+  ...
+# Subtest: shared key primitive retains exact historical JSON SHA256 prefix semantics without granting authority
+ok 8 - shared key primitive retains exact historical JSON SHA256 prefix semantics without granting authority
+  ---
+  duration_ms: 0.8841
+  type: 'test'
+  ...
+# Subtest: actual native sourced goal proposal retains persisted key and replay semantics with neutral helper
+ok 9 - actual native sourced goal proposal retains persisted key and replay semantics with neutral helper
+  ---
+  duration_ms: 283.8418
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2136.7041

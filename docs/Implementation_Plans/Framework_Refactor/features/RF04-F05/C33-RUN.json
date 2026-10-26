@@ -1,0 +1,125 @@
+{
+  "feature": "RF04-F05-C33",
+  "status": "SCOPED_NEUTRAL_NATIVE_CONSENT_KEY_SOURCE_QUALIFIED",
+  "frozen": {
+    "base_head": "20a1e00f698559478b1b7f4d12da8e541b746bf7",
+    "syntax_checked": 4,
+    "files": [
+      {
+        "path": "bot/src/kernel/json-key32.js",
+        "sha256": "4dcc08bfbce8e8705a66912cfb27c6a202a8c27073aaeedb9bf3c656f6379b55"
+      },
+      {
+        "path": "bot/src/frameworks/npc/motivation.js",
+        "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+      },
+      {
+        "path": "bot/src/consent-native.js",
+        "sha256": "6ef18ebf7bccca651d84cfa650103b22e3247e04e8970057f0a1a62aedb892d5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs",
+        "sha256": "885df00d964358e29fbcc32ca50f0cd6dc35f414bc731c97cdb346bcfb526311"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+      }
+    ]
+  },
+  "tests": {
+    "exit_code": 0,
+    "end": "2026-10-26T16:39:28.9584846-05:00",
+    "start": "2026-10-26T16:39:26.7683429-05:00",
+    "duration_ms": 2190.1417,
+    "run_id": "rf04-f05-c33-frozen",
+    "files": 2,
+    "tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "tap_duration_ms": 2136.7041,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c33.test.mjs tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+    "affected_rerun": "Actual native consent composition consumes newly extracted neutral key primitive; whole current C11 owner-response/commitment file7/7passed."
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 701,
+      "unowned": 0,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2069,
+      "acceptedLegacyOccurrences": 2069,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 701,
+      "unowned": 0,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2069,
+      "acceptedLegacyOccurrences": 1343,
+      "activeViolationGroups": 722,
+      "transitionErrors": 722,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "1b58672237dc2aa591434de318dfd7b5f85c9559d594f8ae10c2be3774b888be",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/consent-native.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Original JSON hash first32 helper now neutral kernel. NPC historical motivationKey alias shares same function; native consent no longer depends on NPC policy module. Exact JSON serialization/key semantics preserved.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Native consent/commitment producer and key stability tested offline; broader consent/native source composition and caller retirement remain accountable.",
+    "No new source, consent, mechanical, publication or PC action authority from key helper. No live/provider/Discord/release certification."
+  ],
+  "rollback": "Revert helper/NPC alias/native consent import and restore1exact original dependency. Never rewrite existing saved key strings, consent replies, native outcomes or receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c33-tests.log",
+      "sha256": "a62329dc640e301b31991e5814d8188af8d27d2ff2a3c71ce6f0317ed555a51f"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c33-architecture-initial.log",
+      "sha256": "b3cf0e9220824727a7d27254bef58edbf77de97e2e672dec0b361ad7d155a7af"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c33-rf04-final.log",
+      "sha256": "c0829452a4c1e835e86702284928bb393a351e58d8b4f643a1c2b18193887ad5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c33-rf05-final.log",
+      "sha256": "7b7f798ee5d997c3503bac73b57e78a10535c152979a65e0781180d8043c3f5f"
+    }
+  ]
+}

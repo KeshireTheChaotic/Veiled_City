@@ -5,7 +5,7 @@ import { manageEvidence } from "./evidence-custody.js";
 import { stateRevision } from "./ai-intents.js";
 import { requireCitySource } from "./city-core.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { motivationKey } from "./simulation-motivation.js";
+import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
 import {createConsentResponseRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createConsentResponseRules({capabilities:{personalCharacter:(...args)=>personalCharacter(...args),personalArc:(...args)=>personalArc(...args),organizationRequest:(...args)=>organizationRequest(...args),manageLongProject:(...args)=>manageLongProject(...args),projectPhaseRevision:(...args)=>projectPhaseRevision(...args),manageEvidence:(...args)=>manageEvidence(...args),stateRevision:(...args)=>stateRevision(...args),requireCitySource:(...args)=>requireCitySource(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),motivationKey:(...args)=>motivationKey(...args)}});}

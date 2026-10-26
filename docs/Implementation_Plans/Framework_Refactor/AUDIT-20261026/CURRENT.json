@@ -1,9 +1,9 @@
 {
-  "checkpoint": "RF04-F05 C32 native institutional diagnostic correction",
-  "timestamp": "2026-10-26T21:34:40.030Z",
+  "checkpoint": "RF04-F05 C33 neutral native consent stable keys",
+  "timestamp": "2026-10-26T21:41:01.226Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "0df4feac75eb5a0f14d1d91bf0f04caef43fcc9a269f2c71c204f01ba61a1fce",
-  "open_exact_records": 2054,
+  "manifest_sha256": "4622e5fa5c661b9bb6eb80dc71530f2d4782165c7f42b48700e087015ae4b023",
+  "open_exact_records": 2053,
   "by_feature": {
     "RF05-F05": 416,
     "RF04-F04": 204,
@@ -18,7 +18,7 @@
     "RF06-F05": 43,
     "RF06-F03": 179,
     "RF05-F04": 43,
-    "RF04-F02": 9
+    "RF04-F02": 8
   },
   "resolved_since_audit": [
     {
@@ -116,6 +116,20 @@
       "max_occurrences": 1,
       "source_sha256": "807824e7b5413ee0d28e03ad1b6c529654b1b1f2d65fa45361926a432241537b",
       "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "1b58672237dc2aa591434de318dfd7b5f85c9559d594f8ae10c2be3774b888be",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/consent-native.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "daggerheart",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "3cde277f88db2f95b630d5d9280f2a67c291e04378024ce124fa68af58aa153b",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -4742,68 +4756,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 700,
+      "sourceModules": 701,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 2070,
+      "rawViolationOccurrences": 2069,
+      "acceptedLegacyOccurrences": 2069,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 700,
+      "sourceModules": 701,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 2070,
+      "rawViolationOccurrences": 2069,
+      "acceptedLegacyOccurrences": 2069,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 700,
+      "sourceModules": 701,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
+      "rawViolationOccurrences": 2069,
       "acceptedLegacyOccurrences": 1343,
-      "activeViolationGroups": 723,
-      "transitionErrors": 723,
+      "activeViolationGroups": 722,
+      "transitionErrors": 722,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 700,
+      "sourceModules": 701,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
+      "rawViolationOccurrences": 2069,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1650,
-      "transitionErrors": 1650,
+      "activeViolationGroups": 1649,
+      "transitionErrors": 1649,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 700,
+      "sourceModules": 701,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
+      "importOccurrences": 3033,
+      "internalImportOccurrences": 2854,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
+      "rawViolationOccurrences": 2069,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2054,
-      "transitionErrors": 2054,
+      "activeViolationGroups": 2053,
+      "transitionErrors": 2053,
       "pass": false
     }
   },
@@ -5120,7 +5134,7 @@
     {
       "path": "bot/src/consent-native.js",
       "owner": "daggerheart",
-      "sha256": "3cde277f88db2f95b630d5d9280f2a67c291e04378024ce124fa68af58aa153b"
+      "sha256": "6ef18ebf7bccca651d84cfa650103b22e3247e04e8970057f0a1a62aedb892d5"
     },
     {
       "path": "bot/src/consequence-reconciliation.js",
@@ -6575,7 +6589,7 @@
     {
       "path": "bot/src/frameworks/npc/motivation.js",
       "owner": "npc",
-      "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
+      "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
     },
     {
       "path": "bot/src/frameworks/npc/observation-source.js",
@@ -7166,6 +7180,11 @@
       "path": "bot/src/kernel/json-hash.js",
       "owner": "kernel",
       "sha256": "a04bd1ffe5b975faca989735358529115fd5031a9e5ddbc3ea02ecde4e5b7332"
+    },
+    {
+      "path": "bot/src/kernel/json-key32.js",
+      "owner": "kernel",
+      "sha256": "4dcc08bfbce8e8705a66912cfb27c6a202a8c27073aaeedb9bf3c656f6379b55"
     },
     {
       "path": "bot/src/kernel/serial-queue.js",
@@ -8317,7 +8336,7 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C32-RUN.json"
+    "features/RF04-F05/C33-RUN.json"
   ],
   "release": "NOT_AUTHORIZED"
 }

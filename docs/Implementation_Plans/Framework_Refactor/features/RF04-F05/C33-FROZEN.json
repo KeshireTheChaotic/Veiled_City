@@ -1,0 +1,26 @@
+{
+  "base_head": "20a1e00f698559478b1b7f4d12da8e541b746bf7",
+  "syntax_checked": 4,
+  "files": [
+    {
+      "path": "bot/src/kernel/json-key32.js",
+      "sha256": "4dcc08bfbce8e8705a66912cfb27c6a202a8c27073aaeedb9bf3c656f6379b55"
+    },
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+    },
+    {
+      "path": "bot/src/consent-native.js",
+      "sha256": "6ef18ebf7bccca651d84cfa650103b22e3247e04e8970057f0a1a62aedb892d5"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs",
+      "sha256": "885df00d964358e29fbcc32ca50f0cd6dc35f414bc731c97cdb346bcfb526311"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+      "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+    }
+  ]
+}

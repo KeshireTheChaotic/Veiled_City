@@ -1,8 +1,8 @@
 /** NPC subjective evidence and goal lifecycle; source, availability and native execution capabilities remain external. */
 import {ownedKnowledgeSource} from './knowledge-source.js';
-import {jsonHash} from '../../kernel/json-hash.js';
+import {jsonKey32 as motivationKey} from '../../kernel/json-key32.js';
 import {UserInputError,StateConflictError} from '../../kernel/errors.js';
-export const motivationKey=value=>jsonHash(value).slice(0,32);
+export {motivationKey};
 export function createNpcMotivationRules({cityObject,cityKey,cityInteger,cityAudit,requireCitySource,activeCityProxy,assertNpcAvailability,assertWorldActorControl,nativeWorldOperationAllows,nativeWorldCoordinatorReady,inspectWorldInformationTransfer}){
 
 function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event},{requireResources=true}={}){
