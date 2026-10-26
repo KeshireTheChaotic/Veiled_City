@@ -1,0 +1,68 @@
+{
+  "run_id": "RF04-F04-C13-20261026-focused-1",
+  "feature": "RF04-F04-C13",
+  "status": "FOCUSED_OFFLINE_QUALIFICATION_PASSED",
+  "base_head": "70250c8c30d088ab43ff98f58b291d0b4d9cd430",
+  "head_after_run": "70250c8c30d088ab43ff98f58b291d0b4d9cd430",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "production_changes": [
+    {"path":"bot/src/opening-cohort-runner.js","sha256":"66E1A99FE2D91E7FB9228EFD7505BF395BF18386EF37D51194C9488B8E8D2635"},
+    {"path":"bot/src/opening-entry.js","sha256":"199821575FBE07F93A76210CB168C57325ACC8B58E6DE70402808317A8281AEB"},
+    {"path":"bot/src/session-opening-recovery.js","sha256":"3C3784F094B512AA1ED2C4C0E3DFDB7756D2003C6CA71AB9221C239F150203B9"},
+    {"path":"bot/src/session-opening-runner.js","sha256":"CFA42151F229F4E35D674FBE1930833CE082B7C095895F4F2F3CE5EB3FC1D920"}
+  ],
+  "tests": {
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-reporter=tap tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+    "launches": 1,
+    "exit_code": 0,
+    "test_files": 1,
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 807.856,
+    "test_path": "bot/tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+    "test_sha256": "F72CB1D8B394878DAA645CA35C80E196F1C509378F4A3841B793BCE5BE8FCB56",
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f04-c13-focused-test.log",
+    "log_sha256": "23ED7F0525A883B8D17DC39B1A739748200A32F09933CA13418681611D393880"
+  },
+  "superseded_run": {
+    "exit_code": 0,
+    "tests": 3,
+    "passed": 3,
+    "duration_ms": 20014.1682,
+    "test_sha256": "E98425FE78269348CB68273C8FBC59C9B89EB9566CB9705D991C25B2BAA08060",
+    "log_sha256": "F8D1D86B51F84F2DC29C906900F3C72B96B8278576A605A18FEA94FF57163BB0",
+    "disposition": "Not accepted: the API identity assertion compared two undefined exports and could pass vacuously. Replaced with explicit source export-route assertions and reran the frozen focused test."
+  },
+  "syntax": {"command":"node --check on each changed JS/MJS file","checked":5,"passed":5,"failed":0},
+  "transitions": {
+    "retired_count": 5,
+    "retired_ids_file": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C13-RETIRED.json",
+    "retired_ids_sha256": "9AE2CDF5822418B2CF840DFF06427BBFA4E12D2FAACEE51EAA9021DBE848C342",
+    "retired_ids": [
+      "9d2fa2b13ec694eebb214205500e673637fe0e68c5a13bcd76dba4a41c36b3d2",
+      "758968042694f87b158198e977a444c4e21f5ddd659d3f78d978588daf23829a",
+      "b84c3df3a118b2ff7b5f6038b5efe3e7833ebc5a72e15b25e9394e63dde85e1f",
+      "d636abb35b6cb4e28e135ba8c2811abb0607650769f25b87d6874119494de917",
+      "42121162417c974b4159c4c3ada874c5c0441ccde6407ac22c40d97b579de6b4"
+    ],
+    "manifest_sha256_after": "323D8B1E1EED953BC3B28DD1FF53EE936DC7595A865A913F42BB9EE281E7F460",
+    "rf04_ratchet": {"exit_code":0,"source_modules":581,"unowned":0,"imports":2747,"largest_cycle":181,"active_violation_groups":0,"transition_errors":0},
+    "rf05_ratchet": {"exit_code":1,"source_modules":581,"unowned":0,"imports":2747,"largest_cycle":181,"active_violation_groups":950,"transition_errors":950,"reason":"Pre-existing RF05 transition debt; no C13 source finding."}
+  },
+  "architecture_logs": [
+    {"path":"docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f04-c13-rf04-architecture.log","sha256":"D5874D406CB07F6625B0E84A1095818911529DA0E260BA59F6531FB6363F527C"},
+    {"path":"docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f04-c13-rf05-architecture.log","sha256":"490F77E81809090FEDDB9A588EDB0BD8C615773245EF7060B0179A32F6CC9934"}
+  ],
+  "external_effects": {"provider_calls":0,"tokens":0,"cost_usd":0,"network":0,"production_database":0,"mocked_discord_sends":0},
+  "codex_usage": "UNMEASURED",
+  "limitations": [
+    "This verifies the import boundary and module loading offline, not runtime service behavior.",
+    "The adjacent RF05 ratchet remains held by 950 existing historical transition groups/errors.",
+    "The handoff-referenced full-union log was unavailable at C13 closeout and was supplied afterward; its 96 historical failures are now classified in phases/RF04/rf04-f07-full-union-triage.json, without rerunning the broad batch.",
+    "The saved broad C13 draft batch included inherited P08/P10/RF04 files and is not accepted as C13 evidence."
+  ],
+  "rollback": "Revert only the four listed import lines and this feature's test/evidence files; leave other work and the c13-wip stash intact.",
+  "release": "NOT AUTHORIZED"
+}

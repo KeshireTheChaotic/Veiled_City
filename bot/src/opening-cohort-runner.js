@@ -5,8 +5,8 @@ import {currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,
 import {prepareOpeningCohortOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
-import {indexWorldEvent} from './city-calendar.js';
-import {measureStage,measureNative,operationalMetrics} from './operational-metrics.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
+import {measureStage,measureNative,operationalMetrics} from './frameworks/operations/public.js';
 import {openingErrorCode} from './frameworks/operations/public.js';
 
 const flights=new WeakMap();

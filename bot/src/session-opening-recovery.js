@@ -4,7 +4,7 @@ import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {assemblyDeliverySummary,assemblyPlanHash} from './assembly-state.js';
 import {assertSessionOpeningAttempt,inspectSessionOpening,rebaseSessionOpening} from './session-opening.js';
 import {sessionOpeningFlight,deliverSessionOpening,runSessionOpening} from './session-opening-runner.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
 import {assemblyInputFingerprint} from './assembly-context.js';
 function fail(){throw Object.assign(new Error('Original authenticated GM and exact current prepared opening review required.'),{code:'SESSION_OPENING',expected:true});}
 function operator(db,i,authorize){

@@ -1,0 +1,18 @@
+Command: node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04
+Exit code: 0
+{
+  "mode": "ratchet",
+  "phase": "RF04",
+  "sourceModules": 581,
+  "unowned": 0,
+  "importOccurrences": 2747,
+  "internalImportOccurrences": 2570,
+  "cycleComponents": 1,
+  "largestCycle": 181,
+  "rawViolationOccurrences": 2417,
+  "acceptedLegacyOccurrences": 2417,
+  "activeViolationGroups": 0,
+  "transitionErrors": 0,
+  "pass": true,
+  "firstErrors": []
+}

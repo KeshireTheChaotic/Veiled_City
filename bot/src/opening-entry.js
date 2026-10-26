@@ -6,7 +6,7 @@ import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {inspectSessionOpening} from './session-opening.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
-import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './opening-entry-evidence.js';
+import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './frameworks/session/public.js';
 import {openingErrorCode} from './frameworks/operations/public.js';
 function save(db,guild,key,row,status,data){
   return db.transaction(()=>{

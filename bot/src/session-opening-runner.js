@@ -3,7 +3,7 @@ import {inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAtt
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
-import {measureStage,operationalMetrics} from './operational-metrics.js';
+import {measureStage,operationalMetrics} from './frameworks/operations/public.js';
 import {openingErrorCode,openingDiagnostic} from './frameworks/operations/public.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){

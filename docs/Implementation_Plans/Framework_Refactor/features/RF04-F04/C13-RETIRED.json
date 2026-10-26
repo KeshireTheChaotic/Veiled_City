@@ -1,0 +1,77 @@
+{
+  "feature": "RF04-F04-C13",
+  "original_manifest_sha256": "AEA167D53DFD156A3D0B2FA24988FB8A90A562C6F97B17F5BF9A891F8013CFE3",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "9d2fa2b13ec694eebb214205500e673637fe0e68c5a13bcd76dba4a41c36b3d2",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "758968042694f87b158198e977a444c4e21f5ddd659d3f78d978588daf23829a",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/operational-metrics.js",
+      "kind": "static",
+      "specifier": "./operational-metrics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b84c3df3a118b2ff7b5f6038b5efe3e7833ebc5a72e15b25e9394e63dde85e1f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-entry.js",
+      "to": "bot/src/opening-entry-evidence.js",
+      "kind": "static",
+      "specifier": "./opening-entry-evidence.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "d636abb35b6cb4e28e135ba8c2811abb0607650769f25b87d6874119494de917",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/session-opening-recovery.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "42121162417c974b4159c4c3ada874c5c0441ccde6407ac22c40d97b579de6b4",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/session-opening-runner.js",
+      "to": "bot/src/operational-metrics.js",
+      "kind": "static",
+      "specifier": "./operational-metrics.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

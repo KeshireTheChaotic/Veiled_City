@@ -1,0 +1,11 @@
+# RF04-F04 C13 — Evidence ledger
+
+**Status:** IMPLEMENTED; FOCUSED OFFLINE QUALIFICATION PASSED.
+
+Five imports across four opening workflows now target the owning World, Session, and Operations public APIs. No behavior change is intended. The new test checks expected public/compatibility export routes, changed workflow loading, and the exact import boundaries.
+
+The original `c13-wip` stash is preserved as rollback evidence. Its draft `C13-RUN.json` selected 16 inherited P08/P10/RF04 test files and recorded 17/58 passing; that run is not used to qualify this feature and was not repeated. The initial isolated test also passed 3/3 but was superseded: one API identity assertion could pass vacuously because both queried exports were undefined. The corrected test replaced it with explicit export-route assertions, then passed 3/3 (exit 0, 807.856 ms); changed-file syntax passed 5/5. RF04 architecture ratchet passed with 581 source modules, zero unowned, zero active groups and zero transition errors. RF05 ratchet remains failed on 950 active historical groups/errors, down from the prior 955 because the five C13 edges are now retired. Exact IDs and before/after manifest hashes are in `C13-RETIRED.json`; logs, hashes and commands are in `C13-RUN.json`. The supplied 96-failure log was later reviewed and grouped in the RF04-F07 ledger; it remains excluded from C13 qualification. The P08 worker cleanup `EPERM` is a test-environment cleanup failure; the P10 worker returned `done` instead of `planning` with zero planner calls and remains an unresolved concurrent startup observation.
+
+Provider/network/production database use: zero. Release: **NOT AUTHORIZED**. Rollback: revert only this feature's four import changes and its feature-local evidence; keep other work and the preserved stash.
+
+The 2026-10-26 independent-worker diagnostic also passed after the new worker fixture initialized the same Session–World bootstrap composition as production. It observes the durable `planning` claim over a second SQLite connection without invoking a second planner or taking over the claim. This tests P10-F08 runner behavior, not the five C13 import rewrites; no C13 tests were rerun because their source was unchanged. The completed log and hashes are in RF04-F07's `rf04-f07-full-union-triage.json`.
