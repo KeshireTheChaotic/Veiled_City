@@ -66,6 +66,6 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | persistence--world | PROPOSED_NO_API | persistence → world; world → persistence | 0 / 0 | RF06 |
 | publication--session | PROPOSED_NO_API | session → publication; publication → session | 0 / 0 | RF06 |
 | publication--world | PROPOSED_NO_API | publication → world | 0 / 0 | RF06 |
-| session--world | ADOPTED | session → world; world → session | 3 / 4 | RF04 |
+| session--world | ADOPTED | session → world; world → session | 3 / 5 | RF04 |
 
 Test-path validation is separate from actual execution evidence. Pairs import only their two public owners and neutral kernel; application owns orchestration. No source/canon, PC choice, mechanics, secrecy or delivery authority is inferred from integration. RELEASE NOT AUTHORIZED.

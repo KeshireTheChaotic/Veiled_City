@@ -10,3 +10,7 @@ export function connectWorldPrincipal(){return worldConversationPrincipal.bind(c
 import {sessionSceneWorldSources} from '../../frameworks/session/public.js';
 import {cityObject,cityKey,cityVisibility,cityAudit,requireCitySource,activeCityProxy} from '../../frameworks/world/public.js';
 export function connectSessionSceneWorld(){return sessionSceneWorldSources.bind({cityObject,cityKey,cityVisibility,cityAudit,requireCitySource,activeCityProxy});}
+
+import {currentScene,reconcileSceneArrival} from '../../frameworks/session/public.js';
+import {worldSessionScene} from '../../frameworks/world/public.js';
+export function connectWorldSessionScene(){return worldSessionScene.bind({currentScene,reconcileSceneArrival});}

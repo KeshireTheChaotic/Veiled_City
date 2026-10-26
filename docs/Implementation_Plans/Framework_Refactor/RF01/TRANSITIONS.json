@@ -17283,20 +17283,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ba9170e749047806058370357c8fbb5d66d69a916b4b42d81e2d6ad81c1ffc8c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/simulation.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d95c7bbfa999bb64c7847a54c8e648559cd4cc8c2b3caa9b610fdd0aeb2e34b3",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/simulation.js",

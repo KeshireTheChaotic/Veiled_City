@@ -3296,7 +3296,7 @@
           "to": "session",
           "import_occurrences": 16,
           "injected_calls": 0,
-          "contract": "C09 fixed original Session current conversational-principal reader for World private operation revalidation; other observed Session source contracts remain open."
+          "contract": "C09 fixed original Session current conversational-principal reader for World private operation revalidation; other observed Session source contracts remain open. C20 exact currentScene and reconcileSceneArrival serve actual native World hook/travel execution; descriptive arrival never grants PC authority."
         }
       ],
       "source_evidence": [
@@ -3319,7 +3319,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3342,7 +3343,7 @@
         "occurrences": 39
       },
       "public_api": "bot/src/framework-to-framework/session--world/public.js",
-      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies."
+      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted; remaining orchestration and source contracts remain open."
     }
   ]
 }

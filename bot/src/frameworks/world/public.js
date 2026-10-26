@@ -54,3 +54,6 @@ export {createWorldNpcKnowledgeConsumer,worldNpcKnowledge} from './contracts/npc
 export {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './information-transfer.js';
 export {actorState,configureSimulationEntity} from './actor-state.js';
 export {knownInformation as knownWorldInformation,validateAction as validateNpcAction} from './action-eligibility.js';
+export {saveRecord as saveNativeSimulationRecord} from './simulation-record.js';
+export {createWorldSessionSceneConsumer,worldSessionScene} from './contracts/session-scene.js';
+export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents,recordWorldActorMemory} from './action-execution.js';

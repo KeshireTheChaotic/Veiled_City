@@ -1,0 +1,21 @@
+{
+  "exact_bodies_preserved": true,
+  "parts": {
+    "save_record": {
+      "sha256": "2b2fbed633ae3ceeca1b207c223cfc570edb49d0e7dbfc2e72728db4cb0fc6a3",
+      "characters": 239
+    },
+    "outcome_memory": {
+      "sha256": "aae574334949d5880320eb0fab9462b2fa91f0da8bd9f95294a16238d821dd49",
+      "characters": 866
+    },
+    "recipient_information": {
+      "sha256": "184aea9b4dabe2b665262004dc5fbb8e17204f46365eb23a8a2a25b1a6f2c258",
+      "characters": 762
+    },
+    "native_execution": {
+      "sha256": "27d1a98916364012f7ee921a884c21caca0a7cd21f5aa63305f469b374a97d89",
+      "characters": 16993
+    }
+  }
+}

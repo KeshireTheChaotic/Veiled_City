@@ -1,0 +1,173 @@
+{
+  "feature": "RF04-F05-C20",
+  "status": "SCOPED_ACTUAL_NATIVE_WORLD_ACTION_EXECUTION_QUALIFIED",
+  "base_head": "38b589d2caea8df0018b8fa4723c7563f4b337e8",
+  "changed_files": {
+    "base_head": "38b589d2caea8df0018b8fa4723c7563f4b337e8",
+    "syntax_checked": 8,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/simulation-record.js",
+        "sha256": "9a47c1e243047abe816bda100a87478f964844631d624a69481a0938a744c54e"
+      },
+      {
+        "path": "bot/src/frameworks/world/action-execution.js",
+        "sha256": "02f9f4b4fa169d5a0fb9d1f1a557fde0d38e5550a3f9860c743a9ed30930059a"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/session-scene.js",
+        "sha256": "da9a0db69e8ba85d025b9a4764216c91c990cf728c1a8c41c79af0072e61d708"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "f370ad2fb52e1f349db82804c8082b16cccf47760f774e717b0835aa61111d0b"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "3a869e7b02dbd7dab79bc16777fdb6998248af5a1eecb213fff770e1589e1093"
+      },
+      {
+        "path": "bot/src/framework-to-framework/session--world/public.js",
+        "sha256": "3c87aaa3e6d211d129b9bf09df22224316e5096d76da2e653df4f66eeed97d1d"
+      },
+      {
+        "path": "bot/src/application/composition/world-execution.js",
+        "sha256": "3d59b06a8ab8eb9171c000c59eb8475b2757ba605ffce992a78803d7790baf5a"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "ab454bd28145328c9c242f7debd9a0749ec12445fdf78dfa9e71f7d862c7be04"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "6923de2b008bc6e79074511cc600bda0cbedfb462585d3f71db88b975860a642"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "sha256": "a8ee71f1eb781f41fde2d2bb85d745e7a82440fcc1190fe03334c0b675e0321c"
+      }
+    ]
+  },
+  "body": {
+    "exact_bodies_preserved": true,
+    "parts": {
+      "save_record": {
+        "sha256": "2b2fbed633ae3ceeca1b207c223cfc570edb49d0e7dbfc2e72728db4cb0fc6a3",
+        "characters": 239
+      },
+      "outcome_memory": {
+        "sha256": "aae574334949d5880320eb0fab9462b2fa91f0da8bd9f95294a16238d821dd49",
+        "characters": 866
+      },
+      "recipient_information": {
+        "sha256": "184aea9b4dabe2b665262004dc5fbb8e17204f46365eb23a8a2a25b1a6f2c258",
+        "characters": 762
+      },
+      "native_execution": {
+        "sha256": "27d1a98916364012f7ee921a884c21caca0a7cd21f5aa63305f469b374a97d89",
+        "characters": 16993
+      }
+    }
+  },
+  "tests": {
+    "run_id": "RF04-F05-C20-20261026-1",
+    "start": "2026-10-26T20:29:47.5244874Z",
+    "duration_ms": 5207.2964,
+    "exit_code": 0,
+    "end": "2026-10-26T20:29:52.7317838Z",
+    "files": 4,
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 5151.8244,
+    "reason": "Actual native submit/execute/review/due-action and persistence moved to World; affected C13/C14/C17 actual-producer files rerun once on frozen changed source. No unrelated members."
+  },
+  "syntax": {
+    "checked": 8,
+    "passed": 8
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 658,
+      "unowned": 0,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
+      "cycleComponents": 2,
+      "largestCycle": 147,
+      "rawViolationOccurrences": 2118,
+      "acceptedLegacyOccurrences": 2118,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 658,
+      "unowned": 0,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
+      "cycleComponents": 2,
+      "largestCycle": 147,
+      "rawViolationOccurrences": 2118,
+      "acceptedLegacyOccurrences": 1358,
+      "activeViolationGroups": 756,
+      "transitionErrors": 756,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "ba9170e749047806058370357c8fbb5d66d69a916b4b42d81e2d6ad81c1ffc8c",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/scene-continuity.js",
+      "kind": "static",
+      "specifier": "./scene-continuity.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "World owns exact original transactional submit/execute/review/due-action, outcomes/cost/native NPC dice and receipts. Session source supplies native NPC arrival/current scene through exact existing pair; shared original save-record/outcome-memory functions avoid duplicate runtime logic. Root APIs are actual same-function aliases.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Representative routine/opposed/major-reviewed/delayed/travel/rollback cases exercised, not every effect/action/condition/GM authorization UI. Direct GM test-native API fixture is not proof of Discord authentication.",
+    "World planning/Director/context assembly and NPC strategy Intent delegate source remain mixed; no whole simulation/phase isolation.",
+    "No new publication workflow; actual outbox/Discord/live recovery or semantic narrative quality not qualified."
+  ],
+  "rollback": "Revert C20 native execution/persistence/Session consumer-pair/bootstrap/real resolver changes and restore1exact record together. Preserve saved action/receipt/source/native state, goal, memory and outbox history.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c20-tests.log",
+      "sha256": "eaeca37a06f6f172d254c882ca3b519dd8e0590c1efd99cd6f4f241362dac54f"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c20-architecture-initial.log",
+      "sha256": "2399f8e8668dacd630fffffae56537fc4a09d98a9ccbe75ddaf58e737fa0bc55"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c20-rf04-final.log",
+      "sha256": "f79ae9986a4bfc3d0acdb1e50d6737b8797af861103d784ab31a383fb4ee18fc"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c20-rf05-final.log",
+      "sha256": "c1d773e2b2d9b2625a031930f6c416ade8eb609c1f6e99346da26b7cf4f70348"
+    }
+  ]
+}

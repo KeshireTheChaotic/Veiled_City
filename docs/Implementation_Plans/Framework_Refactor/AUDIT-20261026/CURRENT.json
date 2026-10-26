@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C19 NPC observation and Knowledge/Session integration",
-  "timestamp": "2026-10-26T20:24:46.708Z",
+  "checkpoint": "after C20 actual native World action execution",
+  "timestamp": "2026-10-26T20:30:30.543Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "e8d1cc5f09c39bc89c1e2087c83f7ea399f585c6019b9a12a79b72a782731d7d",
-  "open_exact_records": 2102,
+  "manifest_sha256": "eb51c7688779f0fea4145bfe1dd38466450421435380f4f15809f18f458d2d4f",
+  "open_exact_records": 2101,
   "by_feature": {
     "RF05-F05": 420,
     "RF04-F04": 204,
     "RF05-F02": 219,
     "RF05-F03": 259,
     "RF04-F03": 104,
-    "RF04-F01": 308,
+    "RF04-F01": 307,
     "RF06-F02": 17,
     "RF04-F05": 108,
     "RF06-F07": 5,
@@ -354,6 +354,20 @@
       "max_occurrences": 1,
       "source_sha256": "6cc8edeaf99af4e8f60720d8cc9e9c8e6bd0345cc27a83bdf57a32f6949d9d65",
       "target_owner": "intent",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "ba9170e749047806058370357c8fbb5d66d69a916b4b42d81e2d6ad81c1ffc8c",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/scene-continuity.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "session",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -4070,68 +4084,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 655,
+      "sourceModules": 658,
       "unowned": 0,
-      "importOccurrences": 2911,
-      "internalImportOccurrences": 2733,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
       "cycleComponents": 2,
       "largestCycle": 147,
-      "rawViolationOccurrences": 2119,
-      "acceptedLegacyOccurrences": 2119,
+      "rawViolationOccurrences": 2118,
+      "acceptedLegacyOccurrences": 2118,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 655,
+      "sourceModules": 658,
       "unowned": 0,
-      "importOccurrences": 2911,
-      "internalImportOccurrences": 2733,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
       "cycleComponents": 2,
       "largestCycle": 147,
-      "rawViolationOccurrences": 2119,
-      "acceptedLegacyOccurrences": 2119,
+      "rawViolationOccurrences": 2118,
+      "acceptedLegacyOccurrences": 2118,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 655,
+      "sourceModules": 658,
       "unowned": 0,
-      "importOccurrences": 2911,
-      "internalImportOccurrences": 2733,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
       "cycleComponents": 2,
       "largestCycle": 147,
-      "rawViolationOccurrences": 2119,
+      "rawViolationOccurrences": 2118,
       "acceptedLegacyOccurrences": 1358,
-      "activeViolationGroups": 757,
-      "transitionErrors": 757,
+      "activeViolationGroups": 756,
+      "transitionErrors": 756,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 655,
+      "sourceModules": 658,
       "unowned": 0,
-      "importOccurrences": 2911,
-      "internalImportOccurrences": 2733,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
       "cycleComponents": 2,
       "largestCycle": 147,
-      "rawViolationOccurrences": 2119,
+      "rawViolationOccurrences": 2118,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1698,
-      "transitionErrors": 1698,
+      "activeViolationGroups": 1697,
+      "transitionErrors": 1697,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 655,
+      "sourceModules": 658,
       "unowned": 0,
-      "importOccurrences": 2911,
-      "internalImportOccurrences": 2733,
+      "importOccurrences": 2926,
+      "internalImportOccurrences": 2747,
       "cycleComponents": 2,
       "largestCycle": 147,
-      "rawViolationOccurrences": 2119,
+      "rawViolationOccurrences": 2118,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2102,
-      "transitionErrors": 2102,
+      "activeViolationGroups": 2101,
+      "transitionErrors": 2101,
       "pass": false
     }
   },
@@ -4263,7 +4277,7 @@
     {
       "path": "bot/src/application/composition/world-execution.js",
       "owner": "application",
-      "sha256": "1a7f5fca5a03d99c4145c1c35a3631a23484c2f23687a687cd12817ab30cdc73"
+      "sha256": "3d59b06a8ab8eb9171c000c59eb8475b2757ba605ffce992a78803d7790baf5a"
     },
     {
       "path": "bot/src/application/composition/world-owner-consent.js",
@@ -4648,7 +4662,7 @@
     {
       "path": "bot/src/framework-to-framework/session--world/public.js",
       "owner": "session--world",
-      "sha256": "75598bd3e43f5f46aa8d812797e28cca4535beb5875eec55d842c4e2fa951c43"
+      "sha256": "3c87aaa3e6d211d129b9bf09df22224316e5096d76da2e653df4f66eeed97d1d"
     },
     {
       "path": "bot/src/frameworks/ai-provider/generation-feedback.js",
@@ -5921,6 +5935,11 @@
       "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
     },
     {
+      "path": "bot/src/frameworks/world/action-execution.js",
+      "owner": "world",
+      "sha256": "02f9f4b4fa169d5a0fb9d1f1a557fde0d38e5550a3f9860c743a9ed30930059a"
+    },
+    {
       "path": "bot/src/frameworks/world/active-proxy.js",
       "owner": "world",
       "sha256": "c238f7f5ed22d850168c09a0e8ab536b0eb05338db57aed5a3a1c50b1ab99be7"
@@ -6036,6 +6055,11 @@
       "sha256": "3fee5f6e21eb4df9fc31f3fdfdacfba6da3a776ac8b46d466a33b50a8f319a16"
     },
     {
+      "path": "bot/src/frameworks/world/contracts/session-scene.js",
+      "owner": "world",
+      "sha256": "da9a0db69e8ba85d025b9a4764216c91c990cf728c1a8c41c79af0072e61d708"
+    },
+    {
       "path": "bot/src/frameworks/world/director-cadence.js",
       "owner": "world",
       "sha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4"
@@ -6108,7 +6132,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "c4279b046b8c6bb710fbd95e16eec9bec99e2e880b7f7d519a46fa0820309ed4"
+      "sha256": "f370ad2fb52e1f349db82804c8082b16cccf47760f774e717b0835aa61111d0b"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -6119,6 +6143,11 @@
       "path": "bot/src/frameworks/world/simulation-receipt-core.js",
       "owner": "world",
       "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-record.js",
+      "owner": "world",
+      "sha256": "9a47c1e243047abe816bda100a87478f964844631d624a69481a0938a744c54e"
     },
     {
       "path": "bot/src/frameworks/world/simulation-update-schema.js",
@@ -7223,7 +7252,7 @@
     {
       "path": "bot/src/simulation.js",
       "owner": "world",
-      "sha256": "47e4cc13e2c91cb827cb26539c579066eb13f6e18d405fdfc03a8a70e7337be2"
+      "sha256": "3a869e7b02dbd7dab79bc16777fdb6998248af5a1eecb213fff770e1589e1093"
     },
     {
       "path": "bot/src/source-communication.js",
