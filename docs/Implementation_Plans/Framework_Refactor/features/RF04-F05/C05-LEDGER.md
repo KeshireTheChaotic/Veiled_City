@@ -1,0 +1,9 @@
+# RF04-F05 C05 execution ledger
+
+Status: SCOPED EVIDENCE DIRECTION QUALIFIED; RF04 INCOMPLETE. Scope: `C05-SCOPE.md`. Base `ccae77566632405b492eb83a0fbbdd08ecfa1eb8` with earlier changes preserved. Existing rule bodies stay in Knowledge; event/audit callbacks stay World. One fixed consumer/pair/startup binding replaces original cross-owner assembly. Actual results are below and in `C05-RUN.json`.
+
+Provider calls/tokens/cost 0/0/$0; Codex UNMEASURED. Rollback this slice's Knowledge engine/consumer/public aliases, old reader, exact pair/config/startup and tests as one unit; restore only its retired records and preserve prior source/receipts. RELEASE NOT AUTHORIZED.
+
+## 2026-10-26 C05 Knowledge–World evidence adoption
+
+The single lazy evidence engine now belongs to Knowledge and consumes World event/audit callbacks through its own fixed port, the exact Knowledge–World pair and real startup composition. Old evidence exports are aliases to the same native functions; pure historical reads still work before binding, and a native write without composition fails closed within the original transaction. Fresh C05 cases7 plus affected P04 cases8 passed **15/15**, exit0, TAP3186.524ms; syntax9/9. This justified P04 rerun follows an associated production-source change and qualifies all eight cases against the final whole test file, superseding its split-only coverage limitation. Actual SQLite qualifies source/recipient isolation, no AI promotion, rollback/retry, persisted fact provenance and retraction after reopen. One obsolete exact Knowledge→World import record retired with original retained. RF04 ratchet exit0 at607modules/0unowned/2804imports/2403raw accepted/SCC181/0active/errors; RF05 exit1 on943expired groups/errors. C05-RUN.json records hashes, actual terminals and rollback. Remaining memory/custody/organization/Narrative/Session integrations stay open. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

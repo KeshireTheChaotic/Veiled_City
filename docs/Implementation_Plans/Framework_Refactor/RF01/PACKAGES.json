@@ -97,6 +97,9 @@
     ],
     "intent--world": [
       "bot/src/framework-to-framework/intent--world/public.js"
+    ],
+    "knowledge--world": [
+      "bot/src/framework-to-framework/knowledge--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

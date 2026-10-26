@@ -1,0 +1,38 @@
+[
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\contracts\\world-events.js",
+    "Hash": "E1785951AAE7A8D54BCD3CF932E6E3B9BA0BF62DD1ACADABC54BF3B7258320A2"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\evidence-source.js",
+    "Hash": "A5567BEA8E0F9F9B16038A6B021BF0AFEABE6DA5FA41DF09FD85DA68BF933F0B"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--world\\public.js",
+    "Hash": "9AACE3C68914FA0524F3A4B0A6A340D639BB2B884A044AB69FDCAC0E5BD67E1A"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-world.js",
+    "Hash": "834B04CEBC4017D1267387AE81B7F92691D7AA0E40B4345419ED05F4EF9CAEAD"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\knowledge\\public.js",
+    "Hash": "9982CFF2970D898DEE6F08B2333E97B7F1BCB6BE7D3354483981FA7F829D779E"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\epistemic.js",
+    "Hash": "9F071A3406E93CE89017DEFEE8FE5512256A224A6F68774909B6F9AFB781EF84"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\public.js",
+    "Hash": "EA4C6DA5B91D82C4C1518BF1BB8EAA3513A9FA8AA6DAB2B9F9B19A84D8988523"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\index.js",
+    "Hash": "7776EB2DE3A05B834C75424C286415EDFC90D1DC64E39A953F72A64D20658582"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c05.test.mjs",
+    "Hash": "6B6B02CFD7AA5125142E336C5DA46A035FB9CA213B6C3F22A8D4EDA0EC5B6789"
+  }
+]

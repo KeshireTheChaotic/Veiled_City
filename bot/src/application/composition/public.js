@@ -10,3 +10,4 @@ export {initializeCharacterCreation} from './character-creation.js';
 export {initializeNpcWorldEvidence} from './npc-world-evidence.js';
 export {initializeSessionWorldEvents} from './session-world-events.js';
 export {initializeNarrativeWorld} from './narrative-world.js';
+export {initializeKnowledgeWorld} from './knowledge-world.js';

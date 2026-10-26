@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+ok 1 - unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+  ---
+  duration_ms: 1.0099
+  type: 'test'
+  ...
+# Subtest: legacy registration, public runtime and actual World verification share the original opaque grant store
+ok 2 - legacy registration, public runtime and actual World verification share the original opaque grant store
+  ---
+  duration_ms: 688.5834
+  type: 'test'
+  ...
+# Subtest: private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+ok 3 - private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+  ---
+  duration_ms: 326.5347
+  type: 'test'
+  ...
+# Subtest: real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+ok 4 - real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+  ---
+  duration_ms: 334.8786
+  type: 'test'
+  ...
+# Subtest: saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+ok 5 - saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+  ---
+  duration_ms: 497.7352
+  type: 'test'
+  ...
+# Subtest: source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+ok 6 - source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+  ---
+  duration_ms: 247.4215
+  type: 'test'
+  ...
+# Subtest: real World transaction rolls identity and receipt back on audit failure before a safe retry
+ok 7 - real World transaction rolls identity and receipt back on audit failure before a safe retry
+  ---
+  duration_ms: 190.9605
+  type: 'test'
+  ...
+# Subtest: actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+ok 8 - actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+  ---
+  duration_ms: 0.7609
+  type: 'test'
+  ...
+# Subtest: original and public evidence functions are identical; pure saved-source reads work before composition
+ok 9 - original and public evidence functions are identical; pure saved-source reads work before composition
+  ---
+  duration_ms: 652.732
+  type: 'test'
+  ...
+# Subtest: a native write before World binding fails closed and rolls back without blocking historical reads
+ok 10 - a native write before World binding fails closed and rolls back without blocking historical reads
+  ---
+  duration_ms: 275.5547
+  type: 'test'
+  ...
+# Subtest: fixed pair binds exact native functions, rejects replacement and preserves forwarded error identity
+ok 11 - fixed pair binds exact native functions, rejects replacement and preserves forwarded error identity
+  ---
+  duration_ms: 0.5598
+  type: 'test'
+  ...
+# Subtest: real native fact ruling preserves recipient scope and source ancestry; model drafts cannot promote it
+ok 12 - real native fact ruling preserves recipient scope and source ancestry; model drafts cannot promote it
+  ---
+  duration_ms: 274.5133
+  type: 'test'
+  ...
+# Subtest: failure after event issuance rolls native fact and event back before one successful retry
+ok 13 - failure after event issuance rolls native fact and event back before one successful retry
+  ---
+  duration_ms: 281.8519
+  type: 'test'
+  ...
+# Subtest: saved evidence remains readable after SQLite reopen and source retraction invalidates it without rewriting the fact
+ok 14 - saved evidence remains readable after SQLite reopen and source retraction invalidates it without rewriting the fact
+  ---
+  duration_ms: 473.232
+  type: 'test'
+  ...
+# Subtest: real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners
+ok 15 - real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners
+  ---
+  duration_ms: 0.6873
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3186.524

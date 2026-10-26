@@ -1,0 +1,151 @@
+{
+  "feature": "RF04-F05-C05",
+  "status": "SCOPED_KNOWLEDGE_WORLD_EVIDENCE_ADOPTION_QUALIFIED",
+  "base_head": "ccae77566632405b492eb83a0fbbdd08ecfa1eb8",
+  "changed_files": [
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-events.js",
+      "sha256": "e1785951aae7a8d54bcd3cf932e6e3b9ba0bf62dd1acadabc54bf3b7258320a2",
+      "frozen_sha256": "e1785951aae7a8d54bcd3cf932e6e3b9ba0bf62dd1acadabc54bf3b7258320a2"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/evidence-source.js",
+      "sha256": "a5567bea8e0f9f9b16038a6b021bf0afeabe6da5fa41df09fd85da68bf933f0b",
+      "frozen_sha256": "a5567bea8e0f9f9b16038a6b021bf0afeabe6da5fa41df09fd85da68bf933f0b"
+    },
+    {
+      "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+      "sha256": "9aace3c68914fa0524f3a4b0a6a340d639bb2b884a044ab69fdcac0e5bd67e1a",
+      "frozen_sha256": "9aace3c68914fa0524f3a4b0a6a340d639bb2b884a044ab69fdcac0e5bd67e1a"
+    },
+    {
+      "path": "bot/src/application/composition/knowledge-world.js",
+      "sha256": "834b04cebc4017d1267387ae81b7f92691d7aa0e40b4345419ed05f4ef9caead",
+      "frozen_sha256": "834b04cebc4017d1267387ae81b7f92691d7aa0e40b4345419ed05f4ef9caead"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "9982cff2970d898dee6f08b2333e97b7f1bcb6be7d3354483981fa7f829d779e",
+      "frozen_sha256": "9982cff2970d898dee6f08b2333e97b7f1bcb6be7d3354483981fa7f829d779e"
+    },
+    {
+      "path": "bot/src/epistemic.js",
+      "sha256": "9f071a3406e93ce89017defee8fe5512256a224a6f68774909b6f9afb781ef84",
+      "frozen_sha256": "9f071a3406e93ce89017defee8fe5512256a224a6f68774909b6f9afb781ef84"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ea4c6da5b91d82c4c1518bf1bb8eaa3513a9fa8aa6dab2b9f9b19a84d8988523",
+      "frozen_sha256": "ea4c6da5b91d82c4c1518bf1bb8eaa3513a9fa8aa6dab2b9f9b19a84d8988523"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "7776eb2de3a05b834c75424c286415edfc90d1dc64e39a953f72a64d20658582",
+      "frozen_sha256": "7776eb2de3a05b834c75424c286415edfc90d1dc64e39a953f72a64d20658582"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+      "sha256": "6b6b02cfd7aa5125142e336c5da46a035fb9ca213b6c3f22a8d4eda0ec5b6789",
+      "frozen_sha256": "6b6b02cfd7aa5125142e336c5da46a035fb9ca213b6c3f22a8d4eda0ec5b6789"
+    }
+  ],
+  "tests": {
+    "exit_code": 0,
+    "start": "2026-10-26T17:47:22.6384682Z",
+    "run_id": "RF04-F05-C05-20261026-1",
+    "duration_ms": 3237.7188,
+    "end": "2026-10-26T17:47:25.8761870Z",
+    "test_files": 2,
+    "tests": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "tap_duration_ms": 3186.524,
+    "launches": 1,
+    "members": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "tests": 7,
+        "sha256": "6b6b02cfd7aa5125142e336c5da46a035fb9ca213b6c3f22a8d4eda0ec5b6789"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "tests": 8,
+        "sha256": "e5d17bc9fbc68b57c6e6e17ae14fdb8879508a0075cb3bdf4d8c8ccf57561675"
+      }
+    ],
+    "rerun_reason": "C05 changes the actual evidence engine used by P04 native context/source revalidation. The associated production changed, so its whole final test file was included once; no unchanged unrelated test was run."
+  },
+  "syntax": {
+    "checked": 9,
+    "passed": 9
+  },
+  "ownership": "Knowledge owns the evidence engine and event consumer; World owns event/audit functions; pair maps only those two callbacks; application composes before services.",
+  "compatibility": "Original evidence function exports are the same actual Knowledge function objects. Pure saved-source reads require no startup binding; native establishment fails closed without binding and keeps one synchronous transaction.",
+  "architecture": {
+    "rf04_exit": 0,
+    "summary": {
+      "sourceModules": 607,
+      "unowned": 0,
+      "importOccurrences": 2804,
+      "internalImportOccurrences": 2627,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2403,
+      "acceptedLegacyOccurrences": 2403,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05_active_groups": 943,
+    "rf05_transition_errors": 943
+  },
+  "retired": [
+    {
+      "id": "3c67bf074b870fafb406d25e44c3b7aaeb0a6811c5261866a80a272fc6b1cb94",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/epistemic.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "limits": [
+    "Only the evidence event/audit direction adopted; remaining Knowledge/World collaborators not certified.",
+    "Offline SQLite and mocked service boundaries; no live Discord/provider, production state or semantic narrative qualification."
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED",
+    "caching": "No cache behavior changed or benchmarked."
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Restore old evidence reader composition, remove only this source/port/pair/startup/public/config slice and restore its exact retired transition together; preserve other source changes and saved rows.",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c05-affected-union.log",
+      "sha256": "2768bc89abcdb40abdaf9492ea0e2953db0b1d6c9692df1a30082e7a43a423fb"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c05-architecture-initial.log",
+      "sha256": "0f0047049ea080bdf4be93f3e8c2e8f8d2fa85aeed2a281190060e0e1953f2a8"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c05-rf04-final.log",
+      "sha256": "610d8e6f0ccc6f06234eec44405836b92bcc1e8a04c319af2878a8d2ee9f6565"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c05-rf05-final.log",
+      "sha256": "794b08e07309424ced34d0f1c48fd87c04b9117801ab81951fdee133270ee352"
+    }
+  ]
+}

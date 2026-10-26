@@ -1,8 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). This current table was reconciled against that registry after C03-P04. Historical RF00 observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md).
-
-Current lifecycle counts: 10 ADOPTED, 51 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. An adopted row certifies only its recorded source/caller direction and evidence; it does not certify all historical pair dependencies, live traffic, narration quality or release. Each pair imports only its two public owners and neutral kernel; application composition owns multi-framework wiring.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled after C05. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 12 ADOPTED, 49 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -41,14 +39,14 @@ Current lifecycle counts: 10 ADOPTED, 51 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRE
 | intent--persistence | PROPOSED_NO_API | intent → persistence | 0 / 0 | RF05 |
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |
 | intent--session | PROPOSED_NO_API | session → intent; intent → session | 0 / 0 | RF05 |
-| intent--world | PROPOSED_NO_API | intent → world; world → intent | 0 / 0 | RF05 |
+| intent--world | ADOPTED | world → intent | 1 / 1 | RF05-F04 |
 | knowledge--narrative | PROPOSED_NO_API | knowledge → narrative; narrative → knowledge | 0 / 0 | RF05 |
 | knowledge--npc | PROPOSED_NO_API | knowledge → npc; npc → knowledge | 0 / 0 | RF04 |
 | knowledge--operations | PROPOSED_NO_API | operations → knowledge; knowledge → operations | 0 / 0 | RF04 |
 | knowledge--persistence | PROPOSED_NO_API | persistence → knowledge; knowledge → persistence | 0 / 0 | RF06 |
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
-| knowledge--world | PROPOSED_NO_API | world → knowledge; knowledge → world | 0 / 0 | RF04 |
+| knowledge--world | ADOPTED | knowledge → world | 1 / 1 | RF04-F05 |
 | narrative--npc | PROPOSED_NO_API | narrative → npc; npc → narrative | 0 / 0 | RF05 |
 | narrative--operations | PROPOSED_NO_API | narrative → operations | 0 / 0 | RF05 |
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |
@@ -70,4 +68,4 @@ Current lifecycle counts: 10 ADOPTED, 51 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRE
 | publication--world | PROPOSED_NO_API | publication → world | 0 / 0 | RF06 |
 | session--world | ADOPTED | session → world; world → session | 1 / 2 | RF04 |
 
-Test references are stat-checked metadata, not test executions. Actual exits, source hashes, scopes and residual holds remain in individual ledgers. Source/canon, PC choices, mechanics, secrecy and immutable publication receipts remain authoritative. RELEASE NOT AUTHORIZED.
+Test-path validation is separate from actual execution evidence. Pairs import only their two public owners and neutral kernel; application owns orchestration. No source/canon, PC choice, mechanics, secrecy or delivery authority is inferred from integration. RELEASE NOT AUTHORIZED.
