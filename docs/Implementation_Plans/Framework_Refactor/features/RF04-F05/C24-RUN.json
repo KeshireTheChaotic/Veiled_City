@@ -1,0 +1,160 @@
+{
+  "feature": "RF04-F05-C24",
+  "status": "SCOPED_NARRATIVE_VISIBILITY_SOURCE_QUALIFIED",
+  "frozen": {
+    "base_head": "459242ac4698da6dac8bd3e7a593bea876e9b046",
+    "syntax_checked": 11,
+    "files": [
+      {
+        "path": "bot/src/frameworks/narrative/contracts/knowledge-evidence.js",
+        "sha256": "74c2b1f0acf3d4c6fb9d2451f1acc74f571b45ea4531ed1372e41cb5037f0e06"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/contracts/npc-evidence.js",
+        "sha256": "494522b049e8fcf2b60c68257064c21303ea2fdbe77b2412780d7d50fcb28986"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/visibility-source.js",
+        "sha256": "3fe0d71f9d83dc738c72124462938a8b0934bf30f071f152109785da637c5e22"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/public.js",
+        "sha256": "c0438dcd01372b31f44ba12f3a4ff82ba69b7387c975e1ceb64a131c4d64bf6b"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--narrative/public.js",
+        "sha256": "6796bffe8e578624237529303f1297b6d13fb60af34d64041050677d73c719bc"
+      },
+      {
+        "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+        "sha256": "09730598a3183163a35d6445530fc3b2ddbc566dfbc7ead257fa1bf301a24a4e"
+      },
+      {
+        "path": "bot/src/application/composition/knowledge-narrative.js",
+        "sha256": "c77396a8d632cee5ad5a2c9d4ca8466566ec71334e49520b3270117cb5254209"
+      },
+      {
+        "path": "bot/src/application/composition/npc-evidence-projection.js",
+        "sha256": "cfa9a342638a7b8f8912e777e701bda1d058381c69f0aeba0eaf7a312ad4dc8c"
+      },
+      {
+        "path": "bot/src/scene-fiction-context.js",
+        "sha256": "e46892d78e402c73fb15f4b5da9e9945d06d3142fd433069fcad9e4b4c14ae31"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "sha256": "1d7ee8d3ed323ce9cfbb1c9108acd9d28c560212d1010f58c1a413211b2c4ee4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "sha256": "d4f16f99fcc22c74f598b5af4c6dee08305579629f27791d2fc822cfcc88db5f"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/source-visibility.js",
+        "sha256": "b4fcbf453be6ef11e78b2fbbeeabb0f9a7022d24e6146525ca81effa332d30cb"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "1c9f493ab5bf188ed54fad13ede6ddcbab16a2b05f4152a276e34e26ae65bf3f"
+      }
+    ]
+  },
+  "unchanged_rule_sha256": "b4fcbf453be6ef11e78b2fbbeeabb0f9a7022d24e6146525ca81effa332d30cb",
+  "tests": {
+    "exit_code": 0,
+    "end": "2026-10-26T15:59:16.2662320-05:00",
+    "run_id": "rf04-f05-c24-frozen",
+    "start": "2026-10-26T15:59:13.7251120-05:00",
+    "duration_ms": 2541.12,
+    "files": 2,
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "tap_duration_ms": 2487.7733,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c24.test.mjs tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+    "affected_rerun": "C23 source visibility/bootstrap production code changed in C24; fresh fixture updated for required initializer. Entire current C23 file7/7, closing split-final-file gap."
+  },
+  "syntax": {
+    "checked": 11,
+    "passed": 11
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 675,
+      "unowned": 0,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
+      "cycleComponents": 2,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2094,
+      "acceptedLegacyOccurrences": 2094,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 675,
+      "unowned": 0,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
+      "cycleComponents": 2,
+      "largestCycle": 145,
+      "rawViolationOccurrences": 2094,
+      "acceptedLegacyOccurrences": 1352,
+      "activeViolationGroups": 738,
+      "transitionErrors": 738,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "2da0bb93b3e0d54e9d32136fc5873ec0dbce2d83fadb16531b1e740772d80615",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-fiction-context.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Original recursive visibility source now composed once in Narrative with exact Knowledge evidence/disclosure and NPC actor-reference callbacks through existing pairs. Native audience grant context and historical reader use same singleton. Original policy factory unchanged.",
+  "corrective_defect": "scene-fiction-context referenced undefined closure in authored-location/fact/detail checks. Bound that identifier to original narrativeSourceVisible. Actual captureWorldInput→scene context fixture reaches original viewpoint hold instead of ReferenceError, without adding native presence or moving PC.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Not qualification of successful native narrative artifact authoring/publication or positive typed-speech producer. Recursive malformed certificates exercised only for rejection.",
+    "Other scene context capabilities and original native grant context remain mixed source with exact migration obligations retained.",
+    "No provider/Discord/production recovery/narrative-quality/release qualification."
+  ],
+  "rollback": "Revert C24 Narrative source/ports/pairs/bootstrap/context binding together and restore1exact retired source edge; preserve evidence/player/native/outbox records.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c24-tests.log",
+      "sha256": "a09f7cf8e8809dd8a3f9d9029f40dffa8df13dc050f9a2092f18e37b41c4934a"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c24-architecture-initial.log",
+      "sha256": "e3241263e1dfdbd9a0c937805162e2b2eb1e4fb67b6c35abbcdcba0a3b0f50e3"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c24-rf04-final.log",
+      "sha256": "dcacb960d22365714db164a70d5659cec598d7964205edf625a772887e1248e7"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c24-rf05-final.log",
+      "sha256": "1c41d90fdbd1e636caeac44e12220c6d9d38e6ad70646853c7b79dbf4776106b"
+    }
+  ]
+}

@@ -1,14 +1,14 @@
 {
-  "checkpoint": "RF04-F05 C23 NPC evidence projection source",
-  "timestamp": "2026-10-26T20:55:29.628Z",
+  "checkpoint": "RF04-F05 C24 Narrative native visibility source",
+  "timestamp": "2026-10-26T20:59:28.515Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "7246dcb19aba9151212d577a1d9a2a1f4df93fa66b5e0c9ff0dae2a3b1944899",
-  "open_exact_records": 2078,
+  "manifest_sha256": "a5486291ce724ee3dee360dd309de1e58bce2da8a3a57c15fd2d71166d826da3",
+  "open_exact_records": 2077,
   "by_feature": {
     "RF05-F05": 420,
     "RF04-F04": 204,
     "RF05-F02": 217,
-    "RF05-F03": 256,
+    "RF05-F03": 255,
     "RF04-F03": 102,
     "RF04-F01": 306,
     "RF06-F02": 17,
@@ -340,6 +340,20 @@
       "max_occurrences": 1,
       "source_sha256": "ea062471fc72796b0613b0516e081d9d86c873db9b0ac67b5d6693319b0b6f0a",
       "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "2da0bb93b3e0d54e9d32136fc5873ec0dbce2d83fadb16531b1e740772d80615",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/scene-fiction-context.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "752912da6dbe45c8d50cae2b3af8d1e6ec98ac3961bc552140ee11f7d8b35270",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -4406,68 +4420,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 672,
+      "sourceModules": 675,
       "unowned": 0,
-      "importOccurrences": 2955,
-      "internalImportOccurrences": 2776,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
       "cycleComponents": 2,
       "largestCycle": 145,
-      "rawViolationOccurrences": 2095,
-      "acceptedLegacyOccurrences": 2095,
+      "rawViolationOccurrences": 2094,
+      "acceptedLegacyOccurrences": 2094,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 672,
+      "sourceModules": 675,
       "unowned": 0,
-      "importOccurrences": 2955,
-      "internalImportOccurrences": 2776,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
       "cycleComponents": 2,
       "largestCycle": 145,
-      "rawViolationOccurrences": 2095,
-      "acceptedLegacyOccurrences": 2095,
+      "rawViolationOccurrences": 2094,
+      "acceptedLegacyOccurrences": 2094,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 672,
+      "sourceModules": 675,
       "unowned": 0,
-      "importOccurrences": 2955,
-      "internalImportOccurrences": 2776,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
       "cycleComponents": 2,
       "largestCycle": 145,
-      "rawViolationOccurrences": 2095,
-      "acceptedLegacyOccurrences": 1353,
+      "rawViolationOccurrences": 2094,
+      "acceptedLegacyOccurrences": 1352,
       "activeViolationGroups": 738,
       "transitionErrors": 738,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 672,
+      "sourceModules": 675,
       "unowned": 0,
-      "importOccurrences": 2955,
-      "internalImportOccurrences": 2776,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
       "cycleComponents": 2,
       "largestCycle": 145,
-      "rawViolationOccurrences": 2095,
+      "rawViolationOccurrences": 2094,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1674,
-      "transitionErrors": 1674,
+      "activeViolationGroups": 1673,
+      "transitionErrors": 1673,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 672,
+      "sourceModules": 675,
       "unowned": 0,
-      "importOccurrences": 2955,
-      "internalImportOccurrences": 2776,
+      "importOccurrences": 2965,
+      "internalImportOccurrences": 2786,
       "cycleComponents": 2,
       "largestCycle": 145,
-      "rawViolationOccurrences": 2095,
+      "rawViolationOccurrences": 2094,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2078,
-      "transitionErrors": 2078,
+      "activeViolationGroups": 2077,
+      "transitionErrors": 2077,
       "pass": false
     }
   },
@@ -4539,7 +4553,7 @@
     {
       "path": "bot/src/application/composition/knowledge-narrative.js",
       "owner": "application",
-      "sha256": "c2c1002bfa0b670ceefc35d00313be6a89adc66a2590d47298ebd7cffb314980"
+      "sha256": "c77396a8d632cee5ad5a2c9d4ca8466566ec71334e49520b3270117cb5254209"
     },
     {
       "path": "bot/src/application/composition/knowledge-world.js",
@@ -4564,7 +4578,7 @@
     {
       "path": "bot/src/application/composition/npc-evidence-projection.js",
       "owner": "application",
-      "sha256": "1568e5a509684cfeb93a5f0c83c4aff8e79e8d9e8f4a77cc44df28baf5a935ae"
+      "sha256": "cfa9a342638a7b8f8912e777e701bda1d058381c69f0aeba0eaf7a312ad4dc8c"
     },
     {
       "path": "bot/src/application/composition/npc-observations.js",
@@ -4964,7 +4978,7 @@
     {
       "path": "bot/src/framework-to-framework/knowledge--narrative/public.js",
       "owner": "knowledge--narrative",
-      "sha256": "15be25776207e339ccd3d942336d10ba45b22d1e54dc811206d2729bf9a54194"
+      "sha256": "6796bffe8e578624237529303f1297b6d13fb60af34d64041050677d73c719bc"
     },
     {
       "path": "bot/src/framework-to-framework/knowledge--npc/public.js",
@@ -4979,7 +4993,7 @@
     {
       "path": "bot/src/framework-to-framework/narrative--npc/public.js",
       "owner": "narrative--npc",
-      "sha256": "ab1ed9b5882ce8ff83b57803b035157d26e3b943b9fb97a57d5ec91c9e8625ec"
+      "sha256": "09730598a3183163a35d6445530fc3b2ddbc566dfbc7ead257fa1bf301a24a4e"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -5962,6 +5976,16 @@
       "sha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba"
     },
     {
+      "path": "bot/src/frameworks/narrative/contracts/knowledge-evidence.js",
+      "owner": "narrative",
+      "sha256": "74c2b1f0acf3d4c6fb9d2451f1acc74f571b45ea4531ed1372e41cb5037f0e06"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/npc-evidence.js",
+      "owner": "narrative",
+      "sha256": "494522b049e8fcf2b60c68257064c21303ea2fdbe77b2412780d7d50fcb28986"
+    },
+    {
       "path": "bot/src/frameworks/narrative/contracts/opening-author.js",
       "owner": "narrative",
       "sha256": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e"
@@ -6039,7 +6063,7 @@
     {
       "path": "bot/src/frameworks/narrative/public.js",
       "owner": "narrative",
-      "sha256": "adc62293bdffcea104287a217795cee5ccb5eafdce4a61af515138a372032f12"
+      "sha256": "c0438dcd01372b31f44ba12f3a4ff82ba69b7387c975e1ceb64a131c4d64bf6b"
     },
     {
       "path": "bot/src/frameworks/narrative/scene-observation-route.js",
@@ -6050,6 +6074,11 @@
       "path": "bot/src/frameworks/narrative/source-visibility.js",
       "owner": "narrative",
       "sha256": "b4fcbf453be6ef11e78b2fbbeeabb0f9a7022d24e6146525ca81effa332d30cb"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/visibility-source.js",
+      "owner": "narrative",
+      "sha256": "3fe0d71f9d83dc738c72124462938a8b0934bf30f071f152109785da637c5e22"
     },
     {
       "path": "bot/src/frameworks/narrative/writer-contract-v9.js",
@@ -7554,7 +7583,7 @@
     {
       "path": "bot/src/scene-fiction-context.js",
       "owner": "narrative",
-      "sha256": "752912da6dbe45c8d50cae2b3af8d1e6ec98ac3961bc552140ee11f7d8b35270"
+      "sha256": "e46892d78e402c73fb15f4b5da9e9945d06d3142fd433069fcad9e4b4c14ae31"
     },
     {
       "path": "bot/src/scene-intent-board.js",

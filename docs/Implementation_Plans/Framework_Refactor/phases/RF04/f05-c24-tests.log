@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: fixed NPC evidence consumers fail closed before binding and preserve exact results/errors
+ok 1 - fixed NPC evidence consumers fail closed before binding and preserve exact results/errors
+  ---
+  duration_ms: 1.3134
+  type: 'test'
+  ...
+# Subtest: actual native dossier seed grants attributed nonsecret testimony only and preserves service identity
+ok 2 - actual native dossier seed grants attributed nonsecret testimony only and preserves service identity
+  ---
+  duration_ms: 281.2299
+  type: 'test'
+  ...
+# Subtest: import proof rejects different actor content key belief secret and forged payload hash
+ok 3 - import proof rejects different actor content key belief secret and forged payload hash
+  ---
+  duration_ms: 272.7947
+  type: 'test'
+  ...
+# Subtest: original Narrative visibility excludes GM sources and cross-recipient private ancestry
+ok 4 - original Narrative visibility excludes GM sources and cross-recipient private ancestry
+  ---
+  duration_ms: 302.9857
+  type: 'test'
+  ...
+# Subtest: retraction survives SQLite reopen without rewriting historical NPC knowledge
+ok 5 - retraction survives SQLite reopen without rewriting historical NPC knowledge
+  ---
+  duration_ms: 278.9841
+  type: 'test'
+  ...
+# Subtest: native seed audit failure rolls back profiles knowledge and import source before retry
+ok 6 - native seed audit failure rolls back profiles knowledge and import source before retry
+  ---
+  duration_ms: 273.5211
+  type: 'test'
+  ...
+# Subtest: unsupported human speech and recursive actor-proof narrative cannot manufacture testimony authority
+ok 7 - unsupported human speech and recursive actor-proof narrative cannot manufacture testimony authority
+  ---
+  duration_ms: 164.4685
+  type: 'test'
+  ...
+# Subtest: Narrative fixed evidence consumers retain exact native calls and reject incomplete or replaced policies
+ok 8 - Narrative fixed evidence consumers retain exact native calls and reject incomplete or replaced policies
+  ---
+  duration_ms: 0.9772
+  type: 'test'
+  ...
+# Subtest: historical source and native grant adapter share the single Narrative-owned closure
+ok 9 - historical source and native grant adapter share the single Narrative-owned closure
+  ---
+  duration_ms: 0.1
+  type: 'test'
+  ...
+# Subtest: actual disclosure and ancestry retain GM privacy and private recipient boundaries
+ok 10 - actual disclosure and ancestry retain GM privacy and private recipient boundaries
+  ---
+  duration_ms: 290.4216
+  type: 'test'
+  ...
+# Subtest: native NPC nonsecret import remains attributed actor evidence without making its GM source globally visible
+ok 11 - native NPC nonsecret import remains attributed actor evidence without making its GM source globally visible
+  ---
+  duration_ms: 277.1401
+  type: 'test'
+  ...
+# Subtest: cyclic ancestry missing references and unsupported artifact proof fail closed
+ok 12 - cyclic ancestry missing references and unsupported artifact proof fail closed
+  ---
+  duration_ms: 280.0801
+  type: 'test'
+  ...
+# Subtest: source retraction and failed native indexing remain truthful across database restart
+ok 13 - source retraction and failed native indexing remain truthful across database restart
+  ---
+  duration_ms: 286.5058
+  type: 'test'
+  ...
+# Subtest: scene context uses original visibility closure for authored location then holds missing native presence without choosing PC movement
+ok 14 - scene context uses original visibility closure for authored location then holds missing native presence without choosing PC movement
+  ---
+  duration_ms: 297.3859
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2487.7733

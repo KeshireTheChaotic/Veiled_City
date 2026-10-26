@@ -1,0 +1,42 @@
+{
+  "mode": "ratchet",
+  "phase": "RF05",
+  "sourceModules": 675,
+  "unowned": 0,
+  "importOccurrences": 2965,
+  "internalImportOccurrences": 2786,
+  "cycleComponents": 2,
+  "largestCycle": 145,
+  "rawViolationOccurrences": 2094,
+  "acceptedLegacyOccurrences": 1352,
+  "activeViolationGroups": 738,
+  "transitionErrors": 738,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/action-continuation.js",
+      "owner": "session"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-context.js",
+      "owner": "session"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-evidence.js",
+      "owner": "session"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-readiness.js",
+      "owner": "session"
+    },
+    {
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-state.js",
+      "owner": "session"
+    }
+  ]
+}

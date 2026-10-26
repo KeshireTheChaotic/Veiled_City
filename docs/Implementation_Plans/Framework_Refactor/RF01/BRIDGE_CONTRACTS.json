@@ -1846,6 +1846,11 @@
           "from": "knowledge",
           "to": "narrative",
           "contract": "Existing-identity retrieval consumes the original shared native Narrative source-visibility closure; no copied policy, grant adapter or new audience entitlement."
+        },
+        {
+          "from": "narrative",
+          "to": "knowledge",
+          "contract": "C24 original disclosure, active evidence and evidence type functions for source closure; no copied privacy policy."
         }
       ],
       "source_evidence": [
@@ -1869,7 +1874,8 @@
         "bot/src/application/composition/knowledge-narrative.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1892,7 +1898,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/knowledge--narrative/public.js",
-      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open."
+      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected."
     },
     {
       "pair": "knowledge--npc",
@@ -2256,6 +2262,11 @@
           "from": "npc",
           "to": "narrative",
           "contract": "Original shared native source visibility closure only, no raw planner content or new audience grant."
+        },
+        {
+          "from": "narrative",
+          "to": "npc",
+          "contract": "C24 original NPC actorReferenceVisible proof inside original recursive Narrative source closure; no knowledge or testimony inferred."
         }
       ],
       "source_evidence": [
@@ -2273,7 +2284,8 @@
         "bot/src/application/composition/npc-evidence-projection.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2296,7 +2308,7 @@
         "occurrences": 5
       },
       "public_api": "bot/src/framework-to-framework/narrative--npc/public.js",
-      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt."
+      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected."
     },
     {
       "pair": "narrative--operations",

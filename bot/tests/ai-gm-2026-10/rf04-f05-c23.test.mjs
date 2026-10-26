@@ -6,12 +6,12 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import '../../src/audience-native-v9.js';
-import {initializeKnowledgeWorld,initializeNpcEvidenceProjection} from '../../src/application/composition/public.js';
+import {initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeNpcEvidenceProjection} from '../../src/application/composition/public.js';
 import * as Npc from '../../src/frameworks/npc/public.js';
 import * as World from '../../src/frameworks/world/public.js';
 import * as Legacy from '../../src/npc-cognition-projection.js';
 import {seedNpcCognition} from '../../src/npc-cognition.js';
-initializeKnowledgeWorld();initializeNpcEvidenceProjection();
+initializeKnowledgeWorld();initializeKnowledgeNarrative();initializeNpcEvidenceProjection();
 const party={mode:'party'},privateScope={mode:'private',actorUserId:'owner',actorCharacterId:'pc'};
 function fixture(t){
  const dir=mkdtempSync(path.join(tmpdir(),'vc-c23-')),file=path.join(dir,'fresh.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));

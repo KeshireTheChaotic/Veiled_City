@@ -3,17 +3,17 @@ import {jsonHash} from './kernel/json-hash.js';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {factVisibleTo} from './disclosure-authority.js';
-import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
+import {objectiveEvidence} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {assemblyOrientation} from './assembly-state.js';
-import {actorReferenceVisible} from './npc-cognition-projection.js';
-import {createNarrativeSourceVisibility} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible} from './frameworks/narrative/public.js';
 export const sceneFictionHash=value=>jsonHash(value);
 export function sceneFictionFailure(reason){return Object.assign(new Error(`Scene fiction held: ${reason}. No character action or outcome was inferred.`),
   {code:'SCENE_FICTION',expected:true,diagnostic:{category:reason}});}
 const visible=(row,scope)=>row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
-const {narrativeSourceVisible}=createNarrativeSourceVisibility({sceneFictionHash,visible,activeEvidence,evidenceType,actorReferenceVisible});
+// Historical scene-context call sites use this same original source closure.
+const closure=narrativeSourceVisible;
 export {narrativeSourceVisible};
 const short=(value,max=180)=>typeof value==='string'&&!/[\x00-\x1f\u202a-\u202e\u2066-\u2069]/u.test(value)?value.slice(0,max):'';
 export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='describe_scene',excludeFictionKey=null}={}){

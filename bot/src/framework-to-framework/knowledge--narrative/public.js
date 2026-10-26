@@ -4,3 +4,7 @@ import {nativeNarrativeSource} from '../../frameworks/narrative/public.js';
 export function connectKnowledgeNarrative({consumer=createKnowledgeNarrativeVisibilityConsumer()}={}){
   return consumer.bind(nativeNarrativeSource.nativeSource().narrativeSourceVisible);
 }
+
+import {narrativeKnowledgeEvidence} from '../../frameworks/narrative/public.js';
+import {factVisibleTo,activeEvidence,evidenceType} from '../../frameworks/knowledge/public.js';
+export function connectNarrativeKnowledgeEvidence(){return narrativeKnowledgeEvidence.bind({factVisibleTo,activeEvidence,evidenceType});}
