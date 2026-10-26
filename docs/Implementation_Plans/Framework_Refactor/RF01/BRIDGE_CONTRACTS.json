@@ -2763,7 +2763,7 @@
         {
           "from": "world",
           "to": "npc",
-          "contract": "Exact current db/campaign/actor/information/source and existing resource-check option; no requested world fact becomes acquired NPC knowledge."
+          "contract": "Exact current db/campaign/actor/information/source and existing resource-check option; no requested world fact becomes acquired NPC knowledge. C14 original independent NPC acquired-source attribution supplies native World report transfer; original goal engine no longer imported by World."
         },
         {
           "from": "npc",
@@ -2792,7 +2792,8 @@
         "bot/src/application/composition/npc-world-evidence.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2815,7 +2816,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate."
     },
     {
       "pair": "operations--persistence",

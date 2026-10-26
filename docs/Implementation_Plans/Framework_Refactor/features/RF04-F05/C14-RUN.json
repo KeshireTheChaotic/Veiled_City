@@ -1,0 +1,585 @@
+{
+  "feature": "RF04-F05-C14",
+  "status": "SCOPED_NPC_ATTRIBUTION_AND_WORLD_REPORT_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+  "base_head": "602f0268b056d24d73f3ee72527f1dc3cc428a3b",
+  "changed_files": {
+    "base_head": "602f0268b056d24d73f3ee72527f1dc3cc428a3b",
+    "syntax_checked": 10,
+    "files": [
+      {
+        "path": "bot/src/frameworks/npc/knowledge-source.js",
+        "sha256": "0539c382bd7faafd9c57c72747f6d6b4d789a17d662c8002976f49ddc3b332c5"
+      },
+      {
+        "path": "bot/src/frameworks/npc/motivation.js",
+        "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
+      },
+      {
+        "path": "bot/src/frameworks/npc/public.js",
+        "sha256": "c9729857f80cf1cbed2eea016781074b3876a4a5a71fb8c615a626173dce84f2"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-knowledge-source.js",
+        "sha256": "16144f791e83cd893f26b16843c29c63c83c9e2194ba7c06e4e8d543764daff5"
+      },
+      {
+        "path": "bot/src/frameworks/world/information-transfer.js",
+        "sha256": "007e94b5672b2bfd48205e188646e31749accee1966dbca4d2d0a30897cc457e"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "8d8dae7c6fd9d1debd1f240cf026ecb3036d8dc21550bf5bed74305cc9746bba"
+      },
+      {
+        "path": "bot/src/world-information-transfer.js",
+        "sha256": "7dfc1222597e53f492f0d8db8011caca7f8fc869f1f7e1d413798a7e02a0fede"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "ee8bac3adf1e9cfa0ef767ccb1e8029d3733e60d0cfdd090ae221d8f89e03861"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "41c06ff7260a70235fe95793c8935232dc1b29795b845e78e18e7ac164eff974"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "4677c1287b29194493c34c489e78503b89983090dccc094f773e1e69166d1891"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "sha256": "7b00130b3e1a5a59488e78259e3ae627aa2a641ecef157517a3c52a92c430ff5"
+      }
+    ]
+  },
+  "body": {
+    "npc_source_body_sha256": "325de9fff305a38a520ac1bcf0039b9f0e60a1f2612ac60791fb63b85bbcf175",
+    "transfer_body_sha256": "1c0f9d3e9ef01770240834fe51dd21ac05521fbdeb714f7d7c66741856e3c813",
+    "exact_bodies_preserved": true,
+    "hash_equivalence": "sceneFictionHash delegates directly to same kernel jsonHash; field order unchanged."
+  },
+  "tests": {
+    "initial": {
+      "run_id": "RF04-F05-C14-20261026-1",
+      "exit_code": 1,
+      "end": "2026-10-26T20:00:55.6601358Z",
+      "duration_ms": 3604.38,
+      "start": "2026-10-26T20:00:52.0557558Z",
+      "files": 3,
+      "tests": 21,
+      "passed": 20,
+      "failed": 1,
+      "tap_duration_ms": 3549.7851
+    },
+    "repair": {
+      "start": "2026-10-26T20:01:10.5372863Z",
+      "end": "2026-10-26T20:01:11.7430133Z",
+      "test_sha256": "6923DE2B008BC6E79074511CC600BDA0CBEDFB462585D3F71DB88B975860A642",
+      "run_id": "RF04-F05-C14-20261026-repair",
+      "exit_code": 0,
+      "duration_ms": 1205.727,
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "tap_duration_ms": 1120.1573
+    },
+    "reason": "Actual NPC acquired-source and native contact/resolver dependencies changed. Affected C12/C13 final files whole14/14pass. C14 rollback fixture absent recipient knowledge returns undefined rather than null; only failed case repaired/retested. Six earlier C14 cases passed initial bytes; no final-file union claim."
+  },
+  "syntax": {
+    "checked": 10,
+    "passed": 10,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 638,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
+      "acceptedLegacyOccurrences": 2261,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 638,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
+      "acceptedLegacyOccurrences": 1418,
+      "activeViolationGroups": 839,
+      "transitionErrors": 839,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "184cf42392ca826483f1048aa27ecf9b3401f3de9b5976383e7458a8e6b2ebc8",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "76d33eb89b7fb07906810000ae400d69f7a750f90b488671cea3c2c4f4fbf5fc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/native-actor-control.js",
+      "kind": "static",
+      "specifier": "./native-actor-control.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "385285ce8aeec21d088d886047eb39ba0443966d14d674336a528c1f59bb8d2a",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "d192d2c2bc0a99ae010902a912d62300a5301e15c003fca3747f86c71ca5432d",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "intent",
+      "max_occurrences": 2,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "d2d490119b6023f22d5774b1a024007e90cb407792946e308087d09e818a0eb2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-consequences.js",
+      "kind": "static",
+      "specifier": "./city-consequences.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "b1e6665245258c17fda495e90412f1e6759c48c756d878b50e9194540c338873",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-groups.js",
+      "kind": "static",
+      "specifier": "./city-groups.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "adc7cd2e840e5c0fa85f8b4d1252e79e29ea2288e3cfef4900129f32e1f65b55",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/context-planner.js",
+      "kind": "static",
+      "specifier": "./context-planner.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "8e946aa27be3cd8d1d9bfc6a1a1f0d397bcd3c69b6902394dd6306977b81e35a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "517deaf87e74cc809de2fe60ff732e3840b8a8605b23441a41d966cc67a1e91a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/city-civic.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "037e9fd8e091c4d703fe627ca8ce502d7dbf3434b5023a59c0880e5b7712e2fa",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "ea9610d983a99cabe8fbc95810fe66c5f7184743a55cbe7a7944d2ffc154148e",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "80460fe95c7f6e53e74002b160628414e9708fd1b3d6b19e97874882f510d1b3",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/city-groups.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "5c934acc8fd4f844e4b1dcaaa145d8538245281078d0a4caa666076abb9ec196",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/city-groups.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "c94a1f1b89f8ee8a2167d920e22d792aa26279ffa528be37603bfc140d572bdc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "ddfc44cae4615b4a397ca569b2435be01cff1322aa9ff4bebbabb25f921b24cc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "9f706b729af966295ed233a28eab71e8641ebf2cf613b15c165f544e8b56b4c0",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/encounter.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "f38c81a88d64ac24ffe5539ce3f2155d696d93700cb5b81922b15f5b1341599b",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/long-projects.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "3500ebe1ccc02634ed4c419654385e594fa13b6797d2478626f9d903298b9bca",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "34350ff0e9f45285fa7dfd1c8d75149859cec4e11d6713c7a54401d0a9e2baa0",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "d3b6abd4e8ee3e5d5fafe7b9a608c780bfeb69b0ad0fd1bf7fbde7ad32d934de",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/player-language.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "72e2e44aa5e41e6c655c42e5a4fe497de2cc8727893a8446b8067c5cf7afe4d3",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/world-information-transfer.js",
+      "kind": "static",
+      "specifier": "./world-information-transfer.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "26d2064b57367f55f0c14911d7a8f8ffbf665e8d006446d8286a978fab389881",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "391b06c268735e9061bc0beba826ebf4316266940273c9013e357ca38b865c7f",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "9f1f4d12f9d8d164e7d4622889af393f2aaa08b098643f7e7367cd038be178e9",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "235085de8eece9f8823f29719f8746f651d59494e5c5bc2c2642adcecb76d7f7",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-consequences.js",
+      "kind": "static",
+      "specifier": "./city-consequences.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "80cf2fcfdbbedcdc8e7cda7da73786db8f7adb93ba44c2b43c9bad901949585e",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-groups.js",
+      "kind": "static",
+      "specifier": "./city-groups.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "f59b6829d31105bd397198aa4609d57b258e75be09bc2db3e20f8514182f000b",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/world-information-transfer.js",
+      "kind": "static",
+      "specifier": "./world-information-transfer.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "9be34e4b98c524744cdd9bdc8beadccbe5a8b742f1d0bb443ff0fefb43f06f13",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/story-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "96cae06c92db0deab37fefbd3421795c21fdc079206b534e4353690ebfe38f5f",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "f3ebab1233b777e7c3351141e13edb79f521e1dd60528f557513e8b48b984d3a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "NPC source-attribution lookup independent of motivation orchestration. World native transfer uses exact original body, same kernel hash, own receipt/calendar and fixed native-control/NPC-source consumers.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Native contact producer exercised successful private subjective reports, not every NPC/faction action or narrative disclosure/publication.",
+    "NPC motivation root still composes its World collaborators and native travel audience projection remains mixed; later slices accountable.",
+    "No live provider/Discord/production recovery or narrative-quality qualification."
+  ],
+  "rollback": "Revert C14 NPC method/World transfer relocation, fixed consumer/pair/root/public/real resolver imports and restore30exact retired records together. Preserve committed source/capture/action/report/mutation and recipient-knowledge history.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c14-tests.log",
+      "sha256": "ddb83c909f3ab9ee06aff98d1a5f183fe91f7ef1044eae5b3f380c5d10fe1fe0"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c14-repair.log",
+      "sha256": "fae12ad673ebbc282a1a35087053c32269ae91baed29f2a59c18668b51c41216"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c14-architecture-initial.log",
+      "sha256": "e89a8245400916fd6e37f79e55d1d00ef38236425785d9847467b7fdc18237f5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c14-rf04-final.log",
+      "sha256": "f276c0902b846f472d601bba0d9c2d2c6dc8074814c752de572ead162f403ac2"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c14-rf05-final.log",
+      "sha256": "39a2aa4d1749774c0ce9e220af664b3a725d89c4cd31230082c6766717533bb7"
+    }
+  ]
+}

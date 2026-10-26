@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C13 native simulation receipt core",
-  "timestamp": "2026-10-26T19:57:38.551Z",
+  "checkpoint": "after C14 NPC acquired-source and World native report isolation",
+  "timestamp": "2026-10-26T20:02:07.509Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "cecb32f2448dafbe56ba1a709808be80e3adab190b9fb0a6a2f5076985ae6f8b",
-  "open_exact_records": 2274,
+  "manifest_sha256": "4f2a087bf5f0d17b537967f94e3e87fdc1d9f018ea148e7e6053b5b3e8addd42",
+  "open_exact_records": 2244,
   "by_feature": {
-    "RF05-F05": 432,
-    "RF04-F04": 260,
-    "RF05-F02": 242,
+    "RF05-F05": 431,
+    "RF04-F04": 258,
+    "RF05-F02": 236,
     "RF05-F03": 280,
-    "RF04-F03": 113,
-    "RF04-F01": 333,
+    "RF04-F03": 111,
+    "RF04-F01": 317,
     "RF06-F02": 17,
     "RF04-F05": 114,
     "RF06-F07": 5,
@@ -18,7 +18,7 @@
     "RF06-F05": 43,
     "RF06-F03": 190,
     "RF05-F04": 43,
-    "RF04-F02": 42
+    "RF04-F02": 39
   },
   "resolved_since_audit": [
     {
@@ -330,6 +330,48 @@
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
+      "id": "184cf42392ca826483f1048aa27ecf9b3401f3de9b5976383e7458a8e6b2ebc8",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "76d33eb89b7fb07906810000ae400d69f7a750f90b488671cea3c2c4f4fbf5fc",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "385285ce8aeec21d088d886047eb39ba0443966d14d674336a528c1f59bb8d2a",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
       "id": "7f61b1ffce7192cc4ecf5dd1046f1dd2923b530ce96b71f089f16c88aa17ecfb",
       "feature": "RF05-F02",
       "deadline": "RF05",
@@ -340,6 +382,20 @@
       "max_occurrences": 2,
       "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "d192d2c2bc0a99ae010902a912d62300a5301e15c003fca3747f86c71ca5432d",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 2,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -358,6 +414,48 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "d2d490119b6023f22d5774b1a024007e90cb407792946e308087d09e818a0eb2",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-consequences.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "b1e6665245258c17fda495e90412f1e6759c48c756d878b50e9194540c338873",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-groups.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "adc7cd2e840e5c0fa85f8b4d1252e79e29ea2288e3cfef4900129f32e1f65b55",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/context-planner.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "application",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "ef95e7ad349338d6c93a8f05c2d303cf5915e849499a0cb007d5f1fedb0566f0",
       "feature": "RF05-F02",
       "deadline": "RF05",
@@ -368,6 +466,20 @@
       "max_occurrences": 1,
       "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
       "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "8e946aa27be3cd8d1d9bfc6a1a1f0d397bcd3c69b6902394dd6306977b81e35a",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "581dbaa593e9409793cf3e459b4f7c1dc9b40475b0c05f132acf5f902746c85d",
+      "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -442,6 +554,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "517deaf87e74cc809de2fe60ff732e3840b8a8605b23441a41d966cc67a1e91a",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-civic.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "62e5092676768bc1790717a0cd1b950a8afbd7d8dc0b3fa4b2eaaafab1d0f8f1",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -466,6 +592,34 @@
       "max_occurrences": 1,
       "source_sha256": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "037e9fd8e091c4d703fe627ca8ce502d7dbf3434b5023a59c0880e5b7712e2fa",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "ea9610d983a99cabe8fbc95810fe66c5f7184743a55cbe7a7944d2ffc154148e",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -610,6 +764,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "80460fe95c7f6e53e74002b160628414e9708fd1b3d6b19e97874882f510d1b3",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-groups.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "73b7fb9d2f79a68b988af4f8d5365123103e804873e07265b8f7f987519e5997",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -624,6 +792,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "5c934acc8fd4f844e4b1dcaaa145d8538245281078d0a4caa666076abb9ec196",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-groups.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "fc79fa47a47e5ff1635603e4c9a2da463032a11cfe89dadac96af9b7687e706e",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -633,6 +815,20 @@
       "code": "CYCLIC_IMPORT_EDGE",
       "max_occurrences": 1,
       "source_sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "c94a1f1b89f8ee8a2167d920e22d792aa26279ffa528be37603bfc140d572bdc",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "application",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "39b74a245794b852a08d47c0dfc7c2dffbb94066c6881061fd2c2aca260ccba1",
       "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
@@ -662,6 +858,20 @@
       "max_occurrences": 1,
       "source_sha256": "c99f95f653893eb6d6b9b3831acff440946ce992b681281c6ffd6ba4096a9551",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "ddfc44cae4615b4a397ca569b2435be01cff1322aa9ff4bebbabb25f921b24cc",
+      "feature": "RF04-F04",
+      "deadline": "RF04",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "session",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "c99f95f653893eb6d6b9b3831acff440946ce992b681281c6ffd6ba4096a9551",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -704,6 +914,20 @@
       "max_occurrences": 1,
       "source_sha256": "ebfb1d4708fdba91dcc474b18edeca91ce217f9719f942abf23c2278c652c9b8",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "9f706b729af966295ed233a28eab71e8641ebf2cf613b15c165f544e8b56b4c0",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/encounter.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "ebfb1d4708fdba91dcc474b18edeca91ce217f9719f942abf23c2278c652c9b8",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -788,6 +1012,20 @@
       "max_occurrences": 1,
       "source_sha256": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "f38c81a88d64ac24ffe5539ce3f2155d696d93700cb5b81922b15f5b1341599b",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/long-projects.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -1156,6 +1394,34 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "3500ebe1ccc02634ed4c419654385e594fa13b6797d2478626f9d903298b9bca",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "knowledge",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "23e6acb3002e4521ce13c349aff1d419b5cf9c0844a8914e95b28761376218ee",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "34350ff0e9f45285fa7dfd1c8d75149859cec4e11d6713c7a54401d0a9e2baa0",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "knowledge",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "23e6acb3002e4521ce13c349aff1d419b5cf9c0844a8914e95b28761376218ee",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "31e1916e9aa67d1c1814ea5efd5d862755987f36e748760041ae2a726faedea6",
       "feature": "RF05-F02",
       "deadline": "RF05",
@@ -1194,6 +1460,20 @@
       "max_occurrences": 1,
       "source_sha256": "ffabbcfd051ccc278c79a3f6a21f474dc6e755c9ab9abd2bab4a328e7fcd3c9b",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "d3b6abd4e8ee3e5d5fafe7b9a608c780bfeb69b0ad0fd1bf7fbde7ad32d934de",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/player-language.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "52a92ec63551a28776625e2ae85d0fadfbbe04817a07b13f7d15a559d1fb8f27",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -1380,6 +1660,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "72e2e44aa5e41e6c655c42e5a4fe497de2cc8727893a8446b8067c5cf7afe4d3",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/world-information-transfer.js",
+      "owner": "npc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "64f7310cd6c250e3c1eaccaf2dcf7fece0927db09106349ff7cfe1212d08412d",
       "feature": "RF04-F02",
       "deadline": "RF04",
@@ -1390,6 +1684,20 @@
       "max_occurrences": 1,
       "source_sha256": "c353b1697dc28562444d015c972b00ac5aa9d640edbf6ea7c11a458417c84e39",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "26d2064b57367f55f0c14911d7a8f8ffbf665e8d006446d8286a978fab389881",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "npc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "c353b1697dc28562444d015c972b00ac5aa9d640edbf6ea7c11a458417c84e39",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -1436,11 +1744,67 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "391b06c268735e9061bc0beba826ebf4316266940273c9013e357ca38b865c7f",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-civic.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "19992066b3b294de1c5dda59830735a42a5d97543aa6b67112579a2cc2987907",
       "feature": "RF04-F01",
       "deadline": "RF04",
       "from": "bot/src/simulation.js",
       "to": "bot/src/supply-dependencies.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "9f1f4d12f9d8d164e7d4622889af393f2aaa08b098643f7e7367cd038be178e9",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "235085de8eece9f8823f29719f8746f651d59494e5c5bc2c2642adcecb76d7f7",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-consequences.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "80cf2fcfdbbedcdc8e7cda7da73786db8f7adb93ba44c2b43c9bad901949585e",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/city-groups.js",
       "owner": "world",
       "code": "CYCLIC_IMPORT_EDGE",
       "max_occurrences": 1,
@@ -1492,6 +1856,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "f59b6829d31105bd397198aa4609d57b258e75be09bc2db3e20f8514182f000b",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/world-information-transfer.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "bd4e01ecd43979f97b256acdb7ac26517784a6977078ff1781251ccf8956405b",
       "feature": "RF04-F04",
       "deadline": "RF04",
@@ -1502,6 +1880,20 @@
       "max_occurrences": 1,
       "source_sha256": "578417b0579e897fc835c74a3c1b197a643abd99f903000ab41e55c199d67e1d",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "9be34e4b98c524744cdd9bdc8beadccbe5a8b742f1d0bb443ff0fefb43f06f13",
+      "feature": "RF04-F04",
+      "deadline": "RF04",
+      "from": "bot/src/story-continuity.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "session",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "578417b0579e897fc835c74a3c1b197a643abd99f903000ab41e55c199d67e1d",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -1576,6 +1968,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "96cae06c92db0deab37fefbd3421795c21fdc079206b534e4353690ebfe38f5f",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "c123f2d088c4b7e121b0817012123dafc86718380eda571f095285cd8de0d6ac",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -1586,6 +1992,20 @@
       "max_occurrences": 1,
       "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
       "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "f3ebab1233b777e7c3351141e13edb79f521e1dd60528f557513e8b48b984d3a",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "narrative",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -1662,68 +2082,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 635,
+      "sourceModules": 638,
       "unowned": 0,
-      "importOccurrences": 2867,
-      "internalImportOccurrences": 2689,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
       "cycleComponents": 1,
-      "largestCycle": 172,
-      "rawViolationOccurrences": 2292,
-      "acceptedLegacyOccurrences": 2292,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
+      "acceptedLegacyOccurrences": 2261,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 635,
+      "sourceModules": 638,
       "unowned": 0,
-      "importOccurrences": 2867,
-      "internalImportOccurrences": 2689,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
       "cycleComponents": 1,
-      "largestCycle": 172,
-      "rawViolationOccurrences": 2292,
-      "acceptedLegacyOccurrences": 2292,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
+      "acceptedLegacyOccurrences": 2261,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 635,
+      "sourceModules": 638,
       "unowned": 0,
-      "importOccurrences": 2867,
-      "internalImportOccurrences": 2689,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
       "cycleComponents": 1,
-      "largestCycle": 172,
-      "rawViolationOccurrences": 2292,
-      "acceptedLegacyOccurrences": 1426,
-      "activeViolationGroups": 862,
-      "transitionErrors": 862,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
+      "acceptedLegacyOccurrences": 1418,
+      "activeViolationGroups": 839,
+      "transitionErrors": 839,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 635,
+      "sourceModules": 638,
       "unowned": 0,
-      "importOccurrences": 2867,
-      "internalImportOccurrences": 2689,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
       "cycleComponents": 1,
-      "largestCycle": 172,
-      "rawViolationOccurrences": 2292,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
       "acceptedLegacyOccurrences": 420,
-      "activeViolationGroups": 1859,
-      "transitionErrors": 1859,
+      "activeViolationGroups": 1829,
+      "transitionErrors": 1829,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 635,
+      "sourceModules": 638,
       "unowned": 0,
-      "importOccurrences": 2867,
-      "internalImportOccurrences": 2689,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
       "cycleComponents": 1,
-      "largestCycle": 172,
-      "rawViolationOccurrences": 2292,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2261,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2274,
-      "transitionErrors": 2274,
+      "activeViolationGroups": 2244,
+      "transitionErrors": 2244,
       "pass": false
     }
   },
@@ -2210,7 +2630,7 @@
     {
       "path": "bot/src/framework-to-framework/npc--world/public.js",
       "owner": "npc--world",
-      "sha256": "e1055d18fd7ecc32971bedf5c623e504b09fc4dc564cd9875619c5263a3b62be"
+      "sha256": "ee8bac3adf1e9cfa0ef767ccb1e8029d3733e60d0cfdd090ae221d8f89e03861"
     },
     {
       "path": "bot/src/framework-to-framework/session--world/public.js",
@@ -3268,14 +3688,19 @@
       "sha256": "0d1ad6374828d28fdeac9951b92eb16cdb90db9be843e62666b2239cdd63b54e"
     },
     {
+      "path": "bot/src/frameworks/npc/knowledge-source.js",
+      "owner": "npc",
+      "sha256": "0539c382bd7faafd9c57c72747f6d6b4d789a17d662c8002976f49ddc3b332c5"
+    },
+    {
       "path": "bot/src/frameworks/npc/motivation.js",
       "owner": "npc",
-      "sha256": "7a0fe78a55e978f9682dd9f905757ebe7c0f842f5e8326991214e70272af29c0"
+      "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
     },
     {
       "path": "bot/src/frameworks/npc/public.js",
       "owner": "npc",
-      "sha256": "9df02f21183e7c626762476f16174e149e247c9185369a9e18f39a63a5237168"
+      "sha256": "c9729857f80cf1cbed2eea016781074b3876a4a5a71fb8c615a626173dce84f2"
     },
     {
       "path": "bot/src/frameworks/npc/strategy.js",
@@ -3528,6 +3953,11 @@
       "sha256": "a9fdcb745ab2c0a051ab3462ae0b42ff17653458071fafa9a42a779e9df8be47"
     },
     {
+      "path": "bot/src/frameworks/world/contracts/npc-knowledge-source.js",
+      "owner": "world",
+      "sha256": "16144f791e83cd893f26b16843c29c63c83c9e2194ba7c06e4e8d543764daff5"
+    },
+    {
       "path": "bot/src/frameworks/world/contracts/owner-consent.js",
       "owner": "world",
       "sha256": "3fee5f6e21eb4df9fc31f3fdfdacfba6da3a776ac8b46d466a33b50a8f319a16"
@@ -3561,6 +3991,11 @@
       "path": "bot/src/frameworks/world/identity-rules.js",
       "owner": "world",
       "sha256": "98ccb98bdd0368f4f3b6216c97bafa7e33b65da8f929ced5b47120c8c385d9b0"
+    },
+    {
+      "path": "bot/src/frameworks/world/information-transfer.js",
+      "owner": "world",
+      "sha256": "007e94b5672b2bfd48205e188646e31749accee1966dbca4d2d0a30897cc457e"
     },
     {
       "path": "bot/src/frameworks/world/infrastructure.js",
@@ -3600,7 +4035,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "bfb4e312354e64bad26e85a364591fefb54877ee69a6a78cda9ff18817acfc6e"
+      "sha256": "8d8dae7c6fd9d1debd1f240cf026ecb3036d8dc21550bf5bed74305cc9746bba"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -4715,7 +5150,7 @@
     {
       "path": "bot/src/simulation.js",
       "owner": "world",
-      "sha256": "bf25d8339cd0c10943fbc9c8d5052becc6edd599753983b8d8d7034ac0160b7e"
+      "sha256": "41c06ff7260a70235fe95793c8935232dc1b29795b845e78e18e7ac164eff974"
     },
     {
       "path": "bot/src/source-communication.js",
@@ -4835,7 +5270,7 @@
     {
       "path": "bot/src/world-information-transfer.js",
       "owner": "world",
-      "sha256": "6f490d0ea4d15b9b6609b12458bc2886047186bcacbbf3222b64321f6cd289d8"
+      "sha256": "7dfc1222597e53f492f0d8db8011caca7f8fc869f1f7e1d413798a7e02a0fede"
     },
     {
       "path": "bot/src/world-narrative-bridge.js",

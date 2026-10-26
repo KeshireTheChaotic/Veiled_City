@@ -1,0 +1,54 @@
+{
+  "base_head": "602f0268b056d24d73f3ee72527f1dc3cc428a3b",
+  "syntax_checked": 10,
+  "files": [
+    {
+      "path": "bot/src/frameworks/npc/knowledge-source.js",
+      "sha256": "0539c382bd7faafd9c57c72747f6d6b4d789a17d662c8002976f49ddc3b332c5"
+    },
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
+    },
+    {
+      "path": "bot/src/frameworks/npc/public.js",
+      "sha256": "c9729857f80cf1cbed2eea016781074b3876a4a5a71fb8c615a626173dce84f2"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-knowledge-source.js",
+      "sha256": "16144f791e83cd893f26b16843c29c63c83c9e2194ba7c06e4e8d543764daff5"
+    },
+    {
+      "path": "bot/src/frameworks/world/information-transfer.js",
+      "sha256": "007e94b5672b2bfd48205e188646e31749accee1966dbca4d2d0a30897cc457e"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "8d8dae7c6fd9d1debd1f240cf026ecb3036d8dc21550bf5bed74305cc9746bba"
+    },
+    {
+      "path": "bot/src/world-information-transfer.js",
+      "sha256": "7dfc1222597e53f492f0d8db8011caca7f8fc869f1f7e1d413798a7e02a0fede"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "ee8bac3adf1e9cfa0ef767ccb1e8029d3733e60d0cfdd090ae221d8f89e03861"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "41c06ff7260a70235fe95793c8935232dc1b29795b845e78e18e7ac164eff974"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+      "sha256": "4677c1287b29194493c34c489e78503b89983090dccc094f773e1e69166d1891"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+      "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+      "sha256": "7b00130b3e1a5a59488e78259e3ae627aa2a641ecef157517a3c52a92c430ff5"
+    }
+  ]
+}

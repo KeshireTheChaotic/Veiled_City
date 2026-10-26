@@ -1,15 +1,10 @@
 /** NPC subjective evidence and goal lifecycle; source, availability and native execution capabilities remain external. */
+import {ownedKnowledgeSource} from './knowledge-source.js';
 import {jsonHash} from '../../kernel/json-hash.js';
 import {UserInputError,StateConflictError} from '../../kernel/errors.js';
 export const motivationKey=value=>jsonHash(value).slice(0,32);
 export function createNpcMotivationRules({cityObject,cityKey,cityInteger,cityAudit,requireCitySource,activeCityProxy,assertNpcAvailability,assertWorldActorControl,nativeWorldOperationAllows,nativeWorldCoordinatorReady,inspectWorldInformationTransfer}){
-function ownedKnowledgeSource(db,guild,npc,known){
-  const direct=db.getWorldEvent(guild,known.source_ref);if(direct) return direct;
-  const link=db.getCityRecord(guild,"seed_knowledge_source",`source-link:${motivationKey([npc,known.knowledge_key])}`);
-  if(link?.actor_key===`npc:${npc}`&&link.data.original_source_ref===known.source_ref
-    &&link.data.content_hash===motivationKey([known.content,known.belief_state,known.source_ref])) return db.getWorldEvent(guild,link.source_event);
-  return null;
-}
+
 function actorSource(db,guildId,{actor_type,actor_key,information_key,source_event},{requireResources=true}={}){
   const event=requireCitySource(db,guildId,source_event);cityKey(actor_key);cityKey(information_key);
   assertWorldActorControl(db,guildId,actor_type,actor_key);

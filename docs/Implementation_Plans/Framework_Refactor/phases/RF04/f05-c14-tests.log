@@ -1,0 +1,157 @@
+TAP version 13
+# Subtest: real legacy/public World institutional and supply paths share single service function identities
+ok 1 - real legacy/public World institutional and supply paths share single service function identities
+  ---
+  duration_ms: 0.6261
+  type: 'test'
+  ...
+# Subtest: native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+ok 2 - native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+  ---
+  duration_ms: 382.1736
+  type: 'test'
+  ...
+# Subtest: delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+ok 3 - delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+  ---
+  duration_ms: 414.8176
+  type: 'test'
+  ...
+# Subtest: native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+ok 4 - native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+  ---
+  duration_ms: 424.3432
+  type: 'test'
+  ...
+# Subtest: service access retains established infrastructure/source constraints and cannot target PC economy
+ok 5 - service access retains established infrastructure/source constraints and cannot target PC economy
+  ---
+  duration_ms: 391.5258
+  type: 'test'
+  ...
+# Subtest: institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+ok 6 - institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+  ---
+  duration_ms: 419.3005
+  type: 'test'
+  ...
+# Subtest: original World core source/audit validation and district rollback stay intact after source composition
+ok 7 - original World core source/audit validation and district rollback stay intact after source composition
+  ---
+  duration_ms: 382.2734
+  type: 'test'
+  ...
+# Subtest: real resolver and historical/public reader share exact cost table and verifier identities
+ok 8 - real resolver and historical/public reader share exact cost table and verifier identities
+  ---
+  duration_ms: 0.5558
+  type: 'test'
+  ...
+# Subtest: actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+ok 9 - actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+  ---
+  duration_ms: 401.003
+  type: 'test'
+  ...
+# Subtest: native resolver replay and repeated receipt reads neither spend twice nor append mutations
+ok 10 - native resolver replay and repeated receipt reads neither spend twice nor append mutations
+  ---
+  duration_ms: 382.4503
+  type: 'test'
+  ...
+# Subtest: restart and later resource changes preserve read-only committed history without fresh execution entitlement
+ok 11 - restart and later resource changes preserve read-only committed history without fresh execution entitlement
+  ---
+  duration_ms: 420.0856
+  type: 'test'
+  ...
+# Subtest: modified completed after-state is held instead of accepting stale native receipt ancestry
+ok 12 - modified completed after-state is held instead of accepting stale native receipt ancestry
+  ---
+  duration_ms: 394.5225
+  type: 'test'
+  ...
+# Subtest: duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+ok 13 - duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+  ---
+  duration_ms: 400.4267
+  type: 'test'
+  ...
+# Subtest: native invalid dice and PC target fail transactionally before a successful action or receipt exists
+ok 14 - native invalid dice and PC target fail transactionally before a successful action or receipt exists
+  ---
+  duration_ms: 396.8604
+  type: 'test'
+  ...
+# Subtest: fixed NPC attribution consumer and old/public World transfers preserve native identities
+ok 15 - fixed NPC attribution consumer and old/public World transfers preserve native identities
+  ---
+  duration_ms: 417.5126
+  type: 'test'
+  ...
+# Subtest: actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+ok 16 - actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+  ---
+  duration_ms: 433.2698
+  type: 'test'
+  ...
+# Subtest: native contact replay and read-only transfer restart do not resend information or spend twice
+ok 17 - native contact replay and read-only transfer restart do not resend information or spend twice
+  ---
+  duration_ms: 434.4401
+  type: 'test'
+  ...
+# Subtest: cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+ok 18 - cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+  ---
+  duration_ms: 421.5597
+  type: 'test'
+  ...
+# Subtest: retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+ok 19 - retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+  ---
+  duration_ms: 408.061
+  type: 'test'
+  ...
+# Subtest: failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+not ok 20 - failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+  ---
+  duration_ms: 348.1632
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c14.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs:25:641)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: changed sender source-content cannot retroactively change what the native action captured
+ok 21 - changed sender source-content cannot retroactively change what the native action captured
+  ---
+  duration_ms: 176.7122
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 20
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3549.7851

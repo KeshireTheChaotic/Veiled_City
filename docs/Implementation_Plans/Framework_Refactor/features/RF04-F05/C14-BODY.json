@@ -1,0 +1,6 @@
+{
+  "npc_source_body_sha256": "325de9fff305a38a520ac1bcf0039b9f0e60a1f2612ac60791fb63b85bbcf175",
+  "transfer_body_sha256": "1c0f9d3e9ef01770240834fe51dd21ac05521fbdeb714f7d7c66741856e3c813",
+  "exact_bodies_preserved": true,
+  "hash_equivalence": "sceneFictionHash delegates directly to same kernel jsonHash; field order unchanged."
+}

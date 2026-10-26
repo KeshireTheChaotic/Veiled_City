@@ -4,3 +4,4 @@ export {createNpcStrategyRules} from './strategy.js';
 export {createNpcCognition} from './cognition.js';
 export {createNpcEvidenceProjection} from './evidence-projection.js';
 export {createNpcConversations} from './conversations.js';
+export {ownedKnowledgeSource} from './knowledge-source.js';

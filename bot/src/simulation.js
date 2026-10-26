@@ -19,7 +19,7 @@ import { pacingAdvice } from "./story-continuity.js";
 import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
 import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {nativeWorldStrategyAllowed} from './native-world-operations.js';
-import {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './world-information-transfer.js';
+import {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './frameworks/world/public.js';
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export {ACTION_TYPES,MAJOR_IMPACTS};

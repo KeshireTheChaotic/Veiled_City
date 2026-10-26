@@ -50,3 +50,5 @@ export {validateServiceAccess,assertServiceAccess,transferSupply,updateCityCore,
 export {fileInstitutionReport} from './institution-report.js';
 export {ACTION_COSTS} from './action-costs.js';
 export {inspectWorldSimulationReceipt} from './simulation-receipt-core.js';
+export {createWorldNpcKnowledgeConsumer,worldNpcKnowledge} from './contracts/npc-knowledge-source.js';
+export {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './information-transfer.js';
