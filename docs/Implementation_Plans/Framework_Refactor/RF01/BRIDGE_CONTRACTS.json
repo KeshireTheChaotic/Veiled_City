@@ -1926,10 +1926,12 @@
       "lifecycle": "Bootstrap after Session World sources, before services; no database/provider/state writes during composition.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/npc-observations.js"
+        "bot/src/application/composition/npc-observations.js",
+        "bot/src/application/composition/npc-cognition.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1952,7 +1954,7 @@
         "occurrences": 4
       },
       "public_api": "bot/src/framework-to-framework/knowledge--npc/public.js",
-      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work."
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated."
     },
     {
       "pair": "knowledge--operations",
@@ -2281,11 +2283,13 @@
       "lifecycle": "Bootstrap after native Narrative source registration, before service use; no DB/provider work.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/npc-evidence-projection.js"
+        "bot/src/application/composition/npc-evidence-projection.js",
+        "bot/src/application/composition/npc-cognition.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2308,7 +2312,7 @@
         "occurrences": 5
       },
       "public_api": "bot/src/framework-to-framework/narrative--npc/public.js",
-      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected."
+      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated."
     },
     {
       "pair": "narrative--operations",
@@ -2728,11 +2732,13 @@
       "adoption_feature": "RF04-F05",
       "consumers": [
         "bot/src/application/composition/npc-observations.js",
-        "bot/src/application/composition/npc-evidence-projection.js"
+        "bot/src/application/composition/npc-evidence-projection.js",
+        "bot/src/application/composition/npc-cognition.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2755,7 +2761,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/npc--session/public.js",
-      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C23 exact native event producer/current principal feed original NPC evidence projection."
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C23 exact native event producer/current principal feed original NPC evidence projection. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated."
     },
     {
       "pair": "npc--world",

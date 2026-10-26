@@ -1,0 +1,72 @@
+[
+  {
+    "id": "fcf833a301e30c1e0b84a8c74e50bc67978a086fb972857c1f29471703722ca7",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/npc-cognition.js",
+    "to": "bot/src/narrative-salience.js",
+    "kind": "static",
+    "specifier": "./narrative-salience.js",
+    "owner": "npc",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "39296480a25d73337f6224703f249f15ecfe5bf5e0bf18f295c1475d4f254221",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/npc-cognition.js",
+    "to": "bot/src/memory-clusters.js",
+    "kind": "static",
+    "specifier": "./memory-clusters.js",
+    "owner": "npc",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "478234d25cd0503ce6bba5cdce97119b5298f2c197dafd707c98a33d831718b4",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/npc-cognition.js",
+    "to": "bot/src/scene-continuity.js",
+    "kind": "static",
+    "specifier": "./scene-continuity.js",
+    "owner": "npc",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "da94b32770b7ed8d8f48979206ab41fb650b8910716f3c5950478078b6a26c6b",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/npc-cognition.js",
+    "to": "bot/src/narrative-salience.js",
+    "kind": "static",
+    "specifier": "./narrative-salience.js",
+    "owner": "npc",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  },
+  {
+    "id": "668f7fc537d5886abf53ee4df7a06edc587ea2f8fa43dfeb68cdaa81c94f0235",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/simulation.js",
+    "to": "bot/src/npc-cognition.js",
+    "kind": "static",
+    "specifier": "./npc-cognition.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  }
+]

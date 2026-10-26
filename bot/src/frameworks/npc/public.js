@@ -18,3 +18,7 @@ export {createNpcNarrativeVisibilityConsumer,npcNarrativeVisibility} from './con
 export {createNpcSessionPrincipalConsumer,npcSessionPrincipal} from './contracts/session-principal.js';
 export {createNpcWorldEvidenceEventConsumer,npcWorldEvidenceEvent} from './contracts/world-evidence-event.js';
 export {recordImportedNpcKnowledge,actorEvidenceVisible,actorReferenceVisible} from './evidence-projection-source.js';
+export {createNpcNarrativeContextConsumer,npcNarrativeContext} from './contracts/narrative-context.js';
+export {createNpcKnowledgeClustersConsumer,npcKnowledgeClusters} from './contracts/knowledge-clusters.js';
+export {createNpcSessionViewConsumer,npcSessionView} from './contracts/session-view.js';
+export {retrieveNpcCognition,dossierDecisionProfile,seedNpcCognition} from './cognition-source.js';

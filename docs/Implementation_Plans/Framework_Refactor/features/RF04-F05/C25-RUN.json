@@ -1,0 +1,241 @@
+{
+  "feature": "RF04-F05-C25",
+  "status": "SCOPED_NPC_COGNITION_SOURCE_QUALIFIED",
+  "frozen": {
+    "base_head": "ab67faf7100acd41029ea69315852518617cc21c",
+    "syntax_checked": 18,
+    "files": [
+      {
+        "path": "bot/src/frameworks/narrative/context-eligibility.js",
+        "sha256": "89397dd273a8d72df4d50ea6b3481d17eaee71c797cc9a3c91505b755d23d5df"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/importance-source.js",
+        "sha256": "516735b5d18260bf3e2e27b65073745e5ffd0dd14cc576fc8604e56071119a63"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/eligibility-source.js",
+        "sha256": "b648d871b4a4b7d12b52e67d4451dc4f8b7c64688d4d7cba65c4210c5711cc98"
+      },
+      {
+        "path": "bot/src/frameworks/narrative/public.js",
+        "sha256": "f189738f9567347f52dc4e8f0e65bb80d81528220b3dab634425d244f8dcd5ac"
+      },
+      {
+        "path": "bot/src/narrative-salience.js",
+        "sha256": "414c5c79142495f7489554237ddadc071ed66a01e7fb4d1f043d88ab38abfe8a"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/narrative-context.js",
+        "sha256": "404dc1627b159e85bef134b1076433d1221d56ebafaeb4c7a2ec70fef26ebaa2"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/knowledge-clusters.js",
+        "sha256": "cd3d38d1c0425541d913043c0b933269567081c3d95d428c29886d2b39f1c148"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/session-view.js",
+        "sha256": "8fa8fbc4f6aca8cdba0d3cb890a1729111b04a72c162ade6bd79ffc827bae683"
+      },
+      {
+        "path": "bot/src/frameworks/npc/cognition-source.js",
+        "sha256": "31298c29c8eec8f4faedc8e3a1897de75abfedcf0b9e318e6260a6a230d99f7c"
+      },
+      {
+        "path": "bot/src/frameworks/npc/public.js",
+        "sha256": "15cb1ae042bb811b8fe8c51e93d3df545f7cf23f2180c1aa900e2025c6ad119d"
+      },
+      {
+        "path": "bot/src/npc-cognition.js",
+        "sha256": "d47896bdbb35d95fc1e4928f6542aa5a7590c373eba9ddad5b1bbcf7aa350c6a"
+      },
+      {
+        "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+        "sha256": "9981b89e4fefdbf3547524ae135ca0f5c62ad4a082902910c192ec69c8188405"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--npc/public.js",
+        "sha256": "ff51fe3ab255141a8bc22a3712397fbdab602ce5871d46e59a03cfdbb4fb3f88"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--session/public.js",
+        "sha256": "2d065edf7ed93d20f203c59e245f2825552a3a95d0a34020ca9e7ceacda17c46"
+      },
+      {
+        "path": "bot/src/application/composition/npc-cognition.js",
+        "sha256": "5174e1792fe5978e758f605d1e9ceea799c367c0f0b255ec2a59e864f24cc497"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "644765cb6cee2051aeffa74a92faaed9f2134dd663143dec48f0fb3690002949"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "8958cbf1f15402cc22b18604095baeb76b69b2b9d8c5e2cb605eedd9515e445c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "140e3ae8a19dac405304d213ba3337a087307f171cb6347c9475a4ebb1807043"
+      },
+      {
+        "path": "bot/src/frameworks/npc/cognition.js",
+        "sha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "cb48e13e71b5506a32d098d12826e8db6ff3126f4cca338ac05dc12219a12f41"
+      }
+    ]
+  },
+  "unchanged_cognition_rule_sha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841",
+  "tests": {
+    "duration_ms": 2161.402,
+    "exit_code": 0,
+    "start": "2026-10-26T16:02:34.6233996-05:00",
+    "end": "2026-10-26T16:02:36.7848016-05:00",
+    "run_id": "rf04-f05-c25-frozen",
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "tap_duration_ms": 2109.4578,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
+  },
+  "syntax": {
+    "checked": 18,
+    "passed": 18
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 683,
+      "unowned": 0,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
+      "acceptedLegacyOccurrences": 2089,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 683,
+      "unowned": 0,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
+      "acceptedLegacyOccurrences": 1352,
+      "activeViolationGroups": 733,
+      "transitionErrors": 733,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "fcf833a301e30c1e0b84a8c74e50bc67978a086fb972857c1f29471703722ca7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/narrative-salience.js",
+      "kind": "static",
+      "specifier": "./narrative-salience.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "39296480a25d73337f6224703f249f15ecfe5bf5e0bf18f295c1475d4f254221",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/memory-clusters.js",
+      "kind": "static",
+      "specifier": "./memory-clusters.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "478234d25cd0503ce6bba5cdce97119b5298f2c197dafd707c98a33d831718b4",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/scene-continuity.js",
+      "kind": "static",
+      "specifier": "./scene-continuity.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "da94b32770b7ed8d8f48979206ab41fb650b8910716f3c5950478078b6a26c6b",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/narrative-salience.js",
+      "kind": "static",
+      "specifier": "./narrative-salience.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "668f7fc537d5886abf53ee4df7a06edc587ea2f8fa43dfeb68cdaa81c94f0235",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/npc-cognition.js",
+      "kind": "static",
+      "specifier": "./npc-cognition.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "NPC owns original cached cognition runtime using fixed original Narrative eligibility, Knowledge clusters and Session scene view; own observation/import methods. Narrative eligibility/availability/helpers extracted exactly; original narrativeImportance ranking remains one mixed source, registered owner-locally and not claimed isolated.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Archived/pin/query/location/availability branches exercised in explicit unit with injected importance result; no fabricated positive native importance/identity receipt or full live ranking certification.",
+    "GM-private cognition includes secret packets for reasoning, never publication grant. NPC source retrieval does not prove writer/publisher privacy by itself.",
+    "Original Narrative ranking and broader source/caller isolation remain accountable; no live/production/provider/Discord/narrative-quality/release qualification."
+  ],
+  "rollback": "Revert C25 extracted eligibility/source/ports/pairs/bootstrap/root aliases and restore5exact original identities together; preserve native knowledge/memory/source/history/player/outbox state.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c25-tests.log",
+      "sha256": "93c7e8aa6b77562939bc229c2a480a4e3e01a907502dd953d15ca21ced9d2674"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c25-architecture-initial.log",
+      "sha256": "88e0bffa14e92d7b2adb7e34b56669d7adb50b43e55606be7a41e7b45356fde3"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c25-rf04-final.log",
+      "sha256": "1a1bf67220e47626d70ede4f5430efc215cbf972bc28d577811cb71dc3caffaa"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c25-rf05-final.log",
+      "sha256": "00437e3219f862076c4c7ed4fa81350b113f370e8132a83f8a272543248b09d2"
+    }
+  ]
+}

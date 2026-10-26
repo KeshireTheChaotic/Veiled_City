@@ -6,3 +6,7 @@ export function connectNpcNarrativeVisibility(){return npcNarrativeVisibility.bi
 import {narrativeNpcEvidence} from '../../frameworks/narrative/public.js';
 import {actorReferenceVisible} from '../../frameworks/npc/public.js';
 export function connectNarrativeNpcEvidence(){return narrativeNpcEvidence.bind(actorReferenceVisible);}
+
+import {npcNarrativeContext} from '../../frameworks/npc/public.js';
+import {narrativeContextEligible} from '../../frameworks/narrative/public.js';
+export function connectNpcNarrativeContext(){return npcNarrativeContext.bind(narrativeContextEligible);}

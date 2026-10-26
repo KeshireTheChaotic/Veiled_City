@@ -41,13 +41,13 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | intent--session | PROPOSED_NO_API | session → intent; intent → session | 0 / 0 | RF05 |
 | intent--world | ADOPTED | world → intent | 2 / 2 | RF05-F04 |
 | knowledge--narrative | ADOPTED | knowledge → narrative; narrative → knowledge | 1 / 2 | RF04-F05 |
-| knowledge--npc | ADOPTED | npc → knowledge | 1 / 1 | RF04-F05 |
+| knowledge--npc | ADOPTED | npc → knowledge | 2 / 2 | RF04-F05 |
 | knowledge--operations | PROPOSED_NO_API | operations → knowledge; knowledge → operations | 0 / 0 | RF04 |
 | knowledge--persistence | PROPOSED_NO_API | persistence → knowledge; knowledge → persistence | 0 / 0 | RF06 |
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
 | knowledge--world | ADOPTED | knowledge → world; world → knowledge | 1 / 4 | RF04-F05 |
-| narrative--npc | ADOPTED | npc → narrative; narrative → npc | 1 / 2 | RF04-F05 |
+| narrative--npc | ADOPTED | npc → narrative; narrative → npc | 2 / 3 | RF04-F05 |
 | narrative--operations | PROPOSED_NO_API | narrative → operations | 0 / 0 | RF05 |
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |
 | narrative--publication | PROPOSED_NO_API | narrative → publication; publication → narrative | 0 / 0 | RF05 |
@@ -55,7 +55,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | narrative--world | ADOPTED | world → narrative | 1 / 1 | RF04-F05 |
 | npc--operations | PROPOSED_NO_API | operations → npc; npc → operations | 0 / 0 | RF04 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
-| npc--session | ADOPTED | npc → session; session → npc | 2 / 2 | RF04-F05 |
+| npc--session | ADOPTED | npc → session; session → npc | 3 / 3 | RF04-F05 |
 | npc--world | ADOPTED | world → npc; npc → world | 3 / 5 | RF04-F05 |
 | operations--persistence | PROPOSED_NO_API | persistence → operations; operations → persistence | 0 / 0 | RF06 |
 | operations--publication | PROPOSED_NO_API | publication → operations | 0 / 0 | RF06 |

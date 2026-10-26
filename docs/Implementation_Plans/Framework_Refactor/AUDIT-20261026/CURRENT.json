@@ -1,16 +1,16 @@
 {
-  "checkpoint": "RF04-F05 C24 Narrative native visibility source",
-  "timestamp": "2026-10-26T20:59:28.515Z",
+  "checkpoint": "RF04-F05 C25 NPC cognition source and Narrative eligibility",
+  "timestamp": "2026-10-26T21:03:04.979Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "a5486291ce724ee3dee360dd309de1e58bce2da8a3a57c15fd2d71166d826da3",
-  "open_exact_records": 2077,
+  "manifest_sha256": "e1990c965866772a2313e4285822b952fdbd94797c972254ced1121be8388793",
+  "open_exact_records": 2072,
   "by_feature": {
     "RF05-F05": 420,
     "RF04-F04": 204,
     "RF05-F02": 217,
     "RF05-F03": 255,
     "RF04-F03": 102,
-    "RF04-F01": 306,
+    "RF04-F01": 305,
     "RF06-F02": 17,
     "RF04-F05": 107,
     "RF06-F07": 5,
@@ -18,7 +18,7 @@
     "RF06-F05": 43,
     "RF06-F03": 179,
     "RF05-F04": 43,
-    "RF04-F02": 19
+    "RF04-F02": 15
   },
   "resolved_since_audit": [
     {
@@ -256,6 +256,48 @@
       "max_occurrences": 1,
       "source_sha256": "ce5fe92e8b9e5d1ff3970e63f6a040e6fa5f4a4bd8c238b511e5bb4426740084",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "fcf833a301e30c1e0b84a8c74e50bc67978a086fb972857c1f29471703722ca7",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/narrative-salience.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "39296480a25d73337f6224703f249f15ecfe5bf5e0bf18f295c1475d4f254221",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/memory-clusters.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+      "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "478234d25cd0503ce6bba5cdce97119b5298f2c197dafd707c98a33d831718b4",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/scene-continuity.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+      "target_owner": "session",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -2822,6 +2864,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "da94b32770b7ed8d8f48979206ab41fb650b8910716f3c5950478078b6a26c6b",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/npc-cognition.js",
+      "to": "bot/src/narrative-salience.js",
+      "owner": "npc",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "9f8a45682d518aca96321d464c2045bc1168c8c87fa002ff3b50ad84d5bbf6a1",
       "feature": "RF04-F02",
       "deadline": "RF04",
@@ -3844,6 +3900,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "668f7fc537d5886abf53ee4df7a06edc587ea2f8fa43dfeb68cdaa81c94f0235",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/npc-cognition.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "59759dda8721b145f6639ee5fa2a0dabfa2102da4450548ed5dc35d3e24ad107",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -4420,68 +4490,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 675,
+      "sourceModules": 683,
       "unowned": 0,
-      "importOccurrences": 2965,
-      "internalImportOccurrences": 2786,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
       "cycleComponents": 2,
-      "largestCycle": 145,
-      "rawViolationOccurrences": 2094,
-      "acceptedLegacyOccurrences": 2094,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
+      "acceptedLegacyOccurrences": 2089,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 675,
+      "sourceModules": 683,
       "unowned": 0,
-      "importOccurrences": 2965,
-      "internalImportOccurrences": 2786,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
       "cycleComponents": 2,
-      "largestCycle": 145,
-      "rawViolationOccurrences": 2094,
-      "acceptedLegacyOccurrences": 2094,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
+      "acceptedLegacyOccurrences": 2089,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 675,
+      "sourceModules": 683,
       "unowned": 0,
-      "importOccurrences": 2965,
-      "internalImportOccurrences": 2786,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
       "cycleComponents": 2,
-      "largestCycle": 145,
-      "rawViolationOccurrences": 2094,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
       "acceptedLegacyOccurrences": 1352,
-      "activeViolationGroups": 738,
-      "transitionErrors": 738,
+      "activeViolationGroups": 733,
+      "transitionErrors": 733,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 675,
+      "sourceModules": 683,
       "unowned": 0,
-      "importOccurrences": 2965,
-      "internalImportOccurrences": 2786,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
       "cycleComponents": 2,
-      "largestCycle": 145,
-      "rawViolationOccurrences": 2094,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1673,
-      "transitionErrors": 1673,
+      "activeViolationGroups": 1668,
+      "transitionErrors": 1668,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 675,
+      "sourceModules": 683,
       "unowned": 0,
-      "importOccurrences": 2965,
-      "internalImportOccurrences": 2786,
+      "importOccurrences": 2987,
+      "internalImportOccurrences": 2808,
       "cycleComponents": 2,
-      "largestCycle": 145,
-      "rawViolationOccurrences": 2094,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2089,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2077,
-      "transitionErrors": 2077,
+      "activeViolationGroups": 2072,
+      "transitionErrors": 2072,
       "pass": false
     }
   },
@@ -4576,6 +4646,11 @@
       "sha256": "1e8ef413740a4668102705a4751ce5a5c76b56c5799f9d7e23fc8f0512a11613"
     },
     {
+      "path": "bot/src/application/composition/npc-cognition.js",
+      "owner": "application",
+      "sha256": "5174e1792fe5978e758f605d1e9ceea799c367c0f0b255ec2a59e864f24cc497"
+    },
+    {
       "path": "bot/src/application/composition/npc-evidence-projection.js",
       "owner": "application",
       "sha256": "cfa9a342638a7b8f8912e777e701bda1d058381c69f0aeba0eaf7a312ad4dc8c"
@@ -4598,7 +4673,7 @@
     {
       "path": "bot/src/application/composition/public.js",
       "owner": "application",
-      "sha256": "2801b26bcdad82d0897795d7973788c110f27d488d46cee5c66470e47b08869d"
+      "sha256": "644765cb6cee2051aeffa74a92faaed9f2134dd663143dec48f0fb3690002949"
     },
     {
       "path": "bot/src/application/composition/pvp-agreements.js",
@@ -4983,7 +5058,7 @@
     {
       "path": "bot/src/framework-to-framework/knowledge--npc/public.js",
       "owner": "knowledge--npc",
-      "sha256": "6389c302c1865724c1b0f08f6bc399e3f5204cf7ab7630881516254ec3452fcf"
+      "sha256": "ff51fe3ab255141a8bc22a3712397fbdab602ce5871d46e59a03cfdbb4fb3f88"
     },
     {
       "path": "bot/src/framework-to-framework/knowledge--world/public.js",
@@ -4993,7 +5068,7 @@
     {
       "path": "bot/src/framework-to-framework/narrative--npc/public.js",
       "owner": "narrative--npc",
-      "sha256": "09730598a3183163a35d6445530fc3b2ddbc566dfbc7ead257fa1bf301a24a4e"
+      "sha256": "9981b89e4fefdbf3547524ae135ca0f5c62ad4a082902910c192ec69c8188405"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -5008,7 +5083,7 @@
     {
       "path": "bot/src/framework-to-framework/npc--session/public.js",
       "owner": "npc--session",
-      "sha256": "8d86d6d501c7271a43f31315c7a958ef33df06eae19aa05ffcdb9aec57c7457a"
+      "sha256": "2d065edf7ed93d20f203c59e245f2825552a3a95d0a34020ca9e7ceacda17c46"
     },
     {
       "path": "bot/src/framework-to-framework/npc--world/public.js",
@@ -5976,6 +6051,11 @@
       "sha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba"
     },
     {
+      "path": "bot/src/frameworks/narrative/context-eligibility.js",
+      "owner": "narrative",
+      "sha256": "89397dd273a8d72df4d50ea6b3481d17eaee71c797cc9a3c91505b755d23d5df"
+    },
+    {
       "path": "bot/src/frameworks/narrative/contracts/knowledge-evidence.js",
       "owner": "narrative",
       "sha256": "74c2b1f0acf3d4c6fb9d2451f1acc74f571b45ea4531ed1372e41cb5037f0e06"
@@ -5996,6 +6076,11 @@
       "sha256": "6be5b12243afc474e655b1cdb24d3b9b22c30708a977fccd2d2fc38898a6925b"
     },
     {
+      "path": "bot/src/frameworks/narrative/eligibility-source.js",
+      "owner": "narrative",
+      "sha256": "b648d871b4a4b7d12b52e67d4451dc4f8b7c64688d4d7cba65c4210c5711cc98"
+    },
+    {
       "path": "bot/src/frameworks/narrative/gm-fiction-schema.js",
       "owner": "narrative",
       "sha256": "92b9cedc74403903b00da7aded800253f17ea5215fd1997a08e98ea0cba3bff1"
@@ -6004,6 +6089,11 @@
       "path": "bot/src/frameworks/narrative/gm-world-contract.js",
       "owner": "narrative",
       "sha256": "2e44a5987af95592c77a6b8bcbb87ce45c9ce296073b83a1dda61474cb3b5da3"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/importance-source.js",
+      "owner": "narrative",
+      "sha256": "516735b5d18260bf3e2e27b65073745e5ffd0dd14cc576fc8604e56071119a63"
     },
     {
       "path": "bot/src/frameworks/narrative/interpretation-contract.js",
@@ -6063,7 +6153,7 @@
     {
       "path": "bot/src/frameworks/narrative/public.js",
       "owner": "narrative",
-      "sha256": "c0438dcd01372b31f44ba12f3a4ff82ba69b7387c975e1ceb64a131c4d64bf6b"
+      "sha256": "f189738f9567347f52dc4e8f0e65bb80d81528220b3dab634425d244f8dcd5ac"
     },
     {
       "path": "bot/src/frameworks/narrative/scene-observation-route.js",
@@ -6086,6 +6176,11 @@
       "sha256": "751599a0250265471822e1fdd712678c2f947431c2247bf65bfd170c3ad48fc8"
     },
     {
+      "path": "bot/src/frameworks/npc/cognition-source.js",
+      "owner": "npc",
+      "sha256": "31298c29c8eec8f4faedc8e3a1897de75abfedcf0b9e318e6260a6a230d99f7c"
+    },
+    {
       "path": "bot/src/frameworks/npc/cognition.js",
       "owner": "npc",
       "sha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841"
@@ -6096,9 +6191,19 @@
       "sha256": "fd554eb6df5b9c9b594129836a7249b293aa6aba62aac93f71b68d40a052cc08"
     },
     {
+      "path": "bot/src/frameworks/npc/contracts/knowledge-clusters.js",
+      "owner": "npc",
+      "sha256": "cd3d38d1c0425541d913043c0b933269567081c3d95d428c29886d2b39f1c148"
+    },
+    {
       "path": "bot/src/frameworks/npc/contracts/knowledge-evidence.js",
       "owner": "npc",
       "sha256": "5ae27ac1ac4d6ec83d9f3ac5104cda91024820776151e339d7e073854199f630"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/narrative-context.js",
+      "owner": "npc",
+      "sha256": "404dc1627b159e85bef134b1076433d1221d56ebafaeb4c7a2ec70fef26ebaa2"
     },
     {
       "path": "bot/src/frameworks/npc/contracts/narrative-visibility.js",
@@ -6114,6 +6219,11 @@
       "path": "bot/src/frameworks/npc/contracts/session-principal.js",
       "owner": "npc",
       "sha256": "f0ec0ffd7cad14b0654928325f135e1ffa0469bafc127dac97163fe1c7827f46"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/session-view.js",
+      "owner": "npc",
+      "sha256": "8fa8fbc4f6aca8cdba0d3cb890a1729111b04a72c162ade6bd79ffc827bae683"
     },
     {
       "path": "bot/src/frameworks/npc/contracts/world-evidence-event.js",
@@ -6178,7 +6288,7 @@
     {
       "path": "bot/src/frameworks/npc/public.js",
       "owner": "npc",
-      "sha256": "a88622bd81f20c1cf72247671090de4c2770e9c210bd20d7ccd7254e97d255a2"
+      "sha256": "15cb1ae042bb811b8fe8c51e93d3df545f7cf23f2180c1aa900e2025c6ad119d"
     },
     {
       "path": "bot/src/frameworks/npc/strategy-source.js",
@@ -6698,7 +6808,7 @@
     {
       "path": "bot/src/index.js",
       "owner": "bootstrap",
-      "sha256": "3dd879c7d0d166cf019fafec76211d1f361f3abaf5853eea23f4a5044d1bc538"
+      "sha256": "8958cbf1f15402cc22b18604095baeb76b69b2b9d8c5e2cb605eedd9515e445c"
     },
     {
       "path": "bot/src/kernel/application-authority.js",
@@ -6863,7 +6973,7 @@
     {
       "path": "bot/src/narrative-salience.js",
       "owner": "narrative",
-      "sha256": "9b88e472ed4cb96dcb49ccc0772cc345b68308e33f277d7916214cf6480aacd5"
+      "sha256": "414c5c79142495f7489554237ddadc071ed66a01e7fb4d1f043d88ab38abfe8a"
     },
     {
       "path": "bot/src/narrative-speakers.js",
@@ -7243,7 +7353,7 @@
     {
       "path": "bot/src/npc-cognition.js",
       "owner": "npc",
-      "sha256": "697c0ec0a30560e4b3af82841068afebaf5423fcf5999793fc893dcffebffc8d"
+      "sha256": "d47896bdbb35d95fc1e4928f6542aa5a7590c373eba9ddad5b1bbcf7aa350c6a"
     },
     {
       "path": "bot/src/npc-conversations.js",

@@ -1,3 +1,5 @@
+import {nativeSalienceAvailable,names,mentions,narrativeContextEligible,narrativeImportanceSource} from './frameworks/narrative/public.js';
+export {nativeSalienceAvailable,narrativeContextEligible};
 /** Retrieval only: deterministic source-bound interest, fictional-time decay and reversible prompt retirement. */
 import {createHash} from 'node:crypto';
 import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
@@ -23,16 +25,9 @@ export function decayedNarrativeWeight(weight,createdTick,currentTick){
   return Math.max(0,weight-Math.floor((currentTick-createdTick)/6));
 }
 /** Legacy opt-in remains readable. Qualified native fiction does not need a second routine salience toggle. */
-export function nativeSalienceAvailable(db,guild){
-  const flags=db.getCityCalendar(guild).flags;
-  return flags.narrative_salience===true||flags.narrative_authority===true&&flags.playable_narration===true
-    &&(db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode||'autonomous')==='autonomous';
-}
-function names(db,guild,entity){
-  const d=db.getCityRecord(guild,'autonomous_entity',entity)?.data;
-  return d?[d.key,d.name,...(d.aliases||[])].filter(x=>typeof x==='string'&&x.length>=3):[];
-}
-const mentions=(text,values)=>values.some(name=>String(text).toLocaleLowerCase().includes(name.toLocaleLowerCase()));
+
+
+
 function pinReasons(db,guild,entity){
   const [kind,...rest]=entity.split(':'),key=rest.join(':'),session=db.getActiveSession(guild),reasons=[];
   if(kind==='npc'&&activeCityProxy(db,guild,key))reasons.push('human_proxy');
@@ -181,8 +176,6 @@ export function rankNarrativeMemory(db,guild,scope,rows,{query='',location=null,
     selected.push(item.row);used+=size;if(!item.score)novelty++;if(selected.length>=16)break;}
   return selected;
 }
-export function narrativeContextEligible(db,guild,entity,scope,{query='',location=null}={}){
-  if(!nativeSalienceAvailable(db,guild))return true;
-  const importance=narrativeImportance(db,guild,entity,scope);
-  return importance?.status!=='prompt_archived'||importance.pins.length>0||mentions(query,names(db,guild,entity))||entity===`location:${location}`;
-}
+
+
+narrativeImportanceSource.provide(narrativeImportance);

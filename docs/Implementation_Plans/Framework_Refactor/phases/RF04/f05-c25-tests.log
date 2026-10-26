@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: fixed cognition consumers preserve exact callbacks and reject missing or replaced sources
+ok 1 - fixed cognition consumers preserve exact callbacks and reject missing or replaced sources
+  ---
+  duration_ms: 1.2677
+  type: 'test'
+  ...
+# Subtest: original Narrative context eligibility is unchanged across archived pins query location and availability branches
+ok 2 - original Narrative context eligibility is unchanged across archived pins query location and availability branches
+  ---
+  duration_ms: 0.3375
+  type: 'test'
+  ...
+# Subtest: actual native dossiers retrieve GM-private beliefs unknowns secrets and goals without altering PC or canonical state
+ok 3 - actual native dossiers retrieve GM-private beliefs unknowns secrets and goals without altering PC or canonical state
+  ---
+  duration_ms: 206.3697
+  type: 'test'
+  ...
+# Subtest: recordRecall changes only selected existing memory recall and survives restart
+ok 4 - recordRecall changes only selected existing memory recall and survives restart
+  ---
+  duration_ms: 385.4507
+  type: 'test'
+  ...
+# Subtest: retracted native knowledge remains historical testimony with inactive evidence after restart
+ok 5 - retracted native knowledge remains historical testimony with inactive evidence after restart
+  ---
+  duration_ms: 168.9805
+  type: 'test'
+  ...
+# Subtest: actual Knowledge clusters stay actor-relative inside cognition and never become canon
+ok 6 - actual Knowledge clusters stay actor-relative inside cognition and never become canon
+  ---
+  duration_ms: 164.0264
+  type: 'test'
+  ...
+# Subtest: scene-enabled cognition does not invent an NPC viewpoint attendance or player movement
+ok 7 - scene-enabled cognition does not invent an NPC viewpoint attendance or player movement
+  ---
+  duration_ms: 169.1785
+  type: 'test'
+  ...
+# Subtest: cognition seeding rolls back original native profiles evidence and seed receipt when audit fails
+ok 8 - cognition seeding rolls back original native profiles evidence and seed receipt when audit fails
+  ---
+  duration_ms: 164.0121
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2109.4578

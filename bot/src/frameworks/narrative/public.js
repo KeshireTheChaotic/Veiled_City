@@ -22,3 +22,6 @@ export {materialClaimSchema} from './material-claim-schema.js';
 export {createNarrativeKnowledgeEvidenceConsumer,narrativeKnowledgeEvidence} from './contracts/knowledge-evidence.js';
 export {createNarrativeNpcEvidenceConsumer,narrativeNpcEvidence} from './contracts/npc-evidence.js';
 export {narrativeSourceVisible} from './visibility-source.js';
+export {nativeSalienceAvailable,names,mentions,createNarrativeContextEligibility} from './context-eligibility.js';
+export {createNarrativeImportanceSource,narrativeImportanceSource} from './importance-source.js';
+export {narrativeContextEligible} from './eligibility-source.js';

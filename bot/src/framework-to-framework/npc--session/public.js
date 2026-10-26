@@ -9,3 +9,7 @@ export function connectNpcSessionObservation(){
 import {npcSessionPrincipal} from '../../frameworks/npc/public.js';
 import {conversationPrincipal} from '../../frameworks/session/public.js';
 export function connectNpcSessionPrincipal(){return npcSessionPrincipal.bind(conversationPrincipal);}
+
+import {npcSessionView} from '../../frameworks/npc/public.js';
+import {sceneView} from '../../frameworks/session/public.js';
+export function connectNpcSessionView(){return npcSessionView.bind(sceneView);}
