@@ -1,11 +1,11 @@
 {
-  "checkpoint": "after C03-P04, C23 and C05",
-  "timestamp": "2026-10-26T17:51:34.101Z",
+  "checkpoint": "after C03-P04, C23, C05 and Intent C03",
+  "timestamp": "2026-10-26T18:02:01.902Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "bc66e0bd3eb86807fdc7ce736206cb3120bdcd2b0be7920f5934d8b0784273c5",
-  "open_exact_records": 2383,
+  "manifest_sha256": "95c7694b42eb3ab4cd8c998eb5ff6fc336c050be87860382d018b6ccea16ef95",
+  "open_exact_records": 2382,
   "by_feature": {
-    "RF05-F05": 441,
+    "RF05-F05": 440,
     "RF04-F04": 268,
     "RF05-F02": 250,
     "RF05-F03": 289,
@@ -78,6 +78,20 @@
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
+      "id": "545c88b7bb54bc9d01da8f0838b5b1267ec64c3553a7e594705c8a433b7796e6",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/state.js",
+      "to": "bot/src/action-dependency.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "78229a708df384c960e2bcb8f13b3f92567a090d2080f86053415a30be1140bf",
+      "target_owner": "intent",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
+    },
+    {
       "id": "c1a0941251608c34613ef1b7b0081609292ca3d691d1f8ef5d39cebc985de954",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -136,68 +150,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 607,
+      "sourceModules": 608,
       "unowned": 0,
-      "importOccurrences": 2804,
-      "internalImportOccurrences": 2627,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2403,
-      "acceptedLegacyOccurrences": 2403,
+      "rawViolationOccurrences": 2402,
+      "acceptedLegacyOccurrences": 2402,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 607,
+      "sourceModules": 608,
       "unowned": 0,
-      "importOccurrences": 2804,
-      "internalImportOccurrences": 2627,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2403,
-      "acceptedLegacyOccurrences": 2403,
+      "rawViolationOccurrences": 2402,
+      "acceptedLegacyOccurrences": 2402,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 607,
+      "sourceModules": 608,
       "unowned": 0,
-      "importOccurrences": 2804,
-      "internalImportOccurrences": 2627,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2403,
-      "acceptedLegacyOccurrences": 1455,
+      "rawViolationOccurrences": 2402,
+      "acceptedLegacyOccurrences": 1454,
       "activeViolationGroups": 943,
       "transitionErrors": 943,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 607,
+      "sourceModules": 608,
       "unowned": 0,
-      "importOccurrences": 2804,
-      "internalImportOccurrences": 2627,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2403,
+      "rawViolationOccurrences": 2402,
       "acceptedLegacyOccurrences": 421,
-      "activeViolationGroups": 1967,
-      "transitionErrors": 1967,
+      "activeViolationGroups": 1966,
+      "transitionErrors": 1966,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 607,
+      "sourceModules": 608,
       "unowned": 0,
-      "importOccurrences": 2804,
-      "internalImportOccurrences": 2627,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2403,
+      "rawViolationOccurrences": 2402,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2383,
-      "transitionErrors": 2383,
+      "activeViolationGroups": 2382,
+      "transitionErrors": 2382,
       "pass": false
     }
   },
@@ -229,7 +243,7 @@
     {
       "path": "bot/src/action-dependency.js",
       "owner": "intent",
-      "sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+      "sha256": "62497550a20bd674d8e85d57d0f7351009eca7acecea49f06f63a7fb2a297b48"
     },
     {
       "path": "bot/src/ai-intent-contracts.js",
@@ -1387,6 +1401,11 @@
       "sha256": "1fe52a58ca80835fd3108d99d33fb6eb07359f94cd6d111444015439a2a3dd6f"
     },
     {
+      "path": "bot/src/frameworks/intent/action-dependency.js",
+      "owner": "intent",
+      "sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+    },
+    {
       "path": "bot/src/frameworks/intent/ai-intent-contracts.js",
       "owner": "intent",
       "sha256": "585f1971d099c434e30ae14cfa44c78f817eaafadbab72e1289d6cc406827ae2"
@@ -1419,7 +1438,7 @@
     {
       "path": "bot/src/frameworks/intent/public.js",
       "owner": "intent",
-      "sha256": "422d1c2da5bf92197cbb549566da22dd4f5cade73279aaaadf6bb526b68ae893"
+      "sha256": "9cfc7231028fd6e2212eb8f11aee475e573d2a38f6274d2dbb7bd1bd68216f2d"
     },
     {
       "path": "bot/src/frameworks/knowledge/authority-projection.js",
@@ -3059,7 +3078,7 @@
     {
       "path": "bot/src/state.js",
       "owner": "application",
-      "sha256": "78229a708df384c960e2bcb8f13b3f92567a090d2080f86053415a30be1140bf"
+      "sha256": "993d5bad9e9e3fa58096ef28a580e549dec87de34ad2a909a3ac4614ad2e1716"
     },
     {
       "path": "bot/src/story-commands.js",

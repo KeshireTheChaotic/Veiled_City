@@ -1,0 +1,6 @@
+{
+  "from": "bot/src/action-dependency.js",
+  "to": "bot/src/frameworks/intent/action-dependency.js",
+  "before_sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d",
+  "after_sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+}

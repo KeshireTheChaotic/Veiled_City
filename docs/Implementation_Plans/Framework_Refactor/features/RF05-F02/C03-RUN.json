@@ -1,0 +1,123 @@
+{
+  "feature": "RF05-F02-C03",
+  "status": "SCOPED_DEPENDENCY_ENGINE_QUALIFIED",
+  "base_head": "101b64a9f6ecbc22be159bbee3247a078c794e93",
+  "body": {
+    "from": "bot/src/action-dependency.js",
+    "to": "bot/src/frameworks/intent/action-dependency.js",
+    "before_sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d",
+    "after_sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+  },
+  "source_files": [
+    {
+      "path": "bot/src/frameworks/intent/action-dependency.js",
+      "sha256": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+    },
+    {
+      "path": "bot/src/action-dependency.js",
+      "sha256": "62497550a20bd674d8e85d57d0f7351009eca7acecea49f06f63a7fb2a297b48"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "9cfc7231028fd6e2212eb8f11aee475e573d2a38f6274d2dbb7bd1bd68216f2d"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "993d5bad9e9e3fa58096ef28a580e549dec87de34ad2a909a3ac4614ad2e1716"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f02-c03.test.mjs",
+      "sha256": "947daba2b56cac7385f5a29da75ae16286f339a16623a5170a647a1f60f4bace"
+    }
+  ],
+  "tests": {
+    "duration_ms": 1540.1086,
+    "run_id": "RF05-F02-C03-20261026-1",
+    "start": "2026-10-26T17:58:12.6295393Z",
+    "end": "2026-10-26T17:58:14.1696479Z",
+    "exit_code": 0,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "tap_duration_ms": 1468.6515,
+    "launches": 1,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf05-f02-c03.test.mjs"
+  },
+  "syntax": {
+    "checked": 5,
+    "passed": 5
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "summary": {
+      "sourceModules": 608,
+      "unowned": 0,
+      "importOccurrences": 2806,
+      "internalImportOccurrences": 2629,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2402,
+      "acceptedLegacyOccurrences": 2402,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05_active_groups": 943,
+    "rf05_transition_errors": 943
+  },
+  "retired": [
+    {
+      "id": "545c88b7bb54bc9d01da8f0838b5b1267ec64c3553a7e594705c8a433b7796e6",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "remaining_callers": [
+    "bot/src/action-continuation.js",
+    "bot/src/pvp-damage.js",
+    "bot/src/pvp-terminal.js",
+    "bot/src/typed-roll-outcomes.js",
+    "bot/src/window-coordinator.js"
+  ],
+  "limits": [
+    "Fresh accepted rows and native receipt strings qualify scheduling only; upstream native acceptance/effect authority and standalone cross-process CAS remain unqualified.",
+    "No full state/turn workflow, native transaction pipeline or phase qualification from this move."
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore exact original dependency body/public/state import and retired transition together; preserve all persisted action and continuation readers.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c03-test.log",
+      "sha256": "0bc1f02a967238f1d2a502e6e646eb6941d086f83d7d2033bf472e2ff530f669"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c03-architecture-initial.log",
+      "sha256": "f195d3ce6a4cfe9262504f409201dd22e5ab67d72eaab5f63b9a733e2d3de75b"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c03-rf04-final.log",
+      "sha256": "9cc60af2b7e63c80c0c4423983b2d6704885ed38bd83bed86fa99691f6cb2988"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f02-c03-rf05-final.log",
+      "sha256": "deb582ab8f6188d8da9b160ac5addea73f6cebf2870d6323fa269865a1fd3cfa"
+    }
+  ]
+}

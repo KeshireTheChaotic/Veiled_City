@@ -4,7 +4,7 @@
 
 RF00 is an offline inventory and migration design, anchored to `f43d002693cb4ee38038b5dbb2c1049de95b3ffd` on `codex/clean-ai-gm-2026-10`. It does not relocate or modify application implementation. The owner handoff is preserved at [its supplied path](../phases/RF00/Veiled_City_RF00_Framework_Isolation_Sol_6_1_Medium_Handoff.md).
 
-After reopened C03-P04/C23/C05: [current evidence](AUDIT-20261026/CURRENT.json) records 607 modules, 2,383 exact open transitions, eight retired since audit, RF04 ratchet pass with accepted debt, and RF05 failure on 943 expired RF04 groups/errors. The Narrative–World grant/source direction, Intent–World schema composition, and Knowledge–World evidence event direction now have real consumer evidence. Wider phase obligations remain open.
+After reopened C03-P04/C23/C05 and Intent C03: [current evidence](AUDIT-20261026/CURRENT.json) records 608 modules, 2,382 exact open transitions, nine retired since audit, RF04 ratchet pass with accepted debt, and RF05 failure on 943 expired RF04 groups/errors. Narrative–World grant/source, Intent–World schema, Knowledge–World evidence event and the Intent dependency engine now have real consumer evidence. Wider phase obligations remain open.
 
 Read root AGENTS.md first, then the [owner behavior specification](../OWNER_AI_GM_BEHAVIOR_SPEC.md), complementary [ENGINE constitution](../../../content/ENGINE/AI_GM_CONSTITUTION.md), [test policy](../TEST_PROTOCOL.md), [no-poll policy](../TEST_EXECUTION_NO_POLL.md), then the active [RF02 scope](phases/RF02/SCOPE.md) and feature pair. Historical P-series and RF00/RF01 audit evidence remain unchanged; the live package policy and exact transition list evolve with authorized migrations.
 

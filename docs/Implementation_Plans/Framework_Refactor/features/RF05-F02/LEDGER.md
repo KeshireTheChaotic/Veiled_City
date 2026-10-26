@@ -36,3 +36,7 @@ Next exact feature: RF05-F03, the context-budget and disclosure boundary. Contin
 ## C02 — Restore deferred Responses-client validation
 
 Corrective: RF05-F02 had added a construction-time `client.responses.create` check that the original request path lacked, breaking qualified RF04-F04 C08/C09 (0/5 at HEAD). Removed only that check; dispatch failure behavior is the original one. Final batch 28/28 across 15 files, exit 0; RF04 ratchet passes; RF05 unchanged at 955. See `C02-LEDGER.md`. Release NOT AUTHORIZED.
+
+## 2026-10-26 RF05-F02 C03 native action scheduling ownership
+
+The original action/span dependency objective is reopened alongside earlier transport work. Relocated the Intent engine byte-for-byte (SHA256 837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d), retained same-function old readers and moved the actual state application import to Intent public. Six fresh scheduler/SQLite tests passed6/6, exit0, TAP1468.6515ms; syntax5/5. Stable plan ordering, durable receipt/wake-up replay, private dependency propagation, interrupts and no PC effects exercised using explicit new accepted-row fixtures, without certifying upstream acceptance/native execution. One application private-import record retired; five domain caller and root-location obligations remain. RF04 ratchet passes608modules/0unowned/2806imports/2402rawaccepted/SCC181/0activeerrors; RF05 remains943expiredgroups/errors. Exact evidence: features/RF05-F02/C03-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RF05 incomplete; RELEASE NOT AUTHORIZED.

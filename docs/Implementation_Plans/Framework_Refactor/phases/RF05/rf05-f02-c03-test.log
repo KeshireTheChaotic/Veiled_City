@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: compatibility exports are the same Intent functions and application state adopts their public API
+ok 1 - compatibility exports are the same Intent functions and application state adopts their public API
+  ---
+  duration_ms: 1.1403
+  type: 'test'
+  ...
+# Subtest: ordering and wake-up depend on native terminal receipt status, never automatic execution or PC effects
+ok 2 - ordering and wake-up depend on native terminal receipt status, never automatic execution or PC effects
+  ---
+  duration_ms: 179.6192
+  type: 'test'
+  ...
+# Subtest: receipt replay and continuation signals remain idempotent across SQLite restart
+ok 3 - receipt replay and continuation signals remain idempotent across SQLite restart
+  ---
+  duration_ms: 187.5592
+  type: 'test'
+  ...
+# Subtest: unknown or cyclic dependencies and mixed actor/source/scene inputs are rejected before plan writes
+ok 4 - unknown or cyclic dependencies and mixed actor/source/scene inputs are rejected before plan writes
+  ---
+  duration_ms: 169.5601
+  type: 'test'
+  ...
+# Subtest: private execution and private parent dependencies never widen into a public compound node
+ok 5 - private execution and private parent dependencies never widen into a public compound node
+  ---
+  duration_ms: 195.3509
+  type: 'test'
+  ...
+# Subtest: unresolved interrupts prevent a terminal transition until the existing native receipt is resolved
+ok 6 - unresolved interrupts prevent a terminal transition until the existing native receipt is resolved
+  ---
+  duration_ms: 206.148
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1468.6515

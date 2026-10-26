@@ -1,0 +1,22 @@
+[
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\intent\\action-dependency.js",
+    "Hash": "837AA40BEA1AE6BD5CF9402F88DC508FE9373367A9C05BADCFCE53B22494D71D"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\action-dependency.js",
+    "Hash": "62497550A20BD674D8E85D57D0F7351009ECA7ACECEA49F06F63A7FB2A297B48"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\intent\\public.js",
+    "Hash": "9CFC7231028FD6E2212EB8F11AEE475E573D2A38F6274D2DBB7BD1BD68216F2D"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\state.js",
+    "Hash": "993D5BAD9E9E3FA58096EF28A580E549DEC87DE34AD2A909A3AC4614AD2E1716"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf05-f02-c03.test.mjs",
+    "Hash": "947DABA2B56CAC7385F5A29DA75AE16286F339A16623A5170A647A1F60F4BACE"
+  }
+]

@@ -1,0 +1,11 @@
+# RF05-F02 C03 execution ledger
+
+Status: SCOPED INTENT DEPENDENCY ENGINE QUALIFIED; RF05-F02 INCOMPLETE. Base `101b64a9f6ecbc22be159bbee3247a078c794e93`. Intent owns dependency scheduling; native callers still own receipt verification and mechanical effects. Small unchanged production relocation, compatibility identity and application import adoption only. Five other domain import occurrences retain their current exact migration obligations.
+
+Tests pending. Provider calls/tokens/cost 0/0/$0; Codex UNMEASURED. Rollback original implementation/public/state import and this slice's evidence together, retaining every persisted compound-action/continuation reader and restoring only exact retired transitions. RELEASE NOT AUTHORIZED.
+
+## Terminal outcomes
+
+Frozen fresh test file passed **6/6**, exit **0**, TAP **1,468.6515 ms**; syntax **5/5**. Original and relocated complete implementation SHA-256 both `837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d`. Actual disposable SQLite qualifies old/public function identity, application public-import route, stable scheduling order, ready/suspended/blocked states, unknown/cyclic/mixed-source rejection before writes, durable terminal receipt and wake-up replay across reopen, private parent/receipt propagation, unresolved interrupt rejection and no PC resource/location changes. The accepted-row/native-receipt inputs are explicitly fresh scheduler fixtures; upstream acceptance, native effects and standalone cross-process transitions are not certified. Caller-owned synchronous transaction semantics are unchanged.
+
+One obsolete exact application private-import record retired, full original in `C03-RETIRED.json`. Final RF04 ratchet exit0 at **608 modules**, **0 unowned**, **2,806 imports**, **2,402 raw/accepted occurrences**, SCC **181**, **0 active/errors**. RF05 still exits1 on **943** expired RF04 groups/errors; source-location and five domain caller obligations remain. No baseline/deadline/max changes. Actual command/timestamps, source/test/log hashes and outcomes: `C03-RUN.json`. A one-off shell quoting error before relocation executed no code; the production move was then performed once by a local script. No tests were polled or rerun. Provider calls/tokens/cost0/0/$0; cache unchanged; Codex UNMEASURED. RELEASE NOT AUTHORIZED.

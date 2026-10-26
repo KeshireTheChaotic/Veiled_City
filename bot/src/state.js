@@ -23,7 +23,7 @@ import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-arbitration.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 import { coordinateTypedActionWindows } from "./scene-action-window.js";
-import { buildActionPlan, executableActionSpans, transitionAction } from "./action-dependency.js";
+import { buildActionPlan, executableActionSpans, transitionAction } from "./frameworks/intent/public.js";
 import { saveContextMemories } from "./context-memory.js";
 import { stagePvpAttempts } from "./narrative-pvp.js";
 import {prepareCampaignPvpAttack} from './pvp-attacks.js';

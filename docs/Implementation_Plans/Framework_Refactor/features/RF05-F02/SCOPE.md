@@ -1,5 +1,7 @@
 # RF05-F02 — isolate raw model request transport
 
+**Current scope reconciliation (2026-10-26):** this document records the historical narrow transport slice. The original owner handoff also assigns semantic interpretation, typed intents, action/span dependencies, arbitration, scene intent and decision review to RF05-F02. Those exact 250 transition obligations remain open; `C03-SCOPE.md` begins their accepted-action dependency engine work. Earlier transport evidence does not replace these objectives or qualify the whole feature.
+
 ## Objective
 
 Extract the existing raw OpenAI Responses API client and bounded transient-failure retry loop from application-owned `bot/src/gm.js` into an AI-provider-owned transport module. Preserve client configuration, retry limits/delays, cancellation, call options, usage telemetry, error categories, incident recording and observable retry attribution.

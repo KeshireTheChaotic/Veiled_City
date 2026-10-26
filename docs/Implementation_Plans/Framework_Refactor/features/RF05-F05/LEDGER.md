@@ -1,6 +1,6 @@
 # RF05-F05 execution ledger
 
-**Status:** PARTIAL — pure result-aggregation slice qualified; 441 assigned RF05-F05 transition entries remain.
+**Status:** PARTIAL — pure result-aggregation and current public-import slices qualified; 440 assigned RF05-F05 transition entries remain after Intent C03.
 **Base HEAD:** `410cbd024c4f2cb4b0a0d26413da03cc625e64e6`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -26,3 +26,7 @@ Continue with other independently supportable RF05 work and preserve the phase's
 ### C09 shared Intent import refresh
 
 C09 changed `turn-orchestration.js` to consume `validateDecisionAdvisory` through Intent public and retired this feature's exact private-import transition `c0781b4074f000b11290a1671eaa926ec868bae1ff4f88cb70bc83d038522d09`. No RF05-F05 mutation behavior changed. **441** RF05-F05 assignments remain; see `../RF05-F04/C09-RUN.json` and `C09-RETIRED.json` for exact evidence. RF05-F05's own scoped mutation helper remains unchanged.
+
+## 2026-10-26 RF05-F02 C03 native action scheduling ownership
+
+The original action/span dependency objective is reopened alongside earlier transport work. Relocated the Intent engine byte-for-byte (SHA256 837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d), retained same-function old readers and moved the actual state application import to Intent public. Six fresh scheduler/SQLite tests passed6/6, exit0, TAP1468.6515ms; syntax5/5. Stable plan ordering, durable receipt/wake-up replay, private dependency propagation, interrupts and no PC effects exercised using explicit new accepted-row fixtures, without certifying upstream acceptance/native execution. One application private-import record retired; five domain caller and root-location obligations remain. RF04 ratchet passes608modules/0unowned/2806imports/2402rawaccepted/SCC181/0activeerrors; RF05 remains943expiredgroups/errors. Exact evidence: features/RF05-F02/C03-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RF05 incomplete; RELEASE NOT AUTHORIZED.
