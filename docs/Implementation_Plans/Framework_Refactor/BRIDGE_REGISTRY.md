@@ -1,6 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the recorded source checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 16 ADOPTED, 45 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the recorded source checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 17 ADOPTED, 44 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -34,7 +34,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | discord--world | PROPOSED_NO_API | discord → world | 0 / 0 | RF06 |
 | intent--knowledge | PROPOSED_NO_API | intent → knowledge; knowledge → intent | 0 / 0 | RF05 |
 | intent--narrative | PROPOSED_NO_API | intent → narrative; narrative → intent | 0 / 0 | RF05 |
-| intent--npc | PROPOSED_NO_API | intent → npc; npc → intent | 0 / 0 | RF05 |
+| intent--npc | ADOPTED | npc → intent | 1 / 1 | RF04-F05 |
 | intent--operations | PROPOSED_NO_API | operations → intent | 0 / 0 | RF05 |
 | intent--persistence | PROPOSED_NO_API | intent → persistence | 0 / 0 | RF05 |
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |
@@ -56,7 +56,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | npc--operations | PROPOSED_NO_API | operations → npc; npc → operations | 0 / 0 | RF04 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
 | npc--session | ADOPTED | npc → session; session → npc | 1 / 1 | RF04-F05 |
-| npc--world | ADOPTED | world → npc; npc → world | 1 / 3 | RF04-F05 |
+| npc--world | ADOPTED | world → npc; npc → world | 2 / 4 | RF04-F05 |
 | operations--persistence | PROPOSED_NO_API | persistence → operations; operations → persistence | 0 / 0 | RF06 |
 | operations--publication | PROPOSED_NO_API | publication → operations | 0 / 0 | RF06 |
 | operations--session | PROPOSED_NO_API | session → operations | 0 / 0 | RF04 |

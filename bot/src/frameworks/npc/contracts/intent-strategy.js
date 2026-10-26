@@ -1,0 +1,3 @@
+/** Original native strategy delegation only; no model or plan JSON can replace dispatch scope/receipts. */
+export function createNpcIntentStrategyConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Native Intent strategy delegate required.');if(source&&source!==native)throw new Error('Native strategy delegate replacement forbidden.');source=native;return this;},delegateStrategy(...args){if(!source)throw Object.assign(new Error('NPC Intent strategy delegate has not been composed.'),{code:'NPC_INTENT_STRATEGY_COMPOSITION'});return source(...args);}});}
+export const npcIntentStrategy=createNpcIntentStrategyConsumer();

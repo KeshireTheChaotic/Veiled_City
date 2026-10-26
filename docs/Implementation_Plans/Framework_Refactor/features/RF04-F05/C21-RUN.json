@@ -1,0 +1,294 @@
+{
+  "feature": "RF04-F05-C21",
+  "status": "SCOPED_NPC_STRATEGY_WORLD_INTENT_INTEGRATION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+  "base_head": "4b3a1c9708a45b281654dbbe1412314a225b36ba",
+  "changed_files": {
+    "base_head": "4b3a1c9708a45b281654dbbe1412314a225b36ba",
+    "syntax_checked": 14,
+    "files": [
+      {
+        "path": "bot/src/frameworks/npc/contracts/world-strategy.js",
+        "sha256": "edf60541c7f76598b47ae40a43775d6a9541635bf93d5f7d3eafad575ee10a80"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/intent-strategy.js",
+        "sha256": "fd554eb6df5b9c9b594129836a7249b293aa6aba62aac93f71b68d40a052cc08"
+      },
+      {
+        "path": "bot/src/frameworks/npc/strategy-source.js",
+        "sha256": "e98fbaa2ad3e4775799a459bcb3fd6c2b8249d272ba015f88ad3bc583652639a"
+      },
+      {
+        "path": "bot/src/frameworks/npc/public.js",
+        "sha256": "b278fa868e764769c3f3725f56d566028a5afa91af84b98042acabe3fda27cd4"
+      },
+      {
+        "path": "bot/src/frameworks/intent/contracts/strategy-delegate-source.js",
+        "sha256": "b6de2b3cc56792447f15123606061ff51bdf345012d8804bbd8f227acd223e12"
+      },
+      {
+        "path": "bot/src/frameworks/intent/public.js",
+        "sha256": "119ca01a269f6f9bcb53e7ea944781da8629f993701fe7e8240377ca3763394d"
+      },
+      {
+        "path": "bot/src/ai-intents.js",
+        "sha256": "035dc5056214d582bb7a3a97d36b797a93153ead1b9e91d1fcda4e64d8cd473b"
+      },
+      {
+        "path": "bot/src/simulation-strategy.js",
+        "sha256": "8f13e863b1a2717438c40c8d1f7d991fdc5da351809a8798240a719d83cd00f6"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "0ca1c84d12e449522444d27f2e7176cf0c729e280283327431b46a3597016a9e"
+      },
+      {
+        "path": "bot/src/framework-to-framework/intent--npc/public.js",
+        "sha256": "9933389f01ccba42300bb33d6fdce2ff64cb3a333cda2800bc101626b97f9197"
+      },
+      {
+        "path": "bot/src/application/composition/npc-strategy.js",
+        "sha256": "25456702e003c74a9705c5521a79579abf68313dcf82d5b7368089dc491cd2cc"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "cb22df64c2896ca58eb0b75f35ee8a30ce5335ebd3aefd16f2860c8d5ac04fdb"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "643832f2c992536aa61a194457b2bf47f25fe06a2a4dccfea076e7c1267ff377"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "6260c4bfafc23fd77bd8b1340609fcab083f62c0695fde6118562413b308b074"
+      }
+    ]
+  },
+  "unchanged_strategy_rule_sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d",
+  "tests": {
+    "initial": {
+      "run_id": "RF04-F05-C21-20261026-1",
+      "end": "2026-10-26T20:36:31.4236226Z",
+      "duration_ms": 2327.5202,
+      "start": "2026-10-26T20:36:29.0961024Z",
+      "exit_code": 1,
+      "tests": 8,
+      "passed": 7,
+      "failed": 1,
+      "tap_duration_ms": 2274.6801
+    },
+    "repair": {
+      "test_sha256": "588FE1AA1365C7AA73C222295CE9CAC172A56D0D3805E1B26C90D0FCBDBC0441",
+      "run_id": "RF04-F05-C21-20261026-repair",
+      "duration_ms": 1107.729,
+      "exit_code": 0,
+      "end": "2026-10-26T20:37:39.2474136Z",
+      "start": "2026-10-26T20:37:38.1396846Z",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "tap_duration_ms": 1051.6166
+    },
+    "reason": "Positive native Intent fixture omitted existing closed step-action fields; corrected only failed fixture, no production policy change. Original seven cases passed initial test bytes; final-file union not claimed. Denial case produces actual blocked malformed closed-contract receipt, not proof of separately valid manual-policy denial.",
+    "determinism": "Positive native Intent schedules delay_minutes1, so no RNG inside delegate. Due action then uses injected native roll19; other direct step tests inject deterministic dice. No paid models."
+  },
+  "syntax": {
+    "checked": 14,
+    "passed": 14,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 664,
+      "unowned": 0,
+      "importOccurrences": 2936,
+      "internalImportOccurrences": 2757,
+      "cycleComponents": 2,
+      "largestCycle": 146,
+      "rawViolationOccurrences": 2109,
+      "acceptedLegacyOccurrences": 2109,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 664,
+      "unowned": 0,
+      "importOccurrences": 2936,
+      "internalImportOccurrences": 2757,
+      "cycleComponents": 2,
+      "largestCycle": 146,
+      "rawViolationOccurrences": 2109,
+      "acceptedLegacyOccurrences": 1357,
+      "activeViolationGroups": 748,
+      "transitionErrors": 748,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "e5580b50fe3e722f300d3f302d16a14d0daa501e29f061e7bf3875cd89631ff7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "0fe44eb1fab62589309695d9496b245705f25b40acdebc873e6e6bf0fe0c1eb7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "4e0ad0feaf8ba811ba53e1fb23ba8d0c3ca374b8919252c22200c3d092c95314",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "fa9edc5fbca072183c449bb1593ee03ab08c4c7f2208b390294ea4fa436de253",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/ai-intents.js",
+      "kind": "static",
+      "specifier": "./ai-intents.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "f0ea45f38aa260ed01124a3596431da8164373a21df82e53a46e4546d2a32dfb",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/native-world-operations.js",
+      "kind": "static",
+      "specifier": "./native-world-operations.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "177b8c05557695e12e119daafcabd538468b3233882d0e14e9ab40c5b11ccbac",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/ai-intents.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "d61aefe09b27f1865b5e9c8b2ed35352189486c56331b0ca7c57eca536763d70",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "8de0b69fa5014ca097cfba20ff8461687e70a22fc4612d4e81de9fc31aa5e2ff",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation-strategy.js",
+      "to": "bot/src/ai-intents.js",
+      "kind": "static",
+      "specifier": "./ai-intents.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "5d648b98a70997098f09f63e50c723ab9dc869505fee93f6af4dc0dfafe83b29",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "NPC owns original single strategy runtime; World exact original native executor/catalog/state/authority supplied by pair. Intent original owner source publishes same delegateStrategy function pointer; original adapter registry/dispatcher/receipts remain in existing producer with exact obligations, not copied or falsely isolated.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Original Intent producer remains mixed; strategy-delegation source direction only adopted. Other plan, private-audience, actual UI, intent-dispatch and full action catalog branches remain separate qualification.",
+    "C21 final-file whole union not run after one fixture repair; no unchanged passing cases rerun without associated production change.",
+    "No live provider/Discord/production recovery or semantic narrative-quality qualification."
+  ],
+  "rollback": "Revert C21 NPC runtime/ports, original Intent source registration, pairs/bootstrap/root/public/registry and restore9exact records together. Preserve plan revision, action, native receipt, source and budget history.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c21-tests.log",
+      "sha256": "3146b3a244a9954475ae211cf073c57d0d7398267e22124a94b0128454c150fb"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c21-repair.log",
+      "sha256": "70cf961b58fa1844a0e62c62a24c2e12e8aaf7f5c5c4b15f7dcbb39542778897"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c21-architecture-initial.log",
+      "sha256": "bc1bf8d2d9ba5a2d407676ccbc1067f1a7dcddf6336d784ee2b29179763f3e38"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c21-rf04-final.log",
+      "sha256": "6f018e19b8464ce6067850c00651544a640fcd64666aafaf366221e2c7db6fe1"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c21-rf05-final.log",
+      "sha256": "43f8328e5ec3b290fa34c994235eaab851b0b3a7bba59d947f5e23ea5756a949"
+    }
+  ]
+}

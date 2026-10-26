@@ -5,3 +5,4 @@ export {decisionAdvisorySchema,requiredDecisionAdvisorySchema,decisionPromptCont
 export {ARBITRATION_DISPOSITIONS,npcSceneIntentSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema,matchesArbitrationSchema,arbitrationFailure} from './gm-arbitration-contract.js';
 export {buildActionPlan,executableActionSpans,transitionAction,signalActionContinuation} from './action-dependency.js';
 export {delegationPolicy} from './delegation-policy.js';
+export {createNativeStrategyDelegateSource,nativeStrategyDelegateSource} from './contracts/strategy-delegate-source.js';

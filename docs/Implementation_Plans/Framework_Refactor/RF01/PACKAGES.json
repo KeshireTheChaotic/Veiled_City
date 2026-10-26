@@ -112,6 +112,9 @@
     ],
     "npc--session": [
       "bot/src/framework-to-framework/npc--session/public.js"
+    ],
+    "intent--npc": [
+      "bot/src/framework-to-framework/intent--npc/public.js"
     ]
   },
   "externalCapabilityOwners": {

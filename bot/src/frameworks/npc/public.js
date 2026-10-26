@@ -11,3 +11,6 @@ export {createNpcKnowledgeEvidenceConsumer,npcKnowledgeEvidence} from './contrac
 export {createNpcSceneAccessConsumer,npcSceneAccess} from './contracts/scene-access.js';
 export {createNpcObservationRules} from './observation.js';
 export {npcEvidenceActive,assertNpcObservation} from './observation-source.js';
+export {createNpcWorldStrategyConsumer,npcWorldStrategy} from './contracts/world-strategy.js';
+export {createNpcIntentStrategyConsumer,npcIntentStrategy} from './contracts/intent-strategy.js';
+export {manageStrategy,executeStrategyStep,runStrategyOpportunity} from './strategy-source.js';

@@ -575,3 +575,7 @@ registerIntentAdapter("density",{
   apply:(db,guild)=>({clock:db.getSimulationClock(guild),recent_cycles:db.listSimulationRecords(guild,{kind:"cycle",limit:4}),
     authority:"bounded_scheduler_diagnostics_not_actor_knowledge",npc_budgets:{round:1,scene:3,downtime:4},institution_budget:2})
 });
+
+import {nativeStrategyDelegateSource} from './frameworks/intent/public.js';
+const provideNativeStrategyDelegate=()=>delegateStrategy;
+nativeStrategyDelegateSource.provideSource(provideNativeStrategyDelegate);

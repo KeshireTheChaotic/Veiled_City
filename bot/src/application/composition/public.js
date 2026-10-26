@@ -18,3 +18,4 @@ export {initializeSessionSceneWorld} from './session-scene-world.js';
 export {initializeWorldOwnerConsent} from './world-owner-consent.js';
 export {initializeNativeSessionMovement} from './native-session-movement.js';
 export {initializeNpcObservations} from './npc-observations.js';
+export {initializeNpcStrategy} from './npc-strategy.js';

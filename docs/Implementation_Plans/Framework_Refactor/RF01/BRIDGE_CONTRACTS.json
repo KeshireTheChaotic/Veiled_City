@@ -1522,21 +1522,12 @@
         "intent",
         "npc"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "intent",
-          "to": "npc",
-          "import_occurrences": 5,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "npc",
           "to": "intent",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original native delegateStrategy function from original Intent source; same adapter registry, scope, budget and transaction receipts. No copied dispatch policy."
         }
       ],
       "source_evidence": [
@@ -1547,11 +1538,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fixed owner-provided source function and NPC consumer; source/replacement guards; actual original strategy and native Intent receipt behavior offline.",
+      "lifecycle": "Original ai-intents source loaded by actual index dependencies before bootstrap; own function registration only, no model/database work during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/npc-strategy.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "intent",
@@ -1571,7 +1566,9 @@
         "pair": "intent--npc",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 6
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/intent--npc/public.js",
+      "scope": "Strategy delegation direction only. Original Intent producer/other native dispatch dependencies remain mixed exact transition obligations."
     },
     {
       "pair": "intent--operations",
@@ -2785,12 +2782,14 @@
       "lifecycle": "Application bootstrap binds once before configuration/database/client. Root World operation authority and supply source consumers adopt own World interface. Original NPC source still composes legacy World/Knowledge/Session/native capabilities; not full producer isolation.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/npc-world-evidence.js"
+        "bot/src/application/composition/npc-world-evidence.js",
+        "bot/src/application/composition/npc-strategy.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2813,7 +2812,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes."
     },
     {
       "pair": "operations--persistence",
