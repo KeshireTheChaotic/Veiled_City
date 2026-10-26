@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: native NPC consumer requires both original functions and preserves exact arguments options results and errors
+ok 1 - native NPC consumer requires both original functions and preserves exact arguments options results and errors
+  ---
+  duration_ms: 1.2108
+  type: 'test'
+  ...
+# Subtest: native acquired-source interface receives actual actor-owned GM-private evidence without granting publication or state changes
+ok 2 - native acquired-source interface receives actual actor-owned GM-private evidence without granting publication or state changes
+  ---
+  duration_ms: 171.9105
+  type: 'test'
+  ...
+# Subtest: native attributed testimony preserves secret unknown cross-actor and global GM visibility boundaries
+ok 3 - native attributed testimony preserves secret unknown cross-actor and global GM visibility boundaries
+  ---
+  duration_ms: 159.3337
+  type: 'test'
+  ...
+# Subtest: native resource option and current player-control checks remain distinct and authoritative
+ok 4 - native resource option and current player-control checks remain distinct and authoritative
+  ---
+  duration_ms: 158.9525
+  type: 'test'
+  ...
+# Subtest: source retraction and Native evidence rejection persist across database restart without rewriting knowledge
+ok 5 - source retraction and Native evidence rejection persist across database restart without rewriting knowledge
+  ---
+  duration_ms: 173.241
+  type: 'test'
+  ...
+# Subtest: another actor source and player character cannot become Native NPC authority through the interface
+ok 6 - another actor source and player character cannot become Native NPC authority through the interface
+  ---
+  duration_ms: 167.9627
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1718.2203

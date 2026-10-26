@@ -1,3 +1,5 @@
+import {nativeNpcEvidence} from './frameworks/daggerheart/public.js';
+const {actorSource}=nativeNpcEvidence;
 import {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './frameworks/daggerheart/public.js';
 export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './frameworks/daggerheart/public.js';
 /** Encounter budget, composition, and adversary-library helpers. */
@@ -8,7 +10,6 @@ import { cityObject, cityKey, cityAudit, indexWorldEvent } from "./city-calendar
 import { requireCitySource } from "./city-core.js";
 import { scenePresence, sceneAccess, currentScene } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
-import { actorSource } from "./simulation-motivation.js";
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 
 export function livePcRoster(...args){return compositionRules().livePcRoster(...args);}

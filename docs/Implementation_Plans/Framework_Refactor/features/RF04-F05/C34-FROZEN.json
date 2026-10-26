@@ -1,0 +1,62 @@
+{
+  "base_head": "f4101dc499f6bcc3bb1bb2b45897e373f67b6fbc",
+  "syntax_checked": 10,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/npc-evidence.js",
+      "sha256": "7f2f9345b2ded926804ac0cdbebf0299a9b5a45a8a93d34a433885a84cda9816"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "4d1e74d8b39a2057b2a365bb0faaf19154cf0fab336c4123d990b9a9bacca19a"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--npc/public.js",
+      "sha256": "f1d04eefa7140de540e38bebf2d3774a12bbd4bb8add48e7ed22ab86465f3eff"
+    },
+    {
+      "path": "bot/src/application/composition/native-npc-evidence.js",
+      "sha256": "80dac9a02ac0ef4eaa8c417f637fe8629ebb2350469226c1bd7ceee2da047da2"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "59bb6b2cb82051c46657c94789194da39bca00c118f17ce9c2d3e842c3812acf"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "282ba843fd335c7230b12619ba8e50f6c0eec98bb66be5c288f617284069bef7"
+    },
+    {
+      "path": "bot/src/encounter.js",
+      "sha256": "00807964dc9a333adfabe0ccbd2df493d01bba3ddf98bad76eb8381ca6e23cb7"
+    },
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "9a3426f60a877d875a6ca5adf708f16b612d3ff3f9778618ee9c5bc32d80b637"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "32bf569f1f9f025aaf92b970755aadf5df5f14cacbccb73f5499a714b81a703a"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs",
+      "sha256": "0256f6deb0bb3db38fa9505c3800a7f606472b6b3439eb9bf81d7aeda3bf593a"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-capability-rules.js",
+      "sha256": "4507656e8030ac406cda78cddcc88c0a2a20b710dd4608ad6fdd5d83a593ffda"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+      "sha256": "82d6ebf71e75d3a2dc0230cafbe71213e732e0c5b384f7a4a84a315646a845d9"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "8ec3cb8adb9fee5b1bc27178d8924dcb182e3a9effa30e5dffd47266191f24d5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+      "sha256": "6303328960187e67d329a302cfe6095fa43cacd75fdde91ebfb8cc1ea7b1ed65"
+    }
+  ]
+}

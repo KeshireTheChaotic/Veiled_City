@@ -1,0 +1,7 @@
+# C34 ledger
+
+In progress; no tests yet. Original source evidence and native rule implementations unchanged.
+
+## 2026-10-26 C34 native NPC acquired-evidence interface
+
+Native encounter/GM capability/environment witness sources now consume exact original NPC actorSource/actorReferenceVisible through fixed Daggerheart-owned consumer and observed Daggerheart–NPC pair. Actual bootstrap after source dependencies before services. Original native rule bodies/NPC evidence unchanged, hashes recorded. Six new6/6pass exit0 TAP1718.2203ms; syntax10/10; one frozen batch/no repairs. Actual native dossier/acquired-source proof/noDBwrites, attributed nonsecret testimony distinct from globally hidden GM event, secret/unknown/cross-actor rejection, existing resource option/current player control, retraction/reopen without history rewrite and PC/wrong-source rejection exercised. No full positive GM grant/witness account publication/native writer qualification claimed.3exact native cross-NPC imports retired. RF04 passes704modules/0unowned/3038imports/2066rawaccepted/2cycles/largest144/0activeerrors; RF05 remains719expiredgroups/errors.2050exact open/341resolved since audit; RF04-F02remaining5legacy module locations only, caller/path retirement still required. Broader native/context/phase/live qualifications remain open. Evidence C34-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

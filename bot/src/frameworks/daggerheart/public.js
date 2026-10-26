@@ -118,3 +118,4 @@ export {createNativeWorldProxyConsumer,nativeWorldProxy} from './contracts/world
 export {nativeActorControl} from './actor-control-source.js';
 export {externalConsentTerms,externalConsentKey,hasOwnerConsent} from './owner-consent-source.js';
 export {createNativeMovementReaderSource,nativeMovementReaderSource} from './contracts/movement-reader-source.js';
+export {createNativeNpcEvidenceConsumer,nativeNpcEvidence} from './contracts/npc-evidence.js';

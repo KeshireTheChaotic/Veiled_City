@@ -24,3 +24,4 @@ export {initializeNpcCognition} from './npc-cognition.js';
 export {initializeNpcConversations} from './npc-conversations.js';
 export {initializeWorldCandidateContext} from './world-candidate-context.js';
 export {initializeWorldNpcOpportunity} from './world-npc-opportunity.js';
+export {initializeNativeNpcEvidence} from './native-npc-evidence.js';

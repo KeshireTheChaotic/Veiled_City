@@ -118,6 +118,9 @@
     ],
     "narrative--npc": [
       "bot/src/framework-to-framework/narrative--npc/public.js"
+    ],
+    "daggerheart--npc": [
+      "bot/src/framework-to-framework/daggerheart--npc/public.js"
     ]
   },
   "externalCapabilityOwners": {

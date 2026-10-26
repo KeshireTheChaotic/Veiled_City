@@ -1,0 +1,44 @@
+[
+  {
+    "id": "e3c0732b514a769f617b9fdccc2089d03801c8fc9dbb08642cdf98fe2ca6c470",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/encounter.js",
+    "to": "bot/src/simulation-motivation.js",
+    "kind": "static",
+    "specifier": "./simulation-motivation.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "dc005361f625ab9d492d2cc5a43c81eebb3d0a6bd15dad97318d9e148a810c7e",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/gm-action-capability.js",
+    "to": "bot/src/npc-cognition-projection.js",
+    "kind": "static",
+    "specifier": "./npc-cognition-projection.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "4bbbe8042fc32cdb460a728a4d4019cba48acf076a40775752b88aa2db26e039",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/native-environment-witnesses.js",
+    "to": "bot/src/npc-cognition-projection.js",
+    "kind": "static",
+    "specifier": "./npc-cognition-projection.js",
+    "owner": "daggerheart",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F02",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]
