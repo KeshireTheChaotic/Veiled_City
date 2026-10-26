@@ -22,3 +22,4 @@ export {initializeNpcStrategy} from './npc-strategy.js';
 export {initializeNpcEvidenceProjection} from './npc-evidence-projection.js';
 export {initializeNpcCognition} from './npc-cognition.js';
 export {initializeNpcConversations} from './npc-conversations.js';
+export {initializeWorldCandidateContext} from './world-candidate-context.js';

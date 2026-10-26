@@ -1,0 +1,58 @@
+{
+  "base_head": "4c6b630070dd3015f2d9ff17f25f812a280c2a39",
+  "syntax_checked": 12,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/simulation-query-primitives.js",
+      "sha256": "6e98ed92c5b82cbb699cefc2cb73976e353dc0b7b9e325836ab8600f9ecbf94b"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-candidates.js",
+      "sha256": "ec667d37663e27e5dc5949b9bc1bb4a70a437a0a26caeedc2baffe267cca1d07"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-cognition.js",
+      "sha256": "541dccba14127917ee23a9dbcda99d20589f635a8036100c556396790a3d53fb"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/knowledge-clusters.js",
+      "sha256": "c7bde41072c3c80aec84a82d5eeee0ac3946a8d994b42ed915aa49a3b82d9d85"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "760acd137d0484abf1773eced8183ac42eadd013e28ddf3bc2a3d8b313d47b0c"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "54c3f5c9fa6f8dd1b9cc32df9d4e371354fa3de36dbf3e21b75dd81c5fadd16a"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "8d5312306195b1f553355f9605d614818de8563afaabd00b1b99724c459127cc"
+    },
+    {
+      "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+      "sha256": "3ef0c48cf808871f1708db764c4ffdab4088f1c9333d61dce8141479c1bbfa47"
+    },
+    {
+      "path": "bot/src/application/composition/world-candidate-context.js",
+      "sha256": "63a142cd301830ea84b5fb1f82103a2d4d20d218be6f41df5dc20e1ea6e9edb7"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "fefe7328e4cc6c6efcdbd065fa6830035f2228d3d16885241c06eecb5c2dc71c"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "174cc12af9c14823c95f71d6fd8e911239be710a4806552ca35effff32fdb46b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+      "sha256": "853735814e4a43a9051b118d2451f7c74559ba5ae8ed50c6e563a361718d551c"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "64583b6110268123a47374ebd8851cc35d7546ec65bcf72ccd8aa0e0d68e5505"
+    }
+  ]
+}

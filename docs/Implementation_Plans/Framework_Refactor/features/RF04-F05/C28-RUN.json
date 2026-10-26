@@ -1,0 +1,171 @@
+{
+  "feature": "RF04-F05-C28",
+  "status": "SCOPED_WORLD_CANDIDATE_CONTEXT_QUALIFIED",
+  "frozen": {
+    "base_head": "4c6b630070dd3015f2d9ff17f25f812a280c2a39",
+    "syntax_checked": 12,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/simulation-query-primitives.js",
+        "sha256": "6e98ed92c5b82cbb699cefc2cb73976e353dc0b7b9e325836ab8600f9ecbf94b"
+      },
+      {
+        "path": "bot/src/frameworks/world/simulation-candidates.js",
+        "sha256": "ec667d37663e27e5dc5949b9bc1bb4a70a437a0a26caeedc2baffe267cca1d07"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-cognition.js",
+        "sha256": "541dccba14127917ee23a9dbcda99d20589f635a8036100c556396790a3d53fb"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/knowledge-clusters.js",
+        "sha256": "c7bde41072c3c80aec84a82d5eeee0ac3946a8d994b42ed915aa49a3b82d9d85"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "760acd137d0484abf1773eced8183ac42eadd013e28ddf3bc2a3d8b313d47b0c"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "54c3f5c9fa6f8dd1b9cc32df9d4e371354fa3de36dbf3e21b75dd81c5fadd16a"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "8d5312306195b1f553355f9605d614818de8563afaabd00b1b99724c459127cc"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+        "sha256": "3ef0c48cf808871f1708db764c4ffdab4088f1c9333d61dce8141479c1bbfa47"
+      },
+      {
+        "path": "bot/src/application/composition/world-candidate-context.js",
+        "sha256": "63a142cd301830ea84b5fb1f82103a2d4d20d218be6f41df5dc20e1ea6e9edb7"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "fefe7328e4cc6c6efcdbd065fa6830035f2228d3d16885241c06eecb5c2dc71c"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "174cc12af9c14823c95f71d6fd8e911239be710a4806552ca35effff32fdb46b"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814e4a43a9051b118d2451f7c74559ba5ae8ed50c6e563a361718d551c"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "64583b6110268123a47374ebd8851cc35d7546ec65bcf72ccd8aa0e0d68e5505"
+      }
+    ]
+  },
+  "tests": {
+    "duration_ms": 2146.8792,
+    "run_id": "rf04-f05-c28-frozen",
+    "end": "2026-10-26T16:16:07.7759149-05:00",
+    "start": "2026-10-26T16:16:05.6290357-05:00",
+    "exit_code": 0,
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "tap_duration_ms": 2095.4917,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c28.test.mjs"
+  },
+  "syntax": {
+    "checked": 12,
+    "passed": 12
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 694,
+      "unowned": 0,
+      "importOccurrences": 3017,
+      "internalImportOccurrences": 2838,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2077,
+      "acceptedLegacyOccurrences": 2077,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 694,
+      "unowned": 0,
+      "importOccurrences": 3017,
+      "internalImportOccurrences": 2838,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2077,
+      "acceptedLegacyOccurrences": 1348,
+      "activeViolationGroups": 725,
+      "transitionErrors": 725,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "bf92021fe87ccb3084a5ad719229120a4098f826f755d022580225f37a01a441",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/npc-cognition.js",
+      "kind": "static",
+      "specifier": "./npc-cognition.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "fe97986b2744a7955aae0915f096d3e8191091c6126032fe6a6a9e41564805ae",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/memory-clusters.js",
+      "kind": "static",
+      "specifier": "./memory-clusters.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Original actor memory/goal/candidate query executes in World using original native actor control/state and fixed NPC cognition/Knowledge actor-cluster callbacks via pairs. Remaining original Director uses same source function; shared query helpers extracted once, no selection policy copied.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "mocked_planner_calls": 1,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Actual Director preparation exercised with one deterministic mocked planner call, not whole Director commit, provider speed, model quality, Discord or outbox publication.",
+    "Existing faction and more specialized density wake variants unchanged but not all separately requalified. Other original Director/native source dependencies remain exact debt.",
+    "Evidence hashes cover preserved working tree; not clean-checkout/full-phase/live/production/release qualification."
+  ],
+  "rollback": "Revert C28 World candidate/query helpers/ports/pairs/bootstrap/root integration and restore2exact original imports together. Preserve native profiles, knowledge, goals, memory, control, receipts and outbox state.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c28-tests.log",
+      "sha256": "8d2a66f7c27803eee63c82a5070d7d0eb8cf202171e8660a5069a48bcd3b4d4f"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c28-architecture-initial.log",
+      "sha256": "be12d63a0aa73e0aa8dd839a77d374b6479b196e334d1e171bd39d6f154f6523"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c28-rf04-final.log",
+      "sha256": "a8b74775c581192b90539b53da763ed98956c01af92db13e6b8bdb147525f9ea"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c28-rf05-final.log",
+      "sha256": "f0ea23047265a0a20e0c134e403f48b24e7677e1d72359a74fef245a0194bf3a"
+    }
+  ]
+}

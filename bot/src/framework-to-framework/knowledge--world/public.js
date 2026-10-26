@@ -20,3 +20,7 @@ export function connectKnowledgeMemory(){return knowledgeWorldMemory.bind({cityO
 import {knowledgeWorldHistory} from '../../frameworks/knowledge/public.js';
 import {historyContext} from '../../frameworks/world/public.js';
 export function connectKnowledgeHistory(){return knowledgeWorldHistory.bind(historyContext);}
+
+import {worldKnowledgeClusters} from '../../frameworks/world/public.js';
+import {clusterContext} from '../../frameworks/knowledge/public.js';
+export function connectWorldKnowledgeClusters(){return worldKnowledgeClusters.bind(clusterContext);}

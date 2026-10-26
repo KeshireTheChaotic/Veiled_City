@@ -2223,14 +2223,16 @@
       "lifecycle": "Fixed inert application initialization before Narrative and services; actual legacy evidence reader delegates to one Knowledge-owned engine. Existing initializer binds both fixed directions and retains its prior return identity.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/knowledge-world.js"
+        "bot/src/application/composition/knowledge-world.js",
+        "bot/src/application/composition/world-candidate-context.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2253,7 +2255,7 @@
         "occurrences": 32
       },
       "public_api": "bot/src/framework-to-framework/knowledge--world/public.js",
-      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open. C26 Knowledge deterministic context selection consumes exact original World history summary reader, scoped GM context only; no new actor/canonical authority."
+      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open. C26 Knowledge deterministic context selection consumes exact original World history summary reader, scoped GM context only; no new actor/canonical authority. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers."
     },
     {
       "pair": "narrative--npc",
@@ -2806,7 +2808,8 @@
         "bot/src/application/composition/npc-world-evidence.js",
         "bot/src/application/composition/npc-strategy.js",
         "bot/src/application/composition/npc-evidence-projection.js",
-        "bot/src/application/composition/npc-conversations.js"
+        "bot/src/application/composition/npc-conversations.js",
+        "bot/src/application/composition/world-candidate-context.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
@@ -2814,7 +2817,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2837,7 +2841,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers."
     },
     {
       "pair": "operations--persistence",

@@ -16891,20 +16891,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "bf92021fe87ccb3084a5ad719229120a4098f826f755d022580225f37a01a441",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/simulation.js",
-      "to": "bot/src/npc-cognition.js",
-      "kind": "static",
-      "specifier": "./npc-cognition.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "67b6d7f40c68a67f8cdc278287803a9347334db24dcf3c794d39dbee29b2b1a8",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/simulation.js",
@@ -16925,20 +16911,6 @@
       "to": "bot/src/simulation-strategy.js",
       "kind": "static",
       "specifier": "./simulation-strategy.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "fe97986b2744a7955aae0915f096d3e8191091c6126032fe6a6a9e41564805ae",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/simulation.js",
-      "to": "bot/src/memory-clusters.js",
-      "kind": "static",
-      "specifier": "./memory-clusters.js",
       "owner": "world",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",

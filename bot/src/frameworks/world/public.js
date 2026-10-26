@@ -58,3 +58,6 @@ export {saveRecord as saveNativeSimulationRecord} from './simulation-record.js';
 export {createWorldSessionSceneConsumer,worldSessionScene} from './contracts/session-scene.js';
 export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents,recordWorldActorMemory} from './action-execution.js';
 export {historyContext} from './history-context.js';
+export {createWorldNpcCognitionConsumer,worldNpcCognition} from './contracts/npc-cognition.js';
+export {createWorldKnowledgeClustersConsumer,worldKnowledgeClusters} from './contracts/knowledge-clusters.js';
+export {simulationCandidates} from './simulation-candidates.js';

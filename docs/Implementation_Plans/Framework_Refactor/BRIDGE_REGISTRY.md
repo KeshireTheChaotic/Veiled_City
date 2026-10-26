@@ -46,7 +46,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | knowledge--persistence | PROPOSED_NO_API | persistence → knowledge; knowledge → persistence | 0 / 0 | RF06 |
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
-| knowledge--world | ADOPTED | knowledge → world; world → knowledge | 1 / 5 | RF04-F05 |
+| knowledge--world | ADOPTED | knowledge → world; world → knowledge | 2 / 6 | RF04-F05 |
 | narrative--npc | ADOPTED | npc → narrative; narrative → npc | 2 / 3 | RF04-F05 |
 | narrative--operations | PROPOSED_NO_API | narrative → operations | 0 / 0 | RF05 |
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |
@@ -56,7 +56,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | npc--operations | PROPOSED_NO_API | operations → npc; npc → operations | 0 / 0 | RF04 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
 | npc--session | ADOPTED | npc → session; session → npc | 3 / 3 | RF04-F05 |
-| npc--world | ADOPTED | world → npc; npc → world | 4 / 6 | RF04-F05 |
+| npc--world | ADOPTED | world → npc; npc → world | 5 / 7 | RF04-F05 |
 | operations--persistence | PROPOSED_NO_API | persistence → operations; operations → persistence | 0 / 0 | RF06 |
 | operations--publication | PROPOSED_NO_API | publication → operations | 0 / 0 | RF06 |
 | operations--session | PROPOSED_NO_API | session → operations | 0 / 0 | RF04 |

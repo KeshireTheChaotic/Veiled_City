@@ -17,3 +17,7 @@ export function connectNpcWorldEvidenceEvent(){return npcWorldEvidenceEvent.bind
 
 import {npcWorldConversations} from '../../frameworks/npc/public.js';
 export function connectNpcWorldConversations(){return npcWorldConversations.bind({cityObject,cityKey,cityAudit,requireCitySource,activeCityProxy,assertNpcAvailability,actorState,submitNpcAction});}
+
+import {worldNpcCognition} from '../../frameworks/world/public.js';
+import {retrieveNpcCognition} from '../../frameworks/npc/public.js';
+export function connectWorldNpcCognition(){return worldNpcCognition.bind(retrieveNpcCognition);}

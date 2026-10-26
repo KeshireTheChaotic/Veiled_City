@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: World candidate consumers fail before source binding and preserve exact original results and errors
+ok 1 - World candidate consumers fail before source binding and preserve exact original results and errors
+  ---
+  duration_ms: 1.2521
+  type: 'test'
+  ...
+# Subtest: native NPC candidates preserve subjective actor knowledge and read without recalls or global facts
+ok 2 - native NPC candidates preserve subjective actor knowledge and read without recalls or global facts
+  ---
+  duration_ms: 170.5133
+  type: 'test'
+  ...
+# Subtest: original supporting relevance downtime dormant removed and native player-control checks remain active
+ok 3 - original supporting relevance downtime dormant removed and native player-control checks remain active
+  ---
+  duration_ms: 164.3986
+  type: 'test'
+  ...
+# Subtest: active native proxy excludes its NPC from autonomous candidates
+ok 4 - active native proxy excludes its NPC from autonomous candidates
+  ---
+  duration_ms: 170.1362
+  type: 'test'
+  ...
+# Subtest: native goal dependency completion gates candidate eligibility without inventing completion
+ok 5 - native goal dependency completion gates candidate eligibility without inventing completion
+  ---
+  duration_ms: 170.4614
+  type: 'test'
+  ...
+# Subtest: actor-specific memory clusters remain distinct across database restart
+ok 6 - actor-specific memory clusters remain distinct across database restart
+  ---
+  duration_ms: 179.273
+  type: 'test'
+  ...
+# Subtest: actual Director preparation receives owner candidate packets once and paused Director never calls model boundary
+ok 7 - actual Director preparation receives owner candidate packets once and paused Director never calls model boundary
+  ---
+  duration_ms: 161.678
+  type: 'test'
+  ...
+# Subtest: native density selection retains original affordable actor and packet caps
+ok 8 - native density selection retains original affordable actor and packet caps
+  ---
+  duration_ms: 220.0134
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2095.4917
