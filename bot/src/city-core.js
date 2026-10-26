@@ -3,7 +3,6 @@ import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleC
 import { assertInstitutionDelegation, activeCityProxy, assertWorldActorControl } from "./city-constraints.js";
 import { EXPANSION_FEATURES } from "./expansion-contracts.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
-import { hasOwnerConsent } from "./owner-consent.js";
 import {nativeWorldOperationAllows,nativeWorldStrategyStepAllowed} from './native-world-operations.js';
 
 
@@ -60,7 +59,7 @@ export function configureCityFlags(db,guildId,input,actorId){
 /** Deterministic bounded Institution Director: validated queued intent, no new per-actor LLM calls. */
 export function executeInstitutionAction(...args){return core().executeInstitutionAction(...args);}
 export function runInstitutionDirector(...args){return core().runInstitutionDirector(...args);}
-export function establishCommitment(...args){return commitments().establishCommitment(...args);}
+export {establishCommitment} from './frameworks/world/public.js';
 export function cityContext(...args){return worldCityContext(...args);}
 export function proposeCityOpportunity(...args){return worldProposeCityOpportunity(...args);}
 
@@ -68,9 +67,5 @@ import {createCityCoreRules,INSTITUTION_ACTIONS,requireCitySource,cityStrings,re
 export {INSTITUTION_ACTIONS,requireCitySource,cityStrings,requireCityRecord} from './frameworks/world/public.js';
 let worldCore;
 function core(){return worldCore??=createCityCoreRules({capabilities:{assertInstitutionDelegation:(...args)=>assertInstitutionDelegation(...args),assertWorldActorControl:(...args)=>assertWorldActorControl(...args),assertServiceAccess:(...args)=>assertServiceAccess(...args),nativeWorldOperationAllows:(...args)=>nativeWorldOperationAllows(...args),nativeWorldStrategyStepAllowed:(...args)=>nativeWorldStrategyStepAllowed(...args)}});}
-
-import {createWorldCommitments} from './frameworks/world/public.js';
-let worldCommitments;
-function commitments(){return worldCommitments??=createWorldCommitments({hasOwnerConsent:(...args)=>hasOwnerConsent(...args),activeCityProxy:(...args)=>activeCityProxy(...args)});}
 
 import {cityContext as worldCityContext,proposeCityOpportunity as worldProposeCityOpportunity} from './frameworks/world/public.js';

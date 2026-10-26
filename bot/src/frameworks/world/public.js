@@ -44,3 +44,5 @@ export {activeCityProxy} from './active-proxy.js';
 export {createWorldDelegationConsumer,worldDelegationPolicy} from './contracts/delegation-policy.js';
 export {createWorldPrincipalConsumer,worldConversationPrincipal} from './contracts/conversation-principal.js';
 export {worldActorControl,assertWorldActorControl,assertNpcAvailability,npcAvailability,assertInstitutionDelegation,assertQueuedCompatibility,nativeWorldCoordinatorReady,nativeWorldOperationCatalog,prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldStrategyAllowed,nativeWorldStrategyScope,withNativeStrategyExecution,nativeWorldStrategyStepAllowed} from './execution-source.js';
+export {createWorldOwnerConsentConsumer,worldOwnerConsent} from './contracts/owner-consent.js';
+export {establishCommitment} from './commitment-source.js';

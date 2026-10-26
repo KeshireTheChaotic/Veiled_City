@@ -1059,7 +1059,7 @@
         {
           "from": "world",
           "to": "daggerheart",
-          "contract": "Exact existing current source/profile/audience/presence/established fact/GM opportunity capabilities; source providers retain their old obligations. World scheduling consumes original Daggerheart actor classification."
+          "contract": "Exact existing current source/profile/audience/presence/established fact/GM opportunity capabilities; source providers retain their old obligations. World scheduling consumes original Daggerheart actor classification. C11 supplies original native exact-owner consent receipt reader to World appointments."
         },
         {
           "from": "daggerheart",
@@ -1086,12 +1086,14 @@
       "adoption_feature": "RF03-F05",
       "consumers": [
         "bot/src/application/composition/environment-scene.js",
-        "bot/src/application/composition/world-actor-control.js"
+        "bot/src/application/composition/world-actor-control.js",
+        "bot/src/application/composition/world-owner-consent.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1114,7 +1116,7 @@
         "occurrences": 158
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--world/public.js",
-      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open."
+      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open. C11 native owner-consent read for appointments adopted; upstream response workflow remains its own native source obligation."
     },
     {
       "pair": "discord--narrative",

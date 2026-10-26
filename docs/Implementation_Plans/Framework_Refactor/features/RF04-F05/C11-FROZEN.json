@@ -1,0 +1,54 @@
+{
+  "base_head": "107675c1ed789a54738cc3f56a89101433bb0d56",
+  "syntax_checked": 12,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/owner-consent-source.js",
+      "sha256": "1607df3ed462b60c45801cfeb7ca0053f2c738c6a2d62b882fdc5f02c98a3778"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "1597bbf15f5045b7a571681c5baa56efbd276ec6f0212cb93f4b09ad0dd7c910"
+    },
+    {
+      "path": "bot/src/owner-consent.js",
+      "sha256": "c0c8aad84dadf67075595fdf6891dc9029ecc2d714186d0a194a0de7ef630287"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/owner-consent.js",
+      "sha256": "3fee5f6e21eb4df9fc31f3fdfdacfba6da3a776ac8b46d466a33b50a8f319a16"
+    },
+    {
+      "path": "bot/src/frameworks/world/commitment-source.js",
+      "sha256": "206e82bc7e2ed65fae829f4bb0a739a02541ca67829fdf8e31d58ded6fb203c8"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "9ce3e83d80673453caff50ec76409c85266dbad52b3279bf4f2d44f0bbf8f5cd"
+    },
+    {
+      "path": "bot/src/city-core.js",
+      "sha256": "39f132785d835e90c22cdae1265283d42219f0e735c6bc16579c40aba6ad16d2"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "sha256": "48560d15c075176c5c6dd1a03f4a56d962b03a340fac59b54e15baee53cfee43"
+    },
+    {
+      "path": "bot/src/application/composition/world-owner-consent.js",
+      "sha256": "2643cd9ccd015cfd1ee7ba9319d61b100d7ea82e6f7f48db1c041ff5d445071e"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "594211fd0c085fc8b5ef853e9b171ffbea30277c4ad870cc31f075bee30af99c"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "ebc2b8a4ceb15444c7a6f54b919c50428c378278295e793e3de358a9a374443f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+      "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+    }
+  ]
+}

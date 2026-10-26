@@ -116,3 +116,4 @@ export {createCharacterCreationRules} from './character-creation-rules.js';
 
 export {createNativeWorldProxyConsumer,nativeWorldProxy} from './contracts/world-proxy.js';
 export {nativeActorControl} from './actor-control-source.js';
+export {externalConsentTerms,externalConsentKey,hasOwnerConsent} from './owner-consent-source.js';

@@ -13,3 +13,7 @@ export function connectWorldActorControl(){
  nativeWorldProxy.bind(activeCityProxy);
  return worldNativeActorControl.bind(nativeActorControl);
 }
+
+import {hasOwnerConsent} from '../../frameworks/daggerheart/public.js';
+import {worldOwnerConsent} from '../../frameworks/world/public.js';
+export function connectWorldOwnerConsent(){return worldOwnerConsent.bind(hasOwnerConsent);}
