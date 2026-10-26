@@ -1,0 +1,38 @@
+{
+  "base_head": "e0390a9f130afddea61170e90b2ec47b16377e62",
+  "syntax_checked": 8,
+  "files": [
+    {
+      "path": "bot/src/frameworks/session/contracts/scene-world-sources.js",
+      "sha256": "5444e7b2d9072cf6adefb5c2896719624c99b31dec05e4301b93afdf1b1279a8"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "sha256": "3d3ea511f0f3849077bc6a90570c030e04abf0a58299cab449e0cb5726cf950f"
+    },
+    {
+      "path": "bot/src/framework-to-framework/session--world/public.js",
+      "sha256": "75598bd3e43f5f46aa8d812797e28cca4535beb5875eec55d842c4e2fa951c43"
+    },
+    {
+      "path": "bot/src/application/composition/session-scene-world.js",
+      "sha256": "958fa9238c5f2d3228831e0545a1fccf8e1ceb8bf9e0ce3caf73ab9166bd13bd"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "13577b5aa5f3766a720bc1972b603fcdfd7f6efe1d8ab8594c16930e8f192408"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "c92b43261e639adf209232ba9946c18db922f7aa19ff1779afb1bc0764653d3d"
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "sha256": "e15f0ec6ab8d18fb39fbd05bfe4174c135af6f3f12fbd7045320d5f6ce693f63"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+      "sha256": "3d8b602f66c02ac22e1067dcb15e856100e5dfaa50f05a8f0a021a544a389c88"
+    }
+  ]
+}

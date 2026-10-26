@@ -1,0 +1,181 @@
+{
+  "feature": "RF04-F05-C10",
+  "status": "SCOPED_SESSION_SCENE_WORLD_SOURCES_QUALIFIED",
+  "base_head": "e0390a9f130afddea61170e90b2ec47b16377e62",
+  "changed_files": {
+    "base_head": "e0390a9f130afddea61170e90b2ec47b16377e62",
+    "syntax_checked": 8,
+    "files": [
+      {
+        "path": "bot/src/frameworks/session/contracts/scene-world-sources.js",
+        "sha256": "5444e7b2d9072cf6adefb5c2896719624c99b31dec05e4301b93afdf1b1279a8"
+      },
+      {
+        "path": "bot/src/frameworks/session/public.js",
+        "sha256": "3d3ea511f0f3849077bc6a90570c030e04abf0a58299cab449e0cb5726cf950f"
+      },
+      {
+        "path": "bot/src/framework-to-framework/session--world/public.js",
+        "sha256": "75598bd3e43f5f46aa8d812797e28cca4535beb5875eec55d842c4e2fa951c43"
+      },
+      {
+        "path": "bot/src/application/composition/session-scene-world.js",
+        "sha256": "958fa9238c5f2d3228831e0545a1fccf8e1ceb8bf9e0ce3caf73ab9166bd13bd"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "13577b5aa5f3766a720bc1972b603fcdfd7f6efe1d8ab8594c16930e8f192408"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "c92b43261e639adf209232ba9946c18db922f7aa19ff1779afb1bc0764653d3d"
+      },
+      {
+        "path": "bot/src/scene-continuity.js",
+        "sha256": "e15f0ec6ab8d18fb39fbd05bfe4174c135af6f3f12fbd7045320d5f6ce693f63"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "3d8b602f66c02ac22e1067dcb15e856100e5dfaa50f05a8f0a021a544a389c88"
+      }
+    ]
+  },
+  "tests": {
+    "start": "2026-10-26T19:46:55.3283193Z",
+    "run_id": "RF04-F05-C10-20261026-1",
+    "duration_ms": 1959.2477,
+    "exit_code": 0,
+    "end": "2026-10-26T19:46:57.2875670Z",
+    "files": 1,
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 1903.7963
+  },
+  "syntax": {
+    "checked": 8,
+    "passed": 8
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 627,
+      "unowned": 0,
+      "importOccurrences": 2845,
+      "internalImportOccurrences": 2668,
+      "cycleComponents": 1,
+      "largestCycle": 177,
+      "rawViolationOccurrences": 2328,
+      "acceptedLegacyOccurrences": 2328,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 627,
+      "unowned": 0,
+      "importOccurrences": 2845,
+      "internalImportOccurrences": 2668,
+      "cycleComponents": 1,
+      "largestCycle": 177,
+      "rawViolationOccurrences": 2328,
+      "acceptedLegacyOccurrences": 1435,
+      "activeViolationGroups": 889,
+      "transitionErrors": 889,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "c18238bc0e011134fcd44f1c2a517117a9e67efb2fd137fef4f96facd3d636b3",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "ccddaa0751ac020379b40610a5171a1196d32bca3e65e8da58535264a5cfd6a7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "3e138460bdfbc89c2f06f2817dd03cd982b0d355340c1429c382e1d552711e03",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/city-constraints.js",
+      "kind": "static",
+      "specifier": "./city-constraints.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "e60a3c64f7aa30ab225d57bf5158f67a1c1b1cc7352b08c90b83320f77696dd7",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "Session fixed scene consumer receives exact World callbacks via existing pair. Existing Session native event issuer reused, original cached scene engine and source validators unchanged.",
+  "limits": [
+    "Root still composes native movement condition ancestry and NPC observation/Knowledge. No wholesale relocation or completed Scene isolation claimed.",
+    "Placement fixtures supply explicit owner acceptance directly at native API; do not qualify Discord intake authentication or native movement-condition execution.",
+    "No live provider/Discord/production recovery or narrative-quality claim."
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Revert C10 consumer/pair/root/bootstrap/registry and restore four original exact records together. Keep original saved presence/residue/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c10-tests.log",
+      "sha256": "094fc151fced406a4959dab7d1a25d9edf7e05398b361d84e0c664453044ac77"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c10-architecture-initial.log",
+      "sha256": "c6bb1c2cc85f1575833a2b7a0cb751ecc26d93cf7b201c1edf424078799c2d50"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c10-rf04-final.log",
+      "sha256": "22e2364e1869a7140e41fd5f31933c92701b4c45987e3f4bdef8e6202693ff78"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c10-rf05-final.log",
+      "sha256": "85fffe36c458828dc196826257770a2669530f5b1500224221fcc97d2eb4674e"
+    }
+  ]
+}

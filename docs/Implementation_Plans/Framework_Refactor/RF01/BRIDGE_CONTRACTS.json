@@ -3289,7 +3289,7 @@
           "to": "world",
           "import_occurrences": 23,
           "injected_calls": 0,
-          "contract": "Single Session-owned indexWorldEvent capability; exact original arguments/results/errors; immutable bootstrap identity. Other observed dependencies unresolved."
+          "contract": "Single Session-owned indexWorldEvent capability; exact original arguments/results/errors; immutable bootstrap identity. Other observed dependencies unresolved. C10 exact original World primitive/source/visibility/audit/current-proxy capabilities for descriptive scene occupancy."
         },
         {
           "from": "world",
@@ -3312,12 +3312,14 @@
       "adoption_feature": "RF04",
       "consumers": [
         "bot/src/application/composition/session-world-events.js",
-        "bot/src/application/composition/world-execution.js"
+        "bot/src/application/composition/world-execution.js",
+        "bot/src/application/composition/session-scene-world.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3340,7 +3342,7 @@
         "occurrences": 39
       },
       "public_api": "bot/src/framework-to-framework/session--world/public.js",
-      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open."
+      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies."
     }
   ]
 }

@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: Session consumer validates complete fixed capabilities and uses exact native result/error identity
+ok 1 - Session consumer validates complete fixed capabilities and uses exact native result/error identity
+  ---
+  duration_ms: 0.8302
+  type: 'test'
+  ...
+# Subtest: attendance does not place a PC; explicit owner-established occupancy never changes PC resources or location
+ok 2 - attendance does not place a PC; explicit owner-established occupancy never changes PC resources or location
+  ---
+  duration_ms: 186.5719
+  type: 'test'
+  ...
+# Subtest: character-private and hidden scene information remains excluded from unrelated observers
+ok 3 - character-private and hidden scene information remains excluded from unrelated observers
+  ---
+  duration_ms: 173.2311
+  type: 'test'
+  ...
+# Subtest: original World active-proxy source prevents unconsented NPC voluntary placement
+ok 4 - original World active-proxy source prevents unconsented NPC voluntary placement
+  ---
+  duration_ms: 177.3966
+  type: 'test'
+  ...
+# Subtest: retracted and cross-campaign source cannot establish occupancy or backfill private evidence
+ok 5 - retracted and cross-campaign source cannot establish occupancy or backfill private evidence
+  ---
+  duration_ms: 174.6535
+  type: 'test'
+  ...
+# Subtest: World audit failure rolls back occupancy; retry/reopen preserves one result without repeated audit
+ok 6 - World audit failure rolls back occupancy; retry/reopen preserves one result without repeated audit
+  ---
+  duration_ms: 171.2618
+  type: 'test'
+  ...
+# Subtest: real scene transition archives prior occupancy and restart does not revive it as current presence
+ok 7 - real scene transition archives prior occupancy and restart does not revive it as current presence
+  ---
+  duration_ms: 176.679
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1903.7963

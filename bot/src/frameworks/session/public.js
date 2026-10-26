@@ -12,3 +12,4 @@ export {createAssemblyContext,hookHash,assemblySourceError} from './assembly-con
 export {createSessionOpening} from './session-opening.js';
 export {createOpeningEntryContext} from './opening-entry-context.js';
 export {classifyResourceOverlap} from './action-window-overlap.js';
+export {createSessionSceneWorldConsumer,sessionSceneWorldSources} from './contracts/scene-world-sources.js';

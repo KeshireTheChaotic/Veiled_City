@@ -1,6 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the current C09 checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 13 ADOPTED, 48 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the current C10 checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 13 ADOPTED, 48 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -66,6 +66,6 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | persistence--world | PROPOSED_NO_API | persistence → world; world → persistence | 0 / 0 | RF06 |
 | publication--session | PROPOSED_NO_API | session → publication; publication → session | 0 / 0 | RF06 |
 | publication--world | PROPOSED_NO_API | publication → world | 0 / 0 | RF06 |
-| session--world | ADOPTED | session → world; world → session | 2 / 3 | RF04 |
+| session--world | ADOPTED | session → world; world → session | 3 / 4 | RF04 |
 
 Test-path validation is separate from actual execution evidence. Pairs import only their two public owners and neutral kernel; application owns orchestration. No source/canon, PC choice, mechanics, secrecy or delivery authority is inferred from integration. RELEASE NOT AUTHORIZED.

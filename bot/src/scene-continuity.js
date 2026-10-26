@@ -1,14 +1,11 @@
 /** Original World/native scene composition; retained NPC evidence rules await separate Knowledge/NPC adoption. */
-import {cityObject,cityKey,cityVisibility,cityAudit,indexWorldEvent} from './city-calendar.js';
-import {requireCitySource} from './city-core.js';
-import {activeCityProxy} from './city-constraints.js';
 import {StateConflictError} from './kernel/errors.js';
 import {activeEvidence} from './epistemic.js';
 import {nativeMovementConditionIssue} from './native-group-features.js';
-import {createSceneContinuity} from './frameworks/session/public.js';
+import {createSceneContinuity,sessionSceneWorldSources,sessionWorldEvents} from './frameworks/session/public.js';
 export {RANGE_BANDS} from './frameworks/session/public.js';
 let sceneRules;
-function scenes(){return sceneRules??=createSceneContinuity({cityObject:(...args)=>cityObject(...args),cityKey:(...args)=>cityKey(...args),cityVisibility:(...args)=>cityVisibility(...args),cityAudit:(...args)=>cityAudit(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),requireCitySource:(...args)=>requireCitySource(...args),activeCityProxy:(...args)=>activeCityProxy(...args),nativeMovementConditionIssue:(...args)=>nativeMovementConditionIssue(...args)});}
+function scenes(){return sceneRules??=createSceneContinuity({cityObject:(...args)=>sessionSceneWorldSources.cityObject(...args),cityKey:(...args)=>sessionSceneWorldSources.cityKey(...args),cityVisibility:(...args)=>sessionSceneWorldSources.cityVisibility(...args),cityAudit:(...args)=>sessionSceneWorldSources.cityAudit(...args),indexWorldEvent:(...args)=>sessionWorldEvents.indexWorldEvent(...args),requireCitySource:(...args)=>sessionSceneWorldSources.requireCitySource(...args),activeCityProxy:(...args)=>sessionSceneWorldSources.activeCityProxy(...args),nativeMovementConditionIssue:(...args)=>nativeMovementConditionIssue(...args)});}
 export function currentScene(...args){return scenes().currentScene(...args);}
 export function scenePresence(...args){return scenes().scenePresence(...args);}
 export function lastVerifiedCharacterPresence(...args){return scenes().lastVerifiedCharacterPresence(...args);}
