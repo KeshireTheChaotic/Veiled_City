@@ -57,3 +57,4 @@ export {knownInformation as knownWorldInformation,validateAction as validateNpcA
 export {saveRecord as saveNativeSimulationRecord} from './simulation-record.js';
 export {createWorldSessionSceneConsumer,worldSessionScene} from './contracts/session-scene.js';
 export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents,recordWorldActorMemory} from './action-execution.js';
+export {historyContext} from './history-context.js';

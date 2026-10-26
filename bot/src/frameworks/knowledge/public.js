@@ -27,3 +27,5 @@ export {createSemanticCandidateProof} from './semantic-candidate-source.js';
 export {createNarrativeMemory} from './narrative-memory.js';
 export {createKnowledgeWorldMemoryConsumer,knowledgeWorldMemory} from './contracts/world-memory.js';
 export {manageMemoryCluster,clusterContext,memoryMaintenanceCandidate} from './memory-source.js';
+export {ContextPlanner} from './context-planner.js';
+export {createKnowledgeWorldHistoryConsumer,knowledgeWorldHistory} from './contracts/world-history.js';

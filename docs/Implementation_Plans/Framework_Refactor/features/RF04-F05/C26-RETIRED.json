@@ -1,0 +1,58 @@
+[
+  {
+    "id": "d5ce67e474ca7879e8bc5931a32acfa3f2accaedae07763d67e223f1c97b5d91",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/context-planner.js",
+    "to": "bot/src/city-civic.js",
+    "kind": "static",
+    "specifier": "./city-civic.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "f50fb7395d18d723b7f6260469a017d1d5e81bb884d376d6d2dda92ea7d2a8fc",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/context-planner.js",
+    "to": "bot/src/memory-clusters.js",
+    "kind": "static",
+    "specifier": "./memory-clusters.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "60ff0aa9c6336050f0ef1c3cb8e71b266765935cd45d267c16892b2cf57b805f",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/context-planner.js",
+    "to": "bot/src/epistemic.js",
+    "kind": "static",
+    "specifier": "./epistemic.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "44230be21119ec6abc35d1445df4f8972c0a9b02b309af48ba30911177c6f057",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/context-planner.js",
+    "to": "bot/src/authority-projection.js",
+    "kind": "static",
+    "specifier": "./authority-projection.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

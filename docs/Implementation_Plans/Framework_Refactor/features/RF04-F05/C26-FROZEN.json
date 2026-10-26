@@ -1,0 +1,54 @@
+{
+  "base_head": "a1e3491c2cc124f98c50e999aaebf4b02276850f",
+  "syntax_checked": 10,
+  "files": [
+    {
+      "path": "bot/src/context-planner.js",
+      "sha256": "156cc183c53d0cdd42c09131d966eeccfa8bcba548a4f035b087a4a1cc8b4419"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/context-planner.js",
+      "sha256": "17d171af591e686a10f9fa89576453957d76117bb358b35aec69f8b4089dc8bf"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-history.js",
+      "sha256": "c3bf8eaa3a245863b1573339c1c77ffcb8a9cc5eee73d2b2d9393108666f34f0"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "b57415f0ff2b8efec0593b04c119487efb15dbe079e4af5b4276c08ac13592e6"
+    },
+    {
+      "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+      "sha256": "af321570dd44a41961d1ac1bb9802981a4ac6d8c9c46781f9d753eb82a1314b4"
+    },
+    {
+      "path": "bot/src/application/composition/knowledge-world.js",
+      "sha256": "3eddc087716fdba2708b8e824ef1d8af6e6fa0d2a83c7b9b1ed6401190547c13"
+    },
+    {
+      "path": "bot/src/frameworks/world/history-context.js",
+      "sha256": "f26034d0544ff583b0d873b122b6a7e488ed34b27d9c1a2400a2e6519a93a9a0"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "f370ad2fb52e1f349db82804c8082b16cccf47760f774e717b0835aa61111d0b"
+    },
+    {
+      "path": "bot/src/city-civic.js",
+      "sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+      "sha256": "317f045fc7105744579b9bb5c9b979efa80cbb476afff4b1281403034d62b6bd"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+      "sha256": "6da133884bb1d55561f752199bfc182cced6a507266f222d5137ecb8e7053221"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "da550a9005e99a40b1492fb511589b0de85b66fe6b02b1e0a5c0983ae76ba422"
+    }
+  ]
+}

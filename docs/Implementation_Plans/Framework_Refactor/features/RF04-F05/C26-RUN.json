@@ -1,0 +1,205 @@
+{
+  "feature": "RF04-F05-C26",
+  "status": "SCOPED_KNOWLEDGE_CONTEXT_SELECTION_AND_WORLD_HISTORY_QUALIFIED",
+  "frozen": {
+    "base_head": "a1e3491c2cc124f98c50e999aaebf4b02276850f",
+    "syntax_checked": 10,
+    "files": [
+      {
+        "path": "bot/src/context-planner.js",
+        "sha256": "156cc183c53d0cdd42c09131d966eeccfa8bcba548a4f035b087a4a1cc8b4419"
+      },
+      {
+        "path": "bot/src/frameworks/knowledge/context-planner.js",
+        "sha256": "17d171af591e686a10f9fa89576453957d76117bb358b35aec69f8b4089dc8bf"
+      },
+      {
+        "path": "bot/src/frameworks/knowledge/contracts/world-history.js",
+        "sha256": "c3bf8eaa3a245863b1573339c1c77ffcb8a9cc5eee73d2b2d9393108666f34f0"
+      },
+      {
+        "path": "bot/src/frameworks/knowledge/public.js",
+        "sha256": "b57415f0ff2b8efec0593b04c119487efb15dbe079e4af5b4276c08ac13592e6"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+        "sha256": "af321570dd44a41961d1ac1bb9802981a4ac6d8c9c46781f9d753eb82a1314b4"
+      },
+      {
+        "path": "bot/src/application/composition/knowledge-world.js",
+        "sha256": "3eddc087716fdba2708b8e824ef1d8af6e6fa0d2a83c7b9b1ed6401190547c13"
+      },
+      {
+        "path": "bot/src/frameworks/world/history-context.js",
+        "sha256": "f26034d0544ff583b0d873b122b6a7e488ed34b27d9c1a2400a2e6519a93a9a0"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "f370ad2fb52e1f349db82804c8082b16cccf47760f774e717b0835aa61111d0b"
+      },
+      {
+        "path": "bot/src/city-civic.js",
+        "sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "sha256": "317f045fc7105744579b9bb5c9b979efa80cbb476afff4b1281403034d62b6bd"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "6da133884bb1d55561f752199bfc182cced6a507266f222d5137ecb8e7053221"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "da550a9005e99a40b1492fb511589b0de85b66fe6b02b1e0a5c0983ae76ba422"
+      }
+    ]
+  },
+  "source_review": {
+    "original_history_body_sha256": "a095d12c1e9f1a3599a9fa480ef107e35d8f5edf2499ac1db613f8c3a2a4296c",
+    "current_history_body_sha256": "a095d12c1e9f1a3599a9fa480ef107e35d8f5edf2499ac1db613f8c3a2a4296c",
+    "identical": true,
+    "original_application_class_body_sha256": "6604cfba7f53d37ea9123231c82069a5a4c5039cd1f0647e24c5fdd58a793579",
+    "ownership": "Root context-planner remains application compatibility. Policy class belongs to Knowledge; history source belongs World. No baseline ownership edits.",
+    "inherited_tests": "NOT_READ_NOT_EXECUTED",
+    "saved_c31_gm_switch": "PRESERVED_UNCOMMITTED_SEPARATE_WORK"
+  },
+  "tests": {
+    "start": "2026-10-26T16:07:45.6858327-05:00",
+    "end": "2026-10-26T16:07:48.1869673-05:00",
+    "exit_code": 0,
+    "run_id": "rf04-f05-c26-frozen",
+    "duration_ms": 2501.1346,
+    "files": 2,
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "tap_duration_ms": 2448.1588,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c26.test.mjs tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+    "affected_rerun": "Actual Knowledge initializer changed in C26; full unchanged current C22 memory file7/7passed, closing prior split-final-file gap."
+  },
+  "syntax": {
+    "checked": 10,
+    "passed": 10
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 685,
+      "unowned": 0,
+      "importOccurrences": 2992,
+      "internalImportOccurrences": 2813,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2085,
+      "acceptedLegacyOccurrences": 2085,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 685,
+      "unowned": 0,
+      "importOccurrences": 2992,
+      "internalImportOccurrences": 2813,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2085,
+      "acceptedLegacyOccurrences": 1348,
+      "activeViolationGroups": 733,
+      "transitionErrors": 733,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "d5ce67e474ca7879e8bc5931a32acfa3f2accaedae07763d67e223f1c97b5d91",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/city-civic.js",
+      "kind": "static",
+      "specifier": "./city-civic.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "f50fb7395d18d723b7f6260469a017d1d5e81bb884d376d6d2dda92ea7d2a8fc",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/memory-clusters.js",
+      "kind": "static",
+      "specifier": "./memory-clusters.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "60ff0aa9c6336050f0ef1c3cb8e71b266765935cd45d267c16892b2cf57b805f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/epistemic.js",
+      "kind": "static",
+      "specifier": "./epistemic.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "44230be21119ec6abc35d1445df4f8972c0a9b02b309af48ba30911177c6f057",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/context-planner.js",
+      "to": "bot/src/authority-projection.js",
+      "kind": "static",
+      "specifier": "./authority-projection.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Original ContextPlanner policy class now Knowledge, root retains original application compatibility owner and same class identity. World history source saved by previous worker adopted unchanged after body equality review; fixed own consumer via existing pair. No ownership baseline rewrite.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "C31 saved GM consumer switch and historical tests remain separate preserved uncommitted work; no inherited test execution/repair/qualification claim.",
+    "Full authority-page and personal-arc contracts unchanged but not independently requalified here; this delta covers stated context privacy, retrieval, budget and history paths.",
+    "Current working tree hashes include preserved edits; not clean-checkout, full phase, live providers, Discord, production recovery or narrative-quality certification."
+  ],
+  "rollback": "Revert C26 ContextPlanner/consumer/pair/bootstrap changes and restore original class/history bodies and4exact records. Preserve unrelated original GM switch/public exports and all native campaign/evidence/receipt data.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c26-tests.log",
+      "sha256": "02d514b27e2a3bc5e2d0cb57e346e0480b90a547773e6d886dbdfecbf326d404"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c26-architecture-initial.log",
+      "sha256": "4dacae90303c0e83ca9a7d05a8a6d901eb5a80e7a80d6109b2c246a1a8d3c6d1"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c26-rf04-final.log",
+      "sha256": "46a65c51181b5ce384c58076b493d15d507998e0091a9262cfcb4d163ac5aeb5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c26-rf05-final.log",
+      "sha256": "14a4fc93bbaee271423ae1a8a37996c658c101798d92463d5b5f3a4bc754388d"
+    }
+  ]
+}

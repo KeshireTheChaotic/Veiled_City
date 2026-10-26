@@ -2227,7 +2227,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2250,7 +2251,7 @@
         "occurrences": 32
       },
       "public_api": "bot/src/framework-to-framework/knowledge--world/public.js",
-      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open."
+      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open. C26 Knowledge deterministic context selection consumes exact original World history summary reader, scoped GM context only; no new actor/canonical authority."
     },
     {
       "pair": "narrative--npc",

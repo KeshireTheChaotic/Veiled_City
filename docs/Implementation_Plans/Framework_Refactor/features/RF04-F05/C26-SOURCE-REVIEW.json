@@ -1,0 +1,9 @@
+{
+  "original_history_body_sha256": "a095d12c1e9f1a3599a9fa480ef107e35d8f5edf2499ac1db613f8c3a2a4296c",
+  "current_history_body_sha256": "a095d12c1e9f1a3599a9fa480ef107e35d8f5edf2499ac1db613f8c3a2a4296c",
+  "identical": true,
+  "original_application_class_body_sha256": "6604cfba7f53d37ea9123231c82069a5a4c5039cd1f0647e24c5fdd58a793579",
+  "ownership": "Root context-planner remains application compatibility. Policy class belongs to Knowledge; history source belongs World. No baseline ownership edits.",
+  "inherited_tests": "NOT_READ_NOT_EXECUTED",
+  "saved_c31_gm_switch": "PRESERVED_UNCOMMITTED_SEPARATE_WORK"
+}

@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: fixed World memory capabilities retain exact native behavior and root/public memory methods share identity
+ok 1 - fixed World memory capabilities retain exact native behavior and root/public memory methods share identity
+  ---
+  duration_ms: 0.9177
+  type: 'test'
+  ...
+# Subtest: actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+ok 2 - actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+  ---
+  duration_ms: 178.1534
+  type: 'test'
+  ...
+# Subtest: cross-actor memory and duplicate evidence are rejected before cluster state exists
+ok 3 - cross-actor memory and duplicate evidence are rejected before cluster state exists
+  ---
+  duration_ms: 234.7018
+  type: 'test'
+  ...
+# Subtest: current source retraction hides use without rewriting saved memory index or original actor memories
+ok 4 - current source retraction hides use without rewriting saved memory index or original actor memories
+  ---
+  duration_ms: 319.6741
+  type: 'test'
+  ...
+# Subtest: revision and retirement remain reversible metadata with original pointer history preserved
+ok 5 - revision and retirement remain reversible metadata with original pointer history preserved
+  ---
+  duration_ms: 336.4437
+  type: 'test'
+  ...
+# Subtest: World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+ok 6 - World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+  ---
+  duration_ms: 292.3769
+  type: 'test'
+  ...
+# Subtest: bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+ok 7 - bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+  ---
+  duration_ms: 278.1984
+  type: 'test'
+  ...
+# Subtest: fixed Knowledge history consumer fails before binding and preserves exact native results and errors
+ok 8 - fixed Knowledge history consumer fails before binding and preserves exact native results and errors
+  ---
+  duration_ms: 1.2157
+  type: 'test'
+  ...
+# Subtest: application compatibility class and saved World reader retain exact owner identities
+ok 9 - application compatibility class and saved World reader retain exact owner identities
+  ---
+  duration_ms: 0.1212
+  type: 'test'
+  ...
+# Subtest: actual NPC planning excludes global private facts and other actors before ranking
+ok 10 - actual NPC planning excludes global private facts and other actors before ranking
+  ---
+  duration_ms: 316.6738
+  type: 'test'
+  ...
+# Subtest: owner private exact-source expansion cannot retrieve another recipient or GM fact
+ok 11 - owner private exact-source expansion cannot retrieve another recipient or GM fact
+  ---
+  duration_ms: 298.326
+  type: 'test'
+  ...
+# Subtest: bounded context pages preserve omissions and reject invalid exact-source requests
+ok 12 - bounded context pages preserve omissions and reject invalid exact-source requests
+  ---
+  duration_ms: 446.3011
+  type: 'test'
+  ...
+# Subtest: native World history reaches GM context as summary-only and tracks retracted original source after restart
+ok 13 - native World history reaches GM context as summary-only and tracks retracted original source after restart
+  ---
+  duration_ms: 285.9966
+  type: 'test'
+  ...
+# Subtest: saved World history extraction keeps original six-term four-summary and aggregate bounds
+ok 14 - saved World history extraction keeps original six-term four-summary and aggregate bounds
+  ---
+  duration_ms: 201.6494
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2448.1588
