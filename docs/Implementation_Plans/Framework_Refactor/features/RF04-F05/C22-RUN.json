@@ -1,0 +1,176 @@
+{
+  "feature": "RF04-F05-C22",
+  "status": "SCOPED_KNOWLEDGE_MEMORY_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+  "base_head": "a4bb6b4844fed100688df96c31ad211fbec12f73",
+  "changed_files": {
+    "base_head": "a4bb6b4844fed100688df96c31ad211fbec12f73",
+    "syntax_checked": 7,
+    "files": [
+      {
+        "path": "bot/src/frameworks/knowledge/contracts/world-memory.js",
+        "sha256": "01a7b9e1fb54cbf12aae52426c1f889c8247352e1ab90d899513c9609f52b45c"
+      },
+      {
+        "path": "bot/src/frameworks/knowledge/memory-source.js",
+        "sha256": "117e9548156c2ae02d1aa5811f13d2cfd39b4dbd97ac8d2de41f705b7a8b39d3"
+      },
+      {
+        "path": "bot/src/frameworks/knowledge/public.js",
+        "sha256": "6b54c4938ec61d6ba63c35c74341cbd02a076c9f8c61e0f88d8c10af90cfe4f2"
+      },
+      {
+        "path": "bot/src/memory-clusters.js",
+        "sha256": "608f94bf7e6ae6b5c9f956af637b1e73ec4f51e1139c8fef60a6f7276e7bf886"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+        "sha256": "2bbc12159ca4dcdaf77978d1901ec63ed81b9b6f82d4427f6728fbe1cabc5840"
+      },
+      {
+        "path": "bot/src/application/composition/knowledge-world.js",
+        "sha256": "a4ee09f2a021d857dd9be25cb59cafdda5b7c899828167f4b3c1e48073a69494"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "d4a4501948271f3e0fd3630f0aecfd819af8e0e5e81a71449b85bcba07ba90b0"
+      },
+      {
+        "path": "bot/src/application/composition/world-execution.js",
+        "sha256": "3d59b06a8ab8eb9171c000c59eb8475b2757ba605ffce992a78803d7790baf5a"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "b362359de2ca989879055dd313e41de82a5bbbec01d936c4553385d1a3058ee8"
+      }
+    ]
+  },
+  "unchanged_rule_sha256": "821d251e4f704c69ac0b21929c36bf171c6bc28387cd1a9e99fdc26280b61c68",
+  "tests": {
+    "initial": {
+      "end": "2026-10-26T20:43:29.9315950Z",
+      "run_id": "RF04-F05-C22-20261026-1",
+      "exit_code": 1,
+      "start": "2026-10-26T20:43:27.4517690Z",
+      "duration_ms": 2479.826,
+      "files": 2,
+      "tests": 14,
+      "passed": 8,
+      "failed": 6,
+      "tap_duration_ms": 2426.1119
+    },
+    "repair": {
+      "duration_ms": 1725.1123,
+      "start": "2026-10-26T20:44:08.2504008Z",
+      "run_id": "RF04-F05-C22-20261026-repair",
+      "test_sha256": "6DA133884BB1D55561F752199BFC182CCED6A507266F222D5137ECB8E7053221",
+      "exit_code": 0,
+      "end": "2026-10-26T20:44:09.9755131Z",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "tap_duration_ms": 1671.4295
+    },
+    "reason": "Six new memory cases shared a fixture missing required native NPC profile. Added profile only, production unchanged; six failed cases repaired together. New port case passed earlier bytes, so no whole-final-file C22 claim. C09 actual associated World initializer changed in C20; final unchanged C09 file reran whole7/7 here, closing its split-final-file gap."
+  },
+  "syntax": {
+    "checked": 7,
+    "passed": 7,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 666,
+      "unowned": 0,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
+      "cycleComponents": 2,
+      "largestCycle": 146,
+      "rawViolationOccurrences": 2107,
+      "acceptedLegacyOccurrences": 2107,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 666,
+      "unowned": 0,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
+      "cycleComponents": 2,
+      "largestCycle": 146,
+      "rawViolationOccurrences": 2107,
+      "acceptedLegacyOccurrences": 1357,
+      "activeViolationGroups": 746,
+      "transitionErrors": 746,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "49487824d9f49c02fbd312289e1dd8efc383c08d33f766498687f6e681974718",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/memory-clusters.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "235f05f39a7a262a687b2c94b09118a1892e396e538ec5cd9150a481b3780fc8",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/memory-clusters.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Knowledge original reversible memory factory/source consumes fixed original World primitive/current-source/audit functions through existing pair. Legacy/public service functions identical; actual initializer return identity retained.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "C22 no full final-file union after fixture repair. Standalone memory readers require explicit source bootstrap, as actual application does; no production service restarted.",
+    "Maintenance writes only original bounded cursors/proposals, not model consolidation/canon/new knowledge. Wider source directions and caller retirement remain accountable.",
+    "No live provider/Discord/production recovery/narrative-quality qualification."
+  ],
+  "rollback": "Revert C22 Knowledge source/consumer/pair/bootstrap/root aliases and restore2exact original records. Preserve native memory rows, source pointers, revisions, cursors, actor/privacy/PC/canon/receipt state.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c22-tests.log",
+      "sha256": "f2c4ba5ca860676a4bacb84b7e8e165338547c3c827ed8ebf2ca29a23a4f1ff7"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c22-repair.log",
+      "sha256": "39257043d4f312cd8b2bb0930b568e6f5ae8eaba168ef804b3a45a6c62233628"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c22-architecture-initial.log",
+      "sha256": "1272983395c6c90312413e386dd163de843bf6f53f63ba03c1761a4974b1f632"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c22-rf04-final.log",
+      "sha256": "a08331a87c714f79b8b48f9ac3920d8ff0ac8e0e14309d1a838d044d14d249be"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c22-rf05-final.log",
+      "sha256": "e8042cb3098f2da57124941794ade1511d5c837325c70088a893a9a574639b29"
+    }
+  ]
+}

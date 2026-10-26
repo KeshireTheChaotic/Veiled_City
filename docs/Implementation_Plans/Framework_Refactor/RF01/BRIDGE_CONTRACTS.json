@@ -2187,7 +2187,7 @@
         {
           "from": "knowledge",
           "to": "world",
-          "contract": "Knowledge evidence engine consumes exact native event/audit callbacks; rules, provenance, classification and current recipient entitlement remain Knowledge-owned. Existing-identity retrieval also consumes native place/NPC lookup and read-only World origin proof."
+          "contract": "Knowledge evidence engine consumes exact native event/audit callbacks; rules, provenance, classification and current recipient entitlement remain Knowledge-owned. Existing-identity retrieval also consumes native place/NPC lookup and read-only World origin proof. C22 original World primitive/current-source/audit functions feed original reversible Knowledge memory service."
         },
         {
           "from": "world",
@@ -2218,7 +2218,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2241,7 +2242,7 @@
         "occurrences": 32
       },
       "public_api": "bot/src/framework-to-framework/knowledge--world/public.js",
-      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open."
+      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open."
     },
     {
       "pair": "narrative--npc",

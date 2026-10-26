@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: fixed delegated-policy and conversation consumers preserve exact native values and refuse replacement
+ok 1 - fixed delegated-policy and conversation consumers preserve exact native values and refuse replacement
+  ---
+  duration_ms: 0.8086
+  type: 'test'
+  ...
+# Subtest: real old/public World paths share one native live-grant store without committing service outcomes
+ok 2 - real old/public World paths share one native live-grant store without committing service outcomes
+  ---
+  duration_ms: 287.5027
+  type: 'test'
+  ...
+# Subtest: native source/policy/pause/target changes invalidate grants rather than replaying an outcome
+ok 3 - native source/policy/pause/target changes invalidate grants rather than replaying an outcome
+  ---
+  duration_ms: 281.7524
+  type: 'test'
+  ...
+# Subtest: private grants require actual current Session owner attendance and reject control revision changes
+ok 4 - private grants require actual current Session owner attendance and reject control revision changes
+  ---
+  duration_ms: 327.3241
+  type: 'test'
+  ...
+# Subtest: a grant bound inside a rolled-back source update cannot survive rollback; restart permits only newly verified issuance
+ok 5 - a grant bound inside a rolled-back source update cannot survive rollback; restart permits only newly verified issuance
+  ---
+  duration_ms: 293.205
+  type: 'test'
+  ...
+# Subtest: historical result readers stay read-only and reject fabricated native receipts and strategy frames
+ok 6 - historical result readers stay read-only and reject fabricated native receipts and strategy frames
+  ---
+  duration_ms: 194.39
+  type: 'test'
+  ...
+# Subtest: queued scheduling uses actual Intent policy and retains native source and revision checks
+ok 7 - queued scheduling uses actual Intent policy and retains native source and revision checks
+  ---
+  duration_ms: 172.3758
+  type: 'test'
+  ...
+# Subtest: fixed World memory capabilities retain exact native behavior and root/public memory methods share identity
+ok 8 - fixed World memory capabilities retain exact native behavior and root/public memory methods share identity
+  ---
+  duration_ms: 0.8721
+  type: 'test'
+  ...
+# Subtest: actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+not ok 9 - actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+  ---
+  duration_ms: 163.9153
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:9:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:10:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: cross-actor memory and duplicate evidence are rejected before cluster state exists
+not ok 10 - cross-actor memory and duplicate evidence are rejected before cluster state exists
+  ---
+  duration_ms: 245.258
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:13:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: current source retraction hides use without rewriting saved memory index or original actor memories
+not ok 11 - current source retraction hides use without rewriting saved memory index or original actor memories
+  ---
+  duration_ms: 261.8913
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:15:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: revision and retirement remain reversible metadata with original pointer history preserved
+not ok 12 - revision and retirement remain reversible metadata with original pointer history preserved
+  ---
+  duration_ms: 269.2239
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:18:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:19:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+not ok 13 - World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+  ---
+  duration_ms: 288.1074
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:22:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+not ok 14 - bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+  ---
+  duration_ms: 264.8191
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c22.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: 'NPC profile not found: witness.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    VeiledDB.addNpcMemory (file:///D:/Library/Development/Veiled_City/bot/src/db.js:1794:48)
+    file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:556
+    Array.map (<anonymous>)
+    fixture (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:4:540)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs:25:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 8
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2426.1119

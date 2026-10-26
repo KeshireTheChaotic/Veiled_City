@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+ok 1 - actual native source memory consolidation retains distinct uncertain claims, GM privacy and original evidence without canon/PC effects
+  ---
+  duration_ms: 182.4155
+  type: 'test'
+  ...
+# Subtest: cross-actor memory and duplicate evidence are rejected before cluster state exists
+ok 2 - cross-actor memory and duplicate evidence are rejected before cluster state exists
+  ---
+  duration_ms: 166.1482
+  type: 'test'
+  ...
+# Subtest: current source retraction hides use without rewriting saved memory index or original actor memories
+ok 3 - current source retraction hides use without rewriting saved memory index or original actor memories
+  ---
+  duration_ms: 178.4245
+  type: 'test'
+  ...
+# Subtest: revision and retirement remain reversible metadata with original pointer history preserved
+ok 4 - revision and retirement remain reversible metadata with original pointer history preserved
+  ---
+  duration_ms: 169.482
+  type: 'test'
+  ...
+# Subtest: World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+ok 5 - World audit failure rolls back memory metadata; retry and restart preserve exact same source-bound result
+  ---
+  duration_ms: 179.2574
+  type: 'test'
+  ...
+# Subtest: bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+ok 6 - bounded maintenance produces only a source-pointer proposal and cursor, without creating a cluster or changing evidence
+  ---
+  duration_ms: 162.5708
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1671.4295

@@ -1,0 +1,42 @@
+{
+  "base_head": "a4bb6b4844fed100688df96c31ad211fbec12f73",
+  "syntax_checked": 7,
+  "files": [
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-memory.js",
+      "sha256": "01a7b9e1fb54cbf12aae52426c1f889c8247352e1ab90d899513c9609f52b45c"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/memory-source.js",
+      "sha256": "117e9548156c2ae02d1aa5811f13d2cfd39b4dbd97ac8d2de41f705b7a8b39d3"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "6b54c4938ec61d6ba63c35c74341cbd02a076c9f8c61e0f88d8c10af90cfe4f2"
+    },
+    {
+      "path": "bot/src/memory-clusters.js",
+      "sha256": "608f94bf7e6ae6b5c9f956af637b1e73ec4f51e1139c8fef60a6f7276e7bf886"
+    },
+    {
+      "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+      "sha256": "2bbc12159ca4dcdaf77978d1901ec63ed81b9b6f82d4427f6728fbe1cabc5840"
+    },
+    {
+      "path": "bot/src/application/composition/knowledge-world.js",
+      "sha256": "a4ee09f2a021d857dd9be25cb59cafdda5b7c899828167f4b3c1e48073a69494"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+      "sha256": "d4a4501948271f3e0fd3630f0aecfd819af8e0e5e81a71449b85bcba07ba90b0"
+    },
+    {
+      "path": "bot/src/application/composition/world-execution.js",
+      "sha256": "3d59b06a8ab8eb9171c000c59eb8475b2757ba605ffce992a78803d7790baf5a"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+      "sha256": "b362359de2ca989879055dd313e41de82a5bbbec01d936c4553385d1a3058ee8"
+    }
+  ]
+}

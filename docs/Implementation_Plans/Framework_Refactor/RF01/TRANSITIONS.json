@@ -8746,34 +8746,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "49487824d9f49c02fbd312289e1dd8efc383c08d33f766498687f6e681974718",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/memory-clusters.js",
-      "to": "bot/src/city-calendar.js",
-      "kind": "static",
-      "specifier": "./city-calendar.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "235f05f39a7a262a687b2c94b09118a1892e396e538ec5cd9150a481b3780fc8",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/memory-clusters.js",
-      "to": "bot/src/city-core.js",
-      "kind": "static",
-      "specifier": "./city-core.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "9269a7c5a9a469aca867a87ae4d3fd497ab553e51ff689a2c50a5ef7edb592a5",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/memory-lifecycle.js",

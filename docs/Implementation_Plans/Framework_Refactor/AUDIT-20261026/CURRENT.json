@@ -1,15 +1,15 @@
 {
-  "checkpoint": "after C21 NPC strategy actual World executor and original Intent delegation",
-  "timestamp": "2026-10-26T20:37:58.474Z",
+  "checkpoint": "after C22 Knowledge reversible memory source",
+  "timestamp": "2026-10-26T20:44:24.936Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "1eeaf34e6a22377abe282285eb510151dc6c29b7302c68f782edeac0f34c2c16",
-  "open_exact_records": 2092,
+  "manifest_sha256": "fd225f793cd5ab3bb7ae74b153c856db5a4ca492b1188da968804986ec11873c",
+  "open_exact_records": 2090,
   "by_feature": {
     "RF05-F05": 420,
     "RF04-F04": 204,
     "RF05-F02": 218,
     "RF05-F03": 259,
-    "RF04-F03": 104,
+    "RF04-F03": 102,
     "RF04-F01": 306,
     "RF06-F02": 17,
     "RF04-F05": 108,
@@ -160,6 +160,34 @@
       "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "IMPORTS_PRIVATE_API"
+    },
+    {
+      "id": "49487824d9f49c02fbd312289e1dd8efc383c08d33f766498687f6e681974718",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/memory-clusters.js",
+      "to": "bot/src/city-calendar.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "b152517d815ecc24c66387ee6cbe9cc45e3ed5f77be569eec6f83827228c8d92",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "235f05f39a7a262a687b2c94b09118a1892e396e538ec5cd9150a481b3780fc8",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/memory-clusters.js",
+      "to": "bot/src/city-core.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "b152517d815ecc24c66387ee6cbe9cc45e3ed5f77be569eec6f83827228c8d92",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
       "id": "ae35fb8176b99d1827455dd20fa3b4cca9d57b82b2050232fe11e5f96020d072",
@@ -4210,68 +4238,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 664,
+      "sourceModules": 666,
       "unowned": 0,
-      "importOccurrences": 2936,
-      "internalImportOccurrences": 2757,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
       "cycleComponents": 2,
       "largestCycle": 146,
-      "rawViolationOccurrences": 2109,
-      "acceptedLegacyOccurrences": 2109,
+      "rawViolationOccurrences": 2107,
+      "acceptedLegacyOccurrences": 2107,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 664,
+      "sourceModules": 666,
       "unowned": 0,
-      "importOccurrences": 2936,
-      "internalImportOccurrences": 2757,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
       "cycleComponents": 2,
       "largestCycle": 146,
-      "rawViolationOccurrences": 2109,
-      "acceptedLegacyOccurrences": 2109,
+      "rawViolationOccurrences": 2107,
+      "acceptedLegacyOccurrences": 2107,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 664,
+      "sourceModules": 666,
       "unowned": 0,
-      "importOccurrences": 2936,
-      "internalImportOccurrences": 2757,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
       "cycleComponents": 2,
       "largestCycle": 146,
-      "rawViolationOccurrences": 2109,
+      "rawViolationOccurrences": 2107,
       "acceptedLegacyOccurrences": 1357,
-      "activeViolationGroups": 748,
-      "transitionErrors": 748,
+      "activeViolationGroups": 746,
+      "transitionErrors": 746,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 664,
+      "sourceModules": 666,
       "unowned": 0,
-      "importOccurrences": 2936,
-      "internalImportOccurrences": 2757,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
       "cycleComponents": 2,
       "largestCycle": 146,
-      "rawViolationOccurrences": 2109,
+      "rawViolationOccurrences": 2107,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1688,
-      "transitionErrors": 1688,
+      "activeViolationGroups": 1686,
+      "transitionErrors": 1686,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 664,
+      "sourceModules": 666,
       "unowned": 0,
-      "importOccurrences": 2936,
-      "internalImportOccurrences": 2757,
+      "importOccurrences": 2940,
+      "internalImportOccurrences": 2761,
       "cycleComponents": 2,
       "largestCycle": 146,
-      "rawViolationOccurrences": 2109,
+      "rawViolationOccurrences": 2107,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2092,
-      "transitionErrors": 2092,
+      "activeViolationGroups": 2090,
+      "transitionErrors": 2090,
       "pass": false
     }
   },
@@ -4348,7 +4376,7 @@
     {
       "path": "bot/src/application/composition/knowledge-world.js",
       "owner": "application",
-      "sha256": "2787332387c22a67f8806b242047b0928246f968d68d10437143e3688c625eb9"
+      "sha256": "a4ee09f2a021d857dd9be25cb59cafdda5b7c899828167f4b3c1e48073a69494"
     },
     {
       "path": "bot/src/application/composition/narrative-world.js",
@@ -4773,7 +4801,7 @@
     {
       "path": "bot/src/framework-to-framework/knowledge--world/public.js",
       "owner": "knowledge--world",
-      "sha256": "8cef436860bc33ca1c25e590b82b7d7c19775515c1e6721d8b80bbe3116fe2b4"
+      "sha256": "2bbc12159ca4dcdaf77978d1901ec63ed81b9b6f82d4427f6728fbe1cabc5840"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -5621,6 +5649,11 @@
       "sha256": "31ff0a4069c8e9e37f8a26f35ffb24e195482f0694d91b738d2703534fa7220f"
     },
     {
+      "path": "bot/src/frameworks/knowledge/contracts/world-memory.js",
+      "owner": "knowledge",
+      "sha256": "01a7b9e1fb54cbf12aae52426c1f889c8247352e1ab90d899513c9609f52b45c"
+    },
+    {
       "path": "bot/src/frameworks/knowledge/disclosure-authority.js",
       "owner": "knowledge",
       "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8"
@@ -5676,6 +5709,11 @@
       "sha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2"
     },
     {
+      "path": "bot/src/frameworks/knowledge/memory-source.js",
+      "owner": "knowledge",
+      "sha256": "117e9548156c2ae02d1aa5811f13d2cfd39b4dbd97ac8d2de41f705b7a8b39d3"
+    },
+    {
       "path": "bot/src/frameworks/knowledge/narrative-memory.js",
       "owner": "knowledge",
       "sha256": "e31fffe260433ad538b92efb177e1a1c82e66e46c8acefc7c60f6afc75a87f70"
@@ -5713,7 +5751,7 @@
     {
       "path": "bot/src/frameworks/knowledge/public.js",
       "owner": "knowledge",
-      "sha256": "4c67251351e6fc7afa480ea4cdef8de77794df8abc5e325829c26019d4b4f328"
+      "sha256": "6b54c4938ec61d6ba63c35c74341cbd02a076c9f8c61e0f88d8c10af90cfe4f2"
     },
     {
       "path": "bot/src/frameworks/knowledge/relationship-state.js",
@@ -6498,7 +6536,7 @@
     {
       "path": "bot/src/memory-clusters.js",
       "owner": "knowledge",
-      "sha256": "b152517d815ecc24c66387ee6cbe9cc45e3ed5f77be569eec6f83827228c8d92"
+      "sha256": "608f94bf7e6ae6b5c9f956af637b1e73ec4f51e1139c8fef60a6f7276e7bf886"
     },
     {
       "path": "bot/src/memory-lifecycle.js",

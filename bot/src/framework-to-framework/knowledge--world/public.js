@@ -12,3 +12,7 @@ export function connectWorldKnowledge({consumer=createWorldKnowledgeConsumer()}=
 export function connectKnowledgeIdentities({consumer=createKnowledgeWorldIdentityConsumer()}={}){
   return consumer.bind({resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin});
 }
+
+import {knowledgeWorldMemory} from '../../frameworks/knowledge/public.js';
+import {cityObject,cityKey,requireCitySource} from '../../frameworks/world/public.js';
+export function connectKnowledgeMemory(){return knowledgeWorldMemory.bind({cityObject,cityKey,cityAudit,requireCitySource});}
