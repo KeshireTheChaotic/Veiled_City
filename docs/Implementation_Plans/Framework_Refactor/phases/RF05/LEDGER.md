@@ -16,7 +16,7 @@
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; C02 guidance source move qualified, root compatibility-location transition remains active. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | PARTIAL — MODEL-SELECTION + THIRTEEN PUBLIC-API SLICES QUALIFIED; 49 ASSIGNED ENTRIES REMAIN | Original test 3/3 pass; scoped C02–C14 API imports qualified. Current C14 memory-contract test passed 1/1; see `features/RF05-F04/LEDGER.md` and feature RUN records. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION + FOURTEEN PUBLIC-API SLICES QUALIFIED; 48 ASSIGNED ENTRIES REMAIN | Original test 3/3 pass; scoped C02–C15 API imports qualified. Current C15 mocked writer-packet test passed 1/1; see `features/RF05-F04/LEDGER.md` and feature RUN records. |
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
@@ -108,3 +108,7 @@ Reconciliation found RF04-F04 C08/C09 failing at HEAD because RF05-F02 added a c
 ## C14 — Knowledge context-memory contract public import
 
 GM imports Knowledge's existing context-memory schema and instructions through Knowledge public. The public API exposes the exact module-level values still returned by the root compatibility reader. Fresh test **1/1 passed**, exit 0, 453.3739 ms; syntax 4/4 passed. One exact RF05-F04 private import transition was retired and preserved; 49 assignments remain. RF05 ratchet remains failed on aggregate prior debt (950 groups/errors), with zero unowned modules and no C14 changed-path findings. See `features/RF05-F04/C14-RUN.json`. No provider or external calls; release NOT AUTHORIZED.
+
+## C15 — Narrative v9 writer contract public API
+
+The application writer now gets the v9 schema and creative/natively constrained instructions through Narrative public; root compatibility modules retain the same value identities and native compiler behavior. A fresh test of the actual `GMService.generateNarrative` request passed **1/1**, exit 0, 609.2199 ms, using one mocked requestModel call. Syntax passed **9/9**. One exact transition was retired; **48 RF05-F04 assignments remain**. RF05 ratchet stays failed on 950 prior groups/errors; no C15 changed-path findings and zero unowned modules. See `features/RF05-F04/C15-RUN.json`. No paid model, network or production service use. Release not authorized.

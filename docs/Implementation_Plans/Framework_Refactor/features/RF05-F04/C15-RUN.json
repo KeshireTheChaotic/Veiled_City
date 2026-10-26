@@ -1,0 +1,25 @@
+{
+  "run_id":"rf05-f04-c15-20261026-01",
+  "feature":"RF05-F04-C15",
+  "branch":"codex/clean-ai-gm-2026-10",
+  "base_head":"61dabd3dac4254a085f4be1b0af8ad5be879bd33",
+  "status":"NARRATIVE_V9_CONTRACT_PUBLIC_API_QUALIFIED",
+  "changed_modules":[
+    {"path":"bot/src/frameworks/narrative/narrative-act-kinds-v9.js","owner":"narrative","sha256":"7780DAA4F3B49FFE09194BF99660E161BB16928B54A675604FE23E19B01ECD13","change":"single shared act-kind list"},
+    {"path":"bot/src/frameworks/narrative/native-clause-schema-v9.js","owner":"narrative","sha256":"7E58EF7532605753C13B62ADE3467FC0E714F632C298D6F697EC1C7BF27398B0","change":"single shared closed native-clause schema"},
+    {"path":"bot/src/frameworks/narrative/writer-contract-v9.js","owner":"narrative","sha256":"751599A0250265471822E1FDD712678C2F947431C2247BF65BFD170C3AD48FC8","change":"owns the exact v9 schema and instruction constants"},
+    {"path":"bot/src/frameworks/narrative/public.js","owner":"narrative","sha256":"D3D99800AB81DF2EF05A0AB491398A8167CF2897E4EC623E2B0B51D1FE95F7F5","change":"publishes three existing v9 writer contract values"},
+    {"path":"bot/src/gm.js","owner":"application","sha256":"46AFAF472705D87FD4D0BCFF38DFD8CCE454688351991EA94ED696AC9CD606A9","change":"uses the Narrative public contract for the actual writer request"},
+    {"path":"bot/src/narrative-acts-v9.js","owner":"narrative compatibility","sha256":"31EDB3FC199CB12477F92113C69975B9E4B453F18772E404CDFA969F8037365E","change":"re-exports the shared act-kind identity"},
+    {"path":"bot/src/narrative-clauses-v9.js","owner":"narrative compatibility","sha256":"58AFC528FF826CD2698FD43E950D91A77234614840BC07F8A47698BB7A86C9BC","change":"re-exports the shared clause-schema identity; native clause construction is unchanged"},
+    {"path":"bot/src/narrative-writer-v9.js","owner":"narrative compatibility","sha256":"7F6E7315A5403471CF40556E7DCAA723E9669E2D4A13F6AE59EA8D7AD3EE8548","change":"re-exports the contract values while retaining act mapping and compiler"}
+  ],
+  "test":{"path":"bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs","sha256":"EDE714B20A51565B523FB403FE032B8A4F807BCEF7255ADAA88EDF88555FF3A1","command":"cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c15.test.mjs","exit_code":0,"tests":1,"passed":1,"failed":0,"skipped":0,"duration_ms":609.2199,"log":"phases/RF05/rf05-f04-c15-test.log","log_sha256":"2ADFA545DD2B5D50B5D2C071AE6E6386C537FD010D8AF24D66E4E5ED03161264"},
+  "syntax":{"files":9,"passed":9,"exit_code":0,"log":"phases/RF05/rf05-f04-c15-syntax.log","log_sha256":"4923AECB25364C18050C2CB7165B25AD20A028D8521F4C2FF26F052395C905CC"},
+  "transition":{"retired_id":"61b05681db0c9390b29bab840f6c82e00a3d969edd3878ac506fc4abef7a65ae","original_record":"C15-RETIRED.json","record_sha256":"BE30C4EE0930F2EBDCE041D4F5F48AB82912410834FA1877B3C99AAC33A30B32","manifest_before":"230F1D6C5A4DD46D668E40A68209979F05EB4EA001B19B743E2EA45C131D2541","manifest_after":"B2BA0F9321F4BCCC64C3100843894BA3762A7978323C42A64BCC5CAFD0B015D4","remaining_rf05_f04_entries":48},
+  "architecture":{"command":"cd bot; node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c15-architecture.json","exit_code":1,"source_modules":584,"unowned":0,"imports":2753,"largest_cycle":181,"active_violation_groups":950,"transition_errors":950,"changed_path_findings":0,"raw_violation_occurrences":2414,"accepted_legacy_occurrences":1459,"log":"phases/RF05/rf05-f04-c15-architecture.log","log_sha256":"6AAB325AD61F943DD19E4B7B3A80D73D032C900D420F2FDF6244EEC92E07E5FF","report":"../../../../.reports/rf05-f04-c15-architecture.json","report_sha256":"7FE6B2DDA7DD20CB8E4A55F7059E99124FA69AE121D618C04153C5D5EF83067E","interpretation":"The exact GM-to-root writer-contract import is gone. No new finding appears on changed paths. The aggregate RF05 gate remains failed on existing debt; raw and accepted occurrence totals each decrease by one."
+  },
+  "external_effects":{"requestModel_mocked":1,"paid_provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"production_database":0,"discord":0,"codex_usage":"UNMEASURED"},
+  "rollback":"Restore the original GM import and transition record; restore the original constants in root writer/act/clause modules; remove the three Narrative data-only modules, public exports, test and C15 evidence. No persisted state or receipt migration exists.",
+  "release":"NOT_AUTHORIZED"
+}

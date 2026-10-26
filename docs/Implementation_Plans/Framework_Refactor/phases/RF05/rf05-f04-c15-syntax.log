@@ -1,0 +1,9 @@
+bot/src/frameworks/narrative/narrative-act-kinds-v9.js — PASS
+bot/src/frameworks/narrative/native-clause-schema-v9.js — PASS
+bot/src/frameworks/narrative/writer-contract-v9.js — PASS
+bot/src/narrative-acts-v9.js — PASS
+bot/src/narrative-clauses-v9.js — PASS
+bot/src/narrative-writer-v9.js — PASS
+bot/src/frameworks/narrative/public.js — PASS
+bot/src/gm.js — PASS
+bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs — PASS

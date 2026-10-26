@@ -12,3 +12,4 @@ export {compositionTones,npcCompositionSchema,freshNpcFocuses,freshNpcRequestSch
   freshSceneRequestSchema,freshSceneResponseSchema,sceneFictionRequestSchema,sceneFictionResponseSchema,narrativeRequestSchema,
   narrativeUnitKinds,narrativeResponseSchema,narrativeFictionDeltaV9Schema} from './gm-fiction-schema.js';
 export {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './gm-world-contract.js';
+export {NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS,narrativeResponseV9Schema} from './writer-contract-v9.js';

@@ -68,7 +68,7 @@ import {configureWorldEncounterCatalog} from './world-encounter-beats.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
 import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
-import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './narrative-writer-v9.js';
+import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './frameworks/narrative/public.js';
 import {createModelTransport} from './frameworks/ai-provider/public.js';
 
 const routerSchema={

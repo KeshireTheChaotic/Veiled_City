@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and thirteen public-API slices qualified; 49 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and fourteen public-API slices qualified; 48 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -79,3 +79,9 @@ The application GM now imports the Knowledge-owned `projectAuthorityRecords` imp
 ### C14 — Knowledge context-memory contract public import
 
 At base `58bb25b6ae61e86bcb5feaf94abaff945ae27949`, moved the GM's schema/prompt import to the existing Knowledge public API. `frameworks/knowledge/context-memory.js` now exports the exact module-level values already returned by its factory, so the root compatibility reader preserves object identity and prompt text. The fresh test passed **1/1**, exit **0**, **453.3739 ms**; changed JavaScript syntax passed **4/4**. Exact private-import transition `cdb8c39fc7d883493d37795de97e9b82e6fd68aa812b677c67dfd4d98b451399` is preserved in `C14-RETIRED.json`; **49 RF05-F04 assignments remain**. RF05 architecture ratchet still fails with 950 aggregate active groups/errors, zero unowned modules, 581 source modules and no new findings on C14 changed paths. No provider, network, database or Discord calls; costs $0. Details, hashes, output and rollback: `C14-SCOPE.md`, `C14-RUN.json`, `C14-RETIRED.json` and `phases/RF05/rf05-f04-c14-*.log`. RF05 incomplete; release NOT AUTHORIZED.
+
+## C15 — Narrative v9 writer contract public API
+
+Extracted only the existing immutable v9 act-kind/native-clause schema values, writer response schema, and two instructions into Narrative-owned modules. The root modules remain compatibility re-exports; GM now uses Narrative public for the actual writer packet. No compiler, native validation, player control, audience, mechanics, receipts, or narrative wording changed. A fresh test exercised `GMService.generateNarrative` with a mocked provider and verified the actual schema and both instruction strings; **1/1 passed**, exit **0**, **609.2199 ms**. Syntax passed **9/9**. The exact GM private-import transition is preserved and retired; **48 RF05-F04 assignments remain**.
+
+The RF05 ratchet remains failed with **950** aggregate groups/errors, zero unowned modules, 584 source modules, and no new findings on C15 changed paths; raw and accepted legacy occurrence totals each fell by one. Exact sources/tests/log/report hashes, results, rollback and costs are in `C15-RUN.json`. One provider-call boundary was mocked; paid provider use/tokens/spend, network, production DB and Discord use were all zero. RF05-F04 and RF05 remain incomplete; release is NOT AUTHORIZED.

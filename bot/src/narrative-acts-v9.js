@@ -1,8 +1,6 @@
 /** Non-effect creative proposals, verified per act. Never bypass legacy validators until v9 is qualified. */
-export const NARRATIVE_ACT_KINDS = Object.freeze([
-  'scene_description', 'player_perception', 'npc_speech', 'npc_offer',
-  'npc_allegation', 'artifact_text', 'gm_internal_note'
-]);
+import {NARRATIVE_ACT_KINDS} from './frameworks/narrative/narrative-act-kinds-v9.js';
+export {NARRATIVE_ACT_KINDS};
 const kinds = new Set(NARRATIVE_ACT_KINDS);
 const safeId = value => typeof value === 'string' && value.length > 0 && value.length <= 160;
 const hold = (id, reason) => Object.freeze({id: id || '', status: 'held', reason});
