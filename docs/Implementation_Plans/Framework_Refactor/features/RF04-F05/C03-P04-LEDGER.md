@@ -1,6 +1,6 @@
 # RF04-F05-C03-P04 ledger — Narrative–World authorship switch-over
 
-**Status: LOCAL HOLD; no implementation retained.** Base HEAD `296099876dae42f2bc446690ff7d7912ae5ff233`, branch `codex/clean-ai-gm-2026-10`.
+**Current status (2026-10-26): REOPENED AND SCOPED NATIVE INTEGRATION QUALIFIED; broader context-provider decomposition remains open.** See [reopened execution](C03-P04-REOPENED-LEDGER.md) and [actual evidence](C03-P04-REOPENED-RUN.json). The withdrawn prototypes below remain historical, unqualified evidence. Their base HEAD was `296099876dae42f2bc446690ff7d7912ae5ff233`, branch `codex/clean-ai-gm-2026-10`.
 
 The required pair boundary is not yet bootstrap-safe. World authorship still receives the Narrative audience/source functions through the compatibility readers `bot/src/audience-native-v9.js`, `bot/src/scene-fiction-context.js`, and `bot/src/narrative-authority-context.js`. Their current dependency bodies remain legacy-owned; application composition importing them creates `NEW_TO_LEGACY_IMPORT`. A temporary pair/consumer/composition prototype demonstrated that exact issue, so all prototype source and test files were removed. No permanent source, test, or registry changes remain from the attempt.
 

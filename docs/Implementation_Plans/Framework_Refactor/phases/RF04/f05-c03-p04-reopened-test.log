@@ -1,0 +1,73 @@
+TAP version 13
+# Subtest: unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+ok 1 - unconfigured native sources and World consumers fail closed; fixed binding cannot be replaced
+  ---
+  duration_ms: 0.9619
+  type: 'test'
+  ...
+# Subtest: legacy registration, public runtime and actual World verification share the original opaque grant store
+ok 2 - legacy registration, public runtime and actual World verification share the original opaque grant store
+  ---
+  duration_ms: 192.3141
+  type: 'test'
+  ...
+# Subtest: private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+ok 3 - private source remains private through actual pair and World consumer, with GM and cross-recipient evidence excluded
+  ---
+  duration_ms: 204.7192
+  type: 'test'
+  ...
+# Subtest: real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+ok 4 - real ordinary World invention persists and replays with unchanged native identity receipt and PC state
+  ---
+  duration_ms: 200.1682
+  type: 'test'
+  ...
+# Subtest: saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+ok 5 - saved proof is revalidated after SQLite restart but JSON cannot replace an issued grant
+  ---
+  duration_ms: 195.3584
+  type: 'test'
+  ...
+# Subtest: source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+not ok 6 - source, scene and controller changes hold old authoring contexts without rewriting saved receipts
+  ---
+  duration_ms: 196.5597
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c04.test.mjs:123:1'
+  failureType: 'testCodeFailure'
+  error: 'Scene fiction held: authenticated_source. No character action or outcome was inferred.'
+  code: 'SCENE_FICTION'
+  stack: |-
+    sceneFictionFailure (file:///D:/Library/Development/Veiled_City/bot/src/scene-fiction-context.js:12:66)
+    Object.buildNarrativeContext (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/narrative/context-builder.js:40:63)
+    buildNarrativeContext (file:///D:/Library/Development/Veiled_City/bot/src/narrative-authority-context.js:31:65)
+    Object.context (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs:45:22)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs:127:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: real World transaction rolls identity and receipt back on audit failure before a safe retry
+ok 7 - real World transaction rolls identity and receipt back on audit failure before a safe retry
+  ---
+  duration_ms: 199.5419
+  type: 'test'
+  ...
+# Subtest: actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+ok 8 - actual bootstrap reaches the pair before services; the adapter imports only its two public owners
+  ---
+  duration_ms: 0.683
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7179.5253

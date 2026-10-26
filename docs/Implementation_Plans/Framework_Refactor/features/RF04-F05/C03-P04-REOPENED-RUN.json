@@ -1,0 +1,210 @@
+{
+  "run_id": "RF04-F05-C03-P04-REOPENED-20261026",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "status": "SCOPED_NATIVE_NARRATIVE_WORLD_ADOPTION_QUALIFIED_SPLIT_REPAIR",
+  "changed_files": [
+    {
+      "path": "bot/src/frameworks/narrative/native-source.js",
+      "frozen_sha256": "340eba72bf3017c10eb2f62aab5cf04913f8c4d4571ea30c77caa801afae164b",
+      "current_sha256": "340eba72bf3017c10eb2f62aab5cf04913f8c4d4571ea30c77caa801afae164b"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/narrative-authorship.js",
+      "frozen_sha256": "669426b58c3f3417fd4ed46d23046cb970f4d680b2e088085ff74076adbc1a04",
+      "current_sha256": "669426b58c3f3417fd4ed46d23046cb970f4d680b2e088085ff74076adbc1a04"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--world/public.js",
+      "frozen_sha256": "7940bffa70e80b15c5ee792a270562a46cc8ce590ddf9fdef4b2e3b8f5c78853",
+      "current_sha256": "7940bffa70e80b15c5ee792a270562a46cc8ce590ddf9fdef4b2e3b8f5c78853"
+    },
+    {
+      "path": "bot/src/application/composition/narrative-world.js",
+      "frozen_sha256": "0247208552b71b32022041f6af9f4fcdea1e4dd3797204e187d839390dd4ad62",
+      "current_sha256": "0247208552b71b32022041f6af9f4fcdea1e4dd3797204e187d839390dd4ad62"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "frozen_sha256": "adc62293bdffcea104287a217795cee5ccb5eafdce4a61af515138a372032f12",
+      "current_sha256": "adc62293bdffcea104287a217795cee5ccb5eafdce4a61af515138a372032f12"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "frozen_sha256": "bd4b68eb04d3781492cceda78ba417795ba653d0ba66cf8356a934cdcb857df3",
+      "current_sha256": "bd4b68eb04d3781492cceda78ba417795ba653d0ba66cf8356a934cdcb857df3"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "frozen_sha256": "bfaa931964da24418574d5b53a805ecebbb9864674b7ee03a77620b3aef5f18b",
+      "current_sha256": "bfaa931964da24418574d5b53a805ecebbb9864674b7ee03a77620b3aef5f18b"
+    },
+    {
+      "path": "bot/src/audience-native-v9.js",
+      "frozen_sha256": "8b246a391f0eb4436e98f1fd92c9fcb7cb4b9483242c479aafd5c5d471d5c951",
+      "current_sha256": "8b246a391f0eb4436e98f1fd92c9fcb7cb4b9483242c479aafd5c5d471d5c951"
+    },
+    {
+      "path": "bot/src/world-authorship.js",
+      "frozen_sha256": "a1b01c1c0948c8c972c4720cf152d55533a15af7836c5ca481438062a2af9374",
+      "current_sha256": "a1b01c1c0948c8c972c4720cf152d55533a15af7836c5ca481438062a2af9374"
+    },
+    {
+      "path": "bot/src/index.js",
+      "frozen_sha256": "4732b6a408c6007e4f4a08abea9ca19cb1a66e0986f6da2d83d974d2908c7826",
+      "current_sha256": "4732b6a408c6007e4f4a08abea9ca19cb1a66e0986f6da2d83d974d2908c7826"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+      "frozen_sha256": "13cb6ce7bc210cf9a70d1fe6259e0f5e80c3ce9e2b3b2e9b83aa3e362eb70bb0",
+      "current_sha256": "e5d17bc9fbc68b57c6e6e17ae14fdb8879508a0075cb3bdf4d8c8ccf57561675"
+    }
+  ],
+  "tests": {
+    "initial": {
+      "start": "2026-10-26T17:31:23.6477801Z",
+      "exit_code": 1,
+      "end": "2026-10-26T17:31:30.8796824Z",
+      "run_id": "RF04-F05-C03-P04-REOPENED-20261026-1",
+      "duration_ms": 7231.9023,
+      "passed": 7,
+      "failed": 1,
+      "tests": 8,
+      "tap_duration_ms": 7179.5253
+    },
+    "repair": {
+      "run_id": "RF04-F05-C03-P04-REOPENED-20261026-repair",
+      "end": "2026-10-26T17:31:58.0415395Z",
+      "start": "2026-10-26T17:31:56.9509746Z",
+      "exit_code": 0,
+      "duration_ms": 1090.5649,
+      "passed": 1,
+      "failed": 0,
+      "tests": 1,
+      "tap_duration_ms": 1040.3894
+    },
+    "cases_qualified": 8,
+    "executions": 9,
+    "limitation": "Seven unchanged cases passed at the frozen original test bytes; the repaired controller-source fixture passed separately. No fully green whole-file run against final test bytes is claimed; the final RF changed-code union remains outstanding.",
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+    "repair_selector": "--test-name-pattern=source, scene and controller"
+  },
+  "syntax": {
+    "initial_files": 11,
+    "passed": 11,
+    "repair_files": 1,
+    "repair_passed": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 603,
+      "unowned": 0,
+      "importOccurrences": 2799,
+      "internalImportOccurrences": 2622,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2407,
+      "acceptedLegacyOccurrences": 2407,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05_active_groups": 946,
+    "rf05_transition_errors": 946
+  },
+  "retired": [
+    {
+      "id": "c1a0941251608c34613ef1b7b0081609292ca3d691d1f8ef5d39cebc985de954",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/audience-native-v9.js",
+      "kind": "static",
+      "specifier": "./audience-native-v9.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "6d9d55da0d12d145b0288ee87dc23e27b123a5025d2a8ad1e675361de00cd26c",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "314d1242e42dbdbba15a5734e8975d3c4629ce452dffc999dc0ff8241a890149",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/audience-native-v9.js",
+      "kind": "static",
+      "specifier": "./audience-native-v9.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "d1017d3158ab17d243015ea6236f38cccd35f092edcbf2e14815acd247f7031e",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "source_instance": "Native Narrative runtime owns one cached grant adapter. Compatibility registration, pair and World consumer use that same native source, while each issued grant keeps its original per-authority opaque identity.",
+  "holds": [
+    "Remaining Narrative context dependency composition remains legacy-owned and explicitly registered; no full Narrative source isolation.",
+    "Separate World Knowledge-disclosure and seed/list dependencies remain outside this pair.",
+    "Native index startup service execution, live Discord, paid provider, semantic narrative quality and production recovery are unqualified."
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "rollback": "Revert only this scoped runtime/consumer/pair/composition/root/startup/API/registry change and restore its four retired transition records as one unit. Preserve other edits and original historical evidence.",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p04-reopened-test.log",
+      "sha256": "e6637ff2c648e2b3849ee4a2e977abe406aab81ac30613f781c75bd7751f4f53"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p04-reopened-repair.log",
+      "sha256": "46603871a056e65202a6e2a4b189bded719d570c1a95de338fa6ddc72784d7a6"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p04-reopened-architecture-initial.log",
+      "sha256": "c403680d917c83f60495deb573a7d38f0f60458768b02142bf15e3bb7d1e0670"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p04-reopened-architecture-final.log",
+      "sha256": "f286d3f4a3e0c21d56bb00b12aa97cb2593530df26039ba9463ba842247eda64"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c03-p04-reopened-rf05.log",
+      "sha256": "b39ad8e3ddb47a2c6cf03dad02621ec22bb1fd82d8c0d3472e14c8150133dbbc"
+    }
+  ]
+}

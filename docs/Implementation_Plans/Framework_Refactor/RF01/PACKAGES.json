@@ -91,6 +91,9 @@
     ],
     "session--world": [
       "bot/src/framework-to-framework/session--world/public.js"
+    ],
+    "narrative--world": [
+      "bot/src/framework-to-framework/narrative--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

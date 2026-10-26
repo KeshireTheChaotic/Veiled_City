@@ -2505,36 +2505,37 @@
         "narrative",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "world",
           "to": "narrative",
-          "import_occurrences": 22,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
-        {
-          "from": "narrative",
-          "to": "world",
-          "import_occurrences": 30,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "World authorship consumes the original Narrative runtime audience mint/revalidation, source-visibility and failure capabilities. No copied proof or alternate grant store."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/autonomous-world.js",
-          "to": "bot/src/scene-fiction-context.js",
-          "line": 21,
+          "from": "bot/src/framework-to-framework/narrative--world/public.js",
+          "to": "bot/src/frameworks/narrative/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/narrative--world/public.js",
+          "to": "bot/src/frameworks/world/public.js",
+          "line": 2,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Complete fixed source object, replacement prohibited, original Narrative WeakMap shared with compatibility API. Current source, audience, controller and saved-origin checks stay in their native owners.",
+      "lifecycle": "Inert fixed application initializer called by actual index before service construction. Narrative context factory supplied by original source composition; context-provider decomposition remains explicit residual debt.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/narrative-world.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "world",
@@ -2554,7 +2555,9 @@
         "pair": "narrative--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 52
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions."
     },
     {
       "pair": "npc--operations",

@@ -1,0 +1,46 @@
+[
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\narrative\\native-source.js",
+    "Hash": "340EBA72BF3017C10EB2F62AAB5CF04913F8C4D4571EA30C77CAA801AFAE164B"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\contracts\\narrative-authorship.js",
+    "Hash": "669426B58C3F3417FD4ED46D23046CB970F4D680B2E088085FF74076ADBC1A04"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\narrative--world\\public.js",
+    "Hash": "7940BFFA70E80B15C5EE792A270562A46CC8CE590DDF9FDEF4B2E3B8F5C78853"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\narrative-world.js",
+    "Hash": "0247208552B71B32022041F6AF9F4FCDEA1E4DD3797204E187D839390DD4AD62"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\narrative\\public.js",
+    "Hash": "ADC62293BDFFCEA104287A217795CEE5CCB5EAFDCE4A61AF515138A372032F12"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\public.js",
+    "Hash": "BD4B68EB04D3781492CCEDA78BA417795BA653D0BA66CF8356A934CDCB857DF3"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\public.js",
+    "Hash": "BFAA931964DA24418574D5B53A805ECEBBB9864674B7EE03A77620B3AEF5F18B"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\audience-native-v9.js",
+    "Hash": "8B246A391F0EB4436E98F1FD92C9FCB7CB4B9483242C479AAFD5C5D471D5C951"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\world-authorship.js",
+    "Hash": "A1B01C1C0948C8C972C4720CF152D55533A15AF7836C5CA481438062A2AF9374"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\index.js",
+    "Hash": "4732B6A408C6007E4F4A08ABEA9CA19CB1A66E0986F6DA2D83D974D2908C7826"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c04.test.mjs",
+    "Hash": "13CB6CE7BC210CF9A70D1FE6259E0F5E80C3CE9E2B3B2E9B83AA3E362EB70BB0"
+  }
+]

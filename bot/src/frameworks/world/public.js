@@ -32,3 +32,4 @@ export {BACKGROUND_WORLD_KINDS,createBackgroundIdentityRules} from './background
 export {createWorldAuthorshipRules} from './authorship.js';
 
 export {createNpcEvidenceConsumer,worldNpcEvidence} from './contracts/npc-evidence.js';
+export {createNarrativeAuthorshipConsumer,worldNarrativeAuthorship} from './contracts/narrative-authorship.js';
