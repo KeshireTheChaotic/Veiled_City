@@ -22,3 +22,6 @@ export {createNpcNarrativeContextConsumer,npcNarrativeContext} from './contracts
 export {createNpcKnowledgeClustersConsumer,npcKnowledgeClusters} from './contracts/knowledge-clusters.js';
 export {createNpcSessionViewConsumer,npcSessionView} from './contracts/session-view.js';
 export {retrieveNpcCognition,dossierDecisionProfile,seedNpcCognition} from './cognition-source.js';
+export {createNpcWorldConversationsConsumer,npcWorldConversations} from './contracts/world-conversations.js';
+export {createNpcKnowledgePlannerConsumer,npcKnowledgePlanner} from './contracts/knowledge-planner.js';
+export {resolveNpcConversation} from './conversation-source.js';

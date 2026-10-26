@@ -14,3 +14,6 @@ export function connectNpcWorldStrategy(){return npcWorldStrategy.bind({cityObje
 import {npcWorldEvidenceEvent} from '../../frameworks/npc/public.js';
 import {indexWorldEvent} from '../../frameworks/world/public.js';
 export function connectNpcWorldEvidenceEvent(){return npcWorldEvidenceEvent.bind(indexWorldEvent);}
+
+import {npcWorldConversations} from '../../frameworks/npc/public.js';
+export function connectNpcWorldConversations(){return npcWorldConversations.bind({cityObject,cityKey,cityAudit,requireCitySource,activeCityProxy,assertNpcAvailability,actorState,submitNpcAction});}

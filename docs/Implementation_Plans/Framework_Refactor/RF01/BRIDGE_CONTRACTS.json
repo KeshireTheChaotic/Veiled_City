@@ -1927,11 +1927,13 @@
       "adoption_feature": "RF04-F05",
       "consumers": [
         "bot/src/application/composition/npc-observations.js",
-        "bot/src/application/composition/npc-cognition.js"
+        "bot/src/application/composition/npc-cognition.js",
+        "bot/src/application/composition/npc-conversations.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1954,7 +1956,7 @@
         "occurrences": 4
       },
       "public_api": "bot/src/framework-to-framework/knowledge--npc/public.js",
-      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated."
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged."
     },
     {
       "pair": "knowledge--operations",
@@ -2803,14 +2805,16 @@
       "consumers": [
         "bot/src/application/composition/npc-world-evidence.js",
         "bot/src/application/composition/npc-strategy.js",
-        "bot/src/application/composition/npc-evidence-projection.js"
+        "bot/src/application/composition/npc-evidence-projection.js",
+        "bot/src/application/composition/npc-conversations.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2833,7 +2837,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged."
     },
     {
       "pair": "operations--persistence",

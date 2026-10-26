@@ -5,3 +5,7 @@ export function connectNpcKnowledgeEvidence(){return npcKnowledgeEvidence.bind(a
 import {npcKnowledgeClusters} from '../../frameworks/npc/public.js';
 import {clusterContext} from '../../frameworks/knowledge/public.js';
 export function connectNpcKnowledgeClusters(){return npcKnowledgeClusters.bind(clusterContext);}
+
+import {npcKnowledgePlanner} from '../../frameworks/npc/public.js';
+import {ContextPlanner} from '../../frameworks/knowledge/public.js';
+export function connectNpcKnowledgePlanner(){return npcKnowledgePlanner.bind(ContextPlanner);}
