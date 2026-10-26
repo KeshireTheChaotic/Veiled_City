@@ -1780,36 +1780,37 @@
         "intent",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "intent",
-          "to": "world",
-          "import_occurrences": 18,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "world",
           "to": "intent",
-          "import_occurrences": 11,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Compose the existing World NPC action and Intent array proposal schemas for the actual GM request; grants no execution or disclosure authority."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/ai-intents.js",
-          "to": "bot/src/city-core.js",
-          "line": 4,
+          "from": "bot/src/framework-to-framework/intent--world/public.js",
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--world/public.js",
+          "to": "bot/src/frameworks/world/public.js",
+          "line": 2,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Exact schema fields, order and nested owner-object identities; actual GM/structured transport request tests. Rules and native receipts remain outside proposal composition.",
+      "lifecycle": "One static schema per module, consumed directly by the application GM planner. Old World-owned schema source retired after sole live caller switched; not a persisted receipt reader.",
+      "adoption_feature": "RF05-F04",
+      "consumers": [
+        "bot/src/gm.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "intent",
@@ -1829,7 +1830,9 @@
         "pair": "intent--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 29
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/intent--world/public.js",
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work."
     },
     {
       "pair": "knowledge--narrative",

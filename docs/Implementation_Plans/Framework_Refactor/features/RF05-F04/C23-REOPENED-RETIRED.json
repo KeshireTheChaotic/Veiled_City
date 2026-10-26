@@ -1,0 +1,41 @@
+[
+  {
+    "id": "7bfbedff3f4f1dca62d756fd4b6556e9cb4f14e78acb6dd13451ebc16ced61bf",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/simulation-schema.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "3fe8ae5ab6c425548a6689a53fe4ffd6fcb4c63bad133889a9a501ef610acf01",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/gm.js",
+    "to": "bot/src/simulation-schema.js",
+    "kind": "static",
+    "specifier": "./simulation-schema.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F04",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "b7ee75d1ad9903b6f4aea58bd87b13a27c2f4c436434401ba26f44e55a937907",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/simulation-schema.js",
+    "to": "bot/src/ai-intent-contracts.js",
+    "kind": "static",
+    "specifier": "./ai-intent-contracts.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

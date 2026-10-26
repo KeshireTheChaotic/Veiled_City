@@ -1,0 +1,140 @@
+{
+  "feature": "RF05-F04-C23",
+  "status": "SCOPED_PAIR_ADOPTION_QUALIFIED",
+  "base_head": "ccae77566632405b492eb83a0fbbdd08ecfa1eb8",
+  "changes": {
+    "retired": "bot/src/simulation-schema.js",
+    "pair": "bot/src/framework-to-framework/intent--world/public.js",
+    "consumer": "bot/src/gm.js"
+  },
+  "source_sha256": {
+    "bot/src/gm.js": "9e1bb4fd2deab5e15cb22d41a3c8b148c6e4e59de89a0ecc4252f6ac46267c98",
+    "bot/src/framework-to-framework/intent--world/public.js": "20683fc0895552b1ee4d46043851f298b2cb11f25abf63aa3abc85424a6220b2"
+  },
+  "source_ownership": "Pair owns only the joint proposal schema. World owns action schema/catalogs; Intent owns its array schema. GM application imports the pair public API.",
+  "schema_before_sha256": "10bbb4dcf1ee42ef7e0b65eb9a6a98db5a27f28ddc64bd5b704c02c117c31024",
+  "schema_after_sha256": "10bbb4dcf1ee42ef7e0b65eb9a6a98db5a27f28ddc64bd5b704c02c117c31024",
+  "schema_unchanged": true,
+  "tests": {
+    "run_id": "RF05-F04-C23-REOPENED-20261026-1",
+    "start": "2026-10-26T17:41:14.9079408Z",
+    "exit_code": 0,
+    "end": "2026-10-26T17:41:16.3224198Z",
+    "duration_ms": 1414.479,
+    "files": 1,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "tap_duration_ms": 1367.0752,
+    "launches": 1,
+    "path": "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
+    "sha256": "fdf90d6126ea24834d7de416776ef97ed124cd2f4f970e858d365504c0473790",
+    "mock_provider_requests": 5,
+    "identical_inflight_callers": 2,
+    "identical_inflight_requests": 1,
+    "native_mutation_checks": "unchanged actual disposable SQLite tables in each GM case"
+  },
+  "syntax": {
+    "checked": 3,
+    "passed": 3
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "summary": {
+      "sourceModules": 603,
+      "unowned": 0,
+      "importOccurrences": 2797,
+      "internalImportOccurrences": 2620,
+      "cycleComponents": 1,
+      "largestCycle": 181,
+      "rawViolationOccurrences": 2404,
+      "acceptedLegacyOccurrences": 2404,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05_active_groups": 944,
+    "rf05_transition_errors": 944
+  },
+  "retired_transitions": [
+    {
+      "id": "7bfbedff3f4f1dca62d756fd4b6556e9cb4f14e78acb6dd13451ebc16ced61bf",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/simulation-schema.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3fe8ae5ab6c425548a6689a53fe4ffd6fcb4c63bad133889a9a501ef610acf01",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/simulation-schema.js",
+      "kind": "static",
+      "specifier": "./simulation-schema.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b7ee75d1ad9903b6f4aea58bd87b13a27c2f4c436434401ba26f44e55a937907",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation-schema.js",
+      "to": "bot/src/ai-intent-contracts.js",
+      "kind": "static",
+      "specifier": "./ai-intent-contracts.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "replaced_reader_checks": [
+    "rf05-f04-c20.test.mjs",
+    "rf05-f04-c21.test.mjs",
+    "rf05-f04-c24.test.mjs",
+    "rf05-f04-c25.test.mjs"
+  ],
+  "replacement_meaning": "Earlier extraction tests that import the now-retired static source are historical evidence at their recorded bytes, not current import-path qualification. They were not read, copied, modified, deleted or executed. This new test qualifies the pair and real GM request; unchanged owned schema bodies retain their earlier exact-byte evidence.",
+  "limits": [
+    "No saved-receipt reader was removed; old file held only static proposal exports and had one live caller.",
+    "No live provider, Discord, production DB, semantic narration or full RF05 qualification. Other Intent/World directions remain unresolved."
+  ],
+  "costs": {
+    "paid_provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED",
+    "inflight_cache": "One provider mock dispatch for two identical concurrent plan requests; no persisted response cache."
+  },
+  "rollback": "Restore old static schema source and sole GM import, remove pair/config registration and restore these three exact transitions together. Preserve all unrelated changes and saved readers.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c23-reopened-test.log",
+      "sha256": "b066b40bf801a4933aa13e61add0cde017c7cd9b886c848f6ceb808b7aa1483e"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c23-reopened-architecture-initial.log",
+      "sha256": "3a2b4c8ce4626f06a19688ba4532696a4ec4132674d66dcd75e2376dd3630534"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c23-reopened-rf04-final.log",
+      "sha256": "d10e08f646b15a44b45f34f45877c62cbf26634dd1ac8cf85767ab83e643bc76"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c23-reopened-rf05-final.log",
+      "sha256": "fd88c46c97d2485ddeab5b683e406c47408ddc3ca841f3cdc6c788c48c32ac97"
+    }
+  ]
+}

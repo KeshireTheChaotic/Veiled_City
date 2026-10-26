@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: one pair-owned proposal schema preserves exact World and Intent contract references and field order
+ok 1 - one pair-owned proposal schema preserves exact World and Intent contract references and field order
+  ---
+  duration_ms: 0.911
+  type: 'test'
+  ...
+# Subtest: actual GM planning and structured transport receive the composed schema without native execution
+ok 2 - actual GM planning and structured transport receive the composed schema without native execution
+  ---
+  duration_ms: 158.8766
+  type: 'test'
+  ...
+# Subtest: identical in-flight native opportunity plans share one mocked provider request and return separate proposals
+ok 3 - identical in-flight native opportunity plans share one mocked provider request and return separate proposals
+  ---
+  duration_ms: 166.3589
+  type: 'test'
+  ...
+# Subtest: explicit provider refusal remains one request with no invented proposal or native mutation
+ok 4 - explicit provider refusal remains one request with no invented proposal or native mutation
+  ---
+  duration_ms: 177.2552
+  type: 'test'
+  ...
+# Subtest: malformed JSON retains the existing two-attempt repair and configured model without native commitment
+ok 5 - malformed JSON retains the existing two-attempt repair and configured model without native commitment
+  ---
+  duration_ms: 203.3319
+  type: 'test'
+  ...
+# Subtest: retired schema path has no runtime caller; the actual GM imports only the exact pair public API
+ok 6 - retired schema path has no runtime caller; the actual GM imports only the exact pair public API
+  ---
+  duration_ms: 0.8424
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1367.0752

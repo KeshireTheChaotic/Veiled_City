@@ -1,0 +1,53 @@
+{
+  "feature": "RF05-F04 C23",
+  "status": "DEFERRED_LOCAL_ARCHITECTURE_HOLD_IMPLEMENTATION_WITHDRAWN",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "attempted_change": "Moved the NPC Director proposal schema into an intent--world adapter, published World action catalogs, and redirected the GM and compatibility reader.",
+  "attempted_test": {
+    "fresh_files": 23,
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 28,
+    "failed": 0,
+    "duration_ms": 13681.0205,
+    "log": "phases/RF05/rf05-f04-c23-final-test.log",
+    "log_sha256": "F9E6E78EA40D6E6922E2F38691ACF526FCF518F9E3E4D4046D523BA9B9F591B4",
+    "interpretation": "The attempted implementation passed its fresh functional suite but did not pass architectural acceptance. It was withdrawn; these tests do not qualify the reverted implementation."
+  },
+  "architecture": {
+    "attempted_exit_code": 1,
+    "attempted_findings": [
+      "FRAMEWORK_IMPORTS_PAIR: World-owned simulation-schema.js imported the intent--world bridge, which violates the rule that framework integration stays in the bridge and frameworks do not import adapters.",
+      "The bridge registry briefly contained a duplicate intent--world entry; corrected before withdrawal."
+    ],
+    "after_withdrawal_exit_code": 1,
+    "after_withdrawal_summary": {
+      "active_groups": 950,
+      "transition_errors": 950,
+      "source_modules": 592,
+      "unowned": 0,
+      "imports": 2775,
+      "largest_cycle": 181
+    },
+    "after_withdrawal_log": "phases/RF05/rf05-f04-c23-rollback-architecture.log",
+    "after_withdrawal_log_sha256": "926DA6E4D80A96D56238CEEC020EB10383A1A3723BD99926DF71B628FCB006D7",
+    "result": "The attempted bridge code, test, and package/registry adoption were removed. The existing intent--world registry record is restored to PROPOSED_NO_API."
+  },
+  "withdrawn_source_sha256": {
+    "bot/src/frameworks/world/action-catalog.js": "F312C2F7BDBB6644E70F9B8C07C816DA78FD1B81AC0CC20918C6EBEE2CF5B534",
+    "bot/src/framework-to-framework/intent--world/npc-director-schema.js": "78B45D2DD5D427FCC51B07FCD5CAE752696F4BA9CD9237079F428C60994EE835",
+    "bot/src/framework-to-framework/intent--world/public.js": "410AE58BDAF9CD8372E4432BBDE6DF3ECB0854811A880E0245A8D6E64EDA174B",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs": "7679BD9DEEBB345EC245B886699C3F02F73DA7BD95FF6C72C12C28B470D28A7C"
+  },
+  "post_withdrawal_syntax": {
+    "files": 5,
+    "passed": 5,
+    "log": "phases/RF05/rf05-f04-c23-rollback-syntax.log",
+    "sha256": "0741BC8D3BC7A17915F26F0B37F8BCA3D264DA6A98B797BB39CA351A523755BB"
+  },
+  "hold": "Revisit only after a scoped ownership decision resolves how the World-owned historical simulation-schema.js reader can preserve its API without importing an Intent/World bridge. The standalone World action-catalog extraction remains independently supportable.",
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "release": "NOT AUTHORIZED"
+}

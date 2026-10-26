@@ -94,6 +94,9 @@
     ],
     "narrative--world": [
       "bot/src/framework-to-framework/narrative--world/public.js"
+    ],
+    "intent--world": [
+      "bot/src/framework-to-framework/intent--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

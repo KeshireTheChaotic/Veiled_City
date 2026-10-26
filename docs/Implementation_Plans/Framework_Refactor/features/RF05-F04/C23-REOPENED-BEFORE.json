@@ -1,0 +1,13 @@
+{
+  "source_sha256": "6cc8edeaf99af4e8f60720d8cc9e9c8e6bd0345cc27a83bdf57a32f6949d9d65",
+  "schema_sha256": "10bbb4dcf1ee42ef7e0b65eb9a6a98db5a27f28ddc64bd5b704c02c117c31024",
+  "exports": [
+    "SIMULATION_PROMPT",
+    "npcActionSchema",
+    "npcDirectorSchema",
+    "simulationUpdateSchema"
+  ],
+  "runtime_consumers": [
+    "bot/src/gm.js"
+  ]
+}

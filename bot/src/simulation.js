@@ -1,5 +1,6 @@
 /** Fictional-time NPC/faction simulation. Models propose intent; bounded application rules resolve and persist outcomes. */
 import { randomInt, randomUUID } from "node:crypto";
+import {ACTION_TYPES,MAJOR_IMPACTS} from './frameworks/world/action-catalog.js';
 import {retrieveNpcCognition} from './npc-cognition.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
@@ -21,10 +22,7 @@ import {nativeWorldStrategyAllowed} from './native-world-operations.js';
 import {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './world-information-transfer.js';
 export { updateRelationshipDimensions } from "./relationship-state.js";
 
-export const ACTION_TYPES=["investigate","travel","contact","recruit","observe","prepare","hide","acquire","spend_resource",
-  "threaten","negotiate","attack","protect","repair","sabotage","research","spread_rumor","suppress_rumor","verify_rumor",
-  "weaponize_rumor","request_favor","fulfill_obligation","betray","advance_project"];
-export const MAJOR_IMPACTS=["major_npc_removal","major_location_destruction","faction_transformation","campaign_secret","supernatural_disaster"];
+export {ACTION_TYPES,MAJOR_IMPACTS};
 const RESOURCE_KEYS=["influence","materials","information","manpower","leverage","wounds","stress","favors"];
 const DEFAULT_RESOURCES={influence:4,materials:4,information:2,manpower:2,leverage:1,wounds:0,stress:0,favors:0};
 const COSTS={investigate:"information",research:"information",observe:"manpower",travel:"materials",contact:"influence",
