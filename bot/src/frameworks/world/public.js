@@ -61,3 +61,4 @@ export {historyContext} from './history-context.js';
 export {createWorldNpcCognitionConsumer,worldNpcCognition} from './contracts/npc-cognition.js';
 export {createWorldKnowledgeClustersConsumer,worldKnowledgeClusters} from './contracts/knowledge-clusters.js';
 export {simulationCandidates} from './simulation-candidates.js';
+export {createWorldNpcOpportunityConsumer,worldNpcOpportunity} from './contracts/npc-opportunity.js';

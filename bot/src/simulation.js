@@ -1,3 +1,5 @@
+import {worldNpcOpportunity} from './frameworks/world/public.js';
+const {runMotivationCycle,runStrategyOpportunity}=worldNpcOpportunity;
 import {keyOf,text,intersects} from './frameworks/world/simulation-query-primitives.js';
 import {simulationCandidates} from './frameworks/world/public.js';
 export {simulationCandidates} from './frameworks/world/public.js';
@@ -9,9 +11,7 @@ import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity
 import { npcAvailability, activeCityProxy, assertQueuedCompatibility, worldActorControl } from "./city-constraints.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
-import { runMotivationCycle } from "./simulation-motivation.js";
 import { coordinateConsequences } from "./city-consequences.js";
-import { runStrategyOpportunity } from "./simulation-strategy.js";
 import { proposeContactGroup } from "./city-groups.js";
 import { delegateConsequence, delegateWorldGoal, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
 import { pacingAdvice } from "./story-continuity.js";

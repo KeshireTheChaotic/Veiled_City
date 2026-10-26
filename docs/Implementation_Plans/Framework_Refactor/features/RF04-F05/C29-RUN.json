@@ -1,0 +1,165 @@
+{
+  "feature": "RF04-F05-C29",
+  "status": "SCOPED_NATIVE_DIRECTOR_NPC_OPPORTUNITY_INTEGRATION_QUALIFIED",
+  "frozen": {
+    "base_head": "6bcdbbbb55489b9a5d7621e5e8b4887a788a48c2",
+    "syntax_checked": 8,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-opportunity.js",
+        "sha256": "493458332bfc751fb640006f8db68ad8624f143445d29ca8e365639bd4479d03"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "c2314f34bb53a1b79d30b22164781bf90788faf807108c0aae4ed0c0d2a098f8"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "20b1b42b8b3af45602eabd7ac2748ed2d51e61c3214d2ca33211728e255fd48a"
+      },
+      {
+        "path": "bot/src/application/composition/world-npc-opportunity.js",
+        "sha256": "529dbd83f9e5b043b00726047f6474210a184872c85202ec47304c4ca91e3385"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "8efbe9cb1f16d9b917d7acf2aad040e8645ce7b2336f249cc737adef506cab53"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "7135b75e7925b65762632159969f20f1271bef8d8082bfafc58a6bcf869ddd86"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "54cdbaaf398e8446793c9af52f50878b74cbeda65a94822fc9319f98ac52f4af"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "d71a8e925b036f0e183c52e82bdf69e443e87c20d500e55c9dec0bb55ca9ef87"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+        "sha256": "8f0818c1dc4b2a80fb69e5c82b4fa41601d977db04db74180ccef5902c8ae8ef"
+      }
+    ]
+  },
+  "unchanged_npc_rule_hashes": [
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
+    },
+    {
+      "path": "bot/src/frameworks/npc/strategy.js",
+      "sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d"
+    }
+  ],
+  "tests": {
+    "run_id": "rf04-f05-c29-frozen",
+    "duration_ms": 6883.0487,
+    "end": "2026-10-26T16:20:26.7591082-05:00",
+    "exit_code": 0,
+    "start": "2026-10-26T16:20:19.8760595-05:00",
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "tap_duration_ms": 6828.9941,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c29.test.mjs"
+  },
+  "syntax": {
+    "checked": 8,
+    "passed": 8
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 696,
+      "unowned": 0,
+      "importOccurrences": 3021,
+      "internalImportOccurrences": 2842,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2075,
+      "acceptedLegacyOccurrences": 2075,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 696,
+      "unowned": 0,
+      "importOccurrences": 3021,
+      "internalImportOccurrences": 2842,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2075,
+      "acceptedLegacyOccurrences": 1348,
+      "activeViolationGroups": 723,
+      "transitionErrors": 723,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "67b6d7f40c68a67f8cdc278287803a9347334db24dcf3c794d39dbee29b2b1a8",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "c37a1d1feb3342087e71e3680be5d168a35d1357102cee8b73b6cc4077e0f60b",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Actual World Director uses fixed World-owned opportunity consumer bound to exact original NPC motivation/strategy functions through existing pair. Native code and original NPC rules unchanged; real application bootstrap before services.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "mocked_planner_calls": 3,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Actual offline Director preparation and commit exercised, but remaining Intent/Narrative/source integration still mixed with exact debt retained. This is not full Director or phase certification.",
+    "Strategy scheduling used native delayed action before deterministic due resolution, avoiding unmocked RNG; no AI-policy strategy-delegation positive branch rerun. C21 historical split-final-file gap remains disclosed.",
+    "No live model quality, provider latency, Discord acknowledgment, production recovery or release qualification."
+  ],
+  "rollback": "Revert C29 fixed port/pair/bootstrap/Director imports and restore2exact original imports together. Preserve immutable native actions, cost/dice receipts, history/control/knowledge/clock/outbox state.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c29-tests.log",
+      "sha256": "ee71e12af5c04439ff89c5e0a18a0ce4b49c1675b3e6f4a0ea45cc51da3d9add"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c29-architecture-initial.log",
+      "sha256": "ad52f1f882e6ac1992f5a1a5da6b5416d978e6319d5de419f4d663f8337497d8"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c29-rf04-final.log",
+      "sha256": "9b653906c17ffe2447321f0acf4a38bfc7c3ef06ab87c51c060c2c973dde8e00"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c29-rf05-final.log",
+      "sha256": "f566873272e400da5658c9f216f5fa8342378df059ac6132a9a7b74fd70b841e"
+    }
+  ]
+}

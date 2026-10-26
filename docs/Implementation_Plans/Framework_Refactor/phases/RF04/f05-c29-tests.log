@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: World NPC opportunity consumer preserves fixed native callbacks budgets and source errors
+ok 1 - World NPC opportunity consumer preserves fixed native callbacks budgets and source errors
+  ---
+  duration_ms: 1.1824
+  type: 'test'
+  ...
+# Subtest: World consumes original NPC motivation as sourced nonbinding proposal without minting a goal or PC action
+ok 2 - World consumes original NPC motivation as sourced nonbinding proposal without minting a goal or PC action
+  ---
+  duration_ms: 169.0114
+  type: 'test'
+  ...
+# Subtest: World consumes native NPC strategy scheduling and reconciliation without random dice or duplicate costs
+ok 3 - World consumes native NPC strategy scheduling and reconciliation without random dice or duplicate costs
+  ---
+  duration_ms: 190.9348
+  type: 'test'
+  ...
+# Subtest: actual Director prepare and commit yield native action receipt and replay after restart without reroll or planner call
+ok 4 - actual Director prepare and commit yield native action receipt and replay after restart without reroll or planner call
+  ---
+  duration_ms: 182.4565
+  type: 'test'
+  ...
+# Subtest: native player-control change during planner await blocks action without native dice or spending
+ok 5 - native player-control change during planner await blocks action without native dice or spending
+  ---
+  duration_ms: 170.8878
+  type: 'test'
+  ...
+# Subtest: failed native action audit is isolated and rolls back cost memory and receipt inside real Director cycle
+ok 6 - failed native action audit is isolated and rolls back cost memory and receipt inside real Director cycle
+  ---
+  duration_ms: 169.9141
+  type: 'test'
+  ...
+# Subtest: Director pause prevents planner and NPC opportunity work without altering native campaign state
+ok 7 - Director pause prevents planner and NPC opportunity work without altering native campaign state
+  ---
+  duration_ms: 159.5165
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6828.9941

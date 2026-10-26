@@ -21,3 +21,7 @@ export function connectNpcWorldConversations(){return npcWorldConversations.bind
 import {worldNpcCognition} from '../../frameworks/world/public.js';
 import {retrieveNpcCognition} from '../../frameworks/npc/public.js';
 export function connectWorldNpcCognition(){return worldNpcCognition.bind(retrieveNpcCognition);}
+
+import {worldNpcOpportunity} from '../../frameworks/world/public.js';
+import {runMotivationCycle,runStrategyOpportunity} from '../../frameworks/npc/public.js';
+export function connectWorldNpcOpportunity(){return worldNpcOpportunity.bind({runMotivationCycle,runStrategyOpportunity});}

@@ -1,0 +1,42 @@
+{
+  "base_head": "6bcdbbbb55489b9a5d7621e5e8b4887a788a48c2",
+  "syntax_checked": 8,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-opportunity.js",
+      "sha256": "493458332bfc751fb640006f8db68ad8624f143445d29ca8e365639bd4479d03"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "c2314f34bb53a1b79d30b22164781bf90788faf807108c0aae4ed0c0d2a098f8"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "20b1b42b8b3af45602eabd7ac2748ed2d51e61c3214d2ca33211728e255fd48a"
+    },
+    {
+      "path": "bot/src/application/composition/world-npc-opportunity.js",
+      "sha256": "529dbd83f9e5b043b00726047f6474210a184872c85202ec47304c4ca91e3385"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "8efbe9cb1f16d9b917d7acf2aad040e8645ce7b2336f249cc737adef506cab53"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "7135b75e7925b65762632159969f20f1271bef8d8082bfafc58a6bcf869ddd86"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "54cdbaaf398e8446793c9af52f50878b74cbeda65a94822fc9319f98ac52f4af"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+      "sha256": "d71a8e925b036f0e183c52e82bdf69e443e87c20d500e55c9dec0bb55ca9ef87"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "sha256": "8f0818c1dc4b2a80fb69e5c82b4fa41601d977db04db74180ccef5902c8ae8ef"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# C29 ledger
+
+In progress; no tests yet. Original NPC and World native execution policy remains unchanged.
+
+## 2026-10-26 C29 actual World Director native NPC opportunity integration
+
+Actual World Director motivation/strategy calls now use fixed World-owned consumer bound to exact original NPC runtime through existing pair; real app bootstrap before services, native rules unchanged. Seven new7/7pass exit0 TAP6828.9941ms; syntax8/8; one frozen batch/no repairs. Native motivation produces sourced nonbinding proposal without goal/PCeffects; actual strategy delayed scheduling→deterministic native due-action→one-cost receipt/reconciliation exercised. Actual full offline runNpcDirector prepare/commit with mocked planner creates verified native action receipt, reopens/replays without another plannercall/dice/cost/clock. Deterministic generation barrier then player-control change blocks native action/no spend/dice. Native action audit failure rolls back cost/memory/receipt while original Director records isolated blocked artifact; pause prevents planner and NPC opportunities.2exact cross-NPC imports retired. RF04 passes696modules/0unowned/3021imports/2075rawaccepted/2cycles/largest144/0activeerrors; RF05 remains723expiredgroups/errors.2058exact open/333resolved since audit. Remaining Intent/Narrative/World integrations and C21 split-final-file gap remain open; no full phase/live/provider/Discord/production qualification. Evidence C29-RUN.json. Provider0tokens0cost$0, mockedplanner3; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
