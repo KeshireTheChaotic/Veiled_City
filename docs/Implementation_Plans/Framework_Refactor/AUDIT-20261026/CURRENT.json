@@ -1,9 +1,9 @@
 {
-  "checkpoint": "after C14 NPC acquired-source and World native report isolation",
-  "timestamp": "2026-10-26T20:02:07.509Z",
+  "checkpoint": "after C15 NPC motivation runtime isolation",
+  "timestamp": "2026-10-26T20:05:03.859Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "4f2a087bf5f0d17b537967f94e3e87fdc1d9f018ea148e7e6053b5b3e8addd42",
-  "open_exact_records": 2244,
+  "manifest_sha256": "635fa0507daadcfcb5625975d32fec67d387969ff91beb2e7003582ffd423cb7",
+  "open_exact_records": 2239,
   "by_feature": {
     "RF05-F05": 431,
     "RF04-F04": 258,
@@ -18,7 +18,7 @@
     "RF06-F05": 43,
     "RF06-F03": 190,
     "RF05-F04": 43,
-    "RF04-F02": 39
+    "RF04-F02": 34
   },
   "resolved_since_audit": [
     {
@@ -241,6 +241,76 @@
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "max_occurrences": 1,
       "source_sha256": "ea062471fc72796b0613b0516e081d9d86c873db9b0ac67b5d6693319b0b6f0a",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "02fe052e9ad48262004ddcaa3026786baa271dcb55ec3b502f00b185868ee080",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/city-calendar.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "c49bc4d2c2bc0a0d12aa1e17ba42db4117785f11dee9434147d29be468842500",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/city-core.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "f84785540c203104345a2cb694d2603d47b2aadc83d8f0964050524375464313",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/city-constraints.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "1a7c8b8a3697d252d47d91676f7da080652883bb2953008ceb7c7a55ef884ca7",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/native-world-operations.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "e6f49bc0454fa201b556ad5d2211eb69ed3b14446fd73b4a2047aa299863da35",
+      "feature": "RF04-F02",
+      "deadline": "RF04",
+      "from": "bot/src/simulation-motivation.js",
+      "to": "bot/src/world-information-transfer.js",
+      "owner": "npc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330",
       "target_owner": "world",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
@@ -2082,68 +2152,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 638,
+      "sourceModules": 640,
       "unowned": 0,
       "importOccurrences": 2875,
       "internalImportOccurrences": 2697,
       "cycleComponents": 1,
       "largestCycle": 166,
-      "rawViolationOccurrences": 2261,
-      "acceptedLegacyOccurrences": 2261,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 638,
+      "sourceModules": 640,
       "unowned": 0,
       "importOccurrences": 2875,
       "internalImportOccurrences": 2697,
       "cycleComponents": 1,
       "largestCycle": 166,
-      "rawViolationOccurrences": 2261,
-      "acceptedLegacyOccurrences": 2261,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 638,
+      "sourceModules": 640,
       "unowned": 0,
       "importOccurrences": 2875,
       "internalImportOccurrences": 2697,
       "cycleComponents": 1,
       "largestCycle": 166,
-      "rawViolationOccurrences": 2261,
+      "rawViolationOccurrences": 2256,
       "acceptedLegacyOccurrences": 1418,
-      "activeViolationGroups": 839,
-      "transitionErrors": 839,
+      "activeViolationGroups": 834,
+      "transitionErrors": 834,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 638,
+      "sourceModules": 640,
       "unowned": 0,
       "importOccurrences": 2875,
       "internalImportOccurrences": 2697,
       "cycleComponents": 1,
       "largestCycle": 166,
-      "rawViolationOccurrences": 2261,
+      "rawViolationOccurrences": 2256,
       "acceptedLegacyOccurrences": 420,
-      "activeViolationGroups": 1829,
-      "transitionErrors": 1829,
+      "activeViolationGroups": 1824,
+      "transitionErrors": 1824,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 638,
+      "sourceModules": 640,
       "unowned": 0,
       "importOccurrences": 2875,
       "internalImportOccurrences": 2697,
       "cycleComponents": 1,
       "largestCycle": 166,
-      "rawViolationOccurrences": 2261,
+      "rawViolationOccurrences": 2256,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2244,
-      "transitionErrors": 2244,
+      "activeViolationGroups": 2239,
+      "transitionErrors": 2239,
       "pass": false
     }
   },
@@ -2630,7 +2700,7 @@
     {
       "path": "bot/src/framework-to-framework/npc--world/public.js",
       "owner": "npc--world",
-      "sha256": "ee8bac3adf1e9cfa0ef767ccb1e8029d3733e60d0cfdd090ae221d8f89e03861"
+      "sha256": "52b71ab7282d11b40d7ecca0a6b8686522f26a6618cf73d2943fb7857fe1f8fb"
     },
     {
       "path": "bot/src/framework-to-framework/session--world/public.js",
@@ -3678,6 +3748,11 @@
       "sha256": "c9cf6b40e48f333fbd9d2ed37db5e837b8dd2f8dfa9520abcb8deb5e1675ff7e"
     },
     {
+      "path": "bot/src/frameworks/npc/contracts/world-motivation.js",
+      "owner": "npc",
+      "sha256": "af6f2208c86f361e6cfd0bff2de1b87ac9ce61b87953d348e1641de16a5372b6"
+    },
+    {
       "path": "bot/src/frameworks/npc/conversations.js",
       "owner": "npc",
       "sha256": "6bc29c6eae2ac5677223d1867caed24624f98426ffc6bc18d439402c9bd2630a"
@@ -3693,6 +3768,11 @@
       "sha256": "0539c382bd7faafd9c57c72747f6d6b4d789a17d662c8002976f49ddc3b332c5"
     },
     {
+      "path": "bot/src/frameworks/npc/motivation-source.js",
+      "owner": "npc",
+      "sha256": "a5b5f129e3bdacb92a3a75f2840c085aba5caf5aa81c83e85660de243b7791bd"
+    },
+    {
       "path": "bot/src/frameworks/npc/motivation.js",
       "owner": "npc",
       "sha256": "1ccc9d2aea6346a6e07a109017ad3ee69f70702a17d0a19c8208022077008613"
@@ -3700,7 +3780,7 @@
     {
       "path": "bot/src/frameworks/npc/public.js",
       "owner": "npc",
-      "sha256": "c9729857f80cf1cbed2eea016781074b3876a4a5a71fb8c615a626173dce84f2"
+      "sha256": "d35a6110e1007e07640e3fefa1784f00732b88b36e2a64227533720508370107"
     },
     {
       "path": "bot/src/frameworks/npc/strategy.js",
@@ -5140,7 +5220,7 @@
     {
       "path": "bot/src/simulation-motivation.js",
       "owner": "npc",
-      "sha256": "d6e13974ea4d0d6552f2010afeeb2d6b6f301d647e3682a8cd87d3aa329ff330"
+      "sha256": "8e13d252ba65d9ca85920b26eb7936c9b9da251264ef62cde0185ef9c3cc8760"
     },
     {
       "path": "bot/src/simulation-strategy.js",

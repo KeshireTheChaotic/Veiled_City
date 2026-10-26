@@ -5,3 +5,5 @@ export {createNpcCognition} from './cognition.js';
 export {createNpcEvidenceProjection} from './evidence-projection.js';
 export {createNpcConversations} from './conversations.js';
 export {ownedKnowledgeSource} from './knowledge-source.js';
+export {createNpcWorldMotivationConsumer,npcWorldMotivation} from './contracts/world-motivation.js';
+export {actorSource,proposeGoalTransition,reviewGoalTransition,runMotivationCycle} from './motivation-source.js';

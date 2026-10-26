@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: real legacy/public World institutional and supply paths share single service function identities
+ok 1 - real legacy/public World institutional and supply paths share single service function identities
+  ---
+  duration_ms: 0.5971
+  type: 'test'
+  ...
+# Subtest: native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+ok 2 - native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+  ---
+  duration_ms: 422.8266
+  type: 'test'
+  ...
+# Subtest: delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+ok 3 - delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+  ---
+  duration_ms: 412.9457
+  type: 'test'
+  ...
+# Subtest: native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+ok 4 - native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+  ---
+  duration_ms: 420.6814
+  type: 'test'
+  ...
+# Subtest: service access retains established infrastructure/source constraints and cannot target PC economy
+ok 5 - service access retains established infrastructure/source constraints and cannot target PC economy
+  ---
+  duration_ms: 1282.5866
+  type: 'test'
+  ...
+# Subtest: institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+ok 6 - institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+  ---
+  duration_ms: 471.9725
+  type: 'test'
+  ...
+# Subtest: original World core source/audit validation and district rollback stay intact after source composition
+ok 7 - original World core source/audit validation and district rollback stay intact after source composition
+  ---
+  duration_ms: 388.0141
+  type: 'test'
+  ...
+# Subtest: fixed NPC attribution consumer and old/public World transfers preserve native identities
+ok 8 - fixed NPC attribution consumer and old/public World transfers preserve native identities
+  ---
+  duration_ms: 409.1043
+  type: 'test'
+  ...
+# Subtest: actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+ok 9 - actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+  ---
+  duration_ms: 423.916
+  type: 'test'
+  ...
+# Subtest: native contact replay and read-only transfer restart do not resend information or spend twice
+ok 10 - native contact replay and read-only transfer restart do not resend information or spend twice
+  ---
+  duration_ms: 418.2991
+  type: 'test'
+  ...
+# Subtest: cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+ok 11 - cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+  ---
+  duration_ms: 1327.0398
+  type: 'test'
+  ...
+# Subtest: retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+ok 12 - retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+  ---
+  duration_ms: 465.2667
+  type: 'test'
+  ...
+# Subtest: failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+ok 13 - failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+  ---
+  duration_ms: 401.9494
+  type: 'test'
+  ...
+# Subtest: changed sender source-content cannot retroactively change what the native action captured
+ok 14 - changed sender source-content cannot retroactively change what the native action captured
+  ---
+  duration_ms: 176.3239
+  type: 'test'
+  ...
+# Subtest: complete fixed NPC World interface preserves original results/errors and actual root/public function identity
+ok 15 - complete fixed NPC World interface preserves original results/errors and actual root/public function identity
+  ---
+  duration_ms: 0.9517
+  type: 'test'
+  ...
+# Subtest: actual acquired NPC evidence drives separate proposal and approval without PC placement/resources or objective canon
+ok 16 - actual acquired NPC evidence drives separate proposal and approval without PC placement/resources or objective canon
+  ---
+  duration_ms: 420.3189
+  type: 'test'
+  ...
+# Subtest: native actor ownership, proxy control and retracted evidence cannot become NPC goal authority
+ok 17 - native actor ownership, proxy control and retracted evidence cannot become NPC goal authority
+  ---
+  duration_ms: 423.5614
+  type: 'test'
+  ...
+# Subtest: actual native World goal grant crosses original NPC source and revalidates changed policy before approval
+ok 18 - actual native World goal grant crosses original NPC source and revalidates changed policy before approval
+  ---
+  duration_ms: 404.2137
+  type: 'test'
+  ...
+# Subtest: original autonomous motivation opportunity remains independent of party attendance and respects Director pause
+ok 19 - original autonomous motivation opportunity remains independent of party attendance and respects Director pause
+  ---
+  duration_ms: 1298.2349
+  type: 'test'
+  ...
+# Subtest: review audit failure rolls back goal and state pointer; retry/restart preserves one committed result
+ok 20 - review audit failure rolls back goal and state pointer; retry/restart preserves one committed result
+  ---
+  duration_ms: 473.964
+  type: 'test'
+  ...
+# Subtest: native goal pause/resume projection survives restart without replacing subjective evidence or source receipts
+ok 21 - native goal pause/resume projection survives restart without replacing subjective evidence or source receipts
+  ---
+  duration_ms: 430.522
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4558.8193

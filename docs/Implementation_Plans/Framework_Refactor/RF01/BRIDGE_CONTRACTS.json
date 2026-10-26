@@ -2768,7 +2768,7 @@
         {
           "from": "npc",
           "to": "world",
-          "contract": "Original actorSource current control/source/acquired belief/feasibility result only; subjective secret evidence stays backend state, no canon/PC execution/publication grant."
+          "contract": "C15 exact original World primitive/source/audit/current-proxy/availability/control/native-operation/report-verification functions feed original NPC evidence and goal runtime. Other observed integrations remain separate."
         }
       ],
       "source_evidence": [
@@ -2793,7 +2793,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2816,7 +2817,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open."
     },
     {
       "pair": "operations--persistence",

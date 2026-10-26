@@ -1,0 +1,7 @@
+# RF04-F05 C15 ledger
+
+IMPLEMENTATION IN PROGRESS. NPC retains subjective evidence and goal rules; World retains availability/policy/native operations, native control Daggerheart. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+
+## 2026-10-26 C15 NPC-owned evidence/goal runtime
+
+One original NPC motivation runtime now lives in NPC; fixed own consumer receives exact World source/availability/control/audit/native-operation/report functions through existing pair. Native actor-evidence provider and real root/public services share identities; original rule body unchanged. Seven new plus fourteen affected C14/C12 cases21/21pass exit0 TAP4558.8193ms; syntax6/6, one frozen batch/no repairs. Acquired evidence→proposal→approval, no PC/canon effects, proxy/ownership/retraction rejection, actual World native goal grant/current-policy rejection, independent no-attendee motivation/Director pause, review rollback/retry/reopen and native pause/resume exercised. C14 final file whole7/7 passes at changed actual source; split-final-file gap closed.5exact records retired. RF04 passes640modules/0unowned/2875imports/2256rawaccepted/SCC166/0activeerrors; RF05 still834expiredgroups/errors.2239exact open/152resolved since audit. Remaining NPC strategy/cognition/observation and native travel source boundaries stay open. Evidence C15-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
