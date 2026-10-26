@@ -1,0 +1,30 @@
+{
+  "base_head": "df1033f5b639f5a660ae526a02ace4e178c5f6db",
+  "syntax_checked": 4,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/action-eligibility.js",
+      "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "c4279b046b8c6bb710fbd95e16eec9bec99e2e880b7f7d519a46fa0820309ed4"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "47e4cc13e2c91cb827cb26539c579066eb13f6e18d405fdfc03a8a70e7337be2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+      "sha256": "a8ee71f1eb781f41fde2d2bb85d745e7a82440fcc1190fe03334c0b675e0321c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+      "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+      "sha256": "6923de2b008bc6e79074511cc600bda0cbedfb462585d3f71db88b975860a642"
+    }
+  ]
+}

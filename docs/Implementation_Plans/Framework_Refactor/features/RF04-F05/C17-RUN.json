@@ -1,0 +1,118 @@
+{
+  "feature": "RF04-F05-C17",
+  "status": "SCOPED_WORLD_NATIVE_ACTION_ELIGIBILITY_QUALIFIED",
+  "base_head": "df1033f5b639f5a660ae526a02ace4e178c5f6db",
+  "changed_files": {
+    "base_head": "df1033f5b639f5a660ae526a02ace4e178c5f6db",
+    "syntax_checked": 4,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/action-eligibility.js",
+        "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "c4279b046b8c6bb710fbd95e16eec9bec99e2e880b7f7d519a46fa0820309ed4"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "47e4cc13e2c91cb827cb26539c579066eb13f6e18d405fdfc03a8a70e7337be2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "sha256": "a8ee71f1eb781f41fde2d2bb85d745e7a82440fcc1190fe03334c0b675e0321c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "6923de2b008bc6e79074511cc600bda0cbedfb462585d3f71db88b975860a642"
+      }
+    ]
+  },
+  "body": {
+    "exact_bodies_preserved": true,
+    "known_information_sha256": "12d33e3e34a57c344a94762a9aad5d1f38a09ffcdfcfdc55c24ee846093c42ce",
+    "validate_action_sha256": "d8ed31bc4cdb934dd222c2ead9dbbf7f39b5d2446a61eb0a786631f20d4b33d0"
+  },
+  "tests": {
+    "run_id": "RF04-F05-C17-20261026-1",
+    "start": "2026-10-26T20:11:36.0976295Z",
+    "duration_ms": 4655.4545,
+    "exit_code": 0,
+    "end": "2026-10-26T20:11:40.7530840Z",
+    "files": 3,
+    "tests": 21,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 4601.2489,
+    "reason": "Native validation and real resolver code changed. New seven eligibility cases plus affected native receipt/contact fourteen pass once; no unrelated file rerun."
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 642,
+      "unowned": 0,
+      "importOccurrences": 2887,
+      "internalImportOccurrences": 2709,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 642,
+      "unowned": 0,
+      "importOccurrences": 2887,
+      "internalImportOccurrences": 2709,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 1418,
+      "activeViolationGroups": 834,
+      "transitionErrors": 834,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "ownership": "Exact original World action validation/acquired-information lookup moved once into own module; real submit/execute/communication paths use same validators.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Validation result is neither current resource sufficiency nor execution/consent grant; original native executor remains responsible. Native transfer knowledge is still verified by original World receipt reader.",
+    "No raw debt reduction or full action-executor/strategy isolation claim.",
+    "No live provider/Discord/production recovery or narrative-quality qualification."
+  ],
+  "rollback": "Revert C17 eligibility extraction/public/actual resolver aliases together. Preserve all native state, source and action receipts. No retired transitions.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c17-tests.log",
+      "sha256": "ee1c54ed99c7d90767c76fb735d18ac515a26da3117ab921507a71077953ad1c"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c17-rf04-final.log",
+      "sha256": "8beb8789a8ceda4c14d69e80891d6319c284f2504f14f894d9212804761adfe5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c17-rf05-final.log",
+      "sha256": "210b50942200a42b3bbfe813a25b8c19df5582fa21592d663946351c55a270a9"
+    }
+  ]
+}

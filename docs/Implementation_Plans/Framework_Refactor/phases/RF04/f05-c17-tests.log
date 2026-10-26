@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: real resolver and historical/public reader share exact cost table and verifier identities
+ok 1 - real resolver and historical/public reader share exact cost table and verifier identities
+  ---
+  duration_ms: 0.5954
+  type: 'test'
+  ...
+# Subtest: actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+ok 2 - actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+  ---
+  duration_ms: 388.197
+  type: 'test'
+  ...
+# Subtest: native resolver replay and repeated receipt reads neither spend twice nor append mutations
+ok 3 - native resolver replay and repeated receipt reads neither spend twice nor append mutations
+  ---
+  duration_ms: 437.2531
+  type: 'test'
+  ...
+# Subtest: restart and later resource changes preserve read-only committed history without fresh execution entitlement
+ok 4 - restart and later resource changes preserve read-only committed history without fresh execution entitlement
+  ---
+  duration_ms: 395.5781
+  type: 'test'
+  ...
+# Subtest: modified completed after-state is held instead of accepting stale native receipt ancestry
+ok 5 - modified completed after-state is held instead of accepting stale native receipt ancestry
+  ---
+  duration_ms: 1308.747
+  type: 'test'
+  ...
+# Subtest: duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+ok 6 - duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+  ---
+  duration_ms: 392.8355
+  type: 'test'
+  ...
+# Subtest: native invalid dice and PC target fail transactionally before a successful action or receipt exists
+ok 7 - native invalid dice and PC target fail transactionally before a successful action or receipt exists
+  ---
+  duration_ms: 390.5759
+  type: 'test'
+  ...
+# Subtest: fixed NPC attribution consumer and old/public World transfers preserve native identities
+ok 8 - fixed NPC attribution consumer and old/public World transfers preserve native identities
+  ---
+  duration_ms: 393.9194
+  type: 'test'
+  ...
+# Subtest: actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+ok 9 - actual native contact creates one GM-only attributed transfer and recipient-specific subjective knowledge
+  ---
+  duration_ms: 473.9533
+  type: 'test'
+  ...
+# Subtest: native contact replay and read-only transfer restart do not resend information or spend twice
+ok 10 - native contact replay and read-only transfer restart do not resend information or spend twice
+  ---
+  duration_ms: 429.7734
+  type: 'test'
+  ...
+# Subtest: cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+ok 11 - cross-recipient, cross-campaign and changed current control hold current report use without rewriting history
+  ---
+  duration_ms: 1339.5079
+  type: 'test'
+  ...
+# Subtest: retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+ok 12 - retracted original observation holds attributed report while native action/receipt and recipient history remain intact
+  ---
+  duration_ms: 410.6617
+  type: 'test'
+  ...
+# Subtest: failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+ok 13 - failed transfer audit rolls back entire actual action/cost/recipient receipt, followed by one safe retry
+  ---
+  duration_ms: 371.8104
+  type: 'test'
+  ...
+# Subtest: changed sender source-content cannot retroactively change what the native action captured
+ok 14 - changed sender source-content cannot retroactively change what the native action captured
+  ---
+  duration_ms: 244.882
+  type: 'test'
+  ...
+# Subtest: native eligibility is a read-only state/goal projection; original actual executor still mints the receipt
+ok 15 - native eligibility is a read-only state/goal projection; original actual executor still mints the receipt
+  ---
+  duration_ms: 392.4815
+  type: 'test'
+  ...
+# Subtest: current native player ownership and PC targets cannot be relabeled as autonomous action authority
+ok 16 - current native player ownership and PC targets cannot be relabeled as autonomous action authority
+  ---
+  duration_ms: 439.892
+  type: 'test'
+  ...
+# Subtest: original goal identity, dependencies and acceptable methods remain mandatory before costs
+ok 17 - original goal identity, dependencies and acceptable methods remain mandatory before costs
+  ---
+  duration_ms: 377.9701
+  type: 'test'
+  ...
+# Subtest: native established personality constraints are unchanged and a validator result cannot bypass them
+ok 18 - native established personality constraints are unchanged and a validator result cannot bypass them
+  ---
+  duration_ms: 1311.5659
+  type: 'test'
+  ...
+# Subtest: unknown acquired information is rejected; ordinary source lookup never promotes a report to objective facts
+ok 19 - unknown acquired information is rejected; ordinary source lookup never promotes a report to objective facts
+  ---
+  duration_ms: 381.0738
+  type: 'test'
+  ...
+# Subtest: original active proxy and native delay constraints reject without movement, consent or new receipts
+ok 20 - original active proxy and native delay constraints reject without movement, consent or new receipts
+  ---
+  duration_ms: 400.0993
+  type: 'test'
+  ...
+# Subtest: current established service constraints remain pre-cost blockers under actual native eligibility
+ok 21 - current established service constraints remain pre-cost blockers under actual native eligibility
+  ---
+  duration_ms: 277.0245
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4601.2489

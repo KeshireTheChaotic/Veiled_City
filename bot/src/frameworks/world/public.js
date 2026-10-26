@@ -53,3 +53,4 @@ export {inspectWorldSimulationReceipt} from './simulation-receipt-core.js';
 export {createWorldNpcKnowledgeConsumer,worldNpcKnowledge} from './contracts/npc-knowledge-source.js';
 export {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './information-transfer.js';
 export {actorState,configureSimulationEntity} from './actor-state.js';
+export {knownInformation as knownWorldInformation,validateAction as validateNpcAction} from './action-eligibility.js';
