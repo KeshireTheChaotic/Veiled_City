@@ -42,3 +42,7 @@ export function nativeIncomingConditions(...args){return rules().nativeIncomingC
 export function validateIncomingConditions(...args){return rules().validateIncomingConditions(...args);}
 export function nativeMovementConditionIssue(...args){return rules().nativeMovementConditionIssue(...args);}
 export function nativeAttackExpiryRevision(...args){return rules().nativeAttackExpiryRevision(...args);}
+
+import {nativeMovementReaderSource} from './frameworks/daggerheart/public.js';
+const provideNativeMovementReader=()=>rules().nativeMovementConditionIssue;
+nativeMovementReaderSource.provideSource(provideNativeMovementReader);

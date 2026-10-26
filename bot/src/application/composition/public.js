@@ -16,3 +16,4 @@ export {initializeWorldActorControl} from './world-actor-control.js';
 export {initializeWorldExecution} from './world-execution.js';
 export {initializeSessionSceneWorld} from './session-scene-world.js';
 export {initializeWorldOwnerConsent} from './world-owner-consent.js';
+export {initializeNativeSessionMovement} from './native-session-movement.js';

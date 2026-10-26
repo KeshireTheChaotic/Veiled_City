@@ -13,3 +13,5 @@ export {createSessionOpening} from './session-opening.js';
 export {createOpeningEntryContext} from './opening-entry-context.js';
 export {classifyResourceOverlap} from './action-window-overlap.js';
 export {createSessionSceneWorldConsumer,sessionSceneWorldSources} from './contracts/scene-world-sources.js';
+export {createSessionNativeMovementConsumer,sessionNativeMovement} from './contracts/native-movement.js';
+export {currentScene,scenePresence,lastVerifiedCharacterPresence,reconcileSceneArrival,recordCharacterArrival,recordScenePresence,sceneAccess,sceneView,archiveScenePresence} from './scene-source.js';

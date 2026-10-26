@@ -1,0 +1,58 @@
+{
+  "base_head": "a9a6a56b963848473e48634e51bc3f6e20e6c55a",
+  "syntax_checked": 13,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/movement-reader-source.js",
+      "sha256": "de05662d2bbfb231b0045cf842979ab3a36a0b01c66876f6bac3bcca4531060f"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ce918696d9e53a970993c0abb295cf76102e93fc74c929fa60e0786dc22e203a"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "f7ea66436af86cfc613f5d11157e49790f3e4d4aa9e3d31a51083d14fc5f3cba"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-movement.js",
+      "sha256": "7ca5e243c933dcd489cd2f5e2670d90a9570d1076400006e8ac5ecc0dc1f2359"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-source.js",
+      "sha256": "8c9d9eca75203908d990d160b30624e2c04fd181b5300bfb89bb680564d0c04c"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "sha256": "9ce41118a34452885e0b1daf1acc6c79f9da777afc10b55f1d11875d762cf019"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "sha256": "24fdaaca07668e24e372083a90479d3d4d3d893ed6b58a5cfefc7ff85fa69ce2"
+    },
+    {
+      "path": "bot/src/application/composition/native-session-movement.js",
+      "sha256": "1e8ef413740a4668102705a4751ce5a5c76b56c5799f9d7e23fc8f0512a11613"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "cf8e13a94605b4af46d68af2d5ded84c06fb0a333952d0d2417fc21f5ead3905"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "5752f22faf50ac2385be383ffc3cde27be46356b3a2e3a4c0e8247c87266e2b8"
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "sha256": "e353e7d7b5b5a5aefed8d31b9cb0b2207f23863e9c15415cb5f468979873e3b0"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+      "sha256": "b75ec9cc86f6c7f96100408373dbf76de5dab2be970c0d04cc2636da8a00c3d5"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+      "sha256": "510813a0c561586053a36e73f234aa4933089ca4f1a4116cd08f0b12b231ae85"
+    }
+  ]
+}

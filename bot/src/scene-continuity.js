@@ -1,20 +1,8 @@
 /** Original World/native scene composition; retained NPC evidence rules await separate Knowledge/NPC adoption. */
 import {StateConflictError} from './kernel/errors.js';
 import {activeEvidence} from './epistemic.js';
-import {nativeMovementConditionIssue} from './native-group-features.js';
-import {createSceneContinuity,sessionSceneWorldSources,sessionWorldEvents} from './frameworks/session/public.js';
-export {RANGE_BANDS} from './frameworks/session/public.js';
-let sceneRules;
-function scenes(){return sceneRules??=createSceneContinuity({cityObject:(...args)=>sessionSceneWorldSources.cityObject(...args),cityKey:(...args)=>sessionSceneWorldSources.cityKey(...args),cityVisibility:(...args)=>sessionSceneWorldSources.cityVisibility(...args),cityAudit:(...args)=>sessionSceneWorldSources.cityAudit(...args),indexWorldEvent:(...args)=>sessionWorldEvents.indexWorldEvent(...args),requireCitySource:(...args)=>sessionSceneWorldSources.requireCitySource(...args),activeCityProxy:(...args)=>sessionSceneWorldSources.activeCityProxy(...args),nativeMovementConditionIssue:(...args)=>nativeMovementConditionIssue(...args)});}
-export function currentScene(...args){return scenes().currentScene(...args);}
-export function scenePresence(...args){return scenes().scenePresence(...args);}
-export function lastVerifiedCharacterPresence(...args){return scenes().lastVerifiedCharacterPresence(...args);}
-export function reconcileSceneArrival(...args){return scenes().reconcileSceneArrival(...args);}
-export function recordCharacterArrival(...args){return scenes().recordCharacterArrival(...args);}
-export function recordScenePresence(...args){return scenes().recordScenePresence(...args);}
-export function sceneAccess(...args){return scenes().sceneAccess(...args);}
-export function sceneView(...args){return scenes().sceneView(...args);}
-export function archiveScenePresence(...args){return scenes().archiveScenePresence(...args);}
+import {sceneAccess} from './frameworks/session/public.js';
+export {RANGE_BANDS,currentScene,scenePresence,lastVerifiedCharacterPresence,reconcileSceneArrival,recordCharacterArrival,recordScenePresence,sceneAccess,sceneView,archiveScenePresence} from './frameworks/session/public.js';
 
 export function npcEvidenceActive(db,guild,npc,sourceRef,seen=new Set()){
   if(seen.has(sourceRef)||seen.size>=16)return false;seen.add(sourceRef);

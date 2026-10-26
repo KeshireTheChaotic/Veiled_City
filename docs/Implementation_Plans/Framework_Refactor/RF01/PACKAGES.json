@@ -103,6 +103,9 @@
     ],
     "knowledge--narrative": [
       "bot/src/framework-to-framework/knowledge--narrative/public.js"
+    ],
+    "daggerheart--session": [
+      "bot/src/framework-to-framework/daggerheart--session/public.js"
     ]
   },
   "externalCapabilityOwners": {

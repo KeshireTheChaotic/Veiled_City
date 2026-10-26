@@ -1,7 +1,9 @@
+// Match index -> autonomous-world -> original native source registration before composition.
+import '../../src/native-group-features.js';
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';import os from'node:os';import path from'node:path';import{fileURLToPath}from'node:url';
-import{VeiledDB}from'../../src/db.js';import{initializeWorldActorControl,initializeWorldExecution,initializeSessionWorldEvents,initializeSessionSceneWorld}from'../../src/application/composition/public.js';
+import{VeiledDB}from'../../src/db.js';import{initializeWorldActorControl,initializeWorldExecution,initializeSessionWorldEvents,initializeSessionSceneWorld,initializeNativeSessionMovement}from'../../src/application/composition/public.js';
 import{createSessionSceneWorldConsumer,sessionSceneWorldSources}from'../../src/frameworks/session/public.js';import * as world from'../../src/frameworks/world/public.js';import{currentScene,recordScenePresence,scenePresence,sceneView,sceneAccess}from'../../src/scene-continuity.js';
-const schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));initializeWorldActorControl();initializeWorldExecution();initializeSessionWorldEvents();initializeSessionSceneWorld();
+const schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));initializeWorldActorControl();initializeWorldExecution();initializeSessionWorldEvents();initializeSessionSceneWorld();initializeNativeSessionMovement();
 function fixture(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'vc-c10-')),file=path.join(dir,'scene.sqlite');let db=new VeiledDB(file,schema);t.after(()=>{db.close();fs.rmSync(dir,{recursive:true,force:true});});db.ensureCampaign('city');db.setCityCalendar('city',{flags:{scene_continuity:true}});const session=db.startSession('city','The shuttered bridge');db.setSimulationEntity('city','location','bridge',{name:'Bridge'});return{get db(){return db;},session,reopen(){db.close();db=new VeiledDB(file,schema);}};}
 function source(db,key,visibility='party',subject_key=null){return world.indexWorldEvent(db,'city',{key,kind:'observation',source_kind:'gm',source_id:'native-c10-fixture',title:'An established scene observation',location_key:'bridge',visibility,subject_key});}
 function pc(db,session,user){db.upsertPlayer('city',user,user);const c=db.createCharacter('city',user,user,{location:'bridge',resources:{hope:3}});db.assignCharacter(session.id,user,c.id);db.setPresence(session.id,user,'present');return c;}
@@ -28,3 +30,4 @@ test('World audit failure rolls back occupancy; retry/reopen preserves one resul
 test('real scene transition archives prior occupancy and restart does not revive it as current presence',t=>{
  const f=fixture(t),e=source(f.db,'archived-source'),row=place(f.db,'brass-door','entrance',e.event_key);f.db.resetDirectorRound(f.session.id,{advanceScene:true,sceneLabel:'Elsewhere'});assert.equal(scenePresence(f.db,'city','entrance','brass-door'),null);assert.equal(f.db.getCityRecord('city','scene_presence',row.record_key).status,'archived');assert.equal(f.db.getCityRecord('city','scene_residue',row.record_key).data.authority,'historical_residue_not_current_presence');f.reopen();assert.equal(scenePresence(f.db,'city','entrance','brass-door'),null);assert.equal(sceneView(f.db,'city',{gm:true}).occupants.length,0);
 });
+
