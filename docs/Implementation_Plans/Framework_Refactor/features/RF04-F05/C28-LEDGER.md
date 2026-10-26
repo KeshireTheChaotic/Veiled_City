@@ -1,3 +1,9 @@
+# C28 current scoped status
+
+Implementation commit 6bcdbbbb55489b9a5d7621e5e8b4887a788a48c2. Status SCOPED_WORLD_CANDIDATE_CONTEXT_QUALIFIED; see C28-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C28 ledger
 
 In progress; original candidate selection body will remain unchanged. No tests yet.

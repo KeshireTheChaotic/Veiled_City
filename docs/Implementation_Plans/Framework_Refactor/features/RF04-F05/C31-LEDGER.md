@@ -1,3 +1,11 @@
+# C31 current scoped status
+
+Current followup: Whole final file6/6passed and institutional diagnostic hold resolved in C32 after actual diagnostic source correction. Original implementation status below is historical. Qualification remains source-fingerprint scoped; not phase/release certification.
+
+Implementation commit bbb900e787046c282a0d76366980b427aeee3827. Status SCOPED_INTENT_WORLD_CAPABILITIES_QUALIFIED_WITH_EXISTING_DIAGNOSTIC_HOLD_AND_SPLIT_FIXTURE_EVIDENCE; see C31-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C31 ledger
 
 In progress; no tests yet. Original Intent dispatcher registry and rule bodies remain one source; only fixed native capabilities change their composition.

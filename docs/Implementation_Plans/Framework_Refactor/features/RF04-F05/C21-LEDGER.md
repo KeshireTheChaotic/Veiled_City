@@ -1,5 +1,7 @@
 # C21 current scoped status
 
+Current followup: Whole final file8/8passed in C31 after actual dispatcher integration change. Original implementation status below is historical. Qualification remains source-fingerprint scoped; not phase/release certification.
+
 Implementation commit a4bb6b4844fed100688df96c31ad211fbec12f73. Status SCOPED_NPC_STRATEGY_WORLD_INTENT_INTEGRATION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C21-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
 
 ## Historical opening note and completed evidence

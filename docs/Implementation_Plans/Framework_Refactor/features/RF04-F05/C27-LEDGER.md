@@ -1,3 +1,9 @@
+# C27 current scoped status
+
+Implementation commit 4c6b630070dd3015f2d9ff17f25f812a280c2a39. Status SCOPED_NATIVE_NPC_CONVERSATION_SOURCE_QUALIFIED; see C27-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C27 ledger
 
 In progress; no tests yet. Original conversation policy will remain byte-unchanged.

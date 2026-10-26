@@ -1,3 +1,9 @@
+# C29 current scoped status
+
+Implementation commit 4ec4da066a0cbbbc1f8bf5f0ce0d80cb8d5a3c99. Status SCOPED_NATIVE_DIRECTOR_NPC_OPPORTUNITY_INTEGRATION_QUALIFIED; see C29-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C29 ledger
 
 In progress; no tests yet. Original NPC and World native execution policy remains unchanged.

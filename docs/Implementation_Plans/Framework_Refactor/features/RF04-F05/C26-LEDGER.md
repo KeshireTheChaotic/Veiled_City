@@ -1,3 +1,9 @@
+# C26 current scoped status
+
+Implementation commit ece03d20c8642d834ebec2c4ba834bb58a22112b. Status SCOPED_KNOWLEDGE_CONTEXT_SELECTION_AND_WORLD_HISTORY_QUALIFIED; see C26-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C26 ledger
 
 In progress. Original C31 scope/ledger reviewed, old tests not read or executed. Its unchanged World source will be qualified by new C26 tests; original GM switch remains separate preserved work.

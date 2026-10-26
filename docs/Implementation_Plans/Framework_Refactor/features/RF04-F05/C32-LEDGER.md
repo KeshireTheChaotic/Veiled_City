@@ -1,3 +1,9 @@
+# C32 current scoped status
+
+Implementation commit 9ceacde1236637b57ebec8ef92ce4679d23f10c5. Status SCOPED_NATIVE_INSTITUTION_DIAGNOSTIC_CORRECTION_QUALIFIED; see C32-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C32 ledger
 
 In progress; no tests yet. Diagnostic correction only, existing native execution/approval and player authority unchanged.

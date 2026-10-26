@@ -1,6 +1,6 @@
 {
   "branch": "codex/clean-ai-gm-2026-10",
-  "through_head": "b56c60e97a99ad90b24225be427515bdb02c6786",
+  "through_head": "9ceacde1236637b57ebec8ef92ce4679d23f10c5",
   "slices": [
     {
       "slice": "RF04-F05-C07",
@@ -110,14 +110,18 @@
       "implementation_commit": "a4bb6b4844fed100688df96c31ad211fbec12f73",
       "status": "SCOPED_NPC_STRATEGY_WORLD_INTENT_INTEGRATION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
       "evidence": "features/RF04-F05/C21-RUN.json",
-      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification."
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification.",
+      "final_file_followup": "C31 substantive associated Intent dispatcher primitive/action integration: entire unchanged current C21 file8/8passed exit0.",
+      "current_scoped_status": "QUALIFIED_WITH_RECORDED_FOLLOWUP"
     },
     {
       "slice": "RF04-F05-C22",
       "implementation_commit": "3374db6b507b4488978fc93a02f62a7da6dcd91c",
       "status": "SCOPED_KNOWLEDGE_MEMORY_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
       "evidence": "features/RF04-F05/C22-RUN.json",
-      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification."
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification.",
+      "final_file_followup": "C26 substantive associated Knowledge initializer integration: entire unchanged current C22 file7/7passed exit0.",
+      "current_scoped_status": "QUALIFIED_WITH_RECORDED_FOLLOWUP"
     },
     {
       "slice": "RF04-F05-C23",
@@ -125,7 +129,8 @@
       "status": "SCOPED_NPC_EVIDENCE_PROJECTION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
       "evidence": "features/RF04-F05/C23-RUN.json",
       "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification.",
-      "final_file_followup": "C24 associated native visibility/bootstrap change: current entire C23 file7/7 passed."
+      "final_file_followup": "C24 associated native visibility/bootstrap change: current entire C23 file7/7 passed.",
+      "current_scoped_status": "QUALIFIED_WITH_RECORDED_FOLLOWUP"
     },
     {
       "slice": "RF04-F05-C24",
@@ -140,6 +145,57 @@
       "status": "SCOPED_NPC_COGNITION_SOURCE_QUALIFIED",
       "evidence": "features/RF04-F05/C25-RUN.json",
       "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C26",
+      "implementation_commit": "ece03d20c8642d834ebec2c4ba834bb58a22112b",
+      "status": "SCOPED_KNOWLEDGE_CONTEXT_SELECTION_AND_WORLD_HISTORY_QUALIFIED",
+      "evidence": "features/RF04-F05/C26-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C27",
+      "implementation_commit": "4c6b630070dd3015f2d9ff17f25f812a280c2a39",
+      "status": "SCOPED_NATIVE_NPC_CONVERSATION_SOURCE_QUALIFIED",
+      "evidence": "features/RF04-F05/C27-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C28",
+      "implementation_commit": "6bcdbbbb55489b9a5d7621e5e8b4887a788a48c2",
+      "status": "SCOPED_WORLD_CANDIDATE_CONTEXT_QUALIFIED",
+      "evidence": "features/RF04-F05/C28-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C29",
+      "implementation_commit": "4ec4da066a0cbbbc1f8bf5f0ce0d80cb8d5a3c99",
+      "status": "SCOPED_NATIVE_DIRECTOR_NPC_OPPORTUNITY_INTEGRATION_QUALIFIED",
+      "evidence": "features/RF04-F05/C29-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C30",
+      "implementation_commit": "a947fe9d21243b57ef1d6c220fdb5204789d9eec",
+      "status": "SCOPED_NATIVE_DIRECTOR_ACTION_RANKING_QUALIFIED",
+      "evidence": "features/RF04-F05/C30-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C31",
+      "implementation_commit": "bbb900e787046c282a0d76366980b427aeee3827",
+      "status": "SCOPED_INTENT_WORLD_CAPABILITIES_QUALIFIED_WITH_EXISTING_DIAGNOSTIC_HOLD_AND_SPLIT_FIXTURE_EVIDENCE",
+      "evidence": "features/RF04-F05/C31-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification.",
+      "final_file_followup": "C32 original institutional diagnostic correction: entire current C31 file6/6passed exit0; local diagnostic hold resolved.",
+      "current_scoped_status": "QUALIFIED_WITH_RECORDED_FOLLOWUP"
+    },
+    {
+      "slice": "RF04-F05-C32",
+      "implementation_commit": "9ceacde1236637b57ebec8ef92ce4679d23f10c5",
+      "status": "SCOPED_NATIVE_INSTITUTION_DIAGNOSTIC_CORRECTION_QUALIFIED",
+      "evidence": "features/RF04-F05/C32-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
     }
   ],
   "current": {
@@ -211,77 +267,75 @@
   },
   "critical_blockers": [],
   "release": "NOT_AUTHORIZED",
-  "final_file_evidence_gaps": [
-    "C21 fixture repair:7cases passed prior file bytes;1repaired case passed final bytes. No whole-final-file claim.",
-    "C22 fixture repair:1case passed prior file bytes;6repaired cases passed final bytes. No whole-final-file claim."
-  ],
+  "final_file_evidence_gaps": [],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 683,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 2987,
-      "internalImportOccurrences": 2808,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2089,
-      "acceptedLegacyOccurrences": 2089,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 683,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 2987,
-      "internalImportOccurrences": 2808,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2089,
-      "acceptedLegacyOccurrences": 2089,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 683,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 2987,
-      "internalImportOccurrences": 2808,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2089,
-      "acceptedLegacyOccurrences": 1352,
-      "activeViolationGroups": 733,
-      "transitionErrors": 733,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 1343,
+      "activeViolationGroups": 723,
+      "transitionErrors": 723,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 683,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 2987,
-      "internalImportOccurrences": 2808,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2089,
+      "rawViolationOccurrences": 2070,
       "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1668,
-      "transitionErrors": 1668,
+      "activeViolationGroups": 1650,
+      "transitionErrors": 1650,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 683,
+      "sourceModules": 700,
       "unowned": 0,
-      "importOccurrences": 2987,
-      "internalImportOccurrences": 2808,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
       "cycleComponents": 2,
       "largestCycle": 144,
-      "rawViolationOccurrences": 2089,
+      "rawViolationOccurrences": 2070,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2072,
-      "transitionErrors": 2072,
+      "activeViolationGroups": 2054,
+      "transitionErrors": 2054,
       "pass": false
     }
   },
-  "current_exact_open": 2072,
-  "resolved_since_audit": 319
+  "current_exact_open": 2054,
+  "resolved_since_audit": 337,
+  "final_file_evidence_gap_scope": "C07–C32 newly authored changed-code evidence only. No statement about inherited/historical test evidence, entire checkout or release; passes are tied to recorded source fingerprints and are not rerun without associated code changes."
 }

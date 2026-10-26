@@ -1,3 +1,9 @@
+# C30 current scoped status
+
+Implementation commit a947fe9d21243b57ef1d6c220fdb5204789d9eec. Status SCOPED_NATIVE_DIRECTOR_ACTION_RANKING_QUALIFIED; see C30-RUN.json and later followups below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
+
+## Historical opening note and completed evidence
+
 # C30 ledger
 
 In progress; exact existing ranking policy only, no tests yet.

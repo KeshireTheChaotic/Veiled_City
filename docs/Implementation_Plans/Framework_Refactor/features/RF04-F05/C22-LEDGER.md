@@ -1,5 +1,7 @@
 # C22 current scoped status
 
+Current followup: Whole final file7/7passed in C26 after actual initializer change. Original implementation status below is historical. Qualification remains source-fingerprint scoped; not phase/release certification.
+
 Implementation commit 3374db6b507b4488978fc93a02f62a7da6dcd91c. Status SCOPED_KNOWLEDGE_MEMORY_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C22-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
 
 ## Historical opening note and completed evidence

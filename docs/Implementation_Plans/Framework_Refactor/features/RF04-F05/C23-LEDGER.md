@@ -1,5 +1,7 @@
 # C23 current scoped status
 
+Current followup: Whole final file7/7passed in C24 after actual visibility source change. Original implementation status below is historical. Qualification remains source-fingerprint scoped; not phase/release certification.
+
 Implementation commit 459242ac4698da6dac8bd3e7a593bea876e9b046. Status SCOPED_NPC_EVIDENCE_PROJECTION_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE; see C23-RUN.json and any later followup below. Phase remains incomplete; RELEASE NOT AUTHORIZED.
 
 ## Historical opening note and completed evidence
