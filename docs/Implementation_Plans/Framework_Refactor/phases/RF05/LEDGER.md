@@ -16,7 +16,7 @@
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; C02 guidance source move qualified, root compatibility-location transition remains active. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | PARTIAL — MODEL-SELECTION + FIVE PUBLIC API IMPORTS QUALIFIED; 57 ASSIGNED ENTRIES REMAIN | Original fresh test 3/3 pass; C02–C06 import tests passed; current GM public imports have no findings for these contracts. See `features/RF05-F04/LEDGER.md` and feature RUN records. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION + TWELVE PUBLIC-API SLICES QUALIFIED; 50 ASSIGNED ENTRIES REMAIN | Original test 3/3 pass; scoped C02–C13 API imports qualified; current Knowledge public import test passed 2/2. See `features/RF05-F04/LEDGER.md` and feature RUN records. |
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
@@ -100,3 +100,7 @@ Moved the operational metrics module byte-identically into Operations and routed
 ### RF05-F02 C02 — Restore deferred Responses-client validation
 
 Reconciliation found RF04-F04 C08/C09 failing at HEAD because RF05-F02 added a construction-time Responses-client check. Removed only that check, restoring dispatch-time failure. 28/28 across 15 files, exit 0; RF04 ratchet passes, RF05 955 groups/errors unchanged, no changed-path findings. See `features/RF05-F02/C02-LEDGER.md`. Release NOT AUTHORIZED.
+
+### RF05-F04 C13 — Knowledge authority projection public import
+
+`gm.js` now imports `projectAuthorityRecords` through Knowledge public; the root compatibility reader remains. The fresh repaired test passed **2/2**, exit **0**, **607.07 ms**; changed-file syntax passed **2/2**. The first test attempt failed 1/2 because its assertion expected a named export instead of the existing wildcard route; the assertion alone was corrected before the final whole-file run. The RF05 architecture ratchet remains failed at 950 groups/errors, with zero unowned and zero `gm.js` changed-path findings. Exact transition `44030eadc4099d258170c650827e85d01ff58bf128ca62652198f53ada5bbb06` was preserved and retired; 50 RF05-F04 assignments remain. Hashes, logs, costs and rollback are in `features/RF05-F04/C13-RUN.json`. No provider/network/database/Discord calls. RF05 remains INCOMPLETE; release NOT AUTHORIZED.

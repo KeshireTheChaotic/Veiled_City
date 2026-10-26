@@ -40,7 +40,7 @@ import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
 import {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionRosterContext} from './frameworks/ai-provider/public.js';
 import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-provider--knowledge/public.js';
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
-import { projectAuthorityRecords } from "./authority-projection.js";
+import { projectAuthorityRecords } from "./frameworks/knowledge/public.js";
 import { operationalMetrics, measureStage, measureNative } from "./frameworks/operations/public.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/public.js';

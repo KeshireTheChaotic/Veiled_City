@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: the application GM loads with Knowledge authority projection on its public API
+ok 1 - the application GM loads with Knowledge authority projection on its public API
+  ---
+  duration_ms: 2.3036
+  type: 'test'
+  ...
+# Subtest: Knowledge public and root compatibility readers retain the implementation routes
+not ok 2 - Knowledge public and root compatibility readers retain the implementation routes
+  ---
+  duration_ms: 1.6321
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf05-f04-c13.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /export\s*\{[^}]*projectAuthorityRecords[^}]*\}\s*from\s*["']\.\/authority-projection\.js["']/s. Input:
+    
+    "export * from './authority-projection.js';\n" +
+      "export * from './disclosure-authority.js';\n" +
+      "export * from './legacy-authority.js';\n" +
+      "export * from './narrative-records.js';\n" +
+      "export * from './provenance.js';\n" +
+      "export * from './public-referents.js';\n" +
+      "export * from './relationship-state.js';\n" +
+      "export * from './scoped-query.js';\n" +
+      "export {createMemoryClusters} from './memory-clusters.js';\n" +
+      "export {createEvidenceRules,epistemicSchema} from './epistemic.js';\n" +
+      "export {createMemoryLifecycle} from './memory-lifecycle.js';\n" +
+      "export * from './historical-archive.js';\n" +
+      "export {createContextMemory} from './context-memory.js';\n" +
+      "export {createScopedMemory} from './scoped-memory.js';\n" +
+      "export {createEntityMemory} from './entity-memory.js';\n" +
+      "export {createHistoryReconciliation} from './history-reconciliation.js';\n" +
+      "export {createPresentationEvidence} from './presentation-evidence.js';\n" +
+      "export {createEvidenceCustody} from './evidence-custody.js';\n" +
+      "export {createOwnedCommunity} from './owned-community.js';\n" +
+      "export {createPersonalContinuity} from './personal-continuity.js';\n" +
+      "export {createSemanticCandidateProof} from './semantic-candidate-source.js';\n" +
+      "export {createNarrativeMemory} from './narrative-memory.js';\n"
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    export * from './authority-projection.js';
+    export * from './disclosure-authority.js';
+    export * from './legacy-authority.js';
+    export * from './narrative-records.js';
+    export * from './provenance.js';
+    export * from './public-referents.js';
+    export * from './relationship-state.js';
+    export * from './scoped-query.js';
+    export {createMemoryClusters} from './memory-clusters.js';
+    export {createEvidenceRules,epistemicSchema} from './epistemic.js';
+    export {createMemoryLifecycle} from './memory-lifecycle.js';
+    export * from './historical-archive.js';
+    export {createContextMemory} from './context-memory.js';
+    export {createScopedMemory} from './scoped-memory.js';
+    export {createEntityMemory} from './entity-memory.js';
+    export {createHistoryReconciliation} from './history-reconciliation.js';
+    export {createPresentationEvidence} from './presentation-evidence.js';
+    export {createEvidenceCustody} from './evidence-custody.js';
+    export {createOwnedCommunity} from './owned-community.js';
+    export {createPersonalContinuity} from './personal-continuity.js';
+    export {createSemanticCandidateProof} from './semantic-candidate-source.js';
+    export {createNarrativeMemory} from './narrative-memory.js';
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf05-f04-c13.test.mjs:20:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1319.5323

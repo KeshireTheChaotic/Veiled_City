@@ -8085,20 +8085,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "44030eadc4099d258170c650827e85d01ff58bf128ca62652198f53ada5bbb06",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/authority-projection.js",
-      "kind": "static",
-      "specifier": "./authority-projection.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "5572c7bf7ee1347d1b5e6fa6d3c64328f2f17f966eb0da37240a7b5881925dd5",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

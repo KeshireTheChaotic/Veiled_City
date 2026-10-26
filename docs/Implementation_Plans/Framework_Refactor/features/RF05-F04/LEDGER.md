@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and eleven public-API slices qualified; 51 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and twelve public-API slices qualified; 50 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -71,3 +71,7 @@ The AsyncLocalStorage trace module moved byte-identically to Operations; GM now 
 ## C12 — Operations metrics public API
 
 The operational metrics module moved byte-identically to Operations (same git blob) and now uses the Operations-owned turn trace; GM imports metrics from Operations public, while the root compatibility path keeps one class and singleton for 16 other consumers. The frozen affected-GM union passed **21/21** across twelve files, exit **0**, duration **6,055.9301 ms**; syntax passed **5/5**. The new regression verifies identity, trace retry/stage accounting with guild filtering, and that snapshots/incidents retain no prompt or reference text. Architecture ratchet remains failed with 581 modules, zero unowned, 2,747 imports, and 955 groups/errors; changed paths have no findings. The GM private-import transition was retired and preserved; the root module-location assignment remains. **51** F04 entries remain. See `C12-SCOPE.md`, `C12-LEDGER.md`, `C12-RUN.json`, and `C12-RETIRED.json`. Release remains NOT AUTHORIZED.
+
+## C13 — Knowledge authority projection public import
+
+The application GM now imports the Knowledge-owned `projectAuthorityRecords` implementation through `frameworks/knowledge/public.js`; the root compatibility export remains. The final fresh test passed **2/2** (exit **0**, 607.07 ms) after correcting one test assertion to match the existing wildcard export. Changed-file syntax passed **2/2**. RF05 ratchet remains failed on **950** prior groups/errors, but the saved report shows zero active findings and zero transition errors for `gm.js`. The exact GM import transition was retired and preserved; **50 RF05-F04 assignments remain** (1 legacy location, 1 external capability owner, 48 private API imports). See `C13-SCOPE.md`, `C13-RUN.json`, `C13-RETIRED.json`, and `phases/RF05/rf05-f04-c13-*.log`. No provider, network, database, or Discord use. RF05 and release remain incomplete/not authorized.

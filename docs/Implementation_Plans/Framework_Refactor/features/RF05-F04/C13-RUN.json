@@ -1,0 +1,82 @@
+{
+  "run_id": "RF05-F04-C13-20261026-final",
+  "feature": "RF05-F04-C13",
+  "status": "SCOPED_KNOWLEDGE_PUBLIC_IMPORT_QUALIFIED",
+  "base_head": "ee5f5f24ff8ceec2a25292ce6ecc5030a69253e8",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "changed_production": [
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "B7762CD7FB8868C957D756506D16B467CC61B9A7693AFDF6A20FE4A8D30E8337",
+      "change": "projectAuthorityRecords now imports from frameworks/knowledge/public.js"
+    }
+  ],
+  "test": {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f04-c13.test.mjs",
+    "sha256": "0BC4C7B31525581E3A598739D89FC4056FC0E3D960042420E84C197F63E5FD6C",
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c13.test.mjs",
+    "repair_launches": 1,
+    "exit_code": 0,
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 607.07,
+    "log": "phases/RF05/rf05-f04-c13-repair-test.log",
+    "log_sha256": "AF56385EDA204932E9B16583B3BD85BFC75CE8454EF8E750517517356BEDF1E9",
+    "initial_attempt": {
+      "exit_code": 1,
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "duration_ms": 1319.532,
+      "log": "phases/RF05/rf05-f04-c13-test.log",
+      "log_sha256": "48156AB9A9EE689251487918F339784C8A928D874B0F1E14419FE2108A21CC9E",
+      "reason": "Test expected a named Knowledge export, while the existing public API uses export-star for the same owned module; corrected only the test assertion."
+    }
+  },
+  "syntax": {
+    "command": "node --check src/gm.js; node --check tests/ai-gm-2026-10/rf05-f04-c13.test.mjs",
+    "exit_code": 0,
+    "files": 2,
+    "log": "phases/RF05/rf05-f04-c13-final-syntax.log",
+    "log_sha256": "3988870E4F6C5A85C4447116633AC623047A735CCFFE6386C96567BFAF6AB0E9"
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c13-architecture.json",
+    "exit_code": 1,
+    "source_modules": 581,
+    "unowned": 0,
+    "imports": 2747,
+    "largest_cycle": 181,
+    "active_violation_groups": 950,
+    "transition_errors": 950,
+    "changed_path_findings_for_gm": 0,
+    "changed_path_transition_errors_for_gm": 0,
+    "log": "phases/RF05/rf05-f04-c13-final-architecture.log",
+    "log_sha256": "39A31196C8873E61BE847E45B42A9808E90CEF0A07E1F47ED1D3455DAF3A27B6",
+    "interpretation": "The changed import has no active finding; phase ratchet remains failed on existing transition debt."
+  },
+  "transition": {
+    "retired_id": "44030eadc4099d258170c650827e85d01ff58bf128ca62652198f53ada5bbb06",
+    "retired_record": "C13-RETIRED.json",
+    "retired_record_sha256": "7B02319481D8F5106AAB58C24A5AAB9D6B5460BB07518C5029A66E78F68C8339",
+    "manifest_sha256_after": "D42C6F44DF35995C695013A73E257AE35AEFF02C3F9F90F5CE079B2E1985E778",
+    "remaining_rf05_f04_entries": 50,
+    "remaining_by_code": {
+      "LEGACY_MODULE_LOCATION": 1,
+      "EXTERNAL_CAPABILITY_OWNER": 1,
+      "IMPORTS_PRIVATE_API": 48
+    }
+  },
+  "external_effects": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore the GM import from ./frameworks/knowledge/public.js to ./authority-projection.js and reinsert the exact transition from C13-RETIRED.json; preserve the compatibility reader and unrelated work.",
+  "release": "NOT_AUTHORIZED"
+}
