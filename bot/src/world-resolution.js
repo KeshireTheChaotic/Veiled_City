@@ -1,5 +1,5 @@
 /** Derived coarse-to-fine Director state. Snapshots confer no execution, knowledge or disclosure authority. */
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.js';
 import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
 import {currentScene,scenePresence} from './scene-continuity.js';

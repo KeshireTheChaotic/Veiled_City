@@ -5,7 +5,7 @@ import {prepareOpeningEntryOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
 import {inspectSessionOpening} from './session-opening.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './frameworks/session/public.js';
 import {openingErrorCode} from './frameworks/operations/public.js';
 function save(db,guild,key,row,status,data){

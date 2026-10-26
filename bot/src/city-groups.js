@@ -3,7 +3,7 @@ import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { updateCityCivic } from "./city-civic.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
-import { motivationKey } from "./simulation-motivation.js";
+import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import {nativeWorldOperationAllows} from './native-world-operations.js';
 const playerCommunity=(db,guild,key)=>db.listCityRecords(guild,{kind:"community_membership",actor:`community:${key}`,status:"active",includeGM:true,limit:1}).length>0;

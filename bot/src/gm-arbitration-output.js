@@ -4,7 +4,7 @@ import {inspectGmReactionInvitation} from './gm-native-rolls.js';
 import {formatRollRequest} from './roll-requests.js';
 import {incomingRollProjection,authorizeIncomingOffer,inspectVolley} from './pc-incoming.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';

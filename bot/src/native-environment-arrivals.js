@@ -7,7 +7,7 @@ import {reservedCampaignFear} from './fear-reservations.js';
 import {establishNarrativeEntity} from './autonomous-world.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {indexWorldEvent} from './city-calendar.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {createEnvironmentArrivalRules} from './frameworks/daggerheart/public.js';

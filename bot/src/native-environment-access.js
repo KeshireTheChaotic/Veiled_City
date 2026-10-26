@@ -5,8 +5,8 @@ import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './n
 import {nativeEstablishedFact} from './native-established-fact.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
-import {stateRevision} from './ai-intents.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {stateRevision} from './kernel/state-revision.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentAccessRules} from './frameworks/daggerheart/public.js';

@@ -1,7 +1,7 @@
 /** Native saved entry review/policy/resolve; no lexical route or capture. */
 import {personalCharacter} from './personal-continuity.js';
 import {currentScene,recordScenePresence} from './scene-continuity.js';
-import {stateRevision} from './ai-intents.js';
+import {stateRevision} from './kernel/state-revision.js';
 import {indexWorldEvent,cityAudit} from './city-calendar.js';
 import {randomUUID} from 'node:crypto';
 import {assertPcCanAct} from './pc-native-eligibility.js';

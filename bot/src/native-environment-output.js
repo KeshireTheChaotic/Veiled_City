@@ -1,7 +1,7 @@
 /** Receipt-selected output only. No creation, spending, dice or model prose at a publication sink. */
 import {inspectEnvironmentArrival} from './native-environment-arrivals.js';
 import {environmentSceneProjection} from './native-environment-scene.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {currentScene} from './scene-continuity.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';

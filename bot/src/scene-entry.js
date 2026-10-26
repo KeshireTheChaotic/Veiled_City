@@ -2,7 +2,7 @@
 import { personalCharacter } from "./personal-continuity.js";
 import { captureDeclaration, interpretAuthoredText } from "./player-language.js";
 import { recordCharacterArrival, currentScene } from "./scene-continuity.js";
-import { stateRevision } from "./ai-intents.js";
+import {stateRevision} from './kernel/state-revision.js';
 import { cityAudit } from "./city-calendar.js";
 import { conversationPrincipal } from './frameworks/session/public.js';
 export function entryTarget(text){

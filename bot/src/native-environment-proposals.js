@@ -3,7 +3,7 @@ import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {establishNativeEnvironmentInstance} from './native-environment-instance.js';
 import {compileNativeActors,executableNativeFeatures} from './native-feature-catalog.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 
 import {createEnvironmentProfileProposalRules} from './frameworks/daggerheart/public.js';

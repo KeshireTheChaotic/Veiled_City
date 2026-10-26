@@ -1,7 +1,7 @@
 /** Request-local router interpretation. No effect, consent, listener or disclosure authority. */
 import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 const bindings=new WeakMap();
 export const engagementKinds=['scene_description','current_situation','conversation','action','rules','no_response','uncertain'];
 export function bindSemanticEngagement(db,guild,scope,sourceRef,classification){

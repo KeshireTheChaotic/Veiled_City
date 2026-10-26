@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { cityObject, cityKey, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { addSeedDraft, reviewSeedDraft } from "./seed-drafts.js";
-import { stateRevision } from "./ai-intents.js";
+import {stateRevision} from './kernel/state-revision.js';
 const format="veiled-city-content-package-v1";
 const fields={npc:["name","occupation","public_identity","portrayal","gm_notes"],location:["name","description","gm_notes"],
   faction:["name","description","gm_notes"],mystery:["name","description","truth","clues","gm_notes"],

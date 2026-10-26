@@ -1,6 +1,6 @@
 /** Authenticated exact-state recovery of prepared, demonstrably unsent openings. Never calls a provider or resets uncertainty. */
 import {randomUUID} from 'node:crypto';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {assemblyDeliverySummary,assemblyPlanHash} from './assembly-state.js';
 import {assertSessionOpeningAttempt,inspectSessionOpening,rebaseSessionOpening} from './session-opening.js';
 import {sessionOpeningFlight,deliverSessionOpening,runSessionOpening} from './session-opening-runner.js';

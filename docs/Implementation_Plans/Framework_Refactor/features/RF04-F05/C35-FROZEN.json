@@ -1,0 +1,122 @@
+{
+  "base_head": "c235fb05861d851d1e0afc42edef070a6807b676",
+  "syntax_checked": 26,
+  "files": [
+    {
+      "path": "bot/src/city-groups.js",
+      "sha256": "d967f949a868cf4ff751b3f647827b43b11aa3f1cfaa2797e9265aac9231becb"
+    },
+    {
+      "path": "bot/src/consent-native.js",
+      "sha256": "756551d1f5d916e9f8c3a7c51222be91f653bb324339b3c8c003ddb2708a0073"
+    },
+    {
+      "path": "bot/src/content-packages.js",
+      "sha256": "ef483180d434661f67e3849b20997de728c33d1d78b4ca141ba229a205d5f06f"
+    },
+    {
+      "path": "bot/src/dialogue-continuity.js",
+      "sha256": "f16225f0acfdc04105f0872528892838591489bd40f4b6e69bd30ac0569c3b78"
+    },
+    {
+      "path": "bot/src/gm-arbitration-output.js",
+      "sha256": "303ae0dd04354cd1e2e333c286fbfde11762ba14fc19a2802fe5f8302db38b06"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "sha256": "af3a9753bd34f0ea72e075d32caabe1ea75accc17d0de9bb92b9ebca491ce8a5"
+    },
+    {
+      "path": "bot/src/movement-language.js",
+      "sha256": "63804ab3f9ab5188a53a2d8b6130c9978757325197bcbc04d95ca60929f48906"
+    },
+    {
+      "path": "bot/src/narrative-completeness.js",
+      "sha256": "062993d783228d047cc4a1e1d557e64ff000ce7797a66349dacc2a0f2293a4db"
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "sha256": "6ae3e50e5df1397dae861001f5ad3db937ccc347bf6cdc07fb1c95f1731bcc5c"
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "sha256": "1343f7af9c60439ab9657f1e8268d485fd116395f078da5eaf52ad6313676912"
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "sha256": "f41e8ede211e96270b4932597afc6594eade9e7196e55fb66d95b8e60952e08e"
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "sha256": "eb3534228aa041ee5135d4825a9c5247b83f25b2e6ec40f251216fed162c368e"
+    },
+    {
+      "path": "bot/src/native-environment-recovery.js",
+      "sha256": "86f6b27d14eb2ddab587001472bfa42ce2199b04611eacca77e4adde1e69b0af"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "1c483ed1fc645d512b0ea02f1f3fa356b5aa57fc2cbbf94f57fc51342ad8c6e3"
+    },
+    {
+      "path": "bot/src/opening-entry.js",
+      "sha256": "d9e0167b756cd313cd6cdbd9d442c8bbe0ec83d957a247bfcc4a305cdf2f3831"
+    },
+    {
+      "path": "bot/src/player-language.js",
+      "sha256": "5fb23d16afe511205b282a8a33fd5d8f820c36bd1883102e21b190e82360e40c"
+    },
+    {
+      "path": "bot/src/scene-entry-native.js",
+      "sha256": "9909b3254d8db6bd3697ab88b7679717f5c98aa4d585f741ef2aa41b03c98fe3"
+    },
+    {
+      "path": "bot/src/scene-entry.js",
+      "sha256": "416ae0c6be581944afe88ced3c06b067da8c1e2d1fdace2fa363aa6f899236ec"
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "sha256": "f46f8a884477e61269af345c16d4dcbcb8cf496a494c022c5d561ed4da05d2b2"
+    },
+    {
+      "path": "bot/src/semantic-engagement.js",
+      "sha256": "091c5a18aa1adda55ce5bcf4dac6faa63035747ee880120d65554485a624042a"
+    },
+    {
+      "path": "bot/src/session-opening-recovery.js",
+      "sha256": "6e1ddbe4c7303ac520dd4371decb5bda33decbbe81e34385199ffaab6fecc7bb"
+    },
+    {
+      "path": "bot/src/story-continuity.js",
+      "sha256": "306dd08f1163bddfb928a3518a452a1772e7cc96f2a301dbd0174c52e1024656"
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "31e8e9f6182306778030d5c11c908003a06db6045f98dd310fc443365745b01f"
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "sha256": "65a81ac83b11da28571fc96a1495bce77c6a09eccbdc77299f78435ae51cf0d7"
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "sha256": "c8f6af4dc24cd4b915051b88e16835a928c051882bbc1f48e9462b91fa425f28"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c35.test.mjs",
+      "sha256": "d2e6d5796bea64e1596b612a6c94a156f0cbde073f7e7b8b8e6e5c4a9041f050"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+      "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C35-SOURCE-BASELINE.json",
+      "sha256": "91275d96e2870d4079a7a1b2016f79bf60611edb4eaa737efa4d671dd2bfd205"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json",
+      "sha256": "fbe6def23d58885c53590b0e33adfbca1b580af750e8e8b922da1f4a416f8cb0"
+    }
+  ]
+}

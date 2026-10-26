@@ -8,7 +8,7 @@ import { configurePortrayal } from "./portrayal.js";
 import { configureMystery } from "./story-continuity.js";
 import { configureSimulationEntity } from "./simulation.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { motivationKey } from "./simulation-motivation.js";
+import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { validateIntent } from "./ai-intent-contracts.js";
 
 const plain=value=>value&&typeof value==="object"&&!Array.isArray(value);

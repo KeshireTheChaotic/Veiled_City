@@ -1,0 +1,414 @@
+{
+  "base_head": "c235fb05861d851d1e0afc42edef070a6807b676",
+  "purpose": "Fresh pre-edit current production source/AST fingerprints, no historical tests, fixtures or golden outputs.",
+  "skipped_dirty": [
+    "bot/src/autonomous-world.js",
+    "bot/src/commands.js",
+    "bot/src/native-environment-instance.js"
+  ],
+  "records": [
+    {
+      "path": "bot/src/city-groups.js",
+      "owner": "world",
+      "pre_edit_sha256": "6f1ac9966ad6833bab46ffab91547aa9b653999a31d57bba3403946672f3223c",
+      "unchanged_body_ast_sha256": "ccc60afccebfcc4e1ca219953db1c1752aad6ad087c8585dec70bd697ab11d38",
+      "imports": [
+        {
+          "old_imported": "motivationKey",
+          "old_specifier": "./simulation-motivation.js",
+          "imported": "jsonKey32",
+          "local": "motivationKey",
+          "specifier": "./kernel/json-key32.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/consent-native.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "6ef18ebf7bccca651d84cfa650103b22e3247e04e8970057f0a1a62aedb892d5",
+      "unchanged_body_ast_sha256": "334b03de8beb3df18d18c14037d1fe2ca2d8c24fb139bfb5925152dd9f169bd9",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/content-packages.js",
+      "owner": "content",
+      "pre_edit_sha256": "55422a05f59fc5e97303b85c5098798c8469b836ccb0d93c6c17b0caa9a9823b",
+      "unchanged_body_ast_sha256": "f91891b7e92acba274978623cb6ae9b023349f58bd39344609eb648fba2d1282",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/dialogue-continuity.js",
+      "owner": "session",
+      "pre_edit_sha256": "c99f95f653893eb6d6b9b3831acff440946ce992b681281c6ffd6ba4096a9551",
+      "unchanged_body_ast_sha256": "b05de67a4da3c1729c9163362893e1068419e8e34e6390e214d27e56f9a85765",
+      "imports": [
+        {
+          "old_imported": "motivationKey",
+          "old_specifier": "./simulation-motivation.js",
+          "imported": "jsonKey32",
+          "local": "motivationKey",
+          "specifier": "./kernel/json-key32.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/gm-arbitration-output.js",
+      "owner": "intent",
+      "pre_edit_sha256": "d0b1d95c439e68556f0e148594d79c8449df2b6febc9ffbe4769f09cef9da75b",
+      "unchanged_body_ast_sha256": "02997ae16610dc9f8cb1e82516bd997149cc94e3e4b84c49c530270d2b0212c0",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "owner": "world",
+      "pre_edit_sha256": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
+      "unchanged_body_ast_sha256": "428c1ac68e7755977e0d24a74a87d51ed454da00c4278de94ad622b9f61ccac7",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/movement-language.js",
+      "owner": "intent",
+      "pre_edit_sha256": "ce0315a1df2b8aa2377911cd22215a95b7db31c5b811daa93627a70a72a1ba66",
+      "unchanged_body_ast_sha256": "1a0d2a9e6633d5a718843008a7a6d5ebcf05453957707b40c84af45081790adf",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/narrative-completeness.js",
+      "owner": "narrative",
+      "pre_edit_sha256": "f98db0202145adedc11ef46f4803ca9f42d0b808ab89b963d1c2483dbcc448c1",
+      "unchanged_body_ast_sha256": "dbf9959407b968addc115059c021161f08f6a9bd001fbc0812d474dd255cdbdc",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "bd8be634df8e885c8e4babc0467de8f85824c0e6de965e0d2cc7687124054020",
+      "unchanged_body_ast_sha256": "e01826a70291c090224120a3c26799c053678531b18a303850844a9b048b9b63",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        },
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "7bbf271dc5468f45e442033cd65aee81775525d3d9228e8e071a1d9c21e4be3c",
+      "unchanged_body_ast_sha256": "aa8d16aeee4f6069cf35cca3a5802fa5b9efc119e105ea900e723b9323933b63",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "141e6f401ab06e3252dd175dc64ad59e1c686ff885658f0a53c4817f807d06ff",
+      "unchanged_body_ast_sha256": "91dd9715fcfc6d58dc4c345398277ba3ffeb59ab535b16f64c89dbd6479b0134",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "8e70ed490579181319c93816b3933e98418a386ac679e5768e91dae6fd06bf7c",
+      "unchanged_body_ast_sha256": "a235802774b184a3076d505a75064a7cf341adf83639c013ec843c55319981ec",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-recovery.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "7eff3c501643be37ed83d7aa7180b15bb627d6684c383571a1d0d63065705e47",
+      "unchanged_body_ast_sha256": "2fba88eeaaac7ee2c201dea2f63ca4622738a7dcafd5941d691d26d5b79238bc",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "owner": "daggerheart",
+      "pre_edit_sha256": "f4db3a47e047f8b354221e4aab42127320d3b867118138f8370640f4f8841780",
+      "unchanged_body_ast_sha256": "cff85261572296633cfe7c7b8bbd0dfc95e3e5554ce9bf94351a5d559bcaaa09",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/opening-entry.js",
+      "owner": "application",
+      "pre_edit_sha256": "199821575fbe07f93a76210cb168c57325acc8b58e6de70402808317a8281aeb",
+      "unchanged_body_ast_sha256": "6cb35a481e31c01d3df016973959fbb57d6331a5a0f7ece971e593bab4b85bb5",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/player-language.js",
+      "owner": "intent",
+      "pre_edit_sha256": "52a92ec63551a28776625e2ae85d0fadfbbe04817a07b13f7d15a559d1fb8f27",
+      "unchanged_body_ast_sha256": "aa09e4ede15c9a4f650b54589356b7195c22aeada6d42411be3fc3cb839bb8fb",
+      "imports": [
+        {
+          "old_imported": "motivationKey",
+          "old_specifier": "./simulation-motivation.js",
+          "imported": "jsonKey32",
+          "local": "motivationKey",
+          "specifier": "./kernel/json-key32.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/scene-entry-native.js",
+      "owner": "session",
+      "pre_edit_sha256": "6c2f3eb2d59c107ae2f9189fdaa7b52fae15c06088752729bf0679d1aeb52a86",
+      "unchanged_body_ast_sha256": "3961410da0cbab09eb1c411c9c0c4608f726b47dd053080b2a86cfd2edbf1fde",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/scene-entry.js",
+      "owner": "session",
+      "pre_edit_sha256": "837cb79ffe2554bab10e49a44cd0df2bacf2c07ed9bffd9e439c53436ef1aee2",
+      "unchanged_body_ast_sha256": "897fcd5d451126cc741970b7c874ce7ababba50b8a67daba5327853d1589e935",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "owner": "world",
+      "pre_edit_sha256": "4f50306f106f0e9911a6b9ab6c2772bc2fbbe11b50997423247f004c5528e6f6",
+      "unchanged_body_ast_sha256": "1ff1004de057aef9f5228acfb7f627797e908469cf9bf54142d0811c70573fbf",
+      "imports": [
+        {
+          "old_imported": "motivationKey",
+          "old_specifier": "./simulation-motivation.js",
+          "imported": "jsonKey32",
+          "local": "motivationKey",
+          "specifier": "./kernel/json-key32.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/semantic-engagement.js",
+      "owner": "intent",
+      "pre_edit_sha256": "89f9f48f37c48538ec47a8b6b3e38b378520292f5868e987f2afbc303b60c076",
+      "unchanged_body_ast_sha256": "fb77a5c4e4e831af6eed48676b04f26b2039ec121d5081b10929422fe3ddb10d",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/session-opening-recovery.js",
+      "owner": "application",
+      "pre_edit_sha256": "3c3784f094b512aa1ed2c4c0e3dfdb7756d2003c6ca71ab9221c239f150203b9",
+      "unchanged_body_ast_sha256": "1a68c5ff01d7d82def24d3522788ab7d29f8a002bd0f5939d0782f12ae2bb10f",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/story-continuity.js",
+      "owner": "session",
+      "pre_edit_sha256": "578417b0579e897fc835c74a3c1b197a643abd99f903000ab41e55c199d67e1d",
+      "unchanged_body_ast_sha256": "426b6262843c740ac12d32e872e71ece8e9e51fffb76a34051e548a17f5d2b3c",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        },
+        {
+          "old_imported": "motivationKey",
+          "old_specifier": "./simulation-motivation.js",
+          "imported": "jsonKey32",
+          "local": "motivationKey",
+          "specifier": "./kernel/json-key32.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "owner": "intent",
+      "pre_edit_sha256": "ab22c14465978178bc24c2081ea7277e9f09da46fbb6775c382db6dcd32c795d",
+      "unchanged_body_ast_sha256": "fabf2b557ac65b133d1dbf6abd5255a78adacf0649d69fddde35487480a274dc",
+      "imports": [
+        {
+          "old_imported": "stateRevision",
+          "old_specifier": "./ai-intents.js",
+          "imported": "stateRevision",
+          "local": "stateRevision",
+          "specifier": "./kernel/state-revision.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "owner": "world",
+      "pre_edit_sha256": "6180dfb5882b67c713afbf4f316b6d812a0e174ccb7a4064f8e4df5c093638f0",
+      "unchanged_body_ast_sha256": "aef9e7ff8f77941d1d00e0f9d42591061afec18ab8436712458d6d1743be883a",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "owner": "world",
+      "pre_edit_sha256": "b0cb5033f5e9aa629ca2a7f86474544742c1c13fe96cb81c540b2faad03e692c",
+      "unchanged_body_ast_sha256": "ddcb9e70790b1618507f300fdd8a9b05ec9ea5dbf5601c9e3f50f5944ec4013c",
+      "imports": [
+        {
+          "old_imported": "sceneFictionHash",
+          "old_specifier": "./scene-fiction-context.js",
+          "imported": "jsonHash",
+          "local": "hash",
+          "specifier": "./kernel/json-hash.js"
+        }
+      ]
+    }
+  ],
+  "skipped_dirty_fingerprints": [
+    {
+      "path": "bot/src/autonomous-world.js",
+      "sha256": "d122e3f89204bb29dce53482589b13cf5ebeb7b9c0372968b0af1716b68617bf"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "aca2fbd1317c3408ec31e40c4bd7901b8c6ec2d17c11a85942618a4a9c0b4425"
+    },
+    {
+      "path": "bot/src/native-environment-instance.js",
+      "sha256": "a1e09e5ded254fe6a6156ef33ad3c09be30dc165e5e6e608fea899af3b09d0c2"
+    }
+  ]
+}

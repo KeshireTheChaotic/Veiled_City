@@ -3,7 +3,7 @@ import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js"
 import { requireCitySource } from "./city-core.js";
 import { PermissionError, UserInputError, StateConflictError } from "./kernel/errors.js";
 import { principalAllows, applicationPrincipal } from "./kernel/application-authority.js";
-import { stateRevision } from "./ai-intents.js";
+import {stateRevision} from './kernel/state-revision.js';
 import { actorSource } from "./simulation-motivation.js";
 export const projectPhaseRevision=row=>stateRevision({key:row.record_key,index:row.data.index,phase:row.data.phases[row.data.index]?.key,
   duration:row.data.phases[row.data.index]?.duration_minutes,prerequisites:row.data.phases[row.data.index]?.prerequisites});

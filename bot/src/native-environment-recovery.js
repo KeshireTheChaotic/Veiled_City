@@ -2,7 +2,7 @@ import {inspectEnvironmentSceneEffect} from './native-environment-scene.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
 import {recordScenePresence,scenePresence} from './scene-continuity.js';
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentRecoveryRules} from './frameworks/daggerheart/public.js';

@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: native reader and World fixed consumer share exact terms/results and reject source replacement
+ok 1 - native reader and World fixed consumer share exact terms/results and reject source replacement
+  ---
+  duration_ms: 0.9283
+  type: 'test'
+  ...
+# Subtest: World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+ok 2 - World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+  ---
+  duration_ms: 176.8682
+  type: 'test'
+  ...
+# Subtest: actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+ok 3 - actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+  ---
+  duration_ms: 178.0372
+  type: 'test'
+  ...
+# Subtest: only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+ok 4 - only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+  ---
+  duration_ms: 173.7869
+  type: 'test'
+  ...
+# Subtest: latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+ok 5 - latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+  ---
+  duration_ms: 173.7391
+  type: 'test'
+  ...
+# Subtest: audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+ok 6 - audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+  ---
+  duration_ms: 199.5165
+  type: 'test'
+  ...
+# Subtest: owner consent terms/revision remain exact neutral native hashes and read-only across restart
+ok 7 - owner consent terms/revision remain exact neutral native hashes and read-only across restart
+  ---
+  duration_ms: 185.3554
+  type: 'test'
+  ...
+# Subtest: neutral import migration preserves every current production policy and function body AST
+ok 8 - neutral import migration preserves every current production policy and function body AST
+  ---
+  duration_ms: 60.2314
+  type: 'test'
+  ...
+# Subtest: real startup graph retains native producer registration and architecture ratchet without new exceptions
+ok 9 - real startup graph retains native producer registration and architecture ratchet without new exceptions
+  ---
+  duration_ms: 625.102
+  type: 'test'
+  ...
+# Subtest: neutral primitives preserve exact serialized historical key revision and hash bytes
+ok 10 - neutral primitives preserve exact serialized historical key revision and hash bytes
+  ---
+  duration_ms: 0.2074
+  type: 'test'
+  ...
+# Subtest: three previously dirty source files remain byte-identical to the preserved feature-start snapshot
+ok 11 - three previously dirty source files remain byte-identical to the preserved feature-start snapshot
+  ---
+  duration_ms: 0.627
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1772.1199

@@ -3,7 +3,7 @@ import { personalCharacter } from "./personal-continuity.js";
 import { sceneAccess, sceneView, scenePresence, currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
-import { motivationKey } from "./simulation-motivation.js";
+import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { activeCityProxy } from "./city-constraints.js";
 import {assertNpcAvailability} from './city-constraints.js';
 import {conversationPrincipal} from './frameworks/session/public.js';

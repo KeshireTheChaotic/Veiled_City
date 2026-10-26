@@ -1,5 +1,5 @@
 /** Post-projection response health. Native verified parts, not model self-certification; no effects or provider retries. */
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {operationalMetrics} from './operational-metrics.js';
 import {taskDispositions} from './narrative-tasks.js';
 export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],{sourceRef=null,scope=null}={}){

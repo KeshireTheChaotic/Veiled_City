@@ -3,8 +3,8 @@ import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { cityVisibility } from "./city-calendar.js";
 import { personalCharacter } from "./personal-continuity.js";
-import { stateRevision } from "./ai-intents.js";
-import { motivationKey } from "./simulation-motivation.js";
+import {stateRevision} from './kernel/state-revision.js';
+import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import {explicitSilence,semanticResponseObligation} from './gameplay-intake.js';
 export function setPacingCues(db,guildId,input,actorId){
   if(input?.op==="setup") return manageNarrativeSetup(db,guildId,input,actorId);

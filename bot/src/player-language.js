@@ -1,7 +1,7 @@
 /** Authenticated authored declarations are attempts/utterances, not completed facts or inferred PC consent. */
 import { personalCharacter } from "./personal-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
-import { motivationKey } from "./simulation-motivation.js";
+import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { currentScene } from "./scene-continuity.js";
 export function authoredSceneText(value){
   return String(value||"").trim().replace(/^(?:\*\*|\*|_)([\s\S]*?)(?:\*\*|\*|_)$/,"$1").trim();

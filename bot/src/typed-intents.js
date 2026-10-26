@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { conversationPrincipal } from './conversation-principal.js';
 import { currentScene } from './scene-continuity.js';
 import { worldInputKey } from './autonomous-world.js';
-import { stateRevision } from './ai-intents.js';
+import {stateRevision} from './kernel/state-revision.js';
 import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
