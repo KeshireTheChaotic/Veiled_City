@@ -62,3 +62,4 @@ export {createWorldNpcCognitionConsumer,worldNpcCognition} from './contracts/npc
 export {createWorldKnowledgeClustersConsumer,worldKnowledgeClusters} from './contracts/knowledge-clusters.js';
 export {simulationCandidates} from './simulation-candidates.js';
 export {createWorldNpcOpportunityConsumer,worldNpcOpportunity} from './contracts/npc-opportunity.js';
+export {rankDirectorActions} from './director-action-ranking.js';

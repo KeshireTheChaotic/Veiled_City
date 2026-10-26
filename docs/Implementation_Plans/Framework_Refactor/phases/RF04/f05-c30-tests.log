@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: original ranking function identity and stable source-grounded order are preserved without writes
+ok 1 - original ranking function identity and stable source-grounded order are preserved without writes
+  ---
+  duration_ms: 199.6047
+  type: 'test'
+  ...
+# Subtest: native source retraction and lack of candidate or resources exclude actions without a new grant
+ok 2 - native source retraction and lack of candidate or resources exclude actions without a new grant
+  ---
+  duration_ms: 177.9811
+  type: 'test'
+  ...
+# Subtest: actual completed native actions contribute original repetition penalty rather than fabricated historical receipts
+ok 3 - actual completed native actions contribute original repetition penalty rather than fabricated historical receipts
+  ---
+  duration_ms: 181.8231
+  type: 'test'
+  ...
+# Subtest: native actor player control and PC targets remain ineligible regardless of relevance
+ok 4 - native actor player control and PC targets remain ineligible regardless of relevance
+  ---
+  duration_ms: 174.7585
+  type: 'test'
+  ...
+# Subtest: actual native Director one-slot contention selects grounded action and preserves unselected actor resources
+ok 5 - actual native Director one-slot contention selects grounded action and preserves unselected actor resources
+  ---
+  duration_ms: 194.2476
+  type: 'test'
+  ...
+# Subtest: empty or unsupported native proposals cannot acquire priority from wording alone
+ok 6 - empty or unsupported native proposals cannot acquire priority from wording alone
+  ---
+  duration_ms: 176.1665
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1979.2048

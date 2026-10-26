@@ -1,6 +1,6 @@
 {
-  "checkpoint": "RF04-F05 C29 actual World Director native NPC opportunities",
-  "timestamp": "2026-10-26T21:20:36.943Z",
+  "checkpoint": "RF04-F05 C30 native World action ranking and capacity contention",
+  "timestamp": "2026-10-26T21:26:36.383Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
   "manifest_sha256": "54fc3e4e7a97177294f596783147ec41f94f93f7d2c486abb8094b38e1b5b788",
   "open_exact_records": 2058,
@@ -4686,10 +4686,10 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 696,
+      "sourceModules": 697,
       "unowned": 0,
-      "importOccurrences": 3021,
-      "internalImportOccurrences": 2842,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
       "cycleComponents": 2,
       "largestCycle": 144,
       "rawViolationOccurrences": 2075,
@@ -4699,10 +4699,10 @@
       "pass": true
     },
     "RF04": {
-      "sourceModules": 696,
+      "sourceModules": 697,
       "unowned": 0,
-      "importOccurrences": 3021,
-      "internalImportOccurrences": 2842,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
       "cycleComponents": 2,
       "largestCycle": 144,
       "rawViolationOccurrences": 2075,
@@ -4712,10 +4712,10 @@
       "pass": true
     },
     "RF05": {
-      "sourceModules": 696,
+      "sourceModules": 697,
       "unowned": 0,
-      "importOccurrences": 3021,
-      "internalImportOccurrences": 2842,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
       "cycleComponents": 2,
       "largestCycle": 144,
       "rawViolationOccurrences": 2075,
@@ -4725,10 +4725,10 @@
       "pass": false
     },
     "RF06": {
-      "sourceModules": 696,
+      "sourceModules": 697,
       "unowned": 0,
-      "importOccurrences": 3021,
-      "internalImportOccurrences": 2842,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
       "cycleComponents": 2,
       "largestCycle": 144,
       "rawViolationOccurrences": 2075,
@@ -4738,10 +4738,10 @@
       "pass": false
     },
     "RF07": {
-      "sourceModules": 696,
+      "sourceModules": 697,
       "unowned": 0,
-      "importOccurrences": 3021,
-      "internalImportOccurrences": 2842,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
       "cycleComponents": 2,
       "largestCycle": 144,
       "rawViolationOccurrences": 2075,
@@ -6842,6 +6842,11 @@
       "sha256": "da9a0db69e8ba85d025b9a4764216c91c990cf728c1a8c41c79af0072e61d708"
     },
     {
+      "path": "bot/src/frameworks/world/director-action-ranking.js",
+      "owner": "world",
+      "sha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f"
+    },
+    {
       "path": "bot/src/frameworks/world/director-cadence.js",
       "owner": "world",
       "sha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4"
@@ -6914,7 +6919,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "c2314f34bb53a1b79d30b22164781bf90788faf807108c0aae4ed0c0d2a098f8"
+      "sha256": "791d13dab3df51e995d5d262aa984df14a478f6e969262144697d7cc501c4f9b"
     },
     {
       "path": "bot/src/frameworks/world/simulation-candidates.js",
@@ -8044,7 +8049,7 @@
     {
       "path": "bot/src/simulation.js",
       "owner": "world",
-      "sha256": "54cdbaaf398e8446793c9af52f50878b74cbeda65a94822fc9319f98ac52f4af"
+      "sha256": "55f4ad8e6a236878a832d8e2aaee2688b5527f2187dbca53f87c1e7e9aff96b3"
     },
     {
       "path": "bot/src/source-communication.js",
@@ -8241,7 +8246,7 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C29-RUN.json"
+    "features/RF04-F05/C30-RUN.json"
   ],
   "release": "NOT_AUTHORIZED"
 }

@@ -1,0 +1,8 @@
+{
+  "original_body_sha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1",
+  "extracted_body_sha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1",
+  "note": "Compare normalized trailing line terminators; original body and extracted implementation retained unchanged.",
+  "source_owner": "world",
+  "root_owner": "world_compatibility_and_remaining_orchestration",
+  "baseline_changes": 0
+}

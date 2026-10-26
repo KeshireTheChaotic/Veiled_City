@@ -1,0 +1,114 @@
+{
+  "feature": "RF04-F05-C30",
+  "status": "SCOPED_NATIVE_DIRECTOR_ACTION_RANKING_QUALIFIED",
+  "frozen": {
+    "base_head": "4ec4da066a0cbbbc1f8bf5f0ce0d80cb8d5a3c99",
+    "syntax_checked": 4,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/director-action-ranking.js",
+        "sha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "791d13dab3df51e995d5d262aa984df14a478f6e969262144697d7cc501c4f9b"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "55f4ad8e6a236878a832d8e2aaee2688b5527f2187dbca53f87c1e7e9aff96b3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "e1df774c699fad06ae3b5adebc10dd4d9d1557e066424a871c01fdcc03e1dd2c"
+      }
+    ]
+  },
+  "source_review": {
+    "original_body_sha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1",
+    "extracted_body_sha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1",
+    "note": "Compare normalized trailing line terminators; original body and extracted implementation retained unchanged.",
+    "source_owner": "world",
+    "root_owner": "world_compatibility_and_remaining_orchestration",
+    "baseline_changes": 0
+  },
+  "tests": {
+    "end": "2026-10-26T16:25:09.4558694-05:00",
+    "exit_code": 0,
+    "start": "2026-10-26T16:25:07.4247733-05:00",
+    "duration_ms": 2031.0961,
+    "run_id": "rf04-f05-c30-frozen",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap_duration_ms": 1979.2048,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c30.test.mjs"
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 697,
+      "unowned": 0,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2075,
+      "acceptedLegacyOccurrences": 2075,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 697,
+      "unowned": 0,
+      "importOccurrences": 3028,
+      "internalImportOccurrences": 2849,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2075,
+      "acceptedLegacyOccurrences": 1348,
+      "activeViolationGroups": 723,
+      "transitionErrors": 723,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "ownership": "Original ranking body now World, same-function historical alias consumed by actual Director. Original native validation/cost/source/repetition/tie/rotation behavior unchanged. Policy prerequisite only; no migration count reduction claimed.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "mocked_planner_calls": 1,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Native capacity contention and repetition tested with actual native producers; not full fairness, all source categories, semantic narrative quality, live provider speed or Discord certification.",
+    "Native supplied mock proposal includes actions and ai_intents arrays; provider schema validation itself is not exercised.",
+    "Other Director/source/caller/phase obligations remain exact debt; release not authorized."
+  ],
+  "rollback": "Revert C30 World ranking module/public/root extraction together. Restore original function body; do not rewrite native action history, costs, source pointers or receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c30-tests.log",
+      "sha256": "81831f0089a0291ee494fd20b0bd4577edf724ce6b8d1d1b1ca0cd11850761ff"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c30-architecture-initial.log",
+      "sha256": "a43aca4c6e7a164c379e96c2edf54d58a5ebb2f69dd6df9999dcc8794df652e4"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c30-rf04-final.log",
+      "sha256": "a43aca4c6e7a164c379e96c2edf54d58a5ebb2f69dd6df9999dcc8794df652e4"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c30-rf05-final.log",
+      "sha256": "68ef10de0e34de55b6eeac9d161f664278a71c8a10847a38b7f463333c12173a"
+    }
+  ]
+}

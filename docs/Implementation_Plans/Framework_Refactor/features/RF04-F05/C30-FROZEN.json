@@ -1,0 +1,22 @@
+{
+  "base_head": "4ec4da066a0cbbbc1f8bf5f0ce0d80cb8d5a3c99",
+  "syntax_checked": 4,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/director-action-ranking.js",
+      "sha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "791d13dab3df51e995d5d262aa984df14a478f6e969262144697d7cc501c4f9b"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "55f4ad8e6a236878a832d8e2aaee2688b5527f2187dbca53f87c1e7e9aff96b3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+      "sha256": "e1df774c699fad06ae3b5adebc10dd4d9d1557e066424a871c01fdcc03e1dd2c"
+    }
+  ]
+}
