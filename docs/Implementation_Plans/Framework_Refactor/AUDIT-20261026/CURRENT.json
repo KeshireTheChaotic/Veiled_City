@@ -1,6 +1,6 @@
 {
-  "checkpoint": "after C11 native owner-consent and World appointments",
-  "timestamp": "2026-10-26T19:50:29.336Z",
+  "checkpoint": "after C12 World institutional and supply sources",
+  "timestamp": "2026-10-26T19:55:39.594Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
   "manifest_sha256": "00fe50d3c80c73aedbec8aa7d10483138ba6684008e828af8680811fe9fa7298",
   "open_exact_records": 2277,
@@ -1620,10 +1620,10 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 631,
+      "sourceModules": 633,
       "unowned": 0,
-      "importOccurrences": 2855,
-      "internalImportOccurrences": 2678,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
       "cycleComponents": 1,
       "largestCycle": 172,
       "rawViolationOccurrences": 2295,
@@ -1633,10 +1633,10 @@
       "pass": true
     },
     "RF04": {
-      "sourceModules": 631,
+      "sourceModules": 633,
       "unowned": 0,
-      "importOccurrences": 2855,
-      "internalImportOccurrences": 2678,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
       "cycleComponents": 1,
       "largestCycle": 172,
       "rawViolationOccurrences": 2295,
@@ -1646,10 +1646,10 @@
       "pass": true
     },
     "RF05": {
-      "sourceModules": 631,
+      "sourceModules": 633,
       "unowned": 0,
-      "importOccurrences": 2855,
-      "internalImportOccurrences": 2678,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
       "cycleComponents": 1,
       "largestCycle": 172,
       "rawViolationOccurrences": 2295,
@@ -1659,10 +1659,10 @@
       "pass": false
     },
     "RF06": {
-      "sourceModules": 631,
+      "sourceModules": 633,
       "unowned": 0,
-      "importOccurrences": 2855,
-      "internalImportOccurrences": 2678,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
       "cycleComponents": 1,
       "largestCycle": 172,
       "rawViolationOccurrences": 2295,
@@ -1672,10 +1672,10 @@
       "pass": false
     },
     "RF07": {
-      "sourceModules": 631,
+      "sourceModules": 633,
       "unowned": 0,
-      "importOccurrences": 2855,
-      "internalImportOccurrences": 2678,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
       "cycleComponents": 1,
       "largestCycle": 172,
       "rawViolationOccurrences": 2295,
@@ -1928,7 +1928,7 @@
     {
       "path": "bot/src/city-core.js",
       "owner": "world",
-      "sha256": "39f132785d835e90c22cdae1265283d42219f0e735c6bc16579c40aba6ad16d2"
+      "sha256": "3c64c4e061b3edf9b778824cf2101468936f3d2aa1a6a38d011e9d56deb6443c"
     },
     {
       "path": "bot/src/city-depth.js",
@@ -3426,6 +3426,11 @@
       "sha256": "25d1cc0eb8532263d2ad6f4af5c85fa657c98b49d74cefefbeaa11bca3ad2557"
     },
     {
+      "path": "bot/src/frameworks/world/civic-service-source.js",
+      "owner": "world",
+      "sha256": "07efb5c57cc8331d2933e5e4c4355c5ac1dd242e494cebcac0a95dd20ffc37e5"
+    },
+    {
       "path": "bot/src/frameworks/world/commitment-source.js",
       "owner": "world",
       "sha256": "206e82bc7e2ed65fae829f4bb0a739a02541ca67829fdf8e31d58ded6fb203c8"
@@ -3516,6 +3521,11 @@
       "sha256": "98a2fab4d033f5ce152357b6354172000753aa251640c1d6bae4abce394e39df"
     },
     {
+      "path": "bot/src/frameworks/world/institution-report.js",
+      "owner": "world",
+      "sha256": "7c4e1ad3bd50d6c25e1b1f63f0cf2657e83f60c86e2953d2e333fafada4b2c42"
+    },
+    {
       "path": "bot/src/frameworks/world/location-language.js",
       "owner": "world",
       "sha256": "8c38f182c53017a364fc611d1f07b9a3959f805623f8a38b83ce2dde30b0c97e"
@@ -3543,7 +3553,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "9ce3e83d80673453caff50ec76409c85266dbad52b3279bf4f2d44f0bbf8f5cd"
+      "sha256": "cef2092f7fc03d60627920a675b657afd07ebf6d187b4200d2091e93385d09fb"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -4678,7 +4688,7 @@
     {
       "path": "bot/src/supply-dependencies.js",
       "owner": "world",
-      "sha256": "854bfe1596c480a0bb39b5691b3333ea429850d8e78a563a1109b31f38f2ce58"
+      "sha256": "eb5190ea60290e63c8f3b89034a55c821df2931910ca8db52afc76407fdf4de8"
     },
     {
       "path": "bot/src/tracked-turn.js",

@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: native reader and World fixed consumer share exact terms/results and reject source replacement
+ok 1 - native reader and World fixed consumer share exact terms/results and reject source replacement
+  ---
+  duration_ms: 0.9294
+  type: 'test'
+  ...
+# Subtest: World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+ok 2 - World invitation remains nonbinding; supplied accepted_by never creates owner receipts or PC outcomes
+  ---
+  duration_ms: 290.5634
+  type: 'test'
+  ...
+# Subtest: actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+ok 3 - actual native owner response mints exact consent; World commit remains separate and replay never duplicates obligations
+  ---
+  duration_ms: 304.4775
+  type: 'test'
+  ...
+# Subtest: only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+ok 4 - only current actual owner with attendance, unchanged terms and live reply source satisfies consent
+  ---
+  duration_ms: 306.7658
+  type: 'test'
+  ...
+# Subtest: latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+ok 5 - latest real owner decline supersedes earlier acceptance without deleting immutable receipts
+  ---
+  duration_ms: 300.9304
+  type: 'test'
+  ...
+# Subtest: audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+ok 6 - audit failure rolls back appointment, schedule and offer transition while native owner receipt survives retry/restart
+  ---
+  duration_ms: 327.1975
+  type: 'test'
+  ...
+# Subtest: owner consent terms/revision remain exact neutral native hashes and read-only across restart
+ok 7 - owner consent terms/revision remain exact neutral native hashes and read-only across restart
+  ---
+  duration_ms: 263.9645
+  type: 'test'
+  ...
+# Subtest: real legacy/public World institutional and supply paths share single service function identities
+ok 8 - real legacy/public World institutional and supply paths share single service function identities
+  ---
+  duration_ms: 0.609
+  type: 'test'
+  ...
+# Subtest: native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+ok 9 - native NPC evidence and exact reviewed delivery permit one atomic material transfer, never PC resource effects
+  ---
+  duration_ms: 291.5929
+  type: 'test'
+  ...
+# Subtest: delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+ok 10 - delivery rejects stale balances, recipient proxy and missing actor evidence before changing materials
+  ---
+  duration_ms: 294.4014
+  type: 'test'
+  ...
+# Subtest: native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+ok 11 - native transfer audit failure rolls back both balances and receipt; retry persists exactly once across restart
+  ---
+  duration_ms: 301.0031
+  type: 'test'
+  ...
+# Subtest: service access retains established infrastructure/source constraints and cannot target PC economy
+ok 12 - service access retains established infrastructure/source constraints and cannot target PC economy
+  ---
+  duration_ms: 273.5904
+  type: 'test'
+  ...
+# Subtest: institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+not ok 13 - institution report requires explicit authorized source transfer, preserves subjective belief and proxy consent
+  ---
+  duration_ms: 282.2063
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c12.test.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - null
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs:24:675)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: original World core source/audit validation and district rollback stay intact after source composition
+ok 14 - original World core source/audit validation and district rollback stay intact after source composition
+  ---
+  duration_ms: 267.7314
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2698.7225

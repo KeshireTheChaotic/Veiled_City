@@ -1,38 +1,14 @@
 /** Civic domain validation and institutional knowledge firewall. All descriptors are non-player simulation, never mechanical modifiers. */
-import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent, scheduleCityEvent } from "./city-calendar.js";
-import { assertInstitutionDelegation, activeCityProxy, assertWorldActorControl } from "./city-constraints.js";
+import {cityObject,cityAudit} from './frameworks/world/public.js';
 import { EXPANSION_FEATURES } from "./expansion-contracts.js";
-import { assertServiceAccess } from "./supply-dependencies.js";
-import {nativeWorldOperationAllows,nativeWorldStrategyStepAllowed} from './native-world-operations.js';
 
 
 
 
 
 
-export function updateCityCore(...args){return core().updateCityCore(...args);}
-export function assignDistrictLocation(...args){return core().assignDistrictLocation(...args);}
-export function fileInstitutionReport(db,guildId,input,actorId){
-  cityObject(input);requireCityRecord(db,guildId,"institution",input.institution);requireCitySource(db,guildId,input.source_event);
-  const key=cityKey(input.key),prior=db.getCityRecord(guildId,"report",key);if(prior) return prior;
-  if(input.from_type!=="npc") throw new Error("Institution report requires an explicit NPC source; employee knowledge is not shared automatically.");
-  const proxy=activeCityProxy(db,guildId,input.from_key);
-  if(proxy&&input.proxy_consent_by!==proxy.discord_user_id) throw new Error("Human NPC proxy consent is required for this report.");
-  const known=db.getNpcKnowledge(guildId,input.from_key,input.information_key);
-  if(!known||known.belief_state==="unknown") throw new Error("Reporter does not know the cited information.");
-  if(input.authorized!==true) throw new Error("An authorized report/record transfer must be established explicitly.");
-  return db.transaction(()=>{
-    const after=db.saveCityRecord(guildId,{kind:"report",key,actor_key:input.institution,source_event:input.source_event,
-      data:{from_type:"npc",from_key:input.from_key,information_key:input.information_key,content:known.content,
-        belief_state:known.belief_state,confidence:known.confidence,mechanism:cityKey(input.mechanism||"filed_report"),subjective:true}});
-    cityAudit(db,guildId,"institution_report",key,null,after,actorId);return after;
-  });
-}
-export function addWorldLink(...args){return core().addWorldLink(...args);}
 
-export function inspectInstitutionAction(...args){return core().inspectInstitutionAction(...args);}
-export function submitInstitutionAction(...args){return core().submitInstitutionAction(...args);}
-export function reviewInstitutionAction(...args){return core().reviewInstitutionAction(...args);}
+
 export const CITY_FEATURE_FLAGS=Object.freeze(["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
     "autonomous_pvp_fear",
     "pvp_private_ui",
@@ -57,15 +33,11 @@ export function configureCityFlags(db,guildId,input,actorId){
   });
 }
 /** Deterministic bounded Institution Director: validated queued intent, no new per-actor LLM calls. */
-export function executeInstitutionAction(...args){return core().executeInstitutionAction(...args);}
-export function runInstitutionDirector(...args){return core().runInstitutionDirector(...args);}
 export {establishCommitment} from './frameworks/world/public.js';
 export function cityContext(...args){return worldCityContext(...args);}
 export function proposeCityOpportunity(...args){return worldProposeCityOpportunity(...args);}
 
-import {createCityCoreRules,INSTITUTION_ACTIONS,requireCitySource,cityStrings,requireCityRecord} from './frameworks/world/public.js';
 export {INSTITUTION_ACTIONS,requireCitySource,cityStrings,requireCityRecord} from './frameworks/world/public.js';
-let worldCore;
-function core(){return worldCore??=createCityCoreRules({capabilities:{assertInstitutionDelegation:(...args)=>assertInstitutionDelegation(...args),assertWorldActorControl:(...args)=>assertWorldActorControl(...args),assertServiceAccess:(...args)=>assertServiceAccess(...args),nativeWorldOperationAllows:(...args)=>nativeWorldOperationAllows(...args),nativeWorldStrategyStepAllowed:(...args)=>nativeWorldStrategyStepAllowed(...args)}});}
-
 import {cityContext as worldCityContext,proposeCityOpportunity as worldProposeCityOpportunity} from './frameworks/world/public.js';
+
+export {updateCityCore,assignDistrictLocation,addWorldLink,inspectInstitutionAction,submitInstitutionAction,reviewInstitutionAction,executeInstitutionAction,runInstitutionDirector,fileInstitutionReport} from './frameworks/world/public.js';

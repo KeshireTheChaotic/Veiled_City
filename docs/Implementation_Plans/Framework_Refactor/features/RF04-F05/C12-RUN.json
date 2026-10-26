@@ -1,0 +1,138 @@
+{
+  "feature": "RF04-F05-C12",
+  "status": "SCOPED_WORLD_CIVIC_SERVICE_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+  "base_head": "adb0aa7c2451cc46d093122f97ef44f9d98188cc",
+  "changed_files": {
+    "base_head": "adb0aa7c2451cc46d093122f97ef44f9d98188cc",
+    "syntax_checked": 6,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/civic-service-source.js",
+        "sha256": "07efb5c57cc8331d2933e5e4c4355c5ac1dd242e494cebcac0a95dd20ffc37e5"
+      },
+      {
+        "path": "bot/src/frameworks/world/institution-report.js",
+        "sha256": "7c4e1ad3bd50d6c25e1b1f63f0cf2657e83f60c86e2953d2e333fafada4b2c42"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "cef2092f7fc03d60627920a675b657afd07ebf6d187b4200d2091e93385d09fb"
+      },
+      {
+        "path": "bot/src/city-core.js",
+        "sha256": "3c64c4e061b3edf9b778824cf2101468936f3d2aa1a6a38d011e9d56deb6443c"
+      },
+      {
+        "path": "bot/src/supply-dependencies.js",
+        "sha256": "eb5190ea60290e63c8f3b89034a55c821df2931910ca8db52afc76407fdf4de8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "sha256": "8f6aecaec548df502474588086e38b023e634a0b38ab051e252b314132db5c0c"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+      }
+    ]
+  },
+  "body": {
+    "report_sha256": "ddf9b40a5cbd994892fb41a10b7f2999887a89db45d3197ee9405e1517b6b9ce",
+    "exact_body_preserved": true
+  },
+  "tests": {
+    "initial": {
+      "duration_ms": 2752.7417,
+      "exit_code": 1,
+      "end": "2026-10-26T19:52:56.8095136Z",
+      "run_id": "RF04-F05-C12-20261026-1",
+      "start": "2026-10-26T19:52:54.0567719Z",
+      "files": 2,
+      "tests": 14,
+      "passed": 13,
+      "failed": 1,
+      "tap_duration_ms": 2698.7225
+    },
+    "repair": {
+      "start": "2026-10-26T19:53:23.5362348Z",
+      "exit_code": 0,
+      "duration_ms": 1066.0642,
+      "end": "2026-10-26T19:53:24.6022990Z",
+      "test_sha256": "7B00130B3E1A5A59488E78259E3AE627AA2A641ECEF157517A3C52A92C430FF5",
+      "run_id": "RF04-F05-C12-20261026-repair",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "tap_duration_ms": 1012.0927
+    },
+    "reason": "Civic root source changed; affected C11 file reran whole7/7. C12 report case used null instead of actual absent-fact undefined; repaired only failed case and completed its actual proxy-consent checks. Six C12 cases passed initial bytes; no whole-final-file union claimed."
+  },
+  "syntax": {
+    "checked": 6,
+    "passed": 6,
+    "repaired_test": 1
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 633,
+      "unowned": 0,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
+      "cycleComponents": 1,
+      "largestCycle": 172,
+      "rawViolationOccurrences": 2295,
+      "acceptedLegacyOccurrences": 2295,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 633,
+      "unowned": 0,
+      "importOccurrences": 2860,
+      "internalImportOccurrences": 2683,
+      "cycleComponents": 1,
+      "largestCycle": 172,
+      "rawViolationOccurrences": 2295,
+      "acceptedLegacyOccurrences": 1426,
+      "activeViolationGroups": 865,
+      "transitionErrors": 865,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "ownership": "Original institutional/supply factories now composed once in World; NPC evidence still through existing exact consumer, controls from World runtime; institutional report method extracted verbatim. No new grants or native authority.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "No decrease in raw migration records for this slice: core flag configuration still consumes Narrative expansion metadata and legacy compatibility roots remain. Do not treat service composition as completed module/phase migration.",
+    "Upstream NPC evidence composition and native committed action/replay pipelines remain separate obligations.",
+    "No live service/Discord/production recovery or narrative-quality certification."
+  ],
+  "rollback": "Revert C12 civic/report source and root aliases/public exports together. Native data, audits, transfer rows and appointment receipts unchanged. No transition restoration needed.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c12-tests.log",
+      "sha256": "ada9807ef4377ad0bfdd20b7ec6d185da1921bd38a0cd97d8f2c9cdf373ccf0f"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c12-repair.log",
+      "sha256": "3edcc76bee80edcbdfe0fd3ccac74a6e163d12f9ba013a4eb76adbf8f7cb2fcd"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c12-architecture-initial.log",
+      "sha256": "553b824d155a8742bc256098ddf2bc190aedba9fbc0c0523da692878b2f69a68"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c12-rf05-final.log",
+      "sha256": "4f910925e931f0cf37358ac99b4748f219c84dbc838bfa87175aa72a94fafb60"
+    }
+  ]
+}

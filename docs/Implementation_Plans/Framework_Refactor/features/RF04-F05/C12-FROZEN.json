@@ -1,0 +1,34 @@
+{
+  "base_head": "adb0aa7c2451cc46d093122f97ef44f9d98188cc",
+  "syntax_checked": 6,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/civic-service-source.js",
+      "sha256": "07efb5c57cc8331d2933e5e4c4355c5ac1dd242e494cebcac0a95dd20ffc37e5"
+    },
+    {
+      "path": "bot/src/frameworks/world/institution-report.js",
+      "sha256": "7c4e1ad3bd50d6c25e1b1f63f0cf2657e83f60c86e2953d2e333fafada4b2c42"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "cef2092f7fc03d60627920a675b657afd07ebf6d187b4200d2091e93385d09fb"
+    },
+    {
+      "path": "bot/src/city-core.js",
+      "sha256": "3c64c4e061b3edf9b778824cf2101468936f3d2aa1a6a38d011e9d56deb6443c"
+    },
+    {
+      "path": "bot/src/supply-dependencies.js",
+      "sha256": "eb5190ea60290e63c8f3b89034a55c821df2931910ca8db52afc76407fdf4de8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+      "sha256": "8f6aecaec548df502474588086e38b023e634a0b38ab051e252b314132db5c0c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+      "sha256": "48bffd0defc7607b6e91a232b7788ec9020eeaee3dc41fd099f28dfea809ac6a"
+    }
+  ]
+}

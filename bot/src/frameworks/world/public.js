@@ -46,3 +46,5 @@ export {createWorldPrincipalConsumer,worldConversationPrincipal} from './contrac
 export {worldActorControl,assertWorldActorControl,assertNpcAvailability,npcAvailability,assertInstitutionDelegation,assertQueuedCompatibility,nativeWorldCoordinatorReady,nativeWorldOperationCatalog,prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldStrategyAllowed,nativeWorldStrategyScope,withNativeStrategyExecution,nativeWorldStrategyStepAllowed} from './execution-source.js';
 export {createWorldOwnerConsentConsumer,worldOwnerConsent} from './contracts/owner-consent.js';
 export {establishCommitment} from './commitment-source.js';
+export {validateServiceAccess,assertServiceAccess,transferSupply,updateCityCore,assignDistrictLocation,addWorldLink,inspectInstitutionAction,submitInstitutionAction,reviewInstitutionAction,executeInstitutionAction,runInstitutionDirector} from './civic-service-source.js';
+export {fileInstitutionReport} from './institution-report.js';
