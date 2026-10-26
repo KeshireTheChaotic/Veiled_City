@@ -1059,12 +1059,12 @@
         {
           "from": "world",
           "to": "daggerheart",
-          "contract": "Exact existing current source/profile/audience/presence/established fact/GM opportunity capabilities; source providers retain their old obligations."
+          "contract": "Exact existing current source/profile/audience/presence/established fact/GM opportunity capabilities; source providers retain their old obligations. World scheduling consumes original Daggerheart actor classification."
         },
         {
           "from": "daggerheart",
           "to": "world",
-          "contract": "Original native checked scene-effect/receipt API and read-only historical/current projections; no PC authority, rule or transaction copied into adapter."
+          "contract": "Original native checked scene-effect/receipt API and read-only historical/current projections; no PC authority, rule or transaction copied into adapter. Daggerheart classification consumes read-only World current proxy evidence."
         }
       ],
       "source_evidence": [
@@ -1085,11 +1085,13 @@
       "lifecycle": "One fixed world consumer accepts its own registered source factory; application composition maps that source capability through the native/world pair at index bootstrap before runtime services. No database/model/client/world mutation during composition. Native historical receipts and original APIs retained; standalone readers require explicit initialization.",
       "adoption_feature": "RF03-F05",
       "consumers": [
-        "bot/src/application/composition/environment-scene.js"
+        "bot/src/application/composition/environment-scene.js",
+        "bot/src/application/composition/world-actor-control.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1112,7 +1114,7 @@
         "occurrences": 158
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--world/public.js",
-      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable."
+      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open."
     },
     {
       "pair": "discord--narrative",

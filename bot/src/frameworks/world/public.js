@@ -39,3 +39,5 @@ export {ACTION_TYPES,MAJOR_IMPACTS} from './action-catalog.js';
 export {npcActionSchema} from './npc-action-schema.js';
 export {createWorldKnowledgeConsumer,worldKnowledgeSources} from './contracts/knowledge-records.js';
 export {createWorldIdentityOrigin,worldIdentityOrigin} from './identity-origin.js';
+export {createWorldActorControlConsumer,worldNativeActorControl} from './contracts/actor-control.js';
+export {activeCityProxy} from './active-proxy.js';

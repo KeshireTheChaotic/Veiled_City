@@ -12,3 +12,4 @@ export {initializeSessionWorldEvents} from './session-world-events.js';
 export {initializeNarrativeWorld} from './narrative-world.js';
 export {initializeKnowledgeWorld} from './knowledge-world.js';
 export {initializeKnowledgeNarrative} from './knowledge-narrative.js';
+export {initializeWorldActorControl} from './world-actor-control.js';

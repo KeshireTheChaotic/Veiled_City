@@ -1,0 +1,83 @@
+TAP version 13
+# Subtest: fixed consumers require native functions and reject replacement without changing result/error identity
+ok 1 - fixed consumers require native functions and reject replacement without changing result/error identity
+  ---
+  duration_ms: 0.8251
+  type: 'test'
+  ...
+# Subtest: actual native player classification cannot be relabeled as autonomous NPC or cross-campaign authority
+not ok 2 - actual native player classification cannot be relabeled as autonomous NPC or cross-campaign authority
+  ---
+  duration_ms: 158.1056
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c08.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: 'FOREIGN KEY constraint failed'
+  code: 'ERR_SQLITE_ERROR'
+  stack: |-
+    VeiledDB.createCharacter (file:///D:/Library/Development/Veiled_City/bot/src/db.js:765:8)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs:26:30)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: current active proxy overrides autonomy and cannot leak between sessions or campaigns
+ok 3 - current active proxy overrides autonomy and cannot leak between sessions or campaigns
+  ---
+  duration_ms: 182.3838
+  type: 'test'
+  ...
+# Subtest: native explicit ownership, unsupported identities and dead NPC rules are unchanged
+ok 4 - native explicit ownership, unsupported identities and dead NPC rules are unchanged
+  ---
+  duration_ms: 229.8218
+  type: 'test'
+  ...
+# Subtest: real rollback restores proxy eligibility and native revisions; successful assignment survives reopen
+not ok 5 - real rollback restores proxy eligibility and native revisions; successful assignment survives reopen
+  ---
+  duration_ms: 163.5903
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c08.test.mjs:43:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The validation function is expected to return "true". Received false
+    
+    Caught error:
+    
+    TypeError: f.db.db.transaction is not a function
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs:45:9)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: native and historical readers share classification identity without reads creating receipts or state
+ok 6 - native and historical readers share classification identity without reads creating receipts or state
+  ---
+  duration_ms: 169.3886
+  type: 'test'
+  ...
+# Subtest: actual bootstrap binds control before services and pair imports exactly its two public frameworks
+ok 7 - actual bootstrap binds control before services and pair imports exactly its two public frameworks
+  ---
+  duration_ms: 0.6378
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 5
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1737.1685

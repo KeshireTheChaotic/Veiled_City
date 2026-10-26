@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C07 existing-identity retrieval",
-  "timestamp": "2026-10-26T19:36:36.963Z",
+  "checkpoint": "after C08 native actor-control cycle isolation",
+  "timestamp": "2026-10-26T19:40:11.394Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "c50625541745f264cba035d92185fcbc56a5d8c319b925ba325e2e80afad8d0f",
-  "open_exact_records": 2376,
+  "manifest_sha256": "283765e5502d169df07f48532cef388a606d26fb76b5d8703394ed47075c6b40",
+  "open_exact_records": 2362,
   "by_feature": {
-    "RF05-F05": 440,
+    "RF05-F05": 433,
     "RF04-F04": 268,
-    "RF05-F02": 250,
+    "RF05-F02": 249,
     "RF05-F03": 289,
     "RF04-F03": 117,
-    "RF04-F01": 390,
+    "RF04-F01": 384,
     "RF06-F02": 17,
     "RF04-F05": 115,
     "RF06-F07": 5,
@@ -34,6 +34,20 @@
       "target_owner": null,
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "LEGACY_MODULE_LOCATION"
+    },
+    {
+      "id": "ea2713b0ddca9864e2fa99df76f1ab0d0ec1116501432528f298ef8ea4a7c957",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-constraints.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "d8e9919fecc1643e7902ba708cfec1a23913052e85efb15f5476cd7be76c5236",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
       "id": "472df6a4c3b965f94de31e10addf52f3a021843310becaab3c25f49691cf2d60",
@@ -120,6 +134,20 @@
       "action": "IMPORTS_PRIVATE_API"
     },
     {
+      "id": "ae35fb8176b99d1827455dd20fa3b4cca9d57b82b2050232fe11e5f96020d072",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/native-actor-control.js",
+      "to": "bot/src/city-constraints.js",
+      "owner": "daggerheart",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "bd8dbaba062a4dffa9f749ee80939eb76ac4fe1f7044522af2788811e592cf54",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
       "id": "b7ee75d1ad9903b6f4aea58bd87b13a27c2f4c436434401ba26f44e55a937907",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -204,6 +232,146 @@
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
+      "id": "b707cb120704abfd0084a18e45771626f45ef5cb2d4475cfcf351ef9b35bb7f6",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-constraints.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "d8e9919fecc1643e7902ba708cfec1a23913052e85efb15f5476cd7be76c5236",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "718c2175835ed9cf31f3cd09ab5a688ca36661ce4cacf38fbf634e8d530e2bb4",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/gm-action-capability.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "f27ff0ea45ff0180fca6fd2adf21d0f4936ba5fb833f17ad0009d13348156667",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "042877d12fa62d8f6492545765a7c9706402ffc07597cb15000aa0f4bd1000b1",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/native-actor-control.js",
+      "to": "bot/src/city-constraints.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "bd8dbaba062a4dffa9f749ee80939eb76ac4fe1f7044522af2788811e592cf54",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "49df11b09332548a229b57bb1a737027433b55d46741300212c15e6c871b3852",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-adversary-context.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "2ad6db019ac5f65db72389736e061b1db731ce4f58286f0a93910e4f2700441f",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "365994136424e5e70a75d8036c37e38cd13ac64158395ccd369f7b9a99027bd4",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-encounter-activation.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "b87cd22498704fccecf09902ca21047785aa272aa367236958297cfebb00a970",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "a72aef975fa36ea6911e2507a277e75813c0109353c499eac3488a9b01f55e07",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "a6c3e5dc34bfa7f77fbfda3a7caf65dcd08d20b4985459a634e3145ac8c9ac26",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-equipped-attacks.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9cb177bf8416d1f2d375cdf241876ab9ef00a72d1f8cc8b55387ad127c4e13c6",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "3cce0fecac81293383232556c4501d37987d40a419a7cb322113830b440c5ea5",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-stress-passives.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "4f32d720dec59f5026892cf8b089562d058c7fe846ab7c30e200827be27fd6a0",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "0dd458a2d7a7bcb984ebb309e746d695b4a9060f2a0734923ca382d4e202d901",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-unarmed-attacks.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "b79804d9f50f6a86a1bfbe499643843eb3bc487a6b3a943624cda7da27a2e2e8",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "cbca799b1161e099727512d5b0b77dae40a7498103554654d7deb7e0ec523cbe",
+      "feature": "RF05-F02",
+      "deadline": "RF05",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "intent",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "5e22d2403e21107dc81bafaab67964f8d62a9752908c3ef1f552532f5f3639db",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "314d1242e42dbdbba15a5734e8975d3c4629ce452dffc999dc0ff8241a890149",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -230,72 +398,100 @@
       "target_owner": "narrative",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "78b160ccd5303d3e6ee6277aa736002e809f5757cfe49e1f7f23d46e0aecdffa",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-encounter-beats.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "cd59630150dca3122a1f83ea19c800809283dd0b1d585caac781deb96a665abc",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "c123f2d088c4b7e121b0817012123dafc86718380eda571f095285cd8de0d6ac",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/native-actor-control.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
     }
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 615,
+      "sourceModules": 620,
       "unowned": 0,
-      "importOccurrences": 2820,
-      "internalImportOccurrences": 2643,
+      "importOccurrences": 2830,
+      "internalImportOccurrences": 2653,
       "cycleComponents": 1,
-      "largestCycle": 181,
-      "rawViolationOccurrences": 2396,
-      "acceptedLegacyOccurrences": 2396,
+      "largestCycle": 180,
+      "rawViolationOccurrences": 2382,
+      "acceptedLegacyOccurrences": 2382,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 615,
+      "sourceModules": 620,
       "unowned": 0,
-      "importOccurrences": 2820,
-      "internalImportOccurrences": 2643,
+      "importOccurrences": 2830,
+      "internalImportOccurrences": 2653,
       "cycleComponents": 1,
-      "largestCycle": 181,
-      "rawViolationOccurrences": 2396,
-      "acceptedLegacyOccurrences": 2396,
+      "largestCycle": 180,
+      "rawViolationOccurrences": 2382,
+      "acceptedLegacyOccurrences": 2382,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 615,
+      "sourceModules": 620,
       "unowned": 0,
-      "importOccurrences": 2820,
-      "internalImportOccurrences": 2643,
+      "importOccurrences": 2830,
+      "internalImportOccurrences": 2653,
       "cycleComponents": 1,
-      "largestCycle": 181,
-      "rawViolationOccurrences": 2396,
-      "acceptedLegacyOccurrences": 1453,
-      "activeViolationGroups": 938,
-      "transitionErrors": 938,
+      "largestCycle": 180,
+      "rawViolationOccurrences": 2382,
+      "acceptedLegacyOccurrences": 1445,
+      "activeViolationGroups": 932,
+      "transitionErrors": 932,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 615,
+      "sourceModules": 620,
       "unowned": 0,
-      "importOccurrences": 2820,
-      "internalImportOccurrences": 2643,
+      "importOccurrences": 2830,
+      "internalImportOccurrences": 2653,
       "cycleComponents": 1,
-      "largestCycle": 181,
-      "rawViolationOccurrences": 2396,
+      "largestCycle": 180,
+      "rawViolationOccurrences": 2382,
       "acceptedLegacyOccurrences": 421,
-      "activeViolationGroups": 1960,
-      "transitionErrors": 1960,
+      "activeViolationGroups": 1946,
+      "transitionErrors": 1946,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 615,
+      "sourceModules": 620,
       "unowned": 0,
-      "importOccurrences": 2820,
-      "internalImportOccurrences": 2643,
+      "importOccurrences": 2830,
+      "internalImportOccurrences": 2653,
       "cycleComponents": 1,
-      "largestCycle": 181,
-      "rawViolationOccurrences": 2396,
+      "largestCycle": 180,
+      "rawViolationOccurrences": 2382,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2376,
-      "transitionErrors": 2376,
+      "activeViolationGroups": 2362,
+      "transitionErrors": 2362,
       "pass": false
     }
   },
@@ -392,7 +588,7 @@
     {
       "path": "bot/src/application/composition/public.js",
       "owner": "application",
-      "sha256": "24703e0ccc685d7120986f7aabd5b9a95e45977c4b7d68ced671b02428505070"
+      "sha256": "544b6c97bc2725948b16a79e876c7b609887fe42fb9f8d756b49728c9f598fd7"
     },
     {
       "path": "bot/src/application/composition/pvp-agreements.js",
@@ -403,6 +599,11 @@
       "path": "bot/src/application/composition/session-world-events.js",
       "owner": "application",
       "sha256": "a9b1bf158d4da59cae099182928056476d0207c4305001fb8a3db2bb325eea74"
+    },
+    {
+      "path": "bot/src/application/composition/world-actor-control.js",
+      "owner": "application",
+      "sha256": "f2079bb35af2474d6aa4a14dfc4386bdc832a93ef95abc27de22e8a656c89946"
     },
     {
       "path": "bot/src/application/workflows/state-mutation-results.js",
@@ -517,7 +718,7 @@
     {
       "path": "bot/src/city-constraints.js",
       "owner": "world",
-      "sha256": "d8e9919fecc1643e7902ba708cfec1a23913052e85efb15f5476cd7be76c5236"
+      "sha256": "51ad15ed4f9796ffdeed5451678429c5118f57565caa8e3b609ba38e405633d9"
     },
     {
       "path": "bot/src/city-core.js",
@@ -727,7 +928,7 @@
     {
       "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
       "owner": "daggerheart--world",
-      "sha256": "126bd8874f6df2dc527cdd5dbb3b3a2f5b5ff169e406accfc04b35c984961d8e"
+      "sha256": "860647e50478d769dfacf5937b7cac039496e7db321f177625efc51c04b1312b"
     },
     {
       "path": "bot/src/framework-to-framework/discord--publication/public.js",
@@ -845,6 +1046,11 @@
       "sha256": "9242cc8076ccb1c801e015a1b2852dd20c272e022789fc9eeab40d3b2a918a7e"
     },
     {
+      "path": "bot/src/frameworks/daggerheart/actor-control-source.js",
+      "owner": "daggerheart",
+      "sha256": "2102072b2c6f549cf1476572bb3b6315edbd22535f76da57375d91c4b0affc2b"
+    },
+    {
       "path": "bot/src/frameworks/daggerheart/advancement.js",
       "owner": "daggerheart",
       "sha256": "ef0a2f6ddcd2f04f1709c99d82fe3b2230207e83fbb31891f495a562ff026e25"
@@ -903,6 +1109,11 @@
       "path": "bot/src/frameworks/daggerheart/consequence-reconciliation-rules.js",
       "owner": "daggerheart",
       "sha256": "e322339c17eabfc26bbfab7490d83af4665d699afc08b8aa547e11760db5efba"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/world-proxy.js",
+      "owner": "daggerheart",
+      "sha256": "ddf47a630a93394ce8587eb3c40e87ba9f7b52d6c4ab47e49c979229a3c36ea8"
     },
     {
       "path": "bot/src/frameworks/daggerheart/defensive-feature-rules.js",
@@ -1287,7 +1498,7 @@
     {
       "path": "bot/src/frameworks/daggerheart/public.js",
       "owner": "daggerheart",
-      "sha256": "dcffac639e40dcd31b6d0deb9dd17367ebd461fc50914df2dea1ab48050c5e41"
+      "sha256": "584cf6ef23eedbc7618da98ea09ce84c719c9495ed245c1e3525a15b01520d7a"
     },
     {
       "path": "bot/src/frameworks/daggerheart/pvp-agreement-rules.js",
@@ -1950,6 +2161,11 @@
       "sha256": "f312c2f7bdbb6644e70f9b8c07c816da78fd1b81ac0cc20918c6ebee2cf5b534"
     },
     {
+      "path": "bot/src/frameworks/world/active-proxy.js",
+      "owner": "world",
+      "sha256": "c238f7f5ed22d850168c09a0e8ab536b0eb05338db57aed5a3a1c50b1ab99be7"
+    },
+    {
       "path": "bot/src/frameworks/world/authorship.js",
       "owner": "world",
       "sha256": "efd4a4965e17fc7f7898c81ffa815c0335776d6fcc987cdfbe52cb8d8fde7375"
@@ -1998,6 +2214,11 @@
       "path": "bot/src/frameworks/world/consequences.js",
       "owner": "world",
       "sha256": "8c78475429b968ad959e45a4023b66c9de9744ddc0631d945e51b92fcb8fe520"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/actor-control.js",
+      "owner": "world",
+      "sha256": "88895cfb1587bb8bf3f8104a6b3e57a89a15e7261c462666b37831a9701442cc"
     },
     {
       "path": "bot/src/frameworks/world/contracts/environment-scene.js",
@@ -2077,7 +2298,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "73c4b4d636670a7b97aea2dafee915f966d123289b46e97c474a20cf5b73eb88"
+      "sha256": "fb7755553b1829b78ce71450199e82fbbf8b78dae13cecda1d7ca2d5cd643f2f"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -2212,7 +2433,7 @@
     {
       "path": "bot/src/index.js",
       "owner": "bootstrap",
-      "sha256": "39c63a14cbfc2d7e1e24c80310527264366c6e88f9ea7218ad455050b85fe1f3"
+      "sha256": "f828d86b4c2a3ad679621007a75749eea7482e3aff1c2b2dea89b499897b1e41"
     },
     {
       "path": "bot/src/kernel/application-authority.js",
@@ -2402,7 +2623,7 @@
     {
       "path": "bot/src/native-actor-control.js",
       "owner": "daggerheart",
-      "sha256": "bd8dbaba062a4dffa9f749ee80939eb76ac4fe1f7044522af2788811e592cf54"
+      "sha256": "0b2b4f5acc25491c129457ec38efe01b9ac94817206c5c08294d87e92217c77d"
     },
     {
       "path": "bot/src/native-adversary-context.js",

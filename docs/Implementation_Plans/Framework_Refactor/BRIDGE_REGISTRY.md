@@ -1,6 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the current C07 checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 13 ADOPTED, 48 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the current C08 checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 13 ADOPTED, 48 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -25,7 +25,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | daggerheart--persistence | PROPOSED_NO_API | persistence → daggerheart; daggerheart → persistence | 0 / 0 | RF03 |
 | daggerheart--publication | ADOPTED | daggerheart → publication; publication → daggerheart | 1 / 1 | RF03-F05 |
 | daggerheart--session | PROPOSED_NO_API | daggerheart → session; session → daggerheart | 0 / 0 | RF03 |
-| daggerheart--world | ADOPTED | world → daggerheart; daggerheart → world | 1 / 2 | RF03-F05 |
+| daggerheart--world | ADOPTED | world → daggerheart; daggerheart → world | 2 / 3 | RF03-F05 |
 | discord--narrative | PROPOSED_NO_API | discord → narrative | 0 / 0 | RF05 |
 | discord--operations | PROPOSED_NO_API | discord → operations; operations → discord | 0 / 0 | RF06 |
 | discord--persistence | PROPOSED_NO_API | discord → persistence | 0 / 0 | RF06 |

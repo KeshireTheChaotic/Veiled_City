@@ -2,11 +2,8 @@
 import { delegationPolicy } from "./ai-intents.js";
 import {StateConflictError} from "./kernel/errors.js";
 import {nativeWorldStrategyStepAllowed} from './native-world-operations.js';
-import {nativeActorControl} from './native-actor-control.js';
-export function activeCityProxy(db,guildId,key){
-  const session=db.getActiveSession(guildId);
-  return session?db.listNpcProxies(session.id,{statuses:["active"]}).find(row=>row.npc_key===key):null;
-}
+import {activeCityProxy,worldNativeActorControl} from './frameworks/world/public.js';
+export {activeCityProxy} from './frameworks/world/public.js';
 /** Negative ownership boundary, not an execution grant. Native domain/source/cost checks remain mandatory. */
 export function worldActorControl(...args){return availability().worldActorControl(...args);}
 export function assertWorldActorControl(...args){return availability().assertWorldActorControl(...args);}
@@ -18,4 +15,4 @@ export function assertQueuedCompatibility(...args){return availability().assertQ
 
 import {createWorldAvailability} from './frameworks/world/public.js';
 let worldAvailability;
-function availability(){return worldAvailability??=createWorldAvailability({nativeActorControl:(...args)=>nativeActorControl(...args),activeCityProxy:(...args)=>activeCityProxy(...args),delegationPolicy:(...args)=>delegationPolicy(...args),nativeWorldStrategyStepAllowed:(...args)=>nativeWorldStrategyStepAllowed(...args)});}
+function availability(){return worldAvailability??=createWorldAvailability({nativeActorControl:(...args)=>worldNativeActorControl.nativeActorControl(...args),activeCityProxy:(...args)=>activeCityProxy(...args),delegationPolicy:(...args)=>delegationPolicy(...args),nativeWorldStrategyStepAllowed:(...args)=>nativeWorldStrategyStepAllowed(...args)});}

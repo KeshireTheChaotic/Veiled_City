@@ -5,3 +5,11 @@ export function connectEnvironmentScene({capabilities,consumer=createEnvironment
  const native=createEnvironmentSceneRules({capabilities});
  return consumer.bind(native);
 }
+
+import {nativeActorControl,nativeWorldProxy} from '../../frameworks/daggerheart/public.js';
+import {activeCityProxy,worldNativeActorControl} from '../../frameworks/world/public.js';
+/** Native classification and read-only current proxy evidence retain their original owners. */
+export function connectWorldActorControl(){
+ nativeWorldProxy.bind(activeCityProxy);
+ return worldNativeActorControl.bind(nativeActorControl);
+}

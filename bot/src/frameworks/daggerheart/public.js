@@ -113,3 +113,6 @@ export {createMechanicalOutcomeProjection} from './mechanical-outcome-projection
 export {createEnvironmentProfileProposalRules} from './environment-profile-proposal-rules.js';
 
 export {createCharacterCreationRules} from './character-creation-rules.js';
+
+export {createNativeWorldProxyConsumer,nativeWorldProxy} from './contracts/world-proxy.js';
+export {nativeActorControl} from './actor-control-source.js';
