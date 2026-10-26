@@ -1,6 +1,8 @@
 # RF04-F05 C10 ledger
 
-IMPLEMENTATION IN PROGRESS. World source functions remain original; Session scene rules/cache unchanged. NPC observation and native condition producer responsibilities retained for separate decomposition. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `107675c1ed789a54738cc3f56a89101433bb0d56`. Status: SCOPED_SESSION_SCENE_WORLD_SOURCES_QUALIFIED. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. World source functions remain original; Session scene rules/cache unchanged. NPC observation and native condition producer responsibilities retained for separate decomposition. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C10 descriptive Session scene World sources
 

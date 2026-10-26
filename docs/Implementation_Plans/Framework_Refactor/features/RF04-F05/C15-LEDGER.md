@@ -1,6 +1,8 @@
 # RF04-F05 C15 ledger
 
-IMPLEMENTATION IN PROGRESS. NPC retains subjective evidence and goal rules; World retains availability/policy/native operations, native control Daggerheart. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `0169ee038d27ed6901e964eba837627effb866c5`. Status: SCOPED_NPC_MOTIVATION_RUNTIME_QUALIFIED. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. NPC retains subjective evidence and goal rules; World retains availability/policy/native operations, native control Daggerheart. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C15 NPC-owned evidence/goal runtime
 

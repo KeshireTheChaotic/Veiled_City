@@ -1,6 +1,8 @@
 # RF04-F05 C08 ledger
 
-IMPLEMENTATION IN PROGRESS. No test result yet. Native rule owner Daggerheart; current proxy evidence query owner World; adapter only those two owners. Provider0, Codex UNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `68e120468cb5cee7979aec9e3c877cb802638ba6`. Status: SCOPED_NATIVE_ACTOR_CONTROL_BOUNDARY_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE. C09 union passed unchanged final C08 file7/7 after associated World service changed. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. No test result yet. Native rule owner Daggerheart; current proxy evidence query owner World; adapter only those two owners. Provider0, Codex UNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C08 native World actor-control integration
 

@@ -1,6 +1,8 @@
 # RF04-F05 C13 ledger
 
-IMPLEMENTATION IN PROGRESS. World owns resolver cost and read-only receipt core. Audience projection stays mixed. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `602f0268b056d24d73f3ee72527f1dc3cc428a3b`. Status: SCOPED_NATIVE_SIMULATION_RECEIPT_CORE_QUALIFIED. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. World owns resolver cost and read-only receipt core. Audience projection stays mixed. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C13 native World simulation receipt core
 

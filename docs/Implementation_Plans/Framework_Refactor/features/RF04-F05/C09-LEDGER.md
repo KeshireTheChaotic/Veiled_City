@@ -1,6 +1,8 @@
 # RF04-F05 C09 ledger
 
-IMPLEMENTATION IN PROGRESS. Qualification pending. World owns one availability/operation engine; Intent owns policy getter, Session owns role checks. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `e0390a9f130afddea61170e90b2ec47b16377e62`. Status: SCOPED_SINGLE_WORLD_RUNTIME_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. Qualification pending. World owns one availability/operation engine; Intent owns policy getter, Session owns role checks. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C09 single World scheduling and operation authority
 

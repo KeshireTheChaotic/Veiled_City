@@ -1,6 +1,8 @@
 # RF04-F05 C07 execution ledger
 
-Status: IMPLEMENTATION IN PROGRESS. Existing-identity retrieval belongs to Knowledge, pure saved World origin validation to World, source visibility to Narrative. Exact two-framework adapters and thin startup wire them. Base `463be846b8d0fedd8055d877c30a5c11f0f4f14d`; preserve all prior edits. No new policy, receipt or player-authority behavior planned.
+Current scoped code checkpoint: `07f1efb99c51ac6e0605a95978363a5e931d3e18`. Status: SCOPED_EXISTING_IDENTITY_RETRIEVAL_QUALIFIED. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): Status: IMPLEMENTATION IN PROGRESS. Existing-identity retrieval belongs to Knowledge, pure saved World origin validation to World, source visibility to Narrative. Exact two-framework adapters and thin startup wire them. Base `463be846b8d0fedd8055d877c30a5c11f0f4f14d`; preserve all prior edits. No new policy, receipt or player-authority behavior planned.
 
 Qualification pending. Provider0tokens0cost$0; Codex UNMEASURED. Rollback reader extraction/factory delegation, new fixed ports/source/pair, startup/GM/old-reader/public/registry edits and exact retired transitions together; preserve all saved formats and original seeded-context authority. RELEASE NOT AUTHORIZED.
 

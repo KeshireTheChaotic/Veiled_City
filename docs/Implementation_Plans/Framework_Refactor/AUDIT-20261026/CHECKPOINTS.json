@@ -1,0 +1,141 @@
+{
+  "branch": "codex/clean-ai-gm-2026-10",
+  "through_head": "0169ee038d27ed6901e964eba837627effb866c5",
+  "slices": [
+    {
+      "slice": "RF04-F05-C07",
+      "implementation_commit": "07f1efb99c51ac6e0605a95978363a5e931d3e18",
+      "status": "SCOPED_EXISTING_IDENTITY_RETRIEVAL_QUALIFIED",
+      "evidence": "features/RF04-F05/C07-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C08",
+      "implementation_commit": "68e120468cb5cee7979aec9e3c877cb802638ba6",
+      "status": "SCOPED_NATIVE_ACTOR_CONTROL_BOUNDARY_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+      "evidence": "features/RF04-F05/C08-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification.",
+      "final_file_followup": "C09 union passed unchanged final C08 file7/7 after associated World service changed."
+    },
+    {
+      "slice": "RF04-F05-C09",
+      "implementation_commit": "e0390a9f130afddea61170e90b2ec47b16377e62",
+      "status": "SCOPED_SINGLE_WORLD_RUNTIME_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+      "evidence": "features/RF04-F05/C09-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C10",
+      "implementation_commit": "107675c1ed789a54738cc3f56a89101433bb0d56",
+      "status": "SCOPED_SESSION_SCENE_WORLD_SOURCES_QUALIFIED",
+      "evidence": "features/RF04-F05/C10-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C11",
+      "implementation_commit": "adb0aa7c2451cc46d093122f97ef44f9d98188cc",
+      "status": "SCOPED_NATIVE_OWNER_CONSENT_APPOINTMENTS_QUALIFIED",
+      "evidence": "features/RF04-F05/C11-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C12",
+      "implementation_commit": "1d0bdc67e7f9b4f81184a13f7cf8d6fdba68ce26",
+      "status": "SCOPED_WORLD_CIVIC_SERVICE_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+      "evidence": "features/RF04-F05/C12-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification.",
+      "final_file_followup": "C14 and C15 unions passed unchanged final C12 file7/7 after associated NPC source changed."
+    },
+    {
+      "slice": "RF04-F05-C13",
+      "implementation_commit": "602f0268b056d24d73f3ee72527f1dc3cc428a3b",
+      "status": "SCOPED_NATIVE_SIMULATION_RECEIPT_CORE_QUALIFIED",
+      "evidence": "features/RF04-F05/C13-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    },
+    {
+      "slice": "RF04-F05-C14",
+      "implementation_commit": "d1c3d99e5a4b9cbb7b25e07da5c06859d1a235a7",
+      "status": "SCOPED_NPC_ATTRIBUTION_AND_WORLD_REPORT_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE",
+      "evidence": "features/RF04-F05/C14-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification.",
+      "final_file_followup": "C15 union passed unchanged final C14 file7/7 after associated NPC source changed."
+    },
+    {
+      "slice": "RF04-F05-C15",
+      "implementation_commit": "0169ee038d27ed6901e964eba837627effb866c5",
+      "status": "SCOPED_NPC_MOTIVATION_RUNTIME_QUALIFIED",
+      "evidence": "features/RF04-F05/C15-RUN.json",
+      "qualification": "Frozen working-tree source hashes; preserved unrelated edits mean this is not clean-checkout or release certification."
+    }
+  ],
+  "current": {
+    "RF03": {
+      "sourceModules": 640,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "RF04": {
+      "sourceModules": 640,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 2256,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "RF05": {
+      "sourceModules": 640,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 1418,
+      "activeViolationGroups": 834,
+      "transitionErrors": 834,
+      "pass": false
+    },
+    "RF06": {
+      "sourceModules": 640,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 420,
+      "activeViolationGroups": 1824,
+      "transitionErrors": 1824,
+      "pass": false
+    },
+    "RF07": {
+      "sourceModules": 640,
+      "unowned": 0,
+      "importOccurrences": 2875,
+      "internalImportOccurrences": 2697,
+      "cycleComponents": 1,
+      "largestCycle": 166,
+      "rawViolationOccurrences": 2256,
+      "acceptedLegacyOccurrences": 0,
+      "activeViolationGroups": 2239,
+      "transitionErrors": 2239,
+      "pass": false
+    }
+  },
+  "critical_blockers": [],
+  "release": "NOT_AUTHORIZED"
+}

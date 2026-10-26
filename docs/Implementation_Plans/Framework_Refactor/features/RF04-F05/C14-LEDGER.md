@@ -1,6 +1,8 @@
 # RF04-F05 C14 ledger
 
-IMPLEMENTATION IN PROGRESS. NPC owns acquired-source attribution; World owns native report transfer. Existing native control/source validators unchanged. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `d1c3d99e5a4b9cbb7b25e07da5c06859d1a235a7`. Status: SCOPED_NPC_ATTRIBUTION_AND_WORLD_REPORT_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE. C15 union passed unchanged final C14 file7/7 after associated NPC source changed. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. NPC owns acquired-source attribution; World owns native report transfer. Existing native control/source validators unchanged. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C14 NPC source attribution / native World reports
 

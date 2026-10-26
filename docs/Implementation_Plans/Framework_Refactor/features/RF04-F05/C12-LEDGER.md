@@ -1,6 +1,8 @@
 # RF04-F05 C12 ledger
 
-IMPLEMENTATION IN PROGRESS. World owns original institutional/supply/report rules; NPC retains actor evidence. Core feature flag catalog remains local later integration. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `1d0bdc67e7f9b4f81184a13f7cf8d6fdba68ce26`. Status: SCOPED_WORLD_CIVIC_SERVICE_SOURCE_QUALIFIED_WITH_SPLIT_FIXTURE_EVIDENCE. C14 and C15 unions passed unchanged final C12 file7/7 after associated NPC source changed. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. World owns original institutional/supply/report rules; NPC retains actor evidence. Core feature flag catalog remains local later integration. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C12 World institutional/supply service source
 

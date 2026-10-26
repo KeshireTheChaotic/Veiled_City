@@ -1,6 +1,8 @@
 # RF04-F05 C11 ledger
 
-IMPLEMENTATION IN PROGRESS. Native consent remains Daggerheart; appointments World. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+Current scoped code checkpoint: `adb0aa7c2451cc46d093122f97ef44f9d98188cc`. Status: SCOPED_NATIVE_OWNER_CONSENT_APPOINTMENTS_QUALIFIED. Exact runs and limitations below remain authoritative. This does not close RF04 or qualify release.
+
+Initial execution note (historical): IMPLEMENTATION IN PROGRESS. Native consent remains Daggerheart; appointments World. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
 
 ## 2026-10-26 C11 native owner-consent / World appointments
 
