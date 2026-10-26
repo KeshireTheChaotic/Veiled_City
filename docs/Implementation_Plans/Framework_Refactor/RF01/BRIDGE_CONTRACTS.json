@@ -2188,6 +2188,11 @@
           "from": "knowledge",
           "to": "world",
           "contract": "Knowledge evidence engine consumes exact native event/audit callbacks; rules, provenance, classification and current recipient entitlement remain Knowledge-owned."
+        },
+        {
+          "from": "world",
+          "to": "knowledge",
+          "contract": "World authorship consumes exact Knowledge disclosure and paged native narrative-record functions; no audience widening, new grant or alternative source proof."
         }
       ],
       "source_evidence": [
@@ -2204,14 +2209,15 @@
           "type": "import"
         }
       ],
-      "validation": "Complete native callback identity, no replacement, unchanged synchronous transaction and audit-failure rollback; pure historical evidence reads need no event binding.",
-      "lifecycle": "Fixed inert application initialization before Narrative and services; actual legacy evidence reader delegates to one Knowledge-owned engine.",
+      "validation": "Complete native callback identity, no replacement, unchanged synchronous transaction and audit-failure rollback; pure historical evidence reads need no event binding. Reverse direction preserves exact Knowledge function references, private/campaign/ancestor rejection and v0 saved-origin read-only behavior.",
+      "lifecycle": "Fixed inert application initialization before Narrative and services; actual legacy evidence reader delegates to one Knowledge-owned engine. Existing initializer binds both fixed directions and retains its prior return identity.",
       "adoption_feature": "RF04-F05",
       "consumers": [
         "bot/src/application/composition/knowledge-world.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2234,7 +2240,7 @@
         "occurrences": 32
       },
       "public_api": "bot/src/framework-to-framework/knowledge--world/public.js",
-      "scope": "Evidence event/audit direction only. Other Knowledge/World memory, custody, organization and source integrations remain open."
+      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open."
     },
     {
       "pair": "narrative--npc",

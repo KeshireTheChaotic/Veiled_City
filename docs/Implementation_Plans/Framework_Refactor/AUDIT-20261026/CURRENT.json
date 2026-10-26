@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C03-P04, C23, C05 and Intent C03",
-  "timestamp": "2026-10-26T18:02:01.902Z",
+  "checkpoint": "after C03-P04, C23, C05, Intent C03 and C06",
+  "timestamp": "2026-10-26T18:14:16.791Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "95c7694b42eb3ab4cd8c998eb5ff6fc336c050be87860382d018b6ccea16ef95",
-  "open_exact_records": 2382,
+  "manifest_sha256": "e49834542d22eafa09b39a19e217a737da35a4b72dab8ba693789ab1b09775a7",
+  "open_exact_records": 2380,
   "by_feature": {
     "RF05-F05": 440,
     "RF04-F04": 268,
     "RF05-F02": 250,
     "RF05-F03": 289,
     "RF04-F03": 120,
-    "RF04-F01": 392,
+    "RF04-F01": 390,
     "RF06-F02": 17,
     "RF04-F05": 115,
     "RF06-F07": 5,
@@ -120,6 +120,34 @@
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
+      "id": "31f55e1d9513ec83f83e317aa2a4048649222d7daa794b06e65fee5898e3a230",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/disclosure-authority.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "bf1caa7b7676fa8c96c34eff866113c0c899235f8195848610ccf396237b5bc6",
+      "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "860a7f4a43cac87c68e32ef86f1e44b1f557c62db5e37ebc39ef7f746ea9d23e",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-authorship.js",
+      "to": "bot/src/narrative-records.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "bf1caa7b7676fa8c96c34eff866113c0c899235f8195848610ccf396237b5bc6",
+      "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
       "id": "314d1242e42dbdbba15a5734e8975d3c4629ce452dffc999dc0ff8241a890149",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -150,68 +178,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 608,
+      "sourceModules": 609,
       "unowned": 0,
       "importOccurrences": 2806,
       "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2402,
-      "acceptedLegacyOccurrences": 2402,
+      "rawViolationOccurrences": 2400,
+      "acceptedLegacyOccurrences": 2400,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 608,
+      "sourceModules": 609,
       "unowned": 0,
       "importOccurrences": 2806,
       "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2402,
-      "acceptedLegacyOccurrences": 2402,
+      "rawViolationOccurrences": 2400,
+      "acceptedLegacyOccurrences": 2400,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 608,
+      "sourceModules": 609,
       "unowned": 0,
       "importOccurrences": 2806,
       "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2402,
+      "rawViolationOccurrences": 2400,
       "acceptedLegacyOccurrences": 1454,
-      "activeViolationGroups": 943,
-      "transitionErrors": 943,
+      "activeViolationGroups": 941,
+      "transitionErrors": 941,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 608,
+      "sourceModules": 609,
       "unowned": 0,
       "importOccurrences": 2806,
       "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2402,
+      "rawViolationOccurrences": 2400,
       "acceptedLegacyOccurrences": 421,
-      "activeViolationGroups": 1966,
-      "transitionErrors": 1966,
+      "activeViolationGroups": 1964,
+      "transitionErrors": 1964,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 608,
+      "sourceModules": 609,
       "unowned": 0,
       "importOccurrences": 2806,
       "internalImportOccurrences": 2629,
       "cycleComponents": 1,
       "largestCycle": 181,
-      "rawViolationOccurrences": 2402,
+      "rawViolationOccurrences": 2400,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2382,
-      "transitionErrors": 2382,
+      "activeViolationGroups": 2380,
+      "transitionErrors": 2380,
       "pass": false
     }
   },
@@ -283,7 +311,7 @@
     {
       "path": "bot/src/application/composition/knowledge-world.js",
       "owner": "application",
-      "sha256": "834b04cebc4017d1267387ae81b7f92691d7aa0e40b4345419ed05f4ef9caead"
+      "sha256": "59ddd61100d8d68c64ade53da0b9761d6cc867e58b2939346c6144525ddf4e2c"
     },
     {
       "path": "bot/src/application/composition/narrative-world.js",
@@ -653,7 +681,7 @@
     {
       "path": "bot/src/framework-to-framework/knowledge--world/public.js",
       "owner": "knowledge--world",
-      "sha256": "9aace3c68914fa0524f3a4b0a6a340d639bb2b884a044ab69fdcac0e5bd67e1a"
+      "sha256": "6a7674803b20e98af86bc22e31c2cf03beb791ff4ff0c3ec29010fa649ff164f"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -1896,6 +1924,11 @@
       "sha256": "252af77f61a45fe4db154fe0780656b096ff7dd287b5addd069fc41e1a49ff38"
     },
     {
+      "path": "bot/src/frameworks/world/contracts/knowledge-records.js",
+      "owner": "world",
+      "sha256": "feb381957232673e8e37cc0fa034a572ad76cd1acb40e9c0f181b9f9e5d104ca"
+    },
+    {
       "path": "bot/src/frameworks/world/contracts/narrative-authorship.js",
       "owner": "world",
       "sha256": "669426b58c3f3417fd4ed46d23046cb970f4d680b2e088085ff74076adbc1a04"
@@ -1958,7 +1991,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "bd4b68eb04d3781492cceda78ba417795ba653d0ba66cf8356a934cdcb857df3"
+      "sha256": "7e1cca121cc474edbd673be3d66bdc573148c1ce304da205f62696fe11cfb207"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
@@ -3168,7 +3201,7 @@
     {
       "path": "bot/src/world-authorship.js",
       "owner": "world",
-      "sha256": "a1b01c1c0948c8c972c4720cf152d55533a15af7836c5ca481438062a2af9374"
+      "sha256": "6d6463206fdda1c6cc1d77c42284142f4abcebbb857afaf233d439b2a101e237"
     },
     {
       "path": "bot/src/world-background-identities.js",

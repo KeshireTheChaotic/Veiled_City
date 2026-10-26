@@ -1,0 +1,30 @@
+[
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\contracts\\knowledge-records.js",
+    "Hash": "FEB381957232673E8E37CC0FA034A572AD76CD1ACB40E9C0F181B9F9E5D104CA"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\frameworks\\world\\public.js",
+    "Hash": "7E1CCA121CC474EDBD673BE3D66BDC573148C1CE304DA205F62696FE11CFB207"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\framework-to-framework\\knowledge--world\\public.js",
+    "Hash": "6A7674803B20E98AF86BC22E31C2CF03BEB791FF4FF0C3EC29010FA649FF164F"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\application\\composition\\knowledge-world.js",
+    "Hash": "59DDD61100D8D68C64ADE53DA0B9761D6CC867E58B2939346C6144525DDF4E2C"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\src\\world-authorship.js",
+    "Hash": "6D6463206FDDA1C6CC1D77C42284142F4ABCEBBB857AFAF233D439B2A101E237"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c04.test.mjs",
+    "Hash": "DA6BB160DE83EC6E8980D09C3AD484A2B95DB4A8B33E4A95D5BA0BEE8EA2C854"
+  },
+  {
+    "Path": "D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c06.test.mjs",
+    "Hash": "46F8751FDA7886DFADAAFECA9D7E879E85F2081DBF2FDF9B37A397E34847399F"
+  }
+]

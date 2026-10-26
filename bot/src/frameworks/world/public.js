@@ -37,3 +37,4 @@ export {SIMULATION_PROMPT} from './simulation-prompt.js';
 export {simulationUpdateSchema} from './simulation-update-schema.js';
 export {ACTION_TYPES,MAJOR_IMPACTS} from './action-catalog.js';
 export {npcActionSchema} from './npc-action-schema.js';
+export {createWorldKnowledgeConsumer,worldKnowledgeSources} from './contracts/knowledge-records.js';

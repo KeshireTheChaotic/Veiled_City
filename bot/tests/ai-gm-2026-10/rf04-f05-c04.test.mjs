@@ -8,7 +8,7 @@ import {VeiledDB} from '../../src/db.js';
 import {createNativeNarrativeSource,nativeNarrativeSource} from '../../src/frameworks/narrative/public.js';
 import {createNarrativeAuthorshipConsumer,worldNarrativeAuthorship} from '../../src/frameworks/world/public.js';
 import {connectNarrativeWorld} from '../../src/framework-to-framework/narrative--world/public.js';
-import {initializeNarrativeWorld,initializeEnvironmentScene,initializeNpcWorldEvidence,initializeSessionWorldEvents} from '../../src/application/composition/public.js';
+import {initializeNarrativeWorld,initializeEnvironmentScene,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeKnowledgeWorld} from '../../src/application/composition/public.js';
 import {registerNarrativeContext,mintNarrativeAudience,revalidateNarrativeAudience} from '../../src/audience-native-v9.js';
 import {verifiedWorldAuthoringContext,worldIdentityOrigin} from '../../src/world-authorship.js';
 import {buildNarrativeContext} from '../../src/narrative-authority-context.js';
@@ -19,6 +19,7 @@ const root=fileURLToPath(new URL('../../../',import.meta.url));
 initializeEnvironmentScene();
 initializeNpcWorldEvidence();
 initializeSessionWorldEvents();
+initializeKnowledgeWorld();
 initializeNarrativeWorld();
 
 function fixture(t){

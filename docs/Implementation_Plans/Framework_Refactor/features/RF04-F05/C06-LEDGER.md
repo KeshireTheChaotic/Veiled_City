@@ -1,0 +1,9 @@
+# RF04-F05 C06 execution ledger
+
+Status: SCOPED WORLD AUTHORSHIP READ DIRECTION QUALIFIED; PHASE INCOMPLETE. World owns authorship, Knowledge owns disclosure/record selection, existing pair owns their two-function translation, and application binds both existing directions. Base `27417a604b02dfb5a856bdee52050298bd9e4598`. No policy/body duplication or saved record change. Actual results and hashes are below and in `C06-RUN.json`.
+
+Provider calls/tokens/cost0/0/$0; Codex UNMEASURED. Rollback this consumer/public/root/pair/initializer/registry/test change together and restore only its retired records. Preserve prior shared Narrative audience source and all saved origins. RELEASE NOT AUTHORIZED.
+
+## 2026-10-26 C06 World authorship Knowledge read direction
+
+The existing Knowledge–World pair now supplies the exact native Knowledge disclosure and record-paging functions to a World-owned consumer. The real World authorship source uses it; application binds both directions while retaining its existing initializer return identity. Five new native SQLite reader cases plus seven affected C05 and eight affected P04 cases passed20/20, exit0, TAP3920.6021ms; syntax7/7. New synthetic saved-format v0 records qualify public/private/campaign/retraction/reopen read-only origins without any audience or execution grant; paging preserves103GMrecords exactly and writes nothing. Real current v1 grant/invention/rollback paths still pass in the affected P04 member. Two exact deep import records retired with originals retained. RF04 gate passes609modules/0unowned/2806imports/2400acceptedraw/SCC181/0activeerrors; RF05 still941expiredgroups/errors. Exact evidence C06-RUN.json. Broader context-provider/private-hook/canon/relationship mappings remain local reopened work, not completed isolation. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

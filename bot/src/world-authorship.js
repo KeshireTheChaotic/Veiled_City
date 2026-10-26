@@ -1,8 +1,7 @@
 /** Original World provenance provider: one shared seeded-context identity map across all exports. */
-import {factVisibleTo} from './disclosure-authority.js';
 import {worldHookSeedForGm} from './world-sanctioned-sources.js';
-import {listNarrativeRecords} from './narrative-records.js';
-import {createWorldAuthorshipRules,worldNarrativeAuthorship} from './frameworks/world/public.js';
+import {createWorldAuthorshipRules,worldNarrativeAuthorship,worldKnowledgeSources} from './frameworks/world/public.js';
+const {factVisibleTo,listNarrativeRecords}=worldKnowledgeSources;
 const {mintNarrativeAudience,revalidateNarrativeAudience,narrativeSourceVisible,fail}=worldNarrativeAuthorship;
 let worldAuthorship;
 function authorship(){return worldAuthorship??=createWorldAuthorshipRules({mintNarrativeAudience:(...args)=>mintNarrativeAudience(...args),revalidateNarrativeAudience:(...args)=>revalidateNarrativeAudience(...args),narrativeSourceVisible:(...args)=>narrativeSourceVisible(...args),factVisibleTo:(...args)=>factVisibleTo(...args),worldHookSeedForGm:(...args)=>worldHookSeedForGm(...args),listNarrativeRecords:(...args)=>listNarrativeRecords(...args),fail:(...args)=>fail(...args)});}
