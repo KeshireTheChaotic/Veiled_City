@@ -17,7 +17,7 @@ import { indexWorldEvent } from "./city-calendar.js";
 import { delegateConsequence, delegateWorldGoal, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
 import { pacingAdvice } from "./story-continuity.js";
 import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
-import {inspectWorldSimulationReceipt} from './world-simulation-receipts.js';
+import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {nativeWorldStrategyAllowed} from './native-world-operations.js';
 import {commitWorldInformationTransfer,inspectWorldInformationTransfer} from './world-information-transfer.js';
 export { updateRelationshipDimensions } from "./relationship-state.js";
@@ -25,12 +25,9 @@ export { updateRelationshipDimensions } from "./relationship-state.js";
 export {ACTION_TYPES,MAJOR_IMPACTS};
 const RESOURCE_KEYS=["influence","materials","information","manpower","leverage","wounds","stress","favors"];
 const DEFAULT_RESOURCES={influence:4,materials:4,information:2,manpower:2,leverage:1,wounds:0,stress:0,favors:0};
-const COSTS={investigate:"information",research:"information",observe:"manpower",travel:"materials",contact:"influence",
-  recruit:"influence",prepare:"materials",hide:"materials",acquire:"influence",spend_resource:"materials",threaten:"influence",
-  negotiate:"influence",attack:"manpower",protect:"manpower",repair:"materials",sabotage:"materials",spread_rumor:"influence",
-  suppress_rumor:"influence",verify_rumor:"information",weaponize_rumor:"influence",request_favor:"influence",
-  fulfill_obligation:"materials",betray:"influence",advance_project:"materials"};
-export const ACTION_COSTS=COSTS;
+import {ACTION_COSTS as COSTS} from './frameworks/world/public.js';
+export {ACTION_COSTS} from './frameworks/world/public.js';
+
 const keyOf=(type,key)=>`${type}:${key}`;
 const bounded=(value,min,max)=>Math.max(min,Math.min(max,Number(value)||0));
 const text=(value)=>String(value||"").trim();

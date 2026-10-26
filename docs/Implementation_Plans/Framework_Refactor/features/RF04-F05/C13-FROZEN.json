@@ -1,0 +1,34 @@
+{
+  "base_head": "1d0bdc67e7f9b4f81184a13f7cf8d6fdba68ce26",
+  "syntax_checked": 7,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/action-costs.js",
+      "sha256": "337128a616ecd16e39225d57811be4028d67edf36dfcd4e8ffa5d8def75a09fe"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+      "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "bfb4e312354e64bad26e85a364591fefb54877ee69a6a78cda9ff18817acfc6e"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "sha256": "bf25d8339cd0c10943fbc9c8d5052becc6edd599753983b8d8d7034ac0160b7e"
+    },
+    {
+      "path": "bot/src/world-simulation-receipts.js",
+      "sha256": "9f21df85f5a5b15134103623a421fccb67e8f1bfcf6a09f2a28ac41ec959cd68"
+    },
+    {
+      "path": "bot/src/world-information-transfer.js",
+      "sha256": "6f490d0ea4d15b9b6609b12458bc2886047186bcacbbf3222b64321f6cd289d8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+      "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+    }
+  ]
+}

@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C12 World institutional and supply sources",
-  "timestamp": "2026-10-26T19:55:39.594Z",
+  "checkpoint": "after C13 native simulation receipt core",
+  "timestamp": "2026-10-26T19:57:38.551Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "00fe50d3c80c73aedbec8aa7d10483138ba6684008e828af8680811fe9fa7298",
-  "open_exact_records": 2277,
+  "manifest_sha256": "cecb32f2448dafbe56ba1a709808be80e3adab190b9fb0a6a2f5076985ae6f8b",
+  "open_exact_records": 2274,
   "by_feature": {
     "RF05-F05": 432,
     "RF04-F04": 260,
     "RF05-F02": 242,
     "RF05-F03": 280,
     "RF04-F03": 113,
-    "RF04-F01": 336,
+    "RF04-F01": 333,
     "RF06-F02": 17,
     "RF04-F05": 114,
     "RF06-F07": 5,
@@ -1464,6 +1464,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "87fa88a55cc9da5a31d45c50c2d0a84e6ec5a1efa076dad9d987f6afa7bd7a67",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "7f83c4b213a1dd6495461eb0040f5e8138334dbd17098f39162be5b67b2455bf",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -1548,6 +1562,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "285a28490599fc104f4b3d4e40aa1fba3ec85612880311c1a3743be6f13a46c2",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "c123f2d088c4b7e121b0817012123dafc86718380eda571f095285cd8de0d6ac",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -1604,6 +1632,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "ea0038462f9a06e276532164be8374d6bd9633b6301be5b64820da2b451e19d2",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/world-simulation-receipts.js",
+      "to": "bot/src/simulation.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "6ecd6b3e22980359d4f86f064b8ba87bb9ecb60c53af2ad7327399adccd26de1",
+      "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "42e8ed8382f6134dd4b3cd3651fc417613393f72eaaa6a7bd7d31d635db1bbb7",
       "feature": "RF04-F01",
       "deadline": "RF04",
@@ -1620,68 +1662,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 633,
+      "sourceModules": 635,
       "unowned": 0,
-      "importOccurrences": 2860,
-      "internalImportOccurrences": 2683,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
       "cycleComponents": 1,
       "largestCycle": 172,
-      "rawViolationOccurrences": 2295,
-      "acceptedLegacyOccurrences": 2295,
+      "rawViolationOccurrences": 2292,
+      "acceptedLegacyOccurrences": 2292,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 633,
+      "sourceModules": 635,
       "unowned": 0,
-      "importOccurrences": 2860,
-      "internalImportOccurrences": 2683,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
       "cycleComponents": 1,
       "largestCycle": 172,
-      "rawViolationOccurrences": 2295,
-      "acceptedLegacyOccurrences": 2295,
+      "rawViolationOccurrences": 2292,
+      "acceptedLegacyOccurrences": 2292,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 633,
+      "sourceModules": 635,
       "unowned": 0,
-      "importOccurrences": 2860,
-      "internalImportOccurrences": 2683,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
       "cycleComponents": 1,
       "largestCycle": 172,
-      "rawViolationOccurrences": 2295,
+      "rawViolationOccurrences": 2292,
       "acceptedLegacyOccurrences": 1426,
-      "activeViolationGroups": 865,
-      "transitionErrors": 865,
+      "activeViolationGroups": 862,
+      "transitionErrors": 862,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 633,
+      "sourceModules": 635,
       "unowned": 0,
-      "importOccurrences": 2860,
-      "internalImportOccurrences": 2683,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
       "cycleComponents": 1,
       "largestCycle": 172,
-      "rawViolationOccurrences": 2295,
+      "rawViolationOccurrences": 2292,
       "acceptedLegacyOccurrences": 420,
-      "activeViolationGroups": 1862,
-      "transitionErrors": 1862,
+      "activeViolationGroups": 1859,
+      "transitionErrors": 1859,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 633,
+      "sourceModules": 635,
       "unowned": 0,
-      "importOccurrences": 2860,
-      "internalImportOccurrences": 2683,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
       "cycleComponents": 1,
       "largestCycle": 172,
-      "rawViolationOccurrences": 2295,
+      "rawViolationOccurrences": 2292,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2277,
-      "transitionErrors": 2277,
+      "activeViolationGroups": 2274,
+      "transitionErrors": 2274,
       "pass": false
     }
   },
@@ -3381,6 +3423,11 @@
       "sha256": "f312c2f7bdbb6644e70f9b8c07c816da78fd1b81ac0cc20918c6ebee2cf5b534"
     },
     {
+      "path": "bot/src/frameworks/world/action-costs.js",
+      "owner": "world",
+      "sha256": "337128a616ecd16e39225d57811be4028d67edf36dfcd4e8ffa5d8def75a09fe"
+    },
+    {
       "path": "bot/src/frameworks/world/active-proxy.js",
       "owner": "world",
       "sha256": "c238f7f5ed22d850168c09a0e8ab536b0eb05338db57aed5a3a1c50b1ab99be7"
@@ -3553,12 +3600,17 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "cef2092f7fc03d60627920a675b657afd07ebf6d187b4200d2091e93385d09fb"
+      "sha256": "bfb4e312354e64bad26e85a364591fefb54877ee69a6a78cda9ff18817acfc6e"
     },
     {
       "path": "bot/src/frameworks/world/simulation-prompt.js",
       "owner": "world",
       "sha256": "59b4f8b4fe16b935db253a00b11b3bfdee69e7455201ba4f178e088bf5f3b528"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+      "owner": "world",
+      "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
     },
     {
       "path": "bot/src/frameworks/world/simulation-update-schema.js",
@@ -4663,7 +4715,7 @@
     {
       "path": "bot/src/simulation.js",
       "owner": "world",
-      "sha256": "9608d2b755fd34d04d31e9a1d5bd5fe758e97063677197a61de326231ddec8bb"
+      "sha256": "bf25d8339cd0c10943fbc9c8d5052becc6edd599753983b8d8d7034ac0160b7e"
     },
     {
       "path": "bot/src/source-communication.js",
@@ -4783,7 +4835,7 @@
     {
       "path": "bot/src/world-information-transfer.js",
       "owner": "world",
-      "sha256": "6d31c18ce9fb401e02f3dac3d3032acba02de05eb75768ed84e3185c949e15f7"
+      "sha256": "6f490d0ea4d15b9b6609b12458bc2886047186bcacbbf3222b64321f6cd289d8"
     },
     {
       "path": "bot/src/world-narrative-bridge.js",
@@ -4813,7 +4865,7 @@
     {
       "path": "bot/src/world-simulation-receipts.js",
       "owner": "world",
-      "sha256": "6ecd6b3e22980359d4f86f064b8ba87bb9ecb60c53af2ad7327399adccd26de1"
+      "sha256": "9f21df85f5a5b15134103623a421fccb67e8f1bfcf6a09f2a28ac41ec959cd68"
     },
     {
       "path": "bot/tooling/architecture/ast-imports.mjs",

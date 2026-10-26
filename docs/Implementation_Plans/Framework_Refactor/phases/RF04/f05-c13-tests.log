@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: real resolver and historical/public reader share exact cost table and verifier identities
+ok 1 - real resolver and historical/public reader share exact cost table and verifier identities
+  ---
+  duration_ms: 0.5261
+  type: 'test'
+  ...
+# Subtest: actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+ok 2 - actual native deterministic action producer yields exactly one verified GM-only receipt without player outcomes
+  ---
+  duration_ms: 173.7578
+  type: 'test'
+  ...
+# Subtest: native resolver replay and repeated receipt reads neither spend twice nor append mutations
+ok 3 - native resolver replay and repeated receipt reads neither spend twice nor append mutations
+  ---
+  duration_ms: 164.2586
+  type: 'test'
+  ...
+# Subtest: restart and later resource changes preserve read-only committed history without fresh execution entitlement
+ok 4 - restart and later resource changes preserve read-only committed history without fresh execution entitlement
+  ---
+  duration_ms: 172.7996
+  type: 'test'
+  ...
+# Subtest: modified completed after-state is held instead of accepting stale native receipt ancestry
+ok 5 - modified completed after-state is held instead of accepting stale native receipt ancestry
+  ---
+  duration_ms: 162.3053
+  type: 'test'
+  ...
+# Subtest: duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+ok 6 - duplicate matching audit ancestry after a real commit is rejected as ambiguous, never arbitrarily selected
+  ---
+  duration_ms: 171.0868
+  type: 'test'
+  ...
+# Subtest: native invalid dice and PC target fail transactionally before a successful action or receipt exists
+ok 7 - native invalid dice and PC target fail transactionally before a successful action or receipt exists
+  ---
+  duration_ms: 215.46
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1925.143

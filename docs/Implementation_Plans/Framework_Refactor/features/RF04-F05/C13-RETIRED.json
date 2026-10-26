@@ -1,0 +1,44 @@
+[
+  {
+    "id": "87fa88a55cc9da5a31d45c50c2d0a84e6ec5a1efa076dad9d987f6afa7bd7a67",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/simulation.js",
+    "to": "bot/src/world-simulation-receipts.js",
+    "kind": "static",
+    "specifier": "./world-simulation-receipts.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  },
+  {
+    "id": "285a28490599fc104f4b3d4e40aa1fba3ec85612880311c1a3743be6f13a46c2",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/world-information-transfer.js",
+    "to": "bot/src/world-simulation-receipts.js",
+    "kind": "static",
+    "specifier": "./world-simulation-receipts.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  },
+  {
+    "id": "ea0038462f9a06e276532164be8374d6bd9633b6301be5b64820da2b451e19d2",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "from": "bot/src/world-simulation-receipts.js",
+    "to": "bot/src/simulation.js",
+    "kind": "static",
+    "specifier": "./simulation.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+  }
+]

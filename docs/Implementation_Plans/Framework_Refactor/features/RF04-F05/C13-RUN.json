@@ -1,0 +1,168 @@
+{
+  "feature": "RF04-F05-C13",
+  "status": "SCOPED_NATIVE_SIMULATION_RECEIPT_CORE_QUALIFIED",
+  "base_head": "1d0bdc67e7f9b4f81184a13f7cf8d6fdba68ce26",
+  "changed_files": {
+    "base_head": "1d0bdc67e7f9b4f81184a13f7cf8d6fdba68ce26",
+    "syntax_checked": 7,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/action-costs.js",
+        "sha256": "337128a616ecd16e39225d57811be4028d67edf36dfcd4e8ffa5d8def75a09fe"
+      },
+      {
+        "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+        "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "bfb4e312354e64bad26e85a364591fefb54877ee69a6a78cda9ff18817acfc6e"
+      },
+      {
+        "path": "bot/src/simulation.js",
+        "sha256": "bf25d8339cd0c10943fbc9c8d5052becc6edd599753983b8d8d7034ac0160b7e"
+      },
+      {
+        "path": "bot/src/world-simulation-receipts.js",
+        "sha256": "9f21df85f5a5b15134103623a421fccb67e8f1bfcf6a09f2a28ac41ec959cd68"
+      },
+      {
+        "path": "bot/src/world-information-transfer.js",
+        "sha256": "6f490d0ea4d15b9b6609b12458bc2886047186bcacbbf3222b64321f6cd289d8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "e623afbcd172192a6270daacb91c1099d87ab0a04dfd86d40fe063223db9b40c"
+      }
+    ]
+  },
+  "body": {
+    "receipt_body_sha256": "1e8813df26992f44a794416a390b79baecb47279729144979c3df87ee067869a",
+    "exact_body_preserved": true,
+    "cost_definition_sha256": "7e642c722d7ce5fcaad4132d183e82f8cdd8f88f5616eb73090ea07183db4918"
+  },
+  "tests": {
+    "start": "2026-10-26T19:57:19.6611598Z",
+    "end": "2026-10-26T19:57:21.6791489Z",
+    "exit_code": 0,
+    "duration_ms": 2017.9891,
+    "run_id": "RF04-F05-C13-20261026-1",
+    "files": 1,
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 1925.143
+  },
+  "syntax": {
+    "checked": 7,
+    "passed": 7
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 635,
+      "unowned": 0,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
+      "cycleComponents": 1,
+      "largestCycle": 172,
+      "rawViolationOccurrences": 2292,
+      "acceptedLegacyOccurrences": 2292,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 635,
+      "unowned": 0,
+      "importOccurrences": 2867,
+      "internalImportOccurrences": 2689,
+      "cycleComponents": 1,
+      "largestCycle": 172,
+      "rawViolationOccurrences": 2292,
+      "acceptedLegacyOccurrences": 1426,
+      "activeViolationGroups": 862,
+      "transitionErrors": 862,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "87fa88a55cc9da5a31d45c50c2d0a84e6ec5a1efa076dad9d987f6afa7bd7a67",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "285a28490599fc104f4b3d4e40aa1fba3ec85612880311c1a3743be6f13a46c2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-information-transfer.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "ea0038462f9a06e276532164be8374d6bd9633b6301be5b64820da2b451e19d2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-simulation-receipts.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "ownership": "World action cost table and exact read-only matches/inspector live under World. Real resolver and information-transfer use owner public inspector. Original audience travel projection remains in root with source obligations retained.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Fresh successful receipts come from actual native submitNpcAction with deterministic injected native dice. Does not certify every action type, adversary/PC mechanics, audience projection or Discord delivery.",
+    "Intentional duplicate/mutated receipt fixtures test rejection only; never manufactured positive historical ancestry.",
+    "No live provider/production-recovery/narrative-quality qualification."
+  ],
+  "rollback": "Revert C13 cost/reader extraction and real consumer paths together, restore3exact records. Preserve all original saved action/mutation/audience receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c13-tests.log",
+      "sha256": "3a7552638be00e6d691535c79669fd2c741cf47a4fd56650a483662b4b9b5ba9"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c13-architecture-initial.log",
+      "sha256": "88a449ea9f910c8688eb467f138deeee0cae70e29e387771a84c2101b26d56c4"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c13-rf04-final.log",
+      "sha256": "1df92e6cc4f6900684a91e9a68ad2ac0fbd39541f10499f3a35ffc77d93eb9c0"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c13-rf05-final.log",
+      "sha256": "5f75fd475deee67dc529b02f14a4a8fcafe44a884d0f8e1140d6c04a5170ca11"
+    }
+  ]
+}

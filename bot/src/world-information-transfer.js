@@ -1,5 +1,5 @@
 /** Attributed native actor reports. No objective truth, canon, PC knowledge or publication authority. */
-import {inspectWorldSimulationReceipt} from './world-simulation-receipts.js';
+import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {ownedKnowledgeSource} from './simulation-motivation.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
