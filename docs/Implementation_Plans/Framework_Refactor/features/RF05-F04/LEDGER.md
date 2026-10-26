@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and twelve public-API slices qualified; 50 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and thirteen public-API slices qualified; 49 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -75,3 +75,7 @@ The operational metrics module moved byte-identically to Operations (same git bl
 ## C13 — Knowledge authority projection public import
 
 The application GM now imports the Knowledge-owned `projectAuthorityRecords` implementation through `frameworks/knowledge/public.js`; the root compatibility export remains. The final fresh test passed **2/2** (exit **0**, 607.07 ms) after correcting one test assertion to match the existing wildcard export. Changed-file syntax passed **2/2**. RF05 ratchet remains failed on **950** prior groups/errors, but the saved report shows zero active findings and zero transition errors for `gm.js`. The exact GM import transition was retired and preserved; **50 RF05-F04 assignments remain** (1 legacy location, 1 external capability owner, 48 private API imports). See `C13-SCOPE.md`, `C13-RUN.json`, `C13-RETIRED.json`, and `phases/RF05/rf05-f04-c13-*.log`. No provider, network, database, or Discord use. RF05 and release remain incomplete/not authorized.
+
+### C14 — Knowledge context-memory contract public import
+
+At base `58bb25b6ae61e86bcb5feaf94abaff945ae27949`, moved the GM's schema/prompt import to the existing Knowledge public API. `frameworks/knowledge/context-memory.js` now exports the exact module-level values already returned by its factory, so the root compatibility reader preserves object identity and prompt text. The fresh test passed **1/1**, exit **0**, **453.3739 ms**; changed JavaScript syntax passed **4/4**. Exact private-import transition `cdb8c39fc7d883493d37795de97e9b82e6fd68aa812b677c67dfd4d98b451399` is preserved in `C14-RETIRED.json`; **49 RF05-F04 assignments remain**. RF05 architecture ratchet still fails with 950 aggregate active groups/errors, zero unowned modules, 581 source modules and no new findings on C14 changed paths. No provider, network, database or Discord calls; costs $0. Details, hashes, output and rollback: `C14-SCOPE.md`, `C14-RUN.json`, `C14-RETIRED.json` and `phases/RF05/rf05-f04-c14-*.log`. RF05 incomplete; release NOT AUTHORIZED.

@@ -1,0 +1,59 @@
+{
+  "run_id": "rf05-f04-c14-20261026-01",
+  "feature": "RF05-F04-C14",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "58bb25b6ae61e86bcb5feaf94abaff945ae27949",
+  "status": "SCOPED_KNOWLEDGE_PUBLIC_API_EDGE_QUALIFIED",
+  "changed_modules": [
+    {"path":"bot/src/frameworks/knowledge/context-memory.js","owner":"knowledge","sha256":"EF5ECA716351C7B756EF2D5BE80BB60470F141916FA08CB2BC5DE68933F5BF70","change":"schema and prompt are exported from the same module-level values used by createContextMemory"},
+    {"path":"bot/src/frameworks/knowledge/public.js","owner":"knowledge","sha256":"3A3F45759F6DA2C7EAD95CDE9EFBEBAB51391BC7322CE24BE196AB82872C6DFC","change":"publicly exports contextMemorySchema and CONTEXT_MEMORY_PROMPT"},
+    {"path":"bot/src/gm.js","owner":"application","sha256":"C5BA2FF4DC687AB138C80C7D9B7633EECE901EEF58F1ED58C8E1E984A2F40674","change":"imports the same Knowledge contract values through Knowledge public"}
+  ],
+  "test": {
+    "path":"bot/tests/ai-gm-2026-10/rf05-f04-c14.test.mjs",
+    "sha256":"7324039282113C0499E17CB1061C6393169A6269A33F4230AAF056C439EC9B52",
+    "command":"cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c14.test.mjs",
+    "exit_code":0,
+    "tests":1,
+    "passed":1,
+    "failed":0,
+    "skipped":0,
+    "duration_ms":453.3739,
+    "log":"phases/RF05/rf05-f04-c14-test.log",
+    "log_sha256":"C69992F7F0A4BC956D51DE5592A4512D6C416BA373EF6283C710849B87639C14"
+  },
+  "syntax": {
+    "files":4,
+    "passed":4,
+    "exit_code":0,
+    "log":"phases/RF05/rf05-f04-c14-syntax.log",
+    "log_sha256":"0B0F1107F625A70033EDB84920620AA1006D59D7725156F95131B9FD9F914157"
+  },
+  "transition": {
+    "retired_id":"cdb8c39fc7d883493d37795de97e9b82e6fd68aa812b677c67dfd4d98b451399",
+    "original_record":"C14-RETIRED.json",
+    "record_sha256":"7DD8B52251C2DCF05B8965F2BCD214029A97DF3C1187CA0F77BFF476712201EB",
+    "manifest_sha256_before":"D42C6F44DF35995C695013A73E257AE35AEFF02C3F9F90F5CE079B2E1985E778",
+    "manifest_sha256_after":"230F1D6C5A4DD46D668E40A68209979F05EB4EA001B19B743E2EA45C131D2541",
+    "remaining_rf05_f04_entries":49
+  },
+  "architecture": {
+    "command":"cd bot; node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c14-architecture.json",
+    "exit_code":1,
+    "source_modules":581,
+    "unowned":0,
+    "imports":2747,
+    "largest_cycle":181,
+    "active_violation_groups":950,
+    "transition_errors":950,
+    "new_findings_on_changed_paths":0,
+    "log":"phases/RF05/rf05-f04-c14-architecture.log",
+    "log_sha256":"9A3C9EF64413DD1DF1C20A4885AB7C8573A1BE6D129671DA82B510B58CD19F07",
+    "report":"../../../../.reports/rf05-f04-c14-architecture.json",
+    "report_sha256":"21DC914ECD96C7AD5284293BB41F6F81CB91F1F231C80155F3BB31C8E69A2846",
+    "interpretation":"The exact GM-to-root private edge was removed and its assigned transition retired. Aggregate gate remains failed on existing debt; no changed-path finding appeared."
+  },
+  "external_effects": {"provider_calls":0,"provider_tokens":0,"provider_usd":0,"network":0,"production_database":0,"discord":0,"codex_usage":"UNMEASURED"},
+  "rollback":"Restore the GM import from Knowledge public to the root context-memory compatibility module and reinsert the exact transition from C14-RETIRED.json; remove only C14's public named exports, test, RUN record and logs. Preserve the compatibility reader and all unrelated edits.",
+  "release":"NOT_AUTHORIZED"
+}

@@ -1,0 +1,5 @@
+node --check bot/src/frameworks/knowledge/context-memory.js — PASS (exit 0)
+node --check bot/src/frameworks/knowledge/public.js — PASS (exit 0)
+node --check bot/src/gm.js — PASS (exit 0)
+node --check bot/tests/ai-gm-2026-10/rf05-f04-c14.test.mjs — PASS (exit 0)
+Syntax checks: 4/4 passed; no code changes after checks.

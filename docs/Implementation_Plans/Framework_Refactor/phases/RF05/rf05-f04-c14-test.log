@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: GM context-memory contract uses Knowledge public values and retains compatibility identity
+ok 1 - GM context-memory contract uses Knowledge public values and retains compatibility identity
+  ---
+  duration_ms: 3.2249
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 453.3739

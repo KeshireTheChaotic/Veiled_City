@@ -7777,20 +7777,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "cdb8c39fc7d883493d37795de97e9b82e6fd68aa812b677c67dfd4d98b451399",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/context-memory.js",
-      "kind": "static",
-      "specifier": "./context-memory.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7c35c09e630afd871ab8950a944490d816adf7f1437ed6976678f111469987be",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",

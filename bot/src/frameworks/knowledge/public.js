@@ -10,7 +10,7 @@ export {createMemoryClusters} from './memory-clusters.js';
 export {createEvidenceRules,epistemicSchema} from './epistemic.js';
 export {createMemoryLifecycle} from './memory-lifecycle.js';
 export * from './historical-archive.js';
-export {createContextMemory} from './context-memory.js';
+export {createContextMemory,contextMemorySchema,CONTEXT_MEMORY_PROMPT} from './context-memory.js';
 export {createScopedMemory} from './scoped-memory.js';
 export {createEntityMemory} from './entity-memory.js';
 export {createHistoryReconciliation} from './history-reconciliation.js';

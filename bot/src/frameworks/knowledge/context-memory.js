@@ -1,16 +1,12 @@
 /** Audience-bound descriptive memory. Never canon, inventory, possession or NPC knowledge. */
 import {createHash} from 'node:crypto';
-export function createContextMemory({rememberEntity}){
 const text=n=>({type:"string",maxLength:n});
 const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
-const AUDIENCE_CONTRACT=1;
-
-const contextMemorySchema={type:"array",maxItems:8,items:object({
+export const contextMemorySchema={type:"array",maxItems:8,items:object({
   kind:{type:"string",enum:["object","detail","rumor"]},key:text(100),name:text(160),summary:text(600),
   retention:{type:"string",enum:["durable","temporary"]}
 })};
-
-const CONTEXT_MEMORY_PROMPT=[
+export const CONTEXT_MEMORY_PROMPT=[
   "context_memories are optional descriptions, NEVER authoritative canon, player inventory, NPC knowledge or ownership.",
   "Use for distinctive props, signs, incidental witnesses, environmental clues or contextual objects not covered by world_additions.",
   "Choose durable only when explicitly named/referenced/acted on by a player OR deliberately introduced as an important returning story detail.",
@@ -18,6 +14,8 @@ const CONTEXT_MEMORY_PROMPT=[
   "Never create a durable memory of a GM-only secret in a public player scene. Do not elevate a rumor to objective truth.",
   "NPCs and actionable locations need world_additions, not generic context_memories."
 ].join(" ");
+export function createContextMemory({rememberEntity}){
+const AUDIENCE_CONTRACT=1;
 
 function validateRows(result){
   const rows=result?.context_memories||[];
