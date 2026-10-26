@@ -1,0 +1,18 @@
+{
+  "base_head": "bbb900e787046c282a0d76366980b427aeee3827",
+  "syntax_checked": 3,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/city-core-rules.js",
+      "sha256": "e8fe0675462ec76804d0048cea5715dea0ffdd6ff1a1c6ccd0afa614325dcb41"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c32.test.mjs",
+      "sha256": "500dbf41a1536a5c140b4a0368c0c5507d14a6af3ee09c130e8dd041c543d1a7"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+      "sha256": "e0e4b657b21877c724e785c150c007ce2f86808c364a3da14b990e6bff16f4e2"
+    }
+  ]
+}

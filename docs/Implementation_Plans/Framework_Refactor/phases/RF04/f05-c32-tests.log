@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: Intent native World consumers preserve exact source arguments errors and reject incomplete replacement
+ok 1 - Intent native World consumers preserve exact source arguments errors and reject incomplete replacement
+  ---
+  duration_ms: 1.3646
+  type: 'test'
+  ...
+# Subtest: actual Intent World primitives retain native source status validation and immutable source identity
+ok 2 - actual Intent World primitives retain native source status validation and immutable source identity
+  ---
+  duration_ms: 273.5227
+  type: 'test'
+  ...
+# Subtest: native NPC action inspector is same original service and spends no resource or dice
+ok 3 - native NPC action inspector is same original service and spends no resource or dice
+  ---
+  duration_ms: 289.4282
+  type: 'test'
+  ...
+# Subtest: native diagnostic rechecks resources and player control without granting execution
+ok 4 - native diagnostic rechecks resources and player control without granting execution
+  ---
+  duration_ms: 281.4174
+  type: 'test'
+  ...
+# Subtest: exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+ok 5 - exact institutional bridge executes only native human-reviewed request with one capacity receipt across restart
+  ---
+  duration_ms: 325.6517
+  type: 'test'
+  ...
+# Subtest: native institutional audit failure atomically restores capacity and request before retry
+ok 6 - native institutional audit failure atomically restores capacity and request before retry
+  ---
+  duration_ms: 409.6646
+  type: 'test'
+  ...
+# Subtest: actual native proposed institutional request can be inspected without cost or status mutation
+ok 7 - actual native proposed institutional request can be inspected without cost or status mutation
+  ---
+  duration_ms: 172.0516
+  type: 'test'
+  ...
+# Subtest: native pending major action remains review-required and diagnostic never substitutes for approval
+ok 8 - native pending major action remains review-required and diagnostic never substitutes for approval
+  ---
+  duration_ms: 273.9783
+  type: 'test'
+  ...
+# Subtest: diagnostic rechecks active original source and does not expose retracted institution request
+ok 9 - diagnostic rechecks active original source and does not expose retracted institution request
+  ---
+  duration_ms: 292.1115
+  type: 'test'
+  ...
+# Subtest: zero capacity still fails native validation without mutating pending request
+ok 10 - zero capacity still fails native validation without mutating pending request
+  ---
+  duration_ms: 300.2102
+  type: 'test'
+  ...
+# Subtest: current player control of institution still denies autonomous diagnostic authority
+ok 11 - current player control of institution still denies autonomous diagnostic authority
+  ---
+  duration_ms: 356.6476
+  type: 'test'
+  ...
+# Subtest: completed native action diagnostics survive restart and replay does not spend twice
+ok 12 - completed native action diagnostics survive restart and replay does not spend twice
+  ---
+  duration_ms: 332.5503
+  type: 'test'
+  ...
+# Subtest: missing cross-campaign and malformed action keys cannot borrow an existing institutional action
+ok 13 - missing cross-campaign and malformed action keys cannot borrow an existing institutional action
+  ---
+  duration_ms: 220.8644
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2600.2389

@@ -82,7 +82,9 @@ function addWorldLink(db,guildId,input,actorId){
   });
 }
 function inspectInstitutionAction(db,guildId,key){
-  const row=requireCityRecord(db,guildId,"action",key),institution=validateInstitutionAction(db,guildId,row.data);
+  const row=db.getCityRecord(guildId,"action",cityKey(key));
+  if(!row)throw new Error("Existing institutional action required.");
+  const institution=validateInstitutionAction(db,guildId,row.data);
   return {action_id:key,status:row.status,capacity:institution.data.capacity,review_required:row.data.major===true&&!row.data.approved_by,
     authority:"diagnostic_only_no_capacity_spending"};
 }

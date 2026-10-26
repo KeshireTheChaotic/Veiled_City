@@ -1,6 +1,6 @@
 {
-  "checkpoint": "RF04-F05 C31 Intent native World capability adoption",
-  "timestamp": "2026-10-26T21:31:29.197Z",
+  "checkpoint": "RF04-F05 C32 native institutional diagnostic correction",
+  "timestamp": "2026-10-26T21:34:40.030Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
   "manifest_sha256": "0df4feac75eb5a0f14d1d91bf0f04caef43fcc9a269f2c71c204f01ba61a1fce",
   "open_exact_records": 2054,
@@ -6820,7 +6820,7 @@
     {
       "path": "bot/src/frameworks/world/city-core-rules.js",
       "owner": "world",
-      "sha256": "24dfbbbe6b41d54ea8946e688cd3f1c4de16534a3f1b27f6d6c6728a9c74caad"
+      "sha256": "e8fe0675462ec76804d0048cea5715dea0ffdd6ff1a1c6ccd0afa614325dcb41"
     },
     {
       "path": "bot/src/frameworks/world/city-source.js",
@@ -8317,7 +8317,7 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C31-RUN.json"
+    "features/RF04-F05/C32-RUN.json"
   ],
   "release": "NOT_AUTHORIZED"
 }

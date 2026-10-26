@@ -1,0 +1,99 @@
+{
+  "feature": "RF04-F05-C32",
+  "status": "SCOPED_NATIVE_INSTITUTION_DIAGNOSTIC_CORRECTION_QUALIFIED",
+  "frozen": {
+    "base_head": "bbb900e787046c282a0d76366980b427aeee3827",
+    "syntax_checked": 3,
+    "files": [
+      {
+        "path": "bot/src/frameworks/world/city-core-rules.js",
+        "sha256": "e8fe0675462ec76804d0048cea5715dea0ffdd6ff1a1c6ccd0afa614325dcb41"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c32.test.mjs",
+        "sha256": "500dbf41a1536a5c140b4a0368c0c5507d14a6af3ee09c130e8dd041c543d1a7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "sha256": "e0e4b657b21877c724e785c150c007ce2f86808c364a3da14b990e6bff16f4e2"
+      }
+    ]
+  },
+  "tests": {
+    "duration_ms": 2652.4618,
+    "run_id": "rf04-f05-c32-frozen",
+    "end": "2026-10-26T16:34:19.4475778-05:00",
+    "start": "2026-10-26T16:34:16.7951160-05:00",
+    "exit_code": 0,
+    "files": 2,
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "tap_duration_ms": 2600.2389,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c32.test.mjs tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+    "affected_rerun": "Actual original institutional inspector changed, old C31 defect expectation updated; whole current C31 file6/6passed, closing its split-final-file fixture gap."
+  },
+  "syntax": {
+    "checked": 3,
+    "passed": 3
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 700,
+      "unowned": 0,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 2070,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 700,
+      "unowned": 0,
+      "importOccurrences": 3032,
+      "internalImportOccurrences": 2853,
+      "cycleComponents": 2,
+      "largestCycle": 144,
+      "rawViolationOccurrences": 2070,
+      "acceptedLegacyOccurrences": 1343,
+      "activeViolationGroups": 723,
+      "transitionErrors": 723,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "resolved_local_hold": "C32_INSTITUTION_DIAGNOSTIC_NATIVE_STATUS",
+  "ownership": "World corrects exact native diagnostic lookup only. Fixed Intent consumer still calls same native source. Original live validation and result fields, native executor, major approval, capacity spending and receipts unchanged.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Correction permits read-only inspection of actual native lifecycle records; no new execution, publication, actor knowledge or player authority. Other institution/source/phase and legacy caller contracts remain accountable.",
+    "Offline native records and mocked boundaries do not certify live production recovery, Discord, provider behavior or narrative quality."
+  ],
+  "rollback": "Revert C32 inspector-only lookup and its current C31 expectation. Preserve immutable native actions/source/events/receipts/capacity/approval data. Original diagnostic defect would return; do not delete or rewrite valid native proposals.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c32-tests.log",
+      "sha256": "58461fbc7e1ab884f2f7bfc5bfda75f9dc465783daf696bd70f7508c65d03933"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c32-rf04-final.log",
+      "sha256": "fa9804f8fe7959484c563599c350121260e0766a5744290ee2823dae3f4ab7bf"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c32-rf05-final.log",
+      "sha256": "2437d7f9f93a984c06b1157ffe46dc352b71e79f4a568c59a481c3bef51d2d16"
+    }
+  ]
+}
