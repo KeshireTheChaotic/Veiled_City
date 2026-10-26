@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: fixed source and legacy compatibility consumers reject missing/replaced sources without copying policy
+ok 1 - fixed source and legacy compatibility consumers reject missing/replaced sources without copying policy
+  ---
+  duration_ms: 0.9511
+  type: 'test'
+  ...
+# Subtest: actual current scene plus original recorded observer source qualifies the same NPC witness read-only across restart
+ok 2 - actual current scene plus original recorded observer source qualifies the same NPC witness read-only across restart
+  ---
+  duration_ms: 186.0759
+  type: 'test'
+  ...
+# Subtest: current proximity cannot fabricate a past witness or substitute invented observation content
+ok 3 - current proximity cannot fabricate a past witness or substitute invented observation content
+  ---
+  duration_ms: 171.1608
+  type: 'test'
+  ...
+# Subtest: original Session barrier evidence controls senses without suppressing legitimate heard observation
+ok 4 - original Session barrier evidence controls senses without suppressing legitimate heard observation
+  ---
+  duration_ms: 172.4791
+  type: 'test'
+  ...
+# Subtest: GM-established recipient-specific report delivery never becomes another NPC shared knowledge
+ok 5 - GM-established recipient-specific report delivery never becomes another NPC shared knowledge
+  ---
+  duration_ms: 207.936
+  type: 'test'
+  ...
+# Subtest: subjective inference needs that NPC own acquired evidence and never promotes it to objective truth or PC state
+ok 6 - subjective inference needs that NPC own acquired evidence and never promotes it to objective truth or PC state
+  ---
+  duration_ms: 176.0107
+  type: 'test'
+  ...
+# Subtest: native evidence recursion rejects cycles and retracted source without rewriting historical NPC knowledge
+ok 7 - native evidence recursion rejects cycles and retracted source without rewriting historical NPC knowledge
+  ---
+  duration_ms: 194.0406
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1745.313

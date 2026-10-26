@@ -1903,21 +1903,12 @@
         "knowledge",
         "npc"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "knowledge",
-          "to": "npc",
-          "import_occurrences": 3,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "npc",
           "to": "knowledge",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original activeEvidence function for unchanged NPC acquired-source/observation policy."
         }
       ],
       "source_evidence": [
@@ -1928,11 +1919,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "Complete fixed function sources; replacement rejected; original scene/native/recipient/private/source checks retained.",
+      "lifecycle": "Bootstrap after Session World sources, before services; no database/provider/state writes during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/npc-observations.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "knowledge",
@@ -1952,7 +1947,9 @@
         "pair": "knowledge--npc",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 4
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/knowledge--npc/public.js",
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work."
     },
     {
       "pair": "knowledge--operations",
@@ -2698,21 +2695,17 @@
         "npc",
         "session"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "session",
-          "to": "npc",
-          "import_occurrences": 3,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "npc",
           "to": "session",
-          "import_occurrences": 3,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original current sceneAccess function for witnessed NPC source qualification."
+        },
+        {
+          "from": "session",
+          "to": "npc",
+          "contract": "Temporary original scene-reader compatibility consumes exact NPC-owned observation/evidence functions; no copied rule."
         }
       ],
       "source_evidence": [
@@ -2723,11 +2716,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "Complete fixed function sources; replacement rejected; original scene/native/recipient/private/source checks retained.",
+      "lifecycle": "Bootstrap after Session World sources, before services; no database/provider/state writes during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/npc-observations.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "session",
@@ -2747,7 +2744,9 @@
         "pair": "npc--session",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 6
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/npc--session/public.js",
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work."
     },
     {
       "pair": "npc--world",

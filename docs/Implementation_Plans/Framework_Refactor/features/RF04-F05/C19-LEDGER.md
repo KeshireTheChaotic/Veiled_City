@@ -1,0 +1,7 @@
+# RF04-F05 C19 ledger
+
+IMPLEMENTATION IN PROGRESS. NPC owns observation policy, Knowledge active-source classification, Session scene accessibility. Root is temporary compatibility consumer, not independent policy. Qualification pending. Provider0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.
+
+## 2026-10-26 C19 NPC observation / Knowledge / Session integration
+
+Original observation/evidence policy extracted once into NPC. Fixed own consumers receive original Knowledge activeEvidence and Session sceneAccess through exact pairs. Session temporary compatibility consumer routes historical root readers to same NPC source; root has no copied policy/cross imports. Seven new SQLite cases7/7pass exit0 TAP1745.313ms, syntax14/14, one frozen batch/no repairs. Native scene+recorded witness, current proximity cannot invent past witnessing, recipient-only delivery, sense-specific barrier, own-evidence subjective inference/noPCorcanon effects, cyclic/retracted evidence and restart read-only behavior verified.1exact source edge violation retired. RF04 passes655modules/0unowned/2911imports/2119rawaccepted/2cycles/largest147/0activeerrors; RF05 remains757expiredgroups/errors.2102exact open/289resolved since audit. Legacy caller/path retirement and other source contracts remain accountable, no whole pair/phase isolation claim. Next: native World executor using independently ready sources. Evidence C19-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RELEASE NOT AUTHORIZED.

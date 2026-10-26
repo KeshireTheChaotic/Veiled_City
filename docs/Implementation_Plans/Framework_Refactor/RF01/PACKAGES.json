@@ -106,6 +106,12 @@
     ],
     "daggerheart--session": [
       "bot/src/framework-to-framework/daggerheart--session/public.js"
+    ],
+    "knowledge--npc": [
+      "bot/src/framework-to-framework/knowledge--npc/public.js"
+    ],
+    "npc--session": [
+      "bot/src/framework-to-framework/npc--session/public.js"
     ]
   },
   "externalCapabilityOwners": {

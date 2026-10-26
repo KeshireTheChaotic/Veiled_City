@@ -7,3 +7,7 @@ export {createNpcConversations} from './conversations.js';
 export {ownedKnowledgeSource} from './knowledge-source.js';
 export {createNpcWorldMotivationConsumer,npcWorldMotivation} from './contracts/world-motivation.js';
 export {actorSource,proposeGoalTransition,reviewGoalTransition,runMotivationCycle} from './motivation-source.js';
+export {createNpcKnowledgeEvidenceConsumer,npcKnowledgeEvidence} from './contracts/knowledge-evidence.js';
+export {createNpcSceneAccessConsumer,npcSceneAccess} from './contracts/scene-access.js';
+export {createNpcObservationRules} from './observation.js';
+export {npcEvidenceActive,assertNpcObservation} from './observation-source.js';

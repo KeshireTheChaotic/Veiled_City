@@ -1,4 +1,4 @@
-import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement} from './application/composition/public.js';
+import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations} from './application/composition/public.js';
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
@@ -52,6 +52,7 @@ initializeCharacterCreation();
 initializeNpcWorldEvidence();
 initializeSessionWorldEvents();
 initializeSessionSceneWorld();
+initializeNpcObservations();
 initializeKnowledgeWorld();
 initializeNarrativeWorld();
 initializeKnowledgeNarrative();

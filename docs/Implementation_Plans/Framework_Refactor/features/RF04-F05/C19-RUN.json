@@ -1,0 +1,167 @@
+{
+  "feature": "RF04-F05-C19",
+  "status": "SCOPED_NPC_OBSERVATION_KNOWLEDGE_SESSION_INTEGRATION_QUALIFIED",
+  "base_head": "ac24e1aaf726d0ed7cb7d8182cfb665a6973fc0b",
+  "changed_files": {
+    "base_head": "ac24e1aaf726d0ed7cb7d8182cfb665a6973fc0b",
+    "syntax_checked": 14,
+    "files": [
+      {
+        "path": "bot/src/frameworks/npc/observation.js",
+        "sha256": "e420dfe4d200fb7d93172204f92a0c0118383bc16c39289b1dc38660fbb15231"
+      },
+      {
+        "path": "bot/src/frameworks/npc/observation-source.js",
+        "sha256": "fc9de062c2ccdb95a2989c54aa6f921b4d95b59f5df6a70bd586e9020139b708"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/knowledge-evidence.js",
+        "sha256": "5ae27ac1ac4d6ec83d9f3ac5104cda91024820776151e339d7e073854199f630"
+      },
+      {
+        "path": "bot/src/frameworks/npc/contracts/scene-access.js",
+        "sha256": "34c926b8ee67d84a0fd4747dc536ca73306692f5b47109d2b169ca8f44022778"
+      },
+      {
+        "path": "bot/src/frameworks/npc/public.js",
+        "sha256": "1a18a8afd603839fcdf732ffefa847dd7ff780228514a0504de27f5e822bb2e2"
+      },
+      {
+        "path": "bot/src/frameworks/session/contracts/npc-observation.js",
+        "sha256": "7d3e5d0dc366f37fa19f00c16757fe47a6870d2bfb025d7dd99477dfccec6f8d"
+      },
+      {
+        "path": "bot/src/frameworks/session/public.js",
+        "sha256": "6fe2b606ee5e4f02c4a27d6ee2b3848fe57fc74eaa1d632f2b2dc55ee5cb79da"
+      },
+      {
+        "path": "bot/src/scene-continuity.js",
+        "sha256": "ee048c18ba58c8c73b06b987cb704db3813f3091786f1a8c0032c8b3d7679e03"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--npc/public.js",
+        "sha256": "6389c302c1865724c1b0f08f6bc399e3f5204cf7ab7630881516254ec3452fcf"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--session/public.js",
+        "sha256": "467abdac11efad307ac55f2099636588549592f65d6761af3c425d8813d0a6a2"
+      },
+      {
+        "path": "bot/src/application/composition/npc-observations.js",
+        "sha256": "a91dda49590ff6c013ffb08c9be04b889456ceb00e8ebe1c65865fdf8d7c04aa"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "609ed8fb08bd3f216d64c9de80a9cd33eb1a4955beb827f904fbf8e47813b395"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "441c256ddf747d1c9a4a9c75ea5fe8865900a3425b83f01ff0f17d929aa5df31"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "df209944dbb1008dfa2f7b4a02bdb3539f73469b91b64b4e1a5524f0ca9576d5"
+      }
+    ]
+  },
+  "body": {
+    "exact_policy_bodies_preserved": true,
+    "body_sha256": "ce61cf7dc15417f7c24df3a3dad370a40cb56be3d47bbac0f0dd4bcc2c9788b1"
+  },
+  "tests": {
+    "end": "2026-10-26T20:24:19.4383016Z",
+    "run_id": "RF04-F05-C19-20261026-1",
+    "start": "2026-10-26T20:24:17.6393914Z",
+    "exit_code": 0,
+    "duration_ms": 1798.9102,
+    "files": 1,
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "launches": 1,
+    "tap_duration_ms": 1745.313
+  },
+  "syntax": {
+    "checked": 14,
+    "passed": 14
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 655,
+      "unowned": 0,
+      "importOccurrences": 2911,
+      "internalImportOccurrences": 2733,
+      "cycleComponents": 2,
+      "largestCycle": 147,
+      "rawViolationOccurrences": 2119,
+      "acceptedLegacyOccurrences": 2119,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 655,
+      "unowned": 0,
+      "importOccurrences": 2911,
+      "internalImportOccurrences": 2733,
+      "cycleComponents": 2,
+      "largestCycle": 147,
+      "rawViolationOccurrences": 2119,
+      "acceptedLegacyOccurrences": 1358,
+      "activeViolationGroups": 757,
+      "transitionErrors": 757,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "dada2ac86c826a9b57ccc1ca4c94b262e135ed13eb020af0564b3ab0ae4b4394",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-continuity.js",
+      "to": "bot/src/epistemic.js",
+      "kind": "static",
+      "specifier": "./epistemic.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "NPC unique original observation policy; Knowledge activeEvidence; Session sceneAccess. Exact two-owner pairs provide those functions and temporary Session compatibility consumer routes original root callers to NPC service. No copied rules or new source eligibility.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Legacy root compatibility consumer still needs final caller/path retirement. Other Knowledge/NPC/Session policy directions remain separate obligations.",
+    "Fresh GM-established observation/report fixtures test NPC source contracts, not PC-authored declarations, World mechanical action receipt minting or Discord delivery.",
+    "No live provider/production recovery/narrative-quality qualification."
+  ],
+  "rollback": "Revert C19 original NPC policy extraction/ports/pairs/legacy reader/bootstrap/public/registry and restore1exact transition together; preserve existing source/knowledge/memory/scene records.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c19-tests.log",
+      "sha256": "78ac126a1e9536e255201a5c8006498b5c1f865c827affe7b754690d6ac29b36"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c19-architecture-initial.log",
+      "sha256": "71c0e302653c1f4d12fddbaaf61e062670ef329deab814376692fdd187ff3435"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c19-rf04-final.log",
+      "sha256": "361102c808f0567b91040077052037b4a5eb2c36835dbc8871130194fe6b8cba"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c19-rf05-final.log",
+      "sha256": "7106603c4109af0623e28d7e28713d110f27bdf9b4f395b24695a8eb62b2e5d9"
+    }
+  ]
+}
