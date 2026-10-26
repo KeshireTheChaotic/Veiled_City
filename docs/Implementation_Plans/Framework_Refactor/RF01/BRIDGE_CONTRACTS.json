@@ -1787,7 +1787,7 @@
         {
           "from": "world",
           "to": "intent",
-          "contract": "Compose the existing World NPC action and Intent array proposal schemas for the actual GM request; grants no execution or disclosure authority."
+          "contract": "Compose the existing World NPC action and Intent array proposal schemas for the actual GM request; grants no execution or disclosure authority. C09 also supplies the original Intent campaign delegation-policy read to World scheduling."
         }
       ],
       "source_evidence": [
@@ -1808,10 +1808,12 @@
       "lifecycle": "One static schema per module, consumed directly by the application GM planner. Old World-owned schema source retired after sole live caller switched; not a persisted receipt reader.",
       "adoption_feature": "RF05-F04",
       "consumers": [
-        "bot/src/gm.js"
+        "bot/src/gm.js",
+        "bot/src/application/composition/world-execution.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1834,7 +1836,7 @@
         "occurrences": 29
       },
       "public_api": "bot/src/framework-to-framework/intent--world/public.js",
-      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work."
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open."
     },
     {
       "pair": "knowledge--narrative",
@@ -3294,7 +3296,7 @@
           "to": "session",
           "import_occurrences": 16,
           "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "C09 fixed original Session current conversational-principal reader for World private operation revalidation; other observed Session source contracts remain open."
         }
       ],
       "source_evidence": [
@@ -3309,11 +3311,13 @@
       "lifecycle": "Only native event issuance adopted by attendance, initial setup and opening scheduling; remaining observed directions remain unisolated RF04 obligations.",
       "adoption_feature": "RF04",
       "consumers": [
-        "bot/src/application/composition/session-world-events.js"
+        "bot/src/application/composition/session-world-events.js",
+        "bot/src/application/composition/world-execution.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3335,7 +3339,8 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 39
       },
-      "public_api": "bot/src/framework-to-framework/session--world/public.js"
+      "public_api": "bot/src/framework-to-framework/session--world/public.js",
+      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open."
     }
   ]
 }

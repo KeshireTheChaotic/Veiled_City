@@ -1,0 +1,108 @@
+TAP version 13
+# Subtest: fixed consumers require native functions and reject replacement without changing result/error identity
+ok 1 - fixed consumers require native functions and reject replacement without changing result/error identity
+  ---
+  duration_ms: 0.8338
+  type: 'test'
+  ...
+# Subtest: actual native player classification cannot be relabeled as autonomous NPC or cross-campaign authority
+ok 2 - actual native player classification cannot be relabeled as autonomous NPC or cross-campaign authority
+  ---
+  duration_ms: 279.3556
+  type: 'test'
+  ...
+# Subtest: current active proxy overrides autonomy and cannot leak between sessions or campaigns
+ok 3 - current active proxy overrides autonomy and cannot leak between sessions or campaigns
+  ---
+  duration_ms: 385.4822
+  type: 'test'
+  ...
+# Subtest: native explicit ownership, unsupported identities and dead NPC rules are unchanged
+ok 4 - native explicit ownership, unsupported identities and dead NPC rules are unchanged
+  ---
+  duration_ms: 306.1201
+  type: 'test'
+  ...
+# Subtest: real rollback restores proxy eligibility and native revisions; successful assignment survives reopen
+ok 5 - real rollback restores proxy eligibility and native revisions; successful assignment survives reopen
+  ---
+  duration_ms: 296.8167
+  type: 'test'
+  ...
+# Subtest: native and historical readers share classification identity without reads creating receipts or state
+ok 6 - native and historical readers share classification identity without reads creating receipts or state
+  ---
+  duration_ms: 375.5141
+  type: 'test'
+  ...
+# Subtest: actual bootstrap binds control before services and pair imports exactly its two public frameworks
+ok 7 - actual bootstrap binds control before services and pair imports exactly its two public frameworks
+  ---
+  duration_ms: 0.7559
+  type: 'test'
+  ...
+# Subtest: fixed delegated-policy and conversation consumers preserve exact native values and refuse replacement
+ok 8 - fixed delegated-policy and conversation consumers preserve exact native values and refuse replacement
+  ---
+  duration_ms: 0.886
+  type: 'test'
+  ...
+# Subtest: real old/public World paths share one native live-grant store without committing service outcomes
+ok 9 - real old/public World paths share one native live-grant store without committing service outcomes
+  ---
+  duration_ms: 288.2026
+  type: 'test'
+  ...
+# Subtest: native source/policy/pause/target changes invalidate grants rather than replaying an outcome
+ok 10 - native source/policy/pause/target changes invalidate grants rather than replaying an outcome
+  ---
+  duration_ms: 393.3383
+  type: 'test'
+  ...
+# Subtest: private grants require actual current Session owner attendance and reject control revision changes
+ok 11 - private grants require actual current Session owner attendance and reject control revision changes
+  ---
+  duration_ms: 323.0681
+  type: 'test'
+  ...
+# Subtest: a grant bound inside a rolled-back source update cannot survive rollback; restart permits only newly verified issuance
+ok 12 - a grant bound inside a rolled-back source update cannot survive rollback; restart permits only newly verified issuance
+  ---
+  duration_ms: 297.1416
+  type: 'test'
+  ...
+# Subtest: historical result readers stay read-only and reject fabricated native receipts and strategy frames
+ok 13 - historical result readers stay read-only and reject fabricated native receipts and strategy frames
+  ---
+  duration_ms: 373.0041
+  type: 'test'
+  ...
+# Subtest: queued scheduling uses actual Intent policy and retains native source and revision checks
+not ok 14 - queued scheduling uses actual Intent policy and retains native source and revision checks
+  ---
+  duration_ms: 204.9449
+  type: 'test'
+  location: 'D:\\Library\\Development\\Veiled_City\\bot\\tests\\ai-gm-2026-10\\rf04-f05-c09.test.mjs:43:1'
+  failureType: 'testCodeFailure'
+  error: 'FOREIGN KEY constraint failed'
+  code: 'ERR_SQLITE_ERROR'
+  stack: |-
+    VeiledDB.saveCityRecord (file:///D:/Library/Development/Veiled_City/bot/src/db.js:384:8)
+    save (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs:14:66)
+    TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs:44:195)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2878.5551

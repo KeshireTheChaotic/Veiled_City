@@ -41,3 +41,6 @@ export {createWorldKnowledgeConsumer,worldKnowledgeSources} from './contracts/kn
 export {createWorldIdentityOrigin,worldIdentityOrigin} from './identity-origin.js';
 export {createWorldActorControlConsumer,worldNativeActorControl} from './contracts/actor-control.js';
 export {activeCityProxy} from './active-proxy.js';
+export {createWorldDelegationConsumer,worldDelegationPolicy} from './contracts/delegation-policy.js';
+export {createWorldPrincipalConsumer,worldConversationPrincipal} from './contracts/conversation-principal.js';
+export {worldActorControl,assertWorldActorControl,assertNpcAvailability,npcAvailability,assertInstitutionDelegation,assertQueuedCompatibility,nativeWorldCoordinatorReady,nativeWorldOperationCatalog,prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldStrategyAllowed,nativeWorldStrategyScope,withNativeStrategyExecution,nativeWorldStrategyStepAllowed} from './execution-source.js';

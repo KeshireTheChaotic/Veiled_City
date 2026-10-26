@@ -13,3 +13,4 @@ export {initializeNarrativeWorld} from './narrative-world.js';
 export {initializeKnowledgeWorld} from './knowledge-world.js';
 export {initializeKnowledgeNarrative} from './knowledge-narrative.js';
 export {initializeWorldActorControl} from './world-actor-control.js';
+export {initializeWorldExecution} from './world-execution.js';

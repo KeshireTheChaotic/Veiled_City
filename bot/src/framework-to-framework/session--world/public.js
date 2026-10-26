@@ -2,3 +2,7 @@ import {createSessionWorldEventConsumer} from '../../frameworks/session/public.j
 import {indexWorldEvent} from '../../frameworks/world/public.js';
 /** Pass the native issuer without changing source, audience, transaction, result or error. */
 export function connectSessionWorldEvents({consumer=createSessionWorldEventConsumer(),source=indexWorldEvent}={}){return consumer.bind(source);}
+
+import {conversationPrincipal} from '../../frameworks/session/public.js';
+import {worldConversationPrincipal} from '../../frameworks/world/public.js';
+export function connectWorldPrincipal(){return worldConversationPrincipal.bind(conversationPrincipal);}

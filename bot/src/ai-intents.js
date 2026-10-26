@@ -41,9 +41,9 @@ export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setu
 import {stateRevision} from './kernel/state-revision.js';
 export {stateRevision} from './kernel/state-revision.js';
 export function registerIntentAdapter(feature,adapter){adapters.set(feature,adapter);}
-export function delegationPolicy(db,guild){
-  return db.getCityRecord(guild,"ai_delegation","campaign")?.data||{mode:"manual",revision:0,allow:[],max_operations:1,max_cost:0,expires_minute:null};
-}
+import {delegationPolicy} from './frameworks/intent/public.js';
+export {delegationPolicy} from './frameworks/intent/public.js';
+
 const policyFields=['mode','allow','private_allow','max_operations','max_cost','expires_minute'];
 function validateDelegation(db,guild,input){
   cityObject(input);

@@ -1,0 +1,70 @@
+{
+  "base_head": "68e120468cb5cee7979aec9e3c877cb802638ba6",
+  "syntax_checked": 15,
+  "files": [
+    {
+      "path": "bot/src/frameworks/world/execution-source.js",
+      "sha256": "efe831d1b0c2e073a45c014407eec8293dd5d2fe9e8c050f2c4cd2a440b57089"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/delegation-policy.js",
+      "sha256": "59dd73eea00d6addc991baa22260381e455073098c344be135bb4be661321d3e"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/conversation-principal.js",
+      "sha256": "7aa198c3604f79b42d138fc0f2e6ea4d9ca83b677638dab5a857e33c20fbcf75"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "4b42141b747e03027a87a13925f6877abed5a1161ca5804fd7656d9d472afa8f"
+    },
+    {
+      "path": "bot/src/frameworks/intent/delegation-policy.js",
+      "sha256": "80a8c94b197d991b69bc9ac8a65ac85e2a3ef5af2d063d66d509a5222fd6c05a"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "45d328b2e42cd1e9f1bfce33429c3147653b76d19f322364c20becd7fac0e154"
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "sha256": "2515220bf47d8725be4d341c280ed48ea3e24996e50f71e33a5b473cdfe384f8"
+    },
+    {
+      "path": "bot/src/city-constraints.js",
+      "sha256": "1810ae754393bb3a381a31e4d901f4cfd51d6142b48666cc085e27d2b6a1d4bb"
+    },
+    {
+      "path": "bot/src/native-world-operations.js",
+      "sha256": "b583ea2d340e128b49ee019e04f3217d2ab22bc11ef6045579c3e05228f54b91"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--world/public.js",
+      "sha256": "9d7fe6944659fa372f2479047dbf4b8ed60f53316a97c56402d930f5855dcc73"
+    },
+    {
+      "path": "bot/src/framework-to-framework/session--world/public.js",
+      "sha256": "af4d855c203e1f8d8ddc94313418a766ab1e414e28b5d9539de9882b975d496c"
+    },
+    {
+      "path": "bot/src/application/composition/world-execution.js",
+      "sha256": "1a7f5fca5a03d99c4145c1c35a3631a23484c2f23687a687cd12817ab30cdc73"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "e5e6fe791344b01eecaaa676f7762fa013b00a2ef75d54a363445474413a76e9"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "1993be271ddbe820726adb48b08d7ba834f58e7de3711d579c402790fa5b2501"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+      "sha256": "b257cacbee5031e5766b0a79c02c596b48d174b096893610e032be468731037c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
+      "sha256": "aed561cbd52dca47a6e3a005f7f92454515691f5e147ba38d5927ae935083ecb"
+    }
+  ]
+}
