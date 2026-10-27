@@ -1,6 +1,10 @@
 import {parentPort,workerData} from 'node:worker_threads';
 import {VeiledDB} from '../../src/db.js';
 import {runSessionOpening} from '../../src/session-opening-runner.js';
+import '../../src/ai-intents.js';
+import '../../src/audience-native-v9.js';
+import {initializeWorldExecution,initializeSessionWorldEvents,initializeSessionSceneWorld,initializeKnowledgeWorld,initializeNarrativeWorld,initializeKnowledgeNarrative,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals} from '../../src/application/composition/public.js';
+initializeWorldExecution();initializeSessionWorldEvents();initializeSessionSceneWorld();initializeKnowledgeWorld();initializeNarrativeWorld();initializeKnowledgeNarrative();initializeNativeWorldEvents();initializeCharacterWorldEvents();initializeNativeScenes();initializeNativePrincipals();
 const db=new VeiledDB(workerData.dbPath,workerData.schema);let calls=0;
 const gm={planAssembly:async()=>{calls++;parentPort.postMessage({type:'planning'});await new Promise(resolve=>parentPort.once('message',resolve));throw new Error('mock provider offline');}};
 try{const row=await runSessionOpening({db,guild:{id:'g'},gm});parentPort.postMessage({type:'done',calls,status:row.status});}
