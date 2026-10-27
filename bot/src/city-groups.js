@@ -1,5 +1,5 @@
 /** Reviewed community lifecycle over existing communities; membership grants no knowledge, consent, allegiance, debts or resources. */
-import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
+import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
 import { requireCitySource } from "./city-core.js";
 import { updateCityCivic } from "./city-civic.js";
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";

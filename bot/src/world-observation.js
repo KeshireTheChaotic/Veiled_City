@@ -1,6 +1,6 @@
 /** Selected GM-established non-PC visual facts. Neither profile prose nor an inquiry certifies an answer. */
 import { createHash } from "node:crypto";
-import { indexWorldEvent } from "./city-calendar.js";
+import { indexWorldEvent } from './frameworks/world/public.js';
 import { currentScene, scenePresence, sceneAccess } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";
 

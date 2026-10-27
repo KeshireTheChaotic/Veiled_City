@@ -1,5 +1,5 @@
 /** Typed subscriptions to committed world sources; pending effects never spend, disclose, or fan out without review. */
-import { cityInteger } from "./city-calendar.js";
+import { cityInteger } from './frameworks/world/public.js';
 import { requireCitySource } from "./city-core.js";
 import { changeCityService, transmitCityBelief } from "./city-civic.js";
 import {worldNpcEvidence,worldNpcGoalProposal} from "./frameworks/world/public.js";

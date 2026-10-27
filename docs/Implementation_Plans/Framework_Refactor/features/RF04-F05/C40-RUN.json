@@ -162,5 +162,16 @@
       "sha256": "e94e498b91071c7a0eb2da98f4b855dc6f32127e51815e35eacc1b347be38b1a",
       "retention": "local ignored"
     }
-  ]
+  ],
+  "final_file_followup": {
+    "feature": "RF04-F05-C46",
+    "file_tests": 7,
+    "file_passed": 7,
+    "final_file_hash_unchanged": true,
+    "associated_change": "Actual consequence/civic/backfill production calendar import paths changed.",
+    "union_exit_code": 1,
+    "union_unrelated_failures": 2,
+    "evidence": "C46-RUN.json",
+    "original_gap": "Closed only for C40 final file; broader source/live/phase not qualified."
+  }
 }

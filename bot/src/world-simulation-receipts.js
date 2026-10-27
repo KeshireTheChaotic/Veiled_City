@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import {principalAllows} from './kernel/application-authority.js';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
-import {indexWorldEvent,cityAudit} from './city-calendar.js';
+import {indexWorldEvent,cityAudit} from './frameworks/world/public.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';

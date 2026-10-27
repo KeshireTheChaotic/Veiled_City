@@ -1,0 +1,14 @@
+{
+  "reason": "C39 source fingerprint normalizes only actual calendar import adopted in C46 back to historical spelling, preserving body check. C46 native clock advance already calls processCityDue; second call must return0, native fired receipt remains asserted. Production unchanged.",
+  "files": [
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+      "sha256": "f4712c667ea68cfcbc1672fbdba5b1fb0a3cd87d3390375f9ee91c37370a66aa"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c46.test.mjs",
+      "sha256": "5de66713f21235c264a624bd4db30167f827cb9fd5fe56e73e5356777bb9e7d2"
+    }
+  ],
+  "rerun": "two failed cases only; no passing tests rerun"
+}

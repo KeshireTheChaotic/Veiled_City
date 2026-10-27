@@ -1,6 +1,6 @@
 {
-  "checkpoint": "after C45 World-owned NPC signal-memory projection",
-  "timestamp": "2026-10-27T02:28:18.028Z",
+  "checkpoint": "after C46 World public calendar caller adoption",
+  "timestamp": "2026-10-27T02:34:30.356Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
   "manifest_sha256": "cf3e1af06fb9f26438eee878d04461ede27b43d21a0f05b8b0a935eead282df0",
   "open_exact_records": 1952,
@@ -6508,7 +6508,7 @@
     {
       "path": "bot/src/city-civic.js",
       "owner": "world",
-      "sha256": "8900527b2ff626239dd34420b889818ae74b090db28695dde2aa774a5ef5e94c"
+      "sha256": "ffecfcd878e2d84da6a4b5e744e05726b4da14cff4919eef1eeaee9dfa6a3b3e"
     },
     {
       "path": "bot/src/city-commands.js",
@@ -6518,7 +6518,7 @@
     {
       "path": "bot/src/city-consequences.js",
       "owner": "world",
-      "sha256": "2e10873d5e6ac37068f9b8734dca5bab0c69df0abb565e53c087dc5153b3d84c"
+      "sha256": "80e781383e0893bf7187ed7a34d3d3feb4a4170bb135b8fc30e63c1a360ffe23"
     },
     {
       "path": "bot/src/city-constraints.js",
@@ -6533,12 +6533,12 @@
     {
       "path": "bot/src/city-depth.js",
       "owner": "world",
-      "sha256": "652baebf3ecbddc567711b94a5e8aa42f1d8673febfb95dedfc9105b3159d351"
+      "sha256": "bb22f2166fb42ca160e70c2206b3eb9b2ce730e1c452bc404d503300077fd621"
     },
     {
       "path": "bot/src/city-groups.js",
       "owner": "world",
-      "sha256": "d967f949a868cf4ff751b3f647827b43b11aa3f1cfaa2797e9265aac9231becb"
+      "sha256": "39b279d1b0aa75a2e74c8ebb2a3897f48fee2a78f86bb61f749edfe3b37f7ab6"
     },
     {
       "path": "bot/src/commands.js",
@@ -8703,7 +8703,7 @@
     {
       "path": "bot/src/long-projects.js",
       "owner": "world",
-      "sha256": "b826745d4e8475b6027b3f7cadf7136e12cc8fe3d97beb226a9c21eec7cc302b"
+      "sha256": "e8fd65b0c300bc4db887cb843030bf8122f86b77f14c200c85c3bba3200f8e82"
     },
     {
       "path": "bot/src/mechanical-native-v9.js",
@@ -9028,7 +9028,7 @@
     {
       "path": "bot/src/native-environment-scene.js",
       "owner": "world",
-      "sha256": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d"
+      "sha256": "0d840b433553ee05830255c13f8b323fd51ff91388769a8184970aedf9076522"
     },
     {
       "path": "bot/src/native-environment-sealed-docket.js",
@@ -9568,7 +9568,7 @@
     {
       "path": "bot/src/seed-drafts.js",
       "owner": "world",
-      "sha256": "f46f8a884477e61269af345c16d4dcbcb8cf496a494c022c5d561ed4da05d2b2"
+      "sha256": "aa7d2405fafbcc360aab940c12bef21729785ee80b3218e7d5784ca80fdab68e"
     },
     {
       "path": "bot/src/semantic-candidate-source.js",
@@ -9718,7 +9718,7 @@
     {
       "path": "bot/src/world-authoring.js",
       "owner": "world",
-      "sha256": "a6936a35de71ac2559106b0b0f437e2baf0482bd14d31aaf31d8889bbaf5cb17"
+      "sha256": "cef34965a9845762ad5213927fd24ca550162a11db3536f231bbee83df8d0afa"
     },
     {
       "path": "bot/src/world-authorship.js",
@@ -9738,7 +9738,7 @@
     {
       "path": "bot/src/world-identity-persistence.js",
       "owner": "world",
-      "sha256": "01ea4b4a32bce70dfb02b1c9e394dde0ab0eed04013b2fe8f159bbe051db78e0"
+      "sha256": "020b6dc913f219fd0a9939695188f17a998239faddcc0dbf8e9571870a5fc33e"
     },
     {
       "path": "bot/src/world-information-transfer.js",
@@ -9753,7 +9753,7 @@
     {
       "path": "bot/src/world-observation.js",
       "owner": "world",
-      "sha256": "5d7954e7624945799da037cd6cee499d722ff8c77c758eabb1e6275489d1f18e"
+      "sha256": "636e363679c6f51d4ec606a1475687987dd4dfefb6dc9f5948f8f2766b873d05"
     },
     {
       "path": "bot/src/world-private-seeds.js",
@@ -9763,17 +9763,17 @@
     {
       "path": "bot/src/world-resolution.js",
       "owner": "world",
-      "sha256": "65a81ac83b11da28571fc96a1495bce77c6a09eccbdc77299f78435ae51cf0d7"
+      "sha256": "784362bd3f1298d2569dfbb06201332606e7c29d7aca740fd3a080c20d9aee6b"
     },
     {
       "path": "bot/src/world-sanctioned-sources.js",
       "owner": "world",
-      "sha256": "c8f6af4dc24cd4b915051b88e16835a928c051882bbc1f48e9462b91fa425f28"
+      "sha256": "95c8ca1be64764e8160c00c28558d4dc250b837b3229d7ff7709a0ba3560cb16"
     },
     {
       "path": "bot/src/world-simulation-receipts.js",
       "owner": "world",
-      "sha256": "9f21df85f5a5b15134103623a421fccb67e8f1bfcf6a09f2a28ac41ec959cd68"
+      "sha256": "cbcd8a1bce95e263ffbbd52e76fd5853673131e64497d3b86cb3413d3dcdff12"
     },
     {
       "path": "bot/tooling/architecture/ast-imports.mjs",
@@ -9820,8 +9820,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C45-RUN.json"
+    "features/RF04-F05/C46-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C45 registry tests until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "All new tests/logs local only per owner; clean checkout lacks C38–C45 registry references until locally supplied. Architecture pass is current working-tree only."
 }

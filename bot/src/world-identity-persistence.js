@@ -4,7 +4,7 @@ import {canonicalInterestEvidence,nativeSalienceAvailable} from './narrative-sal
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,narrativeSourceVisible,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
 import {listNarrativeRecords} from './narrative-records.js';
 const issuer='native:world-identity-persistence';
 export function verifiedIdentityPersistence(db,guild,key,scope){

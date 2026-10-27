@@ -1,5 +1,5 @@
 /** Civic interdependencies: sourced claims, bounded service propagation, subjective social layers and source-linked history. */
-import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
+import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from './frameworks/world/public.js';
 import { requireCitySource, requireCityRecord, cityStrings, INSTITUTION_ACTIONS } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
 import {worldNpcEvidence} from "./frameworks/world/public.js";

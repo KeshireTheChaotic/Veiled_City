@@ -1,7 +1,7 @@
 /** Add-only bulk projections and GM-reviewed seed drafts. Archives are sources, never shared knowledge or automatic canon. */
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
-import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
+import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from './frameworks/world/public.js';
 import { requireCitySource, updateCityCore } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic } from "./city-civic.js";
 import { configurePortrayal } from "./portrayal.js";

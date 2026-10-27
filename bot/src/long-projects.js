@@ -1,5 +1,5 @@
 /** Phased continuity over existing adjudicated downtime results; consent and fictional time never grant new PC mechanics or spend resources. */
-import { cityObject, cityKey, cityInteger, cityAudit } from "./city-calendar.js";
+import { cityObject, cityKey, cityInteger, cityAudit } from './frameworks/world/public.js';
 import { requireCitySource } from "./city-core.js";
 import { PermissionError, UserInputError, StateConflictError } from "./kernel/errors.js";
 import { principalAllows, applicationPrincipal } from "./kernel/application-authority.js";

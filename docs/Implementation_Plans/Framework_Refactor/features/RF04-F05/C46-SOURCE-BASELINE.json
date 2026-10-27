@@ -1,0 +1,282 @@
+{
+  "base_head": "278cd7a5189010d04c69136f3ee870070aafe19c",
+  "records": [
+    {
+      "path": "bot/src/city-civic.js",
+      "owner": "world",
+      "before_sha256": "8900527b2ff626239dd34420b889818ae74b090db28695dde2aa774a5ef5e94c",
+      "unchanged_body_ast_sha256": "61e8a90506b38b4586e022617f62b5260b001ea45b077d556aadc38928ec63c0",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityInteger",
+          "local": "cityInteger"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        },
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/city-consequences.js",
+      "owner": "world",
+      "before_sha256": "2e10873d5e6ac37068f9b8734dca5bab0c69df0abb565e53c087dc5153b3d84c",
+      "unchanged_body_ast_sha256": "181c7d11c6f57fd2da62cfd725b824d7d1109276d334db2654351baafe06987f",
+      "imported": [
+        {
+          "name": "cityInteger",
+          "local": "cityInteger"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/city-depth.js",
+      "owner": "world",
+      "before_sha256": "652baebf3ecbddc567711b94a5e8aa42f1d8673febfb95dedfc9105b3159d351",
+      "unchanged_body_ast_sha256": "9529d875cd88d853b76e48ceec26249d6e7bddb554ccf714ff7004ac7a0634c1",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityInteger",
+          "local": "cityInteger"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        },
+        {
+          "name": "scheduleCityEvent",
+          "local": "scheduleCityEvent"
+        },
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "owner": "world",
+      "before_sha256": "d967f949a868cf4ff751b3f647827b43b11aa3f1cfaa2797e9265aac9231becb",
+      "unchanged_body_ast_sha256": "ccc60afccebfcc4e1ca219953db1c1752aad6ad087c8585dec70bd697ab11d38",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "owner": "world",
+      "before_sha256": "b826745d4e8475b6027b3f7cadf7136e12cc8fe3d97beb226a9c21eec7cc302b",
+      "unchanged_body_ast_sha256": "5c6e85a96f00a458ba1a259137b2ef6c64ce971093dba1e951e7a39800e7eb44",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityInteger",
+          "local": "cityInteger"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "owner": "world",
+      "before_sha256": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
+      "unchanged_body_ast_sha256": "48549834dfd1e06dcbc1a5d1bba6d5dd5e2584929bd91d7676880f7b236e76d0",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "owner": "world",
+      "before_sha256": "f46f8a884477e61269af345c16d4dcbcb8cf496a494c022c5d561ed4da05d2b2",
+      "unchanged_body_ast_sha256": "1ff1004de057aef9f5228acfb7f627797e908469cf9bf54142d0811c70573fbf",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityInteger",
+          "local": "cityInteger"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        },
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-authoring.js",
+      "owner": "world",
+      "before_sha256": "a6936a35de71ac2559106b0b0f437e2baf0482bd14d31aaf31d8889bbaf5cb17",
+      "unchanged_body_ast_sha256": "08a959050eff32fcf387637ba25f73f07c346ca3226eccd3fddd2ac6a5531708",
+      "imported": [
+        {
+          "name": "cityObject",
+          "local": "cityObject"
+        },
+        {
+          "name": "cityKey",
+          "local": "cityKey"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-identity-persistence.js",
+      "owner": "world",
+      "before_sha256": "01ea4b4a32bce70dfb02b1c9e394dde0ab0eed04013b2fe8f159bbe051db78e0",
+      "unchanged_body_ast_sha256": "54a36bce9c58af6ea3c84cff9ce897d532059b7695ba51cb72df0593579e004f",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-observation.js",
+      "owner": "world",
+      "before_sha256": "5d7954e7624945799da037cd6cee499d722ff8c77c758eabb1e6275489d1f18e",
+      "unchanged_body_ast_sha256": "a0f0b6d6af468b0e77cd24253c8868c7bd9c34781c0266ab1f31856639b03a03",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "owner": "world",
+      "before_sha256": "65a81ac83b11da28571fc96a1495bce77c6a09eccbdc77299f78435ae51cf0d7",
+      "unchanged_body_ast_sha256": "aef9e7ff8f77941d1d00e0f9d42591061afec18ab8436712458d6d1743be883a",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "owner": "world",
+      "before_sha256": "c8f6af4dc24cd4b915051b88e16835a928c051882bbc1f48e9462b91fa425f28",
+      "unchanged_body_ast_sha256": "ddcb9e70790b1618507f300fdd8a9b05ec9ea5dbf5601c9e3f50f5944ec4013c",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    },
+    {
+      "path": "bot/src/world-simulation-receipts.js",
+      "owner": "world",
+      "before_sha256": "9f21df85f5a5b15134103623a421fccb67e8f1bfcf6a09f2a28ac41ec959cd68",
+      "unchanged_body_ast_sha256": "ce8410e73467f9d30036cd7bba554eea59e1ef406ef9c9d389873138074d9d18",
+      "imported": [
+        {
+          "name": "indexWorldEvent",
+          "local": "indexWorldEvent"
+        },
+        {
+          "name": "cityAudit",
+          "local": "cityAudit"
+        }
+      ],
+      "old": "./city-calendar.js",
+      "new": "./frameworks/world/public.js"
+    }
+  ],
+  "skipped": [
+    {
+      "path": "bot/src/autonomous-world.js",
+      "sha256": "d122e3f89204bb29dce53482589b13cf5ebeb7b9c0372968b0af1716b68617bf"
+    },
+    {
+      "path": "bot/src/native-environment-instance.js",
+      "sha256": "a1e09e5ded254fe6a6156ef33ad3c09be30dc165e5e6e608fea899af3b09d0c2"
+    }
+  ],
+  "purpose": "Fresh current production AST fingerprints only; no inherited fixtures/goldens/tests. Existing root calendar is pure re-export of same original World functions."
+}

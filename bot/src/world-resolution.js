@@ -4,7 +4,7 @@ import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.
 import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
 import {worldActorControl} from './city-constraints.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
 import {narrativeImportance,nativeSalienceAvailable} from './narrative-salience.js';
 
 const issuer='native:world-resolution';

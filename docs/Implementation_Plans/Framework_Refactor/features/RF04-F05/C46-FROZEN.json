@@ -1,0 +1,83 @@
+{
+  "base_head": "278cd7a5189010d04c69136f3ee870070aafe19c",
+  "syntax_checked": 14,
+  "affected_rerun_reason": "Actual city-civic/long-project/consequence/seed-draft native calendar imports change in C46; new current affected feature files only, not inherited suites or unassociated passing tests.",
+  "files": [
+    {
+      "path": "bot/src/city-civic.js",
+      "sha256": "ffecfcd878e2d84da6a4b5e744e05726b4da14cff4919eef1eeaee9dfa6a3b3e"
+    },
+    {
+      "path": "bot/src/city-consequences.js",
+      "sha256": "80e781383e0893bf7187ed7a34d3d3feb4a4170bb135b8fc30e63c1a360ffe23"
+    },
+    {
+      "path": "bot/src/city-depth.js",
+      "sha256": "bb22f2166fb42ca160e70c2206b3eb9b2ce730e1c452bc404d503300077fd621"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "sha256": "39b279d1b0aa75a2e74c8ebb2a3897f48fee2a78f86bb61f749edfe3b37f7ab6"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "sha256": "e8fd65b0c300bc4db887cb843030bf8122f86b77f14c200c85c3bba3200f8e82"
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "sha256": "0d840b433553ee05830255c13f8b323fd51ff91388769a8184970aedf9076522"
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "sha256": "aa7d2405fafbcc360aab940c12bef21729785ee80b3218e7d5784ca80fdab68e"
+    },
+    {
+      "path": "bot/src/world-authoring.js",
+      "sha256": "cef34965a9845762ad5213927fd24ca550162a11db3536f231bbee83df8d0afa"
+    },
+    {
+      "path": "bot/src/world-identity-persistence.js",
+      "sha256": "020b6dc913f219fd0a9939695188f17a998239faddcc0dbf8e9571870a5fc33e"
+    },
+    {
+      "path": "bot/src/world-observation.js",
+      "sha256": "636e363679c6f51d4ec606a1475687987dd4dfefb6dc9f5948f8f2766b873d05"
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "sha256": "784362bd3f1298d2569dfbb06201332606e7c29d7aca740fd3a080c20d9aee6b"
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "sha256": "95c8ca1be64764e8160c00c28558d4dc250b837b3229d7ff7709a0ba3560cb16"
+    },
+    {
+      "path": "bot/src/world-simulation-receipts.js",
+      "sha256": "cbcd8a1bce95e263ffbbd52e76fd5853673131e64497d3b86cb3413d3dcdff12"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c46.test.mjs",
+      "sha256": "5892c0fae5f3a27b56e5e3a99929632e55b00bfc322d70a0313cd7d165d7e754"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+      "sha256": "605299a28cfbccdee8ddfa865eec512915e9e4fac63b16be3f1665ec57673bed"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+      "sha256": "efe933485d2f40e91d1363782eb3558f3c652016fbf2d79a756873e82fb74087"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+      "sha256": "90eb296f9eb7fde6ee59c79290874e4393b9ba193eb41de8804fb96926ca2f8b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+      "sha256": "af6b0529800adba68ccc95b55865e051f0733296e4215f9e4864cd1bda17a904"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C46-SOURCE-BASELINE.json",
+      "sha256": "2ab18ee6f33c5efda70d016dd8e829e09c4af3594592238900fb7389d0861649"
+    }
+  ]
+}

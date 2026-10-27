@@ -5,7 +5,7 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {recordScenePresence,currentScene,scenePresence} from './scene-continuity.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {nativeEstablishedFact} from './native-established-fact.js';
 import {nativeEnvironmentDoorChainSituation} from './native-environment-door-chain.js';

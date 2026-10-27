@@ -1,5 +1,5 @@
 /** Opt-in depth: established upkeep obligations without auto-spending; demand-driven minor NPC drafts without unearned knowledge. */
-import { cityObject, cityKey, cityInteger, cityAudit, scheduleCityEvent, indexWorldEvent } from "./city-calendar.js";
+import { cityObject, cityKey, cityInteger, cityAudit, scheduleCityEvent, indexWorldEvent } from './frameworks/world/public.js';
 import { requireCitySource, requireCityRecord, addWorldLink } from "./city-core.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import {minorNpcSchema} from './frameworks/world/minor-npc-schema.js';
