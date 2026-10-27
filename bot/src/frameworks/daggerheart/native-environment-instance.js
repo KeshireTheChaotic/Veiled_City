@@ -13,6 +13,7 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 const issuer='native:environment-instance';
 const keyFor=d=>`environment-instance:${hash([d.session,d.scene,d.location,d.scope])}`;
+const activeLookups=new WeakMap();
 const enabled=(db,guild)=>db.getCityCalendar(guild).flags.authoring===true
   &&db.getCityCalendar(guild).flags.gm_discretion===true
   &&db.getCityRecord(guild,'gm_authority','campaign')?.data.gm_authority_mode!=='manual';
@@ -96,5 +97,11 @@ export function nativeEnvironmentInstanceCapabilities(db,guild,key,scope){
 export function nativeEnvironmentInstanceForScope(db,guild,scope,location){
   const scene=currentScene(db,guild),key=keyFor({session:scene.session_id,scene:scene.key,location,scope});
   if(!db.getCityRecord(guild,'native_environment_instance',key))return null;
-  return nativeEnvironmentInstanceCapabilities(db,guild,key,scope);
+  let active=activeLookups.get(db);
+  if(!active){active=new Set();activeLookups.set(db,active);}
+  const lookup=JSON.stringify([guild,key]);
+  if(active.has(lookup))return null;
+  active.add(lookup);
+  try{return nativeEnvironmentInstanceCapabilities(db,guild,key,scope);}
+  finally{active.delete(lookup);}
 }

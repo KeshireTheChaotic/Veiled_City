@@ -1,0 +1,11 @@
+# RF04-F05 C65 private audience port follow-up
+
+At checkout HEAD `d429def383eca8925163dc5f38e3ba656a734acd`, with concurrent RF04 edits in the shared working tree, a newly authored local test exercised the C65 Daggerheart audience port using application initializers, original Narrative context and grant providers, and a disposable SQLite campaign. No provider, Discord, production database or deployment was used.
+
+The test minted a private audience through `nativeNarrativeAudience`, checked its exact recipient, revalidated the proof, rejected a second owner's scope and a copied unregistered context, and rejected revalidation after source retraction. This exercises the port and native grant rules; it does not establish an environment instance, inspect private fact contents, qualify all private source types or prove publication behavior. No production code was changed for this test.
+
+The single invocation from `bot/` was `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs`. The complete TAP log records **1 test passed, 0 failed, 0 skipped**, duration **10084.852 ms**. The terminal session yielded before completion and its exit code was not captured; the completed TAP result is the available evidence. Syntax check of the new test passed. No retry or broad suite was run.
+
+Local test SHA-256 `680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F`; local log SHA-256 `F52C13260B57079468AEF15C061858E095CF93D240AE46558C214F4C9A4E6552`. The local ignored test and log are not distributed by a clean checkout. Source fingerprints: Daggerheart environment-sources port `A62BC8B290D54BDB261579871FB48A89548831530E8A663C2C1E1282534E63DE`, environment-scene composition `D1126139E147B78C37197D3CFCB11E6067E96346366AF35862B4B8E2F7237D26`, Daggerheart–Narrative adapter `79E519F37B58F19D64BFB829961CF669A48A8111F2A62034503149AD3DB4F267`, Narrative grant policy `546441B39852A18A3B1C3067F0717E62AC50C3E4F06B74B80802DE1027FCD0D2`. These hashes do not freeze every transitive dependency in the shared working tree.
+
+Rollback removes the local test/log and this follow-up. RF04 remains open and release is not authorized. Provider calls and cost: 0 and $0; Codex usage unmeasured.
