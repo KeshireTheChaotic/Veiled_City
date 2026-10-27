@@ -1,0 +1,126 @@
+{
+  "feature": "RF04-F05-C48",
+  "status": "SCOPED_NEUTRAL_ARBITRATION_FAILURE_QUALIFIED",
+  "frozen": {
+    "base_head": "477628e62367e4042e062195d46b862a37d791c5",
+    "syntax_checked": 4,
+    "affected_rerun_reason": "Intent arbitration and native audience error producers actually change here; C44/C47 are this ongoing task newly authored tests, not inherited suites.",
+    "files": [
+      {
+        "path": "bot/src/kernel/arbitration-failure.js",
+        "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/native-failure.js",
+        "sha256": "acd3b10f450e32bab1f9001d56f328e22aefed51664c2e27b8ab57c5563c5e9f"
+      },
+      {
+        "path": "bot/src/frameworks/intent/gm-arbitration-contract.js",
+        "sha256": "3504904f06e5d8094a67905cfe870e22f4500b7e9e150b607119b810ebf8e0c2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c48.test.mjs",
+        "sha256": "912e8a6b17acc84d64922e6c1da5a23ff7776637574ec2f5d2ec73786421837a"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+        "sha256": "e4bce2943ba8280d6643bad457a58947365063fdfd9d31a1b9f63b2e1c854e56"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "ef1656c437d6c0519f7bd8a14fb14654f5d16f993d233a460667257a69734407"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C48-SOURCE-BASELINE.json",
+        "sha256": "be34b4e78eda5878a673220b51e67e01071d82fc1c94ca563e584d93664bfd4a"
+      }
+    ]
+  },
+  "source_baseline": {
+    "original_native": "/** Stable native adjudication failure contract shared by native validators. No rule or narrative policy is implemented by the error itself. */\nexport function nativeArbitrationFailure(reason){return Object.assign(new Error(`Unified GM arbitration held: ${reason}`),{code:'GM_ARBITRATION',expected:true});}\n",
+    "original_intent_error": "export function arbitrationFailure(reason){return Object.assign(new Error(`Unified GM arbitration held: ${reason}`),{code:'GM_ARBITRATION',expected:true});}",
+    "intent_other_source_sha256": "99c719895481f5461ae1e95b4510eb470e2e857ebfa00ac02a94046589e20f7b",
+    "base_head": "477628e62367e4042e062195d46b862a37d791c5"
+  },
+  "tests": {
+    "exit_code": 0,
+    "duration_ms": 3113.2128,
+    "start": "2026-10-26T21:50:24.3717038-05:00",
+    "end": "2026-10-26T21:50:27.4849166-05:00",
+    "run_id": "rf04-f05-c48-frozen-affected-union",
+    "tests": 14,
+    "new_tests": 3,
+    "affected_tests": 11,
+    "passed": 14,
+    "failed": 0,
+    "tap_duration_ms": 2672.2599,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c48.test.mjs tests/ai-gm-2026-10/rf04-f05-c44.test.mjs tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+    "retention": "Local ignored files per owner."
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 720,
+      "unowned": 0,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
+      "cycleComponents": 3,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1957,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 720,
+      "unowned": 0,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
+      "cycleComponents": 3,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1292,
+      "activeViolationGroups": 661,
+      "transitionErrors": 661,
+      "pass": false
+    }
+  },
+  "retired": [],
+  "ownership": "Neutral kernel owns error construction; original Intent/native exports alias same helper. No source/decision/native rule copied or moved.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Function names remain exported; implementation function name of former nativeArbitrationFailure alias is now arbitrationFailure, with no supported game-state workflow relying on Function.name. Error message/code/expected marker/name preserved.",
+    "This tests shared error behavior and current source-dependent C44/C47, not full phase/native mechanics/Discord/live quality.",
+    "New tests/logs intentionally local; clean checkout fails missing registered references until supplied. No checker exemption or clean-checkout/release qualification."
+  ],
+  "rollback": "Restore exact original Intent and native declarations in C48 baseline, remove only new kernel helper; no persisted data changes.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c48-tests.log",
+      "sha256": "8d92870ed7b31df9fb824de797b91fe673fee45309c210038bd9a6af5410d31f",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c48-rf04.log",
+      "sha256": "bb896d9c67fcf4bec70fe9beadb5f84aef100d5f76047d423edfd5096e2c8d42",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c48-rf05-final.log",
+      "sha256": "994954e1b6f035d5fc376a28af6daf336c432725f70573522ff08219745b5364",
+      "retention": "local ignored"
+    }
+  ]
+}

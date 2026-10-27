@@ -1,0 +1,35 @@
+{
+  "base_head": "477628e62367e4042e062195d46b862a37d791c5",
+  "syntax_checked": 4,
+  "affected_rerun_reason": "Intent arbitration and native audience error producers actually change here; C44/C47 are this ongoing task newly authored tests, not inherited suites.",
+  "files": [
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-failure.js",
+      "sha256": "acd3b10f450e32bab1f9001d56f328e22aefed51664c2e27b8ab57c5563c5e9f"
+    },
+    {
+      "path": "bot/src/frameworks/intent/gm-arbitration-contract.js",
+      "sha256": "3504904f06e5d8094a67905cfe870e22f4500b7e9e150b607119b810ebf8e0c2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c48.test.mjs",
+      "sha256": "912e8a6b17acc84d64922e6c1da5a23ff7776637574ec2f5d2ec73786421837a"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+      "sha256": "e4bce2943ba8280d6643bad457a58947365063fdfd9d31a1b9f63b2e1c854e56"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+      "sha256": "ef1656c437d6c0519f7bd8a14fb14654f5d16f993d233a460667257a69734407"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C48-SOURCE-BASELINE.json",
+      "sha256": "be34b4e78eda5878a673220b51e67e01071d82fc1c94ca563e584d93664bfd4a"
+    }
+  ]
+}

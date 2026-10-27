@@ -1,6 +1,6 @@
 {
-  "checkpoint": "after C47 native environmental audience source integration",
-  "timestamp": "2026-10-27T02:46:00.118Z",
+  "checkpoint": "after C48 neutral arbitration failure source",
+  "timestamp": "2026-10-27T02:50:29.073Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
   "manifest_sha256": "2ef3f5186a76715aff36c95f2253ffc8eb5e1cd6cba0c73ae4698bc0dd152986",
   "open_exact_records": 1942,
@@ -6310,10 +6310,10 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 719,
+      "sourceModules": 720,
       "unowned": 0,
-      "importOccurrences": 3075,
-      "internalImportOccurrences": 2896,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
       "cycleComponents": 3,
       "largestCycle": 134,
       "rawViolationOccurrences": 1957,
@@ -6323,10 +6323,10 @@
       "pass": true
     },
     "RF04": {
-      "sourceModules": 719,
+      "sourceModules": 720,
       "unowned": 0,
-      "importOccurrences": 3075,
-      "internalImportOccurrences": 2896,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
       "cycleComponents": 3,
       "largestCycle": 134,
       "rawViolationOccurrences": 1957,
@@ -6336,10 +6336,10 @@
       "pass": true
     },
     "RF05": {
-      "sourceModules": 719,
+      "sourceModules": 720,
       "unowned": 0,
-      "importOccurrences": 3075,
-      "internalImportOccurrences": 2896,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
       "cycleComponents": 3,
       "largestCycle": 134,
       "rawViolationOccurrences": 1957,
@@ -6349,10 +6349,10 @@
       "pass": false
     },
     "RF06": {
-      "sourceModules": 719,
+      "sourceModules": 720,
       "unowned": 0,
-      "importOccurrences": 3075,
-      "internalImportOccurrences": 2896,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
       "cycleComponents": 3,
       "largestCycle": 134,
       "rawViolationOccurrences": 1957,
@@ -6362,10 +6362,10 @@
       "pass": false
     },
     "RF07": {
-      "sourceModules": 719,
+      "sourceModules": 720,
       "unowned": 0,
-      "importOccurrences": 3075,
-      "internalImportOccurrences": 2896,
+      "importOccurrences": 3077,
+      "internalImportOccurrences": 2898,
       "cycleComponents": 3,
       "largestCycle": 134,
       "rawViolationOccurrences": 1957,
@@ -7413,7 +7413,7 @@
     {
       "path": "bot/src/frameworks/daggerheart/native-failure.js",
       "owner": "daggerheart",
-      "sha256": "012340403f53822c556f3b5a759b3c710700ef77764631c72973d8db5761ec0b"
+      "sha256": "acd3b10f450e32bab1f9001d56f328e22aefed51664c2e27b8ab57c5563c5e9f"
     },
     {
       "path": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
@@ -7783,7 +7783,7 @@
     {
       "path": "bot/src/frameworks/intent/gm-arbitration-contract.js",
       "owner": "intent",
-      "sha256": "4a54892c530945d5a227b311cfb802d48ad1a1d46a7cccfb481ff7e0d0badf1f"
+      "sha256": "3504904f06e5d8094a67905cfe870e22f4500b7e9e150b607119b810ebf8e0c2"
     },
     {
       "path": "bot/src/frameworks/intent/public.js",
@@ -8809,6 +8809,11 @@
       "path": "bot/src/kernel/application-authority.js",
       "owner": "kernel",
       "sha256": "58554e42ec04ca5908ca7ac6e96225b1690a8025a273d4d0e836df4bd4054901"
+    },
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "owner": "kernel",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
     },
     {
       "path": "bot/src/kernel/entity-key.js",
@@ -9980,8 +9985,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C47-RUN.json"
+    "features/RF04-F05/C48-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks newly registered tests from C38 onward until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "New tests/logs local per owner; clean checkout lacks newly registered references from C38 onward until supplied. Local pass only."
 }

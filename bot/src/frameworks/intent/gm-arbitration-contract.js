@@ -75,4 +75,4 @@ export function matchesArbitrationSchema(schema,value){
   return value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length===schema.required.length
     &&schema.required.every(k=>Object.hasOwn(value,k)&&matchesArbitrationSchema(schema.properties[k],value[k]));
 }
-export function arbitrationFailure(reason){return Object.assign(new Error(`Unified GM arbitration held: ${reason}`),{code:'GM_ARBITRATION',expected:true});}
+export {arbitrationFailure} from '../../kernel/arbitration-failure.js';

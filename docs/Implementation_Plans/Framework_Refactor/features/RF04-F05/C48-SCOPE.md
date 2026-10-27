@@ -1,0 +1,3 @@
+# RF04-F05 C48 — Shared arbitration failure construction
+
+Unify the two byte-identical error constructors used by Intent and native Daggerheart validators under neutral kernel, retaining both original export names and exact message/code/expected/Error behavior. No throwing condition, rule, schema, audience, source or gameplay policy changes. This prepares World proof extraction without an Intent import solely for constructing an error. Fresh factory/serialization/schema/unissued-origin tests plus entire current C44/C47 after their actual error producer changes. New tests/logs local per owner; no inherited suites/polling/provider/production/new restrictions. Rollback kernel and exact original two declarations; preserve all native state/receipts. RELEASE NOT AUTHORIZED.

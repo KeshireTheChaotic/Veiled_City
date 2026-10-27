@@ -1,0 +1,6 @@
+{
+  "original_native": "/** Stable native adjudication failure contract shared by native validators. No rule or narrative policy is implemented by the error itself. */\nexport function nativeArbitrationFailure(reason){return Object.assign(new Error(`Unified GM arbitration held: ${reason}`),{code:'GM_ARBITRATION',expected:true});}\n",
+  "original_intent_error": "export function arbitrationFailure(reason){return Object.assign(new Error(`Unified GM arbitration held: ${reason}`),{code:'GM_ARBITRATION',expected:true});}",
+  "intent_other_source_sha256": "99c719895481f5461ae1e95b4510eb470e2e857ebfa00ac02a94046589e20f7b",
+  "base_head": "477628e62367e4042e062195d46b862a37d791c5"
+}
