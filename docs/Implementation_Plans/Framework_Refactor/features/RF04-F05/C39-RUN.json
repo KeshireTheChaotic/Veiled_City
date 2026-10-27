@@ -1,0 +1,191 @@
+{
+  "feature": "RF04-F05-C39",
+  "status": "SCOPED_WORLD_NPC_EVIDENCE_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+  "frozen": {
+    "base_head": "d9df140b2df5dd76c67d9fab90558af0dfae0712",
+    "syntax_checked": 3,
+    "files": [
+      {
+        "path": "bot/src/city-civic.js",
+        "sha256": "8900527b2ff626239dd34420b889818ae74b090db28695dde2aa774a5ef5e94c"
+      },
+      {
+        "path": "bot/src/long-projects.js",
+        "sha256": "b826745d4e8475b6027b3f7cadf7136e12cc8fe3d97beb226a9c21eec7cc302b"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "sha256": "045b9be2150e24612f87aa76306335bfe4e760d0387cd2b824c1f08af92d4d3b"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C39-SOURCE-BASELINE.json",
+        "sha256": "45ef98a4460eab6154eb93d60c215e380ed2c6f23d02d7d487d2dbf3d515ce09"
+      }
+    ]
+  },
+  "source_baseline": [
+    {
+      "path": "bot/src/city-civic.js",
+      "body_sha256": "38458bca88961b815b3ea65f3e24abca9337578c02835e19abd87ae34e2706a7"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "body_sha256": "1b65840782f774cf0eec99539536243e6ee3b60592896d83053cfef359823ad3"
+    }
+  ],
+  "tests": {
+    "initial": {
+      "duration_ms": 1792.224,
+      "start": "2026-10-26T21:03:40.9825374-05:00",
+      "end": "2026-10-26T21:03:42.7747614-05:00",
+      "run_id": "rf04-f05-c39-frozen",
+      "exit_code": 1,
+      "tests": 6,
+      "passed": 1,
+      "failed": 5,
+      "tap_duration_ms": 1739.8751
+    },
+    "unchanged_failed_repair_attempt": {
+      "duration_ms": 1731.1832,
+      "start": "2026-10-26T21:04:13.6142083-05:00",
+      "end": "2026-10-26T21:04:15.3453915-05:00",
+      "exit_code": 1,
+      "run_id": "rf04-f05-c39-fixture-repair",
+      "tests": 5,
+      "passed": 0,
+      "failed": 5,
+      "tap_duration_ms": 1679.6635,
+      "reason": "Repair command failed shell quoting before edit; retry mistakenly ran unchanged bytes. Not qualification."
+    },
+    "applied_fixture_repair": {
+      "exit_code": 0,
+      "start": "2026-10-26T21:04:36.5012552-05:00",
+      "run_id": "rf04-f05-c39-applied-fixture-repair",
+      "duration_ms": 1793.3535,
+      "end": "2026-10-26T21:04:38.2946087-05:00",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "tap_duration_ms": 1742.0741,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-name-pattern='owner-requested|cannot infer|project rejects|influence requires|actual native community' --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c39.test.mjs"
+    },
+    "repair": {
+      "reason": "Fresh native GM source fixture omitted required title. First repair command failed shell quoting and unchanged retry failed0/5; both recorded. Actual edit changes only fixture metadata, not production or passed body test.",
+      "final_test_sha256": "605299a28cfbccdee8ddfa865eec512915e9e4fac63b16be3f1665ec57673bed",
+      "rerun": "five failed native integration cases only"
+    },
+    "retention": "Local ignored test/logs only per owner; committed terminal/fingerprints, no clean-checkout certificate."
+  },
+  "syntax": {
+    "checked": 3,
+    "passed": 3,
+    "repaired_test_checked": true
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 708,
+      "unowned": 0,
+      "importOccurrences": 3043,
+      "internalImportOccurrences": 2864,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1974,
+      "acceptedLegacyOccurrences": 1974,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 708,
+      "unowned": 0,
+      "importOccurrences": 3043,
+      "internalImportOccurrences": 2864,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1974,
+      "acceptedLegacyOccurrences": 1302,
+      "activeViolationGroups": 668,
+      "transitionErrors": 668,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "1a205f8ea5bac24d98c80b618ba6e9fe141155372cfc90d981827cebd61707c1",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/city-civic.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "2c35eb47a2c47bc6177bfce6ddbbcc553c1df5ba776c885601ef1738cda61ab7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/long-projects.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "Two actual World consumers adopt original World-owned NPC evidence callback via existing NPC–World pair. Every non-import byte and native policy unchanged.",
+  "limits": [
+    "Initial body-equivalence case passed before fixture title correction; it was not rerun. Final entire test file not run as one batch. Five actual integration cases pass against final test bytes.",
+    "Owner requires new tests/logs local only: C38/C39 registry references are missing in clean checkout until local files supplied; expected INVALID_BRIDGE_TEST_REFERENCE. No enforcement weakened.",
+    "Project creation remains awaiting explicit owner phase/downtime consent, not completion. Native NPC-only promise does not establish PC participation, location or cooperation beyond its own terms.",
+    "Influence test covers native one-cost contact, explicit subjective response, no canon promotion and replay. Actual Discord/model quality, cross-process review and full phase not qualified."
+  ],
+  "rollback": "Restore only two World import specifiers and two exact transition records; preserve all native state/receipts and unrelated working changes.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-tests.log",
+      "sha256": "c10b6d97ca52d65906cc696f55a096f87d04a5db94a15f029f139c1f30bd3d09",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-repair-tests.log",
+      "sha256": "573febe922bb6af0534e67f08066f778a9e75c85a66107be670b84368f7f5b41",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-applied-repair-tests.log",
+      "sha256": "42d8ae664ca90d246d00cd05b4d90c4b28e602679f61a4d39b7ef8dba0a48f94",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-architecture-initial.log",
+      "sha256": "c545332b8d655fa0cf326ce419e93d357d83331817e5ae150e985868f7c8cce8",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-rf04-final.log",
+      "sha256": "8a70b66de2969d50db25b21dda4e2cbc91756b292b8fcd4b19fde6418258a05d",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c39-rf05-final.log",
+      "sha256": "1125a8d81e96a7990b51b5323c95075809818f11a27d249ca770dd829df810f4",
+      "retention": "local ignored"
+    }
+  ]
+}

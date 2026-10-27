@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C38 Operations native NPC review integration",
-  "timestamp": "2026-10-27T01:58:41.905Z",
+  "checkpoint": "after C39 World civic and long-project NPC evidence adoption",
+  "timestamp": "2026-10-27T02:05:18.208Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "367ce7dd883fbe187d0236387608d67289ea748183924af34e5dc35927d74b12",
-  "open_exact_records": 1961,
+  "manifest_sha256": "2c6c80b919f5730880ac5bffa9940088904fb62892a3549631004176f660cf70",
+  "open_exact_records": 1959,
   "by_feature": {
     "RF05-F05": 413,
     "RF04-F04": 191,
     "RF05-F02": 197,
     "RF05-F03": 238,
     "RF04-F03": 86,
-    "RF04-F01": 281,
+    "RF04-F01": 279,
     "RF06-F02": 17,
     "RF04-F05": 107,
     "RF06-F07": 5,
@@ -129,6 +129,20 @@
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "max_occurrences": 1,
       "source_sha256": "a1f11eaebf2bf69107967dadcf2415d311bde119bee2bc15d04fc5702ccf37ef",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "1a205f8ea5bac24d98c80b618ba6e9fe141155372cfc90d981827cebd61707c1",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-civic.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb",
       "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
@@ -452,6 +466,20 @@
       "max_occurrences": 1,
       "source_sha256": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
       "target_owner": "intent",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "2c35eb47a2c47bc6177bfce6ddbbcc553c1df5ba776c885601ef1738cda61ab7",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/long-projects.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "63aca104d021c694cfc38bad0c6fabc83779cd0829c22cac948d3934233a544e",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -6050,8 +6078,8 @@
       "internalImportOccurrences": 2864,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1976,
-      "acceptedLegacyOccurrences": 1976,
+      "rawViolationOccurrences": 1974,
+      "acceptedLegacyOccurrences": 1974,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
@@ -6063,8 +6091,8 @@
       "internalImportOccurrences": 2864,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1976,
-      "acceptedLegacyOccurrences": 1976,
+      "rawViolationOccurrences": 1974,
+      "acceptedLegacyOccurrences": 1974,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
@@ -6076,10 +6104,10 @@
       "internalImportOccurrences": 2864,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1976,
+      "rawViolationOccurrences": 1974,
       "acceptedLegacyOccurrences": 1302,
-      "activeViolationGroups": 670,
-      "transitionErrors": 670,
+      "activeViolationGroups": 668,
+      "transitionErrors": 668,
       "pass": false
     },
     "RF06": {
@@ -6089,10 +6117,10 @@
       "internalImportOccurrences": 2864,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1976,
+      "rawViolationOccurrences": 1974,
       "acceptedLegacyOccurrences": 406,
-      "activeViolationGroups": 1560,
-      "transitionErrors": 1560,
+      "activeViolationGroups": 1558,
+      "transitionErrors": 1558,
       "pass": false
     },
     "RF07": {
@@ -6102,10 +6130,10 @@
       "internalImportOccurrences": 2864,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1976,
+      "rawViolationOccurrences": 1974,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1961,
-      "transitionErrors": 1961,
+      "activeViolationGroups": 1959,
+      "transitionErrors": 1959,
       "pass": false
     }
   },
@@ -6382,7 +6410,7 @@
     {
       "path": "bot/src/city-civic.js",
       "owner": "world",
-      "sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb"
+      "sha256": "8900527b2ff626239dd34420b889818ae74b090db28695dde2aa774a5ef5e94c"
     },
     {
       "path": "bot/src/city-commands.js",
@@ -8542,7 +8570,7 @@
     {
       "path": "bot/src/long-projects.js",
       "owner": "world",
-      "sha256": "af3a9753bd34f0ea72e075d32caabe1ea75accc17d0de9bb92b9ebca491ce8a5"
+      "sha256": "b826745d4e8475b6027b3f7cadf7136e12cc8fe3d97beb226a9c21eec7cc302b"
     },
     {
       "path": "bot/src/mechanical-native-v9.js",
@@ -9659,7 +9687,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C38-RUN.json"
+    "features/RF04-F05/C39-RUN.json"
   ],
-  "release": "NOT_AUTHORIZED"
+  "release": "NOT_AUTHORIZED",
+  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38/C39 registry tests until locally supplied. Architecture pass is current working-tree only."
 }

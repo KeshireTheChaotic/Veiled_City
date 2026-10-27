@@ -1,0 +1,22 @@
+{
+  "base_head": "d9df140b2df5dd76c67d9fab90558af0dfae0712",
+  "syntax_checked": 3,
+  "files": [
+    {
+      "path": "bot/src/city-civic.js",
+      "sha256": "8900527b2ff626239dd34420b889818ae74b090db28695dde2aa774a5ef5e94c"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "sha256": "b826745d4e8475b6027b3f7cadf7136e12cc8fe3d97beb226a9c21eec7cc302b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+      "sha256": "045b9be2150e24612f87aa76306335bfe4e760d0387cd2b824c1f08af92d4d3b"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C39-SOURCE-BASELINE.json",
+      "sha256": "45ef98a4460eab6154eb93d60c215e380ed2c6f23d02d7d487d2dbf3d515ce09"
+    }
+  ]
+}

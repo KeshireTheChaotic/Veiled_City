@@ -1,0 +1,5 @@
+{
+  "reason": "Fresh native GM source fixture omitted required title. First repair command failed shell quoting and unchanged retry failed0/5; both recorded. Actual edit changes only fixture metadata, not production or passed body test.",
+  "final_test_sha256": "605299a28cfbccdee8ddfa865eec512915e9e4fac63b16be3f1665ec57673bed",
+  "rerun": "five failed native integration cases only"
+}

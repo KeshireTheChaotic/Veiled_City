@@ -1,0 +1,10 @@
+[
+  {
+    "path": "bot/src/city-civic.js",
+    "body_sha256": "38458bca88961b815b3ea65f3e24abca9337578c02835e19abd87ae34e2706a7"
+  },
+  {
+    "path": "bot/src/long-projects.js",
+    "body_sha256": "1b65840782f774cf0eec99539536243e6ee3b60592896d83053cfef359823ad3"
+  }
+]

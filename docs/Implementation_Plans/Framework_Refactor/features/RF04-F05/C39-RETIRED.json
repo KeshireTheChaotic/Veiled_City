@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1a205f8ea5bac24d98c80b618ba6e9fe141155372cfc90d981827cebd61707c1",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/city-civic.js",
+    "to": "bot/src/simulation-motivation.js",
+    "kind": "static",
+    "specifier": "./simulation-motivation.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "2c35eb47a2c47bc6177bfce6ddbbcc553c1df5ba776c885601ef1738cda61ab7",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/long-projects.js",
+    "to": "bot/src/simulation-motivation.js",
+    "kind": "static",
+    "specifier": "./simulation-motivation.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

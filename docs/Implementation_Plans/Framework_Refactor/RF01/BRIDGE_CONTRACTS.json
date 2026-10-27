@@ -2829,7 +2829,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2852,7 +2853,7 @@
         "occurrences": 31
       },
       "public_api": "bot/src/framework-to-framework/npc--world/public.js",
-      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers. C29 actual World Director motivation/strategy calls consume exact original NPC runtime through fixed World-owned opportunity consumer; no copied native logic."
+      "scope": "Adopted actor-evidence service in two actual World consumers only; other observed NPC/World edges and source producer isolation remain accountable. C14 native report attribution adopted; remaining NPC motivation producer decomposition stays separate. C15 adopts original NPC motivation runtime; remaining cognition/strategy/observation source compositions still open. C21 original NPC strategy consumes exact World native catalogs/state/executor/authority; no copied outcomes. C23 exact native event producer/current principal feed original NPC evidence projection. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers. C29 actual World Director motivation/strategy calls consume exact original NPC runtime through fixed World-owned opportunity consumer; no copied native logic. C39 civic influence and long-project NPC collaboration adopt existing World acquired actor-source interface. New regression test retained locally per owner; clean-checkout reference unqualified."
     },
     {
       "pair": "operations--persistence",

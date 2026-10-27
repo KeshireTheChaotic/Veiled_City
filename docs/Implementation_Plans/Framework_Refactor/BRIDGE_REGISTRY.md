@@ -56,7 +56,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | npc--operations | ADOPTED | operations → npc | 1 / 1 | RF04-F05 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
 | npc--session | ADOPTED | npc → session; session → npc | 3 / 3 | RF04-F05 |
-| npc--world | ADOPTED | world → npc; npc → world | 6 / 8 | RF04-F05 |
+| npc--world | ADOPTED | world → npc; npc → world | 6 / 9 | RF04-F05 |
 | operations--persistence | PROPOSED_NO_API | persistence → operations; operations → persistence | 0 / 0 | RF06 |
 | operations--publication | PROPOSED_NO_API | publication → operations | 0 / 0 | RF06 |
 | operations--session | PROPOSED_NO_API | session → operations | 0 / 0 | RF04 |

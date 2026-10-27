@@ -4,7 +4,8 @@ import { requireCitySource } from "./city-core.js";
 import { PermissionError, UserInputError, StateConflictError } from "./kernel/errors.js";
 import { principalAllows, applicationPrincipal } from "./kernel/application-authority.js";
 import {stateRevision} from './kernel/state-revision.js';
-import { actorSource } from "./simulation-motivation.js";
+import {worldNpcEvidence} from "./frameworks/world/public.js";
+const {actorSource}=worldNpcEvidence;
 export const projectPhaseRevision=row=>stateRevision({key:row.record_key,index:row.data.index,phase:row.data.phases[row.data.index]?.key,
   duration:row.data.phases[row.data.index]?.duration_minutes,prerequisites:row.data.phases[row.data.index]?.prerequisites});
 const submissionRevision=row=>stateRevision({id:row.id,character:row.character_id,owner:row.discord_user_id,title:row.title,

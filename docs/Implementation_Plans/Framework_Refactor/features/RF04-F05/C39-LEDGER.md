@@ -1,0 +1,7 @@
+# C39 ledger
+
+Implementation in progress; native rules unchanged; tests not yet run.
+
+## 2026-10-26 C39 World civic and project NPC evidence adoption
+
+Two original World callers use existing own actor-source interface; no new native rules, policy, receipts or creative restrictions. Native integration final5/5pass exit0 TAP1742.0741ms after actual source-fixture title repair; initial1/6pass (body equivalence) and five missing-title failures, then erroneous unchanged0/5retry after repair command quoting failed. All terminal outcomes/hashes recorded, none inferred. Syntax3/3 plus repaired test. Final full-file batch gap remains; body case was not rerun against corrected fixture bytes. Actual native NPC-only promise supports owner-requested awaiting-consent project, no PC/cost mutation; missing/expired promise and private/retracted source reject; missing native influence receipt rejected; actual deterministic native community contact spends influence once, explicit subjective unverified response adds no cost/canon and exact replay unchanged.2exact records retired. RF04 passes708modules/0unowned/3043imports/1974rawaccepted/3cycles/largest135/0activeerrors; RF05 remains668expiredgroups/errors.1959exact open/432resolved. New tests/logs local ignored per owner, clean checkout lacks C38/C39 registered tests and cannot reproduce gate until supplied. Evidence C39-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED. Other source/runtime/phase/live behavior remains open. RELEASE NOT AUTHORIZED.

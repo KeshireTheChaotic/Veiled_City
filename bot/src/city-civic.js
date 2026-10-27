@@ -2,7 +2,8 @@
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from "./city-calendar.js";
 import { requireCitySource, requireCityRecord, cityStrings, INSTITUTION_ACTIONS } from "./city-core.js";
 import { activeCityProxy } from "./city-constraints.js";
-import { actorSource } from "./simulation-motivation.js";
+import {worldNpcEvidence} from "./frameworks/world/public.js";
+const {actorSource}=worldNpcEvidence;
 import { validateServiceAccess } from "./supply-dependencies.js";
 
 export const CIVIC_KINDS=["property","infrastructure","service_access","routine","community","identity","reputation","weather","personnel","history"];
