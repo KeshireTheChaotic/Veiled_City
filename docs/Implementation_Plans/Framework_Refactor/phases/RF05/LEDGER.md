@@ -1,5 +1,10 @@
 # RF05 — execution ledger
 
+## 2026-10-26 current checkpoint through C40
+
+Exact implementation commits and qualifications reconciled in AUDIT-20261026/CHECKPOINTS.json; 709modules, zero unowned, 1958exact open/433resolved, largest cycle135. Local RF04 passes, RF05 has667expiredgroups/errors. C33 neutral identity hash; C34 native NPC evidence; C35 exact primitive imports with reduced cycle; C36 Intent NPC policy; C37 application NPC public callers; C38 Operations native review; C39 civic/project NPC evidence; C40 native goal consequence integration. RF04/RF05 remain open, no full architectural isolation. Native mechanics, PC consent, privacy, receipts unchanged. New tests/logs local per owner: clean-checkout registry validation fails until local C38–C40 evidence supplied. C39/C40 split final-file gaps retained; no repeated passing tests just for documentation. Immediate work: World seed producer and remaining Narrative/Intent/Knowledge NPC evidence adoption, then actual third-domain pair decomposition; follow dependency order without deadline extensions or stopping independent safe work. RELEASE NOT AUTHORIZED.
+
+
 ## Intake
 
 - Actual start commit: `72479cbf51c6abe836e57335d3de5284c969e0e1`

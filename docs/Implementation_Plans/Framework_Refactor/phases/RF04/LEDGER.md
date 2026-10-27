@@ -1,5 +1,10 @@
 # RF04 ledger
 
+## 2026-10-26 current checkpoint through C40
+
+Exact implementation commits and qualifications reconciled in AUDIT-20261026/CHECKPOINTS.json; 709modules, zero unowned, 1958exact open/433resolved, largest cycle135. Local RF04 passes, RF05 has667expiredgroups/errors. C33 neutral identity hash; C34 native NPC evidence; C35 exact primitive imports with reduced cycle; C36 Intent NPC policy; C37 application NPC public callers; C38 Operations native review; C39 civic/project NPC evidence; C40 native goal consequence integration. RF04/RF05 remain open, no full architectural isolation. Native mechanics, PC consent, privacy, receipts unchanged. New tests/logs local per owner: clean-checkout registry validation fails until local C38–C40 evidence supplied. C39/C40 split final-file gaps retained; no repeated passing tests just for documentation. Immediate work: World seed producer and remaining Narrative/Intent/Knowledge NPC evidence adoption, then actual third-domain pair decomposition; follow dependency order without deadline extensions or stopping independent safe work. RELEASE NOT AUTHORIZED.
+
+
 ## Evidence corrections, 2026-10-25
 
 The repaired final files for F02-C03, F02-C04, F03-C01, F03-C03, F03-C04, F03-C15 and F04-C04 were run together after fixture repair: **83/83 passed**, exit 0, TAP 24,534.2691 ms. The first complete run was 82/83; the only failure was F04-C04's missing test setup for the existing Session/World event composition. Its fixture now initializes that composition; no production code changed. `RF04_REPAIRED_WHOLE_FILES_RUN.json` records exact test hashes, times, terminal hashes, the failed run and final run. The final TAP log is `../../../../bot/tests/ai-gm-2026-10/rf04-repaired-whole-files-final-20261025.log`.

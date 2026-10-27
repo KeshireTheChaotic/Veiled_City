@@ -1,6 +1,6 @@
 {
   "branch": "codex/clean-ai-gm-2026-10",
-  "through_head": "9ceacde1236637b57ebec8ef92ce4679d23f10c5",
+  "through_head": "e10aadefec4688da1b2a58ba5b47df1ccd9cf772",
   "slices": [
     {
       "slice": "RF04-F05-C07",
@@ -196,6 +196,62 @@
       "status": "SCOPED_NATIVE_INSTITUTION_DIAGNOSTIC_CORRECTION_QUALIFIED",
       "evidence": "features/RF04-F05/C32-RUN.json",
       "qualification": "Frozen working-tree source hashes; preserved unrelated changes mean no clean-checkout or full current-HEAD/release certification."
+    },
+    {
+      "slice": "RF04-F05-C33",
+      "implementation_commit": "f4101dc499f6bcc3bb1bb2b45897e373f67b6fbc",
+      "status": "SCOPED_NEUTRAL_NATIVE_CONSENT_KEY_SOURCE_QUALIFIED",
+      "evidence": "features/RF04-F05/C33-RUN.json",
+      "qualification": "Frozen working-tree fingerprints; existing dirty edits preserved, not clean-checkout/full phase/release certification."
+    },
+    {
+      "slice": "RF04-F05-C34",
+      "implementation_commit": "c235fb05861d851d1e0afc42edef070a6807b676",
+      "status": "SCOPED_NATIVE_NPC_EVIDENCE_INTERFACE_QUALIFIED",
+      "evidence": "features/RF04-F05/C34-RUN.json",
+      "qualification": "Frozen working-tree fingerprints; existing dirty edits preserved, not clean-checkout/full phase/release certification."
+    },
+    {
+      "slice": "RF04-F05-C35",
+      "implementation_commit": "c196c8df53dc387352e05ec8aff7c91e9b646733",
+      "status": "SCOPED_NEUTRAL_PRIMITIVE_DEPENDENCY_DECOMPOSITION_QUALIFIED",
+      "evidence": "features/RF04-F05/C35-RUN.json",
+      "qualification": "Frozen working-tree fingerprints; existing dirty edits preserved, not clean-checkout/full phase/release certification."
+    },
+    {
+      "slice": "RF04-F05-C36",
+      "implementation_commit": "e98f8996622b2f0328df1983b2a63b503894aee2",
+      "status": "SCOPED_INTENT_NATIVE_NPC_POLICY_INTERFACE_QUALIFIED",
+      "evidence": "features/RF04-F05/C36-RUN.json",
+      "qualification": "Frozen working-tree fingerprints; existing dirty edits preserved, not clean-checkout/full phase/release certification."
+    },
+    {
+      "slice": "RF04-F05-C37",
+      "implementation_commit": "86d5657b12018f801e5e900961c47c4b20f26e16",
+      "status": "SCOPED_APPLICATION_NPC_PUBLIC_CALLERS_QUALIFIED",
+      "evidence": "features/RF04-F05/C37-RUN.json",
+      "qualification": "Frozen working-tree fingerprints; existing dirty edits preserved, not clean-checkout/full phase/release certification."
+    },
+    {
+      "slice": "RF04-F05-C38",
+      "implementation_commit": "d9d96b27f972ae66fb255ed11f035d9b13124110",
+      "status": "SCOPED_OPERATIONS_NPC_REVIEW_QUALIFIED",
+      "evidence": "features/RF04-F05/C38-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. C39/C40 retain explicitly split final-file gaps."
+    },
+    {
+      "slice": "RF04-F05-C39",
+      "implementation_commit": "2d17d22f01dfa563f70b87210f033da663adec97",
+      "status": "SCOPED_WORLD_NPC_EVIDENCE_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+      "evidence": "features/RF04-F05/C39-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. C39/C40 retain explicitly split final-file gaps."
+    },
+    {
+      "slice": "RF04-F05-C40",
+      "implementation_commit": "e10aadefec4688da1b2a58ba5b47df1ccd9cf772",
+      "status": "SCOPED_WORLD_NPC_GOAL_CONSEQUENCE_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+      "evidence": "features/RF04-F05/C40-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. C39/C40 retain explicitly split final-file gaps."
     }
   ],
   "current": {
@@ -270,72 +326,76 @@
   "final_file_evidence_gaps": [],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 700,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
-      "cycleComponents": 2,
-      "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 2070,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1973,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 700,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
-      "cycleComponents": 2,
-      "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 2070,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1973,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 700,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
-      "cycleComponents": 2,
-      "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 1343,
-      "activeViolationGroups": 723,
-      "transitionErrors": 723,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1302,
+      "activeViolationGroups": 667,
+      "transitionErrors": 667,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 700,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
-      "cycleComponents": 2,
-      "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
-      "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1650,
-      "transitionErrors": 1650,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 406,
+      "activeViolationGroups": 1557,
+      "transitionErrors": 1557,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 700,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3032,
-      "internalImportOccurrences": 2853,
-      "cycleComponents": 2,
-      "largestCycle": 144,
-      "rawViolationOccurrences": 2070,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 2054,
-      "transitionErrors": 2054,
+      "activeViolationGroups": 1958,
+      "transitionErrors": 1958,
       "pass": false
     }
   },
-  "current_exact_open": 2054,
-  "resolved_since_audit": 337,
-  "final_file_evidence_gap_scope": "C07–C32 newly authored changed-code evidence only. No statement about inherited/historical test evidence, entire checkout or release; passes are tied to recorded source fingerprints and are not rerun without associated code changes."
+  "current_exact_open": 1958,
+  "resolved_since_audit": 433,
+  "final_file_evidence_gap_scope": "Through C40: C39 and C40 have documented final-file gaps after isolated fixture repairs; passing cases not rerun without associated source changes. C38–C40 new tests/logs intentionally local only by owner decision; clean checkout lacks registered test references. Historical suites and full clean HEAD remain unqualified.",
+  "owner_evidence_decision": {
+    "commit": "d9df140b2df5dd76c67d9fab90558af0dfae0712",
+    "policy": "All new tests and logs local only, committed terminal results/hashes, no checker exemptions. Previously tracked tests/logs preserved."
+  }
 }
