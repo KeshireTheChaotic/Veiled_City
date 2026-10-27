@@ -4,7 +4,8 @@ import {personalCharacter} from './personal-continuity.js';
 import {requireCitySource,requireCityRecord} from './city-core.js';
 import {updateCityCivic} from './city-civic.js';
 import {manageLongProject} from './long-projects.js';
-import {actorSource} from './simulation-motivation.js';
+import {knowledgeNpcActorSource} from './frameworks/knowledge/public.js';
+const {actorSource}=knowledgeNpcActorSource;
 import {createOwnedCommunity} from './frameworks/knowledge/public.js';
 let organizationRules;
 function organizations(){return organizationRules??=createOwnedCommunity({cityObject:(...args)=>cityObject(...args),cityKey:(...args)=>cityKey(...args),cityAudit:(...args)=>cityAudit(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),personalCharacter:(...args)=>personalCharacter(...args),requireCitySource:(...args)=>requireCitySource(...args),requireCityRecord:(...args)=>requireCityRecord(...args),updateCityCivic:(...args)=>updateCityCivic(...args),manageLongProject:(...args)=>manageLongProject(...args),actorSource:(...args)=>actorSource(...args)});}

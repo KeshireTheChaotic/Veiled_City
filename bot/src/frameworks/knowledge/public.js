@@ -29,3 +29,4 @@ export {createKnowledgeWorldMemoryConsumer,knowledgeWorldMemory} from './contrac
 export {manageMemoryCluster,clusterContext,memoryMaintenanceCandidate} from './memory-source.js';
 export {ContextPlanner} from './context-planner.js';
 export {createKnowledgeWorldHistoryConsumer,knowledgeWorldHistory} from './contracts/world-history.js';
+export {createKnowledgeNpcActorSourceConsumer,knowledgeNpcActorSource} from './contracts/npc-actor-source.js';

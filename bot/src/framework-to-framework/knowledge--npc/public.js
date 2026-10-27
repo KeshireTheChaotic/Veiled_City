@@ -9,3 +9,7 @@ export function connectNpcKnowledgeClusters(){return npcKnowledgeClusters.bind(c
 import {npcKnowledgePlanner} from '../../frameworks/npc/public.js';
 import {ContextPlanner} from '../../frameworks/knowledge/public.js';
 export function connectNpcKnowledgePlanner(){return npcKnowledgePlanner.bind(ContextPlanner);}
+
+import {knowledgeNpcActorSource} from '../../frameworks/knowledge/public.js';
+import {actorSource} from '../../frameworks/npc/public.js';
+export function connectKnowledgeNpcActorSource(){return knowledgeNpcActorSource.bind(actorSource);}

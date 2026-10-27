@@ -1,3 +1,3 @@
-import {connectNpcKnowledgeEvidence} from '../../framework-to-framework/knowledge--npc/public.js';
+import {connectNpcKnowledgeEvidence,connectKnowledgeNpcActorSource} from '../../framework-to-framework/knowledge--npc/public.js';
 import {connectNpcSessionObservation} from '../../framework-to-framework/npc--session/public.js';
-export function initializeNpcObservations(){connectNpcKnowledgeEvidence();return connectNpcSessionObservation();}
+export function initializeNpcObservations(){connectKnowledgeNpcActorSource();connectNpcKnowledgeEvidence();return connectNpcSessionObservation();}

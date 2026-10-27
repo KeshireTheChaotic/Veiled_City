@@ -1924,6 +1924,11 @@
           "from": "npc",
           "to": "knowledge",
           "contract": "Original activeEvidence function for unchanged NPC acquired-source/observation policy."
+        },
+        {
+          "from": "knowledge",
+          "to": "npc",
+          "contract": "C43 exact original NPC acquired actor-source function for native owner-confirmed staffing review; original NPC commitment and owner/founder evidence remain independently necessary."
         }
       ],
       "source_evidence": [
@@ -1945,7 +1950,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1968,7 +1974,7 @@
         "occurrences": 4
       },
       "public_api": "bot/src/framework-to-framework/knowledge--npc/public.js",
-      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged."
+      "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged. C43 actual organization staffing review consumes own NPC source callback. No copied owner/NPC consent or policy. Test local only per owner."
     },
     {
       "pair": "knowledge--operations",

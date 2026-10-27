@@ -1,15 +1,15 @@
 {
-  "checkpoint": "after C42 Narrative native NPC testimony evidence adoption",
-  "timestamp": "2026-10-27T02:16:50.861Z",
+  "checkpoint": "after C43 Knowledge native NPC staffing evidence integration",
+  "timestamp": "2026-10-27T02:20:30.445Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "0a65e6c08b4db2264a1e3dd9e5442d7656b3b3fa6e80afbcf85b86307433ad36",
-  "open_exact_records": 1955,
+  "manifest_sha256": "f8221533222fbe43d1ae3d0569aa56e4f5bc61e61407f8fd34d6e371fcb6c2f9",
+  "open_exact_records": 1954,
   "by_feature": {
     "RF05-F05": 413,
     "RF04-F04": 191,
     "RF05-F02": 197,
     "RF05-F03": 236,
-    "RF04-F03": 86,
+    "RF04-F03": 85,
     "RF04-F01": 277,
     "RF06-F02": 17,
     "RF04-F05": 107,
@@ -874,6 +874,20 @@
       "target_owner": "narrative",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "IMPORTS_PRIVATE_API"
+    },
+    {
+      "id": "cd88ce91043abefc5d9b3900b8df8df83ecf1ffe1c307e4dc6cc72dd4cbe3094",
+      "feature": "RF04-F03",
+      "deadline": "RF04",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "knowledge",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "23e6acb3002e4521ce13c349aff1d419b5cf9c0844a8914e95b28761376218ee",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
     {
       "id": "1569765ea64aecd045e302ff53fc54eb4f558b133c751e91377221940b5b5e3c",
@@ -6128,68 +6142,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 711,
+      "sourceModules": 712,
       "unowned": 0,
-      "importOccurrences": 3053,
-      "internalImportOccurrences": 2874,
+      "importOccurrences": 3056,
+      "internalImportOccurrences": 2877,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1970,
-      "acceptedLegacyOccurrences": 1970,
+      "rawViolationOccurrences": 1969,
+      "acceptedLegacyOccurrences": 1969,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 711,
+      "sourceModules": 712,
       "unowned": 0,
-      "importOccurrences": 3053,
-      "internalImportOccurrences": 2874,
+      "importOccurrences": 3056,
+      "internalImportOccurrences": 2877,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1970,
-      "acceptedLegacyOccurrences": 1970,
+      "rawViolationOccurrences": 1969,
+      "acceptedLegacyOccurrences": 1969,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 711,
+      "sourceModules": 712,
       "unowned": 0,
-      "importOccurrences": 3053,
-      "internalImportOccurrences": 2874,
+      "importOccurrences": 3056,
+      "internalImportOccurrences": 2877,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1970,
+      "rawViolationOccurrences": 1969,
       "acceptedLegacyOccurrences": 1300,
-      "activeViolationGroups": 666,
-      "transitionErrors": 666,
+      "activeViolationGroups": 665,
+      "transitionErrors": 665,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 711,
+      "sourceModules": 712,
       "unowned": 0,
-      "importOccurrences": 3053,
-      "internalImportOccurrences": 2874,
+      "importOccurrences": 3056,
+      "internalImportOccurrences": 2877,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1970,
+      "rawViolationOccurrences": 1969,
       "acceptedLegacyOccurrences": 406,
-      "activeViolationGroups": 1554,
-      "transitionErrors": 1554,
+      "activeViolationGroups": 1553,
+      "transitionErrors": 1553,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 711,
+      "sourceModules": 712,
       "unowned": 0,
-      "importOccurrences": 3053,
-      "internalImportOccurrences": 2874,
+      "importOccurrences": 3056,
+      "internalImportOccurrences": 2877,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1970,
+      "rawViolationOccurrences": 1969,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1955,
-      "transitionErrors": 1955,
+      "activeViolationGroups": 1954,
+      "transitionErrors": 1954,
       "pass": false
     }
   },
@@ -6306,7 +6320,7 @@
     {
       "path": "bot/src/application/composition/npc-observations.js",
       "owner": "application",
-      "sha256": "a91dda49590ff6c013ffb08c9be04b889456ceb00e8ebe1c65865fdf8d7c04aa"
+      "sha256": "0c77407a8e559ca0a325be124ba7dc3f10602785988b2f1e7e5ed70d4a541d49"
     },
     {
       "path": "bot/src/application/composition/npc-strategy.js",
@@ -6726,7 +6740,7 @@
     {
       "path": "bot/src/framework-to-framework/knowledge--npc/public.js",
       "owner": "knowledge--npc",
-      "sha256": "68d102206c5becd7e859967c6d3f347ce13c44942eaf844c9bf4efe7edc1a6b2"
+      "sha256": "b8e9ef2de28ff0bafcd18fbc31a138b27131d5147a07d1e441a8b04f64e76d64"
     },
     {
       "path": "bot/src/framework-to-framework/knowledge--world/public.js",
@@ -7604,6 +7618,11 @@
       "sha256": "7b53217cba0449b3381d8698c5ab0c7041d6e650b02a16988086643a430354c5"
     },
     {
+      "path": "bot/src/frameworks/knowledge/contracts/npc-actor-source.js",
+      "owner": "knowledge",
+      "sha256": "c77704734beb405d659f734fae8114b45243cc16c34d57c07b4bcd0d82dcfd02"
+    },
+    {
       "path": "bot/src/frameworks/knowledge/contracts/world-events.js",
       "owner": "knowledge",
       "sha256": "e1785951aae7a8d54bcd3cf932e6e3b9ba0bf62dd1acadabc54bf3b7258320a2"
@@ -7721,7 +7740,7 @@
     {
       "path": "bot/src/frameworks/knowledge/public.js",
       "owner": "knowledge",
-      "sha256": "b57415f0ff2b8efec0593b04c119487efb15dbe079e4af5b4276c08ac13592e6"
+      "sha256": "6fa4dcbccc310266ef13927fb0aa5cca11b7986dc039ee6e23cf7f6aa503cd0a"
     },
     {
       "path": "bot/src/frameworks/knowledge/relationship-state.js",
@@ -9211,7 +9230,7 @@
     {
       "path": "bot/src/owned-community.js",
       "owner": "knowledge",
-      "sha256": "23e6acb3002e4521ce13c349aff1d419b5cf9c0844a8914e95b28761376218ee"
+      "sha256": "884d82809182ec1c88296fe8703885b79dc02e3d4802b264cf676c4f212ba86a"
     },
     {
       "path": "bot/src/owner-action-terminal.js",
@@ -9758,8 +9777,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C42-RUN.json"
+    "features/RF04-F05/C43-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C42 registry tests until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C43 registry tests until locally supplied. Architecture pass is current working-tree only."
 }

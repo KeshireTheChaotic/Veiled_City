@@ -1,0 +1,3 @@
+/** Actual acquired NPC evidence only; organization ownership and NPC agreements remain separate native proofs. */
+export function createKnowledgeNpcActorSourceConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original native NPC actor-source function required.');if(source&&source!==native)throw new Error('Knowledge NPC actor-source replacement forbidden.');source=native;return this;},actorSource(...args){if(!source)throw Object.assign(new Error('Knowledge NPC actor-source not composed.'),{code:'KNOWLEDGE_NPC_ACTOR_SOURCE_COMPOSITION'});return source(...args);}});}
+export const knowledgeNpcActorSource=createKnowledgeNpcActorSourceConsumer();
