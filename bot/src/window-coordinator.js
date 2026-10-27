@@ -7,7 +7,8 @@ import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./scene
 import { validatePvpAgreement } from "./narrative-pvp.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { transitionAction } from "./action-dependency.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {sessionWorldEvents} from './frameworks/session/public.js';
+function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
 import {actionReviewOperation} from "./gm-action-review.js";
 import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';

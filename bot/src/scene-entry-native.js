@@ -2,7 +2,8 @@
 import {personalCharacter} from './personal-continuity.js';
 import {currentScene,recordScenePresence} from './scene-continuity.js';
 import {stateRevision} from './kernel/state-revision.js';
-import {indexWorldEvent,cityAudit} from './city-calendar.js';
+import {sessionWorldEvents,sessionSceneWorldSources} from './frameworks/session/public.js';
+function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 import {randomUUID} from 'node:crypto';
 import {assertPcCanAct} from './pc-native-eligibility.js';
 import {nativeMovementConditionIssue} from './native-group-features.js';

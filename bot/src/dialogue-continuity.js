@@ -1,7 +1,8 @@
 /** Authored speech and actor-owned interpretations extend native NPC memories, never canon or consent. */
 import { personalCharacter } from "./personal-continuity.js";
 import { sceneAccess, sceneView, scenePresence, currentScene } from "./scene-continuity.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {sessionWorldEvents} from './frameworks/session/public.js';
+function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import { requireCitySource } from "./city-core.js";
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { activeCityProxy } from "./city-constraints.js";

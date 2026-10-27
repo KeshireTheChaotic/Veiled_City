@@ -3,7 +3,8 @@ import { personalCharacter } from "./personal-continuity.js";
 import { captureDeclaration, interpretAuthoredText } from "./player-language.js";
 import { recordCharacterArrival, currentScene } from "./scene-continuity.js";
 import {stateRevision} from './kernel/state-revision.js';
-import { cityAudit } from "./city-calendar.js";
+import {sessionSceneWorldSources} from './frameworks/session/public.js';
+function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 import { conversationPrincipal } from './frameworks/session/public.js';
 export function entryTarget(text){
   if(interpretAuthoredText(text,{natural:true}).kind!=="attempt") return null;

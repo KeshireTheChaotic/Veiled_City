@@ -2,7 +2,8 @@
 import {createHash} from 'node:crypto';
 import {assemblyInputFingerprint,assemblySourceError} from './assembly-context.js';
 import {currentScene} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {sessionWorldEvents} from './frameworks/session/public.js';
+function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import {inspectSessionOpening} from './session-opening.js';
 
 export const openingCohortHash=value=>createHash('sha256').update(JSON.stringify(value??null)).digest('hex');

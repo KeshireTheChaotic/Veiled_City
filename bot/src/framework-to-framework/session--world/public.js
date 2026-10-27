@@ -8,8 +8,8 @@ import {worldConversationPrincipal} from '../../frameworks/world/public.js';
 export function connectWorldPrincipal(){return worldConversationPrincipal.bind(conversationPrincipal);}
 
 import {sessionSceneWorldSources} from '../../frameworks/session/public.js';
-import {cityObject,cityKey,cityVisibility,cityAudit,requireCitySource,activeCityProxy} from '../../frameworks/world/public.js';
-export function connectSessionSceneWorld(){return sessionSceneWorldSources.bind({cityObject,cityKey,cityVisibility,cityAudit,requireCitySource,activeCityProxy});}
+import {cityObject,cityKey,cityInteger,cityVisibility,cityAudit,requireCitySource,activeCityProxy} from '../../frameworks/world/public.js';
+export function connectSessionSceneWorld(){return sessionSceneWorldSources.bind({cityObject,cityKey,cityInteger,cityVisibility,cityAudit,requireCitySource,activeCityProxy});}
 
 import {currentScene,reconcileSceneArrival} from '../../frameworks/session/public.js';
 import {worldSessionScene} from '../../frameworks/world/public.js';
