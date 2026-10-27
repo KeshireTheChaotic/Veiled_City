@@ -1,0 +1,527 @@
+{
+  "feature": "RF04-F05-C55",
+  "base_head": "1b2127449085a5f5460737cd6b894f43f3713d7a",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/action-consent.js",
+      "bot/src/encounter.js",
+      "bot/src/gm-action-review.js",
+      "bot/src/gm-action-ruling.js",
+      "bot/src/native-defense-aura.js",
+      "bot/src/native-encounter-activation.js",
+      "bot/src/native-encounter-relations.js",
+      "bot/src/native-environment-access.js",
+      "bot/src/native-environment-context.js",
+      "bot/src/native-environment-countdown.js",
+      "bot/src/native-environment-door-chain.js",
+      "bot/src/native-environment-imaging.js",
+      "bot/src/native-environment-output.js",
+      "bot/src/native-environment-recording.js",
+      "bot/src/native-environment-recovery.js",
+      "bot/src/native-environment-witnesses.js",
+      "bot/src/native-equipped-attacks.js",
+      "bot/src/native-feature-damage.js",
+      "bot/src/native-feature-passives.js",
+      "bot/src/native-feature-windows.js",
+      "bot/src/native-notice.js",
+      "bot/src/native-professional-entry.js",
+      "bot/src/native-roll-participation.js",
+      "bot/src/native-stress-passives.js",
+      "bot/src/native-unarmed-attacks.js",
+      "bot/src/ordinary-effect-proof.js",
+      "bot/src/pc-death.js",
+      "bot/src/pre-roll-fear.js",
+      "bot/src/pvp-campaign-execution.js",
+      "bot/src/pvp-fear-moves.js",
+      "bot/src/pvp-profiles.js",
+      "bot/src/roll-collaboration.js",
+      "bot/src/roll-requests.js",
+      "bot/src/rules-arbitration.js",
+      "bot/src/frameworks/daggerheart/contracts/scenes.js",
+      "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "bot/src/application/composition/native-scenes.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs"
+    ],
+    "passed": 38,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+        "sha256": "86F902396A5D793BDDEC2502DA77C0BBE15F9CEB8EF08BA35535B307BC73C3C2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f03.test.mjs",
+        "sha256": "DE701E296305721082C6C8BEFF52F4749E0FD64CF4A06193F930F988434C5F2F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f11.test.mjs",
+        "sha256": "4C9962B323BD481D9EC41F8C36651F5E2F7CE06121F8500D476CDB12B30FB630"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f14.test.mjs",
+        "sha256": "1F6003047A145BFB27C5428E2A3C4805DE42CA10CA97E0C3D3D8CD3C179958B2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f15.test.mjs",
+        "sha256": "3E17CDB6F07A145C0B1BA31A3375C673E69FA1CA713F04DDFA20C7FFEC98079A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f05.test.mjs",
+        "sha256": "5A0F1533395DF27E018F6F451D220EE3B105075BE1F43807F7BE8F5AE9F1B2A3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f06.test.mjs",
+        "sha256": "045A0FD91E162BA50E2E394472B22F3B28A90627079942A01630B8475D8A2B9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs",
+        "sha256": "EBB1E04688DEC1906256ADE1713F69052B88ADD7AE46B8128AD713A05BDD4543"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs",
+        "sha256": "109D5FCC770AD72AB1EBE9766FC0D49EF4105A5621D7E700B20059FC6DE1DFC9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c10.test.mjs",
+        "sha256": "85E930E15857A772353865763605057512474C92A0BB8930C3CF6DE6A2DE3C91"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c11.test.mjs",
+        "sha256": "70C2227D906BACEBB09BE6AC45C6A9D753A8DD37AFCDEA0515EA53A6F82E481E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c14.test.mjs",
+        "sha256": "CD08955C76C4F6796836C890C4139910B361E7712DF628805D5D376966F61669"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c15.test.mjs",
+        "sha256": "D92744B55E00747D47DD4FA7A1E0E783FC19EC7FB1CF8EB7DBA84B0E8E89CFC7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c16.test.mjs",
+        "sha256": "31FB13C27404BB1782E4326FE2B169AF0846A8854BFC6FF194D821C5515697E4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs",
+        "sha256": "B265E31CDDE8B2C32306252F801CC5B2BB0E3281945E35C9B37D2A791DD1026F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs",
+        "sha256": "0DF3FCE72F9971240F209790854B00696CFA5E9F792B0455A0B1FD96BBEFBDD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs",
+        "sha256": "D0FC3E2A728D55312508685A98621180F56BDCF718D6AC7419B65E3925C3223F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs",
+        "sha256": "12E3DF55B6A33424C15D00E0E9A5F95CAAA8E499F8A105CA36EE94109B84E8AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c23.test.mjs",
+        "sha256": "99AB1672CC089AA993B3BB023AA7B8460FE7189D7F67BC4EE0330E5E012E98ED"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs",
+        "sha256": "ED423484CDA84C7E3A598B636326C246A8D005A2AC02A631BF6532B913275577"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs",
+        "sha256": "4A5452283BF8F9B238000BBF974F31651462A41084C63A65328BFEB7A6F41250"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs",
+        "sha256": "32D252062913C098679D5E9BB87D6CB3F46F427DCBC58C96956526641D8AB12C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c32.test.mjs",
+        "sha256": "97AE9C240EA1DD876D37F781200C90A99DE7CF94F53E3FE874DAF3B97204E01E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
+        "sha256": "2EB202AAF7996E8C98A09D48AE0BCC22E47FC2D496BBCAE5E084E8F3A1CF1D09"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c13.test.mjs",
+        "sha256": "A32D270122F44FF7A23CD9910F3395DCF1E461BFE86A92372FEC4884065D2887"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c16.test.mjs",
+        "sha256": "91374A5FD7826204C1A45C98D0FDE63C1BD62F4522913B2839201F9FAA4F3092"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c17.test.mjs",
+        "sha256": "5C092605B1812F5CCD8B5A6823A8D453466F935280D1EC7C16C065D14C59732D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c16.test.mjs",
+        "sha256": "D26563EE2BA5550FF84824108D6860A4E512605F387F76E9867AC35699B994C2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs",
+        "sha256": "DD22392DEC9A55290A38FFE657112EDC71B5E0CB5B9C44142635E80674B0AE83"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs",
+        "sha256": "161AAFDE23338A1EA4155360CED19E85A02499DE6C552007EF1B52AC0A9F5D8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs",
+        "sha256": "47795C9C7609D08274D967F6EA6617C669AC16A3CB698C70A5497AA302E4DDE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs",
+        "sha256": "B67FDD3A25C807C2DA6E2636DB2E377113F92A092C72CE84549BDB1C9634B341"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs",
+        "sha256": "B94A45C08D968D54F14B1C5EF3318C6F3D46D2EFF85BF2805A3954683FFEC2CF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs",
+        "sha256": "15A35F06DD67A270AC5D211E49D9EAF849B83B042E964A6A08607FE3FD68D8BB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs",
+        "sha256": "A598583F3290DFBC802B290D4F170C99B5395AFB0113E0829AA459E864AD0489"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs",
+        "sha256": "3AF9257E51CC756F9A4FDDFB1556F27A0BA7937D9E8303FE271FCD2562AA2F2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs",
+        "sha256": "E04A3CBB33F02760D90F4F4F634E7E28A34BA9228F54ACA9DD7E723F79E97DA2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs",
+        "sha256": "20B91B9F54BA7F2650B3999A5D155FBBFD189338636DD551F1E6E7789CA1289B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "44AF4972F4433CCD1109B1B11A2003EE1598477CF910E293D2B7F0EF2CD1ADF5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T15:08:20.899Z",
+    "end": "2026-10-27T15:08:51.144Z",
+    "exit_code": 1,
+    "tests": 271,
+    "passed": 266,
+    "failed": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 30208.0674,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c55-test.log",
+    "log_sha256": "997FB69EC50900B550BA633E3109FFB2896992C9330F2FAB2EE0FE1CB4D79D2F",
+    "failing": [
+      "p06-f03.test.mjs | tests\\\\ai-gm-2026-10\\\\p06-f03.test.mjs",
+      "p06-f14.test.mjs | unified dispatcher and current scene context reach the receipt; player response stays open",
+      "p06-f15.test.mjs | the unified route saves one audience-scoped clue record and reuses it only in entitled scene context",
+      "p09-f05.test.mjs | tests\\\\ai-gm-2026-10\\\\p09-f05.test.mjs",
+      "rf03-f02-c03.test.mjs | tests\\\\ai-gm-2026-10\\\\rf03-f02-c03.test.mjs"
+    ],
+    "known_preexisting_failures": [
+      "p06-f03.test.mjs | tests\\\\ai-gm-2026-10\\\\p06-f03.test.mjs",
+      "p06-f14.test.mjs | unified dispatcher and current scene context reach the receipt; player response stays open",
+      "p06-f15.test.mjs | the unified route saves one audience-scoped clue record and reuses it only in entitled scene context",
+      "p09-f05.test.mjs | tests\\\\ai-gm-2026-10\\\\p09-f05.test.mjs",
+      "rf03-f02-c03.test.mjs | tests\\\\ai-gm-2026-10\\\\rf03-f02-c03.test.mjs"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 731,
+      "unowned": 0,
+      "imports": 3102,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1853,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c55-rf04-architecture.log",
+      "log_sha256": "3196D7DDE82491F4307298B226799B30875E41DB2EA25E5BFFA059EB98BDEB08",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 731,
+      "unowned": 0,
+      "imports": 3102,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1292,
+      "active_violation_groups": 558,
+      "transition_errors": 558,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c55-rf05-architecture.log",
+      "log_sha256": "54775CFF2B04329264A2488FB8A4FD1951EDA13EDE3323D98D2841AAED200541",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/encounter.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-context.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/pvp-fear-moves.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-consent.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-consent.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/encounter.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/encounter.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-ruling.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-defense-aura.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-encounter-activation.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-encounter-relations.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-access.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-access.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-countdown.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-countdown.js -> bot/src/native-environment-scene.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-door-chain.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-door-chain.js -> bot/src/autonomous-world.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-door-chain.js -> bot/src/world-authorship.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-imaging.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-output.js -> bot/src/native-environment-scene.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-recovery.js -> bot/src/native-environment-scene.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-scene.js -> bot/src/native-environment-door-chain.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-scene.js -> bot/src/native-environment-imaging.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-witnesses.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-witnesses.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-witnesses.js -> bot/src/epistemic.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-feature-damage.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-feature-passives.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-feature-windows.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-notice.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/world-observation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pre-roll-fear.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-campaign-execution.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/simulation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/action-continuation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/city-depth.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/location-language.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-fear-moves.js -> bot/src/autonomous-world.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-profiles.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-collaboration.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-collaboration.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/rules-arbitration.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/rules-arbitration.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-encounter-beats.js -> bot/src/encounter.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "CYCLIC_IMPORT_EDGE bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-access.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-countdown.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-countdown.js -> bot/src/native-environment-scene.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-door-chain.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-door-chain.js -> bot/src/autonomous-world.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-imaging.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-output.js -> bot/src/native-environment-scene.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-recovery.js -> bot/src/native-environment-scene.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-scene.js -> bot/src/native-environment-door-chain.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-scene.js -> bot/src/native-environment-imaging.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-witnesses.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/pvp-fear-moves.js -> bot/src/simulation.js",
+        "CYCLIC_IMPORT_EDGE bot/src/pvp-fear-moves.js -> bot/src/action-continuation.js",
+        "CYCLIC_IMPORT_EDGE bot/src/pvp-fear-moves.js -> bot/src/autonomous-world.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "EXPIRED_TRANSITION bot/src/encounter.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-context.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/action-consent.js -> ",
+        "EXPIRED_TRANSITION bot/src/action-consent.js -> ",
+        "EXPIRED_TRANSITION bot/src/encounter.js -> ",
+        "EXPIRED_TRANSITION bot/src/encounter.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-ruling.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-defense-aura.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-encounter-activation.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-encounter-relations.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-access.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-access.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-countdown.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-countdown.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-imaging.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-output.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-recovery.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-witnesses.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-witnesses.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-witnesses.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-feature-damage.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-feature-passives.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-feature-windows.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-notice.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/pre-roll-fear.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-campaign-execution.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-profiles.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-collaboration.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-collaboration.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-requests.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-requests.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-requests.js -> ",
+        "EXPIRED_TRANSITION bot/src/rules-arbitration.js -> ",
+        "EXPIRED_TRANSITION bot/src/rules-arbitration.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-access.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-countdown.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-countdown.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-imaging.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-output.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-recovery.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-witnesses.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-fear-moves.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "353a6e72870cd89f20042068469303d22362990a94b38a34e145b4627d2117ac",
+      "6306869d59ea160e3ae6fbb24a398cedbbe595b0ff6b6c4aeed89d7a33291e2a",
+      "7bb8fe18d838cd36360827c5b2b49af50917cba72e896899335419686115eb8c",
+      "7c27994a8265878e4a1a28f26d5471b186476ddeda7789d6141576c1ec1d374d",
+      "d44a47798aa34d1065f7ce8db2fe8892e554cdc1cb3eec4abfd51626e60132f9",
+      "d36ba251a073116e18a7908e6cdafc6f049c527356767c7cc06f7c137eb6ac41",
+      "95435f0b6ebca8fa4f1c521e258e9ddb2200fa60d5f67222ff2c8718e9a5caa4",
+      "4e74ea746d88ea275903ba9f7464c38ef981edf5ca70679a90f9c3be20109c6b",
+      "5417963710c4473b52d422a5754c17220a95069fc584aa1083ccba610cf23d21",
+      "0f49fe96fe2e2dcf4d510db6344dfad2c130020c0723306767f2533c99d5c1c0",
+      "ecf6bd9a6645dc4263e703db1e74d7d28848445ac2c2cc6e6b392b0035c741cb",
+      "d852a8a2a89d3374f5f8161b7376830351b7d72212d8a92e40f9751d1decb3fc",
+      "1b9131f9b01751ae8ceca194268f21ff75071073b803b380752e297305e150c4",
+      "c6e619e38beadc10684e628ca42363245a1bbb25ec7b7e871b975db2de4ec686",
+      "e210324c947cf97374067490e7e4ece73774cedc9a4b48162c4ace942ae73c91",
+      "0de7e3605e925dd823ed6a47815ef43799847c823008624285623ed620d07931",
+      "e86f505c43dae6b68a62f3b19e2941849c4c46c59208ab58692bc1118aea372e",
+      "0fd9401c12925b3603e575e0725447ec0a435a9f9aecea7ee9c071558be1d728",
+      "ef535ea3ad129cbba51993ad97660838618ccb598d13b315b87a001526b8f72b",
+      "06abfbc0a61a44bcf147e562e91e0b70d9f1134bdf99739b6df9a37ce8117f67",
+      "6889f27bf6da3fe1bc165899bae9b8d21274c687e4f816516f987392ef0e0adf",
+      "02c3c532300415a708bb4176ad641ceb72a48688b7e648da19e901fc1735f555",
+      "44aa19a925ec7a6cb41c9126efbe0743c7daff9e3246b848b00d44b0c5b02ff1",
+      "3d42010987b0aa928dceb837af1abea19b1bc4a74ad67009284604387423c756",
+      "480bd25086ba93f9838fc037aae30f4cf85f9782dedf86341809934ffb207df1",
+      "77767257e7e19efa446744681eb9bbbc3f1a0fefbb7bb4a163a0f6f062a38bca",
+      "26cb1e976c7ca2250dba2c24f6f62f8587cfd909454b29dda24e3a490c28f545",
+      "071741ce3ffe5be2d8ff1f9a24e5b7513f50af24f778928379c4c1f2a132d5ad",
+      "90ebaf6ee8a253e670c47ee087a6a7aeebe63070ba31e6123907f9bf1a917ce4",
+      "ab8c38b6d627404d660a11b29cb7551582f6a2785bfce1e7059d69823c52d9a6",
+      "5d98eaa35602328a54a72745ddec8773b6d03763dc03b37bcc66473f8975f00f",
+      "c4f9abd9b280851602616f1c9a2e1ef3f142ca9f407b06306ea8f81b524bd5b5",
+      "07d82c71f63a01eaa9f43492e88fe835217d093eec8cb17d5ddef0454656da41",
+      "3e7f42904e018cb4681e856d76ab50ec11573b1f4f907ae580a0508d5b58a576"
+    ],
+    "original_manifest_sha256": "835D74587C6881069827486571F7F409472426CF61E3F9929F160251AB7A25E2",
+    "manifest_sha256_after": "4BA8EFE38D52BCF0525FFB36F73B898A404EC333D4D83E449BB9869A2DD31AB5",
+    "entries_after": 1839,
+    "remaining_by_feature": {
+      "RF04-F01": 224,
+      "RF04-F02": 5,
+      "RF04-F03": 76,
+      "RF04-F04": 148,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 157,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/action-consent.js": "930DA3EFFF71617EF834B5CEDFC1E36F5C85962A03F4053637A25A63935D9AEC",
+    "bot/src/encounter.js": "0B81039876ADDBDFDF300C84666A5D942056D92AD71D52B65232D30DBCF39991",
+    "bot/src/gm-action-review.js": "7EE2E67377154EB615189D55335E9F651A526EA05896A3E1F4C4C6A7415FE7BD",
+    "bot/src/gm-action-ruling.js": "6418E75A25239D44303801306BA7BA20936CA17D95A2BD26017C026F9CC8C66B",
+    "bot/src/native-defense-aura.js": "5D2B4D56A3E4441AB2549E41F9BD9BD723B8D590A9D503164DC899EA27E6FB61",
+    "bot/src/native-encounter-activation.js": "914104EE7E7EA26A13439F9B1C79706595A6A242465328C17A491FFC598BB0E7",
+    "bot/src/native-encounter-relations.js": "32A26E336C7919463F2033702DB96595E58E8035610CAA0A7E667339A6CE7A3D",
+    "bot/src/native-environment-access.js": "9962EE4041A06B9A678AD0B3021D0518098ADA93DACBF1D59D8ECA7B7505F1E1",
+    "bot/src/native-environment-context.js": "BFDA400E35D506C936A9531ECAAFA72EFB54384C868ADEFD5EE3B13C315561F8",
+    "bot/src/native-environment-countdown.js": "DCA42DB5BCC8D7003A5FE676EA9D2C97C0C0043BB7A3376D60F4AB0384CB59D5",
+    "bot/src/native-environment-door-chain.js": "06B904895A15499EBB7B4D137F3A65F14D81839AA3601456FE1AF7C4F7D1B430",
+    "bot/src/native-environment-imaging.js": "9A040893141D89CF66BD018E08D909FB040E5C5C6BE3DBB573FD7B387D76DDB0",
+    "bot/src/native-environment-output.js": "3AECF5EFB373CF6983457D4330BB81C7BD02DB13321C598AE5DE8F88C0BEC96C",
+    "bot/src/native-environment-recording.js": "40CDBEAE255A8DCBAA3AE2302CD05FA06B53FADA9BE216D0F74A1A325ABD7B77",
+    "bot/src/native-environment-recovery.js": "6FA2E9FA4E536C56F21C34EB0FFC928265F0847DCF366B716C1698D488B36B9E",
+    "bot/src/native-environment-witnesses.js": "10180002D55B700F2F28D3A264E42665D12DFF06A35D7FAF482BC596C0DC7F32",
+    "bot/src/native-equipped-attacks.js": "97E31F858CFD5CE6453CFF8D2196FBA584B3CE4CF385069F94540134F0B7ECDC",
+    "bot/src/native-feature-damage.js": "3549E720FDC48CEC11628328F260BDF0B7ECCE15A358D97B91118B3F1CABA4E1",
+    "bot/src/native-feature-passives.js": "68B4D7CE44828749A58E4A9E742E88EA9D27DE02A42703893BA6737D924B7F4F",
+    "bot/src/native-feature-windows.js": "4B24F0580D10D0C23825B58A9346ADEA3E15F3C1EAA17EEF07A8619511797EDA",
+    "bot/src/native-notice.js": "DBBA525038E4DA9B8709497AC9F6DF7B896863D23D1828E071A294457B76FA02",
+    "bot/src/native-professional-entry.js": "7D0CFFF4F61892BA174080ECC1BEC1CFA8CEEFB911EEA243BDFDCECAC100BD69",
+    "bot/src/native-roll-participation.js": "1803F1C3DD03EB4EEE31EC5C881B9BA53F700FCE82D2348FE62042D5BAEFA58E",
+    "bot/src/native-stress-passives.js": "23BF0A9E870C9699DA8F89D64D0BDDC7868E04F406989F4D037DDF24E9584F4D",
+    "bot/src/native-unarmed-attacks.js": "83C3DC75FE483426F10A025AD0470F821C85D253AF718FB75E8EC6DC343CB0DE",
+    "bot/src/ordinary-effect-proof.js": "F02CFBDA716725C70470C7FFA39C7EDDD7A84174E3B289F8ABFECF5DDDEBA4B5",
+    "bot/src/pc-death.js": "11A7454FECBFF6B116FD374E94DE18BF9E7DD1DAC62B808C426B1DFED79C49D2",
+    "bot/src/pre-roll-fear.js": "A4517FE1705F070ADBBD48A55EB0B39C3EBF72272868FE90EACD462F21B6E403",
+    "bot/src/pvp-campaign-execution.js": "81D150410FA5E89D1EF527C5D7E4B01A3E653F0F47001C03B5284E7691CF6870",
+    "bot/src/pvp-fear-moves.js": "6132270BA667892A6C0A1458ABE61327FC36F4B22D30332B4499111B46DD82FA",
+    "bot/src/pvp-profiles.js": "CCEB47069478B40D2921945095A892D01DC9B00C279F13934C4887C8F962A982",
+    "bot/src/roll-collaboration.js": "056B6EA42DF004EB242E06A800F12FCE1A5E551F16570A5BE975A4C4F53E6F3C",
+    "bot/src/roll-requests.js": "A94A1FC778163102BC24777384C5AF1C151BE1AAF86BD3A87E5165D974E7E660",
+    "bot/src/rules-arbitration.js": "6D7CB66FCC52EE8186692B4386B4541A321D3DD63E19980A6AEE29C62F2825C4",
+    "bot/src/frameworks/daggerheart/contracts/scenes.js": "5AE100E9A72EA8270997AE5A76361A63F153669B77005BF59E169B238D7DB8C1",
+    "bot/src/framework-to-framework/daggerheart--session/public.js": "EC0A255504781E0358B5A3E6F7F8879D7EE7B157DB0693D900EBFFD849C98490",
+    "bot/src/application/composition/native-scenes.js": "40901C9E4C550F2AFF5C716056E55E9F824AEC5CF4BE574DF10F68097922E0F4"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C55 commit: restore the 34 direct ./scene-continuity.js imports, remove the native scenes port, adapter connector, bootstrap call and bridge consumer entry, and restore the 34 exact transitions from C55-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

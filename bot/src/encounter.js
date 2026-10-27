@@ -9,7 +9,8 @@ import { randomInt } from "node:crypto";
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { requireCitySource } from "./city-core.js";
-import { scenePresence, sceneAccess, currentScene } from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}
 import { activeCityProxy } from "./city-constraints.js";
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 

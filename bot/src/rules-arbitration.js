@@ -3,7 +3,8 @@ import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
 import { conversationPrincipal } from "./conversation-principal.js";
-import { currentScene } from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import { isPvpIntent } from "./pvp-authority.js";
 import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
 import {captureNoRollFeatureWindows} from './native-feature-windows.js';

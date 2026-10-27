@@ -8,7 +8,8 @@ import {formatSharedRoll,validateRollSharePreview,sourceConfirmedRollAttempt} fr
 import {pvpOwnerContext} from './narrative-pvp.js';
 import {progressPvp,validatePvpRoundReceipt,validatePvpResolutionReceipt} from './pvp-rounds.js';
 import {pvpProjection} from './pvp-authorship.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
 import {damagePvpOwnerContext} from './pvp-profiles.js';

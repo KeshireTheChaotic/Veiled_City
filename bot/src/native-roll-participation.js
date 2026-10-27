@@ -1,7 +1,8 @@
 /** Source-bound collaboration eligibility. This never enrolls an owner, spends Hope or rolls dice. */
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {sceneAccess,scenePresence} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {mayKnowRoll} from './roll-collaboration.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

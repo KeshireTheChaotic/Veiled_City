@@ -1,6 +1,7 @@
 /** Existing provider composition only; native policy is implemented in Daggerheart. */
 import { personalCharacter } from "./personal-continuity.js";
-import { currentScene, sceneAccess } from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import { requireCitySource } from "./city-core.js";
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

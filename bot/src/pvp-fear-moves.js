@@ -2,7 +2,8 @@
 import { createHash } from "node:crypto";
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import { currentScene, scenePresence, recordScenePresence } from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function recordScenePresence(...args){return nativeScenes.recordScenePresence(...args);}
 import { pvpOwnerContext } from "./narrative-pvp.js";
 import { validatePvpRoundReceipt } from "./pvp-rounds.js";
 import { fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";

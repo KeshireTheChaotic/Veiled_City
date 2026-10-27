@@ -2,7 +2,8 @@
 import {inspectEnvironmentArrival} from './native-environment-arrivals.js';
 import {environmentSceneProjection} from './native-environment-scene.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {environmentCountdownProjection} from './native-environment-countdown.js';

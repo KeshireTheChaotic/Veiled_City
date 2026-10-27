@@ -1,7 +1,8 @@
 /** Authenticated, private pending roll breakdowns. Native persistence only; preparation never spends PC resources or rolls dice. */
 import { createHash } from "node:crypto";
 import { personalCharacter } from "./personal-continuity.js";
-import { currentScene } from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import { requireCitySource } from "./city-core.js";
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}

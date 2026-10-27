@@ -4,7 +4,8 @@ import {personalCharacter} from "./personal-continuity.js";
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
-import {currentScene} from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {recordOwnerActionTerminal} from "./owner-action-terminal.js";
 import {ordinaryActionProof} from './ordinary-effect-proof.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';

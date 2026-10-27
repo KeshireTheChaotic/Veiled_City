@@ -5,7 +5,8 @@ import {nativeActorControl} from './native-actor-control.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {conversationPrincipal} from './conversation-principal.js';
-import {scenePresence} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 
 import {createEncounterActivationRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

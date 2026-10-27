@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {initializeNativeScenes} from '../../src/application/composition/public.js';
+initializeNativeScenes();
 import {createHash} from 'node:crypto';
 import {consentAction} from '../../src/action-consent.js';
 const hash=v=>createHash('sha256').update(v).digest('hex');

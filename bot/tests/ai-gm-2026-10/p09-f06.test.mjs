@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {initializeNativeScenes} from '../../src/application/composition/public.js';
+initializeNativeScenes();
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {nativeAttackPassives} from '../../src/native-feature-passives.js';

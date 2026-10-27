@@ -8,7 +8,8 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {renderNarrativeUnit} from './narrative-authority.js';
 import {activeCityProxy,assertNpcAvailability} from './city-constraints.js';
 import {nativeActorControl} from './native-actor-control.js';
-import {scenePresence,currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function scenePresence(...args){return nativeScenes.scenePresence(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;

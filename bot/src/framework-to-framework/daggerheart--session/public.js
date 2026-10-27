@@ -6,3 +6,7 @@ export function connectNativeSessionMovement(){return sessionNativeMovement.bind
 import {nativeEnvironmentSession} from '../../frameworks/daggerheart/public.js';
 import {conversationPrincipal,currentScene,scenePresence} from '../../frameworks/session/public.js';
 export function connectNativeEnvironmentSession(){return nativeEnvironmentSession.bind({conversationPrincipal,currentScene,scenePresence});}
+
+import {nativeScenes} from '../../frameworks/daggerheart/public.js';
+import {sceneAccess,recordScenePresence} from '../../frameworks/session/public.js';
+export function connectNativeScenes(){return nativeScenes.bind({currentScene,scenePresence,sceneAccess,recordScenePresence});}

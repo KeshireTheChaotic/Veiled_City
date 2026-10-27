@@ -7,7 +7,8 @@ import {reservedCampaignFear} from './fear-reservations.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {inspectEnvironmentSceneEffect} from './native-environment-scene.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {inspectNativeEnvironmentRecording} from './native-environment-recording.js';

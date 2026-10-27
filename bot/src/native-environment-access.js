@@ -5,7 +5,8 @@ import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './n
 import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
 import {conversationPrincipal} from './conversation-principal.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {stateRevision} from './kernel/state-revision.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

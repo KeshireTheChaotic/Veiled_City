@@ -1,6 +1,7 @@
 /** Exact encounter environment provenance. Planning/eligibility only, never an effect or disclosure grant. */
 import {EncounterLibrary} from './encounter.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {executableNativeFeatures,nativeActorTaxonomy,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 

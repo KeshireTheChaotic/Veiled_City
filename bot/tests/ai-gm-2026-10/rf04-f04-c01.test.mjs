@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {initializeNativeScenes} from '../../src/application/composition/public.js';
+initializeNativeScenes();
 import {initializeNativeWorldEvents} from '../../src/application/composition/public.js';
 initializeNativeWorldEvents();
 import {createHash} from 'node:crypto';

@@ -2,7 +2,8 @@
 import {adjudicateAcceptedIntent,selectRuleBasis} from "./rules-arbitration.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
 import {conversationPrincipal} from "./conversation-principal.js";
-import {currentScene,scenePresence} from "./scene-continuity.js";
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {isPvpIntent} from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {nativeDeviceUseIssue} from './native-feature-effects.js';

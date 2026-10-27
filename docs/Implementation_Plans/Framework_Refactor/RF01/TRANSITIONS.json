@@ -3402,20 +3402,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "353a6e72870cd89f20042068469303d22362990a94b38a34e145b4627d2117ac",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/action-consent.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d0f576ffd99241e4a233af65ed69db9398c7bb6d2404105306a132b6a7b53e82",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/action-consent.js",
@@ -6241,20 +6227,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "6306869d59ea160e3ae6fbb24a398cedbbe595b0ff6b6c4aeed89d7a33291e2a",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/encounter.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "60de4d95d4dcccff61915e81cd99d7ea6dff6115af330b5ca2a819cd454fa287",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/encounter.js",
@@ -6437,20 +6409,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "7bb8fe18d838cd36360827c5b2b49af50917cba72e896899335419686115eb8c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-action-review.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "3ce533dc0592e385a945e7b45879c31af70648753239a6ef4b097f75e78336ad",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-action-review.js",
@@ -6485,20 +6443,6 @@
       "to": "bot/src/conversation-principal.js",
       "kind": "static",
       "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "7c27994a8265878e4a1a28f26d5471b186476ddeda7789d6141576c1ec1d374d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-action-ruling.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -9404,20 +9348,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "d44a47798aa34d1065f7ce8db2fe8892e554cdc1cb3eec4abfd51626e60132f9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-defense-aura.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "777ae9663cb6e5ffb0bf6984204fb2197c9d80077ba166bba73e5a955993d83f",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-defense-aura.js",
@@ -9438,34 +9368,6 @@
       "to": "bot/src/conversation-principal.js",
       "kind": "static",
       "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "d36ba251a073116e18a7908e6cdafc6f049c527356767c7cc06f7c137eb6ac41",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-encounter-activation.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "95435f0b6ebca8fa4f1c521e258e9ddb2200fa60d5f67222ff2c8718e9a5caa4",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-encounter-relations.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -9508,20 +9410,6 @@
       "to": "bot/src/conversation-principal.js",
       "kind": "static",
       "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "4e74ea746d88ea275903ba9f7464c38ef981edf5ca70679a90f9c3be20109c6b",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-access.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -9698,20 +9586,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "5417963710c4473b52d422a5754c17220a95069fc584aa1083ccba610cf23d21",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-context.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "0cebe5040138b079c67256aa46bd2a49272010cec53384814bfc36802a64e70c",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-countdown.js",
@@ -9764,20 +9638,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "0f49fe96fe2e2dcf4d510db6344dfad2c130020c0723306767f2533c99d5c1c0",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-countdown.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -9880,20 +9740,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ecf6bd9a6645dc4263e703db1e74d7d28848445ac2c2cc6e6b392b0035c741cb",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-door-chain.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "db887ed1dd1e53faea8fad2f6524ec6013887a0179d94992779b88d221717711",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-door-chain.js",
@@ -9987,20 +9833,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "d852a8a2a89d3374f5f8161b7376830351b7d72212d8a92e40f9751d1decb3fc",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-imaging.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -10244,20 +10076,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "1b9131f9b01751ae8ceca194268f21ff75071073b803b380752e297305e150c4",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-output.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "81597b91a92089047b668810452f8fb6cfcc7ba494b5e9995cea3f34746e817d",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-output.js",
@@ -10370,20 +10188,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "c6e619e38beadc10684e628ca42363245a1bbb25ec7b7e871b975db2de4ec686",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-recording.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c950b9e463f3e2040015a2a5022081710601641684aafc8efaddd362ad4f7837",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-recording.js",
@@ -10421,20 +10225,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "e210324c947cf97374067490e7e4ece73774cedc9a4b48162c4ace942ae73c91",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-recovery.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -11098,20 +10888,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "0de7e3605e925dd823ed6a47815ef43799847c823008624285623ed620d07931",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-witnesses.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "19f978644823a2a80296e23046c1e5ed3dde2e441e4d7b05710541376ba5674f",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-witnesses.js",
@@ -11182,20 +10958,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "e86f505c43dae6b68a62f3b19e2941849c4c46c59208ab58692bc1118aea372e",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-equipped-attacks.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "78cc7c28eade8a5e8b245f86c0e0eef13605d5c5e207469dec23ffd6e906e6ab",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-equipped-attacks.js",
@@ -11219,20 +10981,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "0fd9401c12925b3603e575e0725447ec0a435a9f9aecea7ee9c071558be1d728",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-feature-damage.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -11266,20 +11014,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ef535ea3ad129cbba51993ad97660838618ccb598d13b315b87a001526b8f72b",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-feature-passives.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "ee5669bf71e1088a053848eeb770a83c93baaed30b075a224d857a8f0eee5761",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-feature-passives.js",
@@ -11289,20 +11023,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "06abfbc0a61a44bcf147e562e91e0b70d9f1134bdf99739b6df9a37ce8117f67",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-feature-windows.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -11486,20 +11206,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "6889f27bf6da3fe1bc165899bae9b8d21274c687e4f816516f987392ef0e0adf",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-notice.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -11700,20 +11406,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "02c3c532300415a708bb4176ad641ceb72a48688b7e648da19e901fc1735f555",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-professional-entry.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c0e23bb13d9f0e33515eecb2256ab247acdf8560152ac8c58e7bb27a405206a1",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-publications.js",
@@ -11854,20 +11546,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "44aa19a925ec7a6cb41c9126efbe0743c7daff9e3246b848b00d44b0c5b02ff1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-roll-participation.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4964b500b9ba17f8274731929258e9562e3f0a5279b536a97dad6728a6d7629d",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-roll-participation.js",
@@ -11882,20 +11560,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "3d42010987b0aa928dceb837af1abea19b1bc4a74ad67009284604387423c756",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-stress-passives.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d3b5b122df8e8e31f2dcb764bea45d327dd5e072705da70fa59a114c7c351492",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-unarmed-attacks.js",
@@ -11906,20 +11570,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "480bd25086ba93f9838fc037aae30f4cf85f9782dedf86341809934ffb207df1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-unarmed-attacks.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -12288,20 +11938,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "77767257e7e19efa446744681eb9bbbc3f1a0fefbb7bb4a163a0f6f062a38bca",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ordinary-effect-proof.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4c50d0a21bd14dbf8bd39d57574a63d42133e0bf99ecb1d5c2d507f1e729d9a8",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/ordinary-effects.js",
@@ -12424,20 +12060,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "26cb1e976c7ca2250dba2c24f6f62f8587cfd909454b29dda24e3a490c28f545",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pc-death.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -12686,20 +12308,6 @@
       "to": "bot/src/conversation-principal.js",
       "kind": "static",
       "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "071741ce3ffe5be2d8ff1f9a24e5b7513f50af24f778928379c4c1f2a132d5ad",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pre-roll-fear.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -13141,20 +12749,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "90ebaf6ee8a253e670c47ee087a6a7aeebe63070ba31e6123907f9bf1a917ce4",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-campaign-execution.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "efc72a35200484b37dbfd9b18a2523ca764f944c0628dc8ea521e52241024607",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-damage.js",
@@ -13207,20 +12801,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "ab8c38b6d627404d660a11b29cb7551582f6a2785bfce1e7059d69823c52d9a6",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-fear-moves.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -14037,20 +13617,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "5d98eaa35602328a54a72745ddec8773b6d03763dc03b37bcc66473f8975f00f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-profiles.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d7c542f28bd09d14972411f9f0e9b0e811599ae61dbb83c5ad2157ae8ef8ebc7",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-reactions.js",
@@ -14186,20 +13752,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "c4f9abd9b280851602616f1c9a2e1ef3f142ca9f407b06306ea8f81b524bd5b5",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/roll-collaboration.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -14359,20 +13911,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "07d82c71f63a01eaa9f43492e88fe835217d093eec8cb17d5ddef0454656da41",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/roll-requests.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "27191077a3247205178d67c162f2aa0ae24bfef65117db0da6263e3f154310d4",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/roll-requests.js",
@@ -14463,20 +14001,6 @@
       "to": "bot/src/conversation-principal.js",
       "kind": "static",
       "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "3e7f42904e018cb4681e856d76ab50ec11573b1f4f907ae580a0508d5b58a576",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/rules-arbitration.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",

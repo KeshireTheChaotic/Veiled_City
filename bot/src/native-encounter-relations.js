@@ -1,5 +1,6 @@
 /** Source provider for extracted native-encounter-relations native policy. */
-import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {activeCityProxy} from './city-constraints.js';
 import {nativeActorTaxonomy} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';

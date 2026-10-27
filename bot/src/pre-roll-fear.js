@@ -2,7 +2,8 @@
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {conversationPrincipal} from './conversation-principal.js';
-import {currentScene} from './scene-continuity.js';
+import {nativeScenes} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {incomingAttackEvidence,incomingRollProjection} from './pc-incoming.js';
 import {revalidateOutputPublication} from './pvp-output.js';

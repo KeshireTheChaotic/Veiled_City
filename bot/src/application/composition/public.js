@@ -30,3 +30,4 @@ export {initializeNativeEnvironmentAudience} from './native-environment-audience
 export {initializeNativeWorldEvidence} from './native-world-evidence.js';
 export {initializeNativeWorldEvents} from './native-world-events.js';
 export {initializeCharacterWorldEvents} from './character-world-events.js';
+export {initializeNativeScenes} from './native-scenes.js';
