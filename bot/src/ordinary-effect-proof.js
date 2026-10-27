@@ -2,7 +2,8 @@
 import {historicalActionSource,consentAction} from './action-consent.js';
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
-import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
+import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
+function overlapsOwnerActionTerminal(...args){return nativeOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {renderWorldObservation} from './world-observation.js';

@@ -6,7 +6,8 @@ function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...ar
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
-import {recordOwnerActionTerminal} from "./owner-action-terminal.js";
+import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
+function recordOwnerActionTerminal(...args){return nativeOwnerActionTerminal.recordOwnerActionTerminal(...args);}
 import {ordinaryActionProof} from './ordinary-effect-proof.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';
 import {nativePrincipals} from './frameworks/daggerheart/public.js';

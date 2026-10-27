@@ -15,7 +15,8 @@ import {blazeActionAuthorization} from "./pc-death.js";
 import {publishNativeNotice,queueNativeNotice,reserveNativeNotice,publishCampaignPvpNotices} from "./native-publications.js";
 import {noticeHash} from "./native-notice.js";
 import {gmRulingDetails} from "./gm-action-ruling.js";
-import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
+import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
+function overlapsOwnerActionTerminal(...args){return nativeOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense} from './native-defense-aura.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {publishPreRollFearNotice} from './pre-roll-fear-notice.js';

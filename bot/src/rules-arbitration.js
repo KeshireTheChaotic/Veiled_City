@@ -7,7 +7,8 @@ function conversationPrincipal(...args){return nativePrincipals.conversationPrin
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import { isPvpIntent } from "./pvp-authority.js";
-import {overlapsOwnerActionTerminal} from "./owner-action-terminal.js";
+import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
+function overlapsOwnerActionTerminal(...args){return nativeOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {captureNoRollFeatureWindows} from './native-feature-windows.js';
 import {nativeDeviceUseIssue} from './native-feature-effects.js';
 import {consentAction,historicalActionSource} from './action-consent.js';

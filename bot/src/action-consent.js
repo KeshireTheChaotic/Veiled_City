@@ -6,7 +6,8 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
-import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
+import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
+function overlapsOwnerActionTerminal(...args){return nativeOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {createActionConsentRules} from './frameworks/daggerheart/public.js';
 export {consentHash} from './frameworks/daggerheart/public.js';
 let nativeConsent;

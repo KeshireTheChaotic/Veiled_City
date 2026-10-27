@@ -14,3 +14,7 @@ export function connectNativeScenes(){return nativeScenes.bind({currentScene,sce
 import {nativePrincipals} from '../../frameworks/daggerheart/public.js';
 import {historicalOwnerPrincipal} from '../../frameworks/session/public.js';
 export function connectNativePrincipals(){return nativePrincipals.bind({conversationPrincipal,historicalOwnerPrincipal});}
+
+import {nativeOwnerActionTerminal} from '../../frameworks/daggerheart/public.js';
+import {overlapsOwnerActionTerminal,recordOwnerActionTerminal} from '../../frameworks/session/public.js';
+export function connectNativeOwnerActionTerminal(){return nativeOwnerActionTerminal.bind({overlapsOwnerActionTerminal,recordOwnerActionTerminal});}

@@ -1,0 +1,77 @@
+{
+  "feature": "RF04-F05-C61",
+  "original_manifest_sha256": "C3A14B9D50022ABA51884AD6A19B038D04340684574C84230921377F212C5654",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "d0f576ffd99241e4a233af65ed69db9398c7bb6d2404105306a132b6a7b53e82",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/action-consent.js",
+      "to": "bot/src/owner-action-terminal.js",
+      "kind": "static",
+      "specifier": "./owner-action-terminal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "3ce533dc0592e385a945e7b45879c31af70648753239a6ef4b097f75e78336ad",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/gm-action-review.js",
+      "to": "bot/src/owner-action-terminal.js",
+      "kind": "static",
+      "specifier": "./owner-action-terminal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "3d9e2b8558c7fcdfc308b2e732705ad67b0c9a070de23f199190aeb4be65e422",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ordinary-effect-proof.js",
+      "to": "bot/src/owner-action-terminal.js",
+      "kind": "static",
+      "specifier": "./owner-action-terminal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "121ec3b2fa75f817edec3fbf77ddc038533446b355a01b0fb0261d7b9c667ae7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/roll-requests.js",
+      "to": "bot/src/owner-action-terminal.js",
+      "kind": "static",
+      "specifier": "./owner-action-terminal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b7de804a6f362a90bc3169f5ff1a9f1495d4e3f5795c86caa6fc13d47a178392",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/rules-arbitration.js",
+      "to": "bot/src/owner-action-terminal.js",
+      "kind": "static",
+      "specifier": "./owner-action-terminal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

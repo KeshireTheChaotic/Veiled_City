@@ -26,7 +26,7 @@ function gathering(t){
 }
 
 test('five isolated Session moves preserve implementation fingerprints and historical exported identities',async()=>{
- const manifest=JSON.parse(readFileSync(fileURLToPath(new URL('../../../docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C01-MOVE.json',import.meta.url)),'utf8'));assert.equal(manifest.moves.length,5);for(const item of manifest.moves){const path=fileURLToPath(new URL('../../../'+item.to,import.meta.url));assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),item.moved_sha256);if(item.change==='byte-identical')assert.equal(item.original_sha256,item.moved_sha256);const before=await import('../../src/'+item.from.split('/').at(-1)),after=await import('../../src/frameworks/session/'+item.to.split('/').at(-1));for(const [key,value] of Object.entries(after)){assert.equal(before[key],value);assert.equal(sessionApi[key],value);}}
+ const manifest=JSON.parse(readFileSync(fileURLToPath(new URL('../../../docs/Implementation_Plans/Framework_Refactor/features/RF04-F04/C01-MOVE.json',import.meta.url)),'utf8'));assert.equal(manifest.moves.length,5);for(const item of manifest.moves){const path=fileURLToPath(new URL('../../../'+item.to,import.meta.url));assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),item.moved_sha256);if(item.change==='byte-identical')assert.equal(item.original_sha256,item.moved_sha256);const after=await import('../../src/frameworks/session/'+item.to.split('/').at(-1));for(const [key,value] of Object.entries(after))assert.equal(sessionApi[key],value);}
 });
 
 test('current owner principal binds actual session assignment and revision without PC action, spending or placement',t=>{

@@ -1,0 +1,172 @@
+{
+  "feature": "RF04-F05-C61",
+  "base_head": "bff1db445a5cf95848fd03e8232608f5122092e1",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/action-consent.js",
+      "bot/src/gm-action-review.js",
+      "bot/src/ordinary-effect-proof.js",
+      "bot/src/roll-requests.js",
+      "bot/src/rules-arbitration.js",
+      "bot/src/frameworks/daggerheart/contracts/owner-action-terminal.js",
+      "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "bot/src/application/composition/native-principals.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs"
+    ],
+    "passed": 9,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+        "sha256": "1349676FFD325C3ABDD4898A3F149478DB31FFF215190715C0E44DEC0BE4359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs",
+        "sha256": "EBB1E04688DEC1906256ADE1713F69052B88ADD7AE46B8128AD713A05BDD4543"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs",
+        "sha256": "0DF3FCE72F9971240F209790854B00696CFA5E9F792B0455A0B1FD96BBEFBDD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs",
+        "sha256": "D0FC3E2A728D55312508685A98621180F56BDCF718D6AC7419B65E3925C3223F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs",
+        "sha256": "12E3DF55B6A33424C15D00E0E9A5F95CAAA8E499F8A105CA36EE94109B84E8AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs",
+        "sha256": "DD22392DEC9A55290A38FFE657112EDC71B5E0CB5B9C44142635E80674B0AE83"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "6985C2C324ECA903D75C3D1553DC9CDCAE1E86B660101B9D4B14290916CC8480"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T16:43:06.159Z",
+    "end": "2026-10-27T16:43:11.693Z",
+    "exit_code": 0,
+    "tests": 60,
+    "passed": 60,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 5497.5082,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c61-test.log",
+    "log_sha256": "FF400D61F9EF8066F2DB34F39D8FD56F28E0A6DE776E54705261213ED5BF4EB3",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 723,
+      "unowned": 0,
+      "imports": 3100,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1797,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c61-rf04-architecture.log",
+      "log_sha256": "5A192216C95774C268DBBA5E8C540F7CA1B782BE3025ACFCBF469725E177B3C9",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 723,
+      "unowned": 0,
+      "imports": 3100,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1290,
+      "active_violation_groups": 504,
+      "transition_errors": 504,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c61-rf05-architecture.log",
+      "log_sha256": "7075E6FCE63F9233F7A7ABEBA3E18C6B1AFFB36F634DC95C95AD4B141660CA60",
+      "changed_path_active_findings": [
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/world-observation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-requests.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-requests.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "d0f576ffd99241e4a233af65ed69db9398c7bb6d2404105306a132b6a7b53e82",
+      "3ce533dc0592e385a945e7b45879c31af70648753239a6ef4b097f75e78336ad",
+      "3d9e2b8558c7fcdfc308b2e732705ad67b0c9a070de23f199190aeb4be65e422",
+      "121ec3b2fa75f817edec3fbf77ddc038533446b355a01b0fb0261d7b9c667ae7",
+      "b7de804a6f362a90bc3169f5ff1a9f1495d4e3f5795c86caa6fc13d47a178392"
+    ],
+    "original_manifest_sha256": "C3A14B9D50022ABA51884AD6A19B038D04340684574C84230921377F212C5654",
+    "manifest_sha256_after": "EBC9C6C71F5B2466A243EACA82B88A2CCA13EA3903DB89A32B32445EB57E1040",
+    "entries_after": 1783,
+    "remaining_by_feature": {
+      "RF04-F01": 203,
+      "RF04-F03": 72,
+      "RF04-F04": 124,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/action-consent.js": "36ECA9E937E917A7B245826B8536083BFF91BE719AD16BF29ABDFD22C2EA8305",
+    "bot/src/gm-action-review.js": "ACFD66A2A6598D5D2B10847A8AFADBB43FF1EBF534AEAFD0169C8681642A782F",
+    "bot/src/ordinary-effect-proof.js": "213AF9E82C481F230298CC1042EEBAD129E477E7944F413D93AB8D107487D66E",
+    "bot/src/roll-requests.js": "D38A04081804E8C5E76CA5FB7601537999FBA79CE6502DDB953EC767003C6C73",
+    "bot/src/rules-arbitration.js": "C70E5BB8E567B3F398AA4D1542BFF2637561A2F51870E6A74C18BF4A32851ED0",
+    "bot/src/frameworks/daggerheart/contracts/owner-action-terminal.js": "422CA517E9AE3D65293B475C7DA5ADD1994BBC35B43FA019D44AE03F0CF8D7B4",
+    "bot/src/framework-to-framework/daggerheart--session/public.js": "CA85981A817440CACD421C56458E195BEC14BC58064D458777FE9A6DD20281BA",
+    "bot/src/application/composition/native-principals.js": "987B0F911183423BAAB7D08CC5E5A12FDB97233B7332897BF6EE98A86B202A56"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C61 commit: restore the five direct ./owner-action-terminal.js imports, remove the native owner action terminal port and connector, and restore the five exact transitions from C61-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}
