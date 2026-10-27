@@ -1,0 +1,34 @@
+{
+  "base_head": "e98f8996622b2f0328df1983b2a63b503894aee2",
+  "records": [
+    {
+      "path": "bot/src/gm.js",
+      "pre_edit_sha256": "126ed146f1965de3b80c8f678f3f2930eac90cbd94b03e8cf69ef3887d2a8e96",
+      "body_ast_sha256": "418e8d5a179ddc1a86c5200f1527346285703212dcd385b901b171593c7945a3",
+      "dirty_before": true,
+      "old_imports": [
+        "./npc-cognition.js"
+      ]
+    },
+    {
+      "path": "bot/src/simulation-commands.js",
+      "pre_edit_sha256": "c7dcf2b2cabb7ee876d886f7d338d15f16d51d6bd44e1a5bec382668ac64598e",
+      "body_ast_sha256": "2203b6617eb3958084c8ff9e0eb04d54af45a187673e4696984d86d255be9a55",
+      "dirty_before": false,
+      "old_imports": [
+        "./simulation-motivation.js"
+      ]
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "pre_edit_sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+      "body_ast_sha256": "be5908ff2e55601230d0e4d6a28bdc2a098d211acbcc7525132d2d6f9fc939dd",
+      "dirty_before": false,
+      "old_imports": [
+        "./npc-conversations.js",
+        "./simulation-strategy.js"
+      ]
+    }
+  ],
+  "scope": "Fresh current production source hashes; gm.js original dirty edits retained, only own NPC import staged."
+}

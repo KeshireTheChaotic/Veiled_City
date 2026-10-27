@@ -5,7 +5,7 @@ import { applySimulationUpdates, configureSimulationEntity, simulationOverview, 
   resolveNpcAction, shareInformation, processSimulationEvents } from "./simulation.js";
 import { publishSimulationHooks } from "./publishing.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./simulation-motivation.js";
+import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./frameworks/npc/public.js";
 import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "./city-consequences.js";
 import { transferSupply } from "./supply-dependencies.js";
 

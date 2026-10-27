@@ -19,7 +19,7 @@ import {createPrivateSeedOrigin,privateSeedPrompt,privateWorldSeedsSchema,bindPr
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { narrativeContext } from "./character-narrative.js";
 import { validatePostTurnStateReview,POST_TURN_REVIEW_CATEGORIES } from "./director.js";
-import { retrieveNpcCognition } from "./npc-cognition.js";
+import { retrieveNpcCognition } from "./frameworks/npc/public.js";
 import { npcDirectorSchema } from "./framework-to-framework/intent--world/public.js";
 import { SIMULATION_PROMPT, simulationUpdateSchema } from "./frameworks/world/public.js";
 import { simulationContext } from "./simulation.js";

@@ -7528,20 +7528,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "234d12a34d809648b41adc106b71bb062148c612a4efa92354f1b5e2db80943a",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/npc-cognition.js",
-      "kind": "static",
-      "specifier": "./npc-cognition.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "694bfb167492be83d7780cda1c328db2fb89491d6990931b97263171c864a967",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -16443,20 +16429,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "b0a7afcc54f9f70cc67de19bcdb64676ab98c0ad27913f1c5517c9de9375b88c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/simulation-commands.js",
-      "to": "bot/src/simulation-motivation.js",
-      "kind": "static",
-      "specifier": "./simulation-motivation.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4b64eb7ee357f58fad3193185f9e288ade915568311b0b4c46cff9673e4771bc",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/simulation-commands.js",
@@ -17002,20 +16974,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "873a6700490aa14c3de95dc1af8dcbca25cfac28eb8aa3df8034adf06b5b9c95",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/npc-conversations.js",
-      "kind": "static",
-      "specifier": "./npc-conversations.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "18411c8775ce0a3fbb60452d7a6300d468be3c6ca3064073762b8f8afc05de59",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/story-commands.js",
@@ -17134,20 +17092,6 @@
       "to": "bot/src/city-groups.js",
       "kind": "static",
       "specifier": "./city-groups.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "71e2ce19c84fa6f4ce2a5c9cd17c0214210ae7ceec7815ca646b4b87f942c790",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/simulation-strategy.js",
-      "kind": "static",
-      "specifier": "./simulation-strategy.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

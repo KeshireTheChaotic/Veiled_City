@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: application caller migration preserves full policy bodies including original uncommitted GM work
+ok 1 - application caller migration preserves full policy bodies including original uncommitted GM work
+  ---
+  duration_ms: 41.2655
+  type: 'test'
+  ...
+# Subtest: actual GM context retrieves native NPC private cognition with actor boundaries and no PC or goal mutation
+ok 2 - actual GM context retrieves native NPC private cognition with actor boundaries and no PC or goal mutation
+  ---
+  duration_ms: 168.8689
+  type: 'test'
+  ...
+# Subtest: actual GM planner builds actor-scoped native packet for deterministic mocked structured boundary
+ok 3 - actual GM planner builds actor-scoped native packet for deterministic mocked structured boundary
+  ---
+  duration_ms: 186.7921
+  type: 'test'
+  ...
+# Subtest: actual GM-only simulation goal command uses native public proposal and returns one private response
+ok 4 - actual GM-only simulation goal command uses native public proposal and returns one private response
+  ---
+  duration_ms: 171.7664
+  type: 'test'
+  ...
+# Subtest: actual story strategy command preserves pending native review and private Discord payload
+ok 5 - actual story strategy command preserves pending native review and private Discord payload
+  ---
+  duration_ms: 167.2435
+  type: 'test'
+  ...
+# Subtest: actual story conversation command retains NPC refusal without native dice costs or forced cooperation
+ok 6 - actual story conversation command retains NPC refusal without native dice costs or forced cooperation
+  ---
+  duration_ms: 178.997
+  type: 'test'
+  ...
+# Subtest: unauthorized native command callers cannot parse proposals reply or mutate campaign state
+ok 7 - unauthorized native command callers cannot parse proposals reply or mutate campaign state
+  ---
+  duration_ms: 162.7569
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2119.4249

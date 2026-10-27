@@ -1,9 +1,9 @@
 {
-  "checkpoint": "RF04-F05 C36 native Intent NPC goal and strategy adapter adoption",
-  "timestamp": "2026-10-26T22:05:25.704Z",
+  "checkpoint": "RF04-F05 C37 application native NPC public callers",
+  "timestamp": "2026-10-26T22:23:32.245Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "8c7e55f8195029bb0bd02fa8f95a52c6b59bedc6fd51f976b63ded102d86f084",
-  "open_exact_records": 1967,
+  "manifest_sha256": "87cf883e956dc2d1825b31a74660d420a85320e1ee96462abf979dcce235044f",
+  "open_exact_records": 1963,
   "by_feature": {
     "RF05-F05": 415,
     "RF04-F04": 191,
@@ -14,10 +14,10 @@
     "RF06-F02": 17,
     "RF04-F05": 107,
     "RF06-F07": 5,
-    "RF06-F04": 160,
+    "RF06-F04": 157,
     "RF06-F05": 43,
     "RF06-F03": 179,
-    "RF05-F04": 43,
+    "RF05-F04": 42,
     "RF04-F02": 5
   },
   "resolved_since_audit": [
@@ -382,6 +382,20 @@
       "max_occurrences": 1,
       "source_sha256": "1fa8141917d32cc9871fd05f0c9e7f1b1b40b1871377e0a4fe6ddcc326f85a49",
       "target_owner": "knowledge",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
+    },
+    {
+      "id": "234d12a34d809648b41adc106b71bb062148c612a4efa92354f1b5e2db80943a",
+      "feature": "RF05-F04",
+      "deadline": "RF05",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/npc-cognition.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "1fa8141917d32cc9871fd05f0c9e7f1b1b40b1871377e0a4fe6ddcc326f85a49",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "IMPORTS_PRIVATE_API"
     },
@@ -946,6 +960,20 @@
       "action": "IMPORTS_PRIVATE_API"
     },
     {
+      "id": "b0a7afcc54f9f70cc67de19bcdb64676ab98c0ad27913f1c5517c9de9375b88c",
+      "feature": "RF06-F04",
+      "deadline": "RF06",
+      "from": "bot/src/simulation-commands.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "c7dcf2b2cabb7ee876d886f7d338d15f16d51d6bd44e1a5bec382668ac64598e",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
+    },
+    {
       "id": "02fe052e9ad48262004ddcaa3026786baa271dcb55ec3b502f00b185868ee080",
       "feature": "RF04-F02",
       "deadline": "RF04",
@@ -1180,6 +1208,34 @@
       "max_occurrences": 1,
       "source_sha256": "78229a708df384c960e2bcb8f13b3f92567a090d2080f86053415a30be1140bf",
       "target_owner": "intent",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
+    },
+    {
+      "id": "873a6700490aa14c3de95dc1af8dcbca25cfac28eb8aa3df8034adf06b5b9c95",
+      "feature": "RF06-F04",
+      "deadline": "RF06",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/npc-conversations.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "IMPORTS_PRIVATE_API"
+    },
+    {
+      "id": "71e2ce19c84fa6f4ce2a5c9cd17c0214210ae7ceec7815ca646b4b87f942c790",
+      "feature": "RF06-F04",
+      "deadline": "RF06",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/simulation-strategy.js",
+      "owner": "application",
+      "code": "IMPORTS_PRIVATE_API",
+      "max_occurrences": 1,
+      "source_sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "IMPORTS_PRIVATE_API"
     },
@@ -5966,8 +6022,8 @@
       "internalImportOccurrences": 2860,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1982,
-      "acceptedLegacyOccurrences": 1982,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 1978,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
@@ -5979,8 +6035,8 @@
       "internalImportOccurrences": 2860,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1982,
-      "acceptedLegacyOccurrences": 1982,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 1978,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
@@ -5992,8 +6048,8 @@
       "internalImportOccurrences": 2860,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1982,
-      "acceptedLegacyOccurrences": 1308,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 1304,
       "activeViolationGroups": 670,
       "transitionErrors": 670,
       "pass": false
@@ -6005,10 +6061,10 @@
       "internalImportOccurrences": 2860,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1982,
-      "acceptedLegacyOccurrences": 409,
-      "activeViolationGroups": 1563,
-      "transitionErrors": 1563,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 406,
+      "activeViolationGroups": 1562,
+      "transitionErrors": 1562,
       "pass": false
     },
     "RF07": {
@@ -6018,10 +6074,10 @@
       "internalImportOccurrences": 2860,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1982,
+      "rawViolationOccurrences": 1978,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1967,
-      "transitionErrors": 1967,
+      "activeViolationGroups": 1963,
+      "transitionErrors": 1963,
       "pass": false
     }
   },
@@ -8358,7 +8414,7 @@
     {
       "path": "bot/src/gm.js",
       "owner": "application",
-      "sha256": "126ed146f1965de3b80c8f678f3f2930eac90cbd94b03e8cf69ef3887d2a8e96"
+      "sha256": "a294b9f1934ebb3ae64e2be07ba6a15a1a30508afafbd93560497e5887fd20f6"
     },
     {
       "path": "bot/src/handout.js",
@@ -9348,7 +9404,7 @@
     {
       "path": "bot/src/simulation-commands.js",
       "owner": "application",
-      "sha256": "c7dcf2b2cabb7ee876d886f7d338d15f16d51d6bd44e1a5bec382668ac64598e"
+      "sha256": "d181752ea0baf641cd9333827c059d3a627c07354b6f3c0dd11da6657d74cf0c"
     },
     {
       "path": "bot/src/simulation-motivation.js",
@@ -9378,7 +9434,7 @@
     {
       "path": "bot/src/story-commands.js",
       "owner": "application",
-      "sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5"
+      "sha256": "c10c8805bc6aa09ee05fbfea3605a37eaf631c59367b51afce01b68c8bab3dbc"
     },
     {
       "path": "bot/src/story-continuity.js",
@@ -9560,7 +9616,7 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C36-RUN.json"
+    "features/RF04-F05/C37-RUN.json"
   ],
   "release": "NOT_AUTHORIZED"
 }

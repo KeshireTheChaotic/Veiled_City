@@ -1,0 +1,202 @@
+{
+  "feature": "RF04-F05-C37",
+  "status": "SCOPED_APPLICATION_NPC_PUBLIC_CALLERS_QUALIFIED",
+  "frozen": {
+    "base_head": "e98f8996622b2f0328df1983b2a63b503894aee2",
+    "syntax_checked": 4,
+    "files": [
+      {
+        "path": "bot/src/gm.js",
+        "sha256": "a294b9f1934ebb3ae64e2be07ba6a15a1a30508afafbd93560497e5887fd20f6"
+      },
+      {
+        "path": "bot/src/simulation-commands.js",
+        "sha256": "d181752ea0baf641cd9333827c059d3a627c07354b6f3c0dd11da6657d74cf0c"
+      },
+      {
+        "path": "bot/src/story-commands.js",
+        "sha256": "c10c8805bc6aa09ee05fbfea3605a37eaf631c59367b51afce01b68c8bab3dbc"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146cafd088b52f392696e299a020037a947b4f9b2295f209968d129e51271b68"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C37-SOURCE-BASELINE.json",
+        "sha256": "556ac3052b829476d8a23fcc29bbf6fb4ce692d3f5765ab5dd11804919b08971"
+      }
+    ]
+  },
+  "source_baseline": {
+    "base_head": "e98f8996622b2f0328df1983b2a63b503894aee2",
+    "records": [
+      {
+        "path": "bot/src/gm.js",
+        "pre_edit_sha256": "126ed146f1965de3b80c8f678f3f2930eac90cbd94b03e8cf69ef3887d2a8e96",
+        "body_ast_sha256": "418e8d5a179ddc1a86c5200f1527346285703212dcd385b901b171593c7945a3",
+        "dirty_before": true,
+        "old_imports": [
+          "./npc-cognition.js"
+        ]
+      },
+      {
+        "path": "bot/src/simulation-commands.js",
+        "pre_edit_sha256": "c7dcf2b2cabb7ee876d886f7d338d15f16d51d6bd44e1a5bec382668ac64598e",
+        "body_ast_sha256": "2203b6617eb3958084c8ff9e0eb04d54af45a187673e4696984d86d255be9a55",
+        "dirty_before": false,
+        "old_imports": [
+          "./simulation-motivation.js"
+        ]
+      },
+      {
+        "path": "bot/src/story-commands.js",
+        "pre_edit_sha256": "98bc88e01d75964c8ab60be9c7d21cd166428688af8098bff1df454a74f8d0b5",
+        "body_ast_sha256": "be5908ff2e55601230d0e4d6a28bdc2a098d211acbcc7525132d2d6f9fc939dd",
+        "dirty_before": false,
+        "old_imports": [
+          "./npc-conversations.js",
+          "./simulation-strategy.js"
+        ]
+      }
+    ],
+    "scope": "Fresh current production source hashes; gm.js original dirty edits retained, only own NPC import staged."
+  },
+  "tests": {
+    "exit_code": 0,
+    "duration_ms": 2171.6152,
+    "start": "2026-10-26T17:17:38.6037937-05:00",
+    "end": "2026-10-26T17:17:40.7754089-05:00",
+    "run_id": "rf04-f05-c37-frozen",
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "tap_duration_ms": 2119.4249,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c37.test.mjs"
+  },
+  "syntax": {
+    "checked": 4,
+    "passed": 4
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 705,
+      "unowned": 0,
+      "importOccurrences": 3039,
+      "internalImportOccurrences": 2860,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 1978,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 705,
+      "unowned": 0,
+      "importOccurrences": 3039,
+      "internalImportOccurrences": 2860,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1978,
+      "acceptedLegacyOccurrences": 1304,
+      "activeViolationGroups": 670,
+      "transitionErrors": 670,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "234d12a34d809648b41adc106b71bb062148c612a4efa92354f1b5e2db80943a",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/npc-cognition.js",
+      "kind": "static",
+      "specifier": "./npc-cognition.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b0a7afcc54f9f70cc67de19bcdb64676ab98c0ad27913f1c5517c9de9375b88c",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/simulation-commands.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "873a6700490aa14c3de95dc1af8dcbca25cfac28eb8aa3df8034adf06b5b9c95",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/npc-conversations.js",
+      "kind": "static",
+      "specifier": "./npc-conversations.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "71e2ce19c84fa6f4ce2a5c9cd17c0214210ae7ceec7815ca646b4b87f942c790",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Application GM service and simulation/story command callers adopt original NPC public functions instead of legacy private paths. All non-import AST bodies preserved including original dirty GM edits; only own NPC import staged in GM.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "mocked_structured_requests": 1,
+    "mocked_discord_reply_calls": 3,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "GM context read is trusted GM/private reasoning, not proof of audience-safe model output or semantic narrative quality. Structured model boundary mocked; provider schema dispatch not exercised.",
+    "Command single-call private payload/permission/native behavior tested; actual Discord acknowledgments, outbox exactly-once wrapper and cross-process behavior not newly qualified.",
+    "Mixed GM/command decomposition remains open; current working-tree evidence includes preserved uncommitted original GM schema/model changes. No clean-checkout/full phase/live/provider/release certification."
+  ],
+  "rollback": "Restore only4NPC import specifiers across3application modules and4exact records. Preserve all pre-existing GM edits and native state/source/receipt data.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c37-tests.log",
+      "sha256": "e166fe06b7852ca0c7713bddc1acee801201f9ca1d8aa0e3a867a3a015379c47"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c37-architecture-initial.log",
+      "sha256": "78d5dd8b760c15590e6b116c707fd09e54069e3cb5e3c5722453c473c372b96b"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c37-rf04-final.log",
+      "sha256": "f06cd73261c8597703a1eb043b7c71a9c1627449b6891bf3a2e1e23450385a31"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c37-rf05-final.log",
+      "sha256": "935e17d15324a7186c6a3dd3a92b4d8819f836e740425a9d5fc9c429d0c1b1b8"
+    }
+  ]
+}

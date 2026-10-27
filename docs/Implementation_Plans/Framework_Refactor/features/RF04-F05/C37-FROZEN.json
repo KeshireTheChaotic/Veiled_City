@@ -1,0 +1,26 @@
+{
+  "base_head": "e98f8996622b2f0328df1983b2a63b503894aee2",
+  "syntax_checked": 4,
+  "files": [
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "a294b9f1934ebb3ae64e2be07ba6a15a1a30508afafbd93560497e5887fd20f6"
+    },
+    {
+      "path": "bot/src/simulation-commands.js",
+      "sha256": "d181752ea0baf641cd9333827c059d3a627c07354b6f3c0dd11da6657d74cf0c"
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "sha256": "c10c8805bc6aa09ee05fbfea3605a37eaf631c59367b51afce01b68c8bab3dbc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+      "sha256": "146cafd088b52f392696e299a020037a947b4f9b2295f209968d129e51271b68"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C37-SOURCE-BASELINE.json",
+      "sha256": "556ac3052b829476d8a23fcc29bbf6fb4ce692d3f5765ab5dd11804919b08971"
+    }
+  ]
+}
