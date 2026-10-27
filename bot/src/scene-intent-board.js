@@ -4,7 +4,8 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {activeCityProxy,assertNpcAvailability} from './city-constraints.js';
 import {scenePresence} from './scene-continuity.js';
-import {actorReferenceVisible} from './npc-cognition-projection.js';
+import {intentNpcEvidence} from './frameworks/intent/public.js';
+const {actorReferenceVisible}=intentNpcEvidence;
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';

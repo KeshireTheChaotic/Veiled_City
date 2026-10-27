@@ -9,3 +9,4 @@ export {createNativeStrategyDelegateSource,nativeStrategyDelegateSource} from '.
 export {createIntentWorldPrimitivesConsumer,intentWorldPrimitives} from './contracts/world-primitives.js';
 export {createIntentWorldActionsConsumer,intentWorldActions} from './contracts/world-actions.js';
 export {createIntentNpcPolicyConsumer,intentNpcPolicy} from './contracts/npc-policy.js';
+export {createIntentNpcEvidenceConsumer,intentNpcEvidence} from './contracts/npc-evidence.js';

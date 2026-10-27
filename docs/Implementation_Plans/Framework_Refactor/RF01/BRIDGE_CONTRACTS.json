@@ -1555,7 +1555,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1578,7 +1579,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/intent--npc/public.js",
-      "scope": "Strategy delegation direction only. Original Intent producer/other native dispatch dependencies remain mixed exact transition obligations. C36 original dispatcher uses fixed own NPC policy consumer; reverse native strategy delegate still one original source. Remaining dispatcher/source/caller decomposition stays accountable."
+      "scope": "Strategy delegation direction only. Original Intent producer/other native dispatch dependencies remain mixed exact transition obligations. C36 original dispatcher uses fixed own NPC policy consumer; reverse native strategy delegate still one original source. Remaining dispatcher/source/caller decomposition stays accountable. C44 scene intent board consumes own original NPC actor-reference proof, without native origin or execution authority expansion. Whole positive board workflow not newly qualified. Test local only per owner."
     },
     {
       "pair": "intent--operations",

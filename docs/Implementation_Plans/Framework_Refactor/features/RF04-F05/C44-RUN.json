@@ -1,0 +1,140 @@
+{
+  "feature": "RF04-F05-C44",
+  "status": "SCOPED_INTENT_NPC_REFERENCE_EVIDENCE_QUALIFIED",
+  "frozen": {
+    "base_head": "fe2b1a95ac47b0c95cb0f60ddce912e9c9581e72",
+    "syntax_checked": 6,
+    "files": [
+      {
+        "path": "bot/src/scene-intent-board.js",
+        "sha256": "183029e1cd6ea25acdc7909da149f1dd551f4207a661275e0ed8efcf8f498b06"
+      },
+      {
+        "path": "bot/src/frameworks/intent/contracts/npc-evidence.js",
+        "sha256": "62f33a2e5ab417dfa21dc6f69586d7921f68f0ac3c0e4d4010044c787bb0472f"
+      },
+      {
+        "path": "bot/src/frameworks/intent/public.js",
+        "sha256": "8db3c774dd34f5653f8b8ed8841f71a0d25568197ca02d312bd83289117d5209"
+      },
+      {
+        "path": "bot/src/framework-to-framework/intent--npc/public.js",
+        "sha256": "015d989507c23627c92f883c33a4214d3dcb17157f6ece94a1af1fa26cc21d51"
+      },
+      {
+        "path": "bot/src/application/composition/npc-strategy.js",
+        "sha256": "711d38d06213f64f2f1c9f60de1acf5df0c70b6fe78e7816951b26c4a66cd671"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+        "sha256": "e4bce2943ba8280d6643bad457a58947365063fdfd9d31a1b9f63b2e1c854e56"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C44-SOURCE-BASELINE.json",
+        "sha256": "921473ced23d2b060283e2ea36e6f84704ab9a93d6d239c49bea51c5a0021805"
+      }
+    ]
+  },
+  "source_baseline": {
+    "board_body_sha256": "0139ae595e2b8f8cfaf33103e931c8423847daaae44fa0ff0584f0831c450a1a"
+  },
+  "tests": {
+    "run_id": "rf04-f05-c44-frozen",
+    "duration_ms": 1407.5757,
+    "exit_code": 0,
+    "end": "2026-10-26T21:23:27.1206605-05:00",
+    "start": "2026-10-26T21:23:25.7130848-05:00",
+    "tests": 5,
+    "passed": 5,
+    "failed": 0,
+    "tap_duration_ms": 1355.1277,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+    "retention": "Local ignored test/logs per owner; actual terminal and fingerprints committed."
+  },
+  "syntax": {
+    "checked": 6,
+    "passed": 6
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 713,
+      "unowned": 0,
+      "importOccurrences": 3059,
+      "internalImportOccurrences": 2880,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1968,
+      "acceptedLegacyOccurrences": 1968,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 713,
+      "unowned": 0,
+      "importOccurrences": 3059,
+      "internalImportOccurrences": 2880,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1968,
+      "acceptedLegacyOccurrences": 1299,
+      "activeViolationGroups": 665,
+      "transitionErrors": 665,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "83f063bbc7a3e6436e61ee42c8d60dda5e609e6604b676fd8b6a9e2c049169f9",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "Intent scene board consumes own original NPC actor-reference callback through existing Intent–NPC pair, initialized in actual strategy composition; no native board rule or origin source body changed.",
+  "limits": [
+    "Native NPC proof and actual board rejection of unissued origins exercised; full positive board origin, native writer acceptance and exactly-once publication not newly qualified. No fictional source/PC action fabricated to obtain coverage.",
+    "New tests/logs local per owner: clean checkout lacks C38–C44 registry references until supplied and fails INVALID_BRIDGE_TEST_REFERENCE. No checker exemption or clean-checkout certificate.",
+    "Other scene-board Session/World/Native/Narrative source dependencies remain accountable; no full Intent isolation or phase completion."
+  ],
+  "rollback": "Restore exact C44 interface/pair/initializer, board NPC import and one retired record; preserve original Intent public edits and all native sources/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c44-tests.log",
+      "sha256": "929a941205b8503bc6d5dc80d1a3a90131cba121ee36075af46ac065b6acda65",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c44-architecture-initial.log",
+      "sha256": "33ebbfd0124b2bf3f6827663516a794f48b0e91baafc03b7561fe27344df6582",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c44-rf04-final.log",
+      "sha256": "a941c22986e3cee0b85bda01c18864b389d07c4dd8bb5bcf42ebcef05f7b3591",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c44-rf05-final.log",
+      "sha256": "6cf77dda4980e4be6d22a2ee97752a8a76b5649ef133d36a4f40169bb592eaa3",
+      "retention": "local ignored"
+    }
+  ]
+}

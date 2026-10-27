@@ -34,7 +34,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | discord--world | PROPOSED_NO_API | discord → world | 0 / 0 | RF06 |
 | intent--knowledge | PROPOSED_NO_API | intent → knowledge; knowledge → intent | 0 / 0 | RF05 |
 | intent--narrative | PROPOSED_NO_API | intent → narrative; narrative → intent | 0 / 0 | RF05 |
-| intent--npc | ADOPTED | npc → intent; intent → npc | 1 / 2 | RF04-F05 |
+| intent--npc | ADOPTED | npc → intent; intent → npc | 1 / 3 | RF04-F05 |
 | intent--operations | PROPOSED_NO_API | operations → intent | 0 / 0 | RF05 |
 | intent--persistence | PROPOSED_NO_API | intent → persistence | 0 / 0 | RF05 |
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |

@@ -1,0 +1,34 @@
+{
+  "base_head": "fe2b1a95ac47b0c95cb0f60ddce912e9c9581e72",
+  "syntax_checked": 6,
+  "files": [
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "183029e1cd6ea25acdc7909da149f1dd551f4207a661275e0ed8efcf8f498b06"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/npc-evidence.js",
+      "sha256": "62f33a2e5ab417dfa21dc6f69586d7921f68f0ac3c0e4d4010044c787bb0472f"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "8db3c774dd34f5653f8b8ed8841f71a0d25568197ca02d312bd83289117d5209"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--npc/public.js",
+      "sha256": "015d989507c23627c92f883c33a4214d3dcb17157f6ece94a1af1fa26cc21d51"
+    },
+    {
+      "path": "bot/src/application/composition/npc-strategy.js",
+      "sha256": "711d38d06213f64f2f1c9f60de1acf5df0c70b6fe78e7816951b26c4a66cd671"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+      "sha256": "e4bce2943ba8280d6643bad457a58947365063fdfd9d31a1b9f63b2e1c854e56"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C44-SOURCE-BASELINE.json",
+      "sha256": "921473ced23d2b060283e2ea36e6f84704ab9a93d6d239c49bea51c5a0021805"
+    }
+  ]
+}

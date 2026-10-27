@@ -1,0 +1,3 @@
+/** Original actor-reference proof, never an issued arbitration origin, PC action or execution grant. */
+export function createIntentNpcEvidenceConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original NPC reference visibility required.');if(source&&source!==native)throw new Error('Intent NPC evidence replacement forbidden.');source=native;return this;},actorReferenceVisible(...args){if(!source)throw Object.assign(new Error('Intent NPC evidence not composed.'),{code:'INTENT_NPC_EVIDENCE_COMPOSITION'});return source(...args);}});}
+export const intentNpcEvidence=createIntentNpcEvidenceConsumer();
