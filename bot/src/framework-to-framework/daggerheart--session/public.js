@@ -27,3 +27,7 @@ import {nativeActionConsentSource} from '../../frameworks/daggerheart/public.js'
 import {sessionNativeActionConsent} from '../../frameworks/session/public.js';
 /** Forward only the original native consent checks. */
 export function connectSessionNativeActionConsent(){return sessionNativeActionConsent.bind({consentAction:nativeActionConsentSource.consentAction,validateActionConsent:nativeActionConsentSource.validateActionConsent});}
+
+import {nativeSessionActionWindow} from '../../frameworks/daggerheart/public.js';
+import {openActionWindow} from '../../frameworks/session/public.js';
+export function connectNativeSessionActionWindow(){return nativeSessionActionWindow.bind({openActionWindow});}

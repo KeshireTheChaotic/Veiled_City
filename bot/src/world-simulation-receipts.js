@@ -11,8 +11,8 @@ import {indexWorldEvent,cityAudit} from './frameworks/world/public.js';
 import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {worldKnowledgeSources} from './frameworks/world/public.js';
+import {worldKnowledgeSources,worldNarrativeAuthorship} from './frameworks/world/public.js';
+function narrativeSourceVisible(...args){return worldNarrativeAuthorship.narrativeSourceVisible(...args);}
 function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 
 const key=value=>typeof value==='string'&&value.length>0&&value.length<=200;

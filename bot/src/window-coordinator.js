@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { consentAction, requestActionConsent, respondActionConsent, validateActionConsent } from "./action-consent.js";
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from './frameworks/session/public.js';
-import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./scene-action-window.js";
+import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";
 import { validatePvpAgreement } from "./narrative-pvp.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import { transitionAction } from "./action-dependency.js";

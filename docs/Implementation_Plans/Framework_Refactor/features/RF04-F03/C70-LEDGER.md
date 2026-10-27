@@ -7,3 +7,5 @@ Fresh local `rf04-f03-c70.test.mjs` ran once: 1/1 pass, exit 0, TAP 118.6357 ms.
 Architecture gate, transition retirement and combined startup qualification await coordinated checkpoint. RF04 remains open. RELEASE NOT AUTHORIZED.
 
 Coordinated checkpoint: RF04 ratchet passed at 762 modules, zero active violations and zero transition errors; RF05 remains at 334 transition errors. Exact retired records and graph evidence are retained in the associated retirement files and RF04 phase ledger. RF04 remains incomplete.
+
+Protocol audit: the test directly imports the initializer and Knowledge public API changed by C70, plus Node standard libraries. Its asserted behavior is the port and native terminal ancestry; the positive semantic-candidate flow remains untested.

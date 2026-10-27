@@ -4,7 +4,8 @@ import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function sceneAccess(...args){return worldSessionScene.sceneAccess(...args);}
 import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
-import {nativeActorControl} from './native-actor-control.js';
+import {worldNativeActorControl} from './frameworks/world/public.js';
+const nativeActorControl=(...args)=>worldNativeActorControl.nativeActorControl(...args);
 import {worldIdentityOrigin} from './world-authorship.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {worldKnowledgeSources,worldNarrativeAuthorship} from './frameworks/world/public.js';

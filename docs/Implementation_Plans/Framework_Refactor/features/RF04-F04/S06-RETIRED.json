@@ -1,0 +1,33 @@
+{
+  "feature": "RF04-F04-S06",
+  "records": [
+    {
+      "id": "25753df30448012da7e190f2db9f8eef1732b68385a3b6898d5162fe14976782",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-brawl.js",
+      "to": "bot/src/scene-action-window.js",
+      "kind": "static",
+      "specifier": "./scene-action-window.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "695fa665da4c1f58bc8c3b49182b506951f2622fe0f4650f648679b08ffc5889",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/scene-action-window.js",
+      "kind": "static",
+      "specifier": "./scene-action-window.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

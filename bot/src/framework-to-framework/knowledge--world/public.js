@@ -13,9 +13,10 @@ export function connectKnowledgeIdentities({consumer=createKnowledgeWorldIdentit
   return consumer.bind({resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin});
 }
 
-import {knowledgeWorldMemory} from '../../frameworks/knowledge/public.js';
-import {cityObject,cityKey,cityInteger,requireCitySource} from '../../frameworks/world/public.js';
+import {knowledgeWorldMemory,knowledgeWorldRecord} from '../../frameworks/knowledge/public.js';
+import {cityObject,cityKey,cityInteger,requireCitySource,requireCityRecord} from '../../frameworks/world/public.js';
 export function connectKnowledgeMemory(){return knowledgeWorldMemory.bind({cityObject,cityKey,cityInteger,cityAudit,requireCitySource});}
+export function connectKnowledgeWorldRecord(){return knowledgeWorldRecord.bind({requireCityRecord});}
 
 import {knowledgeWorldHistory} from '../../frameworks/knowledge/public.js';
 import {historyContext} from '../../frameworks/world/public.js';

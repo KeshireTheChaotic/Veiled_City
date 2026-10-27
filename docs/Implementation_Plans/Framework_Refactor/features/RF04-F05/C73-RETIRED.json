@@ -1,0 +1,20 @@
+{
+  "feature": "RF04-F05-C73",
+  "original_manifest_sha256": "e83d47c67e749cc13803f1ddabb49314272227205b18fc567fff9e54b9db0cf3",
+  "retired": [
+    {
+      "id": "7ae57b26a8ebe0a974ac7b0e17986abc9bad28c24175a5ac6f07c48f6106960b",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-encounter-beats.js",
+      "to": "bot/src/native-actor-control.js",
+      "kind": "static",
+      "specifier": "./native-actor-control.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

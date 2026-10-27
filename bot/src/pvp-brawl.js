@@ -1,4 +1,5 @@
-import {openActionWindow} from "./scene-action-window.js";
+import {nativeSessionActionWindow} from './frameworks/daggerheart/public.js';
+const openActionWindow=(...args)=>nativeSessionActionWindow.openActionWindow(...args);
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {validateDamagePvp} from "./pvp-profiles.js";

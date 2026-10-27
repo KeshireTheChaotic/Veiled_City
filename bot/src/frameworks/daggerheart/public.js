@@ -133,3 +133,4 @@ export {nativeWorldAuthoring,nativeNarrativeAudience,nativeArbitrationOrigin,nat
 export {establishNativeEnvironmentInstance,inspectNativeEnvironmentInstance,nativeEnvironmentInstanceCapabilities,nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 export {environmentSceneCapabilities,environmentSceneService,validateMundaneEnvironmentDetail,validateMaintenanceMemoryFact,applyEnvironmentSceneAction,inspectEnvironmentSceneEffect,environmentSceneProjection,nativeEnvironmentSituation} from './native-environment-scene.js';
 export {nativeActionConsentSource} from './contracts/action-consent-source.js';
+export {nativeSessionActionWindow} from './contracts/session-action-window.js';

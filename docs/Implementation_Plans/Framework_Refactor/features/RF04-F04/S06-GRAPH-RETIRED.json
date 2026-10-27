@@ -1,0 +1,47 @@
+{
+  "reason": "Current graph retains these imports outside a cycle",
+  "entries": [
+    {
+      "id": "13b69ddd877dbdc3fe5b9e996719f32f1d5f9a08ba3cfca35607455fe932cedd",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/narrative-director-source.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "3e73b3f65ce9c8c4298a5a212eeaacc62d37e3b1ff128a6bba5e14919b07973b",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-outcome-output.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "43721d24719810b69fc196bc9ae419f67033d789f6680f3c0440f53d872af379",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}
