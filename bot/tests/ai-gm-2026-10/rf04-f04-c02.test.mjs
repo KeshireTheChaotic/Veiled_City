@@ -6,7 +6,8 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
-import {createSceneContinuity,RANGE_BANDS} from '../../src/frameworks/session/public.js';
+import {createSceneContinuity} from '../../src/frameworks/session/public.js';
+import {RANGE_BANDS} from '../../src/frameworks/daggerheart/public.js';
 import {cityObject,cityKey,cityVisibility,cityAudit,indexWorldEvent,requireCitySource} from '../../src/frameworks/world/public.js';
 import {activeCityProxy} from '../../src/city-constraints.js';
 import {nativeMovementConditionIssue} from '../../src/native-group-features.js';
@@ -22,7 +23,7 @@ function chamber(t){
 }
 
 test('current scene and descriptive range labels preserve source API identity and attendance never implies PC presence',t=>{
- const f=chamber(t);assert.equal(original.RANGE_BANDS,RANGE_BANDS);assert.deepEqual(RANGE_BANDS,['Melee','Very Close','Close','Far','Very Far']);assert.equal(f.api.currentScene(f.db,'chamber').session_id,f.session.id);assert.equal(f.api.scenePresence(f.db,'chamber','character',f.pc.id),null);assert.equal(f.api.lastVerifiedCharacterPresence(f.db,'chamber',f.pc),null);assert.equal(f.db.getCharacter(f.pc.id).data.location,undefined);assert.equal(f.db.listCityRecords('chamber',{kind:'scene_presence',includeGM:true}).length,0);
+ const f=chamber(t);assert.deepEqual(RANGE_BANDS,['Melee','Very Close','Close','Far','Very Far']);assert.equal(f.api.currentScene(f.db,'chamber').session_id,f.session.id);assert.equal(f.api.scenePresence(f.db,'chamber','character',f.pc.id),null);assert.equal(f.api.lastVerifiedCharacterPresence(f.db,'chamber',f.pc),null);assert.equal(f.db.getCharacter(f.pc.id).data.location,undefined);assert.equal(f.db.listCityRecords('chamber',{kind:'scene_presence',includeGM:true}).length,0);
 });
 
 test('actual owner-established native arrival uses original key bytes and replays without extra source or position mutation',t=>{

@@ -1,7 +1,8 @@
 /** Real Daggerheart incoming standard NPC attacks. Simulation d20 rows and GM prose are not damage authority. */
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import { currentScene, scenePresence, sceneAccess, RANGE_BANDS } from "./scene-continuity.js";
+import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import { personalCharacter } from "./personal-continuity.js";

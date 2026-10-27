@@ -128,3 +128,4 @@ export {createNativeScenesConsumer,nativeScenes} from './contracts/scenes.js';
 export {createNativePrincipalsConsumer,nativePrincipals} from './contracts/principals.js';
 export {createNativeNpcAvailabilityConsumer,nativeNpcAvailability} from './contracts/npc-availability.js';
 export {createNativeOwnerActionTerminalConsumer,nativeOwnerActionTerminal} from './contracts/owner-action-terminal.js';
+export {RANGE_BANDS} from './range-bands.js';

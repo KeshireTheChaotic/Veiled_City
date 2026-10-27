@@ -1,0 +1,5 @@
+# RF04-F05 C64 — Daggerheart owns the range bands
+
+Base 1699effd. Owner decision 2026-10-27: range bands are Daggerheart rules vocabulary. RANGE_BANDS now lives in frameworks/daggerheart/range-bands.js and the Daggerheart public API. Session's scene validation reads the same list through a new Session-owned sessionRangeBands port bound by the Daggerheart-Session adapter in the native scene bootstrap; Session no longer defines or exports range bands. The five Daggerheart rule modules that imported RANGE_BANDS from the root scene-continuity.js shim now take it from their own framework and their scene reads from the nativeScenes port. rf04-f04-c02 reads the list from Daggerheart (its root-shim identity check is obsolete) and rf03-f06 composes the native scene port.
+
+Rollback: Revert only the C64 commit: return RANGE_BANDS to the Session scene module and public API, restore the five root scene-continuity imports, remove the Daggerheart range-bands module and the Session range-band port, and restore the five exact transitions from C64-RETIRED.json.

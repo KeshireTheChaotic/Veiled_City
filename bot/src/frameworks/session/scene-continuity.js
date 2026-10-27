@@ -1,8 +1,8 @@
 /** Source-grounded descriptive scene occupancy. Native encounter state and player movement authority remain external. */
 import {UserInputError,StateConflictError} from '../../kernel/errors.js';
 import {jsonHash} from '../../kernel/json-hash.js';
+import {sessionRangeBands} from './contracts/range-bands.js';
 const motivationKey=value=>jsonHash(value).slice(0,32);
-export const RANGE_BANDS=["Melee","Very Close","Close","Far","Very Far"];
 export function createSceneContinuity({cityObject,cityKey,cityVisibility,cityAudit,indexWorldEvent,requireCitySource,activeCityProxy,nativeMovementConditionIssue}){
 function currentScene(db,guildId){
   const session=db.getActiveSession(guildId);if(!session) throw new StateConflictError("Active session required for occupancy.");
@@ -81,7 +81,7 @@ function recordScenePresence(db,guildId,input,actorId){
   const entity=cityKey(input.entity_key),location=cityKey(input.location_key),zone=cityKey(input.zone||"scene");
   if(!db.getSimulationEntity(guildId,"location",location)) throw new StateConflictError("Established scene location required.");
   if(source.location_key!==location) throw new StateConflictError("Source event must establish this scene location.");
-  if(input.range&&!RANGE_BANDS.includes(input.range)) throw new UserInputError("Use descriptive Daggerheart range bands.");
+  if(input.range&&!sessionRangeBands.bands().includes(input.range)) throw new UserInputError("Use descriptive Daggerheart range bands.");
   const state=input.state||"actually_present";
   if(!["actually_present","believed_present","uncertain","departed"].includes(state)) throw new UserInputError("Explicit occupancy state required.");
   const knownTo=input.known_to||[];

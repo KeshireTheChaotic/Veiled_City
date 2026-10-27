@@ -11,6 +11,10 @@ import {nativeScenes} from '../../frameworks/daggerheart/public.js';
 import {sceneAccess,recordScenePresence} from '../../frameworks/session/public.js';
 export function connectNativeScenes(){return nativeScenes.bind({currentScene,scenePresence,sceneAccess,recordScenePresence});}
 
+import {RANGE_BANDS} from '../../frameworks/daggerheart/public.js';
+import {sessionRangeBands} from '../../frameworks/session/public.js';
+export function connectSessionRangeBands(){return sessionRangeBands.bind(RANGE_BANDS);}
+
 import {nativePrincipals} from '../../frameworks/daggerheart/public.js';
 import {historicalOwnerPrincipal} from '../../frameworks/session/public.js';
 export function connectNativePrincipals(){return nativePrincipals.bind({conversationPrincipal,historicalOwnerPrincipal});}

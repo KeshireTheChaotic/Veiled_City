@@ -5,7 +5,8 @@ import {buildNarrativeContext} from './narrative-authority-context.js';
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
+import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';
+function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {typedRollProof} from './typed-roll-proof.js';

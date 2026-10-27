@@ -4,7 +4,8 @@ import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost} from './gm-action-capability.js';
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
-import {currentScene,scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
+import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';

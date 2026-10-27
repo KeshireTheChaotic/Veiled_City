@@ -1,7 +1,8 @@
 /** PC resource effects require a separately authorized native cause, never generated prose. */
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import { currentScene,scenePresence,sceneAccess,RANGE_BANDS } from "./scene-continuity.js";
+import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';
+function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import { personalCharacter } from "./personal-continuity.js";

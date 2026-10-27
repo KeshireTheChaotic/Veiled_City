@@ -1,0 +1,250 @@
+{
+  "feature": "RF04-F05-C64",
+  "base_head": "1699effd1870cbd8d3302616eb4fda66f8c1a94c",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/gm-action-capability.js",
+      "bot/src/native-group-features.js",
+      "bot/src/pc-effects.js",
+      "bot/src/pc-incoming.js",
+      "bot/src/pvp-attacks.js",
+      "bot/src/scene-continuity.js",
+      "bot/src/frameworks/session/scene-continuity.js",
+      "bot/src/frameworks/session/contracts/range-bands.js",
+      "bot/src/frameworks/daggerheart/range-bands.js",
+      "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "bot/src/application/composition/native-scenes.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs"
+    ],
+    "passed": 12,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f22.test.mjs",
+        "sha256": "49977D0C91782B788AACB55667ACAFB47E7A303420F78EC33B30EBD7CE48894B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs",
+        "sha256": "1F56E416699EC84D159B4BD448ED42729D26F576F9A99FD1254E4BE9D0676DE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c13.test.mjs",
+        "sha256": "6092E28CBCE9FA791B3BBA2CEE0530CE352F624B84E17FB718D8E30A7C6E3047"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c17.test.mjs",
+        "sha256": "C9780C3FD2BE8166489417DDEB995BA9FE43E61405DD446FE52C0F96BC1BCDEC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c15.test.mjs",
+        "sha256": "4F24AEB1B1D42881AC046245EB8EE188EB0EF5AF6BDC848ED98C8DB5122DF01F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c22.test.mjs",
+        "sha256": "A5AAC27DDB90ED458EDB2639417E281F5BFAD727A28DD6833B899C6FB7DF9775"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06.test.mjs",
+        "sha256": "682D7267608B6B4F6CC6A5178ACD9536550398D1EEB0C54FCE464EF74D501715"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "63316974CFBE6067358F776FAA7C8F26E381ACCDABE06203169BF294F4240A64"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "643D0AB2D15AF174626D2C61181DDB0AC46188DF10C4A0C5099A289546717F9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "D278FDE4F98BCDC2B3B5FB5733864D5ABDAB947B49901E49A96F20F48FEF7535"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "7EB161A31BEE37CF197007EC11C759B1B0826D4B2195A2479034001A6817690E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "sha256": "2A46F9E77ABEE6669660E2B6D3343218CB5CAFF5F2BE1D540349B46E866E85D2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "850D75C34EF0689B45D4A77985EF0E6C48BC2F43A2B5E98A4CFADB58F5C48733"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "5A02984618CE7410018F43BABA25A200A8900EB15EECD12BD1E5567A92222AF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "BF6655F4E15ADF73842F20B409DD3D91F6616F62648289331CAA2DDA59748A86"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "D28CA8B6B3A62532B0019CDEC7CEBB796E7268C3209339C9020CB6701E92BEC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "D71A8E925B036F0E183C52E82BDF69E443E87C20D500E55C9DEC0BB55CA9EF87"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "E1DF774C699FAD06AE3B5ADEBC10DD4D9D1557E066424A871C01FDCC03E1DD2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T17:06:42.903Z",
+    "end": "2026-10-27T17:07:41.490Z",
+    "exit_code": 0,
+    "tests": 195,
+    "passed": 195,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 58552.4163,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c64-test.log",
+    "log_sha256": "72D8371FB25F6A9EC650D1528CA34C4BB69C528351E4B68EFFD6B7BC340FCEA9",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 731,
+      "unowned": 0,
+      "imports": 3112,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1776,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c64-rf04-architecture.log",
+      "log_sha256": "AF464F67611988282DB57C9A99B4FC76007CF91C7EBC93B3AC21F225DF8F5936",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 731,
+      "unowned": 0,
+      "imports": 3112,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1290,
+      "active_violation_groups": 483,
+      "transition_errors": 483,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c64-rf05-architecture.log",
+      "log_sha256": "DBCAEF004974C3AA6AB27256770E519B400F070DACC111076FED7B9A17C0CD52",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/scene-continuity.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-continuation.js -> bot/src/pvp-attacks.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/native-group-features.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-scene.js -> bot/src/gm-action-capability.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-group-features.js -> bot/src/personal-continuity.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/opening-world-bridge.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-effects.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-incoming.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-attacks.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/native-group-features.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/scene-continuity.js",
+        "CYCLIC_IMPORT_EDGE bot/src/action-continuation.js -> bot/src/pvp-attacks.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/native-group-features.js",
+        "CYCLIC_IMPORT_EDGE bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-scene.js -> bot/src/gm-action-capability.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-entry-native.js -> bot/src/native-group-features.js",
+        "EXPIRED_TRANSITION bot/src/scene-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-group-features.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-incoming.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-attacks.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "e0aaf79e4750a462ce0f06cbfa012d76bcb5f194ad3bcd65ac863218bd06f093",
+      "1e5484bf0459cee5cfab7fdb429ba473c6cec805c8d1d946fd45d26214fa7c5c",
+      "bab929216f059d565fcf68e1ed204fe335e51eba8a548100dd8629268fcacd80",
+      "ca850708109dfa6d6ff387bb4c8e42a1bb55dc0cf21052bdc8e2b7122a358d46",
+      "70b4b71580b550b7882a48b8ddc9161c8a7729d1e42c265ec294e0c74c2f3368"
+    ],
+    "original_manifest_sha256": "C29FD795DA2C6220B0EAE3E3853915237AF7B822CD858B4C3868F283C7206E2E",
+    "manifest_sha256_after": "47ED62B3E54271FF3439C2AB612D8EB0666620C24F77E9A6B7A5D88DDC565E4C",
+    "entries_after": 1762,
+    "remaining_by_feature": {
+      "RF04-F01": 195,
+      "RF04-F03": 66,
+      "RF04-F04": 119,
+      "RF04-F05": 103,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/gm-action-capability.js": "1F675978860FD80F3114A4425332DC5113E3C80370D89F08DED7729E2AF0DE0B",
+    "bot/src/native-group-features.js": "13CD27A456D98F6BDFBB9F747A1B6816DBB85202AB5DB3B41415979650EFB0D4",
+    "bot/src/pc-effects.js": "F77AE77B989C43A31C031FDF62C6CA858E7DDB42E9B40FBB243693123C3F1A6B",
+    "bot/src/pc-incoming.js": "39F1BED8039E5A6CCF48A201247B97BA127CA5DBC88A42171AD2A04A1602D268",
+    "bot/src/pvp-attacks.js": "66E164AB428A4B95DE4A6A14ADE79DAFDF0EC79DB795D9923173BDAA5248367D",
+    "bot/src/scene-continuity.js": "698E4D4C34FE2ECB2C775667EFC5A75A94793CF3A9E7988CBE9BAEC152DDB77E",
+    "bot/src/frameworks/session/scene-continuity.js": "A1346A5A62F962942E9BAD9ECC0EC21A6ABB2C0391BBE81948EDBBA575E63038",
+    "bot/src/frameworks/session/contracts/range-bands.js": "D04474BAE73589FFBA1F491AA2F3EA19E57495240633E954086F90FDA7056B22",
+    "bot/src/frameworks/daggerheart/range-bands.js": "95DCA115ACAF414E1973771389908CFD3767A0BE7A0F713DA462F6B87D898E5F",
+    "bot/src/framework-to-framework/daggerheart--session/public.js": "EEF022E795ECB468BCEF37141E6C9AF52FFF1453D501EBB95CBF1B73C9355D53",
+    "bot/src/application/composition/native-scenes.js": "00AF26078AF8ECB8A6BA7AA04ED81B859CE2B5DEC6E8261B90BFD5389968C099"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C64 commit: return RANGE_BANDS to the Session scene module and public API, restore the five root scene-continuity imports, remove the Daggerheart range-bands module and the Session range-band port, and restore the five exact transitions from C64-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}
