@@ -2,7 +2,7 @@
 
 | Field | Planned evidence / actual result |
 |---|---|
-| Status | **CORRECTIVE DELTA PASSED; POSITIVE OUTBOX / CROSS-PROCESS / RESTART ACCEPTANCE UNQUALIFIED** |
+| Status | **OFFLINE LIFECYCLE CORRECTIVE VERIFIED; LIVE DISCORD / OS-RESTART RECOVERY UNQUALIFIED** |
 | Repository / target | `KeshireTheChaotic/Veiled_City` / `codex/clean-ai-gm-2026-10` |
 | Supplied reference | `81569d08699343e401fc11ba1eaed0f10b4fd37a` (reconcile checkout HEAD at execution) |
 | Actual checkout SHA and dirty tree | Baseline `860ba47e42231b304ef0162b70f920c7d5fec883`; branch `codex/clean-ai-gm-2026-10`; F04 source/tests frozen before final union. |
@@ -76,4 +76,7 @@ Source SHA256: `opening-cohort-runner.js` `f0002f7b1d35cadeaa9868d73146d5cd86a03
 
 ### Isolated cohort-runner rerun — 2026-10-26
 
-The previously observed worker cleanup `EPERM` did not reproduce when the current fresh P08-F04 test ran by itself. One blocking launch from `bot/`: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p08-f04-correction.test.mjs`; exit **0**, **7 passed**, **0 failed**, duration **5,336.6607 ms**. It exercised the real opening/cohort paths with disposable SQLite and mocked Discord, including two worker processes claiming the same cohort; the test asserts one planner call and one delivered cohort. Test SHA-256 `181285E12925C08F62D104A414CD24FF48ADBC2FCE82F4F04D5162BAB9638BB0`; current `opening-cohort-runner.js` SHA-256 `66E1A99FE2D91E7FB9228EFD7505BF395BF18386EF37D51194C9488B8E8D2635`; terminal log SHA-256 `F8E25120E9B57EB19A0F9C7462C77F9B0B5A5D0F132ABD154439DABBA98D8363` at `bot/tests/ai-gm-2026-10/p08-f04-correction-isolated-resume.log`. This resolves the cleanup failure for this isolated run and qualifies the tested worker claim/publication path only; it does not certify real Discord, providers, production recovery, or the whole phase. No production source changed; no provider calls/tokens/spend or production data access. Release remains **NOT AUTHORIZED / NOT CERTIFIED**.
+
+### Current-checkout lifecycle requalification — 2026-10-27
+
+After the October 27 fresh-test harness repair added the application startup composition and deterministic worker reaping, the focused suite was run once from the shared checkout (the Claude framework-refactor working tree). Branch `codex/clean-ai-gm-2026-10`, committed HEAD `6b3d4fef0f34f1ed5f66c3a9bccf13370db54165`, dirty framework migration preserved. Exact command from `bot/`: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p08-f04-correction.test.mjs`; exit 0; 7 passed, 0 failed/cancelled/skipped/todo; TAP duration 7,850.8497 ms (tool wall 8.096 s). Current test SHA-256 `397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3`; `opening-cohort-runner.js` SHA-256 `66E1A99FE2D91E7FB9228EFD7505BF395BF18386EF37D51194C9488B8E8D2635`. This requalifies the repaired test against the current migration checkout. It verifies real SQLite/outbox state with mocked Discord, two independent Node workers, one planner claim and one delivered cohort; it also verifies uncertain send survives a reopened DB connection without reauthoring or resend. It does not prove live Discord semantics, operating-system process crash recovery, semantic dramatic fulfillment, or release readiness. Provider use and production DB access were zero. No P08 production source changed in this turn.

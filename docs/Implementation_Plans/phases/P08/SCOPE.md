@@ -1,6 +1,6 @@
 # P08 — OpeningDirector × Audience-First Integration
 
-**Status:** CORRECTIVE COMPLETION DELTA PARTIALLY VERIFIED; OPENING / PRIVATE DELIVERY / RESTART ACCEPTANCE UNQUALIFIED
+**Status:** LIFECYCLE CORRECTIVE VERIFIED OFFLINE; FULL P08 NARRATIVE / EXTERNAL DELIVERY / RELEASE ACCEPTANCE REMAIN PARTIAL
 **Repository:** `KeshireTheChaotic/Veiled_City`  
 **Target branch:** `codex/clean-ai-gm-2026-10`  
 **Reference source SHA:** `81569d08699343e401fc11ba1eaed0f10b4fd37a` (GitHub branch comparison verified identical during planning; Codex re-verifies checkout)  
