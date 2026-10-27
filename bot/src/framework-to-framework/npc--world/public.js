@@ -29,3 +29,7 @@ export function connectWorldNpcOpportunity(){return worldNpcOpportunity.bind({ru
 import {worldNpcGoalProposal} from '../../frameworks/world/public.js';
 import {proposeGoalTransition} from '../../frameworks/npc/public.js';
 export function connectWorldNpcGoalProposal(){return worldNpcGoalProposal.bind(proposeGoalTransition);}
+
+import {worldNpcSeed} from '../../frameworks/world/public.js';
+import {seedNpcCognition} from '../../frameworks/npc/public.js';
+export function connectWorldNpcSeed(){return worldNpcSeed.bind(seedNpcCognition);}

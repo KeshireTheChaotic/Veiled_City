@@ -1,0 +1,140 @@
+{
+  "feature": "RF04-F05-C41",
+  "status": "SCOPED_WORLD_NATIVE_NPC_SEED_QUALIFIED",
+  "frozen": {
+    "base_head": "534dc284179810e5eb8b4d5692b80bad13fc9571",
+    "syntax_checked": 6,
+    "files": [
+      {
+        "path": "bot/src/seed-data.js",
+        "sha256": "3f9d16432d578c3fdd2792410d7e3b8ad4fe1b8b2371659f354ce9f9269e53ee"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-seed.js",
+        "sha256": "be09daff890839df91c1799e7a35fa330eff63c6d166f5fee0c0ac332d6494ee"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "6344492312c86d8102fd50d5929a5be1eb8e26a8c98e1fa97fe58d38d7bb998c"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "866cd07f501cae0d263abc71eae4b66ac27e5b844c16b45c927ffa9c49079e6c"
+      },
+      {
+        "path": "bot/src/application/composition/npc-world-evidence.js",
+        "sha256": "6b6a6316cdd4cc90cb6b96221751537b58048c98601e9f86dbf674228cabc79b"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+        "sha256": "90eb296f9eb7fde6ee59c79290874e4393b9ba193eb41de8804fb96926ca2f8b"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C41-SOURCE-BASELINE.json",
+        "sha256": "d78478c2457cd72c3f8ccf4c461ee39ebc17b79e8937499fc52d9d3c056f4ea4"
+      }
+    ]
+  },
+  "source_baseline": {
+    "seed_body_sha256": "1ce4d3e90f4e52f7429a1a5690da9abc4d19671cf58872f00c8c45b7aa77f64c"
+  },
+  "tests": {
+    "end": "2026-10-26T21:12:55.4085697-05:00",
+    "exit_code": 0,
+    "start": "2026-10-26T21:12:53.7437376-05:00",
+    "run_id": "rf04-f05-c41-frozen",
+    "duration_ms": 1664.8321,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap_duration_ms": 1610.7676,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+    "retention": "Local ignored test/logs per owner; actual terminal and source hashes committed."
+  },
+  "syntax": {
+    "checked": 6,
+    "passed": 6
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 710,
+      "unowned": 0,
+      "importOccurrences": 3050,
+      "internalImportOccurrences": 2871,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1972,
+      "acceptedLegacyOccurrences": 1972,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 710,
+      "unowned": 0,
+      "importOccurrences": 3050,
+      "internalImportOccurrences": 2871,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1972,
+      "acceptedLegacyOccurrences": 1302,
+      "activeViolationGroups": 666,
+      "transitionErrors": 666,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "2a85aed2334bf7370d4179dfcc57185a3e71750460fd7010b84483b1d4db9919",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/seed-data.js",
+      "to": "bot/src/npc-cognition.js",
+      "kind": "static",
+      "specifier": "./npc-cognition.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "World content bootstrap uses original native NPC seed through fixed own callback and existing NPC–World pair; actual application initializer binds before services. Exact seedData body/options and native seed/archive/privacy/transaction rules unchanged.",
+  "limits": [
+    "New tests/logs intentionally local only; clean checkout lacks C38–C41 registry references until locally supplied and fails INVALID_BRIDGE_TEST_REFERENCE. No checker bypass or clean-checkout qualification.",
+    "Actual disposable content and SQLite native seeding exercised, not real campaign migration, provider/Discord behavior, narrative quality, full bootstrap service startup or release.",
+    "Other seed-draft/backfill/content/storage integration obligations remain explicit; no full World/NPC caller retirement claimed."
+  ],
+  "rollback": "Restore only C41 seed import, interface, pair/initializer/registry and one retired record. Preserve original World public edits and all actual archives/native state/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c41-tests.log",
+      "sha256": "c10d1531d8bdefd3c999394d44f517c8690e79413e17ec4a40095ef31fafceb1",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c41-architecture-initial.log",
+      "sha256": "a7502040075f1895c7194223f56a31bc463c359ec5e6aa61af91826337cf665e",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c41-rf04-final.log",
+      "sha256": "bcab8ec43ce4f453ed2293805d7d8ea22dc8378829991ce98cf8e7e5738e1cf7",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c41-rf05-final.log",
+      "sha256": "ef13f6f8b325387c93b9f4a2940decaec3244dc2a01c91bbad46962ef71a4d06",
+      "retention": "local ignored"
+    }
+  ]
+}

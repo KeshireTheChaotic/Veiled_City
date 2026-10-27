@@ -1,0 +1,16 @@
+[
+  {
+    "id": "2a85aed2334bf7370d4179dfcc57185a3e71750460fd7010b84483b1d4db9919",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/seed-data.js",
+    "to": "bot/src/npc-cognition.js",
+    "kind": "static",
+    "specifier": "./npc-cognition.js",
+    "owner": "world",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF04-F01",
+    "expires_after": "RF04",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

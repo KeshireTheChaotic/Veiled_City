@@ -65,3 +65,4 @@ export {createWorldNpcOpportunityConsumer,worldNpcOpportunity} from './contracts
 export {rankDirectorActions} from './director-action-ranking.js';
 export {inspectNpcAction} from './action-diagnostics.js';
 export {createWorldNpcGoalProposalConsumer,worldNpcGoalProposal} from './contracts/npc-goal-proposal.js';
+export {createWorldNpcSeedConsumer,worldNpcSeed} from './contracts/npc-seed.js';

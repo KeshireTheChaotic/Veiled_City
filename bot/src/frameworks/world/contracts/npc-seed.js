@@ -1,0 +1,3 @@
+/** Native seed producer retains its add-only source, privacy, incremental and transaction policy. */
+export function createWorldNpcSeedConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original native NPC seed function required.');if(source&&source!==native)throw new Error('World NPC seed replacement forbidden.');source=native;return this;},seedNpcCognition(...args){if(!source)throw Object.assign(new Error('World NPC seed not composed.'),{code:'WORLD_NPC_SEED_COMPOSITION'});return source(...args);}});}
+export const worldNpcSeed=createWorldNpcSeedConsumer();

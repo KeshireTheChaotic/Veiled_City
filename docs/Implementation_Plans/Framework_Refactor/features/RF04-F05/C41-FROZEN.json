@@ -1,0 +1,34 @@
+{
+  "base_head": "534dc284179810e5eb8b4d5692b80bad13fc9571",
+  "syntax_checked": 6,
+  "files": [
+    {
+      "path": "bot/src/seed-data.js",
+      "sha256": "3f9d16432d578c3fdd2792410d7e3b8ad4fe1b8b2371659f354ce9f9269e53ee"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-seed.js",
+      "sha256": "be09daff890839df91c1799e7a35fa330eff63c6d166f5fee0c0ac332d6494ee"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "6344492312c86d8102fd50d5929a5be1eb8e26a8c98e1fa97fe58d38d7bb998c"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "866cd07f501cae0d263abc71eae4b66ac27e5b844c16b45c927ffa9c49079e6c"
+    },
+    {
+      "path": "bot/src/application/composition/npc-world-evidence.js",
+      "sha256": "6b6a6316cdd4cc90cb6b96221751537b58048c98601e9f86dbf674228cabc79b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+      "sha256": "90eb296f9eb7fde6ee59c79290874e4393b9ba193eb41de8804fb96926ca2f8b"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C41-SOURCE-BASELINE.json",
+      "sha256": "d78478c2457cd72c3f8ccf4c461ee39ebc17b79e8937499fc52d9d3c056f4ea4"
+    }
+  ]
+}
