@@ -1,7 +1,8 @@
 /** Original fixed Narrative/World and same-owner lifecycle composition for disclosed narrative memory. */
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {narrativeVisible} from './narrative-authority-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {knowledgeWorldEvents} from './frameworks/knowledge/public.js';
+function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 import {rememberEntity,narrativeMemoryEpistemic} from './memory-lifecycle.js';
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';

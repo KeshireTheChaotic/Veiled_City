@@ -14,8 +14,8 @@ export function connectKnowledgeIdentities({consumer=createKnowledgeWorldIdentit
 }
 
 import {knowledgeWorldMemory} from '../../frameworks/knowledge/public.js';
-import {cityObject,cityKey,requireCitySource} from '../../frameworks/world/public.js';
-export function connectKnowledgeMemory(){return knowledgeWorldMemory.bind({cityObject,cityKey,cityAudit,requireCitySource});}
+import {cityObject,cityKey,cityInteger,requireCitySource} from '../../frameworks/world/public.js';
+export function connectKnowledgeMemory(){return knowledgeWorldMemory.bind({cityObject,cityKey,cityInteger,cityAudit,requireCitySource});}
 
 import {knowledgeWorldHistory} from '../../frameworks/knowledge/public.js';
 import {historyContext} from '../../frameworks/world/public.js';

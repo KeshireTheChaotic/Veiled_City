@@ -1,0 +1,270 @@
+{
+  "feature": "RF04-F05-C53",
+  "base_head": "10e11e20546b2c7ec30b0a8ac9e3ef636153675e",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/evidence-custody.js",
+      "bot/src/narrative-memory.js",
+      "bot/src/owned-community.js",
+      "bot/src/personal-continuity.js",
+      "bot/src/presentation-evidence.js",
+      "bot/src/frameworks/knowledge/contracts/world-memory.js",
+      "bot/src/framework-to-framework/knowledge--world/public.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c53.test.mjs"
+    ],
+    "passed": 8,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs",
+        "sha256": "28EFA1FC4D6786C89851C68BCF503E33A17C10E151D01376C9352A969BB6D094"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "sha256": "0F11DEF30E2DC0C92EA56EF3A21D5D7F008A2B17A3F2D73C2AB8B3021D3A6AF4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "sha256": "71B01556768ACA879EF1727ABF506BE9027488E0713467B61428298C57F0DF01"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "sha256": "4BAAFC3CB902EBEA586ECEA545A9DDAB39622E2E956EE08EC4DAAF49EADB1470"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "C1C34F9E2151375E6789A36C97B7101644894A3C5DD8C21F90B673B6283C0EA1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "sha256": "F4E42ED2ABA1E291EC8C4ED8E74938D214287EE5523F4CBAC08417AAEB36BB4C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "E56F772BA494367743F82E2EF6494D63D2389C3D8DA421D6322C4130BAABC135"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "sha256": "6B6B02CFD7AA5125142E336C5DA46A035FB9CA213B6C3F22A8D4EDA0EC5B6789"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "sha256": "46F8751FDA7886DFADAAFECA9D7E879E85F2081DBF2FDF9B37A397E34847399F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "820A3EFF204109F6066CF3B0DD5B244E72EAC26EA3A7942875A5EC0CF04CF1CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "FC59F047AF7C882F372C74E2377008EF170E1DEFB87582A2A3DA2A2C44F38FF2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+        "sha256": "AF6B0529800ADBA68CCC95B55865E051F0733296E4215F9E4864CD1BDA17A904"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c53.test.mjs",
+        "sha256": "80ED230219092A09127162FBB3EF1D26986454FA43F6E165E66EAF4C7B27F77A"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T15:00:12.658Z",
+    "end": "2026-10-27T15:00:40.445Z",
+    "exit_code": 1,
+    "tests": 95,
+    "passed": 81,
+    "failed": 14,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 27751.2937,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c53-test.log",
+    "log_sha256": "29E0F01FC26297B66D71F88D8988D328E8B3CA9425C80AA501333BC368A7FFE5",
+    "failing": [
+      "rf04-f03-c15.test.mjs | actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery",
+      "rf04-f03-c15.test.mjs | actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send",
+      "rf04-f03-c15.test.mjs | mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend",
+      "rf04-f03-c15.test.mjs | distinct actual private writer packets and deliveries stay owner-specific, including omission counts",
+      "rf04-f03-c15.test.mjs | source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction",
+      "rf04-f03-c15.test.mjs | real source-authorized selection ranks before capacity and reports only eligible omitted memories",
+      "rf04-f03-c15.test.mjs | acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send",
+      "rf04-f03-c15.test.mjs | queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment",
+      "rf04-f05-c03-p03.test.mjs | Narrative-owned context builder preserves authorized context and compatibility behavior",
+      "rf04-f05-c05.test.mjs | real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners",
+      "rf04-f05-c06.test.mjs | real World historical origin reader preserves private/campaign/retraction boundaries across SQLite reopen without new grants",
+      "rf04-f05-c06.test.mjs | actual World composition has no Knowledge deep imports and existing pair has only its two public owners",
+      "rf04-f05-c07.test.mjs | actual GM and startup use public contracts; both integrations import exactly their two owners",
+      "rf04-f05-c43.test.mjs | owner organization composition body remains unchanged after exact NPC import replacement"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f03-c15.test.mjs | actual native writer acceptance is GM-established memory, never audience recall or unplaced PC witness before delivery",
+      "rf04-f03-c15.test.mjs | actual certified output delivery creates exact durable acknowledgment and idempotent camera recall without another model or send",
+      "rf04-f03-c15.test.mjs | mixed acknowledged and uncertain real chunks grant no recall; restart and exact-message reconciliation recover without resend",
+      "rf04-f03-c15.test.mjs | distinct actual private writer packets and deliveries stay owner-specific, including omission counts",
+      "rf04-f03-c15.test.mjs | source-retracted native output fails closed before mock Discord delivery and preserves existing accepted fiction",
+      "rf04-f03-c15.test.mjs | real source-authorized selection ranks before capacity and reports only eligible omitted memories",
+      "rf04-f03-c15.test.mjs | acknowledgment persistence failure becomes uncertain and exact reconciliation restores memory without a second transport send",
+      "rf04-f03-c15.test.mjs | queue replay retains publication identities and disabled retention never forges a new memory or acknowledgment",
+      "rf04-f05-c03-p03.test.mjs | Narrative-owned context builder preserves authorized context and compatibility behavior",
+      "rf04-f05-c05.test.mjs | real startup binds Knowledge before Narrative and services; adapter has exactly its two public owners",
+      "rf04-f05-c06.test.mjs | real World historical origin reader preserves private/campaign/retraction boundaries across SQLite reopen without new grants",
+      "rf04-f05-c06.test.mjs | actual World composition has no Knowledge deep imports and existing pair has only its two public owners",
+      "rf04-f05-c07.test.mjs | actual GM and startup use public contracts; both integrations import exactly their two owners",
+      "rf04-f05-c43.test.mjs | owner organization composition body remains unchanged after exact NPC import replacement"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 726,
+      "unowned": 0,
+      "imports": 3092,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1888,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c53-rf04-architecture.log",
+      "log_sha256": "74663DD82B6B35F3AB076B58E0AFC93020F8DDE763A7B21E4C3A27DD66A1335B",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 726,
+      "unowned": 0,
+      "imports": 3092,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1292,
+      "active_violation_groups": 593,
+      "transition_errors": 593,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c53-rf05-architecture.log",
+      "log_sha256": "22C0D58C5993A46157A0A405E9ADD5E34702984BC70A05B02A7FB086858FBCED",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/evidence-custody.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/narrative-memory.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/owned-community.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/personal-continuity.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/presentation-evidence.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/consent-native.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/consent-native.js -> bot/src/owned-community.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/consent-native.js -> bot/src/evidence-custody.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/evidence-custody.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/evidence-custody.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-native-rolls.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/scene-fiction-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/narrative-authority-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/narrative-relevance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/world-background-identities.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-experience-eligibility.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-group-features.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-notice.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/owned-community.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/owned-community.js -> bot/src/city-civic.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/owned-community.js -> bot/src/long-projects.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-effects.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-incoming.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/personal-continuity.js -> bot/src/city-core.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/personal-continuity.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-attacks.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-brawl.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-damage.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-reactions.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-collaboration.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-declaration-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-requests.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/session-briefs.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/story-continuity.js -> bot/src/personal-continuity.js",
+        "CYCLIC_IMPORT_EDGE bot/src/evidence-custody.js -> bot/src/personal-continuity.js",
+        "CYCLIC_IMPORT_EDGE bot/src/narrative-memory.js -> bot/src/scene-fiction-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/narrative-memory.js -> bot/src/narrative-authority-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/narrative-memory.js -> bot/src/memory-lifecycle.js",
+        "CYCLIC_IMPORT_EDGE bot/src/narrative-memory.js -> bot/src/world-background-identities.js",
+        "CYCLIC_IMPORT_EDGE bot/src/owned-community.js -> bot/src/personal-continuity.js",
+        "CYCLIC_IMPORT_EDGE bot/src/personal-continuity.js -> bot/src/owned-community.js",
+        "CYCLIC_IMPORT_EDGE bot/src/personal-continuity.js -> bot/src/evidence-custody.js",
+        "EXPIRED_TRANSITION bot/src/evidence-custody.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/owned-community.js -> ",
+        "EXPIRED_TRANSITION bot/src/personal-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/presentation-evidence.js -> ",
+        "EXPIRED_TRANSITION bot/src/evidence-custody.js -> ",
+        "EXPIRED_TRANSITION bot/src/evidence-custody.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/owned-community.js -> ",
+        "EXPIRED_TRANSITION bot/src/owned-community.js -> ",
+        "EXPIRED_TRANSITION bot/src/owned-community.js -> ",
+        "EXPIRED_TRANSITION bot/src/personal-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/personal-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/evidence-custody.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/owned-community.js -> ",
+        "EXPIRED_TRANSITION bot/src/personal-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/personal-continuity.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "4ec2ae192140fa2ad5e6679879d7d069ea93f382ef0154bd6dca7ab74cc10451",
+      "b9e863e64eb62d2dcc690ea0fb6c7ea32c29a4f7b28bd084cb8fc88a2a5dcaa6",
+      "df493eea82054aba12e5063c00ea6d6730e9a0f6b37ddf3e09a5bd879f87c495",
+      "65f5885e3eda5042e1aa72e48b1823df75c31d57455d3c638e66da590e48de66",
+      "cb7f51dbf0144c0144ac1fe53cbf48b3440e35b3d81c78fc5a2579562e91f277"
+    ],
+    "original_manifest_sha256": "130135C6FFF1DD93C67369A9AD2295F78DC357718EDA3B04D7793E16562C395F",
+    "manifest_sha256_after": "489AD99816AB84D338E1B18B6231B10801EF70C08A3113F3D61241FD6FDD9177",
+    "entries_after": 1874,
+    "remaining_by_feature": {
+      "RF04-F01": 224,
+      "RF04-F02": 5,
+      "RF04-F03": 76,
+      "RF04-F04": 182,
+      "RF04-F05": 106,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 157,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/evidence-custody.js": "1F9FB508FBBB4FDA1A96F2AD5D4442766FC4B590AAABA1AE1EF5A716D802FD4C",
+    "bot/src/narrative-memory.js": "318BF48B7304B073C97CF7E0556385F35B243AE2D9AD8FDA2A02029A761BB82C",
+    "bot/src/owned-community.js": "E0B1C4F28420BE2E68F621503997C7A75DB76505184DCC31FB11FF59AC8D6B69",
+    "bot/src/personal-continuity.js": "DC4F6AFA7C1ADE328AB0F761D0A0C6A3A1D5F60F2526BC59434CF8E3F1A03161",
+    "bot/src/presentation-evidence.js": "F720A48EE680410B71DA2925F9D30162362BC7B6EE5755DEE7077E9BD9508C08",
+    "bot/src/frameworks/knowledge/contracts/world-memory.js": "928FF4AE06E63751C9A9B17934E9E7D4022A7CDD8E0F5FA21A50CE76329BE516",
+    "bot/src/framework-to-framework/knowledge--world/public.js": "0CE93011577FF0514A435DBCD62C3568F8F126B6D83BF69A9FFF49B6FAE34B71"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C53 commit: restore the five direct ./city-calendar.js imports, remove cityInteger from the Knowledge World memory port and its adapter binding, and restore the five exact transitions from C53-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

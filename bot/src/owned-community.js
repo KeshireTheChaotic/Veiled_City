@@ -1,5 +1,6 @@
 /** Original fixed World/project/NPC/personal identity composition for owner organization initiatives. */
-import {cityObject,cityKey,cityAudit,indexWorldEvent} from './city-calendar.js';
+import {knowledgeWorldMemory,knowledgeWorldEvents} from './frameworks/knowledge/public.js';
+function cityObject(...args){return knowledgeWorldMemory.cityObject(...args);}function cityKey(...args){return knowledgeWorldMemory.cityKey(...args);}function cityAudit(...args){return knowledgeWorldMemory.cityAudit(...args);}function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 import {personalCharacter} from './personal-continuity.js';
 import {requireCitySource,requireCityRecord} from './city-core.js';
 import {updateCityCivic} from './city-civic.js';
