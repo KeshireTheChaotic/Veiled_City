@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createP08ThreeFixture} from './p08-final-three-fixture.mjs';

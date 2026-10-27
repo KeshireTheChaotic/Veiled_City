@@ -159,7 +159,7 @@ const occurrences=[
     "situation": "nativeEnvironmentWrongOfferingSituation"
   }
 ];
-const definitions=JSON.parse(fs.readFileSync(new URL('../../src/native-feature-definitions.json',import.meta.url),'utf8'));
+const definitions=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-feature-definitions.json',import.meta.url),'utf8'));
 const environments=JSON.parse(fs.readFileSync(new URL('../../../content/GM_PRIVATE/ENVIRONMENTS/environments.json',import.meta.url),'utf8'));
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 assert.equal(occurrences.length,22);

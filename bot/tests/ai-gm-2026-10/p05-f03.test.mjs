@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {beginGenerationFeedback} from '../../src/generation-feedback.js';
+import {beginGenerationFeedback} from '../../src/frameworks/ai-provider/generation-feedback.js';
 import {loadConfig} from '../../src/config.js';
 function setup(config={}){let typing=0,replies=0;const timers=[];const stop=beginGenerationFeedback({channel:{sendTyping:async()=>{typing++;}},reply:async()=>{replies++;}},config,{schedule:f=>{timers.push(f);return 1;},repeat:()=>2,cancel(){},cancelRepeat(){}});return {stop,timers,counts:()=>({typing,replies})};}
 test('typing is default, routine progress is opt-in, queued notices stop with completion',async()=>{

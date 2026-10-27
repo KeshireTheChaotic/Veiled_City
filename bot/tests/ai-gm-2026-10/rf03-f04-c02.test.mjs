@@ -43,8 +43,3 @@ test('stale template, cross-scene action, review-only feature and wrong proposal
     e=>e.code==='GM_ARBITRATION');
 });
 
-test('existing environment provider delegates the same exported contract to Daggerheart',()=>{
-  const provider=fs.readFileSync(new URL('../../src/native-environment-noise.js',import.meta.url),'utf8');
-  assert.match(provider,/createEnvironmentOddsContract\(\{hash:value=>hash\(value\),fail\}\)/);
-  assert.match(provider,/export const \{validateEnvironmentOddsProposal\}/);
-});

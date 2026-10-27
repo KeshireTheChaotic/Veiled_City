@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {assertWorldIdentityNames,assertIndependentWorldIdentity} from '../../src/world-authorship.js';
 const db={getActiveSession:()=>null,listGuildCharacters:()=>[{name:'Mara',data:{aliases:['']}}]};

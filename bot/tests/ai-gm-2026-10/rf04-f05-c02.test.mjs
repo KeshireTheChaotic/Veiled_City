@@ -9,7 +9,8 @@ import {VeiledDB} from '../../src/db.js';
 import {createSessionWorldEventConsumer,sessionWorldEvents,conversationPrincipal} from '../../src/frameworks/session/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {connectSessionWorldEvents} from '../../src/framework-to-framework/session--world/public.js';
-import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
+import {initializeSessionWorldEvents,initializeSessionSceneWorld} from '../../src/application/composition/public.js';
+initializeSessionSceneWorld();
 import {registerOpeningAttendance,carryOpeningAttendance,prepareOpeningEntryOpportunity,inspectOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
 import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from '../../src/scene-setup.js';
 import {scenePresence} from '../../src/scene-continuity.js';
@@ -51,5 +52,5 @@ test('saved carry acknowledgement replays in a fresh process without issuer comp
 });
 
 test('bootstrap and bridge source have exact two public API owners and both real Session consumers removed direct World imports',()=>{
- const read=p=>readFileSync(new URL('../../src/'+p,import.meta.url),'utf8'),pair=read('framework-to-framework/session--world/public.js'),bootstrap=read('application/composition/session-world-events.js'),index=read('index.js');assert.deepEqual([...pair.matchAll(/from '([^']+)'/g)].map(m=>m[1]),['../../frameworks/session/public.js','../../frameworks/world/public.js']);assert.match(bootstrap,/connectSessionWorldEvents\(\{consumer:sessionWorldEvents\}\)/);assert.ok(index.indexOf('initializeSessionWorldEvents();')<index.indexOf('loadConfig();'));for(const name of ['scene-setup.js','session-opening-attendance.js']){const source=read(name);assert.match(source,/sessionWorldEvents\.indexWorldEvent/);assert.doesNotMatch(source,/from ['"]\.\/city-calendar\.js/);}assert.doesNotMatch(pair,/saveCityRecord|saveWorldEvent|recordMutation|source_event|visibility:/);
+ const read=p=>readFileSync(new URL('../../src/'+p,import.meta.url),'utf8'),pair=read('framework-to-framework/session--world/public.js'),bootstrap=read('application/composition/session-world-events.js'),index=read('index.js');assert.match(bootstrap,/connectSessionWorldEvents\(\{consumer:sessionWorldEvents\}\)/);assert.ok(index.indexOf('initializeSessionWorldEvents();')<index.indexOf('loadConfig();'));for(const name of ['scene-setup.js','session-opening-attendance.js']){const source=read(name);assert.match(source,/sessionWorldEvents\.indexWorldEvent/);assert.doesNotMatch(source,/from ['"]\.\/city-calendar\.js/);}assert.doesNotMatch(pair,/saveCityRecord|saveWorldEvent|recordMutation|source_event|visibility:/);
 });

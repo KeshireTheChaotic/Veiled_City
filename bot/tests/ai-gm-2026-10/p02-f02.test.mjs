@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {dualityRoll,gmD20Roll} from '../../src/dice.js';
+import {dualityRoll,gmD20Roll} from '../../src/frameworks/daggerheart/dice.js';
 test('actual Duality faces and helper results are preserved independently of caller mutation',()=>{
  const faces=[4,9],helper=[3];const r=dualityRoll({modifier:2,helperDice:helper},s=>{assert.equal(s,12);return faces.shift();});
  helper[0]=6;assert.deepEqual(r.helper_dice,[3]);assert.equal(r.total,18);assert.equal(r.duality,'Fear');

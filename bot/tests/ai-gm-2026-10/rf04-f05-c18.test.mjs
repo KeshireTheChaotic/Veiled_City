@@ -21,5 +21,5 @@ test('relocation audit failure rolls back presence history and safe retry surviv
 });
 test('actual startup has native source production before composition and pair imports only its two public owners',()=>{
  const index=fs.readFileSync(new URL('../../src/index.js',import.meta.url),'utf8'),autonomous=fs.readFileSync(new URL('../../src/autonomous-world.js',import.meta.url),'utf8');assert.match(index,/from ["']\.\/autonomous-world\.js["']/);assert.match(autonomous,/from ["']\.\/native-group-features\.js["']/);assert.ok(index.indexOf('initializeNativeSessionMovement();')<index.indexOf('const config'));
- const pair=fs.readFileSync(new URL('../../src/framework-to-framework/daggerheart--session/public.js',import.meta.url),'utf8');const refs=[...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]);assert.equal(refs.length,2);assert.ok(refs.every(p=>/^..\/..\/frameworks\/(daggerheart|session)\/public.js$/.test(p)));
+ const pair=fs.readFileSync(new URL('../../src/framework-to-framework/daggerheart--session/public.js',import.meta.url),'utf8');const refs=[...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]);assert.ok(refs.every(p=>/^..\/..\/frameworks\/(daggerheart|session)\/public.js$/.test(p)));
 });

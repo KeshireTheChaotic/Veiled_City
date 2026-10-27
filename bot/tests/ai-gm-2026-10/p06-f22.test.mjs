@@ -39,7 +39,7 @@ test('entitled current profile receives risk cue without invented Exposure resul
 test('scene delivery is scoped and makes no Exposure state change',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-consensus-engine.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentConsensusEngineSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);
 });

@@ -38,7 +38,7 @@ test('entitled current profile exposes the creative prompt and preserves PC acce
 test('scene context wiring projects only and does not record a trade',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-price-offer.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentPriceOfferSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);
 });

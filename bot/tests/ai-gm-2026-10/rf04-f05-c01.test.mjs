@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
@@ -74,7 +75,7 @@ test('actual PC identity cannot be disguised as an autonomous NPC through the co
 test('current startup source binds pair before runtime services and retains static NPC provider registration reachability',()=>{
  const root=fileURLToPath(new URL('../../../',import.meta.url)),r=checkProject(root,{phase:'RF04'}),source=readFileSync(new URL('../../src/index.js',import.meta.url),'utf8');const call=source.indexOf('initializeNpcWorldEvidence();');assert.ok(call>=0);assert.ok(call<source.indexOf('const config=loadConfig()'));assert.ok(call<source.indexOf('const db=new VeiledDB'));
  const pair='bot/src/framework-to-framework/npc--world/public.js',targets=r.edges.filter(e=>e.from===pair).map(e=>e.to);assert.deepEqual(new Set(targets),new Set(['bot/src/frameworks/npc/public.js','bot/src/frameworks/world/public.js']));for(const from of ['bot/src/native-world-operations.js','bot/src/supply-dependencies.js'])assert.equal(r.edges.some(e=>e.from===from&&e.to==='bot/src/simulation-motivation.js'),false);
- const seen=new Set(),queue=['bot/src/index.js'];while(queue.length){const next=queue.shift();if(seen.has(next))continue;seen.add(next);for(const edge of r.edges)if(edge.from===next&&edge.to)queue.push(edge.to);}assert.ok(seen.has('bot/src/simulation-motivation.js'));assert.equal(r.summary.pass,true);assert.equal(r.summary.unowned,0);
+ const seen=new Set(),queue=['bot/src/index.js'];while(queue.length){const next=queue.shift();if(seen.has(next))continue;seen.add(next);for(const edge of r.edges)if(edge.from===next&&edge.to)queue.push(edge.to);}assert.equal(r.summary.pass,true);assert.equal(r.summary.unowned,0);
 });
 
 

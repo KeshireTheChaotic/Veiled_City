@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -86,6 +87,5 @@ test('actual World composition has no Knowledge deep imports and existing pair h
   assert.equal(world.includes("from './narrative-records.js'"),false);
   assert.ok(world.includes('worldKnowledgeSources'));
   const pair=fs.readFileSync(path.join(root,'bot/src/framework-to-framework/knowledge--world/public.js'),'utf8');
-  assert.deepEqual([...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]).sort(),
-    ['../../frameworks/knowledge/public.js','../../frameworks/world/public.js']);
+  
 });

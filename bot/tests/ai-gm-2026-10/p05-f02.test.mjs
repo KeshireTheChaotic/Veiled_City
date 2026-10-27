@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {ContentIndex} from '../../src/content.js';
+import {ContentIndex} from '../../src/frameworks/content/content.js';
 test('packaged index warms, invalidates by bytes/audience, and never caches tenant documents',()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'veiled-cache-'));
  try{fs.writeFileSync(path.join(root,'public.md'),'# Tram\nThe midnight tram passes the station every evening and rings a brass bell.');fs.mkdirSync(path.join(root,'GM_PRIVATE'));fs.writeFileSync(path.join(root,'GM_PRIVATE','secret.md'),'# Secret\nThe midnight tram conceals the smuggler ledger beneath the conductor seat.');

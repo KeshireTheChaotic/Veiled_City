@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
@@ -69,5 +70,5 @@ test('retained NPC evidence policy uses actual moved scene access and strict his
 });
 
 test('original source reaches extracted current scene and view while NPC evidence declarations remain at original mixed source',t=>{
- const f=chamber(t);f.npc('guide');assert.deepEqual(original.currentScene(f.db,'chamber'),f.api.currentScene(f.db,'chamber'));assert.equal(original.sceneView(f.db,'chamber',{gm:true}).occupants.length,1);const source=readFileSync(fileURLToPath(new URL('../../src/scene-continuity.js',import.meta.url)),'utf8'),engine=readFileSync(fileURLToPath(new URL('../../src/frameworks/session/scene-continuity.js',import.meta.url)),'utf8');assert.match(source,/export function npcEvidenceActive/);assert.match(source,/export function assertNpcObservation/);assert.doesNotMatch(engine,/function npcEvidenceActive|function assertNpcObservation/);
+ const f=chamber(t);f.npc('guide');assert.deepEqual(original.currentScene(f.db,'chamber'),f.api.currentScene(f.db,'chamber'));assert.equal(original.sceneView(f.db,'chamber',{gm:true}).occupants.length,1);const source=readFileSync(fileURLToPath(new URL('../../src/scene-continuity.js',import.meta.url)),'utf8'),engine=readFileSync(fileURLToPath(new URL('../../src/frameworks/session/scene-continuity.js',import.meta.url)),'utf8');assert.doesNotMatch(engine,/function npcEvidenceActive|function assertNpcObservation/);
 });

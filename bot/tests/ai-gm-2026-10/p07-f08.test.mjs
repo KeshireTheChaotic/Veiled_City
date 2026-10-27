@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {rankWorldNarrativeOpportunities} from '../../src/narrative-opportunity-policy.js';
-import {selectFreshTests} from '../../src/ai-gm-test-selection.js';
+import {selectFreshTests} from '../../src/frameworks/operations/ai-gm-test-selection.js';
 
 const coverage=JSON.parse(fs.readFileSync(new URL('./coverage.json',import.meta.url),'utf8'));
 

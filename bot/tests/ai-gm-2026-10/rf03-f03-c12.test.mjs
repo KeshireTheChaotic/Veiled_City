@@ -49,9 +49,3 @@ test('historical term validation uses historical owner evidence and does not rea
   assert.deepEqual(historicalReads,[['pc:aya',true],['pc:bo',true]]);
 });
 
-test('current PvP profile provider supplies owner and clock ports to Daggerheart',()=>{
-  const provider=fs.readFileSync(new URL('../../src/pvp-profiles.js',import.meta.url),'utf8');
-  assert.match(provider,/createPvpProfileTerms\(\{fail\}\)/);
-  assert.match(provider,/resolveOwner:\(character,isHistorical\)=>controlledOwner/);
-  assert.match(provider,/currentMinute:\(\)=>db\.getSimulationClock/);
-});

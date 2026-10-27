@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {DatabaseSync} from 'node:sqlite';
 import {connectNativeOutcomes} from '../../src/framework-to-framework/daggerheart--publication/public.js';
 import {createNativeOutcomeConsumer} from '../../src/frameworks/publication/public.js';

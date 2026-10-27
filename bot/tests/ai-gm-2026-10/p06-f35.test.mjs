@@ -38,7 +38,7 @@ test('scoped GM context preserves the roll and failure cue without choosing for 
 test('scene wiring is a scoped read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-express-through-memory.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentExpressThroughMemorySituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);
 });

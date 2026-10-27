@@ -8,7 +8,7 @@ const adversaries=JSON.parse(fs.readFileSync(new URL('../../../content/GM_PRIVAT
 const executioner=adversaries.find(value=>value.name==='Pale Court Executioner');
 const thrall=adversaries.find(value=>value.name==='Pale Court Thrall');
 const host=adversaries.find(value=>value.name==='Green Root Host');
-const errata=JSON.parse(fs.readFileSync(new URL('../../src/native-house-errata.json',import.meta.url),'utf8'));
+const errata=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-house-errata.json',import.meta.url),'utf8'));
 
 test('native fixed damage arithmetic preserves exact expression and bounds',()=>{
   assert.equal(nativeDamageBonusExpression('2d8+3',2),'2d8+5');

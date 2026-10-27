@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {assemblyInputFingerprint,assemblyWriterBrief} from '../../src/assembly-context.js';
@@ -11,7 +12,7 @@ test('planner free text is not writer authority and no-cue fallback remains crea
       input_fingerprint:assemblyInputFingerprint(db,'guild-correction',session)}};
     const brief=assemblyWriterBrief(db,'guild-correction',session.id,{mode:'party',actorUserId:null,actorCharacterId:null},plan);
     assert.equal(brief.dramatic_intent.objective,'Explore an interesting shared opportunity without asserting a hidden cause, PC response, or outcome.');
-    assert.deepEqual(brief.dramatic_intent.cues,[]);
+    assert.deepEqual(brief.dramatic_intent.selected_opportunities,[]);
     assert.doesNotMatch(JSON.stringify(brief),/GM_ONLY_GOAL_CANARY|hidden culprit/);
     assert.match(brief.task,/Ordinary NPC offers, visible surroundings and nonbinding signs are allowed/);
   }finally{close();}

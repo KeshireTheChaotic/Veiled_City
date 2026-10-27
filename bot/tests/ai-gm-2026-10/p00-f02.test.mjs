@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { selectFreshTests } from '../../src/ai-gm-test-selection.js';
+import { selectFreshTests } from '../../src/frameworks/operations/ai-gm-test-selection.js';
 const own = 'bot/tests/ai-gm-2026-10/p00-f02.test.mjs';
 test('changed modules select only explicitly mapped fresh tests, deduplicated', () => {
   assert.deepEqual(selectFreshTests(['bot/src/a.js', 'bot/src/b.js', 'README.md'], {

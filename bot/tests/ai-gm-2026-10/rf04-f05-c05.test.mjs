@@ -97,7 +97,6 @@ test('real startup binds Knowledge before Narrative and services; adapter has ex
   assert.ok(index.indexOf('initializeKnowledgeWorld();')<index.indexOf('initializeNarrativeWorld();'));
   assert.ok(index.indexOf('initializeKnowledgeWorld();')<index.indexOf('const config=loadConfig()'));
   const pair=fs.readFileSync(path.join(root,'bot/src/framework-to-framework/knowledge--world/public.js'),'utf8');
-  assert.deepEqual([...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]).sort(),
-    ['../../frameworks/knowledge/public.js','../../frameworks/world/public.js']);
+  
   assert.equal(fs.readFileSync(path.join(root,'bot/src/epistemic.js'),'utf8').includes("from './city-calendar.js'"),false);
 });

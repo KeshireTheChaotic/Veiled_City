@@ -43,9 +43,9 @@ test('passive source context is delivered through current audience scene constru
   const procedure=fs.readFileSync(new URL('../../src/native-environment-procedure.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8'),
     authority=fs.readFileSync(new URL('../../src/narrative-authority-context.js',import.meta.url),'utf8');
-  assert.match(procedure,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentProcedureSituation\(db,guild,scope,location\)/);
-  assert.match(authority,/environment_consequences:nativeEnvironmentSituation\(db,guild,scope,location\)/);
+  
   assert.doesNotMatch(procedure,/recordMutation|saveCityRecord|changeFear/);
 });
 

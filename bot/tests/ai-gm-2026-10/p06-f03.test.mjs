@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
 import {runFreshDelta} from '../../scripts/ai-gm-delta.mjs';
-import {selectFreshTests} from '../../src/ai-gm-test-selection.js';
+import {selectFreshTests} from '../../src/frameworks/operations/ai-gm-test-selection.js';
 import {gmRulingSchema,validateGmRulingProposal} from '../../src/gm-ruling-schema.js';
 import {gmRulingSchema as compatibilitySchema} from '../../src/gm-action-ruling.js';
 import {playerIntentSchema} from '../../src/typed-intents.js';

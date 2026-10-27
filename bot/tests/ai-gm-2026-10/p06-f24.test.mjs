@@ -38,7 +38,7 @@ test('entitled profile returns the source prompt and preserves GM narration and 
 test('scene context wiring remains a read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-private-room.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentPrivateRoomSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);
 });

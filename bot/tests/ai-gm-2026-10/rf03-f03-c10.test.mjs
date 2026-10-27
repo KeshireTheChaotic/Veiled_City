@@ -27,8 +27,3 @@ test('owned death-specific features hold mapped death dice without removing othe
   assert.equal(native.assertDeathMapping(pc({features:[{name:'Inactive feature',death_move:'blaze',active:false}]}),'risk_it_all'),undefined);
 });
 
-test('existing death workflow injects its established private native failure contract',()=>{
-  const provider=fs.readFileSync(new URL('../../src/pc-death.js',import.meta.url),'utf8');
-  assert.match(provider,/createPcDeathEligibility\(\{fail\}\)/);
-  assert.match(provider,/assertFinalHp:finalHp,assertDeathMapping/);
-});

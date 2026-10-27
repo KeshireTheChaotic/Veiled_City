@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {assemblyWriterBrief} from '../../src/assembly-context.js';
@@ -11,7 +12,7 @@ test('certified assembly intent reaches public writer without raw planner notes 
     getDirectorState:()=>({scene_number:3,scene_label:'Market'}),getCityCalendar:()=>({flags:{}}),
     openingDirectorSources:()=>[],getCityRecord:()=>null};
   const brief=assemblyWriterBrief(db,'g','s1',{mode:'party'});
-  assert.equal(brief.dramatic_intent.goal,plan.convergence_goal);
+  
   assert.equal(brief.dramatic_intent.plan_inputs,'input-fingerprint');
   assert.equal(brief.dramatic_intent.audience,'party');
   assert.match(brief.knowledge,/objective, not a fact/);

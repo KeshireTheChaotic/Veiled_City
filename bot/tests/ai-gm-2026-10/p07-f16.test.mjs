@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {parseCoverageJson} from '../../scripts/ai-gm-delta.mjs';
-import {selectFreshTests} from '../../src/ai-gm-test-selection.js';
+import {selectFreshTests} from '../../src/frameworks/operations/ai-gm-test-selection.js';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const coveragePath=path.join(root,'tests/ai-gm-2026-10/coverage.json');

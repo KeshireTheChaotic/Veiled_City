@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {canonicalNarrativeCause} from '../../src/world-narrative-bridge.js';
 test('missing, retired and GM-private causes confer no audience persistence credit',()=>{

@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {retrieveNpcCognition} from '../../src/npc-cognition.js';
 test('stale density entry and malformed tags do not erase an independent NPC motive or rumor',()=>{

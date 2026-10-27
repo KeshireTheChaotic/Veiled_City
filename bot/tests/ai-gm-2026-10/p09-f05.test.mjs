@@ -1,9 +1,10 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {matchesArbitrationSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema} from '../../src/gm-arbitration-contract.js';
 import {motivationKey} from '../../src/simulation-motivation.js';
-import {gmD20Roll} from '../../src/dice.js';
+import {gmD20Roll} from '../../src/frameworks/daggerheart/dice.js';
 import {PROFESSIONAL_ENTRY,establishPreparedPositions,qualifyProfessionalEntry,professionalEntryRollState,
   commitProfessionalEntryUse,inspectProfessionalEntryUse} from '../../src/native-professional-entry.js';
 

@@ -1,7 +1,9 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {GMService} from '../../src/gm.js';
+import {createModelTransport} from '../../src/frameworks/ai-provider/public.js';
 function service(responses){let calls=0;const ctx={config:{openaiMaxRetries:0},db:{getCityCalendar:()=>({flags:{}})},metrics:{record(){},incident(){}},
- ai:{responses:{create:async()=>{calls++;return responses.shift();}}},requestModel:GMService.prototype.requestModel};return {ctx,calls:()=>calls};}
+ ai:{responses:{create:async()=>{calls++;return responses.shift();}}},requestModel:GMService.prototype.requestModel};ctx.modelTransport=createModelTransport({client:ctx.ai,config:ctx.config,metrics:ctx.metrics});return {ctx,calls:()=>calls};}
 const request={model:'offline-stub',input:'Fresh scenario',text:{format:{schema:{type:'object',properties:{}}}}};
 test('complete prose reaches caller in one provider call; malformed output gets one bounded repair',async()=>{
  for(const [responses,expected] of [[[{output_text:'{"narration":"The bell wakes the empty station."}'}],1],[[{output_text:'{'},{output_text:'{"narration":"The bell wakes the empty station."}'}],2]]){

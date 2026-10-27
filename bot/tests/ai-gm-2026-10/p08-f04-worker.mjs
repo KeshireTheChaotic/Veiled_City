@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import {VeiledDB} from '../../src/db.js';
 import {runOpeningCohort} from '../../src/opening-cohort-runner.js';
 import {assemblyInputs} from '../../src/assembly-context.js';

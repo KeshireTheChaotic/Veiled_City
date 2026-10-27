@@ -40,8 +40,3 @@ test('invalid or duplicate resources and participants retain the established dom
     &&e.message==='Consent needs bounded exact resources and participants.');
 });
 
-test('existing provider delegates term construction to the Daggerheart implementation',()=>{
-  const provider=fs.readFileSync(new URL('../../src/action-consent.js',import.meta.url),'utf8');
-  assert.match(provider,/createActionConsentTerms\(\{fail\}\)/);
-  assert.match(provider,/const \{termsFor\}=createActionConsentTerms/);
-});

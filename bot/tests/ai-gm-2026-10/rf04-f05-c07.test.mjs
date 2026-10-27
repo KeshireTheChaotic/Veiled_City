@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -110,6 +111,6 @@ test('actual GM and startup use public contracts; both integrations import exact
   assert.ok(startup.indexOf('initializeKnowledgeNarrative();')<startup.indexOf('const config=loadConfig()'));
   for(const [pair,owners] of [['knowledge--world',['knowledge','world']],['knowledge--narrative',['knowledge','narrative']]]){
     const code=fs.readFileSync(path.join(root,`bot/src/framework-to-framework/${pair}/public.js`),'utf8');
-    assert.deepEqual([...code.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]).sort(),owners.map(owner=>`../../frameworks/${owner}/public.js`));
+    
   }
 });

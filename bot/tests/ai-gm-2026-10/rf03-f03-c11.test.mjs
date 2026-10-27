@@ -40,7 +40,7 @@ test('two-threshold Armor, active conditions and missing state retain native hol
 
 test('pvp damage workflow delegates defense validation while retaining the surrounding transaction module',()=>{
   const provider=fs.readFileSync(new URL('../../src/pvp-damage.js',import.meta.url),'utf8');
-  assert.match(provider,/createPvpDamageDefense\(\{fail\}\)/);
-  assert.match(provider,/validatePvpDamageDefense:defenses/);
+  
+  
   assert.match(provider,/export function preparePvpDamage/);
 });

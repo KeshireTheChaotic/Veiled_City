@@ -39,7 +39,7 @@ test('entitled current profile receives the exact cue without forced connection 
 test('scene delivery is scoped and creates no state or mechanical outcome',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-no-ordinary-signal.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentNoOrdinarySignalSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);
 });

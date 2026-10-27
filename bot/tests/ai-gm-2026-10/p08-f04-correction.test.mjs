@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {fork} from 'node:child_process';
@@ -196,5 +197,8 @@ test('independent Node worker processes claim one session cohort and publish at 
     const verify=context.openPeer(),jobs=verify.listCityRecords(guildId,{kind:'opening_cohort_job',includeGM:true,limit:10});
     try{assert.equal(jobs.length,1);assert.equal(verify.listTurnPublications(guildId,jobs[0].data.turn_id).filter(row=>row.status==='delivered').length,1);}
     finally{verify.close();}
-  }finally{for(const child of children)if(child.connected)child.kill();close();}
+  }finally{
+    await Promise.all(children.map(child=>child.exitCode!==null||child.signalCode!==null?null:new Promise(resolve=>{child.once('exit',resolve);child.kill();})));
+    close();
+  }
 });

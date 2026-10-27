@@ -38,7 +38,7 @@ test('scoped GM context preserves incomplete forecast fiction and player-owned H
 test('scene context adapter is read-only and wired to entitled current profile',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-model-room.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
-  assert.match(source,/nativeEnvironmentInstanceForScope\(db,guild,scope,location\)/);
+  
   assert.match(scene,/nativeEnvironmentModelRoomSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);
 });

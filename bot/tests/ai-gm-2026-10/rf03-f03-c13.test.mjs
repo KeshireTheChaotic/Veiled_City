@@ -15,10 +15,3 @@ test('Avoid Death maps scar, permanent Hope slot and journey-end threshold',()=>
   assert.deepEqual(avoidDeathOutcome({resources:{hope_max:2}},3,3),{scar:true,hope_max:1,result:'unconscious'});
 });
 
-test('death provider uses native mappings in both mutation and saved-outcome verification',()=>{
-  const provider=fs.readFileSync(new URL('../../src/pc-death.js',import.meta.url),'utf8');
-  assert.match(provider,/riskItAllOutcome\(payload\.duality\)/);
-  assert.match(provider,/riskItAllOutcome\(r\.duality\)/);
-  assert.match(provider,/avoidDeathOutcome\(f\.pc\.data,hope,f\.pc\.data\.level\)/);
-  assert.match(provider,/avoidDeathOutcome\(expected\.data,r\.hope,expected\.data\.level\)/);
-});

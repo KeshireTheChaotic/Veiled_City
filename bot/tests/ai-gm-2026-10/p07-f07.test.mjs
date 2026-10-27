@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {selectFreshTests} from '../../src/ai-gm-test-selection.js';
+import {selectFreshTests} from '../../src/frameworks/operations/ai-gm-test-selection.js';
 
 const raw=fs.readFileSync(new URL('./coverage.json',import.meta.url),'utf8');
 function rootEntries(text){

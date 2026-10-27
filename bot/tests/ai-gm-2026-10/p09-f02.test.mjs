@@ -5,7 +5,7 @@ import {nativeFeatureRuleContextsForTemplate} from '../../src/native-feature-cat
 
 const adversaries=JSON.parse(readFileSync(new URL('../../../content/GM_PRIVATE/ADVERSARIES/adversaries.json',import.meta.url),'utf8'));
 const environments=JSON.parse(readFileSync(new URL('../../../content/GM_PRIVATE/ENVIRONMENTS/environments.json',import.meta.url),'utf8'));
-const definitions=JSON.parse(readFileSync(new URL('../../src/native-feature-definitions.json',import.meta.url),'utf8')).features;
+const definitions=JSON.parse(readFileSync(new URL('../../src/frameworks/daggerheart/native-feature-definitions.json',import.meta.url),'utf8')).features;
 
 test('retrieves exact current-template rules including review-only prose without execution authority',()=>{
   const template=adversaries.find(row=>row.name==='Pale Regent');

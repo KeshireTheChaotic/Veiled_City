@@ -11,5 +11,5 @@ export function disposableCampaign(){
   const db=new VeiledDB(dbPath,schemaPath);
   db.ensureCampaign('guild-correction');
   let closed=false;
-  return {db,dbPath,schemaPath,openPeer(){return new VeiledDB(dbPath,schemaPath);},close(){if(!closed){closed=true;try{db.close();}catch{}}rmSync(dir,{recursive:true,force:true});}};
+  return {db,dbPath,schemaPath,openPeer(){return new VeiledDB(dbPath,schemaPath);},close(){if(!closed){closed=true;try{db.close();}catch{}}rmSync(dir,{recursive:true,force:true,maxRetries:10,retryDelay:100});}};
 }

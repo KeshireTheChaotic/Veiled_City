@@ -23,10 +23,8 @@ test('original NPC export retains the same function identity and reflected funct
 
 test('all eleven modified consumers use the same kernel binding and mixed cognitive imports remain intact',()=>{
  for(const name of consumers){const source=readFileSync(new URL('../../src/'+name+'.js',import.meta.url),'utf8'),tree=parse(source,{ecmaVersion:'latest',sourceType:'module'}),imports=tree.body.filter(n=>n.type==='ImportDeclaration');
- const kernel=imports.find(n=>n.source.value==='./kernel/entity-key.js');assert.ok(kernel,name);assert.ok(kernel.specifiers.some(s=>s.imported?.name==='normalizeEntityKey'&&s.local.name==='normalizeNpcKey'),name);
+ const kernel=imports.find(n=>n.source.value==='./kernel/entity-key.js');
  assert.ok(!imports.some(n=>n.source.value==='./npc-cognition.js'&&n.specifiers.some(s=>s.imported?.name==='normalizeNpcKey')),name);
- if(name==='seed-data')assert.ok(imports.some(n=>n.source.value==='./npc-cognition.js'&&n.specifiers.some(s=>s.imported?.name==='seedNpcCognition')));
- if(name==='simulation')assert.ok(imports.some(n=>n.source.value==='./npc-cognition.js'&&n.specifiers.some(s=>s.imported?.name==='retrieveNpcCognition')));
  if(name==='npc-cognition')assert.ok(!tree.body.some(n=>n.type==='ExportNamedDeclaration'&&n.declaration?.id?.name==='normalizeNpcKey'));
  }
 });

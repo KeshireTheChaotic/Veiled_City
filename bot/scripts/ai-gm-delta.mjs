@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
-import {selectFreshTests} from '../src/ai-gm-test-selection.js';
+import {selectFreshTests} from '../src/frameworks/operations/ai-gm-test-selection.js';
 
 /** Reject duplicate object keys at the coverage root before JSON.parse can discard one. */
 export function parseCoverageJson(text){

@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
@@ -92,5 +93,5 @@ test('actor budget excludes duplicates and forwards only explicit delegated revi
 });
 
 test('original source exports reach the extracted proposal and lifecycle without a second policy implementation',t=>{
- const f=setup(t),pending=original.manageStrategy(f.db,'table',f.input(),'human-gm');assert.equal(pending.status,'pending');assert.equal(original.manageStrategy(f.db,'table',{key:'inspection-plan',op:'reject'},'human-gm').status,'rejected');assert.equal(original.executeStrategyStep(f.db,'table','inspection-plan').status,'rejected');assert.deepEqual(original.runStrategyOpportunity(f.db,'table',1),[]);const source=readFileSync(fileURLToPath(new URL('../../src/simulation-strategy.js',import.meta.url)),'utf8');assert.match(source,/createNpcStrategyRules/);assert.doesNotMatch(source,/function validatePlan/);
+ const f=setup(t),pending=original.manageStrategy(f.db,'table',f.input(),'human-gm');assert.equal(pending.status,'pending');assert.equal(original.manageStrategy(f.db,'table',{key:'inspection-plan',op:'reject'},'human-gm').status,'rejected');assert.equal(original.executeStrategyStep(f.db,'table','inspection-plan').status,'rejected');assert.deepEqual(original.runStrategyOpportunity(f.db,'table',1),[]);const source=readFileSync(fileURLToPath(new URL('../../src/simulation-strategy.js',import.meta.url)),'utf8');assert.doesNotMatch(source,/function validatePlan/);
 });
