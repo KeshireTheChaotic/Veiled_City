@@ -1,0 +1,160 @@
+{
+  "feature": "RF04-F05-C38",
+  "status": "SCOPED_OPERATIONS_NPC_REVIEW_QUALIFIED",
+  "frozen": {
+    "base_head": "545631efd8927c828de09e22570e0f81e75cbb21",
+    "syntax_checked": 8,
+    "files": [
+      {
+        "path": "bot/src/ai-review.js",
+        "sha256": "45e4b6ad9cc2bc7e5b72ede450bd8c21d8e40a72750b15ee5b29fc048bea3fe5"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "7ab771a0e0fd62340a083787fe616b05d54f364c51947f9cf15cdd7808bce655"
+      },
+      {
+        "path": "bot/src/frameworks/operations/contracts/npc-review.js",
+        "sha256": "09c1cffdcc2c98d2715238ee22b98b667598f8c096c615d1d04fc69e321e0c1e"
+      },
+      {
+        "path": "bot/src/frameworks/operations/public.js",
+        "sha256": "a8430104ee52114465f689c26f8e663d9b8d6de90158308ffb0843eb84bc9fb8"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--operations/public.js",
+        "sha256": "b96e68ea59ab06211c4cb51dd96db92b60ad6afd7eb4dd90036142bdeed7312a"
+      },
+      {
+        "path": "bot/src/application/composition/operations-npc-review.js",
+        "sha256": "64b94e9144bc1dd9b73877ecb3ebf25b25c907cbac39bee8a99efdb759d84d7b"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "8f695370bb4590634ab0b9bc4535344893675a9bcfc7707943f6a3279e9e49fa"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c38.test.mjs",
+        "sha256": "318e43d37ce6221695ea5c77c0c55127b9497c915318e77bf755475b70ce7d9d"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C38-SOURCE-BASELINE.json",
+        "sha256": "7dc42708f1eb88884a1ae3fc8c5373f9d815f868a3eda77c18c8132a64e558ab"
+      }
+    ]
+  },
+  "source_baseline": {
+    "review_body_sha256": "6a13b1eab5af4d5f8136bdecd3e9973b545480364353f330c5cee5a08402846d"
+  },
+  "tests": {
+    "end": "2026-10-26T20:58:34.4186054-05:00",
+    "run_id": "rf04-f05-c38-frozen",
+    "duration_ms": 7402.5533,
+    "exit_code": 0,
+    "start": "2026-10-26T20:58:27.0160521-05:00",
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c38.test.mjs",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap_duration_ms": 7349.1839
+  },
+  "syntax": {
+    "checked": 8,
+    "passed": 8
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 708,
+      "unowned": 0,
+      "importOccurrences": 3043,
+      "internalImportOccurrences": 2864,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1976,
+      "acceptedLegacyOccurrences": 1976,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 708,
+      "unowned": 0,
+      "importOccurrences": 3043,
+      "internalImportOccurrences": 2864,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1976,
+      "acceptedLegacyOccurrences": 1302,
+      "activeViolationGroups": 670,
+      "transitionErrors": 670,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "ee720bb2edd5fa9f3a403e4a8bf73bb00ec7feea02607d6a198a2e09841d9937",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-review.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "operations",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "5681a4a503095ef80e66d9fc11d44a5498f39d7db8f9135204d7f32ec84a9ffb",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ai-review.js",
+      "to": "bot/src/simulation-strategy.js",
+      "kind": "static",
+      "specifier": "./simulation-strategy.js",
+      "owner": "operations",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "Operations fixed native NPC review consumer; NPC–Operations pair imports only its two public frameworks; thin application binds before services. Original review body/source/revision and native NPC rules unchanged.",
+  "limits": [
+    "Actual revision-bound operations inbox and native goal/strategy review tested with disposable SQLite; actual Discord delivery, concurrent reviewer races and model behavior not exercised.",
+    "Only NPC review direction adopted. Mixed operations review orchestration, other imports and later-phase migration remain open. Existing dirty work preserved; no full clean-HEAD/phase/live/release certificate."
+  ],
+  "rollback": "Revert only C38 own imports/interface/pair/bootstrap/registry and two retired records together; preserve all original dirty changes and persisted native sources, private data and receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c38-tests.log",
+      "sha256": "7592aa0969fe59f08578e52919bf71afa6d4858bcb9fd85302c6917016c3812c",
+      "retention": "local log; ignored per owner request; terminal result and hash committed"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c38-architecture-initial.log",
+      "sha256": "a6b569f9862fe871aa93655ae9c310413ea9870563f6d37a48763920855e18d4",
+      "retention": "local log; ignored per owner request; terminal result and hash committed"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c38-rf04-final.log",
+      "sha256": "2694946cd31660066f9775a2a5aeecbe7b2a32b6840e6d96301d852ad7aca138",
+      "retention": "local log; ignored per owner request; terminal result and hash committed"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c38-rf05-final.log",
+      "sha256": "e1f532e7c7c9d79cc2d9c11882ae8f1587c964eaee90d196e88167be1c88bf99",
+      "retention": "local log; ignored per owner request; terminal result and hash committed"
+    }
+  ]
+}

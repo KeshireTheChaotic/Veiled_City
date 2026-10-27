@@ -1,6 +1,6 @@
 # Canonical integration registry
 
-The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the recorded source checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 19 ADOPTED, 42 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
+The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json). Current table reconciled at the recorded source checkpoint. Historical observations remain [archived](RF01/RF00_BRIDGE_REGISTRY.md). Lifecycle counts: 20 ADOPTED, 41 PROPOSED_NO_API, 2 CONTRACT_ONLY_UNWIRED. Adopted status applies only to each row's exact qualified direction; other source obligations remain explicit.
 
 | Pair | Status | Contract directions | Consumers / fresh test references | Adoption |
 |---|---|---|---|---|
@@ -53,7 +53,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | narrative--publication | PROPOSED_NO_API | narrative → publication; publication → narrative | 0 / 0 | RF05 |
 | narrative--session | CONTRACT_ONLY_UNWIRED | session → narrative | 1 / 2 | RF04-F04 |
 | narrative--world | ADOPTED | world → narrative | 1 / 1 | RF04-F05 |
-| npc--operations | PROPOSED_NO_API | operations → npc; npc → operations | 0 / 0 | RF04 |
+| npc--operations | ADOPTED | operations → npc | 1 / 1 | RF04-F05 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
 | npc--session | ADOPTED | npc → session; session → npc | 3 / 3 | RF04-F05 |
 | npc--world | ADOPTED | world → npc; npc → world | 6 / 8 | RF04-F05 |

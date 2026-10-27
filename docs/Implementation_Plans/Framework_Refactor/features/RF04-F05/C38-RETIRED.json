@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ee720bb2edd5fa9f3a403e4a8bf73bb00ec7feea02607d6a198a2e09841d9937",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/ai-review.js",
+    "to": "bot/src/simulation-motivation.js",
+    "kind": "static",
+    "specifier": "./simulation-motivation.js",
+    "owner": "operations",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  {
+    "id": "5681a4a503095ef80e66d9fc11d44a5498f39d7db8f9135204d7f32ec84a9ffb",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "from": "bot/src/ai-review.js",
+    "to": "bot/src/simulation-strategy.js",
+    "kind": "static",
+    "specifier": "./simulation-strategy.js",
+    "owner": "operations",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

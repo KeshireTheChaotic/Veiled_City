@@ -1,0 +1,42 @@
+{
+  "base_head": "545631efd8927c828de09e22570e0f81e75cbb21",
+  "syntax_checked": 8,
+  "files": [
+    {
+      "path": "bot/src/ai-review.js",
+      "sha256": "45e4b6ad9cc2bc7e5b72ede450bd8c21d8e40a72750b15ee5b29fc048bea3fe5"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "7ab771a0e0fd62340a083787fe616b05d54f364c51947f9cf15cdd7808bce655"
+    },
+    {
+      "path": "bot/src/frameworks/operations/contracts/npc-review.js",
+      "sha256": "09c1cffdcc2c98d2715238ee22b98b667598f8c096c615d1d04fc69e321e0c1e"
+    },
+    {
+      "path": "bot/src/frameworks/operations/public.js",
+      "sha256": "a8430104ee52114465f689c26f8e663d9b8d6de90158308ffb0843eb84bc9fb8"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--operations/public.js",
+      "sha256": "b96e68ea59ab06211c4cb51dd96db92b60ad6afd7eb4dd90036142bdeed7312a"
+    },
+    {
+      "path": "bot/src/application/composition/operations-npc-review.js",
+      "sha256": "64b94e9144bc1dd9b73877ecb3ebf25b25c907cbac39bee8a99efdb759d84d7b"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "8f695370bb4590634ab0b9bc4535344893675a9bcfc7707943f6a3279e9e49fa"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c38.test.mjs",
+      "sha256": "318e43d37ce6221695ea5c77c0c55127b9497c915318e77bf755475b70ce7d9d"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C38-SOURCE-BASELINE.json",
+      "sha256": "7dc42708f1eb88884a1ae3fc8c5373f9d815f868a3eda77c18c8132a64e558ab"
+    }
+  ]
+}

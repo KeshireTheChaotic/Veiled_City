@@ -121,6 +121,9 @@
     ],
     "daggerheart--npc": [
       "bot/src/framework-to-framework/daggerheart--npc/public.js"
+    ],
+    "npc--operations": [
+      "bot/src/framework-to-framework/npc--operations/public.js"
     ]
   },
   "externalCapabilityOwners": {

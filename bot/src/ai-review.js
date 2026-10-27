@@ -1,10 +1,10 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
 import { intentContext, delegationPolicy, stateRevision, reviewAiIntent, FEATURE_FLAGS } from "./ai-intents.js";
 import { reviewSeedDraft } from "./seed-drafts.js";
-import { reviewGoalTransition } from "./simulation-motivation.js";
+import {operationsNpcReview} from "./frameworks/operations/public.js";
+const {reviewGoalTransition,manageStrategy}=operationsNpcReview;
 import { reviewConsequence } from "./city-consequences.js";
 import { manageGroup } from "./city-groups.js";
-import { manageStrategy } from "./simulation-strategy.js";
 import { cityAudit } from "./city-calendar.js";
 import { reviewOrganization } from "./owned-community.js";
 const REVIEW_KINDS=["ai_intent","goal_transition","consequence","group_transition","strategy","seed_draft","organization_request"];

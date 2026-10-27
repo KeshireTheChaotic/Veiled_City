@@ -1,0 +1,3 @@
+# RF04-F05 C38 — Operations native NPC review interface
+
+Base 545631efd8927c828de09e22570e0f81e75cbb21. Replace two private NPC imports in the original operations review workflow with an Operations-owned fixed interface through the observed NPC–Operations pair. Preserve original review bodies, source/revision guards, human review, PC consent, native transactions and receipts. Thin application wiring before services. Fresh actual native proposal/inbox/review/stale/retraction/strategy/rollback/restart tests; disposable SQLite and no providers, network, old suites or polling. No gameplay or creative limitation. Rollback exact imports, port, pair, bootstrap and retired records together; never revert native persisted data. RELEASE NOT AUTHORIZED.
