@@ -66,3 +66,5 @@ export {rankDirectorActions} from './director-action-ranking.js';
 export {inspectNpcAction} from './action-diagnostics.js';
 export {createWorldNpcGoalProposalConsumer,worldNpcGoalProposal} from './contracts/npc-goal-proposal.js';
 export {createWorldNpcSeedConsumer,worldNpcSeed} from './contracts/npc-seed.js';
+export {createWorldNpcVisibilityConsumer,worldNpcVisibility} from './contracts/npc-visibility.js';
+export {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './npc-signal-memory.js';

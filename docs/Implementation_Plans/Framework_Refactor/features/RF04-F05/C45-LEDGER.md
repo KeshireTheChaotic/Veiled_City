@@ -1,0 +1,7 @@
+# C45 ledger
+
+In progress; whole conversation signal positive qualification not claimed.
+
+## 2026-10-26 C45 World-owned NPC signal-memory projection
+
+Actual bounded memory lookup and source/hash revalidation extracted from mixed Narrative–World bridge into World; fixed own NPC visibility and existing NPC–World pair supply original predicate. Bridge removes third-owner NPC import and consumes own endpoint projection; exact memory predicates and all other bridge policy retained. Initial2/5pass exit1 TAP1378.3297ms: three fresh fixtures used unsupported subject_type event. Fixture corrected to native entity; failed-case3/3pass exit0 TAP1388.1086ms. Syntax7/7 plus repaired test. Two initial cases not rerun; final-file gap remains. Actual GM-authored public observation/native NPC memory validates exact actor/hash read-only; private/retracted/crosscampaign/changed-memory/superseded proof rejected; restart stable; ordinary observation does not become heard player conversation. No invented player speech/typed intent/hearing receipt, no positive whole conversation signal claim. One exact obsolete NPC import retired. RF04 local passes715modules/0unowned/3065imports/1967rawaccepted/3cycles/largest135/0activeerrors; RF05 remains664expiredgroups/errors. 1952exact open/439resolved since audit. Evidence C45-RUN.json. Other third-owner bridge dependencies remain open. New tests/logs local ignored per owner; clean checkout lacks C38–C45 registry references until supplied. Provider0tokens0cost$0; CodexUNMEASURED. RELEASE NOT AUTHORIZED.

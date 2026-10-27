@@ -1,0 +1,6 @@
+{
+  "bridge_other_policy_sha256": "bc6eb8ddccb4505392e2e6a3e64d3790e3496dab254d15af6d99006bc57b5858",
+  "lookup": "const memory=db.listNpcMemories(guild,npc,{status:'active',limit:200}).find(row=>row.source_ref===speech.event_key\n        &&row.source_type==='heard'&&actorEvidenceVisible(db,guild,npc,row,scope));",
+  "revalidation": "if(typeof ref.actor!=='string'||!ref.actor||typeof ref.key!=='string')return false;\n      const memory=db.listNpcMemories(guild,ref.actor,{status:'active',limit:200}).find(m=>m.id===ref.key);\n      return !!memory&&hash(memory)===ref.hash&&actorEvidenceVisible(db,guild,ref.actor,memory,scope);",
+  "normalization": "LF line endings only; exact extracted memory blocks replaced by named placeholders; all other bridge policy retained"
+}

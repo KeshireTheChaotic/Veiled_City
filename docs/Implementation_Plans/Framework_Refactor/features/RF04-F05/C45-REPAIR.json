@@ -1,0 +1,5 @@
+{
+  "reason": "Fresh memory fixture used unsupported subject_type event; current native schema requires entity for a referenced event. Correct fixture only; production and passing predicates unchanged.",
+  "final_test_sha256": "07fee32d2e4cda0e0701047b3b216e10f4d47e26eda3683bcd6c1faf086b21ca",
+  "rerun": "three failed memory integration cases only"
+}

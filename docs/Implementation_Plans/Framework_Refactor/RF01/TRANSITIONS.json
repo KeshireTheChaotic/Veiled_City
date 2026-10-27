@@ -17995,20 +17995,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "bd505da787e9b3ad7f4ecb7b09198faddd044b6d9ae29f2fe4db300bac011181",
-      "code": "PAIR_IMPORTS_THIRD_OWNER",
-      "from": "bot/src/world-narrative-bridge.js",
-      "to": "bot/src/npc-cognition-projection.js",
-      "kind": "static",
-      "specifier": "./npc-cognition-projection.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "6e09d80a18a70fc094d5cae87d45a15ffea50d6f4cf916fd072b4ab72ddedc5c",
       "code": "PAIR_IMPORTS_PRIVATE_API",
       "from": "bot/src/world-narrative-bridge.js",

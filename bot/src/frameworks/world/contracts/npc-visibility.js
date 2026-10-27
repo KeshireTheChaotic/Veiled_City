@@ -1,0 +1,3 @@
+/** Original NPC actor-relative memory eligibility, never a conversation or publication grant. */
+export function createWorldNpcVisibilityConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original NPC evidence visibility required.');if(source&&source!==native)throw new Error('World NPC visibility replacement forbidden.');source=native;return this;},actorEvidenceVisible(...args){if(!source)throw Object.assign(new Error('World NPC visibility not composed.'),{code:'WORLD_NPC_VISIBILITY_COMPOSITION'});return source(...args);}});}
+export const worldNpcVisibility=createWorldNpcVisibilityConsumer();

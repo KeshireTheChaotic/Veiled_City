@@ -1,0 +1,173 @@
+{
+  "feature": "RF04-F05-C45",
+  "status": "SCOPED_WORLD_NPC_SIGNAL_MEMORY_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+  "frozen": {
+    "base_head": "49465be3f28eba19001b9f67fe3d92b6c63f7449",
+    "syntax_checked": 7,
+    "files": [
+      {
+        "path": "bot/src/world-narrative-bridge.js",
+        "sha256": "e2a45a3ced42e2aa69aa157940f01d3eddbb94062f6b5b17ee490c35086e8835"
+      },
+      {
+        "path": "bot/src/frameworks/world/npc-signal-memory.js",
+        "sha256": "67b0f3417300ff2ee4b58358393c0276c933ca9e24337d39af38123d53f1fc7d"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-visibility.js",
+        "sha256": "8d3371a9f71f035f9c06a0e1d43a2ffe2c880f309ee9a4a3537fb718f58c8591"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "9090bf3a341eed09dfee9298f0f84c3d4aab1cbb2ad6c28ffcf0bf3fb78c7484"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "ebe83ecf041e4418a13d8609fa59564fdc473fca9dfe084bfc02ec81f6f983f3"
+      },
+      {
+        "path": "bot/src/application/composition/npc-world-evidence.js",
+        "sha256": "5ec65e388a1a48a1b6babc4da6fe32c7beb009ef2ce783eaa75c58b694e0ce5b"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c45.test.mjs",
+        "sha256": "7033cefb788b16e4da6af7ea923b36d3abf27565e910aac7fc356e2d29795d82"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C45-SOURCE-BASELINE.json",
+        "sha256": "16d0b1dc0b3ad5b37f5cc2f3661c1fb3a19d4fef56a92101497b531058daddbe"
+      }
+    ]
+  },
+  "source_baseline": {
+    "bridge_other_policy_sha256": "bc6eb8ddccb4505392e2e6a3e64d3790e3496dab254d15af6d99006bc57b5858",
+    "lookup": "const memory=db.listNpcMemories(guild,npc,{status:'active',limit:200}).find(row=>row.source_ref===speech.event_key\n        &&row.source_type==='heard'&&actorEvidenceVisible(db,guild,npc,row,scope));",
+    "revalidation": "if(typeof ref.actor!=='string'||!ref.actor||typeof ref.key!=='string')return false;\n      const memory=db.listNpcMemories(guild,ref.actor,{status:'active',limit:200}).find(m=>m.id===ref.key);\n      return !!memory&&hash(memory)===ref.hash&&actorEvidenceVisible(db,guild,ref.actor,memory,scope);",
+    "normalization": "LF line endings only; exact extracted memory blocks replaced by named placeholders; all other bridge policy retained"
+  },
+  "tests": {
+    "initial": {
+      "end": "2026-10-26T21:28:16.0715830-05:00",
+      "duration_ms": 1444.0787,
+      "exit_code": 1,
+      "run_id": "rf04-f05-c45-frozen",
+      "start": "2026-10-26T21:28:14.6275043-05:00",
+      "tests": 5,
+      "passed": 2,
+      "failed": 3,
+      "tap_duration_ms": 1378.3297,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c45.test.mjs"
+    },
+    "repair": {
+      "end": "2026-10-26T21:28:39.9902276-05:00",
+      "exit_code": 0,
+      "duration_ms": 1443.3718,
+      "start": "2026-10-26T21:28:38.5468558-05:00",
+      "run_id": "rf04-f05-c45-subject-fixture-repair",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "tap_duration_ms": 1388.1086,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-name-pattern='native GM-authored|GM-only memory|saved memory reference' --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c45.test.mjs",
+      "fixture": {
+        "reason": "Fresh memory fixture used unsupported subject_type event; current native schema requires entity for a referenced event. Correct fixture only; production and passing predicates unchanged.",
+        "final_test_sha256": "07fee32d2e4cda0e0701047b3b216e10f4d47e26eda3683bcd6c1faf086b21ca",
+        "rerun": "three failed memory integration cases only"
+      }
+    },
+    "retention": "Local ignored tests/logs per owner; actual source fingerprints and terminal outcomes committed."
+  },
+  "syntax": {
+    "checked": 7,
+    "passed": 7,
+    "repaired_test_checked": true
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 715,
+      "unowned": 0,
+      "importOccurrences": 3065,
+      "internalImportOccurrences": 2886,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1967,
+      "acceptedLegacyOccurrences": 1967,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 715,
+      "unowned": 0,
+      "importOccurrences": 3065,
+      "internalImportOccurrences": 2886,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1967,
+      "acceptedLegacyOccurrences": 1299,
+      "activeViolationGroups": 664,
+      "transitionErrors": 664,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "bd505da787e9b3ad7f4ecb7b09198faddd044b6d9ae29f2fe4db300bac011181",
+      "code": "PAIR_IMPORTS_THIRD_OWNER",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "kind": "static",
+      "specifier": "./npc-cognition-projection.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "World owns actual bounded native NPC memory resolution and reference hash/revalidation; existing NPC–World pair supplies original NPC visibility. Mixed Narrative–World bridge now consumes World projection and no NPC module. All other bridge policy/extracted predicates retained; other third-owner imports remain accountable.",
+  "limits": [
+    "Two initial passing cases not rerun after fixture subject-type repair; three final integration cases pass. Full final-file gap remains.",
+    "Positive saved memory proof uses genuine native GM observation and native NPC memory persistence, not fabricated player hearing. Whole positive owner speech/conversation signal not newly qualified; heard lookup negative exercised only.",
+    "New tests/logs local per owner: clean checkout lacks C38–C45 registry references until supplied and fails INVALID_BRIDGE_TEST_REFERENCE; no checker bypass or clean-checkout qualification.",
+    "Full pair isolation, aggregate opportunity ranking, actual Discord/native writer/live quality and entire phase remain unqualified."
+  ],
+  "rollback": "Restore exact original two memory blocks and NPC import in bridge; revert C45 World projection/interface/pair/initializer/export and one exact record. Preserve original World public work and all saved sources/memories/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c45-tests.log",
+      "sha256": "a3fe0265ab12839690d483ee0eb153414f03454408682f66ec257345e561cffe",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c45-repair-tests.log",
+      "sha256": "23cdadf1324a275672aeb00136bdd08862196e81977ffa6d24cd3872a69d8acc",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c45-architecture-initial.log",
+      "sha256": "cdfaacdbf3073bf312095326bba92439ae4f7d0919f3e90d111af1316b666fd9",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c45-rf04-final.log",
+      "sha256": "272122b441314d5aa824988b4ddfab451ee2d2c2525f576da08ec214f8fc3fd8",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c45-rf05-final.log",
+      "sha256": "8547dc849229661c3a49a34c97cd2055fe60f31d32de7ed7dda51cb32ecf5980",
+      "retention": "local ignored"
+    }
+  ]
+}

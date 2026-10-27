@@ -33,3 +33,7 @@ export function connectWorldNpcGoalProposal(){return worldNpcGoalProposal.bind(p
 import {worldNpcSeed} from '../../frameworks/world/public.js';
 import {seedNpcCognition} from '../../frameworks/npc/public.js';
 export function connectWorldNpcSeed(){return worldNpcSeed.bind(seedNpcCognition);}
+
+import {worldNpcVisibility} from '../../frameworks/world/public.js';
+import {actorEvidenceVisible} from '../../frameworks/npc/public.js';
+export function connectWorldNpcVisibility(){return worldNpcVisibility.bind(actorEvidenceVisible);}

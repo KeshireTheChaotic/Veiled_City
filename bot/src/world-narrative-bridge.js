@@ -5,7 +5,7 @@ import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {completedActionSource,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {actorEvidenceVisible} from './npc-cognition-projection.js';
+import {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './frameworks/world/public.js';
 import {activeCityProxy} from './city-constraints.js';
 import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
 import {inspectSessionOpening} from './session-opening.js';
@@ -228,8 +228,7 @@ function nativeConversationSignals(db,guild,scope,scene){
         ||presence.location_key!==state?.location_key||!presenceSource||presenceSource.status!=='active'
         ||presenceSource.session_id!==scene.session_id||presenceSource.scene!==scene.key||presenceSource.location_key!==presence.location_key
         ||!narrativeSourceVisible(db,guild,presenceSource.event_key,scope)||!db.getNpcProfile(guild,npc))continue;
-      const memory=db.listNpcMemories(guild,npc,{status:'active',limit:200}).find(row=>row.source_ref===speech.event_key
-        &&row.source_type==='heard'&&actorEvidenceVisible(db,guild,npc,row,scope));
+      const memory=findNpcConversationMemory(db,guild,npc,speech.event_key,scope);
       if(!memory)continue;
       const refs=[{kind:'npc_memory',key:memory.id,actor:npc,hash:hash(memory)},
         {kind:'scene_presence',key:presence.record_key,actor:npc,hash:hash(presence)},
@@ -520,9 +519,7 @@ function activeSignalSnapshot(db,guild,s,scope){
       :['typed_intent','action_outcome_receipt','roll_request','native_adjudication','narrative_task_coverage','autonomous_turn','scene_presence'].includes(ref.kind)
         ?db.getCityRecord(guild,ref.kind,ref.key):null;
     if(ref.kind==='npc_memory'){
-      if(typeof ref.actor!=='string'||!ref.actor||typeof ref.key!=='string')return false;
-      const memory=db.listNpcMemories(guild,ref.actor,{status:'active',limit:200}).find(m=>m.id===ref.key);
-      return !!memory&&hash(memory)===ref.hash&&actorEvidenceVisible(db,guild,ref.actor,memory,scope);
+      return npcSignalMemoryReferenceValid(db,guild,ref,scope);
     }
     if(ref.kind==='scene_presence'&&ref.actor){
       if(typeof ref.key!=='string'||typeof ref.actor!=='string')return false;
