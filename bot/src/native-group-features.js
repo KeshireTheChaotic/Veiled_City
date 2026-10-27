@@ -8,7 +8,8 @@ import {currentScene,scenePresence,sceneAccess,RANGE_BANDS} from './scene-contin
 import {activeCityProxy} from './city-constraints.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {personalCharacter} from './personal-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {EncounterLibrary} from './encounter.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';

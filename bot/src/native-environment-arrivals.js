@@ -6,7 +6,8 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {establishNarrativeEntity} from './autonomous-world.js';
 import {worldIdentityOrigin} from './world-authorship.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';

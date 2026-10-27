@@ -8,7 +8,8 @@ import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
 import {stateRevision} from './kernel/state-revision.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentAccessRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

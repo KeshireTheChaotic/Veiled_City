@@ -1,5 +1,6 @@
 /** Explainable internal adjudication envelopes; model suggestions never become native dice, costs or authority. */
-import { indexWorldEvent, cityKey } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";

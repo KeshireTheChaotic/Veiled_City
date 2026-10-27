@@ -1,5 +1,6 @@
 /** Provider for native pvp-campaign-policy policy. */
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {cancelBrawlForSafety} from './pvp-brawl.js';
 import {createPvpSafetyRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

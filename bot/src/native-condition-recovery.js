@@ -2,7 +2,8 @@
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {validateNativeCondition} from './native-group-features.js';
 import {assertPcCanAct} from './pc-native-eligibility.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 
 import {createConditionRecoveryRules} from './frameworks/daggerheart/public.js';
 let nativeRecovery;

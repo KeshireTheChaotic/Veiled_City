@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {initializeNativeWorldEvents} from '../../src/application/composition/public.js';
+initializeNativeWorldEvents();
 import {createHash} from 'node:crypto';
 import {readFileSync,mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';

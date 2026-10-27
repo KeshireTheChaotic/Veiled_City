@@ -4,7 +4,8 @@ import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { manageEvidence } from "./evidence-custody.js";
 import {stateRevision} from './kernel/state-revision.js';
 import { requireCitySource } from "./city-core.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
 import {createConsentResponseRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

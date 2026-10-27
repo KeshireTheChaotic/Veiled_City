@@ -8,7 +8,8 @@ import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.
 import {typedRollProof} from './typed-roll-proof.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {assertPcCanAct,hopeCap} from './pc-native-eligibility.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';

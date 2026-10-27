@@ -123,3 +123,4 @@ export {createNativeEnvironmentNarrativeConsumer,nativeEnvironmentNarrative} fro
 export {createNativeEnvironmentSessionConsumer,nativeEnvironmentSession} from './contracts/environment-session.js';
 export {assertEnvironmentAudience} from './environment-audience-source.js';
 export {createNativeWorldEstablishedEvidenceConsumer,nativeWorldEstablishedEvidence} from './contracts/world-established-evidence.js';
+export {createNativeWorldEventsConsumer,nativeWorldEvents} from './contracts/world-events.js';

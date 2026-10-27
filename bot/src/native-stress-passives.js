@@ -2,7 +2,8 @@
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {validateGroupReactionEffect} from './native-group-features.js';
 import {validateFeatureReactionEffect} from './native-feature-effects.js';
 import {inspectManyDeathsEffect} from './native-feature-hit.js';

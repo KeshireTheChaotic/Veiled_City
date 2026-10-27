@@ -1,5 +1,6 @@
 /** PC resource effects require a separately authorized native cause, never generated prose. */
-import { indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { currentScene,scenePresence,sceneAccess,RANGE_BANDS } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { personalCharacter } from "./personal-continuity.js";

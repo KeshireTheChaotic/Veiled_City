@@ -2,7 +2,8 @@ import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
 import {scenePresence,sceneAccess,currentScene} from './scene-continuity.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentRecordingRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

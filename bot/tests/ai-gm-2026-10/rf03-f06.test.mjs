@@ -1,4 +1,6 @@
 import {createHash} from 'node:crypto';
+import {initializeNativeWorldEvents} from '../../src/application/composition/public.js';
+initializeNativeWorldEvents();
 import test from 'node:test';import assert from 'node:assert/strict';import {DatabaseSync} from 'node:sqlite';import {mkdtempSync,rmSync} from 'node:fs';import os from 'node:os';import path from 'node:path';
 import {reviewFeatureEffect,reviewPcEffect,approvePcEffect,applyPcEffect,validatedPcEffectProjection,applyGeneratedPcEffect} from '../../src/pc-effects.js';
 // Feature-local repository fake. SQL transactions are real; production schema and authentication infrastructure are not replaced or certified.

@@ -5,7 +5,8 @@ import {sceneAccess,currentScene,scenePresence} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {EncounterLibrary} from './encounter.js';
 import {nativeHouseErratum} from './native-house-errata.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {createDefensiveFeatureRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createDefensiveFeatureRules({capabilities:{compileNativeFeatures:(...args)=>compileNativeFeatures(...args),compileNativeActors:(...args)=>compileNativeActors(...args),nativeSignalFeatureTarget:(...args)=>nativeSignalFeatureTarget(...args),nativeEncounterActor:(...args)=>nativeEncounterActor(...args),nativeNpcAlliance:(...args)=>nativeNpcAlliance(...args),inspectNativeNpcAllianceReceipt:(...args)=>inspectNativeNpcAllianceReceipt(...args),sceneAccess:(...args)=>sceneAccess(...args),currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),activeCityProxy:(...args)=>activeCityProxy(...args),EncounterLibrary,nativeHouseErratum:(...args)=>nativeHouseErratum(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args)}});}

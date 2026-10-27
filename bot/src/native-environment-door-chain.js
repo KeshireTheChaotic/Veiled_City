@@ -7,7 +7,8 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {establishNarrativeEntity,worldAuthority} from './autonomous-world.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

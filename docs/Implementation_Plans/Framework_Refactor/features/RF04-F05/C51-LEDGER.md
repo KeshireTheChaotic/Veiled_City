@@ -1,0 +1,9 @@
+# C51 ledger
+
+## 2026-10-27 C51 native rules World event port
+
+47 Daggerheart legacy modules switched from direct `./city-calendar.js` imports to the Daggerheart-owned `nativeWorldEvents` port, bound to World's original `indexWorldEvent`, `cityAudit`, `cityKey` and `cityObject` by the existing Daggerheart–World adapter and a thin bootstrap called from `index.js`. No module calls these at load time (all 47 import cleanly uncomposed).
+
+Tests: one frozen batch of 61 files (new `rf04-f05-c51.test.mjs` plus every fresh test directly importing a changed module): 425 tests, 416 pass, 9 fail, all nine named in C51-RUN.json as pre-existing and unrelated to the changed lines (missing root `dice.js` in p09-f05; source-shape drift in p06-f13/f14/f15, rf03-f04-c02, rf04-f04-c02; Session composition in rf04-f04-c02; adapter import count in rf04-f05-c18). An earlier batch on the same code showed 14 further failures in four tests that never composed the new port (rf03-f06, rf04-f04-c01, rf04-f05-c11, rf03-f01-c30 — the last because `encounter.js` validates input through the port before its opt-in check); each received only the bootstrap import and call. New test 3/3: fail-closed and replacement-forbidden port, exact argument/result/error forwarding, real World issuance and forged-source rejection on a disposable database, adapter imports only two public APIs, all 47 modules use the port.
+
+Architecture: first RF04 ratchet reported `UNREGISTERED_BRIDGE_CONSUMER` for the new bootstrap; registered it in the daggerheart--world bridge contract. Corrected RF04 exit 0, 0 active violations, 726 modules; RF05 605 groups/errors (was 652). 47 exact records retired; open records 1886 in the working tree (Codex's uncommitted RF05-F04 retirements included; committed manifest is HEAD minus these 47). Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

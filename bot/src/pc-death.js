@@ -1,7 +1,8 @@
 /** Existing source/effect bindings for the Daggerheart owner-selected death lifecycle. */
 import {historicalOwnerPrincipal} from "./conversation-principal.js";
 import {currentScene} from "./scene-continuity.js";
-import {indexWorldEvent} from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {validatePvpDamageApplication,settlePvpDamageAction} from "./pvp-damage.js";
 import {historicalActionSource,consentAction} from "./action-consent.js";
 import {validateIncomingDamageApplication} from "./pc-incoming.js";

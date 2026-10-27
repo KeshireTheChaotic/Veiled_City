@@ -4,7 +4,8 @@ import {featureDisposition} from './native-feature-catalog.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {currentScene} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

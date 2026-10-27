@@ -1,6 +1,7 @@
 import {reservePvpProjection} from "./native-publications.js";
 import { pvpOwnerContext } from "./narrative-pvp.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 export { assertPvpOutput } from "./pvp-output.js";
 import {createPvpAuthorshipRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

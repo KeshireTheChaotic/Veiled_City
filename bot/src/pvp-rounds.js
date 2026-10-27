@@ -1,5 +1,6 @@
 /** Sealed owner-authorized narrative PvP. Opposed totals only; never ordinary combat damage/metacurrency. */
-import { indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";

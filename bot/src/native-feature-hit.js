@@ -4,7 +4,8 @@ import {nativeHouseErratum} from './native-house-errata.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-incoming.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {applyNativeStressPassive} from './native-stress-passives.js';
 
 import {createAdversaryHitRules} from './frameworks/daggerheart/public.js';

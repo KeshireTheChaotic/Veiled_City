@@ -2,7 +2,8 @@
 import {consentAction,historicalActionSource} from "./action-consent.js";
 import {conversationPrincipal,historicalOwnerPrincipal} from "./conversation-principal.js";
 import {currentScene} from "./scene-continuity.js";
-import {indexWorldEvent} from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {isPvpIntent,pvpTarget} from "./pvp-authority.js";
 import {cancelBrawlForWithdrawal} from "./pvp-brawl.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';

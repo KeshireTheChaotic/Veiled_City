@@ -6,7 +6,8 @@ import {nativeActorControl} from './native-actor-control.js';
 import {scenePresence,sceneAccess} from './scene-continuity.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {assertNonPvpCombatant,isPvpIntent} from './pvp-authority.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 
 import {createUnarmedAttackRules} from './frameworks/daggerheart/public.js';

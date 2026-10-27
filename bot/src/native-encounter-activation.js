@@ -2,7 +2,8 @@
 import {principalAllows} from './kernel/application-authority.js';
 import {manageWorldEncounter,EncounterLibrary,livePcRoster,encounterActors} from './encounter.js';
 import {nativeActorControl} from './native-actor-control.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {conversationPrincipal} from './conversation-principal.js';
 import {scenePresence} from './scene-continuity.js';
 

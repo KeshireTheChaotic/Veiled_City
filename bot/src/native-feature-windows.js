@@ -4,7 +4,8 @@ import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-incoming.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {EncounterLibrary} from './encounter.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {inspectNativeGmDecision,nativeReactionTarget} from './gm-action-capability.js';

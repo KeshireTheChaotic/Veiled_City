@@ -4,7 +4,8 @@ import {consentAction,historicalActionSource} from './action-consent.js';
 import {sceneAccess,scenePresence} from './scene-continuity.js';
 import {mayKnowRoll} from './roll-collaboration.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {isPvpIntent} from './pvp-authority.js';
 
 import {createRollParticipationRules} from './frameworks/daggerheart/public.js';

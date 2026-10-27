@@ -14,7 +14,8 @@ import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentWitnessRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

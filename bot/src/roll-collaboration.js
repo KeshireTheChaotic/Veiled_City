@@ -2,7 +2,8 @@
 import { personalCharacter } from "./personal-continuity.js";
 import { currentScene, sceneAccess } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
-import { cityAudit, cityKey, cityObject, indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { rollRevision, rollBreakdown, rollTraitBreakdown, reserveRollAmendment } from "./roll-requests.js";
 import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollAttempt} from "./roll-sharing.js";
 import { recordObservedAttack } from "./encounter.js";

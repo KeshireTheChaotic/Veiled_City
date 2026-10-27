@@ -21,3 +21,7 @@ export function connectWorldOwnerConsent(){return worldOwnerConsent.bind(hasOwne
 import {nativeWorldEstablishedEvidence} from '../../frameworks/daggerheart/public.js';
 import {nativeEstablishedFact} from '../../frameworks/world/public.js';
 export function connectNativeWorldEstablishedEvidence(){return nativeWorldEstablishedEvidence.bind(nativeEstablishedFact);}
+
+import {nativeWorldEvents} from '../../frameworks/daggerheart/public.js';
+import {indexWorldEvent,cityAudit,cityKey,cityObject} from '../../frameworks/world/public.js';
+export function connectNativeWorldEvents(){return nativeWorldEvents.bind({indexWorldEvent,cityAudit,cityKey,cityObject});}

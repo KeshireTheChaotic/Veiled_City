@@ -4,7 +4,8 @@ import {consentAction,historicalActionSource} from './action-consent.js';
 import {conversationPrincipal,historicalOwnerPrincipal} from './conversation-principal.js';
 import {pvpTarget} from './pvp-authority.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 
 import {createPvpCampaignScopeRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

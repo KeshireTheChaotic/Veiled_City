@@ -1108,14 +1108,16 @@
         "bot/src/application/composition/environment-scene.js",
         "bot/src/application/composition/world-actor-control.js",
         "bot/src/application/composition/world-owner-consent.js",
-        "bot/src/application/composition/native-world-evidence.js"
+        "bot/src/application/composition/native-world-evidence.js",
+        "bot/src/application/composition/native-world-events.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c51.test.mjs"
       ],
       "observed_directions": [
         {

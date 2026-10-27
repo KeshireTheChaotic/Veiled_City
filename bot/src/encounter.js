@@ -6,7 +6,8 @@ export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseB
 import fs from "node:fs";
 import path from "node:path";
 import { randomInt } from "node:crypto";
-import { cityObject, cityKey, cityAudit, indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { requireCitySource } from "./city-core.js";
 import { scenePresence, sceneAccess, currentScene } from "./scene-continuity.js";
 import { activeCityProxy } from "./city-constraints.js";

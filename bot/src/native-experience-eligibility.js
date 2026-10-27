@@ -1,5 +1,6 @@
 /** Closed structured Experience eligibility. This proves availability only, never owner choice or payment. */
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {personalCharacter} from './personal-continuity.js';
 

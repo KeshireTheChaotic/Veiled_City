@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {initializeNativeWorldEvents} from '../../src/application/composition/public.js';
+initializeNativeWorldEvents();
 import {DatabaseSync} from 'node:sqlite';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
 import {createEncounterGroundingRules} from '../../src/frameworks/daggerheart/encounter-grounding-rules.js';

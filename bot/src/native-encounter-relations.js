@@ -4,7 +4,8 @@ import {activeCityProxy} from './city-constraints.js';
 import {nativeActorTaxonomy} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {createEncounterRelationRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createEncounterRelationRules({capabilities:{currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),sceneAccess:(...args)=>sceneAccess(...args),activeCityProxy:(...args)=>activeCityProxy(...args),nativeActorTaxonomy:(...args)=>nativeActorTaxonomy(...args),EncounterLibrary,inspectNativeGmDecision:(...args)=>inspectNativeGmDecision(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args)}});}

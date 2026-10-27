@@ -2,7 +2,8 @@
 import {validatePvpAttackRoll,campaignAttackActorHash} from "./pvp-attacks.js";
 import {validateDamagePvp} from "./pvp-profiles.js";
 import {personalCharacter} from "./personal-continuity.js";
-import {indexWorldEvent} from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {pendingPvpFear} from "./pvp-fear-gate.js";
 import {buildActionPlan,transitionAction} from "./action-dependency.js";
 import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";

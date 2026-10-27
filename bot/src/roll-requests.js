@@ -3,7 +3,8 @@ import { createHash } from "node:crypto";
 import { personalCharacter } from "./personal-continuity.js";
 import { currentScene } from "./scene-continuity.js";
 import { requireCitySource } from "./city-core.js";
-import { cityAudit, cityKey } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}
 import { TRAITS } from "./character-system.js";
 import { StateConflictError } from "./kernel/errors.js";
 import {createRollRequestRules} from "./frameworks/daggerheart/public.js";

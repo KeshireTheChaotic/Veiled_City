@@ -1,6 +1,7 @@
 /** Source provider for native prepared-position evidence and encounter use. */
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {createProfessionalEntryRules} from './frameworks/daggerheart/public.js';
 export {PROFESSIONAL_ENTRY} from './frameworks/daggerheart/professional-entry-rules.js';
 let nativeRules;

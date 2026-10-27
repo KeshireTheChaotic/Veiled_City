@@ -3,7 +3,8 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {historicalActionSource} from './action-consent.js';
 
 import {createAdversaryDamageDefenseRules} from './frameworks/daggerheart/public.js';

@@ -1,7 +1,8 @@
 /** Private non-actionable action review through authenticated owner/GM adapters; never a new effect executor. */
 import {consentAction} from "./action-consent.js";
 import {personalCharacter} from "./personal-continuity.js";
-import {indexWorldEvent} from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {currentScene} from "./scene-continuity.js";
 import {recordOwnerActionTerminal} from "./owner-action-terminal.js";

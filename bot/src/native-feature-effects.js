@@ -2,7 +2,8 @@
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {inspectFeatureWindow} from './native-feature-windows.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {groupReactionState,applyGroupReactionOutcome,settleGroupFeature} from './native-group-features.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';

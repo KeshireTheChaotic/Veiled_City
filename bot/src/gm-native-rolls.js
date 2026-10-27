@@ -11,7 +11,8 @@ import {contributeRoll} from './roll-collaboration.js';
 import {rollRevision} from './roll-requests.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {commitFeatureChoice,commitFeatureReactionCost} from './native-feature-windows.js';
 import {applyFeatureReactionOutcome,validateFeatureInvitation,featureReactionStakes,cancelFeatureReaction} from './native-feature-effects.js';
 import {commitNativeNpcAlliance} from './native-encounter-relations.js';

@@ -1,6 +1,7 @@
 /** Existing NPC identity/world producer and explicit native Fear composition. No world authoring moved into Daggerheart. */
 import { createHash } from "node:crypto";
-import { indexWorldEvent } from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { currentScene, scenePresence, recordScenePresence } from "./scene-continuity.js";
 import { pvpOwnerContext } from "./narrative-pvp.js";
 import { validatePvpRoundReceipt } from "./pvp-rounds.js";

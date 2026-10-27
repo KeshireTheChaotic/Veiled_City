@@ -1,7 +1,8 @@
 /** Existing authenticated source bindings for Daggerheart's exact action consent policy. */
 import {conversationPrincipal,historicalOwnerPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {createActionConsentRules} from './frameworks/daggerheart/public.js';

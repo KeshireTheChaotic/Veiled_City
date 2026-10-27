@@ -2,7 +2,8 @@
 import {validateDamageAttackIntent} from "./pvp-profiles.js";
 import {personalCharacter} from "./personal-continuity.js";
 import {scenePresence,sceneAccess,RANGE_BANDS} from "./scene-continuity.js";
-import {indexWorldEvent} from "./city-calendar.js";
+import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {rollTraitBreakdown} from "./roll-requests.js";
 import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
