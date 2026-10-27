@@ -1,0 +1,3 @@
+/** Existing native NPC proposal producer, not goal approval or player consent. */
+export function createWorldNpcGoalProposalConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original native NPC goal proposal function required.');if(source&&source!==native)throw new Error('World NPC goal proposal replacement forbidden.');source=native;return this;},proposeGoalTransition(...args){if(!source)throw Object.assign(new Error('World NPC goal proposal not composed.'),{code:'WORLD_NPC_GOAL_PROPOSAL_COMPOSITION'});return source(...args);}});}
+export const worldNpcGoalProposal=createWorldNpcGoalProposalConsumer();

@@ -1,0 +1,166 @@
+{
+  "feature": "RF04-F05-C40",
+  "status": "SCOPED_WORLD_NPC_GOAL_CONSEQUENCE_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+  "frozen": {
+    "base_head": "2d17d22f01dfa563f70b87210f033da663adec97",
+    "syntax_checked": 6,
+    "files": [
+      {
+        "path": "bot/src/city-consequences.js",
+        "sha256": "2e10873d5e6ac37068f9b8734dca5bab0c69df0abb565e53c087dc5153b3d84c"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/npc-goal-proposal.js",
+        "sha256": "9c20931cfaa4df1c01eba8ba518111812f400e8f63b7a36f3206c348419d22b5"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "dcf88685ce91c6456805446a30e72dee7656c5046cb8ddde45f1d1d50aa0eb60"
+      },
+      {
+        "path": "bot/src/framework-to-framework/npc--world/public.js",
+        "sha256": "e4fd189b41d33f306bbedfca10ddb3582d57610f52a604d074c913c2aa693055"
+      },
+      {
+        "path": "bot/src/application/composition/world-npc-opportunity.js",
+        "sha256": "e668eec035db84a01aa8adb489ced200471ec76b2443c73e8d23934b58560806"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+        "sha256": "a100c53d6e7223a0994e6fde3fbe44995f589140bcb2237fc099e0def8522836"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C40-SOURCE-BASELINE.json",
+        "sha256": "89ddaba632556edc0cda91333bbf89319dea45f4b83be2f19c3d3deaa8e6d8fc"
+      }
+    ]
+  },
+  "source_baseline": {
+    "handlers_sha256": "26bdd1b886602344887b17d1eaf7a9bfd11512b3d24a7dcbc6cba02110c13a70",
+    "primitive": "motivationKey is exact existing jsonKey32 function alias; native World operations remain original public functions"
+  },
+  "tests": {
+    "initial": {
+      "duration_ms": 1812.052,
+      "start": "2026-10-26T21:08:04.8580974-05:00",
+      "run_id": "rf04-f05-c40-frozen",
+      "exit_code": 1,
+      "end": "2026-10-26T21:08:06.6701494-05:00",
+      "tests": 7,
+      "passed": 6,
+      "failed": 1,
+      "tap_duration_ms": 1759.3777,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c40.test.mjs"
+    },
+    "repair": {
+      "duration_ms": 1170.1552,
+      "end": "2026-10-26T21:08:25.8288250-05:00",
+      "start": "2026-10-26T21:08:24.6586698-05:00",
+      "run_id": "rf04-f05-c40-assertion-repair",
+      "exit_code": 0,
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "tap_duration_ms": 1110.4087,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-name-pattern='native review audit failure' --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+      "assertion_repair": {
+        "reason": "Fresh assertion expected undefined; current native missing-world-event reader returns null. Production and passing cases unchanged.",
+        "final_test_sha256": "efe933485d2f40e91d1363782eb3558f3c652016fbf2d79a756873e82fb74087",
+        "rerun": "one failed audit rollback case only"
+      }
+    },
+    "retention": "Local ignored files per owner; actual results and hashes committed."
+  },
+  "syntax": {
+    "checked": 6,
+    "passed": 6,
+    "repaired_test_checked": true
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 709,
+      "unowned": 0,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1973,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 709,
+      "unowned": 0,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
+      "cycleComponents": 3,
+      "largestCycle": 135,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1302,
+      "activeViolationGroups": 667,
+      "transitionErrors": 667,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "9e00ea169528323d0533cef95da70b790579206a6916198d67a69377cef7bf27",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/simulation-motivation.js",
+      "kind": "static",
+      "specifier": "./simulation-motivation.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "World consequence handlers use own acquired NPC evidence, own fixed native NPC goal proposal, original neutral jsonKey32 and own native operation readiness. Existing NPC–World pair binds original proposal; app initializes before services. No native rule or handler body changed.",
+  "limits": [
+    "Initial six cases passed before final missing-event null assertion correction; only failed rollback case rerun after repair. No full final-file batch; gap explicitly remains.",
+    "New tests/logs remain local per owner. Clean checkout lacks C38/C39/C40 registry references until local files supplied; INVALID_BRIDGE_TEST_REFERENCE expected, no enforcement exemption.",
+    "Only native goal consequence path qualified here; transmit/service handlers preserved but not new positive integration certification. No concurrent review/Discord/live quality/full phase qualification."
+  ],
+  "rollback": "Restore exact own interface, pair/bootstrap and consequence imports plus one retired transition. Preserve original dirty World public exports and all native state/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c40-tests.log",
+      "sha256": "9ba0ff9a015a22992a011b9b49b67fb181f0db526a5682e493b4f33205e095e6",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c40-repair-tests.log",
+      "sha256": "e560c9ad1bc94fd3a3e63e44d072c023775acb8f4858cc744e4d18c6d4c294b2",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c40-architecture-initial.log",
+      "sha256": "f950655f859e3aedc254b86f25269471013b862dfbeccac627e7b7081c2a323b",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c40-rf04-final.log",
+      "sha256": "c0d6b17eda6d69815654db23d26c0e712958c1a47a856c80a200f4561224fd2e",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c40-rf05-final.log",
+      "sha256": "e94e498b91071c7a0eb2da98f4b855dc6f32127e51815e35eacc1b347be38b1a",
+      "retention": "local ignored"
+    }
+  ]
+}

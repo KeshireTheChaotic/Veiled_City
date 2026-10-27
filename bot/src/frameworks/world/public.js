@@ -64,3 +64,4 @@ export {simulationCandidates} from './simulation-candidates.js';
 export {createWorldNpcOpportunityConsumer,worldNpcOpportunity} from './contracts/npc-opportunity.js';
 export {rankDirectorActions} from './director-action-ranking.js';
 export {inspectNpcAction} from './action-diagnostics.js';
+export {createWorldNpcGoalProposalConsumer,worldNpcGoalProposal} from './contracts/npc-goal-proposal.js';

@@ -1,0 +1,5 @@
+{
+  "reason": "Fresh assertion expected undefined; current native missing-world-event reader returns null. Production and passing cases unchanged.",
+  "final_test_sha256": "efe933485d2f40e91d1363782eb3558f3c652016fbf2d79a756873e82fb74087",
+  "rerun": "one failed audit rollback case only"
+}

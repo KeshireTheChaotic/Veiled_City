@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C39 World civic and long-project NPC evidence adoption",
-  "timestamp": "2026-10-27T02:05:18.208Z",
+  "checkpoint": "after C40 native World consequence NPC goal proposal integration",
+  "timestamp": "2026-10-27T02:08:27.892Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "2c6c80b919f5730880ac5bffa9940088904fb62892a3549631004176f660cf70",
-  "open_exact_records": 1959,
+  "manifest_sha256": "af36e49ab14f759d423e4195d6e8a9f235eb41cf073df163a01f0a1dd8acb743",
+  "open_exact_records": 1958,
   "by_feature": {
     "RF05-F05": 413,
     "RF04-F04": 191,
     "RF05-F02": 197,
     "RF05-F03": 238,
     "RF04-F03": 86,
-    "RF04-F01": 279,
+    "RF04-F01": 278,
     "RF06-F02": 17,
     "RF04-F05": 107,
     "RF06-F07": 5,
@@ -143,6 +143,20 @@
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "max_occurrences": 1,
       "source_sha256": "cf97b2f87120df52c535aed84a295012a0e39f9c5dec57956200bd6c31363fdb",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "9e00ea169528323d0533cef95da70b790579206a6916198d67a69377cef7bf27",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/city-consequences.js",
+      "to": "bot/src/simulation-motivation.js",
+      "owner": "world",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66",
       "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
@@ -6072,68 +6086,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 708,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3043,
-      "internalImportOccurrences": 2864,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1974,
-      "acceptedLegacyOccurrences": 1974,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1973,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 708,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3043,
-      "internalImportOccurrences": 2864,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1974,
-      "acceptedLegacyOccurrences": 1974,
+      "rawViolationOccurrences": 1973,
+      "acceptedLegacyOccurrences": 1973,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 708,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3043,
-      "internalImportOccurrences": 2864,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1974,
+      "rawViolationOccurrences": 1973,
       "acceptedLegacyOccurrences": 1302,
-      "activeViolationGroups": 668,
-      "transitionErrors": 668,
+      "activeViolationGroups": 667,
+      "transitionErrors": 667,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 708,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3043,
-      "internalImportOccurrences": 2864,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1974,
+      "rawViolationOccurrences": 1973,
       "acceptedLegacyOccurrences": 406,
-      "activeViolationGroups": 1558,
-      "transitionErrors": 1558,
+      "activeViolationGroups": 1557,
+      "transitionErrors": 1557,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 708,
+      "sourceModules": 709,
       "unowned": 0,
-      "importOccurrences": 3043,
-      "internalImportOccurrences": 2864,
+      "importOccurrences": 3047,
+      "internalImportOccurrences": 2868,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1974,
+      "rawViolationOccurrences": 1973,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1959,
-      "transitionErrors": 1959,
+      "activeViolationGroups": 1958,
+      "transitionErrors": 1958,
       "pass": false
     }
   },
@@ -6305,7 +6319,7 @@
     {
       "path": "bot/src/application/composition/world-npc-opportunity.js",
       "owner": "application",
-      "sha256": "529dbd83f9e5b043b00726047f6474210a184872c85202ec47304c4ca91e3385"
+      "sha256": "e668eec035db84a01aa8adb489ced200471ec76b2443c73e8d23934b58560806"
     },
     {
       "path": "bot/src/application/composition/world-owner-consent.js",
@@ -6420,7 +6434,7 @@
     {
       "path": "bot/src/city-consequences.js",
       "owner": "world",
-      "sha256": "c06b114777bde62f25c5bb574cadc3589760b72a7ffcdcc48cfd323870eb5c66"
+      "sha256": "2e10873d5e6ac37068f9b8734dca5bab0c69df0abb565e53c087dc5153b3d84c"
     },
     {
       "path": "bot/src/city-constraints.js",
@@ -6705,7 +6719,7 @@
     {
       "path": "bot/src/framework-to-framework/npc--world/public.js",
       "owner": "npc--world",
-      "sha256": "20b1b42b8b3af45602eabd7ac2748ed2d51e61c3214d2ca33211728e255fd48a"
+      "sha256": "e4fd189b41d33f306bbedfca10ddb3582d57610f52a604d074c913c2aa693055"
     },
     {
       "path": "bot/src/framework-to-framework/session--world/public.js",
@@ -8258,6 +8272,11 @@
       "sha256": "a9fdcb745ab2c0a051ab3462ae0b42ff17653458071fafa9a42a779e9df8be47"
     },
     {
+      "path": "bot/src/frameworks/world/contracts/npc-goal-proposal.js",
+      "owner": "world",
+      "sha256": "9c20931cfaa4df1c01eba8ba518111812f400e8f63b7a36f3206c348419d22b5"
+    },
+    {
       "path": "bot/src/frameworks/world/contracts/npc-knowledge-source.js",
       "owner": "world",
       "sha256": "16144f791e83cd893f26b16843c29c63c83c9e2194ba7c06e4e8d543764daff5"
@@ -8355,7 +8374,7 @@
     {
       "path": "bot/src/frameworks/world/public.js",
       "owner": "world",
-      "sha256": "a0aaf8244df36306cde46bddcf6ad7300049bb51c4298c52a512e165af52117f"
+      "sha256": "dcf88685ce91c6456805446a30e72dee7656c5046cb8ddde45f1d1d50aa0eb60"
     },
     {
       "path": "bot/src/frameworks/world/simulation-candidates.js",
@@ -9687,8 +9706,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C39-RUN.json"
+    "features/RF04-F05/C40-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38/C39 registry tests until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C40 registry tests until locally supplied. Architecture pass is current working-tree only."
 }

@@ -1,0 +1,34 @@
+{
+  "base_head": "2d17d22f01dfa563f70b87210f033da663adec97",
+  "syntax_checked": 6,
+  "files": [
+    {
+      "path": "bot/src/city-consequences.js",
+      "sha256": "2e10873d5e6ac37068f9b8734dca5bab0c69df0abb565e53c087dc5153b3d84c"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-goal-proposal.js",
+      "sha256": "9c20931cfaa4df1c01eba8ba518111812f400e8f63b7a36f3206c348419d22b5"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "dcf88685ce91c6456805446a30e72dee7656c5046cb8ddde45f1d1d50aa0eb60"
+    },
+    {
+      "path": "bot/src/framework-to-framework/npc--world/public.js",
+      "sha256": "e4fd189b41d33f306bbedfca10ddb3582d57610f52a604d074c913c2aa693055"
+    },
+    {
+      "path": "bot/src/application/composition/world-npc-opportunity.js",
+      "sha256": "e668eec035db84a01aa8adb489ced200471ec76b2443c73e8d23934b58560806"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+      "sha256": "a100c53d6e7223a0994e6fde3fbe44995f589140bcb2237fc099e0def8522836"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C40-SOURCE-BASELINE.json",
+      "sha256": "89ddaba632556edc0cda91333bbf89319dea45f4b83be2f19c3d3deaa8e6d8fc"
+    }
+  ]
+}

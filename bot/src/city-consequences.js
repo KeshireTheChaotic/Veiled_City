@@ -2,9 +2,12 @@
 import { cityInteger } from "./city-calendar.js";
 import { requireCitySource } from "./city-core.js";
 import { changeCityService, transmitCityBelief } from "./city-civic.js";
-import { actorSource, proposeGoalTransition, motivationKey } from "./simulation-motivation.js";
+import {worldNpcEvidence,worldNpcGoalProposal} from "./frameworks/world/public.js";
+import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
+const {actorSource}=worldNpcEvidence;
+const {proposeGoalTransition}=worldNpcGoalProposal;
 import { StateConflictError } from "./kernel/errors.js";
-import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './native-world-operations.js';
+import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './frameworks/world/public.js';
 const handlers={
   goal:(db,guild,row,actor)=>proposeGoalTransition(db,guild,{...row.data.payload,key:row.record_key,source_event:row.source_event},actor),
   service:(db,guild,row,actor)=>{
