@@ -2,7 +2,8 @@
 import {verifiedWorldAuthoringContext} from './world-authorship.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 import {compileNativeActors,executableNativeFeatures} from './native-feature-catalog.js';
-import {currentScene} from './scene-continuity.js';
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}
 import {sceneFictionHash as hash} from './scene-fiction-context.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

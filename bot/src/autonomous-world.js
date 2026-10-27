@@ -1,9 +1,11 @@
 /** AI-GM ordinary worldbuilding: authenticated inputs, canonical entities, bounded native actions and atomic replay receipts. */
 import { createHash } from "node:crypto";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {worldConversationPrincipal} from './frameworks/world/public.js';
+function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import { personalCharacter } from "./personal-continuity.js";
 import { indexWorldEvent, cityAudit, cityObject } from "./city-calendar.js";
-import { currentScene, recordScenePresence } from "./scene-continuity.js";
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}
 import {nativeMovementConditionIssue} from './native-group-features.js';
 import { activeCityProxy } from "./city-constraints.js";
 import { configureSimulationEntity } from "./simulation.js";

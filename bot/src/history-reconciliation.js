@@ -1,5 +1,6 @@
 /** Original fixed Session source composition for Knowledge history reconciliation. */
-import {sceneView} from './scene-continuity.js';
+import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
+function sceneView(...args){return knowledgeSessionScene.sceneView(...args);}
 import {createHistoryReconciliation} from './frameworks/knowledge/public.js';
 let historyRules;
 function history(){return historyRules??=createHistoryReconciliation({sceneView:(...args)=>sceneView(...args)});}

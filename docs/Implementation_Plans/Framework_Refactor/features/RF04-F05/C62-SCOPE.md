@@ -1,0 +1,5 @@
+# RF04-F05 C62 — Knowledge, World and Character read Session scenes and principals through ports
+
+Base 1fdc8797. Eight legacy modules stop importing the root scene-continuity.js and conversation-principal.js shims. Knowledge (evidence-custody, history-reconciliation, scoped-memory, semantic-candidate-source, personal-continuity) uses a new knowledgeSessionScene port and Character (character-observation) a new characterSession port, each bound by a newly adopted pair (knowledge--session, character--session) from its own bootstrap called in index.js and the test startup helper. World (autonomous-world, native-environment-instance) uses its existing worldSessionScene and worldConversationPrincipal ports. Five tests whose real flows now reach these ports compose startup ports.
+
+Rollback: Revert only the C62 commit: restore the eleven direct Session shim imports, remove the Knowledge and Character Session ports, adapters and bootstraps, return knowledge--session and character--session to PROPOSED_NO_API, and restore the eleven exact transitions from C62-RETIRED.json.

@@ -127,6 +127,12 @@
     ],
     "npc--operations": [
       "bot/src/framework-to-framework/npc--operations/public.js"
+    ],
+    "knowledge--session": [
+      "bot/src/framework-to-framework/knowledge--session/public.js"
+    ],
+    "character--session": [
+      "bot/src/framework-to-framework/character--session/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -1,6 +1,7 @@
 /** Original fixed Session/native owner-source composition for Knowledge semantic candidates. */
-import {conversationPrincipal} from './conversation-principal.js';
-import {currentScene} from './scene-continuity.js';
+function conversationPrincipal(...args){return knowledgeSessionScene.conversationPrincipal(...args);}
+import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
+function currentScene(...args){return knowledgeSessionScene.currentScene(...args);}
 import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {authoredTurnEnvelope} from './authored-turn-envelope.js';
 import {createSemanticCandidateProof} from './frameworks/knowledge/public.js';

@@ -345,29 +345,36 @@
         "character",
         "session"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "character",
           "to": "session",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Remaining observed dependency only; exact port remains with accountable migration."
+        },
+        {
+          "from": "session",
+          "to": "character",
+          "contract": "Session's original currentScene, sceneAccess, scenePresence and conversationPrincipal are bound unchanged into the Character-owned characterSession port; Session keeps every scene and identity rule."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/character-observation.js",
-          "to": "bot/src/conversation-principal.js",
-          "line": 3,
+          "from": "bot/src/application/composition/character-session.js",
+          "to": "bot/src/framework-to-framework/character--session/public.js",
+          "line": 1,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
+      "lifecycle": "One fixed consumer port bound by application composition at index bootstrap before runtime services. No database/model/client/state write during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/character-session.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "character",
@@ -381,7 +388,9 @@
         "pair": "character--session",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 2
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/character--session/public.js",
+      "scope": "Character observation scene and principal reads only. Other Character/Session dependencies remain accountable migration obligations."
     },
     {
       "pair": "character--world",
@@ -2183,36 +2192,36 @@
         "knowledge",
         "session"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "session",
-          "to": "knowledge",
-          "import_occurrences": 10,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "knowledge",
           "to": "session",
-          "import_occurrences": 7,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Remaining observed dependency only; exact port remains with accountable migration."
+        },
+        {
+          "from": "session",
+          "to": "knowledge",
+          "contract": "Session's original currentScene, sceneView, scenePresence and conversationPrincipal are bound unchanged into the Knowledge-owned knowledgeSessionScene port; Session keeps every scene and identity rule."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/dialogue-continuity.js",
-          "to": "bot/src/personal-continuity.js",
-          "line": 2,
+          "from": "bot/src/application/composition/knowledge-session.js",
+          "to": "bot/src/framework-to-framework/knowledge--session/public.js",
+          "line": 1,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
+      "lifecycle": "One fixed consumer port bound by application composition at index bootstrap before runtime services. No database/model/client/state write during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/knowledge-session.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "session",
@@ -2232,7 +2241,9 @@
         "pair": "knowledge--session",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 17
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/knowledge--session/public.js",
+      "scope": "Knowledge scene and principal reads only. Other Knowledge/Session dependencies remain accountable migration obligations."
     },
     {
       "pair": "knowledge--world",

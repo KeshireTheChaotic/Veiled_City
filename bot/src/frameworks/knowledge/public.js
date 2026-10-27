@@ -9,6 +9,7 @@ export * from './scoped-query.js';
 export {createMemoryClusters} from './memory-clusters.js';
 export {createEvidenceRules,epistemicSchema} from './epistemic.js';
 export {createKnowledgeWorldEventConsumer,knowledgeWorldEvents} from './contracts/world-events.js';
+export {createKnowledgeSessionSceneConsumer,knowledgeSessionScene} from './contracts/session-scene.js';
 export {evidenceType,activeEvidence,objectiveEvidence,typedEvidence,establishFact} from './evidence-source.js';
 export {createMemoryLifecycle} from './memory-lifecycle.js';
 export * from './historical-archive.js';

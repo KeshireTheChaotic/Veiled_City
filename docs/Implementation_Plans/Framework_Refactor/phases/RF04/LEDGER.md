@@ -581,3 +581,9 @@ Tests: one frozen batch of 27 files: 185 tests, 185 pass, 0 fail. Architecture: 
 Five Daggerheart legacy modules (action-consent, gm-action-review, ordinary-effect-proof, roll-requests, rules-arbitration) stop importing the root owner-action-terminal.js shim and call Session's original overlapsOwnerActionTerminal and recordOwnerActionTerminal through a new nativeOwnerActionTerminal port, bound by the Daggerheart-Session adapter in the native principal bootstrap. rf04-f04-c01 no longer imports the root roster.js removed in C59; it still checks each moved Session module against the public API.
 
 Tests: one frozen batch of 8 files: 60 tests, 60 pass, 0 fail. Architecture: 5 exact records retired. RF04 exit 0, 0 active violations, 723 modules; RF05 504 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-27 C62 Knowledge, World and Character read Session scenes and principals through ports
+
+Eight legacy modules stop importing the root scene-continuity.js and conversation-principal.js shims. Knowledge (evidence-custody, history-reconciliation, scoped-memory, semantic-candidate-source, personal-continuity) uses a new knowledgeSessionScene port and Character (character-observation) a new characterSession port, each bound by a newly adopted pair (knowledge--session, character--session) from its own bootstrap called in index.js and the test startup helper. World (autonomous-world, native-environment-instance) uses its existing worldSessionScene and worldConversationPrincipal ports. Five tests whose real flows now reach these ports compose startup ports.
+
+Tests: one frozen batch of 18 files: 142 tests, 142 pass, 0 fail. Architecture: 11 exact records retired. RF04 exit 0, 0 active violations, 729 modules; RF05 493 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

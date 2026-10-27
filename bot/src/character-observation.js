@@ -1,7 +1,8 @@
 /** Read-side PC observations. A question supplies no fact, consent, reaction or mechanical outcome. */
 import { createHash } from "node:crypto";
-import { conversationPrincipal } from "./conversation-principal.js";
-import { currentScene, sceneAccess, scenePresence } from "./scene-continuity.js";
+function conversationPrincipal(...args){return characterSession.conversationPrincipal(...args);}
+import {characterSession} from './frameworks/character/public.js';
+function currentScene(...args){return characterSession.currentScene(...args);}function sceneAccess(...args){return characterSession.sceneAccess(...args);}function scenePresence(...args){return characterSession.scenePresence(...args);}
 import {characterWorldEvents} from './frameworks/character/public.js';
 function indexWorldEvent(...args){return characterWorldEvents.indexWorldEvent(...args);}
 import { renderWorldObservation } from "./world-observation.js";
