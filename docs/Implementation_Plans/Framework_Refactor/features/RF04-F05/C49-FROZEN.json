@@ -1,0 +1,38 @@
+{
+  "base_head": "a9dac3b7cc928d184d589571f6519ff68e2ba8f2",
+  "syntax_checked": 7,
+  "files": [
+    {
+      "path": "bot/src/native-established-fact.js",
+      "sha256": "0e94d22435ac3b381b991f06a689fa50544169c7b49743a9217621562732d7e5"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/established-evidence.js",
+      "sha256": "dd2aac133a9094fcc17a56629885b86ae1c93234144bd25eb78ef699356abb8c"
+    },
+    {
+      "path": "bot/src/frameworks/world/established-fact-proof.js",
+      "sha256": "4c89957bfaeba5b1be1d35bc719af3c9d7b2bda2022371b586bb6778d1363e20"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "sha256": "ec399266d3563e184be1f082084aa81d78491b734e34cce76bcdf0fd983f8caf"
+    },
+    {
+      "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+      "sha256": "707e492ceab47922cdec2ef89f1535697f1079b2ce57d90ee005807265cdb7a8"
+    },
+    {
+      "path": "bot/src/application/composition/knowledge-world.js",
+      "sha256": "7eeb4f265a2407e2981fd937e192a1cd3ad349cabc5a1ce7d67412a5d058d163"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+      "sha256": "46084da2550ce58abdc080b63d7d37bd4dcc282df21c1e7efcd565f7df035b3d"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C49-SOURCE-BASELINE.json",
+      "sha256": "d4bf07cbe610306249cf12a1be6dcf0979c8988eee70d66683c940efdcf6fc6f"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# C49 ledger
+
+In progress; qualification pending.
+
+## 2026-10-26 C49 World exact native GM fact proof
+
+Original World proof body moved byte-identically to own source; own exact Knowledge evidence readers through existing pair, original World Narrative visibility and neutral error/hash, root same original function alias. Seven new7/7pass exit0 TAP1865.2128ms, syntax7/7, one frozen batch/no repairs. Actual Knowledge.establishFact produces native GM ruling and fact_establish audit: read-only proof requires exact snapshot/reviewer/source; later edit cannot inherit approval, actual new review restores distinct ruling/audit; legacy certainty lacks proof; private source stays recipient-specific; restart retains same receipt; retracted source rejects; native audit failure rolls ruling/provenance back. No fabricated receipt or new establishment operation.7exact identities retired (4records on removed edges,3surviving imports no longer cyclic); largest134→133. RF04 local passes722modules/0unowned/3083imports/1950rawaccepted/3cycles/largest133/0activeerrors; RF05 remains654expiredgroups/errors. 1935exact open/456resolved since audit. Evidence C49-RUN.json/individual review. New tests/logs local per owner; clean checkout lacks newly registered tests from C38 onward until supplied. Native environment effect/writer/publication/GM command authentication/live/full phase not newly qualified. Provider0tokens0cost$0; CodexUNMEASURED. RELEASE NOT AUTHORIZED.

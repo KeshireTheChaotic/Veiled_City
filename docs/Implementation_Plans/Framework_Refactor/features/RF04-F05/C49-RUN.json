@@ -1,0 +1,287 @@
+{
+  "feature": "RF04-F05-C49",
+  "status": "SCOPED_WORLD_EXACT_NATIVE_FACT_PROOF_QUALIFIED",
+  "frozen": {
+    "base_head": "a9dac3b7cc928d184d589571f6519ff68e2ba8f2",
+    "syntax_checked": 7,
+    "files": [
+      {
+        "path": "bot/src/native-established-fact.js",
+        "sha256": "0e94d22435ac3b381b991f06a689fa50544169c7b49743a9217621562732d7e5"
+      },
+      {
+        "path": "bot/src/frameworks/world/contracts/established-evidence.js",
+        "sha256": "dd2aac133a9094fcc17a56629885b86ae1c93234144bd25eb78ef699356abb8c"
+      },
+      {
+        "path": "bot/src/frameworks/world/established-fact-proof.js",
+        "sha256": "4c89957bfaeba5b1be1d35bc719af3c9d7b2bda2022371b586bb6778d1363e20"
+      },
+      {
+        "path": "bot/src/frameworks/world/public.js",
+        "sha256": "ec399266d3563e184be1f082084aa81d78491b734e34cce76bcdf0fd983f8caf"
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--world/public.js",
+        "sha256": "707e492ceab47922cdec2ef89f1535697f1079b2ce57d90ee005807265cdb7a8"
+      },
+      {
+        "path": "bot/src/application/composition/knowledge-world.js",
+        "sha256": "7eeb4f265a2407e2981fd937e192a1cd3ad349cabc5a1ce7d67412a5d058d163"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "sha256": "46084da2550ce58abdc080b63d7d37bd4dcc282df21c1e7efcd565f7df035b3d"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C49-SOURCE-BASELINE.json",
+        "sha256": "d4bf07cbe610306249cf12a1be6dcf0979c8988eee70d66683c940efdcf6fc6f"
+      }
+    ]
+  },
+  "source_baseline": {
+    "original_root": "/** Read-only authenticated establishment proof. A later edit cannot inherit an earlier GM approval. */\r\nimport {evidenceType,objectiveEvidence} from './epistemic.js';\r\nimport {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';\r\nimport {arbitrationFailure as fail} from './gm-arbitration-contract.js';\r\nexport function nativeEstablishedFact(db,guild,id,scope){\r\n  const fact=db.getFact(guild,id),epistemic=fact&&evidenceType(fact),\r\n    ruling=epistemic?.source_refs?.length===1&&db.getWorldEvent(guild,epistemic.source_refs[0]);\r\n  if(!objectiveEvidence(db,guild,fact)||epistemic.kind!=='established'||ruling?.status!=='active'||ruling.kind!=='gm_fact_ruling'\r\n    ||!ruling.details.reviewed_by||ruling.source_id!==ruling.details.reviewed_by||ruling.details.fact_id!==id\r\n    ||epistemic.perspective!==`gm:${ruling.details.reviewed_by}`||!narrativeSourceVisible(db,guild,id,scope)\r\n    ||!narrativeSourceVisible(db,guild,ruling.event_key,scope))throw fail('native_established_fact_source_required');\r\n  const mutations=db.db.prepare(\"SELECT id,after_json FROM mutation_ledger WHERE guild_id=? AND mutation_type='fact_establish' AND entity_key=? AND actor_id=? AND source_layer='city'\")\r\n    .all(guild,id,ruling.details.reviewed_by),audit=mutations.find(m=>hash(JSON.parse(m.after_json))===hash(fact));\r\n  if(!audit)throw fail('native_established_fact_exact_reviewed_snapshot_required');\r\n  return {fact,ruling,mutation:audit.id};\r\n}\r\n",
+    "proof_body_sha256": "3d91743c6313e1a1b3db07d2272447c7804cd4dc168bbd72200375b31a221816"
+  },
+  "tests": {
+    "duration_ms": 1919.3237,
+    "start": "2026-10-26T21:54:24.3153733-05:00",
+    "run_id": "rf04-f05-c49-frozen",
+    "exit_code": 0,
+    "end": "2026-10-26T21:54:26.2346970-05:00",
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "tap_duration_ms": 1865.2128,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+    "retention": "Local ignored test/logs per owner; actual hashes and terminal results committed."
+  },
+  "syntax": {
+    "checked": 7,
+    "passed": 7
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 722,
+      "unowned": 0,
+      "importOccurrences": 3083,
+      "internalImportOccurrences": 2904,
+      "cycleComponents": 3,
+      "largestCycle": 133,
+      "rawViolationOccurrences": 1950,
+      "acceptedLegacyOccurrences": 1950,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 722,
+      "unowned": 0,
+      "importOccurrences": 3083,
+      "internalImportOccurrences": 2904,
+      "cycleComponents": 3,
+      "largestCycle": 133,
+      "rawViolationOccurrences": 1950,
+      "acceptedLegacyOccurrences": 1292,
+      "activeViolationGroups": 654,
+      "transitionErrors": 654,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "7fa9c33f7b9d3a1da8a3264043ced8ce170909dfc18014b557b856ada9aaeee3",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/epistemic.js",
+      "kind": "static",
+      "specifier": "./epistemic.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "37a1047bfd5ebea9c87af3457266b4da207593ad6b04e8903678cc043a95a764",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "278aeba5890605bca6ce3c4cd7496061f8a89ef6e9c7c56a5c451ce5dcbea4b1",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "0694bf7f502b0708d4c47ece13f8d895f2fe80d50c394cfe0001fe0b99f8e5fa",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-access.js",
+      "to": "bot/src/native-established-fact.js",
+      "kind": "static",
+      "specifier": "./native-established-fact.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "96c95f5df50d4e6a4691a26def3757ee9058be447b36dd96faf17be2060ec719",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-scene.js",
+      "to": "bot/src/native-established-fact.js",
+      "kind": "static",
+      "specifier": "./native-established-fact.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "86ad60a9324bb9d5d122e873f2ae341a10bc875111878ece46e2b47782a17c5a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-established-fact.js",
+      "kind": "static",
+      "specifier": "./native-established-fact.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "76952779f68e45ddc54f5df9f82b9799917f7477f67ed71b1ababeb48047f918",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "transition_review": [
+    {
+      "id": "7fa9c33f7b9d3a1da8a3264043ced8ce170909dfc18014b557b856ada9aaeee3",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/epistemic.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original cross-framework proof dependency removed."
+    },
+    {
+      "id": "37a1047bfd5ebea9c87af3457266b4da207593ad6b04e8903678cc043a95a764",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original cross-framework proof dependency removed."
+    },
+    {
+      "id": "278aeba5890605bca6ce3c4cd7496061f8a89ef6e9c7c56a5c451ce5dcbea4b1",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original cross-framework proof dependency removed."
+    },
+    {
+      "id": "0694bf7f502b0708d4c47ece13f8d895f2fe80d50c394cfe0001fe0b99f8e5fa",
+      "from": "bot/src/native-environment-access.js",
+      "to": "bot/src/native-established-fact.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import no longer cyclic, not deleted import."
+    },
+    {
+      "id": "96c95f5df50d4e6a4691a26def3757ee9058be447b36dd96faf17be2060ec719",
+      "from": "bot/src/native-environment-scene.js",
+      "to": "bot/src/native-established-fact.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import no longer cyclic, not deleted import."
+    },
+    {
+      "id": "86ad60a9324bb9d5d122e873f2ae341a10bc875111878ece46e2b47782a17c5a",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-established-fact.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import no longer cyclic, not deleted import."
+    },
+    {
+      "id": "76952779f68e45ddc54f5df9f82b9799917f7477f67ed71b1ababeb48047f918",
+      "from": "bot/src/native-established-fact.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": false,
+      "reason": "Original cross-framework proof dependency removed."
+    }
+  ],
+  "ownership": "Original World proof body unchanged in World source; original Knowledge evidence readers through own fixed consumer/existing Knowledge–World pair; existing World Narrative proof and neutral kernel hash/error. Root same function alias, no new establishment authority.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Actual native Knowledge GM establishment, exact snapshot audit/source/privacy/retraction/rollback/restart qualified offline. GM command permission boundary, Native environment effect issuance, writer/Discord/live/full phase not newly qualified.",
+    "Historical root alias and persisted proof with proper source initialization tested; bootstrap-free standalone reader not newly qualified.",
+    "New tests/logs local per owner; clean checkout lacks newly registered references from C38 onward until supplied, no checker exemption or clean-checkout qualification."
+  ],
+  "rollback": "Restore original native-established-fact composition from C49 baseline, remove only own World proof/interface/pair/initializer/exports and restore7 exact records together. Preserve established facts, rulings, provenance, mutation receipts and private data.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c49-tests.log",
+      "sha256": "6184b401196d0c8ef0d009f9ecd96997bf917ef0ab75da06b922a29e39696443",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c49-architecture-initial.log",
+      "sha256": "31398f867d1aa77853b0eefce1ba29ba73d6d85b628cfdf59ca22104d1e03932",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c49-rf04-final.log",
+      "sha256": "415b262e7d4e797480da9d817c15247a8857432cb4671240b8871448d4303b06",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c49-rf05-final.log",
+      "sha256": "0170e1494d414a2349c7462ab3a4ab9b49b8a0bdc550d26c06792370c43d3b8c",
+      "retention": "local ignored"
+    }
+  ]
+}

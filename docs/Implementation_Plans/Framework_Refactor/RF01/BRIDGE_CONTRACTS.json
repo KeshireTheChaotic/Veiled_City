@@ -2265,7 +2265,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2288,7 +2289,7 @@
         "occurrences": 32
       },
       "public_api": "bot/src/framework-to-framework/knowledge--world/public.js",
-      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open. C26 Knowledge deterministic context selection consumes exact original World history summary reader, scoped GM context only; no new actor/canonical authority. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers."
+      "scope": "Knowledge evidence event/audit and World authorship disclosure/record-reading directions only. Other memory, custody, organization, source and World integrations remain open. Existing-identity retrieval direction is adopted by C07; other mappings remain open. C22 reversible actor memory source adopted; standalone consumers require explicit source bootstrap, and remaining memory ownership/custody directions stay open. C26 Knowledge deterministic context selection consumes exact original World history summary reader, scoped GM context only; no new actor/canonical authority. C28 original World candidate source consumes exact NPC cognition and Knowledge actor clusters through fixed own consumers. C49 World exact GM establishment proof consumes original Knowledge evidence readers, preserving native ruling and exact audit snapshot. Tests local per owner."
     },
     {
       "pair": "narrative--npc",

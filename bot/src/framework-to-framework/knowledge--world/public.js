@@ -24,3 +24,7 @@ export function connectKnowledgeHistory(){return knowledgeWorldHistory.bind(hist
 import {worldKnowledgeClusters} from '../../frameworks/world/public.js';
 import {clusterContext} from '../../frameworks/knowledge/public.js';
 export function connectWorldKnowledgeClusters(){return worldKnowledgeClusters.bind(clusterContext);}
+
+import {evidenceType,objectiveEvidence} from '../../frameworks/knowledge/public.js';
+import {worldEstablishedEvidence} from '../../frameworks/world/public.js';
+export function connectWorldEstablishedEvidence(){return worldEstablishedEvidence.bind({evidenceType,objectiveEvidence});}

@@ -68,3 +68,5 @@ export {createWorldNpcGoalProposalConsumer,worldNpcGoalProposal} from './contrac
 export {createWorldNpcSeedConsumer,worldNpcSeed} from './contracts/npc-seed.js';
 export {createWorldNpcVisibilityConsumer,worldNpcVisibility} from './contracts/npc-visibility.js';
 export {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './npc-signal-memory.js';
+export {createWorldEstablishedEvidenceConsumer,worldEstablishedEvidence} from './contracts/established-evidence.js';
+export {nativeEstablishedFact} from './established-fact-proof.js';

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "7fa9c33f7b9d3a1da8a3264043ced8ce170909dfc18014b557b856ada9aaeee3",
+    "from": "bot/src/native-established-fact.js",
+    "to": "bot/src/epistemic.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original cross-framework proof dependency removed."
+  },
+  {
+    "id": "37a1047bfd5ebea9c87af3457266b4da207593ad6b04e8903678cc043a95a764",
+    "from": "bot/src/native-established-fact.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original cross-framework proof dependency removed."
+  },
+  {
+    "id": "278aeba5890605bca6ce3c4cd7496061f8a89ef6e9c7c56a5c451ce5dcbea4b1",
+    "from": "bot/src/native-established-fact.js",
+    "to": "bot/src/gm-arbitration-contract.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original cross-framework proof dependency removed."
+  },
+  {
+    "id": "0694bf7f502b0708d4c47ece13f8d895f2fe80d50c394cfe0001fe0b99f8e5fa",
+    "from": "bot/src/native-environment-access.js",
+    "to": "bot/src/native-established-fact.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import no longer cyclic, not deleted import."
+  },
+  {
+    "id": "96c95f5df50d4e6a4691a26def3757ee9058be447b36dd96faf17be2060ec719",
+    "from": "bot/src/native-environment-scene.js",
+    "to": "bot/src/native-established-fact.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import no longer cyclic, not deleted import."
+  },
+  {
+    "id": "86ad60a9324bb9d5d122e873f2ae341a10bc875111878ece46e2b47782a17c5a",
+    "from": "bot/src/native-environment-witnesses.js",
+    "to": "bot/src/native-established-fact.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import no longer cyclic, not deleted import."
+  },
+  {
+    "id": "76952779f68e45ddc54f5df9f82b9799917f7477f67ed71b1ababeb48047f918",
+    "from": "bot/src/native-established-fact.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": false,
+    "reason": "Original cross-framework proof dependency removed."
+  }
+]
