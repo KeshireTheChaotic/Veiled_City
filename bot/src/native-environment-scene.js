@@ -3,7 +3,8 @@ import {inspectNativeEnvironmentInstance} from './native-environment-instance.js
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
-import {recordScenePresence,currentScene,scenePresence} from './scene-continuity.js';
+import {worldSessionScene} from './frameworks/world/public.js';
+function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
 import {assertEnvironmentAudience} from './native-environment-audience.js';

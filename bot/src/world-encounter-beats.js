@@ -1,7 +1,9 @@
 /** Read-only pending encounter metadata. A candidate never activates combat or grants publication. */
 import {EncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget} from './encounter.js';
-import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function sceneAccess(...args){return worldSessionScene.sceneAccess(...args);}
+import {worldConversationPrincipal} from './frameworks/world/public.js';
+function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {nativeActorControl} from './native-actor-control.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';

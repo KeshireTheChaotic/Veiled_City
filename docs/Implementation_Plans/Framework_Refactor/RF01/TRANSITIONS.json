@@ -10202,20 +10202,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "a47efd9d97d4feb96d9070a6ea128e30d3287c14d979ded50f560f8609dbd92d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-scene.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "09b7f179e740af2fbb7cb6f773a9bc016e70f38adbda35a62b8c3914ff84af8c",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-scene.js",
@@ -16091,34 +16077,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "4d9a72fde49b3bbe68639699dce4cfdf33fb25b96d1361ccbacc75e87f104008",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-encounter-beats.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "c50f9d38a73a3221d6ebc58eb0aead85e6fdc7a5a5567f643db8a177666ef9c9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-encounter-beats.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7ae57b26a8ebe0a974ac7b0e17986abc9bad28c24175a5ac6f07c48f6106960b",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/world-encounter-beats.js",
@@ -16441,20 +16399,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "275a09af642b50fc0188e9844a3ab9f758821603cc0becf30e8790464cd36262",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-observation.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "66261179c3521347b724b30f4df6e0b4609aa5702cdf6cb37a6c9d628b88c873",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/world-private-seeds.js",
@@ -16497,20 +16441,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "830d10db4b4c1f02fa6b35259c0a61bcbce5fe95cb839cddf56db327ee2c8dd1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-resolution.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7c75afe1110c522c82b812c4c9e35bc8fe7069c07f56a403a60467e53f494c0f",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/world-resolution.js",
@@ -16531,34 +16461,6 @@
       "to": "bot/src/narrative-records.js",
       "kind": "static",
       "specifier": "./narrative-records.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a475aee11109ed697b54814540ee9356b2af6eb5edfe397746c9041ff1d05a1e",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-simulation-receipts.js",
-      "to": "bot/src/scene-continuity.js",
-      "kind": "static",
-      "specifier": "./scene-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "381cd42a7ffe69baf17b03598b53ad555a16a7e81f540eae00b94db8062374a5",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-simulation-receipts.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "world",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",

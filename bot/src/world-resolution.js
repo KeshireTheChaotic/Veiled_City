@@ -2,7 +2,8 @@
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.js';
 import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
-import {currentScene,scenePresence} from './scene-continuity.js';
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
 import {worldActorControl} from './city-constraints.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
 import {narrativeImportance,nativeSalienceAvailable} from './narrative-salience.js';

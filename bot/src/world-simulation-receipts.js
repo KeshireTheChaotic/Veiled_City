@@ -4,10 +4,12 @@ import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 export {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {createHash} from 'node:crypto';
 import {principalAllows} from './kernel/application-authority.js';
-import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function sceneAccess(...args){return worldSessionScene.sceneAccess(...args);}
 import {activeCityProxy} from './city-constraints.js';
 import {indexWorldEvent,cityAudit} from './frameworks/world/public.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {worldConversationPrincipal} from './frameworks/world/public.js';
+function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {factVisibleTo} from './disclosure-authority.js';

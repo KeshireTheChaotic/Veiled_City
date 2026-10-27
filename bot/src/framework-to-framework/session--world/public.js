@@ -11,6 +11,6 @@ import {sessionSceneWorldSources} from '../../frameworks/session/public.js';
 import {cityObject,cityKey,cityInteger,cityVisibility,cityAudit,requireCitySource,activeCityProxy} from '../../frameworks/world/public.js';
 export function connectSessionSceneWorld(){return sessionSceneWorldSources.bind({cityObject,cityKey,cityInteger,cityVisibility,cityAudit,requireCitySource,activeCityProxy});}
 
-import {currentScene,reconcileSceneArrival} from '../../frameworks/session/public.js';
+import {currentScene,reconcileSceneArrival,scenePresence,sceneAccess,recordScenePresence} from '../../frameworks/session/public.js';
 import {worldSessionScene} from '../../frameworks/world/public.js';
-export function connectWorldSessionScene(){return worldSessionScene.bind({currentScene,reconcileSceneArrival});}
+export function connectWorldSessionScene(){return worldSessionScene.bind({currentScene,reconcileSceneArrival,scenePresence,sceneAccess,recordScenePresence});}

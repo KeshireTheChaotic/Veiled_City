@@ -1,7 +1,8 @@
 /** Selected GM-established non-PC visual facts. Neither profile prose nor an inquiry certifies an answer. */
 import { createHash } from "node:crypto";
 import { indexWorldEvent } from './frameworks/world/public.js';
-import { currentScene, scenePresence, sceneAccess } from "./scene-continuity.js";
+import {worldSessionScene} from './frameworks/world/public.js';
+function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function sceneAccess(...args){return worldSessionScene.sceneAccess(...args);}
 import { activeCityProxy } from "./city-constraints.js";
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
