@@ -3,9 +3,10 @@ import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authors
 import {canonicalInterestEvidence,nativeSalienceAvailable} from './narrative-salience.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,narrativeSourceVisible,sceneFictionFailure as fail} from './scene-fiction-context.js';
-import {factVisibleTo} from './disclosure-authority.js';
+function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 import {indexWorldEvent} from './frameworks/world/public.js';
-import {listNarrativeRecords} from './narrative-records.js';
+import {worldKnowledgeSources} from './frameworks/world/public.js';
+function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}
 const issuer='native:world-identity-persistence';
 export function verifiedIdentityPersistence(db,guild,key,scope){
   const row=db.getCityRecord(guild,'world_identity_promotion',key),d=row?.data,event=row&&db.getWorldEvent(guild,row.source_event);

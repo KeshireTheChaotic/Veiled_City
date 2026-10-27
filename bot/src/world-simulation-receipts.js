@@ -12,7 +12,8 @@ import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {factVisibleTo} from './disclosure-authority.js';
+import {worldKnowledgeSources} from './frameworks/world/public.js';
+function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 
 const key=value=>typeof value==='string'&&value.length>0&&value.length<=200;
 const parse=value=>{try{return JSON.parse(value);}catch{return null;}};

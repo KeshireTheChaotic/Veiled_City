@@ -1,0 +1,154 @@
+{
+  "feature": "RF04-F05-C63",
+  "base_head": "5ad59454249bf7f5401b571d08fe0cfddf4cbfa0",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/world-identity-persistence.js",
+      "bot/src/world-sanctioned-sources.js",
+      "bot/src/world-encounter-beats.js",
+      "bot/src/world-simulation-receipts.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c63.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "E623AFBCD172192A6270DAACB91C1099D87AB0A04DFD86D40FE063223DB9B40C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c63.test.mjs",
+        "sha256": "7CDE0EEE69CB506E716AFA520B2802C8BB675BC96521C3AAD88FAFCA4C53AE07"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T16:48:16.636Z",
+    "end": "2026-10-27T16:48:18.799Z",
+    "exit_code": 0,
+    "tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 2126.2653,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c63-test.log",
+    "log_sha256": "634B1CC4F88A781D0C40472A697B639082D1405DF7921BBF4D376D8B5510E689",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 729,
+      "unowned": 0,
+      "imports": 3107,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1781,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c63-rf04-architecture.log",
+      "log_sha256": "7ECA02E7818CAF6793ECF62A48634A3C717D3DBD18AA443D08BE6706D35D4C65",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 729,
+      "unowned": 0,
+      "imports": 3107,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1290,
+      "active_violation_groups": 488,
+      "transition_errors": 488,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c63-rf05-architecture.log",
+      "log_sha256": "EAB9F92655E9B2E0763924849BB4AABA18848B26EBCEB6DA4AE4834403764B5B",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/world-encounter-beats.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-identity-persistence.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-sanctioned-sources.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-simulation-receipts.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-encounter-beats.js -> bot/src/encounter.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-encounter-beats.js -> bot/src/native-actor-control.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-encounter-beats.js -> bot/src/scene-fiction-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/narrative-salience.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/scene-fiction-context.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-simulation-receipts.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-encounter-beats.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-simulation-receipts.js -> bot/src/scene-fiction-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-encounter-beats.js -> bot/src/scene-fiction-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/narrative-salience.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/scene-fiction-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/world-simulation-receipts.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/world-encounter-beats.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-simulation-receipts.js -> bot/src/scene-fiction-context.js",
+        "EXPIRED_TRANSITION bot/src/world-encounter-beats.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-sanctioned-sources.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-simulation-receipts.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-encounter-beats.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-encounter-beats.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-encounter-beats.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-simulation-receipts.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-encounter-beats.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-simulation-receipts.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "87a30b378326034d18ad7b9bcba0269a1013b3900c204fa8e321f6737af1b8e4",
+      "67753c4e35181d07acf6cb4857b536d9461d19ca930996c1f8aba73cc00655b4",
+      "0506b0f7e2c12ace0d9d6c9006d4fe382d4af3dbd19bd6f35a6ba485b7f89584",
+      "5bad8a79c43fc3f368b5dd1a3e87259d8670d9a589cbeab0fe6eae5db4e98684",
+      "10e3f63986c985bf3077b1f958ed230bed1ae0244d68dba2f56f5a2fdf0c99f5"
+    ],
+    "original_manifest_sha256": "A69F4065FBDEF9036EE245DCBD7C20BFFA3B92EBDEDC6B1157D69BD2D5281E49",
+    "manifest_sha256_after": "C29FD795DA2C6220B0EAE3E3853915237AF7B822CD858B4C3868F283C7206E2E",
+    "entries_after": 1767,
+    "remaining_by_feature": {
+      "RF04-F01": 195,
+      "RF04-F03": 66,
+      "RF04-F04": 124,
+      "RF04-F05": 103,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/world-identity-persistence.js": "8E72E6C4D5BB5CA05589E5E2DC4498EAA2F4815D05F724A5F6C8EB19D89818D0",
+    "bot/src/world-sanctioned-sources.js": "0B9724DDDB6826B80F6D630844FD6BC0B74CF028DEABE2A0D9BCC9B861C5085B",
+    "bot/src/world-encounter-beats.js": "6FDC1FE9B308CBAC585BA84927277E58175F78918D77177DD9F151755888B18A",
+    "bot/src/world-simulation-receipts.js": "8A20729ADC47C4EB20792C83F4DED088309A5C6AAF9DFEBFDA85837AFCF9280D"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C63 commit: restore the five direct Knowledge shim imports in four World modules and the five exact transitions from C63-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

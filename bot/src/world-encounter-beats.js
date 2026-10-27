@@ -7,7 +7,8 @@ function conversationPrincipal(...args){return worldConversationPrincipal.conver
 import {nativeActorControl} from './native-actor-control.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {factVisibleTo} from './disclosure-authority.js';
+import {worldKnowledgeSources} from './frameworks/world/public.js';
+function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 import {StateConflictError,UserInputError} from "./kernel/errors.js";
 const expectedPrincipal=new Set(['Active session required.','Select an authenticated current controlled role.',
   'Controller attendance required.','Active campaign character required.']);

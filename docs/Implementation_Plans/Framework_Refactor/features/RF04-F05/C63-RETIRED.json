@@ -1,0 +1,77 @@
+{
+  "feature": "RF04-F05-C63",
+  "original_manifest_sha256": "A69F4065FBDEF9036EE245DCBD7C20BFFA3B92EBDEDC6B1157D69BD2D5281E49",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "87a30b378326034d18ad7b9bcba0269a1013b3900c204fa8e321f6737af1b8e4",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-encounter-beats.js",
+      "to": "bot/src/disclosure-authority.js",
+      "kind": "static",
+      "specifier": "./disclosure-authority.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "67753c4e35181d07acf6cb4857b536d9461d19ca930996c1f8aba73cc00655b4",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-identity-persistence.js",
+      "to": "bot/src/disclosure-authority.js",
+      "kind": "static",
+      "specifier": "./disclosure-authority.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "0506b0f7e2c12ace0d9d6c9006d4fe382d4af3dbd19bd6f35a6ba485b7f89584",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-identity-persistence.js",
+      "to": "bot/src/narrative-records.js",
+      "kind": "static",
+      "specifier": "./narrative-records.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "5bad8a79c43fc3f368b5dd1a3e87259d8670d9a589cbeab0fe6eae5db4e98684",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-sanctioned-sources.js",
+      "to": "bot/src/narrative-records.js",
+      "kind": "static",
+      "specifier": "./narrative-records.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "10e3f63986c985bf3077b1f958ed230bed1ae0244d68dba2f56f5a2fdf0c99f5",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-simulation-receipts.js",
+      "to": "bot/src/disclosure-authority.js",
+      "kind": "static",
+      "specifier": "./disclosure-authority.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
