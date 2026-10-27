@@ -1,0 +1,7 @@
+# C42 ledger
+
+In progress; qualification pending.
+
+## 2026-10-26 C42 Narrative NPC testimony evidence adoption
+
+Narrative authority uses existing own native actor-reference callback; speaker briefing uses fixed own original actor-evidence visibility callback through existing Narrative–NPC pair and actual startup. All non-import source bytes unchanged, including preserved dirty authority extraction; only own import staged there. Native imported nonsecret testimony reaches speaker packet while original GM source stays GM, actual secrets/unknown/otherNPC content excluded; cross-actor/campaign source substitution rejected; no invented PC address/participation; restart preserves packet and retraction removes testimony, no canon mutation. Initial3/5pass exit1 TAP1389.1978ms, two fixture omissions of actual Session NPC observation initializer; corrected only startup fixture, failed-case2/2pass exit0 TAP1188.0215ms. Syntax7/7 plus repaired test. Final-file gap remains: three earlier cases not rerun after fixture correction. Two exact obsolete imports retired. RF04 local passes711modules/0unowned/3053imports/1970rawaccepted/3cycles/largest135/0activeerrors; RF05 remains666expiredgroups/errors.1955exact open/436resolved since audit. Evidence C42-RUN.json. New tests/logs local ignored per owner; clean checkout lacks C38–C42 registry references until supplied. No full writer acceptance/publication/PC-presence/live-quality/full phase certificate. Provider0tokens0cost$0; CodexUNMEASURED. RELEASE NOT AUTHORIZED.

@@ -1,14 +1,14 @@
 {
-  "checkpoint": "after C41 World native NPC content bootstrap",
-  "timestamp": "2026-10-27T02:13:07.182Z",
+  "checkpoint": "after C42 Narrative native NPC testimony evidence adoption",
+  "timestamp": "2026-10-27T02:16:50.861Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "de9c6c97135fe9328e34fb91c843fbf328779ac20727a62df75e9fffbcedf54a",
-  "open_exact_records": 1957,
+  "manifest_sha256": "0a65e6c08b4db2264a1e3dd9e5442d7656b3b3fa6e80afbcf85b86307433ad36",
+  "open_exact_records": 1955,
   "by_feature": {
     "RF05-F05": 413,
     "RF04-F04": 191,
     "RF05-F02": 197,
-    "RF05-F03": 238,
+    "RF05-F03": 236,
     "RF04-F03": 86,
     "RF04-F01": 277,
     "RF06-F02": 17,
@@ -522,6 +522,34 @@
       "max_occurrences": 1,
       "source_sha256": "b152517d815ecc24c66387ee6cbe9cc45e3ed5f77be569eec6f83827228c8d92",
       "target_owner": "world",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "1e0a2ab5f9803922388d4c55ca6cbabe0b2b3a7eb0172cdc1b1ac44f608b2a8e",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/narrative-authority.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "8da098277e25d547cc9e6ae4443d56838481cde6632ec672c5fdb979444827ff",
+      "target_owner": "npc",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "4663752f51b1609e15276bb2f777ac830301d5a219543ec5af7a772d39afc6ac",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/narrative-speakers.js",
+      "to": "bot/src/npc-cognition-projection.js",
+      "owner": "narrative",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "807596235f40a1787038dedb61f3fa956e1cbf8814566b3980e72f462d64c565",
+      "target_owner": "npc",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -6100,68 +6128,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 710,
+      "sourceModules": 711,
       "unowned": 0,
-      "importOccurrences": 3050,
-      "internalImportOccurrences": 2871,
+      "importOccurrences": 3053,
+      "internalImportOccurrences": 2874,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1972,
-      "acceptedLegacyOccurrences": 1972,
+      "rawViolationOccurrences": 1970,
+      "acceptedLegacyOccurrences": 1970,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 710,
+      "sourceModules": 711,
       "unowned": 0,
-      "importOccurrences": 3050,
-      "internalImportOccurrences": 2871,
+      "importOccurrences": 3053,
+      "internalImportOccurrences": 2874,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1972,
-      "acceptedLegacyOccurrences": 1972,
+      "rawViolationOccurrences": 1970,
+      "acceptedLegacyOccurrences": 1970,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 710,
+      "sourceModules": 711,
       "unowned": 0,
-      "importOccurrences": 3050,
-      "internalImportOccurrences": 2871,
+      "importOccurrences": 3053,
+      "internalImportOccurrences": 2874,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1972,
-      "acceptedLegacyOccurrences": 1302,
+      "rawViolationOccurrences": 1970,
+      "acceptedLegacyOccurrences": 1300,
       "activeViolationGroups": 666,
       "transitionErrors": 666,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 710,
+      "sourceModules": 711,
       "unowned": 0,
-      "importOccurrences": 3050,
-      "internalImportOccurrences": 2871,
+      "importOccurrences": 3053,
+      "internalImportOccurrences": 2874,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1972,
+      "rawViolationOccurrences": 1970,
       "acceptedLegacyOccurrences": 406,
-      "activeViolationGroups": 1556,
-      "transitionErrors": 1556,
+      "activeViolationGroups": 1554,
+      "transitionErrors": 1554,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 710,
+      "sourceModules": 711,
       "unowned": 0,
-      "importOccurrences": 3050,
-      "internalImportOccurrences": 2871,
+      "importOccurrences": 3053,
+      "internalImportOccurrences": 2874,
       "cycleComponents": 3,
       "largestCycle": 135,
-      "rawViolationOccurrences": 1972,
+      "rawViolationOccurrences": 1970,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1957,
-      "transitionErrors": 1957,
+      "activeViolationGroups": 1955,
+      "transitionErrors": 1955,
       "pass": false
     }
   },
@@ -6273,7 +6301,7 @@
     {
       "path": "bot/src/application/composition/npc-evidence-projection.js",
       "owner": "application",
-      "sha256": "cfa9a342638a7b8f8912e777e701bda1d058381c69f0aeba0eaf7a312ad4dc8c"
+      "sha256": "353aeb7baa4ce95ebafc32a7d933833ec7446cf17fe419912d6e7c7a65c89cda"
     },
     {
       "path": "bot/src/application/composition/npc-observations.js",
@@ -6708,7 +6736,7 @@
     {
       "path": "bot/src/framework-to-framework/narrative--npc/public.js",
       "owner": "narrative--npc",
-      "sha256": "9981b89e4fefdbf3547524ae135ca0f5c62ad4a082902910c192ec69c8188405"
+      "sha256": "c623d7c23a84939d1cb2da580d296759bce75eac3eb7a43c69c68e097924d36f"
     },
     {
       "path": "bot/src/framework-to-framework/narrative--session/public.js",
@@ -7741,6 +7769,11 @@
       "sha256": "494522b049e8fcf2b60c68257064c21303ea2fdbe77b2412780d7d50fcb28986"
     },
     {
+      "path": "bot/src/frameworks/narrative/contracts/npc-visibility.js",
+      "owner": "narrative",
+      "sha256": "64b8d0c5e38d79154369b047dbe645cb4e30eee3581329ffd650cfc13fcaead7"
+    },
+    {
       "path": "bot/src/frameworks/narrative/contracts/opening-author.js",
       "owner": "narrative",
       "sha256": "20011cb721f25f8ed929abf20cecd2518fa63fa533b55a56ea0cc5a875ee6e5e"
@@ -7828,7 +7861,7 @@
     {
       "path": "bot/src/frameworks/narrative/public.js",
       "owner": "narrative",
-      "sha256": "f189738f9567347f52dc4e8f0e65bb80d81528220b3dab634425d244f8dcd5ac"
+      "sha256": "108bf4046f621838e6a11c60d19b743a7e7c0edfd138681154abd938d0f9e61a"
     },
     {
       "path": "bot/src/frameworks/narrative/scene-observation-route.js",
@@ -8653,7 +8686,7 @@
     {
       "path": "bot/src/narrative-authority.js",
       "owner": "narrative",
-      "sha256": "8da098277e25d547cc9e6ae4443d56838481cde6632ec672c5fdb979444827ff"
+      "sha256": "0683e33dee001fc4aadaf6ced71649f3f09d3c4196a66a45810b740944cc76d3"
     },
     {
       "path": "bot/src/narrative-clauses-v9.js",
@@ -8723,7 +8756,7 @@
     {
       "path": "bot/src/narrative-speakers.js",
       "owner": "narrative",
-      "sha256": "807596235f40a1787038dedb61f3fa956e1cbf8814566b3980e72f462d64c565"
+      "sha256": "d4f404be781bfba48ec4917d54db58d1ea4c014b536d645c7a16a7a1ea9ab569"
     },
     {
       "path": "bot/src/narrative-tasks-v9.js",
@@ -9725,8 +9758,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C41-RUN.json"
+    "features/RF04-F05/C42-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C41 registry tests until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks C38–C42 registry tests until locally supplied. Architecture pass is current working-tree only."
 }

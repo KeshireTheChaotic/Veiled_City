@@ -8788,20 +8788,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "1e0a2ab5f9803922388d4c55ca6cbabe0b2b3a7eb0172cdc1b1ac44f608b2a8e",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/npc-cognition-projection.js",
-      "kind": "static",
-      "specifier": "./npc-cognition-projection.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "cf0a1b2d6d83eceea85226237ef6de86660cc50249c8121eb34cbe31500943e9",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-authority.js",
@@ -9508,20 +9494,6 @@
       "to": "bot/src/city-constraints.js",
       "kind": "static",
       "specifier": "./city-constraints.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "4663752f51b1609e15276bb2f777ac830301d5a219543ec5af7a772d39afc6ac",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-speakers.js",
-      "to": "bot/src/npc-cognition-projection.js",
-      "kind": "static",
-      "specifier": "./npc-cognition-projection.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

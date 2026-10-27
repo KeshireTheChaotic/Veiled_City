@@ -2306,7 +2306,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2329,7 +2330,7 @@
         "occurrences": 5
       },
       "public_api": "bot/src/framework-to-framework/narrative--npc/public.js",
-      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated."
+      "scope": "C23 NPC evidence projection visibility direction only. Other observed Narrative/NPC directions remain explicit migration debt. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated. C42 actual Narrative authority and NPC speaker packets consume own original actor-reference/evidence-visibility interfaces, no copied policy or expanded disclosure. Test local only per owner."
     },
     {
       "pair": "narrative--operations",

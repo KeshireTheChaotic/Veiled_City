@@ -10,3 +10,7 @@ export function connectNarrativeNpcEvidence(){return narrativeNpcEvidence.bind(a
 import {npcNarrativeContext} from '../../frameworks/npc/public.js';
 import {narrativeContextEligible} from '../../frameworks/narrative/public.js';
 export function connectNpcNarrativeContext(){return npcNarrativeContext.bind(narrativeContextEligible);}
+
+import {narrativeNpcVisibility} from '../../frameworks/narrative/public.js';
+import {actorEvidenceVisible} from '../../frameworks/npc/public.js';
+export function connectNarrativeNpcVisibility(){return narrativeNpcVisibility.bind(actorEvidenceVisible);}

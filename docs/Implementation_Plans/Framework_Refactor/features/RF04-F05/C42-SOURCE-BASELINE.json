@@ -1,0 +1,10 @@
+[
+  {
+    "path": "bot/src/narrative-authority.js",
+    "body_sha256": "bb444ec3ea040ed3f064d6e46a07c976907f3fe17116630fcf8e4420c5e797ab"
+  },
+  {
+    "path": "bot/src/narrative-speakers.js",
+    "body_sha256": "df4950a2e51fd29a59aa5aef382698ab68d2e4c6f8cca2656d1f11bbeacf8734"
+  }
+]

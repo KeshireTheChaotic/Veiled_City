@@ -25,3 +25,4 @@ export {narrativeSourceVisible} from './visibility-source.js';
 export {nativeSalienceAvailable,names,mentions,createNarrativeContextEligibility} from './context-eligibility.js';
 export {createNarrativeImportanceSource,narrativeImportanceSource} from './importance-source.js';
 export {narrativeContextEligible} from './eligibility-source.js';
+export {createNarrativeNpcVisibilityConsumer,narrativeNpcVisibility} from './contracts/npc-visibility.js';

@@ -47,7 +47,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
 | knowledge--world | ADOPTED | knowledge → world; world → knowledge | 2 / 6 | RF04-F05 |
-| narrative--npc | ADOPTED | npc → narrative; narrative → npc | 2 / 3 | RF04-F05 |
+| narrative--npc | ADOPTED | npc → narrative; narrative → npc | 2 / 4 | RF04-F05 |
 | narrative--operations | PROPOSED_NO_API | narrative → operations | 0 / 0 | RF05 |
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |
 | narrative--publication | PROPOSED_NO_API | narrative → publication; publication → narrative | 0 / 0 | RF05 |

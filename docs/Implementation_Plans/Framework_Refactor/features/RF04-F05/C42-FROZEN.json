@@ -1,0 +1,38 @@
+{
+  "base_head": "ee60faae3b939e64dce774bd9331557ee11c7473",
+  "syntax_checked": 7,
+  "files": [
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "0683e33dee001fc4aadaf6ced71649f3f09d3c4196a66a45810b740944cc76d3"
+    },
+    {
+      "path": "bot/src/narrative-speakers.js",
+      "sha256": "d4f404be781bfba48ec4917d54db58d1ea4c014b536d645c7a16a7a1ea9ab569"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/npc-visibility.js",
+      "sha256": "64b8d0c5e38d79154369b047dbe645cb4e30eee3581329ffd650cfc13fcaead7"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "108bf4046f621838e6a11c60d19b743a7e7c0edfd138681154abd938d0f9e61a"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--npc/public.js",
+      "sha256": "c623d7c23a84939d1cb2da580d296759bce75eac3eb7a43c69c68e097924d36f"
+    },
+    {
+      "path": "bot/src/application/composition/npc-evidence-projection.js",
+      "sha256": "353aeb7baa4ce95ebafc32a7d933833ec7446cf17fe419912d6e7c7a65c89cda"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+      "sha256": "f5022ebb9b43023c1a33be4aa7e4dcb358cf7ac3b71153e9c794eb9b2318c528"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C42-SOURCE-BASELINE.json",
+      "sha256": "0fd1dff43068eabea2f4de5b1eef678679f6c40bf63950726c874f712b8808bc"
+    }
+  ]
+}

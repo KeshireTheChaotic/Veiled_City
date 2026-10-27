@@ -1,0 +1,5 @@
+{
+  "reason": "Fresh fixture omitted actual application NPC observation composition required by speaker fallback; add original initializer, no fake evidence/native producer or production policy change.",
+  "final_test_sha256": "87278fde1dd65d41f8d2a0c757e52bfe32ff014f1494b3ccb18f83f6f6faab70",
+  "rerun": "two failed speaker integration cases only"
+}

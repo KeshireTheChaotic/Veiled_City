@@ -3,7 +3,8 @@ import {portrayalPacket} from './portrayal.js';
 import {scenePresence,npcEvidenceActive} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {actorEvidenceVisible} from './npc-cognition-projection.js';
+import {narrativeNpcVisibility} from './frameworks/narrative/public.js';
+const {actorEvidenceVisible}=narrativeNpcVisibility;
 const entitled=(db,guild,npc,row,scope)=>actorEvidenceVisible(db,guild,npc,row,scope)
   ||!row.is_secret&&row.source_ref&&npcEvidenceActive(db,guild,npc,row.source_ref)
     &&narrativeSourceVisible(db,guild,row.source_ref,scope);

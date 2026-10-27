@@ -1,0 +1,3 @@
+/** Original actor-relative evidence eligibility; no objective-truth or PC participation grant. */
+export function createNarrativeNpcVisibilityConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original native NPC evidence visibility required.');if(source&&source!==native)throw new Error('Narrative NPC visibility replacement forbidden.');source=native;return this;},actorEvidenceVisible(...args){if(!source)throw Object.assign(new Error('Narrative NPC visibility not composed.'),{code:'NARRATIVE_NPC_VISIBILITY_COMPOSITION'});return source(...args);}});}
+export const narrativeNpcVisibility=createNarrativeNpcVisibilityConsumer();
