@@ -557,3 +557,11 @@ Five World legacy modules switched from the root `./scene-continuity.js` and `./
 Tests: one frozen batch of 8 files: 38 tests, 32 pass, 6 fail, all named in C57-RUN.json as pre-existing. Proof for the two not seen before: p06-f10 and p06-f12 fail identically (`ENVIRONMENT_SCENE_COMPOSITION`) with the C57 edits set aside (phases/RF04/rf04-f05-c57-baseline-test.log: 7 tests, 5 pass, 2 fail); the other four were already recorded in C52/C53. New rf04-f05-c57 3/3: widened port is fail-closed, exact and replacement-forbidden; composed World ports return the same real scene, presence and owner principal as Session directly; all migrated modules use the ports. rf04-f05-c20 bind fixture gained the three functions.
 
 Architecture: RF04 exit 0, 0 active violations, 733 modules, 3107 imports; RF05 533 groups/errors (was 540). 7 exact records retired. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-27 C58 delete ten unreferenced root re-export shims
+
+Ten root files that only re-exported framework APIs and had no source importer were deleted: authority-projection, entity-memory, legacy-authority (Knowledge); native-established-fact, world-information-transfer (World); npc-cognition, npc-cognition-projection, npc-conversations, simulation-motivation, simulation-strategy (NPC). Fresh tests that imported them now import the re-exported modules directly (same functions, renames kept); two identity checks between a shim and its public API were removed as meaningless, and two tests stopped reading a deleted shim's source text. Legacy `bot/scripts` suites that import these paths were not changed (outside the fresh-test gate, already broken by earlier deletions).
+
+Tests: one frozen batch of 25 files: 225 tests, 224 pass, 1 fail — rf04-f05-c01 asserts the live RF04 gate passes, which is only true after retirement; rerun once after retirement: 13/13 (C58-RUN.json `supplemental_tests`). Full fresh suite was green (2029/2029) immediately before this slice.
+
+Architecture: 10 exact LEGACY_MODULE_LOCATION records retired (RF04-F01 ×2, RF04-F02 ×5, RF04-F03 ×3). RF04 exit 0, 0 active violations, 723 modules; RF05 523 (was 533). Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

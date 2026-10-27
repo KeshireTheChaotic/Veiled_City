@@ -5,7 +5,7 @@ initializeNativeScenes();
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {nativeAttackPassives} from '../../src/native-feature-passives.js';
-import {motivationKey} from '../../src/simulation-motivation.js';
+import {motivationKey} from '../../src/frameworks/npc/public.js';
 
 const adversaries=JSON.parse(readFileSync(new URL('../../../content/GM_PRIVATE/ADVERSARIES/adversaries.json',import.meta.url),'utf8'));
 const template=adversaries.find(row=>row.name==='Pale Court Thrall');

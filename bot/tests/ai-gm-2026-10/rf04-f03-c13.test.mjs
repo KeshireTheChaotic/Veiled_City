@@ -16,7 +16,7 @@ import {evidenceType,activeEvidence} from '../../src/epistemic.js';
 import {conversationPrincipal} from '../../src/conversation-principal.js';
 import {ownerSemanticSource,assertSemanticCandidateProof} from '../../src/semantic-candidate-source.js';
 import {stateRevision} from '../../src/kernel/state-revision.js';
-import {motivationKey} from '../../src/simulation-motivation.js';
+import {motivationKey} from '../../src/frameworks/npc/public.js';
 import * as original from '../../src/personal-continuity.js';
 
 function diary(t){

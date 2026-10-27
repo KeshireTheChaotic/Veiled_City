@@ -9,7 +9,7 @@ import {VeiledDB} from '../../src/db.js';
 import {createMemoryClusters} from '../../src/frameworks/knowledge/public.js';
 import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import * as original from '../../src/memory-clusters.js';
-import {retrieveNpcCognition} from '../../src/npc-cognition.js';
+import {retrieveNpcCognition} from '../../src/frameworks/npc/public.js';
 
 function notes(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-cluster-c02-')),file=join(folder,'notes.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('records');db.setCityCalendar('records',{flags:{memory_consolidation:true}});indexWorldEvent(db,'records',{key:'inspection',title:'Bridge inspection report',source_id:'gm:inspection'});for(const npc of ['surveyor','porter'])db.upsertNpcProfile('records',{npcKey:npc,displayName:npc});

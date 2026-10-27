@@ -11,7 +11,7 @@ import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '..
 import {assertNpcAvailability} from '../../src/city-constraints.js';
 import {actorState,submitNpcAction} from '../../src/simulation.js';
 import {ContextPlanner} from '../../src/context-planner.js';
-import {resolveNpcConversation as original} from '../../src/npc-conversations.js';
+import {resolveNpcConversation as original} from '../../src/frameworks/npc/public.js';
 
 function meeting(t){
  const dir=mkdtempSync(join(tmpdir(),'rf04-npc-contact-c06-')),file=join(dir,'contact.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),proxy='',sound=true;db.ensureCampaign('canal');db.setCityCalendar('canal',{flags:{conversations:true}});indexWorldEvent(db,'canal',{key:'invitation',title:'An established contact opportunity',source_id:'gm:invitation'});

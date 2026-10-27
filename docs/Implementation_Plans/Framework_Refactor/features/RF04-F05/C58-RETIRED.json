@@ -1,0 +1,117 @@
+{
+  "feature": "RF04-F05-C58",
+  "original_manifest_sha256": "D0DB703C6A010FFA331A2A29D3147D4D36C82C96E8CA72F6F7C79FEE8CA89DB7",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "51b928c359670b3d81293946af1b87a551066df9af42fceba96b4c6e185eedc3",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/authority-projection.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "264f477848936e1f7eb453cd5da469f4d0b643ae485e9364d772555a849e8c64",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/entity-memory.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "9db09e76c77b35ad05811d2c4bf4c40de707ed06cb081590962eefdc02b31e79",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/legacy-authority.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "a497298f242b6e395570ccc0e05eed573d93d6b0afaaf09af49b852889b83dfd",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-established-fact.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "cd4cc38861e9a77a43317439a26ac83c90690606075feaf1bdaf38f27a3d86e1",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/npc-cognition-projection.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "01c66eb93702940d825cd4ead261a98aef90b54094dd10129e64b5a61e66a491",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/npc-cognition.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "49a0cc33a5b1c6f5bea2a870705e3765177d199284e4b2c3b3a77561a26930e3",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/npc-conversations.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "90b52dd8169e3b8b66ceca0f54185fa86e54f6f23dd16f20490ea95f701b363c",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/simulation-motivation.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3c51dd1f7d6888dabd9dabe85785057582cc5287dc1ec86b6755c002dd7d9e7c",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/simulation-strategy.js",
+      "owner": "npc",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F02",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "95d76448688a2379529d1a52b1091bbea3c0d0cffa20f363261bcc3f25268ce4",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-information-transfer.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

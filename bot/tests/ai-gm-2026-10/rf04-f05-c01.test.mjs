@@ -11,7 +11,7 @@ import {createNpcEvidenceProvider,npcEvidenceProvider} from '../../src/framework
 import {createNpcEvidenceConsumer,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {connectNpcWorldEvidence} from '../../src/framework-to-framework/npc--world/public.js';
 import {initializeNpcWorldEvidence} from '../../src/application/composition/public.js';
-import * as npc from '../../src/simulation-motivation.js';
+import * as npc from '../../src/frameworks/npc/public.js';
 import * as world from '../../src/native-world-operations.js';
 import {transferSupply,supplyRevision} from '../../src/supply-dependencies.js';
 import {checkProject} from '../../tooling/architecture/read-project.mjs';

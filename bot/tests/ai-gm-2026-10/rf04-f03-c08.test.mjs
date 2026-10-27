@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createEntityMemory} from '../../src/frameworks/knowledge/public.js';
 import {resolvePlaceReference,preflightNpcIdentity,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {tierWorldAdditions as original} from '../../src/entity-memory.js';
+import {tierWorldAdditions as original} from '../../src/frameworks/knowledge/public.js';
 
 function street(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-identity-retrieval-c08-')),file=join(folder,'street.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),visible=true,origin=true;db.ensureCampaign('street');const pc=db.createCharacter('street','reader','Reader'),other=db.createCharacter('street','other','Other');indexWorldEvent(db,'street',{key:'origin',title:'Established ordinary identity source',source_id:'gm:origin',visibility:'party'});db.setSimulationEntity('street','location','arcade',{name:'Copper Arcade',aliases:['the arcade']});db.upsertReference('street',{kind:'location',key:'arcade',name:'Copper Arcade',summary:'An established arcade'});db.upsertReference('street',{kind:'npc',key:'seller',name:'Copper Seller',summary:'An established seller'});

@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {mkdtempSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import path from 'node:path';import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';import '../../src/audience-native-v9.js';import '../../src/native-group-features.js';import * as OriginalSalience from '../../src/narrative-salience.js';
 import {initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeNpcEvidenceProjection,initializeNpcObservations,initializeNpcCognition,initializeSessionSceneWorld,initializeNativeSessionMovement} from '../../src/application/composition/public.js';
-import * as Npc from '../../src/frameworks/npc/public.js';import * as Narrative from '../../src/frameworks/narrative/public.js';import * as Knowledge from '../../src/frameworks/knowledge/public.js';import * as World from '../../src/frameworks/world/public.js';import * as Legacy from '../../src/npc-cognition.js';
+import * as Npc from '../../src/frameworks/npc/public.js';import * as Narrative from '../../src/frameworks/narrative/public.js';import * as Knowledge from '../../src/frameworks/knowledge/public.js';import * as World from '../../src/frameworks/world/public.js';
 initializeKnowledgeWorld();initializeKnowledgeNarrative();initializeNativeSessionMovement();initializeSessionSceneWorld();initializeNpcObservations();initializeNpcEvidenceProjection();initializeNpcCognition();
 function fixture(t){const dir=mkdtempSync(path.join(tmpdir(),'vc-c25-')),file=path.join(dir,'fresh.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('city');t.after(()=>{db.close();rmSync(dir,{recursive:true,force:true});});return {get db(){return db;},reopen(){db.close();db=new VeiledDB(file,schema);return db;},seed(){return Npc.seedNpcCognition({db,guildId:'city',actorId:'fresh-c25-gm',content:{read:()=>JSON.stringify([{name:'Bell Keeper',public:'A watchful artisan.',knows:['The harbor bell stopped.'],does_not:['Who cut its rope?'],secret:'A hidden family debt.',want:'Repair the harbor bell.'},{name:'Canal Pilot',knows:['The east lock is open.']}])}});}};}
 function retrieve(db,options={}){return Npc.retrieveNpcCognition(db,'city',{worldDirector:true,recordRecall:false,...options});}
@@ -19,7 +19,7 @@ test('original Narrative context eligibility is unchanged across archived pins q
  assert.equal(OriginalSalience.narrativeContextEligible,Narrative.narrativeContextEligible);assert.equal(OriginalSalience.nativeSalienceAvailable,Narrative.nativeSalienceAvailable);
 });
 test('actual native dossiers retrieve GM-private beliefs unknowns secrets and goals without altering PC or canonical state',t=>{
- const f=fixture(t);f.seed();for(const k of ['retrieveNpcCognition','dossierDecisionProfile','seedNpcCognition'])assert.equal(Legacy[k],Npc[k]);
+ const f=fixture(t);f.seed();
  const before=f.db.db.serialize();const packets=retrieve(f.db);assert.equal(packets.length,2);const bell=packets.find(p=>p.npc_key==='bell-keeper');assert.ok(bell);
  assert.equal(bell.knowledge.find(k=>k.knowledge_key==='seed.unknown.1').belief_state,'unknown');assert.equal(bell.knowledge.find(k=>k.knowledge_key==='seed.self_secret').is_secret,1);assert.match(bell.goals[0].objective,/Repair/);assert.match(bell.continuity_authority,/not canon\/consent/);
  assert.deepEqual(f.db.db.serialize(),before);assert.equal(f.db.listFactsForGM('city',{limit:100}).length,0);assert.equal(f.db.listCharacters('city','owner').length,0);

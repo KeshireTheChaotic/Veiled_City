@@ -10,7 +10,7 @@ import {createNpcMotivationRules,motivationKey} from '../../src/frameworks/npc/p
 import {createWorldAvailability,requireCitySource,cityObject,cityKey,cityInteger,cityAudit,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {createActorControlRules} from '../../src/frameworks/daggerheart/public.js';
 import {jsonHash} from '../../src/kernel/json-hash.js';
-import * as original from '../../src/simulation-motivation.js';
+import * as original from '../../src/frameworks/npc/public.js';
 
 function fixture(t){
  const dir=mkdtempSync(join(tmpdir(),'rf04-npc-motives-')),file=join(dir,'motives.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),proxy=false,nativeReady=false,transfer=null;

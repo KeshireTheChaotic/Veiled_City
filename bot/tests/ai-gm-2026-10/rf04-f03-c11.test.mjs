@@ -10,7 +10,7 @@ import {VeiledDB} from '../../src/db.js';
 import {createEvidenceCustody} from '../../src/frameworks/knowledge/public.js';
 import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {personalCharacter} from '../../src/personal-continuity.js';
-import {motivationKey} from '../../src/simulation-motivation.js';
+import {motivationKey} from '../../src/frameworks/npc/public.js';
 import {stateRevision} from '../../src/kernel/state-revision.js';
 import * as original from '../../src/evidence-custody.js';
 

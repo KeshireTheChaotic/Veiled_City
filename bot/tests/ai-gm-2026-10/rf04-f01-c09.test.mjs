@@ -6,7 +6,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createWorldConsequences,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {motivationKey} from '../../src/simulation-motivation.js';
+import {motivationKey} from '../../src/frameworks/npc/public.js';
 import * as original from '../../src/city-consequences.js';
 
 function fixture(t){

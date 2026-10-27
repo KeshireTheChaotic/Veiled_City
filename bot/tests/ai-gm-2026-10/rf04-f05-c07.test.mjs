@@ -7,7 +7,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {tierWorldAdditions,createKnowledgeWorldIdentityConsumer,createKnowledgeNarrativeVisibilityConsumer} from '../../src/frameworks/knowledge/public.js';
-import {tierWorldAdditions as oldTier} from '../../src/entity-memory.js';
+import {tierWorldAdditions as oldTier} from '../../src/frameworks/knowledge/public.js';
 import {worldIdentityOrigin,resolvePlaceReference,preflightNpcIdentity,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {worldIdentityOrigin as oldOrigin} from '../../src/world-authorship.js';
 import {nativeNarrativeSource} from '../../src/frameworks/narrative/public.js';

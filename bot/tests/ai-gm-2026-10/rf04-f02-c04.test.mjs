@@ -8,8 +8,9 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createNpcCognition} from '../../src/frameworks/npc/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {recordImportedNpcKnowledge} from '../../src/npc-cognition-projection.js';
-import * as source from '../../src/npc-cognition.js';
+import {recordImportedNpcKnowledge} from '../../src/frameworks/npc/public.js';
+import * as source from '../../src/frameworks/npc/public.js';
+
 
 function table(t){
  const dir=mkdtempSync(join(tmpdir(),'rf04-cognition-c04-')),file=join(dir,'recall.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('archive');let eligible=true;const calls=[];

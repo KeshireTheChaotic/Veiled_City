@@ -9,8 +9,8 @@ import '../../src/audience-native-v9.js';
 import {initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeNpcEvidenceProjection} from '../../src/application/composition/public.js';
 import * as Npc from '../../src/frameworks/npc/public.js';
 import * as World from '../../src/frameworks/world/public.js';
-import * as Legacy from '../../src/npc-cognition-projection.js';
-import {seedNpcCognition} from '../../src/npc-cognition.js';
+import * as Legacy from '../../src/frameworks/npc/public.js';
+import {seedNpcCognition} from '../../src/frameworks/npc/public.js';
 initializeKnowledgeWorld();initializeKnowledgeNarrative();initializeNpcEvidenceProjection();
 const party={mode:'party'},privateScope={mode:'private',actorUserId:'owner',actorCharacterId:'pc'};
 function fixture(t){

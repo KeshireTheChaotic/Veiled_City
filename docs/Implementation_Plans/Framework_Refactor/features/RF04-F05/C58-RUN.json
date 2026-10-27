@@ -1,0 +1,224 @@
+{
+  "feature": "RF04-F05-C58",
+  "base_head": "7ae4d26f3d94315220c8bfb26377c2fae72e9317",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [],
+    "passed": 0,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f03.test.mjs",
+        "sha256": "25FA9849A340888EC7D6AB3C2A346B27E917825A9D21FD76E707195AB95B01A7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f05.test.mjs",
+        "sha256": "A6B0AE52FF49C0E12266E395771CA0AEB9E5E3C2DF2984DC88F08AE9B302AD11"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f06.test.mjs",
+        "sha256": "BF7A5D7F59340EB0E97EEEA2EF8300EB9052BFCD93643466962A8199A2FFD545"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c09.test.mjs",
+        "sha256": "7281BE078CC1500CD25DC5480F31E2F91E42D7686C0126752D5989000721BF48"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c11.test.mjs",
+        "sha256": "D9887F4CEE214D238EB1302F367F22E9700232EA604BB1C698BB5F68675107B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c01.test.mjs",
+        "sha256": "27A3DEA08B84E99EF9D7BB4016431DB9597D633DA4EB69A11C2BEE5A57F4B8E4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs",
+        "sha256": "4D05BC4DE05FCBDB34AC2D050DCB9B7B86849E67D12808E5E93C53AE4B0BF98D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs",
+        "sha256": "153172E714479CED2BB06FA6686BFAAF692288C385C7792A1AE9F3DE432623AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c05.test.mjs",
+        "sha256": "5FBC2BF3584A5DD9053244F10E783691509C7D08B4C4E56FDE62D833EEE247DF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs",
+        "sha256": "B7D8534187228A9956921246FC4E44B9B90210B8ABE028C3BD309B73959A88D6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c02.test.mjs",
+        "sha256": "A234288C097BDD4EC9432F324C4AC38A19D4439FACE28612AB3FB81C8AC754C9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c08.test.mjs",
+        "sha256": "AF869A0780C20DBEFB8BB1E330B722CD53D9EA97E3A3C66B16037835C0DB0873"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "sha256": "6ED771B97DEF6187B1462B8F3B949A753CEC1AAACACED44BECAD9FEDAC4FAAD4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "sha256": "DECD364345C5356285DBDAF69C10DE3902483D7FEA5E2ECA8417706A58E0B00C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "sha256": "E90C7B516E683165DA57D9BEED874A69E0E5B47DE921F1F2915878AE9B6B919D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "640D9E8027C100CC6ECAE7EE582DBC95E7ADDA733AA164F4B5A02DEB6C9F30FC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "sha256": "E2D3168030223F6BBBA1A0C5416E0F3ACCC8B6176DA6BF10490375B009E2EF8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "2C476EB087A2C0C6F9EE5BC3E3B2B0713157C21324843E6162CA1685005D2410"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "39846BFAF23C0AE22C9CEEC4E80CA0556F791C96DA26CCC0713CABEE9BCC9266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
+        "sha256": "3041436BCD207CC2D6CB44965688CE8AB7D27DD09715ED238841D1973F95EE4B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "6430FD4C457FB406B62237043F2B9DFAAE86727D2CE1665F19221DA3A11F6CE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "sha256": "4BAC9EB3AAF8C6927C13610DFF177E1937B47E6D8ED72096530ED3D5BC127FF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "D28CA8B6B3A62532B0019CDEC7CEBB796E7268C3209339C9020CB6701E92BEC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "sha256": "3076535FC52438549F70C4D4AE2DC7F136A27D9D010C438F88E8A455FA24AD5D"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T16:35:24.883Z",
+    "end": "2026-10-27T16:36:33.261Z",
+    "exit_code": 1,
+    "tests": 225,
+    "passed": 224,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 68342.0058,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c58-test.log",
+    "log_sha256": "E036FAD816B1CEB4D7CF001BD12648E3098DCB74D9A45F7059D50E69F499F469",
+    "failing": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 723,
+      "unowned": 0,
+      "imports": 3096,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1818,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c58-rf04-architecture.log",
+      "log_sha256": "5E777711141075DA63D04F89ED22ABB13136CFE449259056D20887029DBE51C2",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 723,
+      "unowned": 0,
+      "imports": 3096,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1292,
+      "active_violation_groups": 523,
+      "transition_errors": 523,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c58-rf05-architecture.log",
+      "log_sha256": "5E4F243D0505A64370E856CCF4F744EA12FA343D57ABDC1E068A62297AB4D288",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "51b928c359670b3d81293946af1b87a551066df9af42fceba96b4c6e185eedc3",
+      "264f477848936e1f7eb453cd5da469f4d0b643ae485e9364d772555a849e8c64",
+      "9db09e76c77b35ad05811d2c4bf4c40de707ed06cb081590962eefdc02b31e79",
+      "a497298f242b6e395570ccc0e05eed573d93d6b0afaaf09af49b852889b83dfd",
+      "cd4cc38861e9a77a43317439a26ac83c90690606075feaf1bdaf38f27a3d86e1",
+      "01c66eb93702940d825cd4ead261a98aef90b54094dd10129e64b5a61e66a491",
+      "49a0cc33a5b1c6f5bea2a870705e3765177d199284e4b2c3b3a77561a26930e3",
+      "90b52dd8169e3b8b66ceca0f54185fa86e54f6f23dd16f20490ea95f701b363c",
+      "3c51dd1f7d6888dabd9dabe85785057582cc5287dc1ec86b6755c002dd7d9e7c",
+      "95d76448688a2379529d1a52b1091bbea3c0d0cffa20f363261bcc3f25268ce4"
+    ],
+    "original_manifest_sha256": "D0DB703C6A010FFA331A2A29D3147D4D36C82C96E8CA72F6F7C79FEE8CA89DB7",
+    "manifest_sha256_after": "A5A6E29E161DA3D078C0B716264811EB21DF684C146EAEEB13A5F47CD663FCB9",
+    "entries_after": 1804,
+    "remaining_by_feature": {
+      "RF04-F01": 215,
+      "RF04-F03": 73,
+      "RF04-F04": 130,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 157,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {},
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C58 commit: restore the ten root re-export shims, the fresh-test import paths, and the ten exact LEGACY_MODULE_LOCATION transitions from C58-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED",
+  "supplemental_tests": {
+    "reason": "rf04-f05-c01 asserts the live RF04 gate passes, which is only true after the harness retires the ten records; reran it once after retirement.",
+    "start": "2026-10-27T16:37:02.730Z",
+    "end": "2026-10-27T16:37:05.580Z",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "sha256": "E2D3168030223F6BBBA1A0C5416E0F3ACCC8B6176DA6BF10490375B009E2EF8C"
+      }
+    ],
+    "exit_code": 0,
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c58-supplemental-test.log",
+    "log_sha256": "D7A36A87EA3C7034F1B7B7A609F01A981C168E31E4BCFA0BB05D66711821F781"
+  }
+}

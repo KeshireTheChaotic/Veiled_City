@@ -1,6 +1,6 @@
 import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
-import {retrieveNpcCognition} from '../../src/npc-cognition.js';
+import {retrieveNpcCognition} from '../../src/frameworks/npc/public.js';
 test('stale density entry and malformed tags do not erase an independent NPC motive or rumor',()=>{
  const profile={npc_key:'courier',display_name:'Courier',activity_tier:'active'};
  const db={getCityCalendar:()=>({flags:{activity_density:true}}),densityActorSelection:()=>[{type:'npc',actor_key:'missing'},{type:'npc',actor_key:'courier'}],getNpcProfile:(_g,k)=>k==='courier'?profile:null,

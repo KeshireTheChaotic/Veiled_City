@@ -8,11 +8,11 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createNpcStrategyRules} from '../../src/frameworks/npc/public.js';
 import {cityObject,cityKey,cityInteger,cityAudit,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {actorSource} from '../../src/simulation-motivation.js';
+import {actorSource} from '../../src/frameworks/npc/public.js';
 import {ACTION_TYPES,ACTION_COSTS,actorState,submitNpcAction} from '../../src/simulation.js';
 import {submitInstitutionAction,reviewInstitutionAction} from '../../src/city-core.js';
 import {nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution} from '../../src/native-world-operations.js';
-import * as original from '../../src/simulation-strategy.js';
+import * as original from '../../src/frameworks/npc/public.js';
 
 function setup(t,overrides={}){
  const folder=mkdtempSync(join(tmpdir(),'rf04-plan-c03-')),file=join(folder,'plan.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);const delegated=[];
@@ -93,5 +93,5 @@ test('actor budget excludes duplicates and forwards only explicit delegated revi
 });
 
 test('original source exports reach the extracted proposal and lifecycle without a second policy implementation',t=>{
- const f=setup(t),pending=original.manageStrategy(f.db,'table',f.input(),'human-gm');assert.equal(pending.status,'pending');assert.equal(original.manageStrategy(f.db,'table',{key:'inspection-plan',op:'reject'},'human-gm').status,'rejected');assert.equal(original.executeStrategyStep(f.db,'table','inspection-plan').status,'rejected');assert.deepEqual(original.runStrategyOpportunity(f.db,'table',1),[]);const source=readFileSync(fileURLToPath(new URL('../../src/simulation-strategy.js',import.meta.url)),'utf8');assert.doesNotMatch(source,/function validatePlan/);
+ const f=setup(t),pending=original.manageStrategy(f.db,'table',f.input(),'human-gm');assert.equal(pending.status,'pending');assert.equal(original.manageStrategy(f.db,'table',{key:'inspection-plan',op:'reject'},'human-gm').status,'rejected');assert.equal(original.executeStrategyStep(f.db,'table','inspection-plan').status,'rejected');assert.deepEqual(original.runStrategyOpportunity(f.db,'table',1),[]);
 });

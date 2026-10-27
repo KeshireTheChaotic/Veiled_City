@@ -10,7 +10,7 @@ import {createSceneContinuity,RANGE_BANDS} from '../../src/frameworks/session/pu
 import {cityObject,cityKey,cityVisibility,cityAudit,indexWorldEvent,requireCitySource} from '../../src/frameworks/world/public.js';
 import {activeCityProxy} from '../../src/city-constraints.js';
 import {nativeMovementConditionIssue} from '../../src/native-group-features.js';
-import {motivationKey} from '../../src/simulation-motivation.js';
+import {motivationKey} from '../../src/frameworks/npc/public.js';
 import * as original from '../../src/scene-continuity.js';
 
 function chamber(t){

@@ -12,7 +12,7 @@ import {cityObject,cityKey,cityAudit,indexWorldEvent,requireCitySource,requireCi
 import {personalCharacter} from '../../src/personal-continuity.js';
 import {updateCityCivic} from '../../src/city-civic.js';
 import {manageLongProject} from '../../src/long-projects.js';
-import {actorSource,motivationKey} from '../../src/simulation-motivation.js';
+import {actorSource,motivationKey} from '../../src/frameworks/npc/public.js';
 import {stateRevision} from '../../src/kernel/state-revision.js';
 import * as original from '../../src/owned-community.js';
 

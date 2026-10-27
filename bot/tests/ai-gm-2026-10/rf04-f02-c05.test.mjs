@@ -11,7 +11,7 @@ import {createNpcEvidenceProjection} from '../../src/frameworks/npc/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {jsonHash} from '../../src/kernel/json-hash.js';
 import {sceneFictionHash} from '../../src/scene-fiction-context.js';
-import * as original from '../../src/npc-cognition-projection.js';
+import * as original from '../../src/frameworks/npc/public.js';
 
 function evidenceTable(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-actor-proof-c05-')),file=join(folder,'proof.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),allowed=true,principal={kind:'owner',revision:'current-controller'};const seen=[];db.ensureCampaign('stage');db.upsertNpcProfile('stage',{npcKey:'lamplighter',displayName:'Lamplighter'});
