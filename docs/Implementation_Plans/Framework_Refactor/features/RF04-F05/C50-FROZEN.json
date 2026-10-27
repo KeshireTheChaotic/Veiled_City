@@ -1,0 +1,50 @@
+{
+  "base_head": "379a47a15722620a105175634e67be4b45379cbb",
+  "syntax_checked": 10,
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/world-established-evidence.js",
+      "sha256": "55ee7051f4eca52f8f0308a7c5dcf6fb5d584a2ad35221746ff02549b3d3e0a0"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "e36a2f54f1c3ae376801dd034e65f921164c5abe87e94569dca625c09cc1cccf"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "sha256": "d776356561a3cc5b8cabbcada88d2188ab0789635465d64eef2291acc5e453cf"
+    },
+    {
+      "path": "bot/src/application/composition/native-world-evidence.js",
+      "sha256": "41870b6ad05372d2028340526a640546f8e273a4beb73ccb53a72490015f57f5"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "36fb7e3e141d89d2cfd980b76bb5526b0c755c219509e7e7680f0b0917abc0d5"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "22d265b96c172f30cf3b453d228cac5fdbdc8ba4cdf9acc205424a4844c4cd89"
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "sha256": "1e1599bc21d8177c1a62fa2d49b84e404ca4c8f5211a2692584faddeed34c4a6"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "73310054c168ba5fae2080b1b11a9c55a7f08670b68652474507371e4cd1cd8a"
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "sha256": "4533d2622859be3b334cbb38637592e9c2be342cd11f3c0ff24102a9c639c558"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+      "sha256": "c0096e8fa2193b1f623a7737c5cdd758690a16028625ee8f6b487a68e249b6c5"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C50-SOURCE-BASELINE.json",
+      "sha256": "a35a6978f73f7367daa87339ece8189e781cd989c16479b55d1949a2d80a33f6"
+    }
+  ]
+}

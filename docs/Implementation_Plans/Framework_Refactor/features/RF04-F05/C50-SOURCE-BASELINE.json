@@ -1,0 +1,17 @@
+[
+  {
+    "path": "bot/src/native-environment-access.js",
+    "replacement": "import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';\nconst {nativeEstablishedFact}=nativeWorldEstablishedEvidence;",
+    "body_sha256": "e66f7b30867d0e026e1eb52b105d5b61a8776ccbf83dc9d4fb7288ab9b481fdc"
+  },
+  {
+    "path": "bot/src/native-environment-witnesses.js",
+    "replacement": "import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';\nconst {nativeEstablishedFact}=nativeWorldEstablishedEvidence;",
+    "body_sha256": "e103c9f7376b6ce99af7ab44058a58d6e5487ddeadc8b893bc7b80e29bc67278"
+  },
+  {
+    "path": "bot/src/native-environment-scene.js",
+    "replacement": "import {nativeEstablishedFact} from './frameworks/world/public.js';",
+    "body_sha256": "b2660b142b0dadd3845ad7d7f9562106c66a4f417e6a080299eb52ff326f0b2f"
+  }
+]

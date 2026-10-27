@@ -1,0 +1,184 @@
+{
+  "feature": "RF04-F05-C50",
+  "status": "SCOPED_NATIVE_ENVIRONMENT_WORLD_FACT_PROOF_ADOPTION_QUALIFIED",
+  "frozen": {
+    "base_head": "379a47a15722620a105175634e67be4b45379cbb",
+    "syntax_checked": 10,
+    "files": [
+      {
+        "path": "bot/src/frameworks/daggerheart/contracts/world-established-evidence.js",
+        "sha256": "55ee7051f4eca52f8f0308a7c5dcf6fb5d584a2ad35221746ff02549b3d3e0a0"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/public.js",
+        "sha256": "e36a2f54f1c3ae376801dd034e65f921164c5abe87e94569dca625c09cc1cccf"
+      },
+      {
+        "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
+        "sha256": "d776356561a3cc5b8cabbcada88d2188ab0789635465d64eef2291acc5e453cf"
+      },
+      {
+        "path": "bot/src/application/composition/native-world-evidence.js",
+        "sha256": "41870b6ad05372d2028340526a640546f8e273a4beb73ccb53a72490015f57f5"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "36fb7e3e141d89d2cfd980b76bb5526b0c755c219509e7e7680f0b0917abc0d5"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "22d265b96c172f30cf3b453d228cac5fdbdc8ba4cdf9acc205424a4844c4cd89"
+      },
+      {
+        "path": "bot/src/native-environment-access.js",
+        "sha256": "1e1599bc21d8177c1a62fa2d49b84e404ca4c8f5211a2692584faddeed34c4a6"
+      },
+      {
+        "path": "bot/src/native-environment-witnesses.js",
+        "sha256": "73310054c168ba5fae2080b1b11a9c55a7f08670b68652474507371e4cd1cd8a"
+      },
+      {
+        "path": "bot/src/native-environment-scene.js",
+        "sha256": "4533d2622859be3b334cbb38637592e9c2be342cd11f3c0ff24102a9c639c558"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+        "sha256": "c0096e8fa2193b1f623a7737c5cdd758690a16028625ee8f6b487a68e249b6c5"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C50-SOURCE-BASELINE.json",
+        "sha256": "a35a6978f73f7367daa87339ece8189e781cd989c16479b55d1949a2d80a33f6"
+      }
+    ]
+  },
+  "source_baseline": [
+    {
+      "path": "bot/src/native-environment-access.js",
+      "replacement": "import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';\nconst {nativeEstablishedFact}=nativeWorldEstablishedEvidence;",
+      "body_sha256": "e66f7b30867d0e026e1eb52b105d5b61a8776ccbf83dc9d4fb7288ab9b481fdc"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "replacement": "import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';\nconst {nativeEstablishedFact}=nativeWorldEstablishedEvidence;",
+      "body_sha256": "e103c9f7376b6ce99af7ab44058a58d6e5487ddeadc8b893bc7b80e29bc67278"
+    },
+    {
+      "path": "bot/src/native-environment-scene.js",
+      "replacement": "import {nativeEstablishedFact} from './frameworks/world/public.js';",
+      "body_sha256": "b2660b142b0dadd3845ad7d7f9562106c66a4f417e6a080299eb52ff326f0b2f"
+    }
+  ],
+  "tests": {
+    "start": "2026-10-26T21:57:49.1077405-05:00",
+    "end": "2026-10-26T21:57:50.7070511-05:00",
+    "run_id": "rf04-f05-c50-frozen",
+    "duration_ms": 1599.3106,
+    "exit_code": 0,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap_duration_ms": 1547.0853,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+    "retention": "Local ignored test/logs per owner; actual terminal and source fingerprints committed."
+  },
+  "syntax": {
+    "checked": 10,
+    "passed": 10
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 724,
+      "unowned": 0,
+      "importOccurrences": 3088,
+      "internalImportOccurrences": 2909,
+      "cycleComponents": 3,
+      "largestCycle": 133,
+      "rawViolationOccurrences": 1948,
+      "acceptedLegacyOccurrences": 1948,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 724,
+      "unowned": 0,
+      "importOccurrences": 3088,
+      "internalImportOccurrences": 2909,
+      "cycleComponents": 3,
+      "largestCycle": 133,
+      "rawViolationOccurrences": 1948,
+      "acceptedLegacyOccurrences": 1292,
+      "activeViolationGroups": 652,
+      "transitionErrors": 652,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "2ddff11c30532ccc63236b1d4a6742dec2400584205c904350655ffc24ec3400",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-access.js",
+      "to": "bot/src/native-established-fact.js",
+      "kind": "static",
+      "specifier": "./native-established-fact.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "6a3a029fe9a6d97ba720a776e8d8a1a1266f5ed43ef415af6ea522d29d015ada",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-established-fact.js",
+      "kind": "static",
+      "specifier": "./native-established-fact.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "ownership": "Daggerheart access/witness source compositions consume exact World fact proof via native-owned interface/existing Native–World pair and real thin initializer. World scene uses own public proof. Original native factory/composition bodies unchanged.",
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "limits": [
+    "Actual native GM establishment→native consumer source/audit snapshot/privacy/retraction/restart qualified. Whole environmental feature activation, mechanical effects, GM command authentication, writer/Discord/live/full phase not newly qualified.",
+    "Other native access/witness/scene source dependencies remain explicit; this does not declare their tightly coupled modules isolated.",
+    "New tests/logs local per owner; clean checkout lacks newly registered references from C38 onward until supplied, no checker exemption or clean-checkout qualification."
+  ],
+  "rollback": "Restore only three original proof import statements and remove C50 own interface/pair/bootstrap/exports; restore2 exact transition records. Preserve native facts/rulings/mutations/private/player data and all other work.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c50-tests.log",
+      "sha256": "4cec03553a47d417d18a5d89b47365fb42ca8d64c23ddb94e44d8cac07599b10",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c50-architecture-initial.log",
+      "sha256": "f5eb962ddfd9b132d0aa70f2d0165b3a67a07f388c08d23e0d5dc66573eaa774",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c50-rf04-final.log",
+      "sha256": "3655f4052f522ce70ef30b2052c7357a03894a0b73c0189968fb5a23a2d9733c",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c50-rf05-final.log",
+      "sha256": "daf6d825013b69b5355829a737c65d823877e6c15fe2241dd1ef430e22a1d000",
+      "retention": "local ignored"
+    }
+  ]
+}

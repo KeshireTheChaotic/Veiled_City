@@ -1080,6 +1080,11 @@
           "from": "daggerheart",
           "to": "world",
           "contract": "Original native checked scene-effect/receipt API and read-only historical/current projections; no PC authority, rule or transaction copied into adapter. Daggerheart classification consumes read-only World current proxy evidence."
+        },
+        {
+          "from": "daggerheart",
+          "to": "world",
+          "contract": "C50 exact original audited fact/ruling snapshot proof; read-only and source/audience qualified, no new establishment or native execution grant."
         }
       ],
       "source_evidence": [
@@ -1102,13 +1107,15 @@
       "consumers": [
         "bot/src/application/composition/environment-scene.js",
         "bot/src/application/composition/world-actor-control.js",
-        "bot/src/application/composition/world-owner-consent.js"
+        "bot/src/application/composition/world-owner-consent.js",
+        "bot/src/application/composition/native-world-evidence.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1131,7 +1138,7 @@
         "occurrences": 158
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--world/public.js",
-      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open. C11 native owner-consent read for appointments adopted; upstream response workflow remains its own native source obligation."
+      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open. C11 native owner-consent read for appointments adopted; upstream response workflow remains its own native source obligation. C50 native access and witness exact fact proof adopts native-owned interface. Full environment rule sources remain accountable. Test local per owner."
     },
     {
       "pair": "discord--narrative",

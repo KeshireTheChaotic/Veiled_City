@@ -122,3 +122,4 @@ export {createNativeNpcEvidenceConsumer,nativeNpcEvidence} from './contracts/npc
 export {createNativeEnvironmentNarrativeConsumer,nativeEnvironmentNarrative} from './contracts/environment-narrative.js';
 export {createNativeEnvironmentSessionConsumer,nativeEnvironmentSession} from './contracts/environment-session.js';
 export {assertEnvironmentAudience} from './environment-audience-source.js';
+export {createNativeWorldEstablishedEvidenceConsumer,nativeWorldEstablishedEvidence} from './contracts/world-established-evidence.js';

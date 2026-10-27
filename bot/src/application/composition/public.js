@@ -27,3 +27,4 @@ export {initializeWorldNpcOpportunity} from './world-npc-opportunity.js';
 export {initializeNativeNpcEvidence} from './native-npc-evidence.js';
 export {initializeOperationsNpcReview} from './operations-npc-review.js';
 export {initializeNativeEnvironmentAudience} from './native-environment-audience.js';
+export {initializeNativeWorldEvidence} from './native-world-evidence.js';

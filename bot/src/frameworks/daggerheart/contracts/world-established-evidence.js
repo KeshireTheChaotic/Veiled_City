@@ -1,0 +1,3 @@
+/** Original audited World fact proof; never caller-supplied establishment or native execution permission. */
+export function createNativeWorldEstablishedEvidenceConsumer(){let source=null;return Object.freeze({bind(native){if(typeof native!=='function')throw new TypeError('Original native World fact proof required.');if(source&&source!==native)throw new Error('Native World fact proof replacement forbidden.');source=native;return this;},nativeEstablishedFact(...args){if(!source)throw Object.assign(new Error('Native World established proof not composed.'),{code:'NATIVE_WORLD_ESTABLISHED_EVIDENCE_COMPOSITION'});return source(...args);}});}
+export const nativeWorldEstablishedEvidence=createNativeWorldEstablishedEvidenceConsumer();

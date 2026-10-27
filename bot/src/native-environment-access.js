@@ -2,7 +2,8 @@ import {inspectNativeEnvironmentInstance} from './native-environment-instance.js
 import {featureDisposition} from './native-feature-catalog.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
-import {nativeEstablishedFact} from './native-established-fact.js';
+import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
+const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
 import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
 import {stateRevision} from './kernel/state-revision.js';

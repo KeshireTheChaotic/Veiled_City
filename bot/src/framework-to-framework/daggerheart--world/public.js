@@ -17,3 +17,7 @@ export function connectWorldActorControl(){
 import {hasOwnerConsent} from '../../frameworks/daggerheart/public.js';
 import {worldOwnerConsent} from '../../frameworks/world/public.js';
 export function connectWorldOwnerConsent(){return worldOwnerConsent.bind(hasOwnerConsent);}
+
+import {nativeWorldEstablishedEvidence} from '../../frameworks/daggerheart/public.js';
+import {nativeEstablishedFact} from '../../frameworks/world/public.js';
+export function connectNativeWorldEstablishedEvidence(){return nativeWorldEstablishedEvidence.bind(nativeEstablishedFact);}
