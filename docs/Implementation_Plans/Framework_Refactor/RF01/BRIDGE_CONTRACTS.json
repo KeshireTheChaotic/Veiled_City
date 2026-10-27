@@ -662,11 +662,13 @@
       "adoption_feature": "RF03-F01",
       "consumers": [
         "bot/src/turn-orchestration.js",
-        "bot/src/state.js"
+        "bot/src/state.js",
+        "bot/src/application/composition/environment-scene.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs"
       ],
       "observed_directions": [
         {
@@ -771,12 +773,14 @@
       "adoption_feature": "RF03-F05",
       "consumers": [
         "bot/src/application/composition/pvp-agreements.js",
-        "bot/src/application/composition/native-environment-audience.js"
+        "bot/src/application/composition/native-environment-audience.js",
+        "bot/src/application/composition/environment-scene.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1128,11 +1132,11 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf03-f05-c04.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c51.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c51.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs"
       ],
       "observed_directions": [
         {

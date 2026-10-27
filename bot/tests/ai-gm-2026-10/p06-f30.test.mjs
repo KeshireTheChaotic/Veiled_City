@@ -37,7 +37,7 @@ test('scoped GM context exposes the rule without recording a violation',()=>{
 
 test('scene wiring is a scoped read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-market-neutrality.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentMarketNeutralitySituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);

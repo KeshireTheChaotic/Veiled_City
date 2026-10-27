@@ -52,7 +52,7 @@ test('version 10 accepts only the closed imaging record action while prior versi
 
 test('the unified route saves one audience-scoped clue record and reuses it only in entitled scene context',()=>{
   const dispatch=fs.readFileSync(new URL('../../src/native-environment-dispatch.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8'),
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8'),
     gm=fs.readFileSync(new URL('../../src/gm-unified-arbitration.js',import.meta.url),'utf8'),
     native=fs.readFileSync(new URL('../../src/native-environment-imaging.js',import.meta.url),'utf8');
   

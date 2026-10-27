@@ -37,7 +37,7 @@ test('current scoped GM context returns exact auction prompt without a bid or tr
 
 test('scene context wiring is source-bound projection only',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-auction.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentAuctionSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);

@@ -37,7 +37,7 @@ test('scoped GM context preserves the departure rule without inferring a lie or 
 
 test('scene wiring is a scoped read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-last-train-rules.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentLastTrainRulesSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);

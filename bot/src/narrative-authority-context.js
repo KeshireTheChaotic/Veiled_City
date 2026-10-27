@@ -17,7 +17,8 @@ import {assemblyWriterBrief} from './assembly-context.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';
 import {openingEntryProjection} from './opening-entry-context.js';
-import {nativeEnvironmentSituation} from './native-environment-scene.js';
+import {narrativeNativeEnvironment} from './frameworks/narrative/public.js';
+function nativeEnvironmentSituation(...args){return narrativeNativeEnvironment.nativeEnvironmentSituation(...args);}
 import {inspectOpeningCohortSource} from './opening-cohort-state.js';
 import {createNarrativeContextBuilder} from './frameworks/narrative/public.js';
 let contextBuilder;

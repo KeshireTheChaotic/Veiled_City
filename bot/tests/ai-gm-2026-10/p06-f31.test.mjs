@@ -37,7 +37,7 @@ test('scoped GM receives the trigger while context applies no Exposure delta',()
 
 test('scene wiring is a scoped read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-contaminated-scene.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentContaminatedSceneSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeVeilExposure|changeFear|changeHope/);

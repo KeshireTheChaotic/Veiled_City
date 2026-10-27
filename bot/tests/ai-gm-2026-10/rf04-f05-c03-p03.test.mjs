@@ -27,7 +27,7 @@ import {assemblyWriterBrief} from '../../src/assembly-context.js';
 import {worldIdentityOrigin} from '../../src/world-authorship.js';
 import {backgroundIdentityContext} from '../../src/world-background-identities.js';
 import {openingEntryProjection} from '../../src/opening-entry-context.js';
-import {nativeEnvironmentSituation} from '../../src/native-environment-scene.js';
+import {nativeEnvironmentSituation} from '../../src/frameworks/daggerheart/native-environment-scene.js';
 import {inspectOpeningCohortSource} from '../../src/opening-cohort-state.js';
 import {indexWorldEvent} from '../../src/city-calendar.js';
 

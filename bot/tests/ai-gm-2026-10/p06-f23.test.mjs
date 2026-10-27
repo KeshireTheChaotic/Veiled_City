@@ -38,7 +38,7 @@ test('entitled current profile receives condition without acceptance or protecti
 
 test('scene delivery is scoped and has no hospitality or protection state',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-guest-right.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentGuestRightSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);

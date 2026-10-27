@@ -1,10 +1,7 @@
-import {createEnvironmentSceneRules} from '../../frameworks/daggerheart/public.js';
-import {createEnvironmentSceneConsumer} from '../../frameworks/world/public.js';
-/** Exact world/source capabilities feed native rules; world receives only their original checked service API. */
-export function connectEnvironmentScene({capabilities,consumer=createEnvironmentSceneConsumer()}){
- const native=createEnvironmentSceneRules({capabilities});
- return consumer.bind(native);
-}
+import {nativeWorldAuthoring} from '../../frameworks/daggerheart/public.js';
+import {worldAuthoringContext} from '../../frameworks/world/public.js';
+/** Native environment provenance reads World's original verified authoring context; World keeps every authorship rule. */
+export function connectNativeWorldAuthoring(){return nativeWorldAuthoring.bind({verifiedWorldAuthoringContext:worldAuthoringContext.verifiedWorldAuthoringContext});}
 
 import {nativeActorControl,nativeWorldProxy} from '../../frameworks/daggerheart/public.js';
 import {activeCityProxy,worldNativeActorControl} from '../../frameworks/world/public.js';

@@ -18,6 +18,7 @@ import {nativeActorControl} from './native-actor-control.js';
 import {preRollFearOpportunity,commitPreRollFearCost} from './pre-roll-fear.js';
 
 import {createGmCapabilityRules} from './frameworks/daggerheart/public.js';
+import {nativeGmOpportunityPeer} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createGmCapabilityRules({capabilities:{buildNarrativeContext:(...args)=>buildNarrativeContext(...args),activeCityProxy:(...args)=>activeCityProxy(...args),consentAction:(...args)=>consentAction(...args),historicalActionSource:(...args)=>historicalActionSource(...args),scenePresence:(...args)=>scenePresence(...args),sceneAccess:(...args)=>sceneAccess(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),actorReferenceVisible:(...args)=>actorReferenceVisible(...args),typedRollProof:(...args)=>typedRollProof(...args),isPvpIntent:(...args)=>isPvpIntent(...args),narrativeSourceVisible:(...args)=>narrativeSourceVisible(...args),compileNativeFeatures:(...args)=>compileNativeFeatures(...args),inspectGroupFeatureChild:(...args)=>inspectGroupFeatureChild(...args),planNativeSpotlight:(...args)=>planNativeSpotlight(...args),recordNativeSpotlight:(...args)=>recordNativeSpotlight(...args),nativeActorControl:(...args)=>nativeActorControl(...args),preRollFearOpportunity:(...args)=>preRollFearOpportunity(...args),commitPreRollFearCost:(...args)=>commitPreRollFearCost(...args),RANGE_BANDS}});}
 export function nativeReactionTarget(...args){return rules().nativeReactionTarget(...args);}
@@ -25,3 +26,5 @@ export function inspectNativeGmDecision(...args){return rules().inspectNativeGmD
 export function inspectCommittedGmDecision(...args){return rules().inspectCommittedGmDecision(...args);}
 export function nativeGmOpportunity(...args){return rules().nativeGmOpportunity(...args);}
 export function commitGmActionCost(...args){return rules().commitGmActionCost(...args);}
+// Provide this module's original nativeGmOpportunity to the fixed port; no other authority is granted.
+nativeGmOpportunityPeer.bind({nativeGmOpportunity});

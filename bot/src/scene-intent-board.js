@@ -15,9 +15,11 @@ import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-gro
 import {nativeActorControl} from './native-actor-control.js';
 import {preRollFearCandidates} from './pre-roll-fear.js';
 import {nativeEnvironmentBinding} from './native-environment-context.js';
-import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
+import {intentNativeEnvironment} from './frameworks/intent/public.js';
+function nativeEnvironmentInstanceForScope(...args){return intentNativeEnvironment.nativeEnvironmentInstanceForScope(...args);}
 import {nativeAdversaryFeatureContext} from './native-adversary-context.js';
 import {preparedPositionCandidates} from './native-professional-entry.js';
+import {intentArbitrationOrigin} from './frameworks/intent/public.js';
 const origins=new WeakMap(),bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 export function createArbitrationOrigin(db,guild,scope,sourceRef){
@@ -146,3 +148,5 @@ export function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals
     session_id:o.binding.session,scene:o.binding.scene,location_key:o.binding.location||'',visibility:'gm',details:{input_source:o.binding.source,payload_hash:hash(data)}},'native:unified-gm');
   return db.saveCityRecord(guild,{kind:'scene_intent_board',key,status:'active',source_event:source.event_key,visibility:'gm',data:deepFreeze(data)});
 }
+// Provide this module's original inspectArbitrationOrigin to the fixed port; no other authority is granted.
+intentArbitrationOrigin.bind({inspectArbitrationOrigin});

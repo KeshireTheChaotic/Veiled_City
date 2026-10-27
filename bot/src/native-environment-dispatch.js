@@ -1,6 +1,6 @@
 /** Closed combined-request dispatch. All permissions, costs and results remain in existing native adapters. */
 import {applyEnvironmentArrival} from './native-environment-arrivals.js';
-import {applyEnvironmentSceneAction} from './native-environment-scene.js';
+import {applyEnvironmentSceneAction} from './frameworks/daggerheart/public.js';
 import {applyEnvironmentWitnessAccounts} from './native-environment-witnesses.js';
 import {applyEnvironmentDoorChain} from './native-environment-door-chain.js';
 import {applyEnvironmentImagingRecord} from './native-environment-imaging.js';

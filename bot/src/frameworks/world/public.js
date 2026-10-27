@@ -1,4 +1,3 @@
-export {createEnvironmentSceneConsumer,environmentSceneConsumer} from './contracts/environment-scene.js';
 export {minorNpcSchema} from './minor-npc-schema.js';
 
 export {createDirectorCadence,POST_TURN_REVIEW_CATEGORIES} from './director-cadence.js';
@@ -77,3 +76,4 @@ export {createWorldNpcVisibilityConsumer,worldNpcVisibility} from './contracts/n
 export {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './npc-signal-memory.js';
 export {createWorldEstablishedEvidenceConsumer,worldEstablishedEvidence} from './contracts/established-evidence.js';
 export {nativeEstablishedFact} from './established-fact-proof.js';
+export {worldAuthoringContext} from './contracts/authoring-context.js';

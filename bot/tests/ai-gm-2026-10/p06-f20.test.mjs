@@ -38,7 +38,7 @@ test('entitled current profile receives the invitation without an authored playe
 
 test('scene delivery is scoped and creates no state, choice, or mechanical result',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-metaphor-physics.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentMetaphorPhysicsSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);

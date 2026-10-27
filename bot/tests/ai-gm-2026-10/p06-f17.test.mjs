@@ -38,7 +38,7 @@ test('current entitled profile receives exact risk cue without an automatic witn
 
 test('scene delivery is audience scoped and adds no persisted state',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-thin-walls.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentThinWallsSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);

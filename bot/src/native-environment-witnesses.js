@@ -2,7 +2,7 @@ import {nativeNpcEvidence} from './frameworks/daggerheart/public.js';
 const {actorReferenceVisible}=nativeNpcEvidence;
 /** Nightclub accounts remain attributed testimony. No truth, knowledge or PC-state minting. */
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
-import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {renderNarrativeUnit} from './narrative-authority.js';

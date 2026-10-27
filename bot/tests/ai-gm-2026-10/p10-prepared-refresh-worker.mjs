@@ -2,10 +2,7 @@ import {parentPort,workerData} from 'node:worker_threads';
 import {VeiledDB} from '../../src/db.js';
 import {GMService} from '../../src/gm.js';
 import {runSessionOpening} from '../../src/session-opening-runner.js';
-import '../../src/ai-intents.js';
-import '../../src/audience-native-v9.js';
-import {initializeWorldExecution,initializeSessionWorldEvents,initializeSessionSceneWorld,initializeKnowledgeWorld,initializeNarrativeWorld,initializeKnowledgeNarrative,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals} from '../../src/application/composition/public.js';
-initializeWorldExecution();initializeSessionWorldEvents();initializeSessionSceneWorld();initializeKnowledgeWorld();initializeNarrativeWorld();initializeKnowledgeNarrative();initializeNativeWorldEvents();initializeCharacterWorldEvents();initializeNativeScenes();initializeNativePrincipals();
+import './compose-startup.mjs';
 
 const db=new VeiledDB(workerData.dbPath,workerData.schema),barriers=new Int32Array(workerData.barriers);
 let observed=false,writes=0,sends=0;

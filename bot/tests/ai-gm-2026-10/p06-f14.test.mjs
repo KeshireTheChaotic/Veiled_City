@@ -54,7 +54,7 @@ test('version 9 alone accepts the closed Door Chain scene action',()=>{
 
 test('unified dispatcher and current scene context reach the receipt; player response stays open',()=>{
   const dispatch=fs.readFileSync(new URL('../../src/native-environment-dispatch.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8'),
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8'),
     gm=fs.readFileSync(new URL('../../src/gm-unified-arbitration.js',import.meta.url),'utf8'),
     native=fs.readFileSync(new URL('../../src/native-environment-door-chain.js',import.meta.url),'utf8');
   

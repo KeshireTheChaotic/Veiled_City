@@ -1,13 +1,16 @@
 /** Scene-bound GM environment provenance outside combat. No feature, effect, disclosure or NPC grant. */
-import {verifiedWorldAuthoringContext} from './world-authorship.js';
-import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
+import {nativeWorldAuthoring,nativeNarrativeAudience} from './contracts/environment-sources.js';
 import {compileNativeActors,executableNativeFeatures} from './native-feature-catalog.js';
-import {worldSessionScene} from './frameworks/world/public.js';
-function currentScene(...args){return worldSessionScene.currentScene(...args);}
-import {sceneFictionHash as hash} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {nativeScenes} from './contracts/scenes.js';
+import {nativeWorldEvents} from './contracts/world-events.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {arbitrationFailure as fail} from '../../kernel/arbitration-failure.js';
+function verifiedWorldAuthoringContext(...args){return nativeWorldAuthoring.verifiedWorldAuthoringContext(...args);}
+function mintNarrativeAudience(...args){return nativeNarrativeAudience.mintNarrativeAudience(...args);}
+function revalidateNarrativeAudience(...args){return nativeNarrativeAudience.revalidateNarrativeAudience(...args);}
+function currentScene(...args){return nativeScenes.currentScene(...args);}
+function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 const issuer='native:environment-instance';
 const keyFor=d=>`environment-instance:${hash([d.session,d.scene,d.location,d.scope])}`;
 const enabled=(db,guild)=>db.getCityCalendar(guild).flags.authoring===true

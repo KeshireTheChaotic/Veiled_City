@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {validateMundaneEnvironmentDetail} from '../../src/native-environment-scene.js';
+import {validateMundaneEnvironmentDetail} from '../../src/frameworks/daggerheart/native-environment-scene.js';
 
 const FEATURE='environment:veil-anchor-chamber:automatic-correction';
 const sources=()=>(

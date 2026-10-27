@@ -1,7 +1,8 @@
-import {connectEnvironmentScene} from '../../framework-to-framework/daggerheart--world/public.js';
-import {environmentSceneConsumer} from '../../frameworks/world/public.js';
+import {connectNativeWorldAuthoring} from '../../framework-to-framework/daggerheart--world/public.js';
+import {connectNativeNarrativeAudience,connectNarrativeNativeEnvironment} from '../../framework-to-framework/daggerheart--narrative/public.js';
+import {connectNativeArbitrationOrigin,connectIntentNativeEnvironment} from '../../framework-to-framework/daggerheart--intent/public.js';
 let composed=null;
-/** Bootstrap-only fixed native/world composition. Constructs no database, provider, scene or client. */
+/** Bootstrap-only fixed wiring of the Daggerheart-owned native environment engine to World, Narrative and Intent original sources. Constructs no database, provider, scene or client. */
 export function initializeEnvironmentScene(){
- return composed??=connectEnvironmentScene({consumer:environmentSceneConsumer,capabilities:environmentSceneConsumer.sourceCapabilities()});
+ return composed??=(connectNativeWorldAuthoring(),connectNativeNarrativeAudience(),connectNarrativeNativeEnvironment(),connectNativeArbitrationOrigin(),connectIntentNativeEnvironment(),true);
 }

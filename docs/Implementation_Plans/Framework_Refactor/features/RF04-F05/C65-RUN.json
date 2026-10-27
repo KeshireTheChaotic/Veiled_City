@@ -1,0 +1,1291 @@
+{
+  "feature": "RF04-F05-C65",
+  "base_head": "6b3d4fef0f34f1ed5f66c3a9bccf13370db54165",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/application/composition/environment-scene.js",
+      "bot/src/audience-native-v9.js",
+      "bot/src/fear-reservations.js",
+      "bot/src/frameworks/daggerheart/contracts/environment-sources.js",
+      "bot/src/frameworks/daggerheart/native-environment-auction.js",
+      "bot/src/frameworks/daggerheart/native-environment-capabilities.js",
+      "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+      "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+      "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+      "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+      "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+      "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+      "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+      "bot/src/frameworks/daggerheart/native-environment-instance.js",
+      "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+      "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+      "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+      "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+      "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+      "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+      "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+      "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+      "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+      "bot/src/frameworks/daggerheart/native-environment-scene.js",
+      "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+      "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+      "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+      "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+      "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+      "bot/src/frameworks/daggerheart/native-feature-catalog.js",
+      "bot/src/frameworks/daggerheart/public.js",
+      "bot/src/frameworks/intent/contracts/environment-sources.js",
+      "bot/src/frameworks/intent/public.js",
+      "bot/src/frameworks/narrative/contracts/environment-sources.js",
+      "bot/src/frameworks/narrative/public.js",
+      "bot/src/frameworks/world/contracts/authoring-context.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+      "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "bot/src/gm-action-capability.js",
+      "bot/src/kernel/function-port.js",
+      "bot/src/narrative-authority-context.js",
+      "bot/src/native-environment-access.js",
+      "bot/src/native-environment-arrivals.js",
+      "bot/src/native-environment-auction.js",
+      "bot/src/native-environment-capabilities.js",
+      "bot/src/native-environment-chain-of-title.js",
+      "bot/src/native-environment-consensus-engine.js",
+      "bot/src/native-environment-containment-shutters.js",
+      "bot/src/native-environment-contaminated-scene.js",
+      "bot/src/native-environment-countdown.js",
+      "bot/src/native-environment-dispatch.js",
+      "bot/src/native-environment-door-chain.js",
+      "bot/src/native-environment-everyone-is-watching.js",
+      "bot/src/native-environment-express-through-memory.js",
+      "bot/src/native-environment-guest-right.js",
+      "bot/src/native-environment-imaging.js",
+      "bot/src/native-environment-last-train-rules.js",
+      "bot/src/native-environment-market-neutrality.js",
+      "bot/src/native-environment-metaphor-physics.js",
+      "bot/src/native-environment-model-room.js",
+      "bot/src/native-environment-no-consensus.js",
+      "bot/src/native-environment-noise.js",
+      "bot/src/native-environment-no-ordinary-signal.js",
+      "bot/src/native-environment-output.js",
+      "bot/src/native-environment-price-offer.js",
+      "bot/src/native-environment-private-room.js",
+      "bot/src/native-environment-procedure.js",
+      "bot/src/native-environment-proposals.js",
+      "bot/src/native-environment-recovery.js",
+      "bot/src/native-environment-sealed-docket.js",
+      "bot/src/native-environment-thin-walls.js",
+      "bot/src/native-environment-third-rail-spirit.js",
+      "bot/src/native-environment-three-vectors.js",
+      "bot/src/native-environment-trace.js",
+      "bot/src/native-environment-witnesses.js",
+      "bot/src/native-environment-wrong-offering.js",
+      "bot/src/native-feature-catalog.js",
+      "bot/src/scene-intent-board.js",
+      "bot/src/world-authorship.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs"
+    ],
+    "passed": 82,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f01.test.mjs",
+        "sha256": "6A69B5F1987BE30FCC3EE2B06D42375FEB0EA06440D6E5442ED55C92F5073722"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f01.test.mjs",
+        "sha256": "501DA0A3E2E194EFB4DFE40C2E3E3C4CB3F9A166A0824AE43044898F239F5CC5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f04.test.mjs",
+        "sha256": "A2833092CD20F426919A6232097A68D3198085B23FB749D4A49802C146BAE67A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f05.test.mjs",
+        "sha256": "3F922920133F2A39F2EF899B76563C09B67ACB5FB952869C5AB2FC0B9527BE6A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f06.test.mjs",
+        "sha256": "617A4B5FB9542B0B1BA90DBA771E6120ACFA3D9E4863054230D652DC93827F6D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f07.test.mjs",
+        "sha256": "5DF1B1C12A8E18E94BD1826A96EE942E9F2E9C869B3A13E3188EE4AA21EE7F1B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f08.test.mjs",
+        "sha256": "A705CAE64B374FB2530DC31CCA9A619ACC5ACEE10097FBF7713ECC55BAECFCFF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f09.test.mjs",
+        "sha256": "395CF12927D53591B141EF26A14791063834E49EAA878F28A574C172F018FAFA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f10.test.mjs",
+        "sha256": "AE424002D22AA3E472F699A1B812D2A7A4AFF199C93D8B7BFE59386E63453BF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f11.test.mjs",
+        "sha256": "4C9962B323BD481D9EC41F8C36651F5E2F7CE06121F8500D476CDB12B30FB630"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f12.test.mjs",
+        "sha256": "AB5F5D61D82404B10F1C082089248BD23C6A81AB5D8264A572E5DB9535F4107C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f13-c01.test.mjs",
+        "sha256": "80B29A5D6A00548B365C418E7FD01BB93D7F5E35953A39FE196F1831E876CAED"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f13.test.mjs",
+        "sha256": "474A273535327E468DD6884989177D6B1F3C21B9D5DC3052C6000EEFCBA2823F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f14.test.mjs",
+        "sha256": "862B6D0482AFF84A4819C447A8DCE7377C60A1ACAFCB7757F0F3AE5FD2ACBAB2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f15.test.mjs",
+        "sha256": "DF2479ED3B8EE885989C91D495F023EE840CB7706F714CC999E286B749569E9E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f16.test.mjs",
+        "sha256": "F89689B123E88E1B512BF8AC95183B4640C32F27BFB91C491E94842EEDF0FB3C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f17.test.mjs",
+        "sha256": "AE4A66A6CF6973051300BC30AE7B7C18CE0ED644282E40D3788B4DFABDCF818A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
+        "sha256": "FC5C9FEFB2176F3D99F4CC32C39F7B1567CFC85976D084161E6F6E4DD1B6FC10"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
+        "sha256": "A5934BB0F3D54A3E749F5739DF665F6BFBA0177E702D7E1FE16BC362906EB67D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
+        "sha256": "B7B77E851972E0A8DCEC4BEFAA12CF225156EC0EAE2469E76FE102A2A962102A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+        "sha256": "F16FB75760E49E1C8EB4D32D1EA237082E8E2F30A7F436C89A2802A3AB8424BE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f22.test.mjs",
+        "sha256": "52A7C67DC4874AE0E414DC147D149BE3E5A0D6B0664D25A4F77460EC3A2C2D31"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f23.test.mjs",
+        "sha256": "0EC2E7162265EEDEDC0508BAD38229C666B37FC37EF35206DB160E9D9FCFA452"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f24.test.mjs",
+        "sha256": "0D52644B7A9D8877E4564DFFEB18C1DB0DEB99565857478CF6316E433CA178A9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f25.test.mjs",
+        "sha256": "92649A159723EC1125ECCBD7B6DFC3FC1CDDC2C7D9D5040E9B0E7E5956DE59C5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f26.test.mjs",
+        "sha256": "446898BD0527B7075A2395F08DE47A8AD20202C0DBB1A2536CB123F04B9B508C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f27.test.mjs",
+        "sha256": "125DF178725CD3C3A65572021F72058566E7624BEE3BF231C6E07AC03A5C929F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f28.test.mjs",
+        "sha256": "728E71A272527843C406F8C8F4B4C192C7058F89F05FC577A7D38C94669DA31D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f29.test.mjs",
+        "sha256": "4884AF4C9FA6BBFE5EE40F9119E5EBA36CA2B63057F8BA96F5CCE6184F4F38DB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f30.test.mjs",
+        "sha256": "DF1AAA8202918258DFE306DD04AA5765146F7D58838ABBDFDB066351E74ED29D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f31.test.mjs",
+        "sha256": "63B59B223929D80427AFEA6E103A33B3AB3EFC79A6C016162644844B9CD2E405"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
+        "sha256": "BA359A89587F59A739D54B05A6845ED8CAC95AFDFDADB27CFFA08D922D1E19D1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
+        "sha256": "90574D56B0D0AA276B8EE764BE7ABEE6342E685CF8CDC981326FA361E1D16D2A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
+        "sha256": "36C708DA05283E267315B82552B3311D5CEAD5CA3D71734436EAC6D75B001B97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+        "sha256": "DF0EC5FB825646D821325037FD07CE19B77166D4AEE7C8167D9F44BBFCDB5692"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f36.test.mjs",
+        "sha256": "0323FC5F70D308901E990EF2846BD06F921D93415FB446C9F23BE4E1B3F74943"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f37-c01.test.mjs",
+        "sha256": "6359B54E317A3E16193EF5ACE71DC2E9CC37B1609E8249273B2070166DE22B9C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f37.test.mjs",
+        "sha256": "A7152CB8E2D9D01C22694C411B64B839C95F9C4C0B8062FBB5A809D32793CBEB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f38.test.mjs",
+        "sha256": "BB77D25C63A35EFD84DEC5B59C553B52B5D34972BCB29CDF3E301500D6BF6712"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f02.test.mjs",
+        "sha256": "D8F2F79DAE5DBCE5DD3D5A31C08CD24E1887730AC32D4C811C053CA36DA49A12"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c02.test.mjs",
+        "sha256": "F2CCF3943AE51968118D9171754A44CFA8D08B772CA4823645245C50F719EB56"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
+        "sha256": "5679623887A80D1125B73B0E77C4DEACD0D2CA72BBEA0B4B8B174685E56A09DC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c04.test.mjs",
+        "sha256": "7044DDBBD0C5E184F3B9E95212FE0D2018900B74A2E543ACF202F58BBABDC0B0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
+        "sha256": "6E2023E181EB80C3606F8188B7FCB20FC50A1C43634625C4D5D9C0CBF5063FB1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs",
+        "sha256": "EBB1E04688DEC1906256ADE1713F69052B88ADD7AE46B8128AD713A05BDD4543"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs",
+        "sha256": "109D5FCC770AD72AB1EBE9766FC0D49EF4105A5621D7E700B20059FC6DE1DFC9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c33.test.mjs",
+        "sha256": "56B3BECA5D515527F0122CAEBD481CAC1C7930A102389EF72CB4697971923AF8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01.test.mjs",
+        "sha256": "1BD66682706638FE9387087BDADF0A6EF46FA6BF21464506B96062984D455891"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c01.test.mjs",
+        "sha256": "06BD45337AA17B73AA966B6DE2E8258F84A1AA891F93A8335F48354FBEA0476A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c02.test.mjs",
+        "sha256": "4BF5006DB394B79AA0E25B5CC2965534B89E7D1E49FFDE87DCFF0BDA952E2C41"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c03.test.mjs",
+        "sha256": "849133727B43B74F3D7004F0D1B3DFE46BDBCB5CA5455BE12F17B90CD1892582"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c15.test.mjs",
+        "sha256": "949AFF6C6625FF4FED256F8174295799CEA6FFAD5F5E96F52EDF20CD1C7CA763"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c20.test.mjs",
+        "sha256": "9B325A56583D0540262AD5561DB10297DE5D2EFD923C72AC81E728ADE530C580"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02-c21.test.mjs",
+        "sha256": "EFFE848E3831EBC68FAD735C506F49F5C11CFE000176E92720D699617369D887"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f02.test.mjs",
+        "sha256": "5976D929EAF804E17D7165EA6791CA321BA93102F37A06B9BCB69BD8B6962735"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c01.test.mjs",
+        "sha256": "F7159F96B5E784EC659174DEC918C9503CF5F6BEE556131F5BC431675C4B166F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c02.test.mjs",
+        "sha256": "A07E414DBD6CAD1208791CF3043640E35A9AB043EDC9E174D1774A37C6A03CB4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c14.test.mjs",
+        "sha256": "1F87CF4FA251FF8FB856883F717287441C2F2F82AAD4A61540570578B75111C8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c16.test.mjs",
+        "sha256": "D26563EE2BA5550FF84824108D6860A4E512605F387F76E9867AC35699B994C2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs",
+        "sha256": "161AAFDE23338A1EA4155360CED19E85A02499DE6C552007EF1B52AC0A9F5D8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs",
+        "sha256": "533FB4E3C9A29E097F8C9D319DD516DF85E51E912EC181B1C5B4E475E23B19E5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03.test.mjs",
+        "sha256": "C9069605E010DCE1CFF7ECE2598B73F2092A3FCA3DC351DF4DBF85886259B97D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c01.test.mjs",
+        "sha256": "87A2B88E2341DE9EBEA417BE9A0917A0DDCCCD6A4AD8B2E3086A60A0B11FDD93"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c02.test.mjs",
+        "sha256": "93BF3263904DE268F6B4964E91E59D199230585A2DE8C9581004298055D80A25"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c05.test.mjs",
+        "sha256": "834B0C6132BE0F4E0B2D342C4A86D1B0AA5E8127B7E6130F869B4D26C195AE66"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c06.test.mjs",
+        "sha256": "15A35F06DD67A270AC5D211E49D9EAF849B83B042E964A6A08607FE3FD68D8BB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c13.test.mjs",
+        "sha256": "A1D83D0A0D7E966E10820CF1D0102DBB830B84576F3A476E383D94C2C42E32D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs",
+        "sha256": "A598583F3290DFBC802B290D4F170C99B5395AFB0113E0829AA459E864AD0489"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs",
+        "sha256": "3AF9257E51CC756F9A4FDDFB1556F27A0BA7937D9E8303FE271FCD2562AA2F2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c16.test.mjs",
+        "sha256": "6A6DDA77BA70E4647176B3F0FC02BF0AD621D3F226D1C1BEAA7198C3790D813C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c17.test.mjs",
+        "sha256": "67E98F885B7F7A89142F38E87A2108EAF97613016E6BC9830E119327A1B99327"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs",
+        "sha256": "45848E51ED84E7BE6C6C166CA83A3A9B29D7F63AB4790F6ABB90765AECCEA726"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs",
+        "sha256": "E04A3CBB33F02760D90F4F4F634E7E28A34BA9228F54ACA9DD7E723F79E97DA2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs",
+        "sha256": "20B91B9F54BA7F2650B3999A5D155FBBFD189338636DD551F1E6E7789CA1289B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c05.test.mjs",
+        "sha256": "1A032B8B5A85CBB4FD7251EB34C3789E49AC67768FBF9878DC89CC6438610016"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c06.test.mjs",
+        "sha256": "956B5102CB48B0C5FAE5684BDC33FAE854BBD53F3E683768060069D19DDADB67"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c07.test.mjs",
+        "sha256": "42872B5B882A97AD5D85902909C3C5620265834FFFE1F68A278DE4A97FAD86ED"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs",
+        "sha256": "59314D3F5FF5AAF81CEB400EFF6980571990664C1D5B2D1194F95DC8E0B44CE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c09.test.mjs",
+        "sha256": "7281BE078CC1500CD25DC5480F31E2F91E42D7686C0126752D5989000721BF48"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c10.test.mjs",
+        "sha256": "BA145A03B4750286998C86D9C670A2B7C3EBE7A71D5FB4553A8E721591493E9F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c12.test.mjs",
+        "sha256": "3E47E6E26052A3B3AF52AD548D51A23F55A1A956AFB1C2F0BC03132754F5BF5D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "sha256": "E4B1F4E031CC0A4BB24AB6C9AEA19386178F0E15FC433B5C4D01E99678409C6F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+        "sha256": "974F3FE9A474CC7C77CBF81AAF2CECBAE75D597062D537526456D95B51A10F4A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs",
+        "sha256": "A82A5691303D2F692FAB1D57349F34389785FABDC7C60830DF679816FCBE908C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c01.test.mjs",
+        "sha256": "27A3DEA08B84E99EF9D7BB4016431DB9597D633DA4EB69A11C2BEE5A57F4B8E4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs",
+        "sha256": "4D05BC4DE05FCBDB34AC2D050DCB9B7B86849E67D12808E5E93C53AE4B0BF98D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c04.test.mjs",
+        "sha256": "153172E714479CED2BB06FA6686BFAAF692288C385C7792A1AE9F3DE432623AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c05.test.mjs",
+        "sha256": "5FBC2BF3584A5DD9053244F10E783691509C7D08B4C4E56FDE62D833EEE247DF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs",
+        "sha256": "B7D8534187228A9956921246FC4E44B9B90210B8ABE028C3BD309B73959A88D6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs",
+        "sha256": "499BEB636F2743949BE80CD23A0799650464CF777E1A0A6C89C96AE2D35CC9C4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c02.test.mjs",
+        "sha256": "A234288C097BDD4EC9432F324C4AC38A19D4439FACE28612AB3FB81C8AC754C9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs",
+        "sha256": "4B190BAF4990B9020A4C5683A4449FC4551B2BCA58A8810E188FE1F81D5FCFB3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c04.test.mjs",
+        "sha256": "00E780AB0A640EDCCC83C4B8BA6349EF783E282A6DFFEDF49FE25D89E15B97AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c05.test.mjs",
+        "sha256": "B3569F467A395A194CE328D1FAD5B985001A97892EC61C560B683B13F29D86DD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c06.test.mjs",
+        "sha256": "D2528DDFC758B5629B9543C076EE223A2CC46F48E0998499B503B0D350DC67DB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+        "sha256": "CC7734C7E03C4E99337EA40550D9F6C3055DF023652095107A68DD77C2C56C80"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c08.test.mjs",
+        "sha256": "AF869A0780C20DBEFB8BB1E330B722CD53D9EA97E3A3C66B16037835C0DB0873"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c09.test.mjs",
+        "sha256": "438B0BAE2B37D2E4692CE5799F5C32A57AED18ACEFAFF4FF6431766FD826080C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs",
+        "sha256": "28EFA1FC4D6786C89851C68BCF503E33A17C10E151D01376C9352A969BB6D094"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "sha256": "6ED771B97DEF6187B1462B8F3B949A753CEC1AAACACED44BECAD9FEDAC4FAAD4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "sha256": "DECD364345C5356285DBDAF69C10DE3902483D7FEA5E2ECA8417706A58E0B00C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "sha256": "2ACF463762F71C5FBA7C445D1998B766D764582999CB8BA20A02BA7E3E1CDEF1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "63316974CFBE6067358F776FAA7C8F26E381ACCDABE06203169BF294F4240A64"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "sha256": "C0F9435EB9E505556081C50655D0FAFE6F34CCA04CF7EE9B95665DDA38CCFED7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "8E54B8245F786BB7887634E175B5F950080CC051B04B127EF1B074B4857CB288"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "643D0AB2D15AF174626D2C61181DDB0AC46188DF10C4A0C5099A289546717F9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "D278FDE4F98BCDC2B3B5FB5733864D5ABDAB947B49901E49A96F20F48FEF7535"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "sha256": "E2D3168030223F6BBBA1A0C5416E0F3ACCC8B6176DA6BF10490375B009E2EF8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "850D75C34EF0689B45D4A77985EF0E6C48BC2F43A2B5E98A4CFADB58F5C48733"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+        "sha256": "69D7D7464F80CCE77555182F581D4F8C73EF969E8AB30C91A89F0262825BD04F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs",
+        "sha256": "99DF568B3FD167F02C7DB4A562F91FA34D540A0928BC2895608E4408CEFFC89B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "sha256": "9ABC71E7429071126A901B9BED79C7025239FB23747C7EFFA09D907F0A3B9C60"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "sha256": "CE77D5D06034C3AB5971F07691D8B08F85F3777D9137731BC5D807C0FEA1A9AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "sha256": "C0E5F9249105EF015996F62C0FA4C939AC3AA5FCF9B78BD3C90679E6F67CEB24"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "2C476EB087A2C0C6F9EE5BC3E3B2B0713157C21324843E6162CA1685005D2410"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
+        "sha256": "AED561CBD52DCA47A6E3A005F7F92454515691F5E147BA38D5927AE935083ECB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "B362359DE2CA989879055DD313E41DE82A5BBBEC01D936C4553385D1A3058EE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "sha256": "6B053D45B24E659BC878EAC6A5A899D9DAB8C9E5E60D077014C86A8B1A194BEA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "sha256": "7B00130B3E1A5A59488E78259E3AE627AA2A641ECEF157517A3C52A92C430FF5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "E623AFBCD172192A6270DAACB91C1099D87AB0A04DFD86D40FE063223DB9B40C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "39846BFAF23C0AE22C9CEEC4E80CA0556F791C96DA26CCC0713CABEE9BCC9266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
+        "sha256": "3041436BCD207CC2D6CB44965688CE8AB7D27DD09715ED238841D1973F95EE4B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+        "sha256": "1BD1153331AC693BB3E8A669EF4E2BFA57CF73C6AEC0262D4699BECDA3CCD892"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "sha256": "A8EE71F1EB781F41FDE2D2BB85D745E7A82440FCC1190FE03334C0B675E0321C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "BF6655F4E15ADF73842F20B409DD3D91F6616F62648289331CAA2DDA59748A86"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "6430FD4C457FB406B62237043F2B9DFAAE86727D2CE1665F19221DA3A11F6CE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "FC59F047AF7C882F372C74E2377008EF170E1DEFB87582A2A3DA2A2C44F38FF2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "sha256": "4BAC9EB3AAF8C6927C13610DFF177E1937B47E6D8ED72096530ED3D5BC127FF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "sha256": "4420D1710E9E09B5C6CE0AA6BFFE605193A45FC2C70F472779484B495970E7A8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "sha256": "317F045FC7105744579B9BB5C9B979EFA80CBB476AFFF4B1281403034D62B6BD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "D28CA8B6B3A62532B0019CDEC7CEBB796E7268C3209339C9020CB6701E92BEC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "D71A8E925B036F0E183C52E82BDF69E443E87C20D500E55C9DEC0BB55CA9EF87"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "E1DF774C699FAD06AE3B5ADEBC10DD4D9D1557E066424A871C01FDCC03E1DD2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "sha256": "E0E4B657B21877C724E785C150C007CE2F86808C364A3DA14B990E6BFF16F4E2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c32.test.mjs",
+        "sha256": "500DBF41A1536A5C140B4A0368C0C5507D14A6AF3EE09C130E8DD041C543D1A7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs",
+        "sha256": "885DF00D964358E29FBCC32CA50F0CD6DC35F414BC731C97CDB346BCFB526311"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs",
+        "sha256": "0256F6DEB0BB3DB38FA9505C3800A7F606472B6B3439EB9BF81D7AEDA3BF593A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs",
+        "sha256": "4FED9FFD3AE0D9C805C0F5444584CFEFE14B88039BA7AB0A9075C6CE5E4C42AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c38.test.mjs",
+        "sha256": "318E43D37CE6221695EA5C77C0C55127B9497C915318E77BF755475B70CE7D9D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "sha256": "F4712C667EA68CFCBC1672FBDBA5B1FB0A3CD87D3390375F9EE91C37370A66AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+        "sha256": "EFE933485D2F40E91D1363782EB3558F3C652016FBF2D79A756873E82FB74087"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+        "sha256": "90EB296F9EB7FDE6EE59C79290874E4393B9BA193EB41DE8804FB96926CA2F8B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+        "sha256": "87278FDE1DD65D41F8D2A0C757E52BFE32FF014F1494B3CCB18F83F6F6FAAB70"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+        "sha256": "76F8F77D646588A69A6388A0F50F4F2878646C84B30B21B420A38B243EEA3DD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+        "sha256": "4E6463DB2B4A16B5EBB9B3C58B7193B514645E9E93CBD82CC730715F476A31BC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c45.test.mjs",
+        "sha256": "07FEE32D2E4CDA0E0701047B3B216E10F4D47E26EDA3683BCD6C1FAF086B21CA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c46.test.mjs",
+        "sha256": "1C6B7E2A5BB26ADC7A8329541824A9D7B2F1144510C24A46049490B5D0371D56"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c48.test.mjs",
+        "sha256": "912E8A6B17ACC84D64922E6C1DA5A23FF7776637574EC2F5D2EC73786421837A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "sha256": "3076535FC52438549F70C4D4AE2DC7F136A27D9D010C438F88E8A455FA24AD5D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+        "sha256": "DC30857241AFC51425682C8FC0A7EB359082A3F5A5C94F11522FFA61F747ADA7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c51.test.mjs",
+        "sha256": "FF61600DD096058952CBAB632FEBBCA6F5720452213AA79537D6ECAE462BD770"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c52.test.mjs",
+        "sha256": "992340C0C887E723704AC04CF0768F3B10F25BF9F388AAFDC5F342260C74EA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c53.test.mjs",
+        "sha256": "80ED230219092A09127162FBB3EF1D26986454FA43F6E165E66EAF4C7B27F77A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs",
+        "sha256": "F7D42E57A978C6357B27C91E20F29A557D7DF1B27005CE14E074D9F10C08DEDB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c57.test.mjs",
+        "sha256": "1414E4C8CC94F0464BFDF71968321D1BC60F03C545088676552F6EDA81F2796F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c60.test.mjs",
+        "sha256": "FA6A46AB2101890F85D3F102AEF982064D056B0880E6BCBB7F4E293EB466F3EA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c63.test.mjs",
+        "sha256": "7CDE0EEE69CB506E716AFA520B2802C8BB675BC96521C3AAD88FAFCA4C53AE07"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
+        "sha256": "F6F5743C17EDE6458C002C4171019530FEB6C5B7DCBE4CD658FB70F96963B9F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+        "sha256": "C05E2757860091E8FB147B3F0E9A4D944BDA255213271A3A6F92B6CE7620A412"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-c03.test.mjs",
+        "sha256": "947DABA2B56CAC7385F5A29DA75AE16286F339A16623A5170A647A1F60F4BACE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs",
+        "sha256": "C2433449CF328A60E15797FFDB57F1B8A75A82E4F92CA1438896127202937946"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+        "sha256": "DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs",
+        "sha256": "2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs",
+        "sha256": "633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs",
+        "sha256": "083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs",
+        "sha256": "EDE714B20A51565B523FB403FE032B8A4F807BCEF7255ADAA88EDF88555FF3A1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c16.test.mjs",
+        "sha256": "6E839C073BAB18F1D927CBFDA9FF38312A70AE4F10A09807CB33C115A6665450"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+        "sha256": "515BA265756F9423A7201BB6E69E083E83F19F12372E49B35BF6AD4DF31A7F8B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c18.test.mjs",
+        "sha256": "06EDD801EE4E594A1AA616412372951D2F11FD62DA90AA15E86532CCDACE257F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c19.test.mjs",
+        "sha256": "70C70BC432B2A0513FD3F60CF74CDE0DCAD3C76240C98FE37EC01F1A7187EA51"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c22.test.mjs",
+        "sha256": "FEBEDDF6966BDC1E342E8E22A519E02ECB0E71D7616A6599C2A1B8197195C06A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
+        "sha256": "8DDEBA0771FCEC25A7666F2F0108828CE9D67F24BF630E3B76BDF43FDA219E38"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c26.test.mjs",
+        "sha256": "F3076F1DC4BC847D87BB6FBF48FB301E83C0646D5CBBF377FC8A6D0666A51B31"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c27.test.mjs",
+        "sha256": "8C89F767A1274BBCB69DA6493E066220E6FC381CE7891A48285CB5CB77BB500B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c28.test.mjs",
+        "sha256": "F44E8597A3A04D49354AB88E68D9CE4E51CF2F8A0F74351862F9E2FEB7C9EC66"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c29.test.mjs",
+        "sha256": "21BB41443654C06F937D3F7670952ADD6289D30636E238E665C10DC8069508D9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c30.test.mjs",
+        "sha256": "FE6B2D25BBD7C54E51E8B4FFC81122C107526E75242DBE2386076175E6B48B79"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c31.test.mjs",
+        "sha256": "EC8CB0E366A4F68CD537319FE12EBABE3282F91D51DA39944772DB175F84FECA"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T19:13:49.007Z",
+    "end": "2026-10-27T19:19:05.755Z",
+    "exit_code": 1,
+    "tests": 1154,
+    "passed": 1153,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 316709.222,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-test.log",
+    "log_sha256": "B057F371333D0D199505E4087B94EEF681D82D8E3DEBA06278C46D31488244AB",
+    "failing": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 1,
+      "source_modules": 759,
+      "unowned": 0,
+      "imports": 3153,
+      "largest_cycle": 107,
+      "accepted_legacy_occurrences": 1626,
+      "active_violation_groups": 1,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-rf04-architecture.log",
+      "log_sha256": "0BA20AC6C323369790F48AAB5CE06379ADA63FD61691BD1EA59E441CF1140F52",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 759,
+      "unowned": 0,
+      "imports": 3153,
+      "largest_cycle": 107,
+      "accepted_legacy_occurrences": 1279,
+      "active_violation_groups": 347,
+      "transition_errors": 346,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-rf05-architecture.log",
+      "log_sha256": "C170AF6E0900AA8FD53B7D61763D6039EA31F70AA1F4189CC3F3E5C49AF559C5",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-auction.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-chain-of-title.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-consensus-engine.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-containment-shutters.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-contaminated-scene.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-everyone-is-watching.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-express-through-memory.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-guest-right.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-last-train-rules.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-market-neutrality.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-metaphor-physics.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-model-room.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-no-consensus.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-no-ordinary-signal.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-price-offer.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-private-room.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-procedure.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-sealed-docket.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-thin-walls.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-third-rail-spirit.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-three-vectors.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/native-environment-wrong-offering.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-authorship.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/memory-lifecycle.js -> bot/src/world-authorship.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/narrative-authority-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-arrivals.js -> bot/src/autonomous-world.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-arrivals.js -> bot/src/world-authorship.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-door-chain.js -> bot/src/autonomous-world.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-door-chain.js -> bot/src/world-authorship.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-witnesses.js -> bot/src/epistemic.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-private-seeds.js -> bot/src/narrative-authority-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/narrative-memory.js -> bot/src/narrative-authority-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-arrivals.js -> bot/src/autonomous-world.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "EXPIRED_TRANSITION bot/src/native-environment-auction.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-chain-of-title.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-consensus-engine.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-containment-shutters.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-contaminated-scene.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-everyone-is-watching.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-express-through-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-guest-right.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-last-train-rules.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-market-neutrality.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-metaphor-physics.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-model-room.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-no-consensus.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-no-ordinary-signal.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-price-offer.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-private-room.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-procedure.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-sealed-docket.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-thin-walls.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-third-rail-spirit.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-three-vectors.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-wrong-offering.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-authorship.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-arrivals.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-arrivals.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-door-chain.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-witnesses.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-arrivals.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "86ef5fef263708b344fa32fa3712d74d071ea64b95b25a1b60f45fbfd623ccbc",
+      "f2545a09236b0190fb5a3c5aa5d968759de7a71aa5e5aab0b55800fa138f9562",
+      "2ef84abb6d3dea54fae1647ddac02e0307979da04e962c584bc648fa638261d3",
+      "fc74f1c48a60909f0a6f21bc67b7a96449bd09eb35017989f6822021ed0271da",
+      "38b73f2a9b0f0b255b8671eeb8423125eb568dbae50bfec6d80a04dc54993b20",
+      "4ce2f6bce2dacb1cc589519227777491f6274fac73ad178e64d7ad86a11946d0",
+      "7abb09f7f63236d61178e66de8335a07d63cbcf84f5be6645cf47c6e29a8d5a1",
+      "789845b40f0fe37792e7b527101b45a600cd26b620a030ac9431359f99ec6ec3",
+      "1854e09debf02934879bea8f66544abe57f5887b3ca17c1379f0226b9f0dbcc8",
+      "cbfb17b9712272b70630709f9cca196096cc5ebf1ca02682385765445834dbf9",
+      "3244d7eca9c9b382942983884fac8f0912ecd80f0b362d838c78729efb31a928",
+      "bcccbf1f5387f60fc9759b984b821342318d7839581b1d7ee45718c3925266e0",
+      "0554424ae54fb7baf917e25a3f6058b12f7e746da9494dbb9c8b1da6fb4fabba",
+      "110cf6a037de53a8c4372c218600e060c832395fccc2f1854676ae52930115e9",
+      "0824c2b267e863acdb3a50bd420a932ea962ea0a357f4e380a6ae6c41baaf76a",
+      "09d15a865cbda9b6d6cfb671427b593125129d6b49cb2e7b0542b75485d61979",
+      "9dd682f09f4f319e13c1afb98aa59f8ed532dbba613b2f0f182ab28dea63235b",
+      "5200fb1d8fcf694bb1284314ccbeb161ec0a090be148a7208e11fb689c7fe362",
+      "e25b2ce554932be76a0c7b0463e1c5dfd648b5813901b09366d37865eba1e634",
+      "1e14f436a667c50d0320365de9d0c98312a5bb4b2ea888460049ef5b23df16ba",
+      "6f9fdb6531ccafd150010b66c7a19b917de794964dfae27b3998afeb2d796f9f",
+      "0f087e92887acba18084d3e63b38325d0dd3cf13e40625392bfae4397169187f",
+      "f5e8f41256dbc0b57f4ac44bd8a6b221f06ec3d616aa43e497bac9c0ceea8502",
+      "025644cc816a4e5475f39ea16e69fbdb23489ba57b6c068d1f1233133c73f5c6",
+      "940b2a59034435138b522c54ef2f4c45da19de6cfcad2fe955004e401fa3567a",
+      "2d4a9fc61025b91a67267d8603bf8639ba1dea6b2b9f929dfcc17fc682c06474",
+      "393f3826adff82b34154b255e81b841adca79f444c18981caa5a406f04e4b8dc",
+      "2219bc68f18bca22b08de5377f1ec461ffb35c7a4d975b278ea39f12850fd8f0",
+      "a9070a4d0709714b1c9e86ab96e600c1bf8a35bcec1b332f200296b2d2b686fa",
+      "9dd5dd3120183c6b27574a922df7d42c646bfc69f463bf5dc8453c0c7b51bec7",
+      "9e1d92eae3066ddfbf003c278f7e1f682cb01a4a81ff2af8f05dcbde4a345117",
+      "90104c4829b2da15ab57bded5175801bb098ea02dcc24fc0d68faf112a75d960",
+      "445875f4a70c66df845fec2acd7e349d6f095683804734cfbd54604f440bc7e3",
+      "099cff6a90a24b9894dc1f4479970763b3c7975b6a8213fb55ae140d5a45171f",
+      "1408af9bff07041be41cb23e26a259b136635e647d4d09e1dd66187445b14724",
+      "1b062dd54c1c0f93f492112960d1cb204d3c339c930d06a54ea18aae46d8eb82",
+      "26574efb5084320f7e37b7003967ab4790940889d204e9ffe530db270562fd09",
+      "c0f31db8c3fac12be782ef675d163adcec6c2583ace4f281f1cb045ee65fd457",
+      "7c9cb42d629ffd406028225665db2db8c6e9c91d74cc10a8ce88b7c3cf3894d4",
+      "bf22798c506f9b857c0f3aac2d5bcbb55c49ac7f86ecb17c973ed072e96eb2b1",
+      "09b7f179e740af2fbb7cb6f773a9bc016e70f38adbda35a62b8c3914ff84af8c",
+      "34f0c55a5d4179d376f0a531cdfbb933bc970349b57d7c621fcf4c87a54effff",
+      "ba5ef0504fa48ea3d9127e84ec74e6e7b8c114a348d496d4d0c20ceade21926b",
+      "49b945c84acc2057f8aef87b3a96b86aa3e3dcce74db254488e99b40c156b8d4",
+      "10edd3a1b885d16487b271cea48e12a46494953495c8b82bce66661292648cbf",
+      "ea2d48208e3fe9a7d031ea48e247bcb04e438bfc77d5a9476e210623ca74191d",
+      "4ca84e1445c917ebaf55ed5df93ce64dbc44a8a086790ecb5fe8c99bdc08e0d2",
+      "d83fe616877e7b329b075d1c7ad166ddbd09f9a8d40a75909d98c1f09521837a",
+      "f6c9d798e30042487cfc8367091ecd68274c2f5fffabd0deeb30c9e8bb0239b6",
+      "49e15730fbc7a8fe84db72c7180de0e059d1045ab971150e8eb08e8478182425",
+      "c5827436e08e56d2c1f44b20fd8989a5ad83be6fa90a9592c03fa1bcab193b54",
+      "567dcde86d6dfbd997591faf7d8474ae0111671a96188c2e7117d053e58d1143",
+      "803df22c30a60fb9050d6e38e75301dcd177a3b09837092537b10f61562c3242",
+      "1b6d780fd52ff21a60ad3e285c58c9282e8205ac13b984f7e5e3bec027dd0949",
+      "ffd27692bd8dfaaaf4d5892ab82c5cb47d08ef1dc845d48d91df4f42dce5e92d",
+      "c8bcd335ca52558aebfb0a45f4d7736982523c645a0d348541f265c43820adca",
+      "80ad277a6827dcd02234336cec3301d806b646c3b419befaebd8c921e59db04c",
+      "318fde784d91c8973c4bd794e47fa7aa95a941f870b5a14c7767c45caf9d1124",
+      "220298e6d7a0dc4081bd82d8fdfbd449c95b9079942bd95ac20990105b116003",
+      "c051a141bf8093e3c7104e7382c6a7e1d6c1fa20ec68bfbf3ad93e49e9cd5242",
+      "0e25c8b6d1b2045ced71037cf6ebd356c8b155837592e87f912545597c4f470b",
+      "042f1928e0334f8f3405af8e7dee56343ef3dbb894d1fca849bbe8b8428b5cb7",
+      "e07aab328a9b512bda8f845b4aca2abaa4cc68fe5ac8ff70703c2945e42ccd94",
+      "9663d719a1fbf87769ae23af551d1a2c1783086d2021c0c627f0a3e1b2a98eb1",
+      "7ac8320ca9d2c0da1aa46e2409a5f7f10c0f8da6c0588dbf97285efee7adc2f0",
+      "0ebcd281c131a4fb98081a08ef64b47a96525799e8817e8a1007c1f662c4618f",
+      "6027439adfc4e3209457bf566405b6788b0d4b6e59ced587cc22f33ab368eb78",
+      "8355119c73ec0619125121ecb1d5cb21109db026ce78f876c78cd0a7ee6184c4",
+      "e0b41548d7beff09a29d7d2bfe864400f8ae10662c5e2c32882eceaa98a9f222",
+      "1c6464150dd7640fad7c0a67fbabaec2280c2bca28293fab4a1db8b3c0ef941e",
+      "83960b38cf866e13abebe1af7aa170af30b6fe3e0783fe9f6ba7931e679e4a64",
+      "5ad74dcdb91e9ad3a6db5c03678f645148e308f7b538fa59695a6afdaf0bd986",
+      "712669aabd44f1980cad5bced4bf44bf9a0694a4178707c4df78854fc107e4fe",
+      "271598f2ebe11c485a2c5c9bbcda76d9a462573987ff99383a9714d23552c2cd",
+      "2624fef2a4b9814307a6ec1b412d460a3df4c822aace28ef16799100579c5ab4",
+      "4a92918cd9d9bbdc4f72686bd23652968b230dc817a98a3c75d05eaea6498e43",
+      "a77e0ad2eec498675802326fae4d402dc4609d3775d6a6d1270aac596dba2a18",
+      "145e9440bcc8d6d0ea4920991da8fb6dd0735b3d7c7a389b215445d37de21fe2",
+      "6f17709f956b6c73bb076f3cd7617644da5380e2ac873df32e94cb49be7a9ee3",
+      "71fd2861e00e95cc58b06f01ac1d88494b517f312be35121153c36dba64b20f2",
+      "056c7488917db609a2dc2e831a67203687f9f9136edf42e236907c9039d08aef",
+      "db83020cbbac57d2a5963ef693a78b7db0c83b0496df983a3fc071984abf507a",
+      "ebb80aae995963e07cdb3462a8ed20fdf4964aba213b743b9af688b6da7302bf",
+      "ed0f67c74b3d1fe4c35746d8a1b62bd12ff26d2387e1d3c0c94d7210fc1f57c1",
+      "ee507c3a46eec3f0a66579dd7e2af2a4a9c656cfdc434d707c2422d9d99d9d91",
+      "ce96c06142e064b1e0b324cd36561c3ab65f39c4ee7ee1df9010a48e19d7609c",
+      "34743dd6125eb24a959ebb1236b08a386efe405a04831864855c4579663fedf0",
+      "917cea0cc5ef0d679f6716469261a0bc34010d649ed3cb39bf846ae417c45008",
+      "adf14c234c06a0c13b4a635849b13917e02ef3dd56b3c4c427c03caa461dbe7e",
+      "a63c946b769299529cc912b8051993915b74e71e22db308f8b1e12704cf156f9",
+      "b2c5bc20d7eea5dccd40f106c567856ccb60b454821918e70fcb507ced935b16",
+      "9a950ced10db8ef17af238afe992ce0e3d6253e15a02f8ebb70761a10f56ae29",
+      "bfb5b25c31e023646d8ecbdfcabb090182883cd2a9d1592f0b56d59239f4ca4b",
+      "f2970d0d0dba7267b63dcada9f8698515461a21db618645b3e6b822552f5890e",
+      "8020f289f73415c105d263a68fdaefe89b89c7f447261d7f37b1e588dc8326ca",
+      "135f94d10065707b51db96ad64b4427e233d3817cce2df4894e4bd113902299b",
+      "91dd1073b662bfa20fd10f562b81dd90676a52a2ead565bca7fa6f539c468e82",
+      "ae6344eee14addc68756d9ff6127e93738e560f2cb437e5fa99ce92def817a4a",
+      "b140b8a91948e4969ee6c9f47a2d8d7cbd7667ccd71631af541c772672f9eebb",
+      "9642474761cad628c9c0ea00a4a491434d4e410e4ec1f9652746099cb1ecd32c",
+      "ba8d783def7e5ececa41abce0f740ad9c29480b5beb2b80d240bfa6222427739",
+      "6ff5849d738501565cf027dab25d037237de1789999a101f0f41f63f0cb1c5ce",
+      "f2798b64c078d65cfbf854e5239479ac0cbecc31e8c28b17c854c9ada4fae955",
+      "d46600c7705cbca89dcbcdd601d8312791f246efcc2648509547e6c90b536e18",
+      "5f786282974718d850829ce808125c7875aaac8904a51f52e608d16b8a4b45d5",
+      "b93ced4f7cda559173da5a8efc3a1192386d1922105f491856b582cba0fe27ba",
+      "4904c0d9311d20bacb9216886c59542b66ba809cdcaf9353bf388bb2aaacd5a3",
+      "146766660a61b8b8966390fe7bcd0becb60bc41e5b2fe176620d8ed1ad879396",
+      "20f0259f0c1ce1ed25f7fc21cf89f75c7117b173b9fe4a3dca681bd8c7757650",
+      "0764528721b8c026b62c97581214480f66c319ab645cb1097f9471896759d733",
+      "75a24f4cd37a918b27aeaf858d99c195df9d3685a58328dd8c769d96c49a519e",
+      "b74eed2954bfccdf16743b016805bd7096ef5e16923b3b86c4d80183bcb732e6",
+      "b3f0898f78ace251375e5113591cf21b879e23b6695bb398f024177206085c45",
+      "afa1e5ba85c5c1a22ffc4c0377bc69f122a6e7e05b83ed98e5272d897d2583a9",
+      "103adac524d250eb334c200d6c1533ad22a81326f8a749db3cf61e575c10722e",
+      "8b88fc4a6a61a4bb90aa4d2d6b5f36e87dd759921eb81f2968ee32c2e808ed5e",
+      "c9b81f6b673d3938d6a07effda50f1ff81f1361ddf8c073301eca75b66cd9576",
+      "3259ca8f63fdf968a005c41179571763cdae747a284c0271ede12b0b68da9510",
+      "9b96564fd3453487f7ddbc71c4c6b1877f606501b497b588fd6facc75c5d5d57",
+      "cc2e02a52b39863cd2a1364c473f5a1eaae91a46b91181ad4380b9e2cc9ae91c",
+      "432a7a364730645973d7030dcc7f2a13bc8d95a0e9dab5a8f62b09c5aa1ec889",
+      "cee098654026c2b7eaf0f107fde6eb08fa73ae8010eac98aed255af5248394d6",
+      "f651d27f5276e8c71c83673e79c3c28c529741225b5430c6973a54cb829bf2c6",
+      "03fa15fcb34f3979a179b23918d26a2b7ff6196191d86b8c6ca6d9abfa91c8b3",
+      "e026959a0a7ba73ecf8c1d637693ff2c925862e68af930b3ea193d2c63752756",
+      "f41db7402f63e2324c92c2f8623559f926b22b7273e0c8a64a8cca019ccc2cf4",
+      "b02d5267fcfb01e2069bbaaa50d208539296db48689b29365a0231782b60f4aa",
+      "3a9340d1d37b6f3c086d7d74f99df5c8397e2726792c1ecae430d97da313dc91",
+      "d9e60b7a2e2ba96b4eb2ef8c9cd825d659a9242dfcff0a56704ea39cb6e89d1e",
+      "8cc6d5167a6334323560fd91b5188fc6797d018cb08270c3fb9cf84ffd2c615b",
+      "c5be7828ac437e60c30742ef2862c517a1d6fac1295f4ea58fd4e72997e8df6f",
+      "f3aaa357261769bfa16e29109e25e9635803ab6426bf81291a95631d906c3a77",
+      "182cd74840b42718e727252c51912e72d45f4522d9de6a9bbbafe9c71b7613e6",
+      "f6a12859db7fafbc5d409b144018da5a59cacbcc151c5e56d2311ba7bca1de38",
+      "6de2b9b2a1d63852a0981f84341efe87c12cd90722a0db31352588abe29cf86c",
+      "a651d285d6f5b9ceb901541ef25888c34c7a638d386bc751415f28ec0631670a",
+      "8bbcb4730e95220c17a747a428bb1094142355f0cead5ce0287f26d0b33c7f9f",
+      "fe04a3d7deb80362e2ca63449cab2f2025363c32cd023903d0c49d414fe92d89",
+      "b03b0d994e256eac4ce19fe962e24636e1a16fb95b091782116801d9b4be5a73",
+      "0bd937fae2528c3f69374d71d14f1aa1be1ef963ef59f3ab4fbf03a5fc799bdd",
+      "f3e27ec1f7ab7793a47c6f50ce7591c67dd01d8dfd7745f084afcf5a4da5adfb",
+      "95a3febe5e5e89dc2ecbfb4c1c8fea419e4d9cbc6491613e712bbcea444668d8",
+      "127fdbf2a5d974addbf05030b3f2ea81b47c4a0484e70563126d9c897ff6bd08",
+      "090037e9ac23a6da88c87fa29821ee20e774d53fe66b9a279b9b172abc0c17ee",
+      "329ef4844c137402271c83d531a3a3d4b28c0f63764d85551a744308a86ead05",
+      "31dc00ce3a6bcad648c5ec2982ef134bc5fe297389352c31292c4ff9559ceb4c",
+      "d42b095c77f1069b3d1d7814e09504611cbc45529452fd183d61e7cd3c64f033",
+      "641ae34e203670ba285031da739c7958f1a69ac266d5e654380dba3ff9838987"
+    ],
+    "original_manifest_sha256": "47ED62B3E54271FF3439C2AB612D8EB0666620C24F77E9A6B7A5D88DDC565E4C",
+    "manifest_sha256_after": "65F681FE78440A5A251BAF7101C0978C9D1F45A7AE5AB2A65BC5AF1967E9C76D",
+    "entries_after": 1614,
+    "remaining_by_feature": {
+      "RF04-F01": 102,
+      "RF04-F03": 66,
+      "RF04-F04": 119,
+      "RF04-F05": 59,
+      "RF05-F02": 192,
+      "RF05-F03": 229,
+      "RF05-F04": 42,
+      "RF05-F05": 406,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/application/composition/environment-scene.js": "D1126139E147B78C37197D3CFCB11E6067E96346366AF35862B4B8E2F7237D26",
+    "bot/src/audience-native-v9.js": "A89B26B923FA9C1148DAEECD84E4C45717BCDE4C73F447E3C42297FF30B4C99E",
+    "bot/src/fear-reservations.js": "5479946F249E36B923D64DDF1293D7E41C6841DAE21B1537615842BC2D335255",
+    "bot/src/frameworks/daggerheart/contracts/environment-sources.js": "A62BC8B290D54BDB261579871FB48A89548831530E8A663C2C1E1282534E63DE",
+    "bot/src/frameworks/daggerheart/native-environment-auction.js": "47D5F818FA29B9B10431C1D2E14331B8B9A1356B90AA3BAC7327AC9CC50C4FCC",
+    "bot/src/frameworks/daggerheart/native-environment-capabilities.js": "BB074C8E0AA5F8A304DADE936531DE00921FE7C3C443E68E5770407F54FD9B70",
+    "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js": "E6234185AFDA93B6ED0E1C865873146C414F94B41AB4AC6D3983A2A18D98ED40",
+    "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js": "20BCF792A79D6E5145DA644B850C1FDA0C5646B6A1D6A2EB09DC709D543D7779",
+    "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js": "F935DB4F28CD6C6E5C89DB4684ABC89C95F50801F39C3AB970A600469ED92141",
+    "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js": "D44E694E2BF9FB0466655BB968F4202ADEF0597C27D8865F5D403870C93BFE23",
+    "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js": "47F12E81055924AE0CD45CCEBC7CAE33953A77BA2B03436A0DE857C3FDE08D69",
+    "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js": "F2CC692F138F826A2FE2F845084E5C4D9FB0C239DDFC8AA2811DE400A2150BFB",
+    "bot/src/frameworks/daggerheart/native-environment-guest-right.js": "D38119BD79CFC7C4BB78D0A6E477620EB379A5CDB91F7EBE5847BE337B5E3012",
+    "bot/src/frameworks/daggerheart/native-environment-instance.js": "8B86DA35AC850489985E490A477BBD5BB0A548B9DBE0FE93F13927898D2B8165",
+    "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js": "2AE5174053D7CF0197CD308EE20671FA36CAC1DEBDC6BC2FA0AA79D7A720A66F",
+    "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js": "D4763634DA0DA392BD56CAD3A96AEAF3C42306A12B2B3C0DEBD2E7AF1B976C32",
+    "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js": "4E95C1DA7340C09E638306F47BF004DB243336324D80A4E9F10E658B316200A7",
+    "bot/src/frameworks/daggerheart/native-environment-model-room.js": "178E51C4967609EAC94BC693284187245C584A58D15E9A284F8686654693CBC3",
+    "bot/src/frameworks/daggerheart/native-environment-no-consensus.js": "241DF328CC33DCB999ECCE226FD4DF6A28698E82209770CADA6B1E4B4AF66CCD",
+    "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js": "274CF55FCAEBF82CDD0C9AC099DCA42830C15CD46BB34100B4B94C37CE0FED2B",
+    "bot/src/frameworks/daggerheart/native-environment-price-offer.js": "F401D599D4BF7FAAB2CEF402121F43DAEE7FE2A65E0A0BE9F3ECF08D2A8C514A",
+    "bot/src/frameworks/daggerheart/native-environment-private-room.js": "40979E8CC10322721E73562B20C68AD4C1DB0D9639E7E8423F44E7CFF97252FD",
+    "bot/src/frameworks/daggerheart/native-environment-procedure.js": "4A0FF118CCEC312FAF895CDB4ECCC7F13632D6EF4C41081A43F084544CFE6DAC",
+    "bot/src/frameworks/daggerheart/native-environment-scene.js": "2781A0864B8B950F7614BD4512252D7580631C9DB310ABEF74D4061BD92CA451",
+    "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js": "8377FE77A9626675BC3880E475D6FECE6C82C860916B2EF2F9CFC449E5610E27",
+    "bot/src/frameworks/daggerheart/native-environment-thin-walls.js": "8A00E91FB4523D2ECF7769EBE4F3D9D096A0C2392D76383358B1C4FC16F56FB4",
+    "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js": "5DC36E08BB57C6FD938F01CC893DCD9B3D6892A55409667B1EA90266ACF6CA19",
+    "bot/src/frameworks/daggerheart/native-environment-three-vectors.js": "32525488B17F82653EDA3D59CCBDBEBC9A315535F87B24941B40D6C64564DAE1",
+    "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js": "6244CCB0FE1BDC60C374111A513A0515D7113AC6A4267B828C1059A8F078C4D1",
+    "bot/src/frameworks/daggerheart/native-feature-catalog.js": "8A0A18C58A2B47491D64578CED517BC729DA3E550E275CCA82C4DD910A0BCBE9",
+    "bot/src/frameworks/daggerheart/public.js": "5AEE08009AC3DFDA73E5BD5AA36510A8A7A42315BF4B113AE7E3DE1766B3BF6D",
+    "bot/src/frameworks/intent/contracts/environment-sources.js": "90D8DE230405684AC0AFD3F7F2B9E812AC40DCF86EE989E45BDF642514F2DB25",
+    "bot/src/frameworks/intent/public.js": "F6B423B46D74D3F926DF1B1A5882AB60DC82F408BD3571E63731A21479793BC9",
+    "bot/src/frameworks/narrative/contracts/environment-sources.js": "17F370DA1C84821246C7CF283298ABEB7FA64A8624E2631FCC8E8512A68D06A3",
+    "bot/src/frameworks/narrative/public.js": "ECF4565A9FDA7255B9F25A05D19BA711933171BA7A7737247C5AE5F67A60A568",
+    "bot/src/frameworks/world/contracts/authoring-context.js": "954FBB6C7D5F97BD52FDCFD3A6102DE7DD1365711820047774539E0B273AF906",
+    "bot/src/frameworks/world/public.js": "767AAFEDE17AD3FC2C3EAEC14CA6F26EA205F1ABC4859C786561C6A5D3D9D1AC",
+    "bot/src/framework-to-framework/daggerheart--intent/public.js": "EDDBD9DC0D6A1996AE63E45F2955D153A5B30DA3A0D3823B849869D81FF92C1B",
+    "bot/src/framework-to-framework/daggerheart--narrative/public.js": "79E519F37B58F19D64BFB829961CF669A48A8111F2A62034503149AD3DB4F267",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "5B426956BE3F730BEC9E064B1790573980970C61FB6ADE90B7E678ABAE556F4F",
+    "bot/src/gm-action-capability.js": "96F02444D5A52FBA70838A91A03DCFB21E24AE55B354A058407992B04F661C3C",
+    "bot/src/kernel/function-port.js": "9CF6749E89CA2A3D52766E145E9344B6C7D058112831FEBBBF088E6EFC4E8C1C",
+    "bot/src/narrative-authority-context.js": "A189ECDBE169F868DA0AED4F0CB5658562E6D47556AD7FBF0BDDC363AFFB7C95",
+    "bot/src/native-environment-access.js": "8C180791836C58ECDF537F4AFF1FF54CF746BB995E5A418E0C6EBFB65EF3C30D",
+    "bot/src/native-environment-arrivals.js": "04DB54BB529E63FB6919F18C30F87C722A6DFE686D2288895FFA7A1609E76086",
+    "bot/src/native-environment-auction.js": "B4F5DED7EBFCE5E9CE0E8F69EB39AF579564B1458F114ED710D8FC0BED12E8FB",
+    "bot/src/native-environment-capabilities.js": "CE735E6AA4C99E874E7492A2EE90154576CB4C8C3C7D3D61025E38E7414FF066",
+    "bot/src/native-environment-chain-of-title.js": "24A70C45886B0680339B63F0E5ED808A5318B22CB0248739CF7407369DAE45EA",
+    "bot/src/native-environment-consensus-engine.js": "885F94BE011016F5828C84CCC36158684CB7CF41C6068AEBCF05ADBFC9141268",
+    "bot/src/native-environment-containment-shutters.js": "38CEB59D2A172E1F191BCD9C9992E3FC226333AD42DC5269C2742E67019C2B04",
+    "bot/src/native-environment-contaminated-scene.js": "DC895C90636E2D63B954D81C9171FD2E86CD38B5527200AF12AE6076DD8DA3D4",
+    "bot/src/native-environment-countdown.js": "674DC15D982D315471EBA2078136EA6FFCA97391AA5BF65FAA8772D9FF704881",
+    "bot/src/native-environment-dispatch.js": "F26E8AC31B228A7B2DA589AA1351155803D0CD53F43D0DC556C79E7CBCA4E2F5",
+    "bot/src/native-environment-door-chain.js": "576F0FE296FEACF186A77D85C4EB443CC73A4251F6946ADD225E36CF5EADD8DD",
+    "bot/src/native-environment-everyone-is-watching.js": "C8CD86D1B016974F3BCDC454887105CA6E99B41386C56B7BE60F3E45849855C3",
+    "bot/src/native-environment-express-through-memory.js": "C99103F8A93C623FA8B2D47A2C5C433145303DC51FDE292DC4C44E3D6792051D",
+    "bot/src/native-environment-guest-right.js": "6B64B0BB99BA57D426A2DC5CC09890BBB5EF83650FFAB19E060F4E5B530F4714",
+    "bot/src/native-environment-imaging.js": "327816BE1E6E7EA4D3C2B2DB2809A23F221FC06246EB8A348ED44A064B6C5F26",
+    "bot/src/native-environment-last-train-rules.js": "61BFBF63BE466D17E9CC8FF1A30AD887D89DA026A5C4813901318EAB25842A49",
+    "bot/src/native-environment-market-neutrality.js": "03B38C8A7564A33BC35FE6ED6234A890DE9FB8063C7670ED36D1A6ED9E9B08D5",
+    "bot/src/native-environment-metaphor-physics.js": "4D970B45FC5ABCEAC9C969CF4F353D0E6584791E2FDDA597B1A6F8E9A50CB39F",
+    "bot/src/native-environment-model-room.js": "45E035DC69BF3E4F967DD9C2493CB754C0CDA5EC43027FE92CA896FD86645230",
+    "bot/src/native-environment-no-consensus.js": "70925E933F61A750AC2D213936D3767BC1B54916148D7308857B2E0E040CC449",
+    "bot/src/native-environment-noise.js": "D763A6059D4C59FFC736A3E92098D9690A8A2DE2719E4F0984925A842A4D665A",
+    "bot/src/native-environment-no-ordinary-signal.js": "900702F1FF543DBFEF3BE8D73EBC98E189517665D09D1C3ECAA6BDD97E596128",
+    "bot/src/native-environment-output.js": "26D8A4CF66C727BBE41DC7E17D3DF468E2157AF10322772D80685FFAC681A403",
+    "bot/src/native-environment-price-offer.js": "5CBCF357BF824707B57EF58D4102F074ABAD483A7674BA3719069D806B7E3F38",
+    "bot/src/native-environment-private-room.js": "00C22A4B0DF52A2982D70162FCBF942C513BE8B6546023C5E5AD92BBA2806AD4",
+    "bot/src/native-environment-procedure.js": "2E93B53A767B847666C1A22D7E19A0C581B685B41CC954C17906753C0119D7EA",
+    "bot/src/native-environment-proposals.js": "0854772629E1C4CBC0C1E0F73DC4BBC04CE9B95423661D226553A814F233EA92",
+    "bot/src/native-environment-recovery.js": "4A1CF7A4F1FF04B450494DEDF88371791AE44E54D42ED9196785515248275EAC",
+    "bot/src/native-environment-sealed-docket.js": "68D4960DBE1971259CE49C35776A250C18072BC0868A71028A2FD152927FD0C2",
+    "bot/src/native-environment-thin-walls.js": "BE1587E2B98AAF08DA0C276B1B9DD4EB05B0D37046D1836A24598CA0B17AE18C",
+    "bot/src/native-environment-third-rail-spirit.js": "B59C248184FDAA8FEA2D093D6EBF927C2872BB4517A4F18FACBB803F3195A52C",
+    "bot/src/native-environment-three-vectors.js": "E4930B0D4061A85B3FA01024E8C077234F059E9EC565AD7B32A2C021EB2511A1",
+    "bot/src/native-environment-trace.js": "E9B70CA51780C5CBA1FF8AC2DBD148043BC3CD4E254511796A9255522A0B4285",
+    "bot/src/native-environment-witnesses.js": "B50C270AA266127120A68E1B7C7499E4696C611E02599D17424938B57FADCCBF",
+    "bot/src/native-environment-wrong-offering.js": "828C41D6371F03D352392B2C74CB68AB9CD2C88E559356BC91C8044631068DBB",
+    "bot/src/native-feature-catalog.js": "28EC5C95609D78A18DA6261859514B682603FE7441ADBB3DA3F1FEE42A77C577",
+    "bot/src/scene-intent-board.js": "551E08CCBB503639128E87A3F95B0F33B95CDE55962408F2E946F6F5E42BE445",
+    "bot/src/world-authorship.js": "91B713A05896D9FAEBD416789FEA6820E4429348D48AF75BE30B492ACBCB1C0C"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C65 commit: restore native-environment-instance.js and native-environment-scene.js at the root as World modules, the 24 moved native environment and catalog modules at their root paths, the World environment-scene consumer and adapter, remove the environment source ports, provider registrations and kernel function port, return the two files to the World ownership group, and restore the 148 exact transitions from C65-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED",
+  "architecture_correction": {
+    "reason": "Post-retirement ratchet reported INVALID_BRIDGE_TEST_REFERENCE: daggerheart--world still listed rf03-f05-c04.test.mjs, deleted in this slice because it tested only the removed World environment consumer. Removed that one test reference; no source or test change.",
+    "bridge_contracts_sha256": "BF3F1DC1FE156F378392168DB89FDFC2229DE210536117ACAAB16BEAE306CD38",
+    "RF04": {
+      "exit_code": 0,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-rf04-architecture-corrected.log",
+      "log_sha256": "3DBA9CB8A8E6F0AA4EBA048C8CE238824DB52D1FA7232D0237F7FB994165D753"
+    },
+    "RF05": {
+      "exit_code": 1,
+      "active_violation_groups": 346,
+      "transition_errors": 346,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-rf05-architecture-corrected.log",
+      "log_sha256": "E3609183907ADC3263C044C1017ACDED11EC4BA8C0C0B88E8AD675E7FE1BC373"
+    }
+  },
+  "full_suite": {
+    "files": 372,
+    "tests": 2045,
+    "passed": 2045,
+    "failed": 0,
+    "per_test_timeout_ms": 120000,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c65-full-suite.log",
+    "log_sha256": "CB55882856D94CF18896FB2C7F1C2D18DE8BEEE7628DA32C9AEBD81FE842F847",
+    "note": "Run after the slice batch, the bridge test-reference correction, and switching the P10 fixture and workers to the shared startup composition."
+  }
+}

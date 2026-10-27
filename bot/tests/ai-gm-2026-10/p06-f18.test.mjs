@@ -38,7 +38,7 @@ test('entitled current profile receives the source cue without an inferred recor
 
 test('scene delivery uses current scope and has no persistent or mechanical effect',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-chain-of-title.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentChainOfTitleSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear/);

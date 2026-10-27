@@ -37,7 +37,7 @@ test('scoped GM context preserves PC speech ownership and faction fiction autono
 
 test('scene wiring is a scoped read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-everyone-is-watching.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentEveryoneIsWatchingSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);

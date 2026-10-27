@@ -37,7 +37,7 @@ test('scoped context preserves the exact Fear and route rule without committing 
 });
 
 test('native scene context routes the exact occurrence and stops at its six-item limit',()=>{
-  const scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+  const scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   assert.match(scene,/nativeEnvironmentContainmentShuttersSituation/);
   assert.match(scene,/environment-containment-shutters\.js/);
   assert.match(scene,/nativeEnvironmentContainmentShuttersSituation\(db,guild,scope,location\)\.slice\(0,6-result\.length\)/);

@@ -11,3 +11,9 @@ import {createUnifiedAdjudicationSourcePort} from '../../frameworks/intent/publi
 export function connectUnifiedArbitration({source,mechanics}){
   return createUnifiedAdjudication({source:createUnifiedAdjudicationSourcePort(source),mechanics});
 }
+
+import {nativeArbitrationOrigin,nativeEnvironmentInstanceForScope} from '../../frameworks/daggerheart/public.js';
+import {intentArbitrationOrigin,intentNativeEnvironment} from '../../frameworks/intent/public.js';
+/** Native environment scenes read Intent's original arbitration origin; Intent reads native environment instances. */
+export function connectNativeArbitrationOrigin(){return nativeArbitrationOrigin.bind({inspectArbitrationOrigin:intentArbitrationOrigin.inspectArbitrationOrigin});}
+export function connectIntentNativeEnvironment(){return intentNativeEnvironment.bind({nativeEnvironmentInstanceForScope});}

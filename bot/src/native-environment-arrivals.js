@@ -1,6 +1,6 @@
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
-import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';

@@ -1,4 +1,4 @@
-import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';

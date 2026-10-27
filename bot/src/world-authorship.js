@@ -1,6 +1,7 @@
 /** Original World provenance provider: one shared seeded-context identity map across all exports. */
 import {worldHookSeedForGm} from './world-sanctioned-sources.js';
 import {createWorldAuthorshipRules,worldNarrativeAuthorship,worldKnowledgeSources} from './frameworks/world/public.js';
+import {worldAuthoringContext} from './frameworks/world/public.js';
 const {factVisibleTo,listNarrativeRecords}=worldKnowledgeSources;
 const {mintNarrativeAudience,revalidateNarrativeAudience,narrativeSourceVisible,fail}=worldNarrativeAuthorship;
 let worldAuthorship;
@@ -11,3 +12,5 @@ export function assertIndependentWorldIdentity(...args){return authorship().asse
 export function verifiedWorldAuthoringContext(...args){return authorship().verifiedWorldAuthoringContext(...args);}
 export function privateWorldIdentityForGm(...args){return authorship().privateWorldIdentityForGm(...args);}
 export {worldIdentityOrigin} from './frameworks/world/public.js';
+// Provide this module's original verifiedWorldAuthoringContext to the fixed port; no other authority is granted.
+worldAuthoringContext.bind({verifiedWorldAuthoringContext});

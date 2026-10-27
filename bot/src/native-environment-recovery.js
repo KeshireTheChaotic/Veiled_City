@@ -1,4 +1,4 @@
-import {inspectEnvironmentSceneEffect} from './native-environment-scene.js';
+import {inspectEnvironmentSceneEffect} from './frameworks/daggerheart/public.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';

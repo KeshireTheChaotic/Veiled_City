@@ -1,6 +1,6 @@
 /** Receipt-selected output only. No creation, spending, dice or model prose at a publication sink. */
 import {inspectEnvironmentArrival} from './native-environment-arrivals.js';
-import {environmentSceneProjection} from './native-environment-scene.js';
+import {environmentSceneProjection} from './frameworks/daggerheart/public.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}

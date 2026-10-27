@@ -1,11 +1,11 @@
 /** W6 construction: fictional Upload in Progress receipts; never elapsed time or inferred PC conduct. */
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
-import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
-import {inspectEnvironmentSceneEffect} from './native-environment-scene.js';
+import {inspectEnvironmentSceneEffect} from './frameworks/daggerheart/public.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}

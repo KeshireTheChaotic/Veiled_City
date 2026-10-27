@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {validateMaintenanceMemoryFact} from '../../src/native-environment-scene.js';
+import {validateMaintenanceMemoryFact} from '../../src/frameworks/daggerheart/native-environment-scene.js';
 import {matchesArbitrationSchema,unifiedArbitrationSchema} from '../../src/gm-arbitration-contract.js';
 
 const FEATURE='environment:veil-anchor-chamber:maintenance-memory';

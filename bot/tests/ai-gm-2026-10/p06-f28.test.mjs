@@ -37,7 +37,7 @@ test('scoped GM context preserves source prompt and PC response ownership',()=>{
 
 test('scene context wiring remains an entitled read-only projection',()=>{
   const source=fs.readFileSync(new URL('../../src/native-environment-sealed-docket.js',import.meta.url),'utf8'),
-    scene=fs.readFileSync(new URL('../../src/native-environment-scene.js',import.meta.url),'utf8');
+    scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentSealedDocketSituation\(db,guild,scope,location\)/);
   assert.doesNotMatch(source,/recordMutation|saveCityRecord|indexWorldEvent|changeFear|changeHope/);
