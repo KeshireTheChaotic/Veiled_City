@@ -1,0 +1,49 @@
+{
+  "feature": "RF05-F04 C26",
+  "status": "LOCALLY_QUALIFIED_WORLD_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the ordered World Director review category list to the World-owned director-cadence module and exposed it through World public. director.js re-exports the identical value and retains validation. GM imports the category contract publicly while keeping the validator compatibility import.",
+    "changed_modules": ["bot/src/frameworks/world/director-cadence.js", "bot/src/frameworks/world/public.js", "bot/src/director.js", "bot/src/gm.js"],
+    "behavior_changed": false,
+    "review_validation_changed": false
+  },
+  "tests": {
+    "files": 25,
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 30,
+    "failed": 0,
+    "duration_ms": 14511.683,
+    "new_test": "bot/tests/ai-gm-2026-10/rf05-f04-c26.test.mjs",
+    "log": "phases/RF05/rf05-f04-c26-final-test.log",
+    "log_sha256": "DC1576D05288F30214A0612C6E112FC6E52A276547B92FFCF3F5B56D91831B2E"
+  },
+  "syntax": {"files": 5, "passed": 5, "failed": 0, "log": "phases/RF05/rf05-f04-c26-syntax.log", "log_sha256": "D5AFF9F67428E42650633623A508AACF52CA59EB63D417057E1265DBDE6F5A23"},
+  "hashes_sha256": {
+    "bot/src/frameworks/world/director-cadence.js": "E29039E631FD02E0C0DA8AD1823DE2479D26977987D1DF7DFE8A31FC5DF46CF4",
+    "bot/src/frameworks/world/public.js": "F933719D315E06C4BE273C37755E5AA34A3E9AED0562D9E7591DA8594F893609",
+    "bot/src/director.js": "55C64944D47D4EF5F788595BAE057D23EDE5FB8085E2B0D2D8D71E82D8C95C13",
+    "bot/src/gm.js": "8D0BF214E6F284248E15E90EA78C2F56E3EDEE6351D3F13724991A6CDFB3C3A1",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c26.test.mjs": "582897699A1067A4D5B73EAA15980B717AD553F2BC47B3177F51DF0FC623CC52",
+    "architecture_log": "5135F528A0FAE3B2EA25BF0D18A72928CDB62CF3870C2A4F63BFCC7B2EC079DA",
+    "architecture_report": "3943DDCC8A2ACC713E49DCCF6A6163B411C230C1519946706A0F06DBC612136F"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 594,
+    "unowned_modules": 0,
+    "imports": 2780,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "new_contract_findings": 0,
+    "result": "RF05 aggregate gate remains failed on existing transition debt. The changed-path output showed only the pre-existing legacy location of director.js; the World contract/public import added no new finding."
+  },
+  "transitions": {"retired": [], "rf05_f04_remaining": 48},
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Restore POST_TURN_REVIEW_CATEGORIES in director.js and the original GM import, then remove only the World export/test/evidence changes. No persistent data changed.",
+  "release": "NOT AUTHORIZED"
+}

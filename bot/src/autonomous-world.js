@@ -21,37 +21,12 @@ import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityFo
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {validateBackgroundIdentity} from './world-background-identities.js';
 import {nativeVipAdmission} from './native-environment-access.js';
+import {AUTONOMOUS_WORLD_PROMPT} from './frameworks/world/autonomous-world-contract.js';
+export {AUTONOMOUS_WORLD_PROMPT};
+import {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema} from './frameworks/world/world-proposal-schema.js';
+export {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema};
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
-const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
-const text=maxLength=>({type:"string",maxLength});
-const nonEmptyText=maxLength=>({type:"string",minLength:1,maxLength});
-const common={key:{...nonEmptyText(100),pattern:"^[a-z0-9]+(?:-[a-z0-9]+)*$"},name:nonEmptyText(160),summary:nonEmptyText(600),visibility:{type:"string",enum:["party","character","gm"]}};
-export const worldAdditionsSchema={type:"array",maxItems:4,items:{anyOf:[
-  object({kind:{type:"string",enum:["location"]},...common,parent_location_key:text(160)}),
-  object({kind:{type:"string",enum:["npc"]},...common,location_key:text(160),occupation:text(160),public_identity:text(160),portrayal:text(160)})
-]}};
-export const sceneActionsSchema={type:"array",maxItems:4,items:object({
-  kind:{type:"string",enum:["reveal_nearby_place","move","introduce_npc","local_zone"]},
-  entity_ref:text(160),source_span:text(1500),zone:text(160)
-})};
-export const worldConflictsSchema={type:"array",maxItems:2,items:object({canon_key:text(160),current_event_id:text(160),
-  proposed_value:text(600),reason:text(600)})};
-export const AUTONOMOUS_WORLD_PROMPT="Veilkeeper IS the GM: missing ordinary surroundings, places, people or descriptions are prompts to create, not human approval gates. "
-  +"Fresh modest locations or NPCs require the isolated native narrative_request stage. Raw world_additions may only reference established audience-visible identities, never create them. Use scene_actions for validated reveal/move/introduce_npc/local_zone. "
-  +"Every new location is an ordinary public accessible nearby place, not a vault, hidden answer, new canon override, distant route or free combatant. "
-  +"parent_location_key is the acting PC's current location (empty only if none exists). New NPCs need a real location, ordinary role/voice and bounded knowledge. "
-  +"No special powers, money, stats, property grants or hidden campaign knowledge. Never introduce/move/speak for an active human NPC proxy. "
-  +"Search/observation reveals a candidate WITHOUT moving the PC. move needs the owner's exact current explicit entry clause in source_span and an ordinary accessible local destination. "
-  +"local_zone changes only the local zone, not city location. scene_actions.entity_ref is a canonical established key, never an unverified proposal. "
-  +"Native preview stages entities, arrival and presence before checking claims; use claims for completed movement/access, not cosmetic description. "
-  +"Unknown records, disabled expansions, low confidence and technical failures are NOT fictional contradictions. "
-  +"For actual locked access, distant travel, costs or encounters adjudicate the obstacle through native rules; keep unrelated conversation moving. "
-  +"Only specific incompatible authoritative facts merit human reconciliation. Avoid/reuse/rename a conflicting proposal first. "
-  +"world_conflicts may queue only a specific current CANON LEDGER key/event ID with a materially different proposed value and reason; never use it for missing records, low confidence or mechanics. Keep unrelated narration moving and do not narrate the conflicting outcome as committed. "
-  +"Treat in-character needs, worries, aspirations and indirect remarks as invitations to engage: ask an open contextual question or offer an observable lead, not a mandatory menu. "
-  +"For 'I need work, PantryQueue is not pulling in enough money', ask about seeking work/what work they want; do not accept a job, create a debt, award income or move the PC for them.";
-
 export function worldAuthority(...args){return identities().worldAuthority(...args);}
 /** Trusted isolated-GM fiction creation; no PC source/action impersonation, combat stats, powers or movement. */
 export function establishNarrativeEntity(...args){return identities().establishNarrativeEntity(...args);}

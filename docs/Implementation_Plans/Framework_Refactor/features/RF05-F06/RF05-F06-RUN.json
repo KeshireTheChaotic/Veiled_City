@@ -525,5 +525,35 @@
       "database_access": 0,
       "codex_usage": "UNMEASURED"
     }
+  },
+  "after_c31_refresh": {
+    "head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+    "test": {
+      "file": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+      "exit_code": 0,
+      "passed": 7,
+      "failed": 0,
+      "duration_ms": 602.6723,
+      "log": "phases/RF05/rf05-f06-f02-test.log",
+      "sha256": "6A86C9C405D800001E00ACE00767EE4F8824233BDD47A768537E24FE26C09B6E"
+    },
+    "syntax": {
+      "files": 30,
+      "failed": 0,
+      "log": "phases/RF05/rf05-f06-syntax.log",
+      "sha256": "5B14538B6F4745DB957D4FDC56B92E1110298D43DB2DA85E4BD806347E430F95"
+    },
+    "architecture": {
+      "exit_code": 1,
+      "source_modules": 596,
+      "unowned": 0,
+      "imports": 2785,
+      "largest_cycle": 181,
+      "active_violation_groups": 950,
+      "transition_errors": 950,
+      "log": "phases/RF05/rf05-f06-architecture.log",
+      "sha256": "ADD23E38C415A6811E662FAF925CBAC5054B5737525604F2E97F9CEB1B3BE043"
+    },
+    "status": "CHECKPOINT_EVIDENCE_COMPLETE_PHASE_INCOMPLETE"
   }
 }

@@ -37,6 +37,25 @@ Next exact feature: RF05-F03, the context-budget and disclosure boundary. Contin
 
 Corrective: RF05-F02 had added a construction-time `client.responses.create` check that the original request path lacked, breaking qualified RF04-F04 C08/C09 (0/5 at HEAD). Removed only that check; dispatch failure behavior is the original one. Final batch 28/28 across 15 files, exit 0; RF04 ratchet passes; RF05 unchanged at 955. See `C02-LEDGER.md`. Release NOT AUTHORIZED.
 
+### Shared GM refresh after RF05-F04 C17
+
+After the shared GM module changed, the remaining fresh RF05 tests that import GMService passed 24/24 in one targeted batch, exit 0, 8,429.1518 ms. Test files: bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs, rf05-f03-c02.test.mjs, and RF05-F04 C02, C03, C05-C13, and C15. Current gm.js SHA-256: F24D8C7A77F3B6C322A567E5BB955DD562E42A8167E68612CFD62D9D4E503928. Terminal log: docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-shared-gm-refresh.log (SHA-256 DEC67CE28CFD17A7C310573CC4609CD284C169FDCC7549501590314978F20304). No live provider or service use.
+
+
+### Shared GM refresh after RF05-F04 C18
+
+The full frozen fresh GM-dependent union was rerun after the current `gm.js` change: 36/36 passed across 18 files, exit 0, 17,868.0517 ms. Current gm.js SHA-256: 1F5ED13BBD86D1DF42F5C19D69A16110703090A4E9F20CFFEF73E0DB229C039E. Log: docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c18-final-test.log (SHA-256 1E776695140D172988B2AA5D6977329D2EDC06D88EDCF8126B24044593592A59). No provider, network, production database, Discord, or CI access.
+
+
+### Shared GM refresh after RF05-F04 C19
+
+The complete fresh GM-dependent union ran once after the current GM module change: 37/37 passed across 19 files, exit 0, 17,944.705 ms. Current gm.js SHA-256: 8B8C27CF365C4E3E04B5F154889F7493B9A172869B18B79E5AD0405EAC53DBBA. Terminal log: docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c19-final-test.log (SHA-256 FF1885EB05C5F85509C1D98E99A8DA0CC7650CF969B2678222ADFEF8C62F999C). No paid provider or service use.
+
+
+### Shared GM refresh after RF05-F04 C20
+
+After the current gm.js change, the complete fresh GM-dependent union passed 38/38 across 20 files, exit 0, 18,370.7892 ms. Current gm.js SHA-256: 8CE164DE119CDC91EE439D04ADFE9CD5F734B1C7CC5F1C5CAA181C3B44A60416. Terminal log: docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c20-final-test.log (SHA-256 E7278E0BBEA19857328CAAD1EB4896ABDBA0F8CD0090D22F5771547E47E52BD7). No live provider or service use.
+
 ## 2026-10-26 RF05-F02 C03 native action scheduling ownership
 
 The original action/span dependency objective is reopened alongside earlier transport work. Relocated the Intent engine byte-for-byte (SHA256 837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d), retained same-function old readers and moved the actual state application import to Intent public. Six fresh scheduler/SQLite tests passed6/6, exit0, TAP1468.6515ms; syntax5/5. Stable plan ordering, durable receipt/wake-up replay, private dependency propagation, interrupts and no PC effects exercised using explicit new accepted-row fixtures, without certifying upstream acceptance/native execution. One application private-import record retired; five domain caller and root-location obligations remain. RF04 ratchet passes608modules/0unowned/2806imports/2402rawaccepted/SCC181/0activeerrors; RF05 remains943expiredgroups/errors. Exact evidence: features/RF05-F02/C03-RUN.json. Provider0tokens0cost$0; CodexUNMEASURED; RF05 incomplete; RELEASE NOT AUTHORIZED.

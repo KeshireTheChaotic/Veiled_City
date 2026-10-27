@@ -1,0 +1,80 @@
+{
+  "feature": "RF05-F04 C29",
+  "status": "LOCALLY_QUALIFIED_WORLD_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the private-world-seed proposal schema and instruction contract to World public. Compatibility identities and native capability runtime remain intact.",
+    "changed_modules": [
+      "bot/src/frameworks/world/private-world-seed-contract.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/world-private-seeds.js",
+      "bot/src/gm.js"
+    ],
+    "behavior_changed": false,
+    "authority_or_receipt_changed": false
+  },
+  "tests": {
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf05-f04-c29.test.mjs"
+    ],
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 2,
+    "failed": 0,
+    "duration_ms": 643.2196,
+    "log": "phases/RF05/rf05-f04-c29-test.log",
+    "log_sha256": "08F8B3CAB46D4E3EFF5BCC506041BB82EFF0B096380E3713B214656E70C70C99"
+  },
+  "syntax": {
+    "files_checked": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c29-syntax.log",
+    "log_sha256": "1D8AD0A6C619EEC680A9D246C5D10408D4142E2D761F28039455AB90CE6A18FD"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 597,
+    "unowned": 0,
+    "imports": 2788,
+    "internal_imports": 2611,
+    "largest_cycle": 181,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "log": "phases/RF05/rf05-f04-c29-architecture.log",
+    "log_sha256": "1863B102105C45C099C4C2E5597377E0EE09DCD410B1BA7476A79A40E094C299",
+    "result": "Aggregate RF05 transition debt remains; no phase completion claim."
+  },
+  "transitions": {
+    "retired": [],
+    "rf05_f04_remaining": 47
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore declarations in world-private-seeds.js and the prior gm.js schema import; remove only C29 World module/public export/test/evidence.",
+  "release": "NOT_AUTHORIZED",
+  "hashes_sha256": {
+    "bot/src/frameworks/world/private-world-seed-contract.js": "33B6EDFAFFAF44EE3E5E4C47FC0CA5A86AE27F67381CBB1EB0546992F53E59FD",
+    "bot/src/frameworks/world/public.js": "497913D26C8EC8674F2651C62D8E7304F9BE9C7CC46D1E7D60A7E105F8B63218",
+    "bot/src/world-private-seeds.js": "C66561F0536946CB2071E8F273813D5C1F00AFF2EFE1D3F2D8AFA8E7CECE83F5",
+    "bot/src/gm.js": "5259D9B6CC1CE46F76A9D1219FA3FF8D0C36F5F3A4EC4410613AD0D5E3871864",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c29.test.mjs": "21BB41443654C06F937D3F7670952ADD6289D30636E238E665C10DC8069508D9"
+  },
+  "affected_regression": {
+    "feature": "P10-F08",
+    "test": "bot/tests/ai-gm-2026-10/p10-f08.test.mjs",
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 9,
+    "failed": 0,
+    "duration_ms": 8323.4975,
+    "log": "phases/RF05/rf05-f04-c29-p10-f08-refresh.log",
+    "log_sha256": "6D6B8AFAEA259BD822A4C9B7FD2E7670CE46616905EF27DAA303870979DF7918"
+  }
+}

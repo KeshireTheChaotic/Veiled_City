@@ -1,0 +1,100 @@
+{
+  "run_id": "rf05-f04-c20-20261026-01",
+  "feature": "RF05-F04-C20",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "result_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "status": "SCOPED_WORLD_SIMULATION_PROMPT_PUBLIC_API_QUALIFIED",
+  "changed_modules": [
+    {
+      "owner": "world",
+      "path": "bot/src/frameworks/world/simulation-prompt.js",
+      "change": "owns exact simulation instructions; schema dependencies remain in compatibility source",
+      "sha256": "59B4F8B4FE16B935DB253A00B11B3BFDEE69E7455201BA4F178E088BF5F3B528"
+    },
+    {
+      "owner": "world",
+      "path": "bot/src/frameworks/world/public.js",
+      "change": "exports SIMULATION_PROMPT",
+      "sha256": "1CE8CD9435206F827A5A6578A91CDABD9CD1E94619182D02CB9E1E348ED44C48"
+    },
+    {
+      "owner": "world compatibility",
+      "path": "bot/src/simulation-schema.js",
+      "change": "re-exports exact prompt and retains mixed World/Intent schemas",
+      "sha256": "A71BFABE53D48D540F4BFC801F971314230E45C3B1DD3E64B6562CB1E6C5E59A"
+    },
+    {
+      "owner": "application",
+      "path": "bot/src/gm.js",
+      "change": "imports simulation prompt through World public",
+      "sha256": "8CE164DE119CDC91EE439D04ADFE9CD5F734B1C7CC5F1C5CAA181C3B44A60416"
+    }
+  ],
+  "baseline_verification": {
+    "exact_match": true,
+    "prompt_sha256": "ef71ac0e0eb039dc6742d98802d144df27bc5249d72ead54d021c0489d30dfe7"
+  },
+  "test": {
+    "failed": 0,
+    "tests": 38,
+    "duration_ms": 18370.7892,
+    "exit_code": 0,
+    "p10_worker_sha256": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F",
+    "passed": 38,
+    "path": "bot/tests/ai-gm-2026-10/rf05-f04-c20.test.mjs",
+    "p10_test_sha256": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+    "log_sha256": "E7278E0BBEA19857328CAAD1EB4896ABDBA0F8CD0090D22F5771547E47E52BD7",
+    "sha256": "D85A333E1918BD68BD5239CF250CC3E8525B2853EB869E09388785539C3B4DEF",
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap [20 fresh GM-dependent test files]",
+    "launches": 1,
+    "log": "phases/RF05/rf05-f04-c20-final-test.log",
+    "files": 20
+  },
+  "syntax": {
+    "files": 19,
+    "log": "phases/RF05/rf05-f04-c20-syntax.log",
+    "exit_code": 0,
+    "log_sha256": "E4F472B52FCA2A5F862852EA56554C93AC409D61EF602335E9D692D34C620590",
+    "passed": 19
+  },
+  "architecture": {
+    "transition_errors": 950,
+    "report_sha256": "F3AB6DDC0C113374782D94E120E2DD9691F8172B2D902C5B272692F7FEA89608",
+    "previous_C19_groups": 950,
+    "exit_code": 1,
+    "source_modules": 590,
+    "note": "Existing phase debt remains; group and error totals are unchanged.",
+    "previous_C19_errors": 950,
+    "report": ".reports/rf05-f04-c20-architecture.json",
+    "active_violation_groups": 950,
+    "largest_cycle": 181,
+    "command": "cd bot; node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c20-architecture.json",
+    "imports": 2770,
+    "new_contract_module_findings": 0,
+    "log": "phases/RF05/rf05-f04-c20-architecture.log",
+    "log_sha256": "CE5B9771BD8FF9E840626CE82644C6123FF88F400A617AD17EF32BA0B54CB0D4",
+    "unowned": 0
+  },
+  "transition": {
+    "remaining_rf05_f04_entries": 48,
+    "retired_ids": [],
+    "note": "No transition retired because schema and runtime imports remain in the World/Intent compatibility module."
+  },
+  "external_effects": {
+    "provider_usd": 0,
+    "production_database": 0,
+    "network": 0,
+    "discord": 0,
+    "ci": 0,
+    "provider_tokens": 0,
+    "codex_usage": "UNMEASURED",
+    "paid_provider_calls": 0
+  },
+  "rollback": "Restore the previous GM import and root prompt definition; remove only C20 module/public export/test/evidence. No persisted state changed.",
+  "commit": {
+    "status": "NOT_CREATED",
+    "reason": "The execution environment denies writes to .git; prior git add failed on .git/index.lock."
+  },
+  "release": "NOT_AUTHORIZED"
+}

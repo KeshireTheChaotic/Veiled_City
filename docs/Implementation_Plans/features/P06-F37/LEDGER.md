@@ -12,3 +12,7 @@ Status: SUPPORTED / TARGETED PASS.
 - Owner decision recorded 2026-10-21: authorized HR14 v1 exactly—optional 1 Hope by the affected current PC owner, silence never pays, suppression only for this trace. Enforcement hardening: [P06-F49](../P06-F49/SCOPE.md).
 - Local holds: DB-backed live replay, Discord delivery and full release qualification. The selected existing route is covered by fresh exact-source and dispatch/saved-reader boundary tests; it was not run against live persistent campaign state.
 - Critical blocker: none. Release authorization: false.
+
+## 2026-10-26 historical-log follow-up
+
+The supplied broad log's three HR14 failures inspect implementation text in the root compatibility reader. Current behavior is delegated to Daggerheart-owned trace rules and the owner-authored erratum registry. New diagnostic `bot/tests/ai-gm-2026-10/p06-f37-c01.test.mjs` (SHA-256 `6359B54E317A3E16193EF5ACE71DC2E9CC37B1609E8249273B2070166DE22B9C`) passed in the first diagnostic batch, checking the current feature contract and exact optional owner-choice fields. It was not rerun. No production module changed; this does not add native trace execution or replace the earlier qualification. The old test was not modified or invoked. Live saved-state replay remains unverified; release remains unauthorized.

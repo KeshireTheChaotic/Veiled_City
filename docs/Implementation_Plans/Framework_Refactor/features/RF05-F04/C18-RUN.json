@@ -1,0 +1,120 @@
+{
+  "run_id": "rf05-f04-c18-20261026-01",
+  "feature": "RF05-F04-C18",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "result_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "status": "SCOPED_NARRATIVE_INTEGRITY_CONTRACT_QUALIFIED",
+  "changed_modules": [
+    {
+      "change": "owns exact existing narrative claim guidance",
+      "sha256": "8A555CDF17CC01EF29672A3CFF777E3D6D6A41C1BA9FD4C58139D42793B4DC7D",
+      "path": "bot/src/frameworks/narrative/narrative-integrity-contract.js",
+      "owner": "narrative"
+    },
+    {
+      "change": "publishes narrative integrity instruction",
+      "sha256": "63C6196982D915FA4236103653ACD0F1F59969AB55186D636FD8DA05D0600894",
+      "path": "bot/src/frameworks/narrative/public.js",
+      "owner": "narrative"
+    },
+    {
+      "change": "re-exports same instruction and retains claim schema/validation",
+      "sha256": "549B52FF00A8214BDA24978A373C7A38CFD232C1FDA8DFEC1B1DDD11D7668C61",
+      "path": "bot/src/narrative-integrity.js",
+      "owner": "narrative compatibility"
+    },
+    {
+      "change": "uses Narrative public in GM request instructions",
+      "sha256": "1F5ED13BBD86D1DF42F5C19D69A16110703090A4E9F20CFFEF73E0DB229C039E",
+      "path": "bot/src/gm.js",
+      "owner": "application"
+    }
+  ],
+  "baseline_verification": {
+    "exact_match": true,
+    "instruction_sha256": "ff0a370d63e9a1e8ad7834cce5ec626077bc8804d8022adb916c62f89bdffb96"
+  },
+  "test": {
+    "other_test_hashes": {
+      "c17": "515BA265756F9423A7201BB6E69E083E83F19F12372E49B35BF6AD4DF31A7F8B",
+      "p10_f08": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+      "c16": "6E839C073BAB18F1D927CBFDA9FF38312A70AE4F10A09807CB33C115A6665450",
+      "p10_worker": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F"
+    },
+    "files": 18,
+    "tests": 36,
+    "sha256": "06EDD801EE4E594A1AA616412372951D2F11FD62DA90AA15E86532CCDACE257F",
+    "launches": 1,
+    "passed": 36,
+    "path": "bot/tests/ai-gm-2026-10/rf05-f04-c18.test.mjs",
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c18-final-test.log",
+    "duration_ms": 17868.0517,
+    "log_sha256": "1E776695140D172988B2AA5D6977329D2EDC06D88EDCF8126B24044593592A59",
+    "exit_code": 0,
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap [18 fresh GM-dependent test files]"
+  },
+  "syntax": {
+    "files": 12,
+    "passed": 12,
+    "exit_code": 0,
+    "log_sha256": "772E6F255DE1F49CC4D7712F21BF524D23DCDC4C916C14CDEAD838C62467B9EE",
+    "log": "phases/RF05/rf05-f04-c18-syntax.log"
+  },
+  "architecture": {
+    "active_violation_groups": 950,
+    "prior_C17_errors": 950,
+    "new_contract_module_findings": 0,
+    "largest_cycle": 181,
+    "unowned": 0,
+    "prior_C17_groups": 950,
+    "source_modules": 588,
+    "note": "Ratchet remains failed on existing transition debt; active group and transition-error totals did not increase.",
+    "log": "phases/RF05/rf05-f04-c18-architecture.log",
+    "report_sha256": "C2CD6D0C3512D54ED08C004F8D41EB9E3F55585998EF4D6D7770C4EE61F86525",
+    "transition_errors": 950,
+    "imports": 2764,
+    "log_sha256": "5406822AD0B8A12D363762F1F3C2CDE297A7103664363C0230A35DEFD6904D4C",
+    "exit_code": 1,
+    "command": "cd bot; node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c18-architecture.json",
+    "report": ".reports/rf05-f04-c18-architecture.json"
+  },
+  "transition": {
+    "retired_ids": [],
+    "note": "No transition retired; narrative-integrity compatibility module remains for schema and validator imports.",
+    "remaining_rf05_f04_entries": 48
+  },
+  "external_effects": {
+    "codex_usage": "UNMEASURED",
+    "provider_usd": 0,
+    "provider_tokens": 0,
+    "network": 0,
+    "production_database": 0,
+    "paid_provider_calls": 0,
+    "ci": 0,
+    "discord": 0
+  },
+  "rollback": "Restore GM import and in-module declaration, remove Narrative contract module/public export and C18 test/evidence. No persisted state changed.",
+  "commit": {
+    "status": "NOT_CREATED",
+    "reason": "git add was denied when creating .git/index.lock because repository metadata is read-only in this execution environment."
+  },
+  "release": "NOT_AUTHORIZED",
+  "shared_module_refresh_after_C19": {
+    "gm_sha256": "8B8C27CF365C4E3E04B5F154889F7493B9A172869B18B79E5AD0405EAC53DBBA",
+    "tests": 37,
+    "passed": 37,
+    "result": "feature test passed in the complete current shared-GM union",
+    "union_log": "phases/RF05/rf05-f04-c19-final-test.log",
+    "union_log_sha256": "FF1885EB05C5F85509C1D98E99A8DA0CC7650CF969B2678222ADFEF8C62F999C"
+  },
+  "shared_module_refresh_after_C20": {
+    "gm_sha256": "8CE164DE119CDC91EE439D04ADFE9CD5F734B1C7CC5F1C5CAA181C3B44A60416",
+    "tests": 38,
+    "passed": 38,
+    "result": "feature test passed in complete current shared-GM union",
+    "union_log": "phases/RF05/rf05-f04-c20-final-test.log",
+    "union_log_sha256": "E7278E0BBEA19857328CAAD1EB4896ABDBA0F8CD0090D22F5771547E47E52BD7"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "feature": "RF05-F04 C27",
+  "status": "LOCALLY_QUALIFIED_INTENT_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the existing authored-candidate schemas and prompt into an Intent-owned contract module and exposed them through Intent public. The compatibility module re-exports identical values and retains persistence. GM imports the schema contract through Intent public.",
+    "changed_modules": ["bot/src/frameworks/intent/authored-candidate-schema.js", "bot/src/frameworks/intent/public.js", "bot/src/authored-candidates.js", "bot/src/gm.js"],
+    "behavior_changed": false,
+    "player_authority_changed": false,
+    "historical_candidate_recovery_changed": false
+  },
+  "tests": {
+    "files": 26,
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 31,
+    "failed": 0,
+    "duration_ms": 14716.6291,
+    "new_test": "bot/tests/ai-gm-2026-10/rf05-f04-c27.test.mjs",
+    "log": "phases/RF05/rf05-f04-c27-final-test.log",
+    "log_sha256": "833786D1605773973A7ABDBE1E5873B066F7889CD29DAD06F1A79E22AFBB50B5"
+  },
+  "syntax": {"files": 5, "passed": 5, "failed": 0, "log": "phases/RF05/rf05-f04-c27-syntax.log", "log_sha256": "C30F87FE315E56AC9CEA35294E0BCB53DEA67DB29A8D13945DDDA58232E74D97"},
+  "hashes_sha256": {
+    "bot/src/frameworks/intent/authored-candidate-schema.js": "336719231F334FD7AE8C035F42EF08C32B038CD3FE238DF92110D9B29A49E320",
+    "bot/src/frameworks/intent/public.js": "422D1C2DA5BF92197CBB549566DA22DD4F5CADE73279AAAADF6BB526B68AE893",
+    "bot/src/authored-candidates.js": "8C6D1359ABEE7F2001A90CBD1D297912BEFE6C22DDD1DF82E168AE4F3CF2807F",
+    "bot/src/gm.js": "BBEBEC6D2D2E3E7617573F002230C818A969F958D0992CC5BB0FAAA3A5A82122",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c27.test.mjs": "8C89F767A1274BBCB69DA6493E066220E6FC381CE7891A48285CB5CB77BB500B",
+    "transition_manifest": "660B7BE0AD14ED227EC3B72D342CB2F55C5A14BFF539CF3F58E2F095619E3D52",
+    "retired_record": "08826E27DA93374491A434D94E4711B24AC4DFD6614B818D81C22C7FFE342301",
+    "final_architecture_log": "0A43201BE3569C1D613DB109CF558FE17B63A80A44AC198CC082F8AE1B60C5BE",
+    "final_architecture_report": "FEB48590901E081DDA15B8E98749ACD6E000ABE3064B090EE0B9D98053FC92FA"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 595,
+    "unowned_modules": 0,
+    "imports": 2782,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "new_contract_findings": 0,
+    "result": "Initial ratchet identified the exact removed GM-to-compatibility import transition as UNUSED_TRANSITION. Preserved and retired only that exact transition after confirming the source edge disappeared, then reran the ratchet. It returned to the prior 950 aggregate groups/errors; the new Intent contract/public paths have no findings."
+  },
+  "transitions": {
+    "retired": ["ee1f7416c348e4db4a44c8ed308f6a5d0ff9204fd7013c95e033bfef188b168f"],
+    "rf05_f04_remaining": 47,
+    "record": "C27-RETIRED.json"
+  },
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Restore the prior GM import and declaration locations, remove the Intent module/public export, and reinstate the exact transition record if the source edge returns. Preserve the retirement record as historical evidence.",
+  "release": "NOT AUTHORIZED"
+}

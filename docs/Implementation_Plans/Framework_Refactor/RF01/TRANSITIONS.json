@@ -7080,20 +7080,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ee1f7416c348e4db4a44c8ed308f6a5d0ff9204fd7013c95e033bfef188b168f",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/authored-candidates.js",
-      "kind": "static",
-      "specifier": "./authored-candidates.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4e94a92ee4ebe3cb45af6210ecb6d666bf27dc1d8ace4da845bbaeb262792477",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -7206,40 +7192,12 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "708565757d8396cf98e452a782b20812d47d51f944c7e4330abeb64290765f8e",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/director.js",
-      "kind": "static",
-      "specifier": "./director.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "694bfb167492be83d7780cda1c328db2fb89491d6990931b97263171c864a967",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
       "to": "bot/src/simulation.js",
       "kind": "static",
       "specifier": "./simulation.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "df82f4dc873ca72d5a992ac4f3c97f054ac820af40cc2faf0957e82ca6af1df5",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/city-civic.js",
-      "kind": "static",
-      "specifier": "./city-civic.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F04",

@@ -1,0 +1,76 @@
+{
+  "feature": "RF05-F04 C30",
+  "status": "LOCALLY_QUALIFIED_WORLD_REVIEW_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the pure post-turn state-review validator into World public; kept director.js as an identity-preserving compatibility export and switched GM to the World API.",
+    "changed_modules": [
+      "bot/src/frameworks/world/director-review.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/director.js",
+      "bot/src/gm.js"
+    ],
+    "behavior_changed": false,
+    "authority_or_receipt_changed": false
+  },
+  "tests": {
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf05-f04-c30.test.mjs",
+      "bot/tests/ai-gm-2026-10/p10-f08.test.mjs"
+    ],
+    "launch_count": 1,
+    "exit_code": 0,
+    "passed": 12,
+    "failed": 0,
+    "duration_ms": 8387.2657,
+    "wall_duration_ms": 9477.007,
+    "log": "phases/RF05/rf05-f04-c30-test.log",
+    "log_sha256": "F7CD1FB9EFB027A3E12373EAB9221C7B87D16FD26064F72F94EF44FD6128CEB6"
+  },
+  "syntax": {
+    "files_checked": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c30-syntax.log",
+    "log_sha256": "1D8AD0A6C619EEC680A9D246C5D10408D4142E2D761F28039455AB90CE6A18FD"
+  },
+  "architecture": {
+    "initial_exit_code": 1,
+    "initial_transition_errors": 951,
+    "initial_log": "phases/RF05/rf05-f04-c30-architecture.log",
+    "final_exit_code": 1,
+    "source_modules": 598,
+    "unowned": 0,
+    "imports": 2791,
+    "internal_imports": 2614,
+    "largest_cycle": 181,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "final_log": "phases/RF05/rf05-f04-c30-architecture-final.log",
+    "final_log_sha256": "397592816B901FCB705338CDECA9B6F0ECBF535294A596FD38FAB0DB48E03C4A",
+    "result": "Exact unused GM-to-director compatibility transition retired; aggregate RF05 debt remains."
+  },
+  "transitions": {
+    "retired": [
+      "708565757d8396cf98e452a782b20812d47d51f944c7e4330abeb64290765f8e"
+    ],
+    "rf05_f04_remaining": 46
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore validator body in director.js and GM import, remove World module/public/test, and restore exact transition record from C30-RETIRED.json.",
+  "release": "NOT_AUTHORIZED",
+  "hashes_sha256": {
+    "bot/src/frameworks/world/director-review.js": "28D2FF76290381C0E5FAE37D763FFCDE404D6C8528A8AAF988D168205515C7DA",
+    "bot/src/frameworks/world/public.js": "D08F99E1DFD442C1660EDAD165B977A9678B3B7F60AE2DB77550B08738716ED1",
+    "bot/src/director.js": "BD56F5F917DA8EDA8507932225A1759E3D7246CBCE5B8EF588AC11C433D2A1D2",
+    "bot/src/gm.js": "5513FD97476D51272029A5479EDC780015E3D7BB86A46AD830BEC30BBA0BFB25",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c30.test.mjs": "FE6B2D25BBD7C54E51E8B4FFC81122C107526E75242DBE2386076175E6B48B79"
+  }
+}

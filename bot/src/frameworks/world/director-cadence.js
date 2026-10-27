@@ -1,4 +1,8 @@
 /** World Director scheduling only: no PC action, mechanical effect or wall-clock campaign advancement. */
+export const POST_TURN_REVIEW_CATEGORIES=[
+  "facts_clues","resources","clocks","threads","references","relationships","handouts","canon","veil_exposure","npc_cognition"
+];
+
 export function createDirectorCadence({eligibleRoundUsers,now}){
 if(typeof eligibleRoundUsers!=='function'||typeof now!=='function')throw new TypeError('Director attendance and timestamp capabilities required');
 /** Queue the next durable world-director pass after a resolved party turn. */

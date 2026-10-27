@@ -5,22 +5,10 @@ import { conversationPrincipal } from "./conversation-principal.js";
 import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { locationMatches } from "./scene-entry.js";
+import { interpretationSchema } from "./frameworks/narrative/interpretation-schema.js";
+import { CONTEXT_CONTRACT } from "./frameworks/narrative/interpretation-contract.js";
 // Typed movement now comes from the main GM player_intents contract.
-const text=maxLength=>({type:"string",maxLength});
-const list=(items,maxItems=12)=>({type:"array",items,maxItems});
-const object=properties=>({type:"object",additionalProperties:false,properties,required:Object.keys(properties)});
-export const interpretationSchema={anyOf:[{type:"null"},object({source_ref:text(200),
-  references:list(object({phrase:text(200),entity_type:{type:"string",enum:["location","npc","character","unknown"]},
-    entity_key:text(160),source_refs:list(text(200),6),status:{type:"string",enum:["resolved","candidate","unresolved"]}})),
-  intended_actions:list(text(600)),acknowledgements:list(text(600)),
-  unresolved:list(object({question:text(300),blocks_action:{type:"boolean"}}),6)})]};
-export const CONTEXT_CONTRACT="narrative_interpretation is optional read-only meaning, not a mutation proposal. "
-  +"Resolve ordinary names, pronouns and implied referents from audience-visible context without exact-phrase requirements. "
-  +"Set it to null unless SCOPED INTERPRETATION supplies input_source. Its source_ref must exactly equal input_source. "
-  +"Reference source_refs must be copied only from audience-visible source_ref values supplied in scoped context; unknown entities stay candidate/unresolved. "
-  +"Acknowledgements do not need movement/material claims. Never put completed movement, access, possession, status, disclosure or obligations in acknowledgements. "
-  +"Copy intended_actions as exact authored source spans; do not paraphrase them. Only unresolved questions that materially affect an action should block that action; continue ordinary conversation. "
-  +"Interpretation cannot authorize travel, presence, access, NPC knowledge, spending, consent or canon. State changes require separate native proposals.";
+export { interpretationSchema, CONTEXT_CONTRACT };
 export const contextSourceKey=(messageId,character)=>`context:${createHash("sha256").update(JSON.stringify([messageId,character])).digest("hex").slice(0,40)}`;
 export function captureContextSource(db,guild,user,character,messageId,content,{privateScene=false}={}){
   if(!messageId||!character||db.getCityCalendar(guild).flags.natural_language!==true) return null;

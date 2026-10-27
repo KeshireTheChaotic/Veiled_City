@@ -1,0 +1,108 @@
+{
+  "feature": "RF05-F04 C21",
+  "status": "QUALIFIED_LOCAL_PUBLIC_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Published the existing simulationUpdateSchema through World public, kept the compatibility export identical, and routed GM schema use through World public. The mixed npcDirectorSchema remains in simulation-schema.js with its Intent dependency.",
+    "changed_modules": [
+      "bot/src/frameworks/world/simulation-update-schema.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/simulation-schema.js",
+      "bot/src/gm.js"
+    ],
+    "ownership": {
+      "simulation_update_schema": "world",
+      "npc_director_schema": "application compatibility module pending a separately scoped extraction",
+      "consumer": "application GM via World public"
+    },
+    "behavior_changed": false
+  },
+  "tests": {
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf05-f04-c16.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c18.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c19.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c20.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c21.test.mjs",
+      "bot/tests/ai-gm-2026-10/p10-f08-c01.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f02-c02.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c11.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c13.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs"
+    ],
+    "frozen_union_attempt": {
+      "launches": 1,
+      "exit_code": 1,
+      "passed": 38,
+      "failed": 1,
+      "duration_ms": 19012.2857,
+      "failure": "C20 import-shape assertion expected a standalone prompt import; C21 validly co-imported prompt and schema from World public. Production code was correct."
+    },
+    "repair_verification": {
+      "launches": 1,
+      "file": "bot/tests/ai-gm-2026-10/rf05-f04-c20.test.mjs",
+      "exit_code": 0,
+      "passed": 1,
+      "failed": 0,
+      "duration_ms": 450.5643,
+      "log": "phases/RF05/rf05-f04-c21-c20-repair.log",
+      "log_sha256": "E06311A1D79C38FB1DF4F4B27BBF4F0CCC940A100F930EDA3E8F2C341B7623BA"
+    },
+    "effective_result": "All 39 cases passed against current production code across the frozen batch and one targeted repaired C20 file run; this was not a single all-green batch.",
+    "syntax": {
+      "files_checked": 21,
+      "passed": 21,
+      "failed": 0,
+      "log": "phases/RF05/rf05-f04-c21-syntax.log",
+      "log_sha256": "recorded in the syntax log; 21/21 exit 0"
+    }
+  },
+  "hashes_sha256": {
+    "bot/src/frameworks/world/simulation-update-schema.js": "039840722D43BF640DD4FC1BBA8384C5B36DA2A9DA7FBE7F1DC65EE05E8283AC",
+    "bot/src/frameworks/world/public.js": "A777BFD34DC546E2D61DFEEE73E97BDE6E92CD8C6402C023CC304F6148AF9451",
+    "bot/src/simulation-schema.js": "51FFFE820CAAC42A77C9229E9DDA232AE4739DEF93E4AEF6777D8BDA2588CDFC",
+    "bot/src/gm.js": "39657253E0597855C425AEE0AF7989C17EA331D2E3A0BBE7A7CA1D3900FB71F6",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c21.test.mjs": "2F05B1CE1ED38DD3B9FC18EC93379696CA141EDEE64E4160594B393BCB6F064C",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c20.test.mjs": "A70D279D00016FF2AC4C613B2E555444DD513BE13562AD1BCEA43CE3F377E7F6",
+    "initial_batch_log": "F78A06930236D681EBF4087ABBD4C69A6BC349736C444C10C2FF413DDB0451AB"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "active_violation_groups": 950,
+    "transition_errors": 950,
+    "unowned_modules": 0,
+    "source_modules": 591,
+    "imports": 2772,
+    "changed_path_findings": 0,
+    "result": "Aggregate ratchet remains failed on pre-existing transition debt; no C21 changed-path finding was reported."
+  },
+  "transitions": {
+    "retired": [],
+    "rf05_f04_remaining": 48
+  },
+  "cost": {
+    "paid_provider_calls": 0,
+    "paid_provider_cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "holds": [
+    "The aggregate RF05 architecture ratchet remains failed on 950 active prior transition violations.",
+    "npcDirectorSchema still mixes application schema code and Intent contract dependency; ownership extraction is deferred to a separately scoped feature."
+  ],
+  "rollback": "Restore the prior GM simulationUpdateSchema import and remove the World public export/module; retain simulation-schema.js declaration and compatibility API. Revert only C21-owned changes and evidence.",
+  "release": "NOT AUTHORIZED"
+}

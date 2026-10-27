@@ -1,0 +1,56 @@
+{
+  "feature": "RF05-F04 C24",
+  "status": "LOCALLY_QUALIFIED_WORLD_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the existing action and major-impact arrays to a World-owned catalog, exported them through World public, and kept simulation.js compatibility exports bound to the same objects. The existing NPC Director schema still uses those same arrays.",
+    "changed_modules": [
+      "bot/src/frameworks/world/action-catalog.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/simulation.js"
+    ],
+    "behavior_changed": false,
+    "actions_or_effects_changed": false
+  },
+  "tests": {
+    "file": "bot/tests/ai-gm-2026-10/rf05-f04-c24.test.mjs",
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "duration_ms": 511.4329,
+    "log": "phases/RF05/rf05-f04-c24-test.log",
+    "log_sha256": "A2A922C1536FBA5C5CF2F173D648ADB61B8214D821171017AEED377AA36468D4"
+  },
+  "syntax": {
+    "files": 5,
+    "passed": 5,
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c24-syntax.log",
+    "log_sha256": "E2E6989F049B830EE8E8FF69BED52890CA4C15E70D46385F2754106F9DD1065C"
+  },
+  "hashes_sha256": {
+    "bot/src/frameworks/world/action-catalog.js": "F312C2F7BDBB6644E70F9B8C07C816DA78FD1B81AC0CC20918C6EBEE2CF5B534",
+    "bot/src/frameworks/world/public.js": "33ECC3FAC0965915A43E5051578D234A1505493941BCD4C2AE5B06F9670D7CA7",
+    "bot/src/simulation.js": "9608D2B755FD34D04D31E9A1D5BD5FE758E97063677197A61DE326231DDEC8BB",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c24.test.mjs": "E7BECD75D20E1F87FEBA0508395966440F04AFFCB573A4F421B46A3734386B99",
+    "architecture_log": "60657B223A9E1DFB983579FB99D9A6CD5068DA6D2541644C308F4A35E884EA82"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 593,
+    "unowned_modules": 0,
+    "imports": 2777,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "new_action_catalog_findings": 0,
+    "result": "RF05 aggregate gate remains failed on existing transition debt; the new World catalog and public export have no reported findings. The legacy simulation.js module retains its existing violations."
+  },
+  "transitions": {"retired": [], "rf05_f04_remaining": 48},
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Restore both arrays in simulation.js, remove its catalog import and World public export, and remove only the new catalog/test/evidence. No persistent data changed.",
+  "release": "NOT AUTHORIZED"
+}

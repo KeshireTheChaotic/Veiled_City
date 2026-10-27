@@ -1,6 +1,6 @@
 # RF05-F04 execution ledger
 
-**Status:** PARTIAL — model selection and fourteen public-API slices qualified; 48 assigned RF05-F04 transition entries remain.
+**Status:** PARTIAL — model selection and twenty-six public-API slices qualified; 47 assigned RF05-F04 transition entries remain.
 **Base HEAD:** `b515fdb1f48da98b66564010ed87930e07cf7338`
 **Scope:** [`SCOPE.md`](SCOPE.md)
 
@@ -85,6 +85,94 @@ At base `58bb25b6ae61e86bcb5feaf94abaff945ae27949`, moved the GM's schema/prompt
 Extracted only the existing immutable v9 act-kind/native-clause schema values, writer response schema, and two instructions into Narrative-owned modules. The root modules remain compatibility re-exports; GM now uses Narrative public for the actual writer packet. No compiler, native validation, player control, audience, mechanics, receipts, or narrative wording changed. A fresh test exercised `GMService.generateNarrative` with a mocked provider and verified the actual schema and both instruction strings; **1/1 passed**, exit **0**, **609.2199 ms**. Syntax passed **9/9**. The exact GM private-import transition is preserved and retired; **48 RF05-F04 assignments remain**.
 
 The RF05 ratchet remains failed with **950** aggregate groups/errors, zero unowned modules, 584 source modules, and no new findings on C15 changed paths; raw and accepted legacy occurrence totals each fell by one. Exact sources/tests/log/report hashes, results, rollback and costs are in `C15-RUN.json`. One provider-call boundary was mocked; paid provider use/tokens/spend, network, production DB and Discord use were all zero. RF05-F04 and RF05 remain incomplete; release is NOT AUTHORIZED.
+## C16 — Narrative interpretation contract public API
+
+Moved the exact interpretation schema and read-only interpretation instructions into Narrative-owned modules and exported them through Narrative public. The root `narrative-context.js` re-exports the same object/string identities and retains source capture, visibility, and validation. GM contract imports now use Narrative public; GM runtime helper imports remain on the compatibility path. No prompt wording, validation, privacy, mechanics, or player authority behavior changed.
+
+Fresh test `bot/tests/ai-gm-2026-10/rf05-f04-c16.test.mjs`: **1/1 passed**, exit **0**, one blocking launch, **491.6591 ms**. Changed JavaScript/MJS syntax: **6/6 passed**, exit **0**. The RF05 ratchet remains **failed**, exit **1**, at **950** active groups and **950** transition errors (586 modules, zero unowned, 2,758 imports, largest cycle 181), unchanged in group/error count from C15. The two new Narrative modules have no cross-framework dependencies; pre-existing findings on `gm.js` and `narrative-context.js` remain. No transition is retired because the compatibility module still serves runtime functions; **48 RF05-F04 assignments remain**. Test, source, syntax, architecture, and report hashes are in `C16-RUN.json`. No provider, network, production database, Discord, or CI access; provider cost $0. RF05-F04 and RF05 remain incomplete; release NOT AUTHORIZED.
+
+Rollback only C16 by restoring the prior GM imports and definitions and removing the two contract modules/public exports. No persisted state changed.
+## C17 — Narrative authority instruction public API
+
+Moved the existing delegated GM writer instruction string unchanged into a Narrative-owned contract module, exported it from Narrative public, and switched the application GM's actual writer request to that API. The compatibility module re-exports the same string and keeps authoring/validation behavior. No instruction text or narrative boundaries changed.
+
+The first frozen run passed 10/11 cases; the new test compared the production v9 response schema to a separate v8 schema. The assertion was corrected to use the actual v9 contract, with no production change caused by that test failure. The final fresh union of C16, C17, and the changed-GM P10-F08 regression passed **11/11** across three files, exit **0**, one blocking launch, **8,521.2785 ms**. Changed JavaScript/MJS syntax passed **9/9**, exit **0**. The RF05 ratchet remains failed at **950** groups and **950** transition errors, unchanged; 587 source modules, zero unowned, 2,761 imports, largest cycle 181. The new Narrative contract module adds no cross-framework dependency. No transition retired; **48 F04 assignments remain**. Exact hashes and failure/final logs are in `C17-RUN.json`. One mocked writer request, zero paid provider calls/tokens/spend, network, production database, Discord, or CI. RF05 remains incomplete; release NOT AUTHORIZED.
+
+Rollback only C17 by restoring the prior GM import/string declaration and removing its Narrative module/export/test/evidence. No saved state changed.
+
+## C18 — Narrative integrity instruction public API
+
+Moved the existing narrative-claim instruction string unchanged into a Narrative-owned module and exported it through Narrative public. GM now imports the instruction publicly; the compatibility module re-exports the same string and retains schema/validator behavior. A comparison against the exact declaration at base HEAD passed; both values have SHA-256 `ff0a370d63e9a1e8ad7834cce5ec626077bc8804d8022adb916c62f89bdffb96`.
+
+The frozen fresh union of all 18 current GM-dependent files passed **36/36**, exit **0**, one blocking launch, **17,868.0517 ms**. Changed JavaScript/MJS syntax passed **12/12**, exit **0**. RF05 architecture ratchet remains failed at **950** groups/errors, unchanged from C17; 588 source modules, zero unowned, 2,764 imports, largest cycle 181. The new Narrative contract module introduces no cross-framework dependency. No transition retired; 48 F04 assignments remain. Exact hashes and terminal data are in `C18-RUN.json`. No paid provider calls, tokens, spend, network, production database, Discord, or CI. RF05-F04 and RF05 remain incomplete; release NOT AUTHORIZED.
+
+Rollback only C18 by restoring the prior GM import and root string declaration and removing C18's new module/API/test/evidence. No persistent state changed.
+
+## C19 — World autonomy prompt public API
+
+Published the existing World-owned autonomous-world instruction value through World public and switched the application GM to that API. The root compatibility module preserves the same value identity and existing World runtime functions. Exact comparison with base HEAD passed; baseline/current prompt SHA-256 is `0f5372c6e0b10f4cdaa86ee7cdcf4e91d39cd70150b21b1477c001d89a83cf1f`.
+
+The frozen fresh union of 19 GM-dependent files passed **37/37**, exit **0**, one blocking launch, **17,944.705 ms**. Changed JS/MJS syntax passed **16/16**. RF05 architecture ratchet remains failed at **950** groups and **950** transition errors, unchanged from C18; 589 source modules, zero unowned, 2,767 imports, largest cycle 181. The new World contract module adds no cross-framework dependency. No transition retired; **48 F04 assignments remain**. Exact hashes and results are in `C19-RUN.json`. No paid provider calls, tokens, spend, network, production database, Discord, or CI. RF05-F04/RF05 remain incomplete; release NOT AUTHORIZED.
+
+Rollback C19 only by restoring the old GM import/root declaration and removing the World contract module/public export/test/evidence. No persisted state changed. Commit is unavailable because `.git/index.lock` creation is denied by the execution environment; unrelated dirty work remains untouched.
+
+## C20 — World simulation prompt public API
+
+Moved only the existing World simulation instruction string into a World-owned module and exposed it through World public. The root compatibility module preserves the same prompt identity; its mixed World/Intent schema contracts remain there. Exact comparison with the base declaration passed; prompt SHA-256 is `ef71ac0e0eb039dc6742d98802d144df27bc5249d72ead54d021c0489d30dfe7`.
+
+The frozen fresh union of 20 GM-dependent files passed **38/38**, exit **0**, one blocking launch, **18,370.7892 ms**. Changed JavaScript/MJS syntax passed **19/19**. The RF05 architecture ratchet remains failed at **950** active groups and **950** transition errors, unchanged from C19; 590 source modules, zero unowned, 2,770 imports, largest cycle 181. The new World prompt module adds no cross-framework dependency. No transition retired; **48 F04 assignments remain**. Hashes and terminal results are in `C20-RUN.json`. No paid provider calls, tokens, spend, network, production database, Discord, or CI. RF05-F04/RF05 remain incomplete; release NOT AUTHORIZED.
+
+Rollback C20 only by restoring the old GM import/root prompt declaration and removing C20 module/public export/test/evidence. No persistent state changed. Git commit remains unavailable because the execution environment denies `.git/index.lock` creation; unrelated worktree edits remain untouched.
+
+## C21 — World simulation update schema public API
+
+Published the data-only simulation update schema through World public, preserving identity through the root compatibility export; GM now consumes the public contract. The 21-file fresh union initially passed 38/39 in 19,012.2857 ms. Its only failure was C20's stale static import-shape assertion after the valid combined import; no production defect was found. After updating that test assertion, its complete file passed 1/1 in 450.5643 ms. The union plus the focused repair provides 39/39 effective current-code passes across two launches, not a single all-green batch. Syntax passed 21/21. RF05 remains at 950 aggregate violations/errors with zero unowned and no changed-path findings; no transition retired and 48 F04 entries remain. See `C21-RUN.json`. No live provider/service usage; release NOT AUTHORIZED.
+
+Rollback C21 only by restoring the old GM schema import and compatibility declaration and removing the World module/public export/test/evidence. No persistent state changed. Git commit remains unavailable because the environment denies `.git/index.lock` creation; preserve all unrelated dirty edits.
+
+## C22 — Narrative material-claim schema public contract
+
+Moved only the data-only material claim schema to Narrative ownership and exposed it through Narrative public. The compatibility module preserves identical schema identity and retains all native/evidence validation; GM uses public schema plus the existing compatibility validator. The fresh 22-file GM-dependent union passed **27/27**, exit **0**, 14,098.6494 ms; syntax passed **5/5**. RF05 ratchet remains failed at 950 active groups/errors, 592 modules, zero unowned, 2,775 imports, largest cycle 181. The console summary omitted changed-path findings, so none are inferred. No transition retired; 48 F04 assignments remain. See `C22-RUN.json`. No provider or external service use; release NOT AUTHORIZED.
+
+Rollback C22 by restoring the old GM schema import and compatibility declaration and removing only this schema module/public export/test/evidence. No persistent state changed.
+
+## C23 — NPC Director schema bridge attempt deferred
+
+The attempted bridge passed 28/28 fresh cases but failed architectural acceptance: the World-owned historical `simulation-schema.js` compatibility reader would import its Intent/World pair adapter. The bridge implementation, test, and package/registry adoption were withdrawn; the existing pair record is restored to `PROPOSED_NO_API`. After withdrawal, RF05 returned to 950 active groups/errors, zero unowned, 592 modules and 2,775 imports. This local hold defers only the compatibility-reader ownership question; C24 proceeds with the independently safe World-only action catalog. See `C23-RUN.json`. Release NOT AUTHORIZED.
+
+## C24 — World action catalog extraction
+
+Moved the existing action and major-impact arrays to a World-owned module and published them through World public. `simulation.js` preserves exact compatibility identity. The fresh C24 test passed **1/1**, exit **0**, 511.4329 ms; syntax passed **5/5**. RF05 aggregate gate remains failed at 950 active groups/errors, 593 modules, zero unowned, 2,777 imports and largest cycle 181. The new catalog/public export have no reported findings; pre-existing `simulation.js` violations remain. No transition retired; 48 F04 entries remain. See `C24-RUN.json`. Release NOT AUTHORIZED.
+
+Rollback C24 by restoring both catalog arrays in `simulation.js` and removing its import, World public export and the C24-owned test/module/evidence. No persisted state changed.
+
+## C25 — World NPC action proposal schema
+
+Moved only the World-owned `npcActionSchema` into World public. The simulation compatibility module re-exports the same object and retains the combined Director schema with its existing Intent contract. Fresh test passed **1/1**, exit **0**, 96.2373 ms; syntax passed **4/4**. RF05 ratchet remains at 950 active groups/errors, 594 modules, zero unowned, 2,779 imports and largest cycle 181. The new schema has no reported finding; the old simulation-schema location and Intent import remain. No transition retired; 48 F04 assignments remain. See `C25-RUN.json`. Release NOT AUTHORIZED.
+
+## C26 — World Director review-category contract
+
+Moved the ordered review category list into the World Director cadence module and exposed it through World public. `director.js` re-exports the exact same value and retains review validation; GM imports the categories publicly. The fresh 25-file shared-GM union passed **30/30**, exit **0**, 14,511.683 ms; syntax passed **5/5**. RF05 ratchet remains at 950 active groups/errors, 594 modules, zero unowned, 2,780 imports and largest cycle 181. No new contract finding; the legacy `director.js` location remains. No transition retired; 48 F04 entries remain. See `C26-RUN.json`. Release NOT AUTHORIZED.
+
+## C27 — Intent authored-candidate schema contract
+
+Moved the candidate schemas and source-span prompt to Intent public while preserving identical compatibility exports and leaving persistence in place. The fresh 26-file shared-GM union passed **31/31**, exit **0**, 14,716.6291 ms; syntax passed **5/5**. RF05 ratchet returned to 950 active groups/errors after retiring the exact GM-to-compatibility transition `ee1f7416c348e4db4a44c8ed308f6a5d0ff9204fd7013c95e033bfef188b168f`; the new Intent contract paths have no findings. 47 F04 assignments remain. See `C27-RUN.json` and `C27-RETIRED.json`. Release NOT AUTHORIZED.
+
+## C28 — World proposal schemas public contract
+
+Moved the three data-only World proposal schemas to World public, preserving compatibility identity and keeping all runtime authority and persistence in place. The fresh 27-file shared-GM union passed **32/32**, exit **0**, 14,950.2107 ms; syntax passed **5/5**. RF05 ratchet remains at 950 active groups/errors, 596 modules, zero unowned, 2,785 imports, and largest cycle 181. New schema/public paths have no findings; prior autonomous-world.js findings remain. No transition retired; 47 F04 assignments remain. See `C28-RUN.json`. Release NOT AUTHORIZED.
+
+## C29 — World private seed proposal contract
+
+Moved only the bounded private-world-seed schema/instruction contract to World public. The root module retains source verification and native capability flow with identical compatibility exports; GM consumes the schema publicly. Fresh test **2/2** passed (exit 0; 643.2196 ms), syntax **4/4** passed, architecture remains at 950 groups/errors with zero unowned. 47 F04 assignments remain. See `C29-RUN.json`; release not authorized.
+
+## C30 — World post-turn review contract
+
+Moved the pure structured-review validator to World public and switched GM to the public export while preserving director.js compatibility identity. Fresh C30 and P10-F08 batch passed **12/12**, syntax **4/4**. The first gate found the exact now-unused GM-to-director transition; after preserving and retiring it, RF05 remains at 950 aggregate groups/errors, 598 modules, and zero unowned. 46 F04 assignments remain. See `C30-RUN.json` and `C30-RETIRED.json`. Release not authorized.
+
+## C31 — World history context reader
+
+Moved bounded historical summary retrieval to World public and switched GM to the public contract. The first C31/P10 batch passed 11/12; all 9 P10-F08 cases passed. The only failure was a test expectation that overlooked one summary fitting the 10k budget; the failed C31 case passed 1/1 in a targeted repair run. Do not represent the evidence as one green union. Syntax passed 4/4. After retiring the exact unused GM-to-city-civic transition, RF05 remains at 950 groups/errors, 599 modules, zero unowned; 45 F04 assignments remain. See C31 RUN and RETIRED records. Release not authorized.
 
 ## 2026-10-26 C23 reopened and resolved
 

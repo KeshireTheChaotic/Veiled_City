@@ -1,7 +1,7 @@
 export {createEnvironmentSceneConsumer,environmentSceneConsumer} from './contracts/environment-scene.js';
 export {minorNpcSchema} from './minor-npc-schema.js';
 
-export {createDirectorCadence} from './director-cadence.js';
+export {createDirectorCadence,POST_TURN_REVIEW_CATEGORIES} from './director-cadence.js';
 
 export {cityObject,cityKey,cityInteger,cityVisibility,cityAudit,calendarStatus,configureCalendar,indexWorldEvent,scheduleCityEvent,reviewCityEvent,processCityDue} from './city-calendar.js';
 
@@ -30,18 +30,26 @@ export {createWorldIdentityRules} from './identity-rules.js';
 export {BACKGROUND_WORLD_KINDS,createBackgroundIdentityRules} from './background-identities.js';
 
 export {createWorldAuthorshipRules} from './authorship.js';
+export {createWorldIdentityOrigin,worldIdentityOrigin} from './identity-origin.js';
+export {createWorldKnowledgeConsumer,worldKnowledgeSources} from './contracts/knowledge-records.js';
+export {createNarrativeAuthorshipConsumer,worldNarrativeAuthorship} from './contracts/narrative-authorship.js';
 
 export {createNpcEvidenceConsumer,worldNpcEvidence} from './contracts/npc-evidence.js';
-export {createNarrativeAuthorshipConsumer,worldNarrativeAuthorship} from './contracts/narrative-authorship.js';
+export {AUTONOMOUS_WORLD_PROMPT} from './autonomous-world-contract.js';
 export {SIMULATION_PROMPT} from './simulation-prompt.js';
 export {simulationUpdateSchema} from './simulation-update-schema.js';
 export {ACTION_TYPES,MAJOR_IMPACTS} from './action-catalog.js';
 export {npcActionSchema} from './npc-action-schema.js';
-export {createWorldKnowledgeConsumer,worldKnowledgeSources} from './contracts/knowledge-records.js';
-export {createWorldIdentityOrigin,worldIdentityOrigin} from './identity-origin.js';
+export {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema} from './world-proposal-schema.js';
+export {privateWorldSeedsSchema,PRIVATE_WORLD_SEED_INSTRUCTIONS} from './private-world-seed-contract.js';
+export {validatePostTurnStateReview} from './director-review.js';
+export {historyContext} from './history-context.js';
+
 export {createWorldActorControlConsumer,worldNativeActorControl} from './contracts/actor-control.js';
 export {activeCityProxy} from './active-proxy.js';
+
 export {createWorldDelegationConsumer,worldDelegationPolicy} from './contracts/delegation-policy.js';
+
 export {createWorldPrincipalConsumer,worldConversationPrincipal} from './contracts/conversation-principal.js';
 export {worldActorControl,assertWorldActorControl,assertNpcAvailability,npcAvailability,assertInstitutionDelegation,assertQueuedCompatibility,nativeWorldCoordinatorReady,nativeWorldOperationCatalog,prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldStrategyAllowed,nativeWorldStrategyScope,withNativeStrategyExecution,nativeWorldStrategyStepAllowed} from './execution-source.js';
 export {createWorldOwnerConsentConsumer,worldOwnerConsent} from './contracts/owner-consent.js';
@@ -57,7 +65,6 @@ export {knownInformation as knownWorldInformation,validateAction as validateNpcA
 export {saveRecord as saveNativeSimulationRecord} from './simulation-record.js';
 export {createWorldSessionSceneConsumer,worldSessionScene} from './contracts/session-scene.js';
 export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents,recordWorldActorMemory} from './action-execution.js';
-export {historyContext} from './history-context.js';
 export {createWorldNpcCognitionConsumer,worldNpcCognition} from './contracts/npc-cognition.js';
 export {createWorldKnowledgeClustersConsumer,worldKnowledgeClusters} from './contracts/knowledge-clusters.js';
 export {simulationCandidates} from './simulation-candidates.js';

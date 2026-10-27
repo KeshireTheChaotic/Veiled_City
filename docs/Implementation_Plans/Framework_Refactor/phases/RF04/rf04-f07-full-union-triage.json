@@ -1,0 +1,190 @@
+{
+  "record": "RF04-F07 post-hoc test-run failure classification",
+  "source_log": {
+    "path": "C:/Users/Keshi/AppData/Local/Temp/claude/D--Library-Development-Veiled-City/4aa473be-a621-4a90-9d78-e7de368d55df/scratchpad/full-union.log",
+    "sha256": "D4E6BB8BEC81C5E6BECF6B72208BFEDEB5C0432B586453CD308C8A5D2F96C92A",
+    "bytes": 627962,
+    "last_write_utc": "2026-10-25T16:17:31Z"
+  },
+  "execution": {
+    "tests": 1624,
+    "passed": 1528,
+    "failed": 96,
+    "skipped": 0,
+    "cancelled": 0,
+    "duration_ms": 281004.8908,
+    "exit_code": 1,
+    "execution_repeated": false,
+    "qualification": "NOT ACCEPTED: broad inherited union; inspected as historical evidence only"
+  },
+  "failure_groups": [
+    {
+      "count": 43,
+      "category": "file-level test import or module-resolution failures",
+      "breakdown": {
+        "missing bot/src/ai-gm-test-selection.js": 7,
+        "missing bot/src/native-adversary-*.js root paths": 27,
+        "missing bot/src/native-feature-definitions.json root path": 3,
+        "missing bot/src/native-house-errata.json root path": 2,
+        "missing bot/src/dice.js root path": 2,
+        "missing bot/src/content.js root path": 1,
+        "missing bot/src/generation-feedback.js root path": 1
+      },
+      "interpretation": "These tests did not reach their assertions. Several named files are present under framework-owned paths; this triage did not map each native-adversary path to its current replacement or prove a production capability is missing."
+    },
+    {
+      "count": 32,
+      "category": "static source-shape assertions expecting an earlier implementation layout",
+      "breakdown": {
+        "P06-F14 through F15 dispatcher implementation shape": 2,
+        "P06-F16 through F36 environment projection helper location": 21,
+        "RF03-F01-C27 shared kernel import/source layout": 1,
+        "RF03-F03-C09 through C14 native delegation layout": 6,
+        "RF03-F04-C02 environment delegation layout": 1,
+        "RF04-F01-C11 location-language consumer layout": 1
+      },
+      "interpretation": "The assertions compare source text or import locations. The output alone does not establish a runtime behavior regression."
+    },
+    {
+      "count": 11,
+      "category": "tests failed because required native services were not composed in the fixture",
+      "breakdown": {
+        "native scene service": 2,
+        "native bilateral agreement service": 6,
+        "Session-World native event source": 3
+      },
+      "interpretation": "The observed errors are explicit missing-composition failures. They do not show that production startup composition is missing."
+    },
+    {
+      "count": 10,
+      "category": "other assertion, mock setup, or worker-environment failures",
+      "breakdown": {
+        "P05-F01 requestModel mock unavailable / refusal expectation mismatch": 2,
+        "P06-F13 expected two observations, got zero": 1,
+        "P06-F37 HR14 behavior/source assertions": 3,
+        "P08-F03 writer/intent shape expectations": 2,
+        "P08-F04 worker temp-directory cleanup EPERM": 1,
+        "P10-F08 second worker returned status done instead of planning, with zero planner calls": 1
+      },
+      "interpretation": "The P08 cleanup error is an environment-sensitive cleanup failure. The P10 status mismatch is a concurrency-path observation requiring an isolated fresh reproduction before disposition. Remaining assertion failures require feature-scoped source and fixture review."
+    }
+  ],
+  "reconciliation": {
+    "total_failures": 96,
+    "group_total": 96,
+    "new_tests_run_during_triage": 0,
+    "release": "NOT AUTHORIZED"
+  },
+  "follow_up_2026_10_26": {
+    "base_head": "70250c8c30d088ab43ff98f58b291d0b4d9cd430",
+    "branch": "codex/clean-ai-gm-2026-10",
+    "production_changes": [],
+    "failure_disposition": {
+      "43_import_failures": {
+        "status": "mapped selectively; historical tests untouched",
+        "verified_current_paths": {
+          "7_ai_gm_test_selection": "bot/src/frameworks/operations/ai-gm-test-selection.js",
+          "3_feature_definition_json": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+          "2_house_errata_json": "bot/src/frameworks/daggerheart/native-house-errata.json",
+          "2_dice": "bot/src/frameworks/daggerheart/dice.js",
+          "1_content": "bot/src/frameworks/content/content.js",
+          "1_generation_feedback": "bot/src/frameworks/ai-provider/generation-feedback.js"
+        },
+        "27_native_adversary_imports": "The proposed one-file-per-adversary paths in the crosswalk are absent at current HEAD. Current source is decomposed across generic Daggerheart rules and native feature dispatch; exact test-to-handler mappings were not established. These cases remain unqualified rather than being routed through invented compatibility files."
+      },
+      "32_source_shape_assertions": "Historical tests were not edited or rerun. P06-F13 and P06-F37 current public capability paths were covered by fresh functional contract checks; the P08-F03 check verifies current certified-brief behavior. Remaining assertions continue to report source-layout mismatch only, without proof of runtime regression.",
+      "11_fixture_composition_failures": "Not rerun or modified; failures remain fixture composition evidence only, not startup-runtime proof.",
+      "10_other_failures": {
+        "p06_f13": "Fresh current-capability spot-check passed; historical assertion expected a fixed reference count in the root arbitration file, now a compatibility/delegation boundary.",
+        "p06_f37": "Fresh current-capability spot-check passed; historical assertions expected internal handler text in the root compatibility reader rather than the Daggerheart-owned implementation.",
+        "p08_f03": "Fresh current-writer spot-check passed; old fixture supplied unauthenticated convergence_goal prose without the required native assembly contract.",
+        "p10_f08": "Fresh cross-process SQLite test passed after the test worker received the same Session-World bootstrap composition as production. No production runner change was required.",
+        "p08_worker_cleanup": "The original isolated rerun exited 0; cleanup EPERM did not reproduce in this run. This narrows the prior failure to a non-reproduced environment cleanup issue, without proving general worker cleanup reliability.",
+        "p05_provider_mock_and_other_assertions": "Not resolved by this scoped follow-up; remain unqualified."
+      }
+    },
+    "fresh_diagnostic_tests": {
+      "p10-f08-c01": {"path":"bot/tests/ai-gm-2026-10/p10-f08-c01.test.mjs","sha256":"2CF0CE3ACBD8F1B02E06A1A1AD4CE3A7BD03245DABE737C1F54D32BFFCA74CAA","worker":"bot/tests/ai-gm-2026-10/p10-f08-c01-worker.mjs","worker_sha256":"25EEF509B10627B772C37888F1E8EDB3C7D01F7FA9AAEA77E4C3E877709458B9","final": "1/1 pass, exit 0, TAP 2491.602 ms; independent SQLite worker observes planning without planner invocation or claim takeover"},
+      "p06-f13-c01": {"path":"bot/tests/ai-gm-2026-10/p06-f13-c01.test.mjs","sha256":"80B29A5D6A00548B365C418E7FD01BB93D7F5E35953A39FE196F1831E876CAED","initial_batch":"pass; not rerun"},
+      "p06-f37-c01": {"path":"bot/tests/ai-gm-2026-10/p06-f37-c01.test.mjs","sha256":"6359B54E317A3E16193EF5ACE71DC2E9CC37B1609E8249273B2070166DE22B9C","initial_batch":"pass; not rerun"},
+      "p08-f03-c01": {"path":"bot/tests/ai-gm-2026-10/p08-f03-c01.test.mjs","sha256":"4FC7412FAA81A6D3C435C4753352C0C9FF268BDF17B0F45216778D6915023529","initial_batch":"pass; not rerun"}
+      ,"p08-f04-isolated-resume": {"path":"bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs","sha256":"181285E12925C08F62D104A414CD24FF48ADBC2FCE82F4F04D5162BAB9638BB0","command":"node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p08-f04-correction.test.mjs","exit_code":0,"passed":7,"failed":0,"duration_ms":5336.6607,"log":"bot/tests/ai-gm-2026-10/p08-f04-correction-isolated-resume.log","log_sha256":"F8E25120E9B57EB19A0F9C7462C77F9B0B5A5D0F132ABD154439DABBA98D8363","production_sha256":{"bot/src/opening-cohort-runner.js":"66E1A99FE2D91E7FB9228EFD7505BF395BF18386EF37D51194C9488B8E8D2635"},"disposition":"isolated worker cleanup EPERM not reproduced; cross-process cohort claim test passed"}
+    },
+    "initial_batch": {"log":"bot/tests/ai-gm-2026-10/rf-triage-corrective-tests.log","sha256":"7376D87DD1D1E69AA3D1932504F01D977EA56873104FF710741EA88D8365BC20","exit_code":1,"passed":3,"failed":2,"duration_ms":1832.4337,"reason":"The explicit path list accidentally included the worker helper as a standalone test, and the independent worker lacked the application bootstrap composition. Both were test harness defects; passed P06/P08 checks were not repeated."},
+    "repair_batch": {"log":"bot/tests/ai-gm-2026-10/p10-f08-c01-repair.log","sha256":"D3CA532C77AC5C63B1320EE3184D717295120977460911EBB0BE13D74A1AC6A3","command":"node --test tests/ai-gm-2026-10/p10-f08-c01.test.mjs","exit_code":0,"passed":1,"failed":0,"duration_ms":2491.602,"changed_file_syntax":"p10-f08-c01.test.mjs and p10-f08-c01-worker.mjs passed node --check"},
+    "p10_f08_full_file_rerun_2026_10_26": {
+      "base_head": "ee5f5f24ff8ceec2a25292ce6ecc5030a69253e8",
+      "production_changes": [],
+      "test_worker_change": "bot/tests/ai-gm-2026-10/p10-worker.mjs initializes the Session-World application composition in the worker, matching production startup",
+      "test_path": "bot/tests/ai-gm-2026-10/p10-f08.test.mjs",
+      "test_sha256": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+      "worker_sha256": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F",
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f08.test.mjs",
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "duration_ms": 7506.9373,
+      "log": "docs/Implementation_Plans/phases/P10/p10-f08-worker-bootstrap-rerun.log",
+      "log_sha256": "6BD513980CB2CC721901321EDF53FC1FF0960041FF396463C12158F3469CF5FF",
+      "cost": {"paid_provider_calls": 0, "provider_tokens": 0, "provider_usd": 0, "mock_invocation_totals": "UNMEASURED"},
+      "disposition": "fixture startup mismatch repaired; full affected fresh test file passes; does not establish OS-process crash recovery, live Discord, or semantic quality",
+      "after_c14_commit_rerun": {
+        "base_head": "61dabd3dac4254a085f4be1b0af8ad5be879bd33",
+        "production_change_since_previous_run": "GM Knowledge context-memory import now resolves through Knowledge public; no session-opening runner behavior changed",
+        "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f08.test.mjs",
+        "exit_code": 0,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 7657.4165,
+        "test_sha256": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+        "worker_sha256": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F",
+        "log": "docs/Implementation_Plans/phases/P10/p10-f08-after-c14-rerun.log",
+        "log_sha256": "EA9F7604A7D921E51A086FD9EB383609B5349583A8E1EFA3901D1E13D2C10FE3",
+        "cost": {"paid_provider_calls": 0, "provider_tokens": 0, "provider_usd": 0, "mock_invocation_totals": "UNMEASURED"},
+        "disposition": "entire fresh test file rerun because imported GM source changed; all cases pass; no live or OS-process claims"
+      },
+      "after_c15_commit_rerun": {
+        "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+        "production_change_since_previous_run": "Narrative v9 writer schema and instructions moved behind Narrative public; native writer response/validation exercised with mock only",
+        "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/p10-f08.test.mjs",
+        "exit_code": 0,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 7653.6422,
+        "test_sha256": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+        "worker_sha256": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F",
+        "log": "docs/Implementation_Plans/phases/P10/p10-f08-after-c15-rerun.log",
+        "log_sha256": "6E37F05807BE33E68B8DCB6770655EC37A748DACF9AD30EE6D08C4F08E6B4D02",
+        "cost": {"paid_provider_calls": 0, "provider_tokens": 0, "provider_usd": 0, "mock_invocation_totals": "UNMEASURED"},
+        "disposition": "full fresh file passes current GM contract bytes; live Discord and OS-process recovery remain unqualified"
+      }
+    },
+    "production_source_hashes_reviewed": {
+      "bot/src/session-opening-runner.js":"CFA42151F229F4E35D674FBE1930833CE082B7C095895F4F2F3CE5EB3FC1D920",
+      "bot/src/session-opening.js":"461D78DC50747736DFEC82C6C8E8CB822218BC54BA2D2B71208F6B6B1F9CE943",
+      "bot/src/application/composition/public.js":"AA7B4BC5857C10BEE82E59CD57FA6DC375819B44FA714899A103AF4B16AC038D",
+      "bot/src/db.js":"65D2179E79AAFB927A87EF62D5569DD01A2D5D813CABEE2CB70526322D5E96AA",
+      "bot/src/frameworks/daggerheart/feature-catalog.js":"2A13ED8116D18C67D661C6E0B05AF39F081CCF3A126D855C7A2B78AC3542A401",
+      "bot/src/frameworks/daggerheart/house-errata.js":"874752D63EC86062E57805D5D48919803408DEA2E3D8F6085C1578D0F9444404",
+      "bot/src/frameworks/daggerheart/environment-trace-rules.js":"3FD39B25BD15FD76C9981476E587DBEE9FC780406B03FD488F7F6D8C786F14D0",
+      "bot/src/frameworks/daggerheart/environment-acoustic-rules.js":"628584CDD4C123ACB97494C9DE4CC769FB8D95FECC0B2A25B41E84DAB6CC5293",
+      "bot/src/frameworks/daggerheart/environment-capability-catalog.js":"37F21517D9D39C586EE69CD1B1CBF8F08099A7D383C0E1118B9DB5D0CDC28770",
+      "bot/src/frameworks/daggerheart/native-house-errata.json":"6F679F50272861CCC01F5B189D0FC5D9947E5DF350DF372CB52F97DF93A28964",
+      "bot/src/frameworks/session/assembly-context.js":"B9C4E1E870773A825AE349F861899EFA730F19CBD94EC1D0BBF98A3100845B8E",
+      "bot/src/assembly-context.js":"0498FD7D6C6924BE55A4AF3DE3BDCB6FC4B6AEDD73CFBC4398876DF703D80CF7",
+      "bot/src/native-environment-capabilities.js":"1036C481DA84DC03889C9675CD28BD6638D1FE26DE192EB314875A4B14A0F54F",
+      "bot/src/native-environment-noise.js":"EA6FB366B8F06C7BEB740BE4C24424B3B81CA8D0B6D1A6BA950DF7AC132D2A58",
+      "bot/src/native-house-errata.js":"328F91B204A5B2C0E9CDE0EF6F1610F4D62181B5518639D246D950366A11DFB7"
+    },
+    "interpretation": "These are focused diagnostics against current production contracts, not changed-production qualification. No production source changed in this follow-up. They do not establish live Discord, provider latency, semantic narrative quality, or full feature certification.",
+    "cost": {"paid_provider_calls":0,"provider_tokens":0,"provider_usd":0,"Codex_usage":"UNMEASURED"},
+    "release": "NOT AUTHORIZED",
+    "rollback": "Remove the five new diagnostic test/helper files, their two logs and this follow-up record, and revert only the added ledger paragraphs. Preserve the existing C13 work and all pre-existing user edits."
+  }
+}

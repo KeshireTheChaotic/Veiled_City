@@ -1,6 +1,6 @@
 {
   "feature": "RF05-F04",
-  "status": "PARTIAL_MODEL_SELECTION_SLICE_QUALIFIED_62_TRANSITIONS_REMAIN",
+  "status": "PARTIAL_PUBLIC_CONTRACT_SLICES_QUALIFIED_45_TRANSITIONS_REMAIN",
   "base_head": "b515fdb1f48da98b66564010ed87930e07cf7338",
   "branch": "codex/clean-ai-gm-2026-10",
   "changed_modules": [
@@ -16,7 +16,9 @@
     "composition_consumer": "gm.js"
   },
   "tests": {
-    "files": ["bot/tests/ai-gm-2026-10/rf05-f04-model-selection.test.mjs"],
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf05-f04-model-selection.test.mjs"
+    ],
     "launch_count": 1,
     "exit_code": 0,
     "passed": 3,
@@ -28,7 +30,13 @@
   },
   "syntax": {
     "files_checked": 5,
-    "exit_codes": [0, 0, 0, 0, 0],
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
     "log": "phases/RF05/rf05-f04-model-selection-syntax.log",
     "sha256": "1C89A694EAFFF15363F2D4F67012125AAC87F1AF5843CFDBE9FA0721BA57DD8B"
   },
@@ -71,5 +79,68 @@
     "codex_usage": "UNMEASURED"
   },
   "release": "NOT_AUTHORIZED",
-  "rollback": "Revert only the RF05-F04 model-selection checkpoint; preserve RF05-F01 through F03, pre-existing user edits and RF04 diagnostic logs."
+  "rollback": "Revert only the RF05-F04 model-selection checkpoint; preserve RF05-F01 through F03, pre-existing user edits and RF04 diagnostic logs.",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_slices": [
+    "C16",
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C21",
+    "C22",
+    "C24",
+    "C25",
+    "C26",
+    "C27",
+    "C28",
+    "C29",
+    "C30",
+    "C31"
+  ],
+  "current_transition_count": 44,
+  "current_architecture": {
+    "exit_code": 1,
+    "active_groups": 943,
+    "transition_errors": 943,
+    "unowned": 0,
+    "source_modules": 607,
+    "imports": 2804,
+    "report": "../RF04/f05-c05-rf05-final.log",
+    "meaning": "Current whole-source migration check after reopened P04/C23/C05; no full RF05 qualification."
+  },
+  "latest_test_union": {
+    "files": 2,
+    "tests": 12,
+    "passed": 11,
+    "failed": 1,
+    "duration_ms": null,
+    "log": "phases/RF05/rf05-f04-c31-test.log",
+    "log_sha256": "630C7996D05C9B31C846E6CD0590DB7686E69D7AEAE5797089B191F322D37B3F",
+    "repair": "one failed C31 case passed in a separate targeted invocation; not one fully green union"
+  },
+  "latest_feature_slice": {
+    "feature": "C31",
+    "fresh_test": "bot/tests/ai-gm-2026-10/rf05-f04-c31.test.mjs",
+    "effective_cases": 3,
+    "launch_evidence": [
+      "C31-RUN.json"
+    ],
+    "failed_initial_case_repaired": true,
+    "union_files": 2,
+    "union_initial_passed": 11,
+    "union_initial_failed": 1,
+    "repair_passed": 1,
+    "repair_failed": 0,
+    "repair_log": "phases/RF05/rf05-f04-c31-budget-repair.log",
+    "repair_sha256": "00F5C1291DA69480C5D0931C6E7DD569198C1E0A8E925FEC1CC4F1C3A1CEA615",
+    "run_evidence": "features/RF05-F04/C31-RUN.json"
+  },
+  "current_hold_reconciliation": "../../AUDIT-20261026/CURRENT.json",
+  "c23_reopened": {
+    "status": "SCOPED_PAIR_ADOPTION_QUALIFIED",
+    "tests": 6,
+    "exit_code": 0,
+    "evidence": "C23-REOPENED-RUN.json"
+  }
 }

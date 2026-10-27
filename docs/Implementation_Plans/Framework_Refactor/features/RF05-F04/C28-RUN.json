@@ -1,0 +1,49 @@
+{
+  "feature": "RF05-F04 C28",
+  "status": "LOCALLY_QUALIFIED_WORLD_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved worldAdditionsSchema, sceneActionsSchema, and worldConflictsSchema to World ownership and exported them through World public. autonomous-world.js re-exports identical schema objects and retains all authority, validation, and persistence functions. GM imports schemas publicly and runtime functions through the compatibility module.",
+    "changed_modules": ["bot/src/frameworks/world/world-proposal-schema.js", "bot/src/frameworks/world/public.js", "bot/src/autonomous-world.js", "bot/src/gm.js"],
+    "behavior_changed": false,
+    "authority_or_receipt_changed": false
+  },
+  "tests": {
+    "files": 27,
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 32,
+    "failed": 0,
+    "duration_ms": 14950.2107,
+    "new_test": "bot/tests/ai-gm-2026-10/rf05-f04-c28.test.mjs",
+    "log": "phases/RF05/rf05-f04-c28-final-test.log",
+    "log_sha256": "E5507FF43BE4772615498F0FD3689997FF5E4C884CA5DDA7DE39398241BEED44"
+  },
+  "syntax": {"files": 5, "passed": 5, "failed": 0, "log": "phases/RF05/rf05-f04-c28-syntax.log", "log_sha256": "98BCA8154F0B61BBE4F8464A573D37CC8069F09DFB5CF59FBF273F23BA07668B"},
+  "hashes_sha256": {
+    "bot/src/frameworks/world/world-proposal-schema.js": "5073DABCAFB52764F43DB9D536EA45C9C81D4F8D3D7E2B0100259A778502871F",
+    "bot/src/frameworks/world/public.js": "6E30899274C82405E30CD529008E5BA0902E7D155F512F659E228FB313920196",
+    "bot/src/autonomous-world.js": "D122E3F89204BB29DCE53482589B13CF5EBEB7B9C0372968B0AF1716B68617BF",
+    "bot/src/gm.js": "D8552D6E34C64C98F9AF7799FF69EF0D53AAEDFAD96FB0B4935B815CF342A338",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c28.test.mjs": "F44E8597A3A04D49354AB88E68D9CE4E51CF2F8A0F74351862F9E2FEB7C9EC66",
+    "architecture_log": "ADD23E38C415A6811E662FAF925CBAC5054B5737525604F2E97F9CEB1B3BE043",
+    "architecture_report": "2F55B7F8BFBAC6D89C85F2BED8CC32C3185C2A9672142D209264213DB431E8EB"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 596,
+    "unowned_modules": 0,
+    "imports": 2785,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "new_contract_findings": 0,
+    "result": "RF05 ratchet remains failed on existing transition debt. The new World proposal-schema module and public imports have no findings; autonomous-world.js retains its prior legacy-location and cross-framework findings."
+  },
+  "transitions": {"retired": [], "rf05_f04_remaining": 47},
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Restore the three schema declarations in autonomous-world.js and the prior GM import, then remove only C28's World module/public/test/evidence. No persisted data changed.",
+  "release": "NOT AUTHORIZED"
+}

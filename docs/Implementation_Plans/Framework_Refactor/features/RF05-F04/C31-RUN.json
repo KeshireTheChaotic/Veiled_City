@@ -1,0 +1,86 @@
+{
+  "feature": "RF05-F04 C31",
+  "status": "LOCALLY_QUALIFIED_WORLD_HISTORY_CONTRACT_SPLIT_REPAIR",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved bounded historyContext read logic to World public; city-civic compatibility identity retained and GM adopts World public.",
+    "changed_modules": [
+      "bot/src/frameworks/world/history-context.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/city-civic.js",
+      "bot/src/gm.js"
+    ],
+    "behavior_changed": false
+  },
+  "tests": {
+    "first_union": {
+      "files": [
+        "bot/tests/ai-gm-2026-10/rf05-f04-c31.test.mjs",
+        "bot/tests/ai-gm-2026-10/p10-f08.test.mjs"
+      ],
+      "launch_count": 1,
+      "exit_code": 1,
+      "passed": 11,
+      "failed": 1,
+      "p10_f08_passed": 9,
+      "log": "phases/RF05/rf05-f04-c31-test.log",
+      "log_sha256": "630C7996D05C9B31C846E6CD0590DB7686E69D7AEAE5797089B191F322D37B3F"
+    },
+    "repair": {
+      "test": "bot/tests/ai-gm-2026-10/rf05-f04-c31.test.mjs",
+      "pattern": "history context stops before exceeding its aggregate text budget and GM uses World public",
+      "launch_count": 1,
+      "exit_code": 0,
+      "passed": 1,
+      "failed": 0,
+      "duration_ms": 463.2178,
+      "log": "phases/RF05/rf05-f04-c31-budget-repair.log",
+      "log_sha256": "00F5C1291DA69480C5D0931C6E7DD569198C1E0A8E925FEC1CC4F1C3A1CEA615"
+    },
+    "effective_c31_cases": 3,
+    "fully_green_single_batch": false
+  },
+  "syntax": {
+    "files": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c31-syntax.log",
+    "log_sha256": "36BED481DBD66FDCB838B662C71F647ED5FC412DDE901543F8795C4FEC91DAD9"
+  },
+  "architecture": {
+    "initial_transition_errors": 951,
+    "initial_log": "phases/RF05/rf05-f04-c31-architecture.log",
+    "final_exit_code": 1,
+    "modules": 599,
+    "unowned": 0,
+    "imports": 2793,
+    "largest_cycle": 181,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "final_log": "phases/RF05/rf05-f04-c31-architecture-final.log",
+    "final_log_sha256": "39DE4C52E3561B78654311C2B56D3E7A12BBA797EEEA7837437F6B87B41E8844"
+  },
+  "transitions": {
+    "retired": [
+      "df82f4dc873ca72d5a992ac4f3c97f054ac820af40cc2faf0957e82ca6af1df5"
+    ],
+    "rf05_f04_remaining": 45
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore function body in city-civic.js and GM import, remove World module/public/test/evidence, restore transition from C31-RETIRED.json.",
+  "release": "NOT_AUTHORIZED",
+  "hashes_sha256": {
+    "bot/src/frameworks/world/history-context.js": "F26034D0544FF583B0D873B122B6A7E488ED34B27D9C1A2400A2E6519A93A9A0",
+    "bot/src/frameworks/world/public.js": "5C764BEA997C4BC392FB3139EC76DF6CE4F1C6BF7658B9E712AC12CA0919D72B",
+    "bot/src/city-civic.js": "CF97B2F87120DF52C535AED84A295012A0E39F9C5DEC57956200BD6C31363FDB",
+    "bot/src/gm.js": "1FA8141917D32CC9871FD05F0C9E7F1B1B40B1871377E0A4FE6DDCC326F85A49",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c31.test.mjs": "EC8CB0E366A4F68CD537319FE12EBABE3282F91D51DA39944772DB175F84FECA"
+  }
+}

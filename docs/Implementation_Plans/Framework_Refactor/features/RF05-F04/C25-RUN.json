@@ -1,0 +1,58 @@
+{
+  "feature": "RF05-F04 C25",
+  "status": "LOCALLY_QUALIFIED_WORLD_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved the World-only npcActionSchema into World ownership and published it through World public. simulation-schema.js re-exports the exact same schema object and continues composing npcDirectorSchema with its existing Intent proposal array.",
+    "changed_modules": [
+      "bot/src/frameworks/world/npc-action-schema.js",
+      "bot/src/frameworks/world/public.js",
+      "bot/src/simulation-schema.js"
+    ],
+    "behavior_changed": false,
+    "intent_director_composition_changed": false,
+    "historical_compatibility_preserved": true
+  },
+  "tests": {
+    "file": "bot/tests/ai-gm-2026-10/rf05-f04-c25.test.mjs",
+    "launches": 1,
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "duration_ms": 96.2373,
+    "log": "phases/RF05/rf05-f04-c25-test.log",
+    "log_sha256": "6C0C7D68BFE114E55CEF9C37F927D5A607172A90E500C662134F6C041BCB80C7"
+  },
+  "syntax": {
+    "files": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "phases/RF05/rf05-f04-c25-syntax.log",
+    "log_sha256": "7D8E83E7864EDBDA11FC2A48B7B63ABBBCA7E461EBCAE43843B782CE5EFE35F6"
+  },
+  "hashes_sha256": {
+    "bot/src/frameworks/world/npc-action-schema.js": "8FD00370314B54489BBD831802CFD53100F3410EEAE5C3F18C42E102B91D4813",
+    "bot/src/frameworks/world/public.js": "70A840328139D919B6F1BD07599365AA507330151D35C423291AC896642B7ABF",
+    "bot/src/simulation-schema.js": "6CC8EDEAF99AF4E8F60720D8CC9E9C8E6BD0345CC27A83BDF57A32F6949D9D65",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c25.test.mjs": "7A21FA42BDDF07B9573337678EFD0E482C595C0F918615D8B764B769F6082B02",
+    "architecture_log": "B688E699781E3801B17126F4C936985A2810FDD9DA450AE6C334AF2DA380956D",
+    "architecture_report": "69B9E593294964E72DE2A178B1258757059CD6CB69860BADF969CC24F04BE812"
+  },
+  "architecture": {
+    "exit_code": 1,
+    "source_modules": 594,
+    "unowned_modules": 0,
+    "imports": 2779,
+    "active_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "new_npc_action_schema_findings": 0,
+    "result": "RF05 aggregate ratchet remains failed on existing transition debt. The new World schema has no reported finding; simulation-schema.js retains its existing location and Intent-import violations."
+  },
+  "transitions": {"retired": [], "rf05_f04_remaining": 48},
+  "cost": {"paid_provider_calls": 0, "paid_provider_cost_usd": 0, "codex_usage": "UNMEASURED"},
+  "rollback": "Restore npcActionSchema in simulation-schema.js, remove its World public export and the new module/test/evidence. No persisted data changed.",
+  "release": "NOT AUTHORIZED"
+}

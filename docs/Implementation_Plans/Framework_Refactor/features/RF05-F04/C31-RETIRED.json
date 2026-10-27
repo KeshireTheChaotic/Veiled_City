@@ -1,0 +1,19 @@
+{
+  "feature": "RF05-F04 C31",
+  "reason": "The exact GM import of World historyContext from the city-civic compatibility module disappeared after World public adoption. city-civic.js remains an identity-preserving compatibility reader.",
+  "removed_transition": {
+    "id": "df82f4dc873ca72d5a992ac4f3c97f054ac820af40cc2faf0957e82ca6af1df5",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/gm.js",
+    "to": "bot/src/city-civic.js",
+    "kind": "static",
+    "specifier": "./city-civic.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F04",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  "release": "NOT AUTHORIZED"
+}

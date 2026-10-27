@@ -1,0 +1,73 @@
+{
+  "feature": "RF05-F04 C22",
+  "status": "LOCALLY_QUALIFIED_PUBLIC_CONTRACT",
+  "base_branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "current_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "implementation": {
+    "summary": "Moved only the existing materialClaimSchema and pure helpers into Narrative ownership. Narrative public now exports it; the compatibility module re-exports the same object and retains all runtime validation. GM imports the schema through Narrative public and continues to use the compatibility validator.",
+    "changed_modules": [
+      "bot/src/frameworks/narrative/material-claim-schema.js",
+      "bot/src/frameworks/narrative/public.js",
+      "bot/src/narrative-integrity.js",
+      "bot/src/gm.js"
+    ],
+    "behavior_changed": false,
+    "native_rules_changed": false,
+    "audience_or_creativity_policy_changed": false
+  },
+  "tests": {
+    "new_test": "bot/tests/ai-gm-2026-10/rf05-f04-c22.test.mjs",
+    "frozen_batch": {
+      "files": 22,
+      "launches": 1,
+      "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap [22 fresh RF05/P10 files listed in phase log]",
+      "exit_code": 0,
+      "passed": 27,
+      "failed": 0,
+      "duration_ms": 14098.6494,
+      "log": "phases/RF05/rf05-f04-c22-final-test.log",
+      "log_sha256": "0094FF9BB5ECF31A3FC598C36D7E1D3B16FEFCFBA87A7792B03D59FA4F0D318E"
+    },
+    "syntax": {
+      "files_checked": 5,
+      "passed": 5,
+      "failed": 0,
+      "log": "phases/RF05/rf05-f04-c22-syntax.log",
+      "log_sha256": "4AC84FA5249E5C15A28D0D527DD200C0C4F123A90363B51ACA4512254571D096"
+    }
+  },
+  "hashes_sha256": {
+    "bot/src/frameworks/narrative/material-claim-schema.js": "BAA5C75B739C2AA46997FCB39444CBE973A6CB3EA2AEBFDD26ECEB007D613998",
+    "bot/src/frameworks/narrative/public.js": "43A067FCD13D182BC229BE3FDAFCCA22F10078DFA646EDC7087D9D915447E53B",
+    "bot/src/narrative-integrity.js": "F9A1B93DAC0EBA3619840B7CF6F2B1F1E4A1FE2C78EDFFE6435D1740EC8AE085",
+    "bot/src/gm.js": "9B1AC303CA17B56B96D69A9BDB69E2041B1F373B3856DD5BE0EF6904C95DF709",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c22.test.mjs": "FEBEDDF6966BDC1E342E8E22A519E02ECB0E71D7616A6599C2A1B8197195C06A",
+    "test_log": "0094FF9BB5ECF31A3FC598C36D7E1D3B16FEFCFBA87A7792B03D59FA4F0D318E",
+    "architecture_log": "926DA6E4D80A96D56238CEEC020EB10383A1A3723BD99926DF71B628FCB006D7"
+  },
+  "architecture": {
+    "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+    "exit_code": 1,
+    "source_modules": 592,
+    "unowned_modules": 0,
+    "import_occurrences": 2775,
+    "active_violation_groups": 950,
+    "transition_errors": 950,
+    "largest_cycle": 181,
+    "result": "Aggregate RF05 ratchet remains failed. The generated console summary does not provide changed-path findings for this run, so C22-specific zero-finding status is not asserted."
+  },
+  "transitions": {
+    "retired": [],
+    "rf05_f04_remaining": 48,
+    "reason": "The application GM still imports validateNarrativeClaims from the compatibility module, so that module edge remains."
+  },
+  "cost": {
+    "paid_provider_calls": 0,
+    "paid_provider_tokens": 0,
+    "paid_provider_cost_usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "rollback": "Restore the prior GM schema import and schema declaration in narrative-integrity.js; remove only the C22 Narrative schema module/public export/test/evidence. No persistent data changed.",
+  "release": "NOT AUTHORIZED"
+}

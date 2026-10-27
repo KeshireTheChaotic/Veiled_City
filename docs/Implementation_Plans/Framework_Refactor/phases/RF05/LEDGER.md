@@ -21,7 +21,7 @@ Exact implementation commits and qualifications reconciled in AUDIT-20261026/CHE
 | RF05-F01 | COMPLETE FOR SCOPED BOUNDARY | Four fresh tests passed in the final frozen batch; changed-file syntax passed; exact path and cross-import transitions were removed after the corresponding source occurrences disappeared. The RF05 ratchet remains failed on prior RF04 transition debt. See `RF05-F01-LEDGER.md` and `RF05-F01-RUN.json`. |
 | RF05-F02 | COMPLETE FOR SCOPED RAW-TRANSPORT BOUNDARY | Final fresh test 7/7 pass, syntax 4/4 pass; architecture gate finds no changed-path violations but remains failed on prior RF04 debt. See `RF05-F02-LEDGER.md` and `RF05-F02-RUN.json`. |
 | RF05-F03 | PARTIAL — SCOPED SLICES QUALIFIED, 289 ASSIGNED TRANSITIONS LOCALLY HELD | Final frozen batch 9/9 pass, syntax 9/9 pass; C02 guidance source move qualified, root compatibility-location transition remains active. See `RF05-F03-LEDGER.md`, `RF05-F03-RUN.json`, and `LOCAL_HOLDS.json`. |
-| RF05-F04 | PARTIAL — MODEL-SELECTION + FOURTEEN PUBLIC-API SLICES QUALIFIED; 48 ASSIGNED ENTRIES REMAIN | Original test 3/3 pass; scoped C02–C15 API imports qualified. Current C15 mocked writer-packet test passed 1/1; see `features/RF05-F04/LEDGER.md` and feature RUN records. |
+| RF05-F04 | PARTIAL — MODEL-SELECTION + TWENTY-SIX PUBLIC-API SLICES QUALIFIED; 47 ASSIGNED ENTRIES REMAIN | Original selector test 3/3 pass; scoped C02–C22 and C24–C28 slices qualified. C23 bridge adoption is a documented local hold. Latest GM union C28 passed 32/32. See `features/RF05-F04/LEDGER.md` and RUN records. |
 | RF05-F05 | PARTIAL — PURE MUTATION-RESULT AGGREGATION QUALIFIED; 442 ASSIGNED ENTRIES REMAIN | Fresh test 3/3 pass, syntax 3/3 pass; no changed-path findings. See `features/RF05-F05/LEDGER.md` and `RF05-F05-RUN.json`. |
 | RF05-F06 | QUALIFIED CHECKPOINT — PHASE GATE FAILED | One changed-code union member 7/7 pass, syntax 14/14 pass; architecture gate fails on 967 prior transition errors. See `features/RF05-F06/LEDGER.md` and `RF05-F06-RUN.json`. |
 
@@ -117,6 +117,86 @@ GM imports Knowledge's existing context-memory schema and instructions through K
 ## C15 — Narrative v9 writer contract public API
 
 The application writer now gets the v9 schema and creative/natively constrained instructions through Narrative public; root compatibility modules retain the same value identities and native compiler behavior. A fresh test of the actual `GMService.generateNarrative` request passed **1/1**, exit 0, 609.2199 ms, using one mocked requestModel call. Syntax passed **9/9**. One exact transition was retired; **48 RF05-F04 assignments remain**. RF05 ratchet stays failed on 950 prior groups/errors; no C15 changed-path findings and zero unowned modules. See `features/RF05-F04/C15-RUN.json`. No paid model, network or production service use. Release not authorized.
+
+### RF05-F04 C16 — Narrative interpretation contract
+
+The existing schema and read-only interpretation instructions now have Narrative-owned modules and public exports. The root compatibility module re-exports identical values and keeps capture/validation; GM imports the contract from Narrative public. Fresh test passed **1/1**, exit **0**, 491.6591 ms; changed syntax passed **6/6**. RF05 ratchet remains failed at 950 aggregate groups/errors, unchanged from C15, with zero unowned modules. No transition retired because runtime helpers remain on the compatibility path; 48 F04 entries remain. See `features/RF05-F04/C16-RUN.json`. No provider or external service use; release NOT AUTHORIZED.
+
+### RF05-F04 C17 — Narrative authority contract
+
+The exact delegated writer instruction string now lives under Narrative ownership and is consumed through Narrative public. The actual GM writer request test, C16 test, and fresh P10-F08 regression passed **11/11** in one frozen batch (exit **0**, 8,521.2785 ms); syntax passed **9/9**. The RF05 architecture gate remains failed at 950 active groups/errors, unchanged, with zero unowned modules. No transition retired and 48 F04 entries remain. See `features/RF05-F04/C17-RUN.json`. One mocked writer request; no live provider or service use. Release NOT AUTHORIZED.
+
+## RF05-F04 C17 shared-GM requalification
+
+The completed C16/C17/P10-F08 union passed 11/11 in 8,521.2785 ms. The remaining current fresh RF05 test files importing `GMService` then passed 24/24 in a separate targeted batch, exit 0, 8,429.1518 ms. Together these are 35 passing tests across 17 distinct fresh files in two recorded batches; they are not represented as one batch. Current GM hash, test paths, and terminal log hash are recorded above and in C17-RUN.json. One first attempt at the initial union failed only because C17 expected a different response schema; the corrected final union passed. No inherited suite ran.
+
+### RF05-F04 C18 — Narrative integrity contract
+
+The exact narrative-claim instruction is now published from Narrative and imported by the application GM; schema and validator remain in the compatibility module. Base-source comparison confirmed identical content. The frozen fresh shared-GM union passed **36/36** across 18 files, exit **0**, 17,868.0517 ms; syntax passed **12/12**. RF05 ratchet remains failed at 950 aggregate groups/errors, unchanged, with zero unowned modules. No transition retired; 48 F04 assignments remain. See `features/RF05-F04/C18-RUN.json`. No live provider/service use. Release NOT AUTHORIZED.
+
+### RF05-F04 C19 — World autonomy prompt
+
+The existing World autonomy prompt is now consumed through World public while the compatibility module retains runtime functions and the exact prompt identity. Base-content comparison passed. The frozen 19-file fresh GM-dependent union passed **37/37** (17,944.705 ms, exit 0); syntax passed **16/16**. RF05 architecture remains failed at 950 groups/errors, unchanged, with zero unowned modules. No transition retired; 48 F04 entries remain. See `features/RF05-F04/C19-RUN.json`. No live provider or external service use. Release NOT AUTHORIZED.
+
+### RF05-F04 C20 — World simulation instruction contract
+
+World simulation instructions now come through World public; schema contracts remain in their mixed compatibility source. The exact prompt matched base source. The frozen 20-file fresh GM union passed **38/38** (18,370.7892 ms, exit 0); syntax passed **19/19**. RF05 ratchet remains failed at 950 groups/errors, unchanged, with zero unowned modules. No transition retired; 48 F04 records remain. See `features/RF05-F04/C20-RUN.json`. Release NOT AUTHORIZED.
+
+## C21 — World simulation update schema public API
+
+Moved the data-only simulation update schema into World ownership and published it through World public; compatibility identity is preserved and the GM consumes the public export. The initial 21-file current-GM union produced 38/39 passing cases in 19,012.2857 ms; its sole failure was the C20 test's stale assumption that `SIMULATION_PROMPT` was imported alone. After changing only that assertion, the complete C20 file passed 1/1 in 450.5643 ms. Combined evidence is 39/39 effective passes across the original union and a targeted repair run, not one fully green union. Syntax passed 21/21. RF05 ratchet remains failed on 950 existing groups/errors; zero unowned modules and no changed-path findings. No transition retired; 48 F04 records remain. See `features/RF05-F04/C21-RUN.json`. Release NOT AUTHORIZED.
+
+## C22 — Narrative material-claim schema public contract
+
+Moved only the data-only material claim schema to Narrative ownership and exposed it through Narrative public. The compatibility module preserves identical schema identity and retains all native/evidence validation; GM uses public schema plus the existing compatibility validator. The fresh 22-file GM-dependent union passed **27/27**, exit **0**, 14,098.6494 ms; syntax passed **5/5**. RF05 ratchet remains failed at 950 active groups/errors, 592 modules, zero unowned, 2,775 imports, largest cycle 181. The console summary omitted changed-path findings, so none are inferred. No transition retired; 48 F04 assignments remain. See `features/RF05-F04/C22-RUN.json`. Release NOT AUTHORIZED.
+
+## C23 — NPC Director schema bridge attempt deferred
+
+The attempted bridge passed 28/28 fresh cases but failed architectural acceptance: the World-owned historical `simulation-schema.js` compatibility reader would import its Intent/World pair adapter. The bridge implementation, test, and package/registry adoption were withdrawn; the existing pair record is restored to `PROPOSED_NO_API`. After withdrawal, RF05 returned to 950 active groups/errors, zero unowned, 592 modules and 2,775 imports. This local hold defers only the compatibility-reader ownership question; C24 proceeds with the independently safe World-only action catalog. See `features/RF05-F04/C23-RUN.json`. Release NOT AUTHORIZED.
+
+## C24 — World action catalog extraction
+
+Moved the existing action and major-impact arrays to a World-owned module and published them through World public. `simulation.js` preserves exact compatibility identity. The fresh C24 test passed **1/1**, exit **0**, 511.4329 ms; syntax passed **5/5**. RF05 aggregate gate remains failed at 950 active groups/errors, 593 modules, zero unowned, 2,777 imports and largest cycle 181. The new catalog/public export have no reported findings; pre-existing `simulation.js` violations remain. No transition retired; 48 F04 entries remain. See `features/RF05-F04/C24-RUN.json`. Release NOT AUTHORIZED.
+
+## C25 — World NPC action proposal schema
+
+Moved only the World-owned `npcActionSchema` into World public. The simulation compatibility module re-exports the same object and retains the combined Director schema with its existing Intent contract. Fresh test passed **1/1**, exit **0**, 96.2373 ms; syntax passed **4/4**. RF05 ratchet remains at 950 active groups/errors, 594 modules, zero unowned, 2,779 imports and largest cycle 181. The new schema has no reported finding; the old simulation-schema location and Intent import remain. No transition retired; 48 F04 entries remain. See `features/RF05-F04/C25-RUN.json`. Release NOT AUTHORIZED.
+
+## C26 — World Director review-category contract
+
+Moved the ordered review category list into the World Director cadence module and exposed it through World public. `director.js` re-exports the exact same value and retains review validation; GM imports the categories publicly. The fresh 25-file shared-GM union passed **30/30**, exit **0**, 14,511.683 ms; syntax passed **5/5**. RF05 ratchet remains at 950 active groups/errors, 594 modules, zero unowned, 2,780 imports and largest cycle 181. No new contract finding; the legacy `director.js` location remains. No transition retired; 48 F04 entries remain. See `features/RF05-F04/C26-RUN.json`. Release NOT AUTHORIZED.
+
+## C27 — Intent authored-candidate schema contract
+
+Moved the candidate schemas and source-span prompt to Intent public while preserving identical compatibility exports and leaving persistence in place. The fresh 26-file shared-GM union passed **31/31**, exit **0**, 14,716.6291 ms; syntax passed **5/5**. RF05 ratchet returned to 950 active groups/errors after retiring the exact GM-to-compatibility transition `ee1f7416c348e4db4a44c8ed308f6a5d0ff9204fd7013c95e033bfef188b168f`; the new Intent contract paths have no findings. 47 F04 assignments remain. See `features/RF05-F04/C27-RUN.json` and `C27-RETIRED.json`. Release NOT AUTHORIZED.
+
+## C28 — World proposal schemas public contract
+
+Moved the three data-only World proposal schemas to World public, preserving compatibility identity and keeping all runtime authority and persistence in place. The fresh 27-file shared-GM union passed **32/32**, exit **0**, 14,950.2107 ms; syntax passed **5/5**. RF05 ratchet remains at 950 active groups/errors, 596 modules, zero unowned, 2,785 imports, and largest cycle 181. New schema/public paths have no findings; prior autonomous-world.js findings remain. No transition retired; 47 F04 assignments remain. See `features/RF05-F04/C28-RUN.json`. Release NOT AUTHORIZED.
+
+### RF05-F04 C28 — World proposal schemas
+
+C28’s fresh shared-GM batch passed **32/32** across 27 files, exit **0**, 14,950.2107 ms; changed syntax checks passed **5/5**. Architecture gate remains at 950 groups/errors, 596 modules, 0 unowned, 2,785 imports, largest cycle 181. The three new schema contract paths have no findings; existing autonomous-world compatibility-source findings remain. RF05-F04 has 47 assigned records left. Detailed source/test/log hashes and rollback are in `features/RF05-F04/C28-RUN.json`. Release remains NOT AUTHORIZED.
+
+### RF05-F06 checkpoint attempt at HEAD 87be9d2 — RUNNING / UNQUALIFIED
+
+A single blocking checkpoint invocation was launched for the fresh F02 model-transport test, syntax checks on changed source files, and the RF05 architecture ratchet. The execution exceeded the shell's initial 30-second return window without a terminal summary. Under the repository's no-poll rule, it will not be queried, watched, or rerun. Until a terminal result is available at a natural checkpoint, this attempted F06 qualification is RUNNING / UNQUALIFIED; no pass is claimed. The batch logs are `rf05-f06-f02-test.log`, `rf05-f06-syntax.log`, and `rf05-f06-architecture.log` if the command reaches their completion points. No production code changed during the frozen batch.
+
+### RF05-F06 checkpoint status at natural review
+
+The one-shot invocation's syntax stage completed: **30 changed JavaScript/MJS files checked, zero syntax failures**. At the single natural checkpoint, no concise test or architecture terminal summary had been written; per the no-poll rule, their outcome remains **RUNNING / UNQUALIFIED** and the batch will not be queried or repeated. This checkpoint therefore does not close F06. The independent next slice is scoped in `features/RF05-F04/C29-SCOPE.md`; no C29 production changes have begun.
+
+### RF05-F04 C29 — World private seed proposal contract
+
+Fresh contract test passed **2/2**, exit **0** (643.2196 ms); syntax passed **4/4**. The RF05 gate remains failed at 950 groups/errors, 597 modules and zero unowned; 47 F04 transition assignments remain. C29 preserved the native private-seed capability path and created no gameplay/state change. See `features/RF05-F04/C29-RUN.json` for source/log hashes, cost, and rollback. Release remains NOT AUTHORIZED.
+
+### RF05-F04 C30 — World review validator public API
+
+C30 moved the post-turn review validator into World public and retired its exact unused GM-to-director compatibility edge. The fresh C30/P10-F08 batch passed **12/12**, exit **0**; syntax passed **4/4**. Final architecture check remains failed at 950 active groups and 950 transition errors, with 598 modules and zero unowned. F04 has 46 assigned records left. See `features/RF05-F04/C30-RUN.json`. Release remains NOT AUTHORIZED.
+
+### RF05-F04 C31 — World history context public API
+
+C31's first shared batch was 11/12 (exit 1): the P10-F08 regression passed 9/9 and one new history-budget assertion was incorrect. The failed C31 case passed 1/1 in a separate repair run; total effective C31 cases are 3/3 across two launches, not a single fully green union. Syntax passed 4/4. The exact now-unused GM-to-city-civic edge was preserved and retired; final architecture remains 950 groups/errors, 599 modules, zero unowned. 45 F04 assignments remain. See `features/RF05-F04/C31-RUN.json`. Release remains NOT AUTHORIZED.
 
 ## 2026-10-26 reopened C03-P04 Native Narrative–World adoption
 

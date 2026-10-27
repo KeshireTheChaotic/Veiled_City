@@ -1,0 +1,19 @@
+{
+  "feature": "RF05-F04 C27",
+  "reason": "The exact GM import of authored-candidate contract values from the compatibility module disappeared after GM adopted Intent public. The compatibility module remains for runtime persistence and re-exports the contract values.",
+  "removed_transition": {
+    "id": "ee1f7416c348e4db4a44c8ed308f6a5d0ff9204fd7013c95e033bfef188b168f",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/gm.js",
+    "to": "bot/src/authored-candidates.js",
+    "kind": "static",
+    "specifier": "./authored-candidates.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F04",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  "release": "NOT AUTHORIZED"
+}

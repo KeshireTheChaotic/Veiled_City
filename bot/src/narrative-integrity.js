@@ -4,34 +4,9 @@ import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js"
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { candidateNarrative,canQuarantineDisclosure,unattributedChoiceText } from "./pvp-output.js";
 import {disclosureFailureReason} from './disclosure-authority.js';
-const claimProperties={
-  actor:{type:"string"},entity_type:{type:"string",enum:["character","npc","combatant","world"]},entity:{type:"string"},
-  action:{type:"string",enum:["damage","movement","access","disclosure","obligation","status","canon","dice","possession"]},
-  prior:{type:"string"},proposed:{type:"string"},visibility:{type:"string",enum:["public","party","player","character","gm"]},
-  source_ref:{type:"string"},mutation_index:{type:"integer"},
-  certainty:{type:"string",enum:["committed","dialogue","rumor","uncertain","forecast","metaphor","intent"]}
-};
-const claimFields=Object.keys(claimProperties);
-const closedClaim=extra=>({type:"object",additionalProperties:false,properties:{...claimProperties,...extra},
-  required:[...claimFields,...Object.keys(extra)]});
-const separatedClaimSchema=closedClaim({authored_source_span:{type:"string"},output_claim_span:{type:"string",minLength:1}});
-const legacyClaimSchema=closedClaim({source_span:{type:"string",minLength:1}});
-export const materialClaimSchema={anyOf:[separatedClaimSchema,legacyClaimSchema]};
-export const NARRATIVE_CONTRACT="Return narrative_claims for EVERY consequential assertion in narration/private_messages: damage, movement, disclosure, obligations, status, canon, dice. "
-  +"Never supply predefined narrative choices, fixed acceptance/decline prompts, A/B/C story answers or scripted PC dialogue. Ask openly. "
-  +"Use authored_source_span only for exact player-input evidence and output_claim_span only for the exact claim text on one output surface. Use empty authored_source_span when no human declaration supports the claim. Legacy source_span means output_claim_span only. Stable actor/entity IDs and source_ref identify existing fact/knowledge/canon/obligation evidence. "
-  +"actor identifies the observer/speaker: npc:<key>, character:<id>, or empty for GM narration, not an invented NPC. "
-  +"A character observing their own saved position needs no NPC witness. An entry declaration alone is not arrival evidence. Create ordinary places/people via world_additions, and arrival/presence via scene_actions before asserting material claims. Atmospheric details need no entity per noun. "
-  +"action=status means an existing character/NPC lifecycle, not a generic door, sound or equipment condition. Historical recap text supplies context, not a current lifecycle, repeated event or native consequence receipt. Use current source-grounded GM fiction parts for eligible description; do not manufacture a lifecycle claim for it. "
-  +"Separate conversational understanding from authority: resolve ordinary contextual names, pronouns and references using scoped conversation. "
-  +"Acknowledging an earlier attempt or clarified destination is not a material state change and needs no movement claim. "
-  +"Do not demand a clarification solely because a place is not yet authorized. Ask only when unresolved ambiguity materially affects an action. "
-  +"Never infer travel completion, restricted access, encounter resolution, character presence or NPC knowledge from understood intent. "
-  +"Disclosure requires an existing audience-visible fact. Narrator/PC knowledge is not NPC knowledge; an NPC additionally needs its own sourced knowledge of that fact. "
-  +"Uncertain observations, quoted lies, hallucinations, metaphors, forecasts and intentions must be explicitly framed as such in prose and tagged, not committed facts. "
-  +"mutation_index is a matching events index or -1 for already established state. A newly staged fact/clue uses source_ref event:<index>; native receipts supply its actual ID. "
-  +"Ordinary new businesses, streets, signs and NPCs are NOT canon-ledger claims. Only existing exact canon keys/values support action=canon; event:<index> is never a canon key. World additions need no human approval absent an authoritative contradiction. "
-  +"Never invent dice, PC consent or compensate for a rejected claim. Cosmetic prose needs no claim.";
+import {NARRATIVE_CONTRACT} from './frameworks/narrative/narrative-integrity-contract.js';
+import {materialClaimSchema} from './frameworks/narrative/material-claim-schema.js';
+export {NARRATIVE_CONTRACT,materialClaimSchema};
 function deny(category,claim,source="",reasonCode=null){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
   error.code="NARRATIVE_INTEGRITY";

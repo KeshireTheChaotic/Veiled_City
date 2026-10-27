@@ -73,3 +73,47 @@ For this undeployed local delta, revert source/test commit `079ab386c23aca1876a4
 ## Corrective F08 delta — prepared-refresh cross-connection claim — 2026-10-22
 
 At base HEAD `738cd6082b12a42bfedbc98d5ae39f73eef99328`, review identified that two processes could both enter the `prepared_refresh` branch before either status write. `session-opening-runner.js` now uses `transitionCityRecord` in a transaction to claim `prepared_refresh → publishing` against the exact source event before calling the writer. A fresh two-worker, two-SQLite-connection barrier test proved one writer invocation and one acknowledged send. Run `p10-f08-prepared-refresh-race-20261022-01`: one blocking targeted test, exit 0, 1/1 passed, 0 failures/skips/cancellations, 10076.0856ms; changed JS/MJS syntax checks passed. Exact SHA256 values and environment/cost boundaries are in `../../evidence/P10_F08_PREPARED_REFRESH_RACE.json`; per-feature rollback and evidence are in `../../features/P10-F08/LEDGER.md`. No old test was rerun. This does not qualify live Discord or production process-crash recovery. **RELEASE NOT AUTHORIZED.**
+
+### P10-F08 current-checkout race-fixture repair — 2026-10-26
+
+The isolated P10-F08 rerun initially confirmed the historical second-worker mismatch. Root cause was fixture-only: the worker omitted production's Session–World startup composition. Added the bootstrap to the fresh worker and ran all nine cases in `p10-f08.test.mjs` once at current HEAD `ee5f5f24ff8ceec2a25292ce6ecc5030a69253e8`: exit 0, 9/9 passed, 0 skipped/cancelled, 7,506.9373 ms. Changed worker syntax check passed. No production module or behavior changed. Source/test/log hashes and the exact command are in `features/P10-F08/LEDGER.md`. Measured test runtime is not live latency; provider invocation totals for this rerun are UNMEASURED, paid provider spend is $0. This resolves only the fixture discrepancy and supports the exercised worker-thread/SQLite claim path. Live Discord, OS-process recovery, narrative quality, and full P10 certification remain unqualified. Existing owner edits and unrelated dirty files were preserved. RELEASE NOT AUTHORIZED.
+
+### P10-F08 rerun after GM contract import change — 2026-10-26
+
+Because RF05-F04 C14 changed the `gm.js` module imported by this feature's tests, the complete fresh F08 file was rerun once at HEAD `61dabd3dac4254a085f4be1b0af8ad5be879bd33`: exit 0, 9/9 passed, 7,657.4165 ms. Exact hashes and cost accounting are in `Framework_Refactor/phases/RF04/rf04-f07-full-union-triage.json`. This refresh supports only the exercised offline test cases and does not qualify live Discord or OS-process recovery.
+
+### P10-F08 rerun after Narrative v9 public import — 2026-10-26
+
+The complete fresh F08 file was rerun once after C15 changed the GM's v9 writer-contract import. At HEAD `87be9d2eb4f57b97c680d1b60f3117e1a5a594b7`, exit 0, 9/9 passed, 7,653.6422 ms. Test/worker/log hashes and actual cost limits are recorded in the RF04 F07 triage JSON. This offline refresh does not establish live Discord, OS-process recovery or semantic narrative quality.
+
+## P10-F08 shared-GM requalification after RF05-F04 C17
+
+The current `gm.js` bytes were exercised by the fresh P10-F08 test in the RF05 shared-GM batch: **9/9 passed** (part of 11/11, 8,521.2785 ms, exit 0). Evidence path and hash are recorded in the P10-F08 feature ledger. This offline test does not qualify live Discord or production recovery; release remains NOT AUTHORIZED.
+
+## P10-F08 shared-GM refresh after RF05-F04 C18
+
+After the GM contract import changed again, the complete fresh P10-F08 test passed **9/9** inside the RF05 C18 36/36 union, exit 0, 17,868.0517 ms. See the C18 RUN record for current source/test hashes and log. Live Discord/production recovery remains unqualified; release is NOT AUTHORIZED.
+
+## P10-F08 shared-GM refresh after RF05-F04 C19
+
+P10-F08 passed **9/9** in the complete current 19-file GM-dependent union, exit 0, 17,944.705 ms. See RF05-F04 C19 evidence for current source/test hashes and the terminal log. Live service behavior remains unqualified; release is NOT AUTHORIZED.
+
+## P10-F08 shared-GM refresh after RF05-F04 C20
+
+The current GM bytes were exercised by the complete fresh P10-F08 suite: **9/9 passed** inside the 20-file RF05 shared-GM union, exit 0, 18,370.7892 ms. Exact source/test hashes and terminal log are in the C20 RUN record. Live behavior remains unqualified; release is NOT AUTHORIZED.
+
+## P10-F08 shared-GM refresh after RF05-F04 C28
+
+The nine fresh P10-F08 cases passed inside the frozen 27-file RF05-F04 shared-GM union: **32/32 total**, exit **0**, 14,950.2107 ms. C28 changed schema import paths while retaining the same compatibility schema values; this refresh covers the exercised offline opening/recovery cases. It does not establish live Discord behavior or production process recovery. See `Framework_Refactor/features/RF05-F04/C28-RUN.json` for hashes and the terminal log. Release remains NOT AUTHORIZED.
+
+## P10-F08 refresh after RF05-F04 C29
+
+Because C29 changed a public schema import in `gm.js`, the complete fresh P10-F08 regression file was run once against that code: **9/9 passed**, exit **0**, TAP 8,323.4975 ms (wall 8,566.6051 ms). Log SHA256 `6D6B8AFAEA259BD822A4C9B7FD2E7670CE46616905EF27DAA303870979DF7918`, at `Framework_Refactor/phases/RF05/rf05-f04-c29-p10-f08-refresh.log`. This remains offline-only evidence; live Discord and process-crash recovery are not qualified. Release is NOT AUTHORIZED.
+
+## P10-F08 refresh after RF05-F04 C30
+
+The frozen C30 batch included the fresh P10-F08 suite after `gm.js` switched its review-validator import: **12/12 total**, including **9/9 P10-F08**, exit **0**, 8,387.2657 ms. This confirms the exercised offline opening/recovery behaviors with the updated import. No live Discord or production recovery qualification follows. See `Framework_Refactor/features/RF05-F04/C30-RUN.json`; release remains NOT AUTHORIZED.
+
+## P10-F08 refresh after RF05-F04 C31
+
+The initial frozen batch ran the fresh C31 contract test with P10-F08 after `gm.js` switched its history-context import. P10-F08 passed **9/9** in that batch, although the overall 12-case invocation exited 1 because one new C31 test assertion was too strict. The C31 failure was corrected and only that failed case reran. P10-F08's passing cases were not rerun because their code was unchanged. This offline result does not qualify live Discord or production recovery. See `Framework_Refactor/features/RF05-F04/C31-RUN.json`; release remains NOT AUTHORIZED.

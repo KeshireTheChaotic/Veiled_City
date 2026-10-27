@@ -1,16 +1,16 @@
 {
   "mode": "ratchet",
   "phase": "RF05",
-  "sourceModules": 572,
+  "sourceModules": 596,
   "unowned": 0,
-  "importOccurrences": 2732,
-  "internalImportOccurrences": 2555,
+  "importOccurrences": 2785,
+  "internalImportOccurrences": 2608,
   "cycleComponents": 1,
   "largestCycle": 181,
-  "rawViolationOccurrences": 2435,
-  "acceptedLegacyOccurrences": 1462,
-  "activeViolationGroups": 968,
-  "transitionErrors": 967,
+  "rawViolationOccurrences": 2413,
+  "acceptedLegacyOccurrences": 1458,
+  "activeViolationGroups": 950,
+  "transitionErrors": 950,
   "pass": false,
   "firstErrors": [
     {

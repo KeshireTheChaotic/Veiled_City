@@ -1,0 +1,145 @@
+{
+  "run_id": "rf05-f04-c17-20261026-01",
+  "feature": "RF05-F04-C17",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "base_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "result_head": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
+  "status": "SCOPED_NARRATIVE_AUTHORITY_CONTRACT_QUALIFIED",
+  "changed_modules": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-authority-contract.js",
+      "sha256": "5B2504DBEF9E36BDBE2641F67B670007FA42A7F365C4FFA1CD1B8EFE799A5318",
+      "owner": "narrative",
+      "change": "owns exact existing delegated writer instruction string"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "1FEAF7B07ECC630478FD6F9FB3683C7C15A4A53814F7E7205BFEF2F6204AF754",
+      "owner": "narrative",
+      "change": "exports existing narrative authority contract"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "8DA098277E25D547CC9E6AE4443D56838481CDE6632EC672C5FDB979444827FF",
+      "owner": "narrative compatibility",
+      "change": "re-exports identical string; retains authoring and validation"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "F24D8C7A77F3B6C322A567E5BB955DD562E42A8167E68612CFD62D9D4E503928",
+      "owner": "application",
+      "change": "actual writer request receives contract through Narrative public"
+    }
+  ],
+  "tests": {
+    "failed": 0,
+    "passed": 11,
+    "tests": 11,
+    "duration_ms": 8521.2785,
+    "exit_code": 0,
+    "launches": 1,
+    "files": 3,
+    "prior_failed_batch": {
+      "counts": "10/11 passed, 1 assertion failure",
+      "path": "phases/RF05/rf05-f04-c17-union-test.log",
+      "reason": "Test expected the v8 delegated-unit schema; production generateNarrative correctly sends the existing v9 schema. Corrected the fresh assertion; no production change followed from the failure."
+    },
+    "log": "phases/RF05/rf05-f04-c17-final-test.log",
+    "test_hashes": {
+      "p10_f08": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9",
+      "p10_worker": "4DBBCBB2730335E7D5D3EE1E8E6D507267B75AF17FE4E1D61D71FC15E7E1EB2F",
+      "c16": "6E839C073BAB18F1D927CBFDA9FF38312A70AE4F10A09807CB33C115A6665450",
+      "c17": "515BA265756F9423A7201BB6E69E083E83F19F12372E49B35BF6AD4DF31A7F8B"
+    },
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf05-f04-c16.test.mjs tests/ai-gm-2026-10/rf05-f04-c17.test.mjs tests/ai-gm-2026-10/p10-f08.test.mjs",
+    "log_sha256": "1D9CC6A0AA72650AA66C677D92ACF396E641B31462D4757AEBB15306DD6F2DCA"
+  },
+  "syntax": {
+    "exit_code": 0,
+    "files": 9,
+    "log": "phases/RF05/rf05-f04-c17-syntax.log",
+    "passed": 9,
+    "log_sha256": "2275EBFB914D240CDDD24F1E9413153B6E153FAC2D9F4AA661822BC1C6A5FC01"
+  },
+  "architecture": {
+    "command": "cd bot; node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/rf05-f04-c17-architecture.json",
+    "log": "phases/RF05/rf05-f04-c17-architecture.log",
+    "log_sha256": "6E5EA8CEED075F107F5AAF19E91844AC5395E32A60DFC88273B6E2D2C54F2F1F",
+    "largest_cycle": 181,
+    "note": "Ratchet remains failed on existing transition debt; no increase in active group or transition-error count.",
+    "previous_C16_errors": 950,
+    "exit_code": 1,
+    "report_sha256": "38DE92E24CE656FFF052EB94BA84E7840B5672B176CBB7DECA1149198F37B594",
+    "source_modules": 587,
+    "previous_C16_groups": 950,
+    "report": ".reports/rf05-f04-c17-architecture.json",
+    "new_contract_modules_findings": 0,
+    "transition_errors": 950,
+    "unowned": 0,
+    "imports": 2761,
+    "active_violation_groups": 950
+  },
+  "transition": {
+    "remaining_rf05_f04_entries": 48,
+    "note": "No transition retired because the legacy authoring module remains for runtime functions and compatibility.",
+    "retired_ids": []
+  },
+  "external_effects": {
+    "discord": 0,
+    "paid_provider_calls": 0,
+    "mocked_GM_requestModel_calls": 1,
+    "codex_usage": "UNMEASURED",
+    "provider_usd": 0,
+    "ci": 0,
+    "provider_tokens": 0,
+    "production_database": 0,
+    "network": 0
+  },
+  "rollback": "Restore the prior GM import and instruction definition; remove the new Narrative contract module/export and restore compatibility export. No persistence or receipt changes.",
+  "commit": {
+    "reason": "The execution environment denies writes to .git; git add failed creating .git/index.lock with permission denied.",
+    "status": "NOT_CREATED"
+  },
+  "release": "NOT_AUTHORIZED",
+  "original_instruction_verification": {
+    "exact_baseline_match": true,
+    "value_sha256": "660ab26c8a36b9eb8394b6012be444295651ff5176807f013732c1260cb3f52d"
+  },
+  "supplemental_changed_GM_refresh": {
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap [13 listed fresh GM-dependent RF05 tests]",
+    "exit_code": 0,
+    "test_files": 14,
+    "tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "duration_ms": 8429.1518,
+    "log": "phases/RF05/rf05-f04-shared-gm-refresh.log",
+    "log_sha256": "DEC67CE28CFD17A7C310573CC4609CD284C169FDCC7549501590314978F20304",
+    "current_gm_sha256": "F24D8C7A77F3B6C322A567E5BB955DD562E42A8167E68612CFD62D9D4E503928"
+  },
+  "shared_module_refresh_after_C18": {
+    "gm_sha256": "1F5ED13BBD86D1DF42F5C19D69A16110703090A4E9F20CFFEF73E0DB229C039E",
+    "test_result": "passed in complete current shared-GM union",
+    "test_path": "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+    "union_tests": 36,
+    "union_passed": 36,
+    "union_log": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/rf05-f04-c18-final-test.log",
+    "union_log_sha256": "1E776695140D172988B2AA5D6977329D2EDC06D88EDCF8126B24044593592A59"
+  },
+  "shared_module_refresh_after_C19": {
+    "gm_sha256": "8B8C27CF365C4E3E04B5F154889F7493B9A172869B18B79E5AD0405EAC53DBBA",
+    "tests": 37,
+    "passed": 37,
+    "result": "feature test passed in the complete current shared-GM union",
+    "union_log": "phases/RF05/rf05-f04-c19-final-test.log",
+    "union_log_sha256": "FF1885EB05C5F85509C1D98E99A8DA0CC7650CF969B2678222ADFEF8C62F999C"
+  },
+  "shared_module_refresh_after_C20": {
+    "gm_sha256": "8CE164DE119CDC91EE439D04ADFE9CD5F734B1C7CC5F1C5CAA181C3B44A60416",
+    "tests": 38,
+    "passed": 38,
+    "result": "feature test passed in complete current shared-GM union",
+    "union_log": "phases/RF05/rf05-f04-c20-final-test.log",
+    "union_log_sha256": "E7278E0BBEA19857328CAAD1EB4896ABDBA0F8CD0090D22F5771547E47E52BD7"
+  }
+}

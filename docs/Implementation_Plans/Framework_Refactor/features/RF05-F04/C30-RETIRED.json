@@ -1,0 +1,19 @@
+{
+  "feature": "RF05-F04 C30",
+  "reason": "The exact GM import of post-turn review validation from the director.js compatibility module disappeared after the World public contract was adopted. director.js remains as an identity-preserving compatibility reader for other callers.",
+  "removed_transition": {
+    "id": "708565757d8396cf98e452a782b20812d47d51f944c7e4330abeb64290765f8e",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/gm.js",
+    "to": "bot/src/director.js",
+    "kind": "static",
+    "specifier": "./director.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F04",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  },
+  "release": "NOT AUTHORIZED"
+}
