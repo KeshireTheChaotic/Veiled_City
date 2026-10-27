@@ -6,7 +6,8 @@ import {nativeHouseErratum} from './native-house-errata.js';
 import {historicalActionSource,consentAction} from './action-consent.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {typedRollProof} from './typed-roll-proof.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {assertPcCanAct,hopeCap} from './pc-native-eligibility.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

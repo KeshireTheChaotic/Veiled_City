@@ -4,7 +4,8 @@ import {manageWorldEncounter,EncounterLibrary,livePcRoster,encounterActors} from
 import {nativeActorControl} from './native-actor-control.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 

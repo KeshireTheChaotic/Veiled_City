@@ -1,7 +1,8 @@
 /** Opt-in ordinary GM ruling proposals: source-verified arbitration only, never capability or effect authority. */
 import {adjudicateAcceptedIntent,selectRuleBasis} from "./rules-arbitration.js";
 import {consentAction,historicalActionSource} from "./action-consent.js";
-import {conversationPrincipal} from "./conversation-principal.js";
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {isPvpIntent} from "./pvp-authority.js";

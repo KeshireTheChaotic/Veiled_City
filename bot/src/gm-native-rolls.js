@@ -3,7 +3,8 @@ import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability
 import {prepareArbitratedIncomingAttack,prepareArbitratedVolley,inspectVolley} from './pc-incoming.js';
 import {EncounterLibrary} from './encounter.js';
 import {personalCharacter} from './personal-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {captureWorldInput} from './autonomous-world.js';
 import {persistPlayerIntents} from './typed-intents.js';
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';

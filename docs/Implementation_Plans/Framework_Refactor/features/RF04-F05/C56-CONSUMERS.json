@@ -1,0 +1,20 @@
+[
+    "bot/src/action-consent.js",
+    "bot/src/gm-action-capability.js",
+    "bot/src/gm-action-review.js",
+    "bot/src/gm-action-ruling.js",
+    "bot/src/gm-native-rolls.js",
+    "bot/src/native-encounter-activation.js",
+    "bot/src/native-environment-access.js",
+    "bot/src/native-environment-trace.js",
+    "bot/src/native-group-features.js",
+    "bot/src/ordinary-effect-proof.js",
+    "bot/src/ordinary-effects.js",
+    "bot/src/pc-effects.js",
+    "bot/src/pc-incoming.js",
+    "bot/src/pre-roll-fear.js",
+    "bot/src/pvp-brawl.js",
+    "bot/src/pvp-campaign-execution.js",
+    "bot/src/pvp-profiles.js",
+    "bot/src/rules-arbitration.js"
+]

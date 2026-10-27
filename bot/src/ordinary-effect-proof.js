@@ -1,6 +1,7 @@
 /** Read-only ordinary effect ancestry and final projection. No RNG, costs or effect executor. */
 import {historicalActionSource,consentAction} from './action-consent.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';

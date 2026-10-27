@@ -10,3 +10,7 @@ export function connectNativeEnvironmentSession(){return nativeEnvironmentSessio
 import {nativeScenes} from '../../frameworks/daggerheart/public.js';
 import {sceneAccess,recordScenePresence} from '../../frameworks/session/public.js';
 export function connectNativeScenes(){return nativeScenes.bind({currentScene,scenePresence,sceneAccess,recordScenePresence});}
+
+import {nativePrincipals} from '../../frameworks/daggerheart/public.js';
+import {historicalOwnerPrincipal} from '../../frameworks/session/public.js';
+export function connectNativePrincipals(){return nativePrincipals.bind({conversationPrincipal,historicalOwnerPrincipal});}

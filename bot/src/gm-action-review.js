@@ -9,7 +9,8 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {recordOwnerActionTerminal} from "./owner-action-terminal.js";
 import {ordinaryActionProof} from './ordinary-effect-proof.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 
 import {createGmActionReviewRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

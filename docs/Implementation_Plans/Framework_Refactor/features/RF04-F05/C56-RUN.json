@@ -1,0 +1,366 @@
+{
+  "feature": "RF04-F05-C56",
+  "base_head": "5b6275d879655395a4fa42bb0dae20c1edc2206b",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/action-consent.js",
+      "bot/src/gm-action-capability.js",
+      "bot/src/gm-action-review.js",
+      "bot/src/gm-action-ruling.js",
+      "bot/src/gm-native-rolls.js",
+      "bot/src/native-encounter-activation.js",
+      "bot/src/native-environment-access.js",
+      "bot/src/native-environment-trace.js",
+      "bot/src/native-group-features.js",
+      "bot/src/ordinary-effect-proof.js",
+      "bot/src/ordinary-effects.js",
+      "bot/src/pc-effects.js",
+      "bot/src/pc-incoming.js",
+      "bot/src/pre-roll-fear.js",
+      "bot/src/pvp-brawl.js",
+      "bot/src/pvp-campaign-execution.js",
+      "bot/src/pvp-profiles.js",
+      "bot/src/rules-arbitration.js",
+      "bot/src/frameworks/daggerheart/contracts/principals.js",
+      "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "bot/src/application/composition/native-principals.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs"
+    ],
+    "passed": 22,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+        "sha256": "1349676FFD325C3ABDD4898A3F149478DB31FFF215190715C0E44DEC0BE4359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f03.test.mjs",
+        "sha256": "DE701E296305721082C6C8BEFF52F4749E0FD64CF4A06193F930F988434C5F2F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c12.test.mjs",
+        "sha256": "1F56E416699EC84D159B4BD448ED42729D26F576F9A99FD1254E4BE9D0676DE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c13.test.mjs",
+        "sha256": "6092E28CBCE9FA791B3BBA2CEE0530CE352F624B84E17FB718D8E30A7C6E3047"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c17.test.mjs",
+        "sha256": "C9780C3FD2BE8166489417DDEB995BA9FE43E61405DD446FE52C0F96BC1BCDEC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c18.test.mjs",
+        "sha256": "B265E31CDDE8B2C32306252F801CC5B2BB0E3281945E35C9B37D2A791DD1026F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c19.test.mjs",
+        "sha256": "0DF3FCE72F9971240F209790854B00696CFA5E9F792B0455A0B1FD96BBEFBDD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c20.test.mjs",
+        "sha256": "D0FC3E2A728D55312508685A98621180F56BDCF718D6AC7419B65E3925C3223F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c21.test.mjs",
+        "sha256": "12E3DF55B6A33424C15D00E0E9A5F95CAAA8E499F8A105CA36EE94109B84E8AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c23.test.mjs",
+        "sha256": "99AB1672CC089AA993B3BB023AA7B8460FE7189D7F67BC4EE0330E5E012E98ED"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c24.test.mjs",
+        "sha256": "ED423484CDA84C7E3A598B636326C246A8D005A2AC02A631BF6532B913275577"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c17.test.mjs",
+        "sha256": "DD22392DEC9A55290A38FFE657112EDC71B5E0CB5B9C44142635E80674B0AE83"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c18.test.mjs",
+        "sha256": "161AAFDE23338A1EA4155360CED19E85A02499DE6C552007EF1B52AC0A9F5D8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c21.test.mjs",
+        "sha256": "47795C9C7609D08274D967F6EA6617C669AC16A3CB698C70A5497AA302E4DDE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f03-c24.test.mjs",
+        "sha256": "B67FDD3A25C807C2DA6E2636DB2E377113F92A092C72CE84549BDB1C9634B341"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c03.test.mjs",
+        "sha256": "E04A3CBB33F02760D90F4F4F634E7E28A34BA9228F54ACA9DD7E723F79E97DA2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06.test.mjs",
+        "sha256": "AC1C6FE856E58294FFD110A301A798C59DAE23F827836E58D32F3FDAE99B1D5E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "FBD1B2C0F49E6109654375CB4DB87482B885AF41B0046E7B1C94A49CDEB9CE4E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "EF23FCE4691D398F50F493D8E3D973E22341EA02F780F1A049B17D78190292F6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "B75EC9CC86F6C7F96100408373DBF76DE5DAB2BE970C0D04CC2636DA8A00C3D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "140E3AE8A19DAC405304D213BA3337A087307F171CB6347C9475A4EBB1807043"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "2749A2006C018E26479C4C613B5608E61B80322F094239D89FA1AA997DDFC0C6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "D71A8E925B036F0E183C52E82BDF69E443E87C20D500E55C9DEC0BB55CA9EF87"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "E1DF774C699FAD06AE3B5ADEBC10DD4D9D1557E066424A871C01FDCC03E1DD2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T15:11:39.396Z",
+    "end": "2026-10-27T15:12:28.171Z",
+    "exit_code": 1,
+    "tests": 214,
+    "passed": 209,
+    "failed": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 48735.4475,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c56-test.log",
+    "log_sha256": "FE2B6095202FC165E97C77C8222617D2C28A009DC056D17063B223C584CB86FA",
+    "failing": [
+      "p06-f03.test.mjs | tests\\\\ai-gm-2026-10\\\\p06-f03.test.mjs",
+      "rf04-f04-c02.test.mjs | scene archival preserves native last verified position as read-only history without minting a new arrival or witness",
+      "rf04-f04-c02.test.mjs | retained NPC evidence policy uses actual moved scene access and strict historical observer evidence, never proximity alone",
+      "rf04-f04-c02.test.mjs | original source reaches extracted current scene and view while NPC evidence declarations remain at original mixed source",
+      "rf04-f05-c18.test.mjs | actual startup has native source production before composition and pair imports only its two public owners"
+    ],
+    "known_preexisting_failures": [
+      "p06-f03.test.mjs | tests\\\\ai-gm-2026-10\\\\p06-f03.test.mjs",
+      "rf04-f04-c02.test.mjs | scene archival preserves native last verified position as read-only history without minting a new arrival or witness",
+      "rf04-f04-c02.test.mjs | retained NPC evidence policy uses actual moved scene access and strict historical observer evidence, never proximity alone",
+      "rf04-f04-c02.test.mjs | original source reaches extracted current scene and view while NPC evidence declarations remain at original mixed source",
+      "rf04-f05-c18.test.mjs | actual startup has native source production before composition and pair imports only its two public owners"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 733,
+      "unowned": 0,
+      "imports": 3107,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1835,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c56-rf04-architecture.log",
+      "log_sha256": "0BACB6004631B4E67FD72DB591ECA9D469F52C9CF7DBBC3FB9821C77D9E85A2C",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 733,
+      "unowned": 0,
+      "imports": 3107,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1292,
+      "active_violation_groups": 540,
+      "transition_errors": 540,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c56-rf05-architecture.log",
+      "log_sha256": "7EC9393264733735F78C0721173455E3D959173D7A8A412F1AF275D2A7227AFB",
+      "changed_path_active_findings": [
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-consent.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/native-group-features.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-capability.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-capability.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-action-review.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/gm-native-rolls.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-access.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-scene.js -> bot/src/gm-action-capability.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-environment-trace.js -> bot/src/native-environment-instance.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-group-features.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-group-features.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/native-group-features.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effect-proof.js -> bot/src/world-observation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effects.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/ordinary-effects.js -> bot/src/autonomous-world.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-effects.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-effects.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-incoming.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-incoming.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pc-incoming.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-brawl.js -> bot/src/scene-action-window.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/pvp-brawl.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/rules-arbitration.js -> bot/src/owner-action-terminal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/native-group-features.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/action-continuation.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/native-group-features.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-access.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-scene.js -> bot/src/gm-action-capability.js",
+        "CYCLIC_IMPORT_EDGE bot/src/native-environment-trace.js -> bot/src/native-environment-instance.js",
+        "CYCLIC_IMPORT_EDGE bot/src/ordinary-effects.js -> bot/src/autonomous-world.js",
+        "CYCLIC_IMPORT_EDGE bot/src/pvp-brawl.js -> bot/src/scene-action-window.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-action-window.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-entry-native.js -> bot/src/native-group-features.js",
+        "CYCLIC_IMPORT_EDGE bot/src/scene-entry-native.js -> bot/src/native-environment-access.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/rules-arbitration.js",
+        "CYCLIC_IMPORT_EDGE bot/src/window-coordinator.js -> bot/src/gm-action-review.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "EXPIRED_TRANSITION bot/src/action-consent.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-capability.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-capability.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-action-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/gm-native-rolls.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-access.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-trace.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-group-features.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-group-features.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-group-features.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effect-proof.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-incoming.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-incoming.js -> ",
+        "EXPIRED_TRANSITION bot/src/pc-incoming.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-brawl.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-brawl.js -> ",
+        "EXPIRED_TRANSITION bot/src/rules-arbitration.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-access.js -> ",
+        "EXPIRED_TRANSITION bot/src/native-environment-trace.js -> ",
+        "EXPIRED_TRANSITION bot/src/ordinary-effects.js -> ",
+        "EXPIRED_TRANSITION bot/src/pvp-brawl.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "09ad788d26ddba77b43315df823b78f372722ca7069e3e6ae013faabb44a05b0",
+      "082a9da3a269702879aff60f276eabd5d5f0b762a2102bd737a783097303bd3a",
+      "8ce76be42d4c3944fd81186a0b9af5eac02029931761e44408076f2ac53d657e",
+      "3a0e09c2740568b82ac9438cdf48dd4d59e4d2eaf2b266735e3e8fded8d76951",
+      "7564e4ee36fe0611a7e074172e7402a73ff527cdf6a63a3067cf98a16b563bf4",
+      "c94cde82fb9c1c96a5485c2d12bc59dcc6e4b8167a944fb175a0bcb75b3cd68f",
+      "966a3347775b536cd5cf10de7aeebc3c1ae206bc2260a0d4f1b80ff370f27e6c",
+      "baacb070f87dc47771e5f619da4da3730ee8b8128cb117145fa399a81f02a84e",
+      "57f7c3872163cc7fcec9cec5aae2a1618f1fa76e6d86ca597840dec28472fd09",
+      "0bb94ef109ea6fe8391b513a060b890484261f4fe17707ba4deb56c4a262375d",
+      "d43f1b660b251428c511136776f4347e1f892c6055df5b5dbb599b242596c6c9",
+      "7e1d1cf689740213698d9c58d98706255d19b9765466664a6202fecf00085e51",
+      "0fc5ca704276d0f71d4745a19aed53731255b49087d260dd20c59edec4fa406c",
+      "d9e39e7352cf6181d271c8384982bfbd6bedc067741c8d3f6b94bc9cc8b13229",
+      "351e675fa567aea45c5f4f93704dd37bd032fa5d111a56cda934e0eadd00b8b3",
+      "f16f87cd9b2d260e560f6af9adf403f4bc14ceddf30d790c140bfe646b6388d4",
+      "f3d995a926fa7bfcbabd609669e058400eabc4dccf061541d870fd358d5fe3aa",
+      "bc45208c69e5c815ed58a5daec0b0a0fb5a612bdb92c821224a458b09c356401"
+    ],
+    "original_manifest_sha256": "4BA8EFE38D52BCF0525FFB36F73B898A404EC333D4D83E449BB9869A2DD31AB5",
+    "manifest_sha256_after": "CC61100F28C8793B9D590A094ABDC8F9D538F520EE4BD61A1E0D2D5B38E12B0A",
+    "entries_after": 1821,
+    "remaining_by_feature": {
+      "RF04-F01": 224,
+      "RF04-F02": 5,
+      "RF04-F03": 76,
+      "RF04-F04": 130,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 157,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/action-consent.js": "5E25CFFA7E4AB7443EDE0FAD742B73460B801B167B79503D1310040FA4F18A4B",
+    "bot/src/gm-action-capability.js": "15FA99B7031412723B32049DF5B41812B04AA56D4B3FB42BF74AADFFC989F2AD",
+    "bot/src/gm-action-review.js": "273A6E860E037056FF555ED6570DFE8CF6EE17F66976B562D25C85AEE2A81C0F",
+    "bot/src/gm-action-ruling.js": "C6E5C21822695019BDC41E90102C7B95F410BA9CC1488EC925C77B28070D17F8",
+    "bot/src/gm-native-rolls.js": "014E7680AD16AB49DDBE3561256BE37F852428798A27BAC19A6A810C97B14DDC",
+    "bot/src/native-encounter-activation.js": "0E53E3EC4F844A911077B87CBDEE6086D60D850E64E13BBD0FE3C5DA3D715061",
+    "bot/src/native-environment-access.js": "0D855A7CC9F8D7A13C2946BF8346A3CBA0CD5644D0537CBE1814C87C609E5A28",
+    "bot/src/native-environment-trace.js": "F894D1F900829C449DF115C0772B4981DA9A8EB1B0B5B22F9DEDB3A4E726F910",
+    "bot/src/native-group-features.js": "4C9935195A285BD37DBBB9081801B4F43F69777AF9135EEBA0B112C8B86A7285",
+    "bot/src/ordinary-effect-proof.js": "BB8F7B22264425C25E075AB96E57931084B770F83CAF87AAEBEA76C00CE95AC8",
+    "bot/src/ordinary-effects.js": "361EF4EA7BDB67E44D7FCB07403941A7432C64504675EF57AD481900113C95A7",
+    "bot/src/pc-effects.js": "6BBDD2640C01DF4303D7D3688B26A468CF90FB8B7A75C276A9F90DE853F3BBD6",
+    "bot/src/pc-incoming.js": "7EDC5D7617B4BB370B6C366317EA5212677D8AA7FD6109EAA182A12D330A97FF",
+    "bot/src/pre-roll-fear.js": "84A37CADAF88C144EC85624D866FF61488A46B5F25A42044F2E662F475270C4D",
+    "bot/src/pvp-brawl.js": "1DAB9C092744440340DDE93E5A50EF7FF9D3628D9137ACD4348D07CBCEE9C550",
+    "bot/src/pvp-campaign-execution.js": "9CB6DD543E40BA47F87464F90F062803F7F7BD73BB8249F88716EA2320011E0F",
+    "bot/src/pvp-profiles.js": "6CE1B4D9D632F013009506F3CF648D21BF4B9A0000F2C734F10FCD8CFDBDBDE2",
+    "bot/src/rules-arbitration.js": "3C30125B51A9E08F10770062FC32F68E0BAB71199A7A229C6C9BE44E239FD5A7",
+    "bot/src/frameworks/daggerheart/contracts/principals.js": "741B46F0C26CB845A4F3DB4478B854AF910EEC4EB767E5487F35356BA2E216DB",
+    "bot/src/framework-to-framework/daggerheart--session/public.js": "8DF4D6BB0132B36F28F23F1D9CD9D49FF788ACF2168A2366D8AC360299F8C19D",
+    "bot/src/application/composition/native-principals.js": "F533C464E328F345993764CF8722938EC2451E2E465324573938EBB802D7AC63"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C56 commit: restore the 18 direct ./conversation-principal.js imports, remove the native principals port, adapter connector, bootstrap call and bridge consumer entry, and restore the 18 exact transitions from C56-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

@@ -1,7 +1,8 @@
 /** One source-bound pre-roll NPC spotlight, never paid by the interrupted action's future Fear result. */
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {narrativeSourceVisible} from './scene-fiction-context.js';

@@ -3,7 +3,8 @@ import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {validateDamagePvp} from "./pvp-profiles.js";
 import {personalCharacter} from "./personal-continuity.js";
-import {conversationPrincipal} from "./conversation-principal.js";
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {validatePvpAttackRoll,attackReviewAuthority} from "./pvp-attacks.js";
 import {blazeActionAuthorization} from "./pc-death.js";
 import {assertPvpSafety,pvpSafetyStatus} from './pvp-campaign-policy.js';

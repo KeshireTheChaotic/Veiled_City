@@ -2,7 +2,8 @@
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import { isPvpIntent } from "./pvp-authority.js";

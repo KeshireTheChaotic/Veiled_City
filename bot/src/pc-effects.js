@@ -2,7 +2,8 @@
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { currentScene,scenePresence,sceneAccess,RANGE_BANDS } from "./scene-continuity.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import { personalCharacter } from "./personal-continuity.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {consentAction} from "./action-consent.js";

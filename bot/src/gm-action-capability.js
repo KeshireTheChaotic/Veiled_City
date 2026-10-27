@@ -5,7 +5,8 @@ import {buildNarrativeContext} from './narrative-authority-context.js';
 import {activeCityProxy} from './city-constraints.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';

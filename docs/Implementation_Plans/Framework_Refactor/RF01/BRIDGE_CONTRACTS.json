@@ -1037,12 +1037,14 @@
       "consumers": [
         "bot/src/application/composition/native-session-movement.js",
         "bot/src/application/composition/native-environment-audience.js",
-        "bot/src/application/composition/native-scenes.js"
+        "bot/src/application/composition/native-scenes.js",
+        "bot/src/application/composition/native-principals.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs"
       ],
       "observed_directions": [
         {

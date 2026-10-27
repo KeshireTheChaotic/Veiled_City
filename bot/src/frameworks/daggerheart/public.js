@@ -125,3 +125,4 @@ export {assertEnvironmentAudience} from './environment-audience-source.js';
 export {createNativeWorldEstablishedEvidenceConsumer,nativeWorldEstablishedEvidence} from './contracts/world-established-evidence.js';
 export {createNativeWorldEventsConsumer,nativeWorldEvents} from './contracts/world-events.js';
 export {createNativeScenesConsumer,nativeScenes} from './contracts/scenes.js';
+export {createNativePrincipalsConsumer,nativePrincipals} from './contracts/principals.js';

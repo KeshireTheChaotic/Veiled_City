@@ -6,7 +6,8 @@ import {inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 import {currentScene,scenePresence,sceneAccess,RANGE_BANDS} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {nativePrincipals} from './frameworks/daggerheart/public.js';
+function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {personalCharacter} from './personal-continuity.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
