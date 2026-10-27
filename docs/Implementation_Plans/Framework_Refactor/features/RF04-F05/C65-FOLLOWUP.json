@@ -1,0 +1,29 @@
+{
+  "feature": "RF04-F05-C65 focused follow-up",
+  "checkout_head": "08f0fae6",
+  "production_changed": false,
+  "test_changed": false,
+  "focused_test": {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+    "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+    "exit_code": 0,
+    "passed": 13,
+    "failed": 0,
+    "duration_ms": 4672.9402
+  },
+  "architecture": {
+    "command": "npm --prefix bot run architecture:check -- --phase RF04",
+    "phase": "RF04",
+    "source_modules": 759,
+    "unowned": 0,
+    "cycle_components": 3,
+    "largest_cycle": 107,
+    "active_violation_groups": 0,
+    "transition_errors": 0,
+    "pass": true
+  },
+  "qualification_limit": "Focused rerun and current ratchet do not requalify the original C65 196-file batch or release readiness.",
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0
+}
