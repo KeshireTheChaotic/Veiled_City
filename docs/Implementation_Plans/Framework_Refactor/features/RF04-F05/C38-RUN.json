@@ -56,7 +56,8 @@
     "tests": 6,
     "passed": 6,
     "failed": 0,
-    "tap_duration_ms": 7349.1839
+    "tap_duration_ms": 7349.1839,
+    "retention": "Local ignored file; owner decision received after initial test commit; removed from tracking in follow-up"
   },
   "syntax": {
     "checked": 8,
@@ -131,7 +132,8 @@
   "ownership": "Operations fixed native NPC review consumer; NPC–Operations pair imports only its two public frameworks; thin application binds before services. Original review body/source/revision and native NPC rules unchanged.",
   "limits": [
     "Actual revision-bound operations inbox and native goal/strategy review tested with disposable SQLite; actual Discord delivery, concurrent reviewer races and model behavior not exercised.",
-    "Only NPC review direction adopted. Mixed operations review orchestration, other imports and later-phase migration remain open. Existing dirty work preserved; no full clean-HEAD/phase/live/release certificate."
+    "Only NPC review direction adopted. Mixed operations review orchestration, other imports and later-phase migration remain open. Existing dirty work preserved; no full clean-HEAD/phase/live/release certificate.",
+    "Owner requires new tests/logs local only. New C38 test intentionally untracked in follow-up; clean checkout INVALID_BRIDGE_TEST_REFERENCE expected until local file supplied. Local result is not clean-checkout qualification."
   ],
   "rollback": "Revert only C38 own imports/interface/pair/bootstrap/registry and two retired records together; preserve all original dirty changes and persisted native sources, private data and receipts.",
   "release": "NOT_AUTHORIZED",
