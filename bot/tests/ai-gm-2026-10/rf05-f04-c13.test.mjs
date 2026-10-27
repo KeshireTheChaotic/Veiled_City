@@ -13,11 +13,9 @@ test('the application GM loads with Knowledge authority projection on its public
   assert.doesNotMatch(gm,/from\s*["']\.\/authority-projection\.js["']/);
 });
 
-test('Knowledge public and root compatibility readers retain the implementation routes',async()=>{
+test('Knowledge public API retains the implementation route',async()=>{
   const api=await read('frameworks/knowledge/public.js');
-  const compatibility=await read('authority-projection.js');
   const implementation=await read('frameworks/knowledge/authority-projection.js');
   assert.match(api,/export\s*\*\s*from\s*["']\.\/authority-projection\.js["']/);
-  assert.match(compatibility,/export\s*\*\s*from\s*["']\.\/frameworks\/knowledge\/authority-projection\.js["']/);
   assert.match(implementation,/export\s+function\s+projectAuthorityRecords\s*\(/);
 });
