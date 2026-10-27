@@ -1,4 +1,5 @@
 export {createOpeningAuthoringPort} from './contracts/opening-authoring.js';
+export {sessionNativeActionConsent} from './contracts/native-action-consent.js';
 export * from './conversation-principal.js';
 export * from './owner-action-terminal.js';
 export * from './opening-entry-evidence.js';

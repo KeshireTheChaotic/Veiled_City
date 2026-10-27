@@ -1,5 +1,6 @@
 /** Existing authenticated source bindings for Daggerheart's exact action consent policy. */
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
+import {nativeActionConsentSource} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}function historicalOwnerPrincipal(...args){return nativePrincipals.historicalOwnerPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
@@ -18,3 +19,4 @@ export function completedActionSource(...args){return rules().completedActionSou
 export function requestActionConsent(...args){return rules().requestActionConsent(...args);}
 export function respondActionConsent(...args){return rules().respondActionConsent(...args);}
 export function validateActionConsent(...args){return rules().validateActionConsent(...args);}
+nativeActionConsentSource.bind({consentAction,validateActionConsent});

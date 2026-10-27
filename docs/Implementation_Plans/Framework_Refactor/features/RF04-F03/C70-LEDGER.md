@@ -1,0 +1,9 @@
+# RF04-F03 C70 Session terminal source
+
+Knowledge semantic candidate now calls a fixed Knowledge-owned consumer of the original Session owner terminal rule. The Knowledge–Session pair binds that original function during the existing application initializer. Function-port construction is inert, fails closed before startup, and forbids replacing the native function. The original Session rule and historical reader remain authoritative.
+
+Fresh local `rf04-f03-c70.test.mjs` ran once: 1/1 pass, exit 0, TAP 118.6357 ms. With fabricated in-memory source, terminal, action and review records, it checks missing binding, no-terminal false, native overlap true, non-overlap false, changed source ancestry rejection and no writes. It does not qualify the positive full semantic candidate flow, persisted database or live behavior. `node --check` passed on five changed production files and the test. SHA256: contract `D8B353CFDF092EFC2EBA32D247A1A50173F57E822AE5DAE89643F9327207F200`, Knowledge public `80AF6797376BCFF73DE21D1CA25C9310A14DD72013C815E28B8506A1E4ECCDE2`, pair `2AEB7FCCA29E5AFFE1FBA22D076C8A40C159193DBA1540D6974865D8A60B3980`, initializer `0D70575024EC14CA462B904987DD7D5C4042E921039E609ECF2D152AA6B7759F`, semantic source `6606F41BC2A91D96F362EC08BF9CD8A9513B3107D4420C9E77C2AB30C9966F82`, local test `93629A341EE584F8A3035A550EF6D2689770C97B9D30E7A2283EF1CFBF9ED123`. Provider calls/tokens/cost 0/0/$0; Codex usage unmeasured.
+
+Architecture gate, transition retirement and combined startup qualification await coordinated checkpoint. RF04 remains open. RELEASE NOT AUTHORIZED.
+
+Coordinated checkpoint: RF04 ratchet passed at 762 modules, zero active violations and zero transition errors; RF05 remains at 334 transition errors. Exact retired records and graph evidence are retained in the associated retirement files and RF04 phase ledger. RF04 remains incomplete.

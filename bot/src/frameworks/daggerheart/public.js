@@ -132,3 +132,4 @@ export {RANGE_BANDS} from './range-bands.js';
 export {nativeWorldAuthoring,nativeNarrativeAudience,nativeArbitrationOrigin,nativeGmOpportunityPeer,reservedCampaignFearPeer,doorChainSituationPeer,imagingSituationPeer} from './contracts/environment-sources.js';
 export {establishNativeEnvironmentInstance,inspectNativeEnvironmentInstance,nativeEnvironmentInstanceCapabilities,nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 export {environmentSceneCapabilities,environmentSceneService,validateMundaneEnvironmentDetail,validateMaintenanceMemoryFact,applyEnvironmentSceneAction,inspectEnvironmentSceneEffect,environmentSceneProjection,nativeEnvironmentSituation} from './native-environment-scene.js';
+export {nativeActionConsentSource} from './contracts/action-consent-source.js';

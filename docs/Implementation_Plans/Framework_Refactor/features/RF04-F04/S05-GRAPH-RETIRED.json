@@ -1,0 +1,89 @@
+{
+  "reason": "RF04 ratchet reported these exact records unused after coordinated graph changes; surviving cycle imports are no longer cyclic",
+  "entries": [
+    {
+      "id": "2ce8e213e5c8fe3795d40e37a893a2270fa73b5ddc40fef24af83d87bf76c51c",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-action-window.js",
+      "to": "bot/src/action-consent.js",
+      "kind": "static",
+      "specifier": "./action-consent.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "91764a96ea97d9e9cab63577c39e9db582c354aa5b18996732e368769b139232",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/narrative-director-source.js",
+      "to": "bot/src/world-encounter-beats.js",
+      "kind": "static",
+      "specifier": "./world-encounter-beats.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "cde1f1567c4519659addf5a007153e7c94df1a1b6a55bb2799f3e1d10e18bb76",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/pvp-brawl.js",
+      "to": "bot/src/scene-action-window.js",
+      "kind": "static",
+      "specifier": "./scene-action-window.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "3f743e4717704fac811aee19a1300deadae1aa12710c350b4e8122d388bca527",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/scene-action-window.js",
+      "to": "bot/src/action-consent.js",
+      "kind": "static",
+      "specifier": "./action-consent.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "0a841b5df101dc392104b00062d8f4cc551805bdd3747aae4692d06cdf4adb8c",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/window-coordinator.js",
+      "to": "bot/src/scene-action-window.js",
+      "kind": "static",
+      "specifier": "./scene-action-window.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "223d1531460099a86ac415cde428a211e2da91f8f9744974138499135ad25f8a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/world-encounter-beats.js",
+      "kind": "static",
+      "specifier": "./world-encounter-beats.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

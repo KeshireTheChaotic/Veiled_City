@@ -1,0 +1,19 @@
+{
+  "reason": "Original direct import removed through existing Knowledge World consumer",
+  "entries": [
+    {
+      "id": "3e049e806de2602908848748b88c37eb849bd71f579f1bbf1e0ef641b21a6d70",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/personal-continuity.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

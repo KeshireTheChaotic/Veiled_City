@@ -1,8 +1,8 @@
 /** Optional scene-scoped action windows for real overlap; ordinary posts never wait on this module. */
 import { createHash } from "node:crypto";
-import { currentScene } from "./scene-continuity.js";
-import { consentAction, validateActionConsent } from "./action-consent.js";
-import {classifyResourceOverlap} from './frameworks/session/public.js';
+import {classifyResourceOverlap,currentScene,sessionNativeActionConsent} from './frameworks/session/public.js';
+const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
+const validateActionConsent=(...args)=>sessionNativeActionConsent.validateActionConsent(...args);
 export {classifyResourceOverlap} from './frameworks/session/public.js';
 
 const reasons=new Set(["combat_spotlight","cooperative_operation","contested_resource","reaction_opportunity","direct_pc_conflict","gm_declared_beat"]);

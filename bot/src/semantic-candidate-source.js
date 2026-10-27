@@ -2,7 +2,8 @@
 function conversationPrincipal(...args){return knowledgeSessionScene.conversationPrincipal(...args);}
 import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
 function currentScene(...args){return knowledgeSessionScene.currentScene(...args);}
-import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
+import {knowledgeSessionOwnerTerminal} from './frameworks/knowledge/public.js';
+function overlapsOwnerActionTerminal(...args){return knowledgeSessionOwnerTerminal.overlapsOwnerActionTerminal(...args);}
 import {authoredTurnEnvelope} from './authored-turn-envelope.js';
 import {createSemanticCandidateProof} from './frameworks/knowledge/public.js';
 let candidateRules;

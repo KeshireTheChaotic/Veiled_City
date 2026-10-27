@@ -6,8 +6,9 @@ import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {nativeActorControl} from './native-actor-control.js';
 import {worldIdentityOrigin} from './world-authorship.js';
-import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {worldKnowledgeSources} from './frameworks/world/public.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {worldKnowledgeSources,worldNarrativeAuthorship} from './frameworks/world/public.js';
+function narrativeSourceVisible(...args){return worldNarrativeAuthorship.narrativeSourceVisible(...args);}
 function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 import {StateConflictError,UserInputError} from "./kernel/errors.js";
 const expectedPrincipal=new Set(['Active session required.','Select an authenticated current controlled role.',

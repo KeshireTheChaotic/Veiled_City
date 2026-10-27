@@ -22,3 +22,8 @@ export function connectNativePrincipals(){return nativePrincipals.bind({conversa
 import {nativeOwnerActionTerminal} from '../../frameworks/daggerheart/public.js';
 import {overlapsOwnerActionTerminal,recordOwnerActionTerminal} from '../../frameworks/session/public.js';
 export function connectNativeOwnerActionTerminal(){return nativeOwnerActionTerminal.bind({overlapsOwnerActionTerminal,recordOwnerActionTerminal});}
+
+import {nativeActionConsentSource} from '../../frameworks/daggerheart/public.js';
+import {sessionNativeActionConsent} from '../../frameworks/session/public.js';
+/** Forward only the original native consent checks. */
+export function connectSessionNativeActionConsent(){return sessionNativeActionConsent.bind({consentAction:nativeActionConsentSource.consentAction,validateActionConsent:nativeActionConsentSource.validateActionConsent});}

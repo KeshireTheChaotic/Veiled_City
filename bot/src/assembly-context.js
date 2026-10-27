@@ -1,7 +1,6 @@
 /** Original verified source composition; source adapter decomposition remains RF04-F05. */
-import {createAssemblyContext} from './frameworks/session/public.js';
+import {createAssemblyContext,currentScene,scenePresence} from './frameworks/session/public.js';
 export {hookHash,assemblySourceError} from './frameworks/session/public.js';
-import {currentScene,scenePresence} from './scene-continuity.js';
 import {openingWorldOpportunities} from './opening-world-bridge.js';
 const context=createAssemblyContext({currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),openingWorldOpportunities:(...args)=>openingWorldOpportunities(...args)});
 export const assemblyHookSources=(...args)=>context.assemblyHookSources(...args);

@@ -1,0 +1,9 @@
+# RF04-F04 S03 ledger
+
+At base `d429def383eca8925163dc5f38e3ba656a734acd` with S02 applied, `opening-cohort-state.js` adopted its own Session public `currentScene`; the prior root shim forwarded that exact function. Changed source SHA-256 `3BB25E9A475B3AF14295AB9D7FB5C5F3E898D206437531D0B4FCE84CC7D34FC1`; fresh local test SHA-256 `65FF190C75115EB0E39269E9B2EEF6E736896DF4B58D03CB69CAB6C65B56E77F`; S02 assembly-context source SHA-256 `4E053FBA3AFE4EF7BFBCB9FA603E97032E6F91877F23CE78FB33838FB14532EF`.
+
+From `bot/`, one frozen invocation `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f04-s03.test.mjs` exited 0: 2 passed, 0 failed/skipped/cancelled, TAP 518.3813 ms. Both changed JS/MJS syntax checks passed. Fresh fakes exercise actual cohort and assembly readers: a changed current scene changes scene identity and input fingerprint without changing roster revision; two independent owners qualify and a proxy-controlled second character does not. This does not qualify actual publication, full source authentication or privacy. No production database, network or provider calls; provider cost $0.
+
+No transition directly names the removed same-owner shim import. Module location and assembly/session-opening cycle obligations remain open. Architecture ratchet and any indirect cycle-record retirement require coordination with concurrent RF04 slices; no graph outcome is asserted here. The local test is ignored and must be supplied for reproduction. RELEASE NOT AUTHORIZED.
+
+Coordinated checkpoint: RF04 ratchet passed at 762 modules, zero active violations and zero transition errors; RF05 remains at 334 transition errors. Exact retired records and graph evidence are retained in the associated retirement files and RF04 phase ledger. RF04 remains incomplete.

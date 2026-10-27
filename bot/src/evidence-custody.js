@@ -1,7 +1,7 @@
 /** Original fixed World/Session/personal-identity composition for Knowledge evidence custody. */
 import {knowledgeWorldMemory} from './frameworks/knowledge/public.js';
 function cityObject(...args){return knowledgeWorldMemory.cityObject(...args);}function cityKey(...args){return knowledgeWorldMemory.cityKey(...args);}function cityAudit(...args){return knowledgeWorldMemory.cityAudit(...args);}
-import {requireCitySource} from './city-core.js';
+function requireCitySource(...args){return knowledgeWorldMemory.requireCitySource(...args);}
 import {personalCharacter} from './personal-continuity.js';
 import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
 function scenePresence(...args){return knowledgeSessionScene.scenePresence(...args);}

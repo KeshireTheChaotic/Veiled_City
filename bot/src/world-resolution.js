@@ -1,8 +1,8 @@
 /** Derived coarse-to-fine Director state. Snapshots confer no execution, knowledge or disclosure authority. */
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.js';
-import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
-import {worldSessionScene} from './frameworks/world/public.js';
+import {worldSessionScene,worldKnowledgeSources} from './frameworks/world/public.js';
+const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords(...args);
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
 import {worldActorControl} from './city-constraints.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
@@ -25,7 +25,7 @@ function identityProof(db,guild,row){
 }
 function derivedScopes(db,guild){
   const rows=listNarrativeRecords(db,guild,'autonomous_entity');
-  if(rows.length>=NARRATIVE_RECORD_LIMIT)throw fail('identity_scan_requires_reconciliation');
+  if(rows.length>=worldKnowledgeSources.narrativeRecordLimit())throw fail('identity_scan_requires_reconciliation');
   const salient=nativeSalienceAvailable(db,guild)?new Set(listNarrativeRecords(db,guild,'narrative_salience').map(r=>r.data.entity)):new Set();
   const session=db.getActiveSession(guild),scene=session?currentScene(db,guild):null,
     encounter=session&&db.getCurrentEncounter(session.id),

@@ -1,8 +1,7 @@
 /** Additive post-start opening identity. It is deliberately separate from the immutable start job and plan. */
 import {createHash} from 'node:crypto';
 import {assemblyInputFingerprint,assemblySourceError} from './assembly-context.js';
-import {currentScene} from './scene-continuity.js';
-import {sessionWorldEvents} from './frameworks/session/public.js';
+import {currentScene,sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import {inspectSessionOpening} from './session-opening.js';
 
