@@ -3,3 +3,4 @@ export {normalizeNarrativeMarkdown,narrativeRelativePath} from './narrative-text
 export {createCharacterAdvancementPort} from './contracts/advancement.js';
 
 export {createCharacterCreationConsumer,characterCreationConsumer} from './contracts/creation.js';
+export {createCharacterWorldEventsConsumer,characterWorldEvents} from './contracts/world-events.js';

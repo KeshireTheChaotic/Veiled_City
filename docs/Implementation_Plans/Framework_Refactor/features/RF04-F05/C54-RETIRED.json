@@ -1,0 +1,21 @@
+{
+  "feature": "RF04-F05-C54",
+  "original_manifest_sha256": "489AD99816AB84D338E1B18B6231B10801EF70C08A3113F3D61241FD6FDD9177",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "996b73e1b024c174d877fc3c1d50d2983271edb498c5e06db39579a45e94c0d9",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/character-observation.js",
+      "to": "bot/src/city-calendar.js",
+      "kind": "static",
+      "specifier": "./city-calendar.js",
+      "owner": "character",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

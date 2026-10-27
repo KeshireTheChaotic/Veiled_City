@@ -1,0 +1,142 @@
+{
+  "feature": "RF04-F05-C54",
+  "base_head": "a5c885d5a9928e5ebe9364ab82c84b8d6a65efe8",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/character-observation.js",
+      "bot/src/frameworks/character/contracts/world-events.js",
+      "bot/src/framework-to-framework/character--world/public.js",
+      "bot/src/application/composition/character-world-events.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs",
+        "sha256": "3B9EDAC73570958D2F2AC5DB19CC526081257CAE86FB092D619A1CC5F38D6FDF"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T15:02:30.100Z",
+    "end": "2026-10-27T15:02:30.691Z",
+    "exit_code": 0,
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 554.1643,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c54-test.log",
+    "log_sha256": "546A95C2122A6E5748E4622692EB5EE72DC1BB53FE8C381EC196B325EE01D647",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 729,
+      "unowned": 0,
+      "imports": 3097,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1887,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c54-rf04-architecture.log",
+      "log_sha256": "264004B8BCE7936B821FB0184E0AECAC91BCA8A5FD9CDB1EE98F6288D73F048D",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 729,
+      "unowned": 0,
+      "imports": 3097,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1292,
+      "active_violation_groups": 592,
+      "transition_errors": 592,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c54-rf05-architecture.log",
+      "log_sha256": "72DD5D9A2BEAC01BE4FE51FCDD0D48E1DBEDF324550DC4ECB7BAC65D85D3D21B",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/character-observation.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/autonomous-world.js -> bot/src/character-observation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/conversation-principal.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/scene-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/world-observation.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "CYCLIC_IMPORT_EDGE bot/src/autonomous-world.js -> bot/src/character-observation.js",
+        "CYCLIC_IMPORT_EDGE bot/src/character-observation.js -> bot/src/pc-incoming.js",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> ",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> ",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> ",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> ",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> ",
+        "EXPIRED_TRANSITION bot/src/character-observation.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "996b73e1b024c174d877fc3c1d50d2983271edb498c5e06db39579a45e94c0d9"
+    ],
+    "original_manifest_sha256": "489AD99816AB84D338E1B18B6231B10801EF70C08A3113F3D61241FD6FDD9177",
+    "manifest_sha256_after": "835D74587C6881069827486571F7F409472426CF61E3F9929F160251AB7A25E2",
+    "entries_after": 1873,
+    "remaining_by_feature": {
+      "RF04-F01": 224,
+      "RF04-F02": 5,
+      "RF04-F03": 76,
+      "RF04-F04": 182,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 157,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/character-observation.js": "C17F3B283B4BCC44F1346C292F1178B3DEA587EAE4D8C9ABB67DBD252250FE19",
+    "bot/src/frameworks/character/contracts/world-events.js": "E59CF6646C977EB60455719E833866DB5CD75AE6E3E3DA81F8E84A4807D007D5",
+    "bot/src/framework-to-framework/character--world/public.js": "D7C7976E163831B3316F3F92EA8C6E110FF18E46D713A6039ED90EEDD6BADAE3",
+    "bot/src/application/composition/character-world-events.js": "F2971E674C4EB5ECB198A72F70541BB2EDFCF2D87178A33F51349DCEA409FDE6"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C54 commit: restore the direct ./city-calendar.js import in character-observation.js, remove the Character World-events port, character--world adapter, bootstrap call and PACKAGES entry, return the character--world bridge contract to PROPOSED_NO_API, and restore the exact transition from C54-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED",
+  "supplemental_tests": {
+    "reason": "No fresh test imported character-observation.js directly, so the harness batch held only the port test; added an actual owner self-description flow through the composed port and reran the C54 test file once.",
+    "start": "2026-10-27T15:03:37.008Z",
+    "end": "2026-10-27T15:03:37.888Z",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs",
+        "sha256": "2BCBF00F4ACD178D2398E62E42281ACC20F251EF82667825660F6E4B28E6C218"
+      }
+    ],
+    "exit_code": 0,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c54-supplemental-test.log",
+    "log_sha256": "5CB7BB1DB66FEB0BC73FE8B520A5760E8CFE5A837D46E7C20EF86D5664075F83"
+  }
+}

@@ -2,7 +2,8 @@
 import { createHash } from "node:crypto";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene, sceneAccess, scenePresence } from "./scene-continuity.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {characterWorldEvents} from './frameworks/character/public.js';
+function indexWorldEvent(...args){return characterWorldEvents.indexWorldEvent(...args);}
 import { renderWorldObservation } from "./world-observation.js";
 import { visibleIncomingInjury } from "./pc-incoming.js";
 

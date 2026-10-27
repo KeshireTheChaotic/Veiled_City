@@ -62,6 +62,9 @@
     "character--daggerheart": [
       "bot/src/framework-to-framework/character--daggerheart/public.js"
     ],
+    "character--world": [
+      "bot/src/framework-to-framework/character--world/public.js"
+    ],
     "intent": [
       "bot/src/frameworks/intent/public.js"
     ],

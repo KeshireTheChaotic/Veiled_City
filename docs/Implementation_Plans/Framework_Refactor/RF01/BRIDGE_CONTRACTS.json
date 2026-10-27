@@ -389,36 +389,36 @@
         "character",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "world",
           "to": "character",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "World's original indexWorldEvent is bound unchanged into the Character-owned characterWorldEvents port; World keeps event validation, audience and audit."
         },
         {
           "from": "character",
           "to": "world",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Remaining observed dependency only; exact port remains with accountable migration."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/autonomous-world.js",
-          "to": "bot/src/character-observation.js",
-          "line": 17,
+          "from": "bot/src/application/composition/character-world-events.js",
+          "to": "bot/src/framework-to-framework/character--world/public.js",
+          "line": 1,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "validation": "Port fails closed before composition and forbids replacement; World validates every event. Adapter contains no business rules.",
+      "lifecycle": "One fixed Character consumer bound by application composition at index bootstrap before runtime services. No database/model/client/world mutation during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/character-world-events.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "world",
@@ -438,7 +438,9 @@
         "pair": "character--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 3
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/character--world/public.js",
+      "scope": "Character observation event issuance only. Other Character/World dependencies remain accountable migration obligations."
     },
     {
       "pair": "content--intent",
