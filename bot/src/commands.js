@@ -24,7 +24,7 @@ import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
 import {normalizeNarrativeMarkdown,narrativeRelativePath} from './frameworks/character/public.js';
 import {createNarrativeExportPackage} from './character-narrative.js';
-import { buildSessionRosterReport, chunkRosterReport } from "./roster.js";
+import { buildSessionRosterReport, chunkRosterReport } from "./frameworks/session/public.js";
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';

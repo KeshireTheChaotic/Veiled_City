@@ -1,0 +1,123 @@
+{
+  "feature": "RF04-F05-C59",
+  "base_head": "1b30d37c9c1768cdca8e7f0feb67386b7a273106",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/commands.js",
+      "bot/src/story-commands.js"
+    ],
+    "passed": 2,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f07.test.mjs",
+        "sha256": "FF45418519E552E0CE052BAC3943DF0300DE0D9944815120271381AFD0E3681E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+        "sha256": "9AD0116D6DAD800919950EEE9436C45ECDC0EA9989A169E561C90D1276BEFCF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-27T16:37:50.429Z",
+    "end": "2026-10-27T16:38:02.190Z",
+    "exit_code": 0,
+    "tests": 18,
+    "passed": 18,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 11723.6653,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c59-test.log",
+    "log_sha256": "5923593E178C6D91B4114EFAC050A47C2C2C1A1AD4B6DE025195D1F82A4DB73A",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 721,
+      "unowned": 0,
+      "imports": 3094,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1814,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c59-rf04-architecture.log",
+      "log_sha256": "F7F9055EFD29F3AAB114E5C31AD3238FC6FF13FBCAD80491D34EB5A7BCD18BE7",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 721,
+      "unowned": 0,
+      "imports": 3094,
+      "largest_cycle": 133,
+      "accepted_legacy_occurrences": 1290,
+      "active_violation_groups": 521,
+      "transition_errors": 521,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c59-rf05-architecture.log",
+      "log_sha256": "4BBF440EFA9C113E8C536905C98B2DCA290B82B805D9ADAE8D0CFBFEA47BA839",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "067646bd00d4af8a1b2d9b10579121b0ff7ac0ada2900e99762e3ac0b62cd785",
+      "564d2ee988f1ccf7a43b8f1d7eb244cfa2126a60c7ead9ea8482fc1289d5099b",
+      "684931bba05a062433c7549a0b003f70995294f5e164e87bc52792d9f0ca6dfe",
+      "8b7dc86cd05a21f9f211abe82d141dc0c30b3a6494d17766239d0f66538cee50"
+    ],
+    "original_manifest_sha256": "A5A6E29E161DA3D078C0B716264811EB21DF684C146EAEEB13A5F47CD663FCB9",
+    "manifest_sha256_after": "4A9CDDA90B15407B896E325884BBB506809A742E1396383367072226B46E2D54",
+    "entries_after": 1800,
+    "remaining_by_feature": {
+      "RF04-F01": 215,
+      "RF04-F03": 72,
+      "RF04-F04": 129,
+      "RF04-F05": 105,
+      "RF05-F02": 196,
+      "RF05-F03": 234,
+      "RF05-F04": 42,
+      "RF05-F05": 408,
+      "RF06-F02": 17,
+      "RF06-F03": 179,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/commands.js": "7EB7B4C86B25D5035116423DECE6713A33D9BE0A3AAC7684E6F718644DE31FB1",
+    "bot/src/story-commands.js": "546177D2BCFC4CF88E45E65C2ABC865F99407EFA6253F8793A7659F83235F5B9"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C59 commit: restore the provenance and roster root shims, the two application imports, and the four exact transitions from C59-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

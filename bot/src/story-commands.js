@@ -8,7 +8,7 @@ import { validateNarrativeClaims } from "./narrative-integrity.js";
 import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMysteryAttempt } from "./story-continuity.js";
 import { negotiateAgreement } from "./negotiations.js";
 import { previewOutcomes } from "./outcome-preview.js";
-import { explainWhy } from "./provenance.js";
+import { explainWhy } from "./frameworks/knowledge/public.js";
 import { configurePortrayal } from "./portrayal.js";
 import { authorWorldDraft, reviewWorldDraft } from "./world-authoring.js";
 import { recordScenePresence, sceneView } from "./scene-continuity.js";

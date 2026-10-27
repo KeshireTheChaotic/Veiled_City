@@ -1,0 +1,57 @@
+{
+  "feature": "RF04-F05-C59",
+  "original_manifest_sha256": "A5A6E29E161DA3D078C0B716264811EB21DF684C146EAEEB13A5F47CD663FCB9",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "067646bd00d4af8a1b2d9b10579121b0ff7ac0ada2900e99762e3ac0b62cd785",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/provenance.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "564d2ee988f1ccf7a43b8f1d7eb244cfa2126a60c7ead9ea8482fc1289d5099b",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/roster.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "684931bba05a062433c7549a0b003f70995294f5e164e87bc52792d9f0ca6dfe",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/roster.js",
+      "kind": "static",
+      "specifier": "./roster.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8b7dc86cd05a21f9f211abe82d141dc0c30b3a6494d17766239d0f66538cee50",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/provenance.js",
+      "kind": "static",
+      "specifier": "./provenance.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
