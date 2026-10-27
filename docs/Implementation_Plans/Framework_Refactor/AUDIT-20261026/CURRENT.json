@@ -1,16 +1,16 @@
 {
-  "checkpoint": "after C46 World public calendar caller adoption",
-  "timestamp": "2026-10-27T02:34:30.356Z",
+  "checkpoint": "after C47 native environmental audience source integration",
+  "timestamp": "2026-10-27T02:46:00.118Z",
   "audit_base": "87be9d2eb4f57b97c680d1b60f3117e1a5a594b7",
-  "manifest_sha256": "cf3e1af06fb9f26438eee878d04461ede27b43d21a0f05b8b0a935eead282df0",
-  "open_exact_records": 1952,
+  "manifest_sha256": "2ef3f5186a76715aff36c95f2253ffc8eb5e1cd6cba0c73ae4698bc0dd152986",
+  "open_exact_records": 1942,
   "by_feature": {
-    "RF05-F05": 413,
-    "RF04-F04": 191,
+    "RF05-F05": 408,
+    "RF04-F04": 189,
     "RF05-F02": 196,
-    "RF05-F03": 236,
+    "RF05-F03": 234,
     "RF04-F03": 85,
-    "RF04-F01": 277,
+    "RF04-F01": 276,
     "RF06-F02": 17,
     "RF04-F05": 106,
     "RF06-F07": 5,
@@ -606,6 +606,48 @@
       "max_occurrences": 1,
       "source_sha256": "7bbf271dc5468f45e442033cd65aee81775525d3d9228e8e071a1d9c21e4be3c",
       "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "5d5bfaec82bd7b9e5c775a975a3689a76a81fe27bb32d1f1ca2f6c14820efa9a",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "daggerheart",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "f0ddec470894522ab261368bcc8a2a9921db5a2ef211822079bb989604110726",
+      "feature": "RF04-F04",
+      "deadline": "RF04",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/conversation-principal.js",
+      "owner": "daggerheart",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+      "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
+    },
+    {
+      "id": "5103312538d5352889e2f9d9c0a19ca70b42ccbe5aa0ef211f3cf1af6b279cc9",
+      "feature": "RF04-F04",
+      "deadline": "RF04",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-continuity.js",
+      "owner": "daggerheart",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "max_occurrences": 1,
+      "source_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+      "target_owner": "session",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "DIRECT_CROSS_FRAMEWORK_IMPORT"
     },
@@ -3466,6 +3508,34 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "1a7f8bdf3514c3a124159d3cbfdbac44409fae4c308478ebe72fc1aceb8cc09a",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-arrivals.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "7bbf271dc5468f45e442033cd65aee81775525d3d9228e8e071a1d9c21e4be3c",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "1e29dc5671e06bcc7b9730f01997b351d9d9146df7b593eda2b44643881acd36",
+      "feature": "RF05-F03",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+      "target_owner": "narrative",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "e645b656e431df61ca534c002659972b384038ce79bfc4aec2ca600cf4edec71",
       "feature": "RF04-F04",
       "deadline": "RF04",
@@ -3564,6 +3634,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "7c3cc64b084e942232726d0a09bd0c70d74515da4ac1c37d755661cc22cb95b0",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-door-chain.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "0f16cdd68e49c66a2f6798fddb31745ebd15b65e1f76bf4f8c84c215f2e8ba7f",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "a40ed5ee3811f50f5fd4c5f47d6f7cab74b2ab5dfaf1a3eb298a60e57f5eada1",
       "feature": "RF04-F04",
       "deadline": "RF04",
@@ -3574,6 +3658,20 @@
       "max_occurrences": 1,
       "source_sha256": "b49f0b100f1b71c3223451a03dc37301fd7df7451440871d9125f0616d0e4034",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "8e8384a4d0e43d2f05be18f6b7582534ca20efa579487ec519761d734cc05ff3",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-imaging.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "b49f0b100f1b71c3223451a03dc37301fd7df7451440871d9125f0616d0e4034",
+      "target_owner": "daggerheart",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -3634,6 +3732,20 @@
       "action": "CYCLIC_IMPORT_EDGE"
     },
     {
+      "id": "161b5e207597835a13057b1c792901ce248a13b998b79ead3dd1df0c7ae700c3",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-output.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "141e6f401ab06e3252dd175dc64ad59e1c686ff885658f0a53c4817f807d06ff",
+      "target_owner": "daggerheart",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
       "id": "68bf6956b8e5087a7e5078960429a372b5cf3d98e79e608ef72b7f2809a6cc13",
       "feature": "RF04-F04",
       "deadline": "RF04",
@@ -3686,6 +3798,20 @@
       "max_occurrences": 1,
       "source_sha256": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "91c10dbcbd885c9290271660f4a9bcd4f149befa88cf7401ecd3d9eccfec1349",
+      "feature": "RF04-F01",
+      "deadline": "RF04",
+      "from": "bot/src/native-environment-scene.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "world",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "b83f00d5a8987b2be3f9739b54da341757a43a045f60335ce0b92c4674e5664d",
+      "target_owner": "daggerheart",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -3756,6 +3882,20 @@
       "max_occurrences": 1,
       "source_sha256": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368",
       "target_owner": "session",
+      "status": "REOPENED_MIGRATION_OBLIGATION",
+      "action": "CYCLIC_IMPORT_EDGE"
+    },
+    {
+      "id": "1aeabb3e0ea2f3c7a84ceefd4c940d068aeffa493936de95d649a98bb0db3acf",
+      "feature": "RF05-F05",
+      "deadline": "RF05",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "max_occurrences": 1,
+      "source_sha256": "fa11bb98e1336fa0702e7e5dafcb68de63898c7d5125a625bf731f92cf1e4368",
+      "target_owner": "daggerheart",
       "status": "REOPENED_MIGRATION_OBLIGATION",
       "action": "CYCLIC_IMPORT_EDGE"
     },
@@ -6170,68 +6310,68 @@
   ],
   "phase_gates": {
     "RF03": {
-      "sourceModules": 715,
+      "sourceModules": 719,
       "unowned": 0,
-      "importOccurrences": 3065,
-      "internalImportOccurrences": 2886,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
       "cycleComponents": 3,
-      "largestCycle": 135,
-      "rawViolationOccurrences": 1967,
-      "acceptedLegacyOccurrences": 1967,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1957,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF04": {
-      "sourceModules": 715,
+      "sourceModules": 719,
       "unowned": 0,
-      "importOccurrences": 3065,
-      "internalImportOccurrences": 2886,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
       "cycleComponents": 3,
-      "largestCycle": 135,
-      "rawViolationOccurrences": 1967,
-      "acceptedLegacyOccurrences": 1967,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1957,
       "activeViolationGroups": 0,
       "transitionErrors": 0,
       "pass": true
     },
     "RF05": {
-      "sourceModules": 715,
+      "sourceModules": 719,
       "unowned": 0,
-      "importOccurrences": 3065,
-      "internalImportOccurrences": 2886,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
       "cycleComponents": 3,
-      "largestCycle": 135,
-      "rawViolationOccurrences": 1967,
-      "acceptedLegacyOccurrences": 1299,
-      "activeViolationGroups": 664,
-      "transitionErrors": 664,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1292,
+      "activeViolationGroups": 661,
+      "transitionErrors": 661,
       "pass": false
     },
     "RF06": {
-      "sourceModules": 715,
+      "sourceModules": 719,
       "unowned": 0,
-      "importOccurrences": 3065,
-      "internalImportOccurrences": 2886,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
       "cycleComponents": 3,
-      "largestCycle": 135,
-      "rawViolationOccurrences": 1967,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
       "acceptedLegacyOccurrences": 406,
-      "activeViolationGroups": 1551,
-      "transitionErrors": 1551,
+      "activeViolationGroups": 1541,
+      "transitionErrors": 1541,
       "pass": false
     },
     "RF07": {
-      "sourceModules": 715,
+      "sourceModules": 719,
       "unowned": 0,
-      "importOccurrences": 3065,
-      "internalImportOccurrences": 2886,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
       "cycleComponents": 3,
-      "largestCycle": 135,
-      "rawViolationOccurrences": 1967,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
       "acceptedLegacyOccurrences": 0,
-      "activeViolationGroups": 1952,
-      "transitionErrors": 1952,
+      "activeViolationGroups": 1942,
+      "transitionErrors": 1942,
       "pass": false
     }
   },
@@ -6316,6 +6456,11 @@
       "sha256": "0247208552b71b32022041f6af9f4fcdea1e4dd3797204e187d839390dd4ad62"
     },
     {
+      "path": "bot/src/application/composition/native-environment-audience.js",
+      "owner": "application",
+      "sha256": "0c27908f0616bf2f3de0a0f4ecfb89e1f99380969b50609b67a1051a43e38d61"
+    },
+    {
       "path": "bot/src/application/composition/native-npc-evidence.js",
       "owner": "application",
       "sha256": "80dac9a02ac0ef4eaa8c417f637fe8629ebb2350469226c1bd7ceee2da047da2"
@@ -6368,7 +6513,7 @@
     {
       "path": "bot/src/application/composition/public.js",
       "owner": "application",
-      "sha256": "8f695370bb4590634ab0b9bc4535344893675a9bcfc7707943f6a3279e9e49fa"
+      "sha256": "dec7751bd40436b53a72fb99f3cf953ac32e328ad270f9efd55123d1f9b2924a"
     },
     {
       "path": "bot/src/application/composition/pvp-agreements.js",
@@ -6723,7 +6868,7 @@
     {
       "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
       "owner": "daggerheart--narrative",
-      "sha256": "f4a1d7c45d5cc62705d4b48b7e4a2d00c5ba86c6bd9a4d8150d173135ab2a343"
+      "sha256": "cb06cf6f3ad991b2a097e9388abee8cb0c76aa025ae52f54d7c3cace6210faa3"
     },
     {
       "path": "bot/src/framework-to-framework/daggerheart--npc/public.js",
@@ -6738,7 +6883,7 @@
     {
       "path": "bot/src/framework-to-framework/daggerheart--session/public.js",
       "owner": "daggerheart--session",
-      "sha256": "24fdaaca07668e24e372083a90479d3d4d3d893ed6b58a5cfefc7ff85fa69ce2"
+      "sha256": "a53bcb8a28202efda74182868997bb2c21cc006859d660de37aa464401224d72"
     },
     {
       "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
@@ -6951,6 +7096,16 @@
       "sha256": "e322339c17eabfc26bbfab7490d83af4665d699afc08b8aa547e11760db5efba"
     },
     {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-narrative.js",
+      "owner": "daggerheart",
+      "sha256": "9c92c708951c57e3a8fb52f4d707616b91c1dc9af60c6cdec598d623fe566abd"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-session.js",
+      "owner": "daggerheart",
+      "sha256": "cb3f4bfc634617acd7b2cc0efa8b03cc40cdc62cdc332bfbb2251d7a46f94133"
+    },
+    {
       "path": "bot/src/frameworks/daggerheart/contracts/movement-reader-source.js",
       "owner": "daggerheart",
       "sha256": "de05662d2bbfb231b0045cf842979ab3a36a0b01c66876f6bac3bcca4531060f"
@@ -7024,6 +7179,11 @@
       "path": "bot/src/frameworks/daggerheart/environment-audience-rules.js",
       "owner": "daggerheart",
       "sha256": "fa7fb92c0fa1921df88674e7babc8c0c797ea371f8cfd773f74509baaee99731"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-audience-source.js",
+      "owner": "daggerheart",
+      "sha256": "f5876c99fc8cbeb7c27c0d0859973eac477a087b4f33eb3a5ed5640c1b17f5b2"
     },
     {
       "path": "bot/src/frameworks/daggerheart/environment-binding-rules.js",
@@ -7353,7 +7513,7 @@
     {
       "path": "bot/src/frameworks/daggerheart/public.js",
       "owner": "daggerheart",
-      "sha256": "4d1e74d8b39a2057b2a365bb0faaf19154cf0fab336c4123d990b9a9bacca19a"
+      "sha256": "c295a9fb168c2510eb1b2d723d60e69446dc9b7413ac0745fd8fdb9de6301276"
     },
     {
       "path": "bot/src/frameworks/daggerheart/pvp-agreement-rules.js",
@@ -8643,7 +8803,7 @@
     {
       "path": "bot/src/index.js",
       "owner": "bootstrap",
-      "sha256": "7ab771a0e0fd62340a083787fe616b05d54f364c51947f9cf15cdd7808bce655"
+      "sha256": "49d0afca0eb9d9ed4a483bcf4e7097df0057dec36dea7b3acacd3521bcdfc4cb"
     },
     {
       "path": "bot/src/kernel/application-authority.js",
@@ -8883,7 +9043,7 @@
     {
       "path": "bot/src/native-environment-audience.js",
       "owner": "daggerheart",
-      "sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48"
+      "sha256": "059803fd718dd843759217e0ff9988528bc579bee9c570d4e959fe36126f98ec"
     },
     {
       "path": "bot/src/native-environment-capabilities.js",
@@ -9820,8 +9980,8 @@
     "features/RF04-F05/C03-P04-REOPENED-RUN.json",
     "features/RF05-F04/C23-REOPENED-RUN.json",
     "features/RF04-F05/C05-RUN.json",
-    "features/RF04-F05/C46-RUN.json"
+    "features/RF04-F05/C47-RUN.json"
   ],
   "release": "NOT_AUTHORIZED",
-  "evidence_distribution": "All new tests/logs local only per owner; clean checkout lacks C38–C45 registry references until locally supplied. Architecture pass is current working-tree only."
+  "evidence_distribution": "New tests/logs local only per owner; clean checkout lacks newly registered tests from C38 onward until locally supplied. Architecture pass is current working-tree only."
 }

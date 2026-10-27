@@ -19,12 +19,12 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | daggerheart--discord | ADOPTED | daggerheart → discord | 1 / 1 | RF03-F05 |
 | daggerheart--intent | ADOPTED | intent → daggerheart; daggerheart → intent | 2 / 2 | RF03-F01 |
 | daggerheart--knowledge | PROPOSED_NO_API | daggerheart → knowledge | 0 / 0 | RF03 |
-| daggerheart--narrative | ADOPTED | narrative → daggerheart; daggerheart → narrative | 1 / 2 | RF03-F05 |
+| daggerheart--narrative | ADOPTED | narrative → daggerheart; daggerheart → narrative; daggerheart → narrative | 2 / 3 | RF03-F05 |
 | daggerheart--npc | ADOPTED | daggerheart → npc | 1 / 1 | RF04-F05 |
 | daggerheart--operations | PROPOSED_NO_API | daggerheart → operations | 0 / 0 | RF03 |
 | daggerheart--persistence | PROPOSED_NO_API | persistence → daggerheart; daggerheart → persistence | 0 / 0 | RF03 |
 | daggerheart--publication | ADOPTED | daggerheart → publication; publication → daggerheart | 1 / 1 | RF03-F05 |
-| daggerheart--session | ADOPTED | session → daggerheart | 1 / 1 | RF04-F05 |
+| daggerheart--session | ADOPTED | session → daggerheart; daggerheart → session | 2 / 2 | RF04-F05 |
 | daggerheart--world | ADOPTED | world → daggerheart; daggerheart → world | 3 / 4 | RF03-F05 |
 | discord--narrative | PROPOSED_NO_API | discord → narrative | 0 / 0 | RF05 |
 | discord--operations | PROPOSED_NO_API | discord → operations; operations → discord | 0 / 0 | RF06 |

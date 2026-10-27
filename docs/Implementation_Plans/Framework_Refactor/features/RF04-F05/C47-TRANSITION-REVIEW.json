@@ -1,0 +1,82 @@
+[
+  {
+    "id": "5d5bfaec82bd7b9e5c775a975a3689a76a81fe27bb32d1f1ca2f6c14820efa9a",
+    "from": "bot/src/native-environment-audience.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original native audience dependency removed."
+  },
+  {
+    "id": "f0ddec470894522ab261368bcc8a2a9921db5a2ef211822079bb989604110726",
+    "from": "bot/src/native-environment-audience.js",
+    "to": "bot/src/conversation-principal.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original native audience dependency removed."
+  },
+  {
+    "id": "5103312538d5352889e2f9d9c0a19ca70b42ccbe5aa0ef211f3cf1af6b279cc9",
+    "from": "bot/src/native-environment-audience.js",
+    "to": "bot/src/scene-continuity.js",
+    "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+    "source_edge_still_exists": false,
+    "reason": "Original native audience dependency removed."
+  },
+  {
+    "id": "1a7f8bdf3514c3a124159d3cbfdbac44409fae4c308478ebe72fc1aceb8cc09a",
+    "from": "bot/src/native-environment-arrivals.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  },
+  {
+    "id": "1e29dc5671e06bcc7b9730f01997b351d9d9146df7b593eda2b44643881acd36",
+    "from": "bot/src/native-environment-audience.js",
+    "to": "bot/src/scene-fiction-context.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": false,
+    "reason": "Original native audience dependency removed."
+  },
+  {
+    "id": "7c3cc64b084e942232726d0a09bd0c70d74515da4ac1c37d755661cc22cb95b0",
+    "from": "bot/src/native-environment-door-chain.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  },
+  {
+    "id": "8e8384a4d0e43d2f05be18f6b7582534ca20efa579487ec519761d734cc05ff3",
+    "from": "bot/src/native-environment-imaging.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  },
+  {
+    "id": "161b5e207597835a13057b1c792901ce248a13b998b79ead3dd1df0c7ae700c3",
+    "from": "bot/src/native-environment-output.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  },
+  {
+    "id": "91c10dbcbd885c9290271660f4a9bcd4f149befa88cf7401ecd3d9eccfec1349",
+    "from": "bot/src/native-environment-scene.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  },
+  {
+    "id": "1aeabb3e0ea2f3c7a84ceefd4c940d068aeffa493936de95d649a98bb0db3acf",
+    "from": "bot/src/native-environment-witnesses.js",
+    "to": "bot/src/native-environment-audience.js",
+    "code": "CYCLIC_IMPORT_EDGE",
+    "source_edge_still_exists": true,
+    "reason": "Surviving source import is no longer cyclic, not deleted import."
+  }
+]

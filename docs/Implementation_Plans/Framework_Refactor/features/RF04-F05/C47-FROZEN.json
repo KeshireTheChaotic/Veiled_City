@@ -1,0 +1,54 @@
+{
+  "base_head": "13af2aefabfceb37128f2717032250f792d55ef1",
+  "syntax_checked": 11,
+  "files": [
+    {
+      "path": "bot/src/native-environment-audience.js",
+      "sha256": "059803fd718dd843759217e0ff9988528bc579bee9c570d4e959fe36126f98ec"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-narrative.js",
+      "sha256": "9c92c708951c57e3a8fb52f4d707616b91c1dc9af60c6cdec598d623fe566abd"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-session.js",
+      "sha256": "cb3f4bfc634617acd7b2cc0efa8b03cc40cdc62cdc332bfbb2251d7a46f94133"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-audience-source.js",
+      "sha256": "f5876c99fc8cbeb7c27c0d0859973eac477a087b4f33eb3a5ed5640c1b17f5b2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "c295a9fb168c2510eb1b2d723d60e69446dc9b7413ac0745fd8fdb9de6301276"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+      "sha256": "cb06cf6f3ad991b2a097e9388abee8cb0c76aa025ae52f54d7c3cace6210faa3"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "sha256": "a53bcb8a28202efda74182868997bb2c21cc006859d660de37aa464401224d72"
+    },
+    {
+      "path": "bot/src/application/composition/native-environment-audience.js",
+      "sha256": "0c27908f0616bf2f3de0a0f4ecfb89e1f99380969b50609b67a1051a43e38d61"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "dec7751bd40436b53a72fb99f3cf953ac32e328ad270f9efd55123d1f9b2924a"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "49d0afca0eb9d9ed4a483bcf4e7097df0057dec36dea7b3acacd3521bcdfc4cb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+      "sha256": "ef1656c437d6c0519f7bd8a14fb14654f5d16f993d233a460667257a69734407"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C47-SOURCE-BASELINE.json",
+      "sha256": "172a63a0a8818f7eddbf13cdf34ea0252bf96918e5febfd3064a37b520ccf0ef"
+    }
+  ]
+}

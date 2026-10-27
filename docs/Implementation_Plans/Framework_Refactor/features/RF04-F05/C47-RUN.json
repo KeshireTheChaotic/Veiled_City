@@ -1,0 +1,372 @@
+{
+  "feature": "RF04-F05-C47",
+  "status": "SCOPED_NATIVE_ENVIRONMENT_AUDIENCE_SOURCE_QUALIFIED",
+  "frozen": {
+    "base_head": "13af2aefabfceb37128f2717032250f792d55ef1",
+    "syntax_checked": 11,
+    "files": [
+      {
+        "path": "bot/src/native-environment-audience.js",
+        "sha256": "059803fd718dd843759217e0ff9988528bc579bee9c570d4e959fe36126f98ec"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/contracts/environment-narrative.js",
+        "sha256": "9c92c708951c57e3a8fb52f4d707616b91c1dc9af60c6cdec598d623fe566abd"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/contracts/environment-session.js",
+        "sha256": "cb3f4bfc634617acd7b2cc0efa8b03cc40cdc62cdc332bfbb2251d7a46f94133"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/environment-audience-source.js",
+        "sha256": "f5876c99fc8cbeb7c27c0d0859973eac477a087b4f33eb3a5ed5640c1b17f5b2"
+      },
+      {
+        "path": "bot/src/frameworks/daggerheart/public.js",
+        "sha256": "c295a9fb168c2510eb1b2d723d60e69446dc9b7413ac0745fd8fdb9de6301276"
+      },
+      {
+        "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+        "sha256": "cb06cf6f3ad991b2a097e9388abee8cb0c76aa025ae52f54d7c3cace6210faa3"
+      },
+      {
+        "path": "bot/src/framework-to-framework/daggerheart--session/public.js",
+        "sha256": "a53bcb8a28202efda74182868997bb2c21cc006859d660de37aa464401224d72"
+      },
+      {
+        "path": "bot/src/application/composition/native-environment-audience.js",
+        "sha256": "0c27908f0616bf2f3de0a0f4ecfb89e1f99380969b50609b67a1051a43e38d61"
+      },
+      {
+        "path": "bot/src/application/composition/public.js",
+        "sha256": "dec7751bd40436b53a72fb99f3cf953ac32e328ad270f9efd55123d1f9b2924a"
+      },
+      {
+        "path": "bot/src/index.js",
+        "sha256": "49d0afca0eb9d9ed4a483bcf4e7097df0057dec36dea7b3acacd3521bcdfc4cb"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "ef1656c437d6c0519f7bd8a14fb14654f5d16f993d233a460667257a69734407"
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/features/RF04-F05/C47-SOURCE-BASELINE.json",
+        "sha256": "172a63a0a8818f7eddbf13cdf34ea0252bf96918e5febfd3064a37b520ccf0ef"
+      }
+    ]
+  },
+  "source_baseline": {
+    "native_rule_path": "bot/src/frameworks/daggerheart/environment-audience-rules.js",
+    "native_rule_sha256": "fa7fb92c0fa1921df88674e7babc8c0c797ea371f8cfd773f74509baaee99731",
+    "original_root_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+    "original_root": "/** Audience entitlement for a committed local environmental effect; never a new execution grant. */\nimport {narrativeSourceVisible} from './scene-fiction-context.js';\nimport {conversationPrincipal} from './conversation-principal.js';\nimport {currentScene,scenePresence} from './scene-continuity.js';\nimport {createEnvironmentAudienceRules} from './frameworks/daggerheart/public.js';\nlet nativeRules;\nfunction rules(){return nativeRules??=createEnvironmentAudienceRules({capabilities:{narrativeSourceVisible:(...args)=>narrativeSourceVisible(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args)}});}\nexport function assertEnvironmentAudience(...args){return rules().assertEnvironmentAudience(...args);}\n"
+  },
+  "tests": {
+    "run_id": "rf04-f05-c47-frozen",
+    "end": "2026-10-26T21:45:38.5147612-05:00",
+    "duration_ms": 2074.3728,
+    "exit_code": 0,
+    "start": "2026-10-26T21:45:36.4403884-05:00",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap_duration_ms": 1680.5433,
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-timeout=20000 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+    "retention": "Local ignored test/logs per owner; terminal and fingerprints committed."
+  },
+  "syntax": {
+    "checked": 11,
+    "passed": 11
+  },
+  "architecture": {
+    "rf04_exit": 0,
+    "rf04": {
+      "sourceModules": 719,
+      "unowned": 0,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
+      "cycleComponents": 3,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1957,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "rf05_exit": 1,
+    "rf05": {
+      "sourceModules": 719,
+      "unowned": 0,
+      "importOccurrences": 3075,
+      "internalImportOccurrences": 2896,
+      "cycleComponents": 3,
+      "largestCycle": 134,
+      "rawViolationOccurrences": 1957,
+      "acceptedLegacyOccurrences": 1292,
+      "activeViolationGroups": 661,
+      "transitionErrors": 661,
+      "pass": false
+    }
+  },
+  "retired": [
+    {
+      "id": "5d5bfaec82bd7b9e5c775a975a3689a76a81fe27bb32d1f1ca2f6c14820efa9a",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "f0ddec470894522ab261368bcc8a2a9921db5a2ef211822079bb989604110726",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/conversation-principal.js",
+      "kind": "static",
+      "specifier": "./conversation-principal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "5103312538d5352889e2f9d9c0a19ca70b42ccbe5aa0ef211f3cf1af6b279cc9",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-continuity.js",
+      "kind": "static",
+      "specifier": "./scene-continuity.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "1a7f8bdf3514c3a124159d3cbfdbac44409fae4c308478ebe72fc1aceb8cc09a",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-arrivals.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "1e29dc5671e06bcc7b9730f01997b351d9d9146df7b593eda2b44643881acd36",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "7c3cc64b084e942232726d0a09bd0c70d74515da4ac1c37d755661cc22cb95b0",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-door-chain.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "8e8384a4d0e43d2f05be18f6b7582534ca20efa579487ec519761d734cc05ff3",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-imaging.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "161b5e207597835a13057b1c792901ce248a13b998b79ead3dd1df0c7ae700c3",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-output.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "91c10dbcbd885c9290271660f4a9bcd4f149befa88cf7401ecd3d9eccfec1349",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-scene.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "1aeabb3e0ea2f3c7a84ceefd4c940d068aeffa493936de95d649a98bb0db3acf",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-environment-audience.js",
+      "kind": "static",
+      "specifier": "./native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ],
+  "transition_review": [
+    {
+      "id": "5d5bfaec82bd7b9e5c775a975a3689a76a81fe27bb32d1f1ca2f6c14820efa9a",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original native audience dependency removed."
+    },
+    {
+      "id": "f0ddec470894522ab261368bcc8a2a9921db5a2ef211822079bb989604110726",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/conversation-principal.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original native audience dependency removed."
+    },
+    {
+      "id": "5103312538d5352889e2f9d9c0a19ca70b42ccbe5aa0ef211f3cf1af6b279cc9",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-continuity.js",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "source_edge_still_exists": false,
+      "reason": "Original native audience dependency removed."
+    },
+    {
+      "id": "1a7f8bdf3514c3a124159d3cbfdbac44409fae4c308478ebe72fc1aceb8cc09a",
+      "from": "bot/src/native-environment-arrivals.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    },
+    {
+      "id": "1e29dc5671e06bcc7b9730f01997b351d9d9146df7b593eda2b44643881acd36",
+      "from": "bot/src/native-environment-audience.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": false,
+      "reason": "Original native audience dependency removed."
+    },
+    {
+      "id": "7c3cc64b084e942232726d0a09bd0c70d74515da4ac1c37d755661cc22cb95b0",
+      "from": "bot/src/native-environment-door-chain.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    },
+    {
+      "id": "8e8384a4d0e43d2f05be18f6b7582534ca20efa579487ec519761d734cc05ff3",
+      "from": "bot/src/native-environment-imaging.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    },
+    {
+      "id": "161b5e207597835a13057b1c792901ce248a13b998b79ead3dd1df0c7ae700c3",
+      "from": "bot/src/native-environment-output.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    },
+    {
+      "id": "91c10dbcbd885c9290271660f4a9bcd4f149befa88cf7401ecd3d9eccfec1349",
+      "from": "bot/src/native-environment-scene.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    },
+    {
+      "id": "1aeabb3e0ea2f3c7a84ceefd4c940d068aeffa493936de95d649a98bb0db3acf",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/native-environment-audience.js",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "source_edge_still_exists": true,
+      "reason": "Surviving source import is no longer cyclic, not deleted import."
+    }
+  ],
+  "costs": {
+    "provider_calls": 0,
+    "tokens": 0,
+    "usd": 0,
+    "codex_usage": "UNMEASURED"
+  },
+  "ownership": "One cached original native audience service in Daggerheart; own Narrative visibility and Session owner/scene/presence consumers. Existing two-owner pairs bind exact source functions; thin main initializer before services. Historical reader aliases same service, original rule bytes unchanged.",
+  "limits": [
+    "Audience eligibility predicate tested with actual native GM source/owner assignment and camera. This is not an issued native environment effect, PC action, writer acceptance, private output delivery or publication receipt.",
+    "Historical import/function identity and saved-source restart tested with real source initialization; bootstrap-free standalone historical rendering is not newly qualified.",
+    "New tests/logs local per owner: clean checkout lacks newly registered test references from C38 onward until supplied; INVALID_BRIDGE_TEST_REFERENCE expected, no checker exemption or clean-checkout certification.",
+    "Other native environmental source families, whole phase, production recovery, live providers/Discord and semantic quality remain unqualified."
+  ],
+  "rollback": "Restore original root composition from source baseline and remove only C47 own source/interfaces/pair/bootstrap/exports, restore10 exact records together; preserve original rule bytes and all native sources/private/player data/receipts.",
+  "release": "NOT_AUTHORIZED",
+  "logs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c47-tests.log",
+      "sha256": "b605f87ae4ffe4cd9b8fa595f581e1a0177bbc42bb8c275fe86808745ffc9a8b",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c47-architecture-initial.log",
+      "sha256": "607a2e8e63aa33fb4844cdc605657eb442c6f76ed119f9ee3c194d3235e9d29c",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c47-rf04-final.log",
+      "sha256": "48437ddeb09166aa39c26c281094faa0ac292fbdd217f252dc0f28800a209096",
+      "retention": "local ignored"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/f05-c47-rf05-final.log",
+      "sha256": "6fbeebf7bdfc1e208f41aae145be92834f8e4da8f7635be2143d6c3f727c5a39",
+      "retention": "local ignored"
+    }
+  ]
+}

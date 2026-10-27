@@ -740,6 +740,11 @@
           "from": "daggerheart",
           "to": "narrative",
           "contract": "Original native agreement/signature/owner/terms/attempt-staging API and saved receipt validation; no new player action, outcome or disclosure."
+        },
+        {
+          "from": "daggerheart",
+          "to": "narrative",
+          "contract": "C47 original Narrative source visibility supplies unchanged native environmental audience rules; no new native effect, PC position or disclosure authority."
         }
       ],
       "source_evidence": [
@@ -754,11 +759,13 @@
       "lifecycle": "Original narrative module registers only its fixed source factory; actual application composition binds native agreement service before index constructs runtime services. Existing historical API and native formats preserved; standalone readers initialize composition.",
       "adoption_feature": "RF03-F05",
       "consumers": [
-        "bot/src/application/composition/pvp-agreements.js"
+        "bot/src/application/composition/pvp-agreements.js",
+        "bot/src/application/composition/native-environment-audience.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f03-c32.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs"
       ],
       "observed_directions": [
         {
@@ -781,7 +788,7 @@
         "occurrences": 111
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
-      "scope": "Bilateral native agreement source and clause/round consumers only; broader native receipt/writer integration remains separately accountable."
+      "scope": "Bilateral native agreement source and clause/round consumers only; broader native receipt/writer integration remains separately accountable. C47 original environmental audience source integrated; other native environment source families remain accountable. Test local only per owner."
     },
     {
       "pair": "daggerheart--npc",
@@ -1007,6 +1014,11 @@
           "from": "session",
           "to": "daggerheart",
           "contract": "Exact movement-condition query from original cached native group-feature engine; source remains current native ancestor validator, no condition/grant copied."
+        },
+        {
+          "from": "daggerheart",
+          "to": "session",
+          "contract": "C47 original Session principal, current scene and presence supplies unchanged native environmental audience rules; no new native effect, PC position or disclosure authority."
         }
       ],
       "source_evidence": [
@@ -1021,10 +1033,12 @@
       "lifecycle": "Actual index statically loads native-group source through autonomous-world; own provider registered at module evaluation. Bootstrap pair binds source before services. One Session scene engine consumes same native reader.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/native-session-movement.js"
+        "bot/src/application/composition/native-session-movement.js",
+        "bot/src/application/composition/native-environment-audience.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1047,7 +1061,7 @@
         "occurrences": 88
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--session/public.js",
-      "scope": "Movement-condition read direction only. Native group source producer, remaining native/session and Session NPC observation dependencies remain exact local migration obligations."
+      "scope": "Movement-condition read direction only. Native group source producer, remaining native/session and Session NPC observation dependencies remain exact local migration obligations. C47 original environmental audience source integrated; other native environment source families remain accountable. Test local only per owner."
     },
     {
       "pair": "daggerheart--world",

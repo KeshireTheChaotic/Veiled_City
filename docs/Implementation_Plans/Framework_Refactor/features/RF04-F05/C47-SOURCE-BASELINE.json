@@ -1,0 +1,6 @@
+{
+  "native_rule_path": "bot/src/frameworks/daggerheart/environment-audience-rules.js",
+  "native_rule_sha256": "fa7fb92c0fa1921df88674e7babc8c0c797ea371f8cfd773f74509baaee99731",
+  "original_root_sha256": "2613c53728dcc37e58400f35cf57885b348d0ced077963d2666d85b87b069e48",
+  "original_root": "/** Audience entitlement for a committed local environmental effect; never a new execution grant. */\nimport {narrativeSourceVisible} from './scene-fiction-context.js';\nimport {conversationPrincipal} from './conversation-principal.js';\nimport {currentScene,scenePresence} from './scene-continuity.js';\nimport {createEnvironmentAudienceRules} from './frameworks/daggerheart/public.js';\nlet nativeRules;\nfunction rules(){return nativeRules??=createEnvironmentAudienceRules({capabilities:{narrativeSourceVisible:(...args)=>narrativeSourceVisible(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args)}});}\nexport function assertEnvironmentAudience(...args){return rules().assertEnvironmentAudience(...args);}\n"
+}
