@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {initializeNativeScenes} from '../../src/application/composition/public.js';

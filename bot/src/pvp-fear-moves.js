@@ -9,7 +9,8 @@ import { validatePvpRoundReceipt } from "./pvp-rounds.js";
 import { fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { configureSimulationEntity, submitNpcAction } from "./simulation.js";
-import { assertNpcAvailability,activeCityProxy } from "./city-constraints.js";
+import {nativeWorldProxy,nativeNpcAvailability} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}function assertNpcAvailability(...args){return nativeNpcAvailability.assertNpcAvailability(...args);}
 import { validateWorldEncounterActivation, EncounterLibrary } from "./encounter.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";

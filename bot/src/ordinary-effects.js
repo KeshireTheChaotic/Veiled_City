@@ -2,7 +2,8 @@
 import {ordinaryActionProof,ordinaryPrerequisite,effectObservation,effectTarget,effectVisibility,effectHash,effectKey,effectFail,verifyOrdinaryEffect} from './ordinary-effect-proof.js';
 import {dispatchAiIntents} from './ai-intents.js';
 import {validateIntent} from './ai-intent-contracts.js';
-import {activeCityProxy} from './city-constraints.js';
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {worldInputKey} from './autonomous-world.js';
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}

@@ -126,3 +126,4 @@ export {createNativeWorldEstablishedEvidenceConsumer,nativeWorldEstablishedEvide
 export {createNativeWorldEventsConsumer,nativeWorldEvents} from './contracts/world-events.js';
 export {createNativeScenesConsumer,nativeScenes} from './contracts/scenes.js';
 export {createNativePrincipalsConsumer,nativePrincipals} from './contracts/principals.js';
+export {createNativeNpcAvailabilityConsumer,nativeNpcAvailability} from './contracts/npc-availability.js';

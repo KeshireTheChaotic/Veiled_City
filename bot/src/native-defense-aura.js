@@ -3,7 +3,8 @@ import {compileNativeFeatures,compileNativeActors,nativeSignalFeatureTarget} fro
 import {nativeEncounterActor,nativeNpcAlliance,inspectNativeNpcAllianceReceipt} from './native-encounter-relations.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
-import {activeCityProxy} from './city-constraints.js';
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {EncounterLibrary} from './encounter.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

@@ -1,7 +1,8 @@
 /** Source provider for extracted native-encounter-relations native policy. */
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
-import {activeCityProxy} from './city-constraints.js';
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {nativeActorTaxonomy} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';

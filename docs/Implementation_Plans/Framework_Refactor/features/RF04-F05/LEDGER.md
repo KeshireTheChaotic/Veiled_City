@@ -306,3 +306,9 @@ Architecture: 10 exact LEGACY_MODULE_LOCATION records retired (RF04-F01 ×2, RF0
 ## 2026-10-27 C59 provenance and roster shims removed
 
 commands.js imports buildSessionRosterReport/chunkRosterReport from the Session public API and story-commands.js imports explainWhy from the Knowledge public API (both already re-exported there); root provenance.js and roster.js deleted. Tests: one frozen batch of 5 files, 18/18 pass. Architecture: 4 exact records retired (provenance and roster LEGACY_MODULE_LOCATION, RF04-F03/F04; the two application IMPORTS_PRIVATE_API, RF06-F04). RF04 exit 0; RF05 521 (was 523). Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-27 C60 native rules read World proxy and NPC availability through native ports
+
+Twelve Daggerheart legacy modules stop importing the root city-constraints.js shim. activeCityProxy goes through the existing nativeWorldProxy port; assertNpcAvailability (native-environment-witnesses, pvp-fear-moves) goes through a new nativeNpcAvailability port bound by the Daggerheart-World adapter in the existing native World bootstrap. p09-f06 now composes startup ports for its real Pack Pressure flow.
+
+Tests: one frozen batch of 27 files: 185 tests, 185 pass, 0 fail. Architecture: 12 exact records retired. RF04 exit 0, 0 active violations, 722 modules; RF05 509 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

@@ -11,7 +11,8 @@ function cityObject(...args){return nativeWorldEvents.cityObject(...args);}funct
 import { requireCitySource } from "./city-core.js";
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}
-import { activeCityProxy } from "./city-constraints.js";
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
 
 export function livePcRoster(...args){return compositionRules().livePcRoster(...args);}

@@ -2,7 +2,8 @@
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { currentScene, scenePresence, sceneAccess, RANGE_BANDS } from "./scene-continuity.js";
-import { activeCityProxy } from "./city-constraints.js";
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import { personalCharacter } from "./personal-continuity.js";
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}function historicalOwnerPrincipal(...args){return nativePrincipals.historicalOwnerPrincipal(...args);}

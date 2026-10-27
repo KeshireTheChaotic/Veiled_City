@@ -3,7 +3,8 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {EncounterLibrary} from './encounter.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
-import {activeCityProxy} from './city-constraints.js';
+import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {historicalActionSource} from './action-consent.js';
