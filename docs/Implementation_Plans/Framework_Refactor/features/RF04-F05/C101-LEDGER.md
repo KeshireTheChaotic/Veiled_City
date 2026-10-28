@@ -1,0 +1,7 @@
+# C101 ledger
+
+## 2026-10-28 C101 World autonomous input reads Session continuation authorization through a World port
+
+World's autonomous-world.js stops importing continuationAuthorization from the Session root module action-continuation.js. World gains a fixed worldSessionContinuation port; Session gains a sessionContinuationAuthorization provider slot (separate from the C93 sessionActionContinuation slot, which a test binds with a fixed key list) that action-continuation.js fills at load with its original. The existing session--world adapter binds the port via connectWorldSessionContinuation from the existing initializeWorldExecution bootstrap (no index.js change). The new test imports only changed contracts and the bootstrap with a feature-local fake original.
+
+Tests: one frozen batch of 126 files: 806 tests, 803 pass, 3 fail (named in C101-RUN.json: rf04-f03-c74-session-diagnostic.test.mjs | tests\\ai-gm-2026-10\\rf04-f03-c74-session-diagnostic.test.mjs; rf04-f04-s08-notice.test.mjs | a saved private continuation notice revalidates the original action through the composed source; rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability). Architecture: 2 exact records retired. RF04 exit 0, 0 active violations, 795 modules; RF05 232 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

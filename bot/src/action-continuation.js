@@ -233,6 +233,7 @@ export function refreshActionContinuations(db,guild){
     results.push(...drainActionContinuations(db,guild,{sourceEvent:source}));
   return results;
 }
-import {sessionActionContinuation} from './frameworks/session/public.js';
-// Provide this module's original continuation drain to the fixed Session slot; no other authority is granted.
+import {sessionActionContinuation,sessionContinuationAuthorization} from './frameworks/session/public.js';
+// Provide this module's original continuation drain and authorization reader to the fixed Session slots; no other authority is granted.
 sessionActionContinuation.bind({drainActionContinuations});
+sessionContinuationAuthorization.bind({continuationAuthorization});

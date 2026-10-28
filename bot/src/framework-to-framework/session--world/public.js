@@ -27,3 +27,8 @@ import {sessionWorldAutonomy} from '../../frameworks/session/public.js';
 import {worldAutonomousApplication} from '../../frameworks/world/public.js';
 /** Pass World's original autonomous application to Session unchanged. */
 export function connectSessionWorldAutonomy(){return sessionWorldAutonomy.bind({applyAutonomousWorld:worldAutonomousApplication.applyAutonomousWorld});}
+
+import {sessionContinuationAuthorization} from '../../frameworks/session/public.js';
+import {worldSessionContinuation} from '../../frameworks/world/public.js';
+/** Pass Session's original continuation authorization to World unchanged. */
+export function connectWorldSessionContinuation(){return worldSessionContinuation.bind({continuationAuthorization:sessionContinuationAuthorization.continuationAuthorization});}

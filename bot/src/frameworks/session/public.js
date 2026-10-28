@@ -22,7 +22,7 @@ export {createSessionNativeMovementConsumer,sessionNativeMovement} from './contr
 export {currentScene,scenePresence,lastVerifiedCharacterPresence,reconcileSceneArrival,recordCharacterArrival,recordScenePresence,sceneAccess,sceneView,archiveScenePresence} from './scene-source.js';
 export {createSessionNpcObservationConsumer,sessionNpcObservations,npcEvidenceActive,assertNpcObservation} from './contracts/npc-observation.js';
 export {sessionPersonalContinuity} from './contracts/personal-continuity.js';
-export {sessionActionContinuation} from './contracts/action-continuation.js';
+export {sessionActionContinuation,sessionContinuationAuthorization} from './contracts/action-continuation.js';
 export {sessionIntent} from './contracts/intent.js';
 export {sessionNativeChecks} from './contracts/native-checks.js';
 export {sessionWorldAutonomy} from './contracts/world-autonomy.js';

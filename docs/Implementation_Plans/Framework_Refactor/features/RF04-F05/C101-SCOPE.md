@@ -1,0 +1,5 @@
+# RF04-F05 C101 — World autonomous input reads Session continuation authorization through a World port
+
+Base 553a0ac4. World's autonomous-world.js stops importing continuationAuthorization from the Session root module action-continuation.js. World gains a fixed worldSessionContinuation port; Session gains a sessionContinuationAuthorization provider slot (separate from the C93 sessionActionContinuation slot, which a test binds with a fixed key list) that action-continuation.js fills at load with its original. The existing session--world adapter binds the port via connectWorldSessionContinuation from the existing initializeWorldExecution bootstrap (no index.js change). The new test imports only changed contracts and the bootstrap with a feature-local fake original.
+
+Rollback: Revert only the C101 commit: restore the direct ./action-continuation.js import in autonomous-world.js, remove the World worldSessionContinuation port, the Session sessionContinuationAuthorization slot and its binding in action-continuation.js, connectWorldSessionContinuation and its call in initializeWorldExecution, and restore the 2 exact transitions from C101-RETIRED.json.

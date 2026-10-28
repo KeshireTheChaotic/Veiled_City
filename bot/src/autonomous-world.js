@@ -20,7 +20,8 @@ function movementAdjudication(...args){return worldNativeMovementChecks.movement
 import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
 function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct(...args);}
-import {continuationAuthorization} from "./action-continuation.js";
+import {worldSessionContinuation} from './frameworks/world/public.js';
+function continuationAuthorization(...args){return worldSessionContinuation.continuationAuthorization(...args);}
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {validateBackgroundIdentity} from './world-background-identities.js';
