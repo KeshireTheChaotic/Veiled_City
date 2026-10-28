@@ -24,3 +24,4 @@ export {createSessionNpcObservationConsumer,sessionNpcObservations,npcEvidenceAc
 export {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 export {sessionActionContinuation} from './contracts/action-continuation.js';
 export {sessionIntent} from './contracts/intent.js';
+export {sessionNativeChecks} from './contracts/native-checks.js';

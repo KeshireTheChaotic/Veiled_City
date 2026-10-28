@@ -23,3 +23,6 @@ export function rollPvp(...args){return rules().rollPvp(...args);}
 export function continuePvp(...args){return rules().continuePvp(...args);}
 export function progressPvp(...args){return rules().progressPvp(...args);}
 export function pvpComplication(...args){return rules().pvpComplication(...args);}
+import {nativePvpResolutionReceipt} from './frameworks/daggerheart/public.js';
+// Provide this module's original PvP resolution receipt check to the fixed native slot; no other authority is granted.
+nativePvpResolutionReceipt.bind({validatePvpResolutionReceipt});

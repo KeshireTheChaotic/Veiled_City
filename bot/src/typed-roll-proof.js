@@ -11,3 +11,6 @@ import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 import {createTypedRollProof} from './frameworks/daggerheart/public.js';
 const prove=createTypedRollProof({historicalActionSource:(...args)=>historicalActionSource(...args),validateBlazeSavedRoll:(...args)=>validateBlazeSavedRoll(...args),inspectAdversaryDamageDefense:(...args)=>inspectAdversaryDamageDefense(...args),inspectNativeDefenseAura:(...args)=>inspectNativeDefenseAura(...args),inspectNativeFormationDefense:(...args)=>inspectNativeFormationDefense(...args),validateSavedNativeExperienceEligibility:(...args)=>validateSavedNativeExperienceEligibility(...args),inspectNativeUnarmedAttack:(...args)=>inspectNativeUnarmedAttack(...args),inspectOrdinaryRollModifier:(...args)=>inspectOrdinaryRollModifier(...args),inspectNativeRollParticipation:(...args)=>inspectNativeRollParticipation(...args),inspectNativeEquippedAttack:(...args)=>inspectNativeEquippedAttack(...args)});
 export function typedRollProof(...args){return prove(...args);}
+import {nativeTypedRollProof} from './frameworks/daggerheart/public.js';
+// Provide this module's original typed roll proof to the fixed native slot; no other authority is granted.
+nativeTypedRollProof.bind({typedRollProof});

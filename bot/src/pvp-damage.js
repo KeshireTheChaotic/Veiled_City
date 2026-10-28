@@ -27,3 +27,6 @@ export function reviewPvpDamage(...args){return rules().reviewPvpDamage(...args)
 export function resolvePvpDamage(...args){return rules().resolvePvpDamage(...args);}
 export function validatePvpDamageApplication(...args){return rules().validatePvpDamageApplication(...args);}
 export function settlePvpDamageAction(...args){return rules().settlePvpDamageAction(...args);}
+import {nativePvpDamageApplication} from './frameworks/daggerheart/public.js';
+// Provide this module's original PvP damage application check to the fixed native slot; no other authority is granted.
+nativePvpDamageApplication.bind({validatePvpDamageApplication});

@@ -8,14 +8,15 @@ const completedActionSource=(...args)=>sessionNativeActionConsent.completedActio
 const historicalActionSource=(...args)=>sessionNativeActionConsent.historicalActionSource(...args);
 import {currentScene} from "./scene-continuity.js";
 import {applyAutonomousWorld} from "./autonomous-world.js";
-import {assertPcCanAct} from "./pc-native-eligibility.js";
-import {validatePvpResolutionReceipt} from "./pvp-rounds.js";
-import {pendingPvpFear} from "./pvp-fear-gate.js";
-import {validatePvpDamageApplication} from "./pvp-damage.js";
-import {validatePvpAttackRoll} from './pvp-attacks.js';
+import {sessionNativeChecks} from './frameworks/session/public.js';
+function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
+function validatePvpResolutionReceipt(...args){return sessionNativeChecks.validatePvpResolutionReceipt(...args);}
+function pendingPvpFear(...args){return sessionNativeChecks.pendingPvpFear(...args);}
+function validatePvpDamageApplication(...args){return sessionNativeChecks.validatePvpDamageApplication(...args);}
+function validatePvpAttackRoll(...args){return sessionNativeChecks.validatePvpAttackRoll(...args);}
 import {prepareContinuationOutput} from "./pvp-output.js";
 import {queueTurnPublications} from "./publication-outbox.js";
-import {typedRollProof} from "./typed-roll-proof.js";
+function typedRollProof(...args){return sessionNativeChecks.typedRollProof(...args);}
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function acceptedInputHash(row){
   const data={...row.data};

@@ -35,3 +35,6 @@ export function reviewPvpAttack(...args){return rules().reviewPvpAttack(...args)
 export function authorizePvpAttack(...args){return rules().authorizePvpAttack(...args);}
 export function validatePvpAttackRoll(...args){return rules().validatePvpAttackRoll(...args);}
 export function rollPvpAttack(...args){return rules().rollPvpAttack(...args);}
+import {nativePvpAttackRoll} from './frameworks/daggerheart/public.js';
+// Provide this module's original PvP attack roll check to the fixed native slot; no other authority is granted.
+nativePvpAttackRoll.bind({validatePvpAttackRoll});

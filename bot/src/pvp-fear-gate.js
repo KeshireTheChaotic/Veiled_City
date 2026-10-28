@@ -11,3 +11,6 @@ export function capturePvpFear(...args){return rules().capturePvpFear(...args);}
 export function gatePvpExchange(...args){return rules().gatePvpExchange(...args);}
 export function pendingPvpFear(...args){return rules().pendingPvpFear(...args);}
 export function closePartialFearGate(...args){return rules().closePartialFearGate(...args);}
+import {nativePvpPendingFear} from './frameworks/daggerheart/public.js';
+// Provide this module's original pending PvP Fear reader to the fixed native slot; no other authority is granted.
+nativePvpPendingFear.bind({pendingPvpFear});

@@ -36,3 +36,8 @@ import {nativeActionContinuation} from '../../frameworks/daggerheart/public.js';
 import {sessionActionContinuation} from '../../frameworks/session/public.js';
 /** Pass Session's original continuation drain to native rules unchanged. */
 export function connectNativeActionContinuation(){return nativeActionContinuation.bind({drainActionContinuations:sessionActionContinuation.drainActionContinuations});}
+
+import {nativePcActionEligibility,nativePvpResolutionReceipt,nativePvpPendingFear,nativePvpDamageApplication,nativePvpAttackRoll,nativeTypedRollProof} from '../../frameworks/daggerheart/public.js';
+import {sessionNativeChecks} from '../../frameworks/session/public.js';
+/** Pass native rules' original eligibility, PvP and typed-roll proof checks to Session unchanged. */
+export function connectSessionNativeChecks(){return sessionNativeChecks.bind({assertPcCanAct:nativePcActionEligibility.assertPcCanAct,validatePvpResolutionReceipt:nativePvpResolutionReceipt.validatePvpResolutionReceipt,pendingPvpFear:nativePvpPendingFear.pendingPvpFear,validatePvpDamageApplication:nativePvpDamageApplication.validatePvpDamageApplication,validatePvpAttackRoll:nativePvpAttackRoll.validatePvpAttackRoll,typedRollProof:nativeTypedRollProof.typedRollProof});}

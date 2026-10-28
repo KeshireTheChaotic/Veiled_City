@@ -6,7 +6,8 @@ import {stateRevision} from './kernel/state-revision.js';
 import {sessionWorldEvents,sessionSceneWorldSources} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 import {randomUUID} from 'node:crypto';
-import {assertPcCanAct} from './pc-native-eligibility.js';
+import {sessionNativeChecks} from './frameworks/session/public.js';
+function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
 import {nativeMovementConditionIssue} from './native-group-features.js';
 import {nativeVipAdmission} from './native-environment-access.js';
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
