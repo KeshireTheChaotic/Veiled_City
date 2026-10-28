@@ -1,4 +1,5 @@
 export {createOpeningAuthoringPort} from './contracts/opening-authoring.js';
+export {createSessionWorldInstitutionConsumer,sessionWorldInstitution} from './contracts/world-institution.js';
 export {sessionNativeActionConsent} from './contracts/native-action-consent.js';
 export * from './conversation-principal.js';
 export * from './owner-action-terminal.js';

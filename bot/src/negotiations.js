@@ -1,8 +1,10 @@
 /** Reviewable bargaining revisions; explicit consent and bounded existing resources, never automatic PC spend. */
-import {sessionSceneWorldSources} from './frameworks/session/public.js';
+import {sessionSceneWorldSources,sessionWorldInstitution} from './frameworks/session/public.js';
 function cityObject(...args){return sessionSceneWorldSources.cityObject(...args);}function cityKey(...args){return sessionSceneWorldSources.cityKey(...args);}function cityInteger(...args){return sessionSceneWorldSources.cityInteger(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
-import { requireCitySource, requireCityRecord } from "./city-core.js";
-import { activeCityProxy, assertInstitutionDelegation } from "./city-constraints.js";
+function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
+function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProxy(...args);}
+function requireCityRecord(...args){return sessionWorldInstitution.requireCityRecord(...args);}
+function assertInstitutionDelegation(...args){return sessionWorldInstitution.assertInstitutionDelegation(...args);}
 import { actorState } from "./simulation.js";
 import { hasOwnerConsent } from "./owner-consent.js";
 function participants(db,guildId,list,terms){

@@ -1,0 +1,21 @@
+{
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "feature": "RF04-F05-C79",
+  "original_manifest_sha256": "32BD80FE046DD7B74E6594C4BAB9A993B990EB754A0909EBB584066EE780C5C1",
+  "retired": [
+    {
+      "id": "5c8a40ab3a9954efc541bfe12818d55b6d6fe55efe1935f82a85655b1bb8233b",
+      "code": "PAIR_IMPORTS_PRIVATE_API",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/narrative-opportunity-policy.js",
+      "kind": "static",
+      "specifier": "./narrative-opportunity-policy.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

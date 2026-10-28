@@ -1,0 +1,20 @@
+{
+  "feature": "RF04-F05-C80",
+  "original_manifest_sha256": "32bd80fe046dd7b74e6594c4bab9a993b990eb754a0909ebb584066ee780c5c1",
+  "retired": [
+    {
+      "id": "b7b7da36b07638c7ab4e7abb7109766626f9e4ef6bce3bacdfc4e6809921297a",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-private-seeds.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "feature": "RF04-F04-S09",
+  "records": [
+    {
+      "id": "1348325323d17f74ceb7183427d673c6a5a898b1602d94be74dc456fa381bf6b",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/negotiations.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8badfb29c316383d00e34a7850179fd0cd2a0e6642845a3cbd541632b7b5778a",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/negotiations.js",
+      "to": "bot/src/city-constraints.js",
+      "kind": "static",
+      "specifier": "./city-constraints.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

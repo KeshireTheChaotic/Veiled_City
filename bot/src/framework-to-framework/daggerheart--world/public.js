@@ -22,6 +22,9 @@ export function connectNativeWorldEstablishedEvidence(){return nativeWorldEstabl
 import {nativeWorldEvents} from '../../frameworks/daggerheart/public.js';
 import {indexWorldEvent,cityAudit,cityKey,cityObject} from '../../frameworks/world/public.js';
 export function connectNativeWorldEvents(){return nativeWorldEvents.bind({indexWorldEvent,cityAudit,cityKey,cityObject});}
+import {nativeWorldSource} from '../../frameworks/daggerheart/public.js';
+import {requireCitySource} from '../../frameworks/world/public.js';
+export function connectNativeWorldSource(){return nativeWorldSource.bind({requireCitySource});}
 
 import {nativeNpcAvailability} from '../../frameworks/daggerheart/public.js';
 import {assertNpcAvailability} from '../../frameworks/world/public.js';

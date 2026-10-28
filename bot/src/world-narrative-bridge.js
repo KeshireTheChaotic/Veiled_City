@@ -1,6 +1,6 @@
 /** Read-only native causal signals for the existing GM request. No world effects, disclosure or provider calls. */
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {narrativeSourceVisible} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible,rankWorldNarrativeOpportunities} from './frameworks/narrative/public.js';
 import {listNarrativeRecords} from './narrative-records.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
@@ -15,7 +15,6 @@ import {renderNarrativeUnit} from './narrative-authority.js';
 import {validateFearEffect} from './pvp-fear-moves.js';
 import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
 import {inspectNativeEncounterCandidate} from './world-encounter-beats.js';
-import {rankWorldNarrativeOpportunities} from './narrative-opportunity-policy.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};

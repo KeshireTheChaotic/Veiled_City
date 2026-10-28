@@ -3,7 +3,8 @@ import { organizationRequest } from "./owned-community.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { manageEvidence } from "./evidence-custody.js";
 import {stateRevision} from './kernel/state-revision.js';
-import { requireCitySource } from "./city-core.js";
+import {nativeWorldSource} from './frameworks/daggerheart/public.js';
+function requireCitySource(...args){return nativeWorldSource.requireCitySource(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
