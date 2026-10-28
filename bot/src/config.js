@@ -33,10 +33,15 @@ export function loadConfig(){
     if(!v) throw new Error(`Missing required environment variable ${k}`);
     return v;
   };
+  // "chatgpt" signs model calls in through the Codex CLI's ChatGPT login: local testing only, never live.
+  const aiAuthMode=enumEnv("AI_AUTH_MODE","api_key",["api_key","chatgpt"]);
+  const voiceEnabled=/^(1|true|yes|on)$/i.test(process.env.VOICE_ENABLED||"false");
   return {
     discordToken:need("DISCORD_TOKEN"),
     discordClientId:need("DISCORD_CLIENT_ID"),
-    openaiKey:need("OPENAI_API_KEY"),
+    aiAuthMode,
+    // Text-to-speech has no ChatGPT sign-in route, so voice still needs an API key.
+    openaiKey:aiAuthMode==="api_key"||voiceEnabled?need("OPENAI_API_KEY"):process.env.OPENAI_API_KEY||null,
     modelPricing:parseModelPricing(process.env.MODEL_PRICING_JSON||'{}'),
     gmModel:process.env.OPENAI_GM_MODEL||"gpt-6.1-sol",
     narrativeModel:process.env.OPENAI_NARRATIVE_MODEL||null,
@@ -75,7 +80,7 @@ export function loadConfig(){
     handoutMaxOutputTokens:numberEnv("HANDOUT_MAX_OUTPUT_TOKENS",1200,{min:64,max:32000,integer:true}),
     aftermathMaxOutputTokens:numberEnv("AFTERMATH_MAX_OUTPUT_TOKENS",1800,{min:64,max:32000,integer:true}),
     encounterAftermathMode:enumEnv("ENCOUNTER_AFTERMATH_MODE","auto",["auto","confirm","none"]),
-    voiceEnabled:/^(1|true|yes|on)$/i.test(process.env.VOICE_ENABLED||"false"),
+    voiceEnabled,
     voiceModel:String(process.env.OPENAI_VOICE_MODEL||"gpt-4o-mini-tts").trim(),
     voiceMode:enumEnv("VOICE_MODE","narrative",["off","narrative","full"]),
     voiceName:voiceNameEnv(),

@@ -35,7 +35,7 @@ import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay }
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage,measureNative } from "./operational-metrics.js";
 import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./pvp-fear-moves.js";
-import {beginGenerationFeedback} from './frameworks/ai-provider/public.js';
+import {beginGenerationFeedback,createChatGptClient} from './frameworks/ai-provider/public.js';
 import {turnLatency} from './turn-latency.js';
 import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
@@ -85,7 +85,9 @@ const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});
 const content=new ContentIndex(config.contentRoot);
 setPvpFearContentIndex(content);
-const gm=new GMService({db,content,config});
+if(config.aiAuthMode==="chatgpt")log.warn("AI_AUTH_MODE=chatgpt: model calls use your ChatGPT sign-in. Local testing only; set AI_AUTH_MODE=api_key before going live.");
+const gm=new GMService({db,content,config,
+  ai:config.aiAuthMode==="chatgpt"?createChatGptClient({timeoutMs:config.openaiRequestTimeoutMs}):null});
 const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
 
