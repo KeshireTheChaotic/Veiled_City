@@ -19,7 +19,8 @@ import {incomingAttackEvidence,rollAutonomousFearIncomingAttack} from "./pc-inco
 import {drainActionContinuations} from "./action-continuation.js";
 import {validateMinorIdentity} from "./city-depth.js";
 import {preflightNpcIdentity} from "./location-language.js";
-import {worldAuthority} from "./autonomous-world.js";
+import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
+function worldAuthority(...args){return nativeWorldAutonomy.worldAuthority(...args);}
 import {consentAction} from "./action-consent.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");

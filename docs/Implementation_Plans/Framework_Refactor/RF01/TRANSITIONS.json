@@ -8830,20 +8830,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "1ac94f635d380576d5db3c33dc0d36ec367b3af5c38d7b0e8c7db1384d484fdf",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-arrivals.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "151e2ab4899e414fe92a5df94f6abbf98ec3cf9235a418397d1c7139f29006e3",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-arrivals.js",
@@ -8938,20 +8924,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "86079dd08a38b34a1bf6df1fe777d034fa62cbdc67e2cb7d030f11313b0707e9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-door-chain.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -10090,20 +10062,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "8f8fc2b05a88567f8ae8b522be2254fd42202f099fe4ca0a6fd364dc1510d994",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ordinary-effects.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "a9f5def925645cf31a0ac7252872cfda9e6c34fc96ef9488d02e9e03355187c7",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/owned-community.js",
@@ -10711,20 +10669,6 @@
       "to": "bot/src/location-language.js",
       "kind": "static",
       "specifier": "./location-language.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "f979307c38ce25de9607355bd4ce2997ed3db5f6908b11cbedb878e58089daa9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-fear-moves.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
@@ -16021,20 +15965,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "7927606f396921f79b3158b448853af9e6b96af78f8c62f01a4de46f0d5b7f0a",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-arrivals.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "a2a4c407fd5bb27c812d5be6c58b549e2a2339430622a1b56f595711539cf563",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-environment-countdown.js",
@@ -17743,20 +17673,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "322960efed08d8fa499fbb1adc99a35c6634f87dd31dd19558b670de857b545b",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/ordinary-effects.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "1ea5c622f48c0eba5e454ccc3e4d46d20b2c40e52facdbf42385aad546994b48",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/ordinary-effects.js",
@@ -19040,20 +18956,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "eded54ad9f4f4cbf8a179e4daebea3fd10986365d537fbda165c4418f6022067",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-fear-moves.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."

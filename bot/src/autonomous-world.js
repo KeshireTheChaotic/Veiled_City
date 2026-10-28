@@ -319,3 +319,6 @@ export function autonomousWorldContext(db,guild,scope,messageId){
 import {createWorldIdentityRules} from './frameworks/world/public.js';
 let worldIdentities;
 function identities(){return worldIdentities??=createWorldIdentityRules({verifiedWorldAuthoringContext:(...args)=>verifiedWorldAuthoringContext(...args),currentScene:(...args)=>currentScene(...args),privateWorldIdentityForGm:(...args)=>privateWorldIdentityForGm(...args),worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args),assertIndependentWorldIdentity:(...args)=>assertIndependentWorldIdentity(...args),assertWorldIdentityNames:(...args)=>assertWorldIdentityNames(...args),validateBackgroundIdentity:(...args)=>validateBackgroundIdentity(...args),configureSimulationEntity:(...args)=>configureSimulationEntity(...args),validateMinorIdentity:(...args)=>validateMinorIdentity(...args),recordScenePresence:(...args)=>recordScenePresence(...args),activeCityProxy:(...args)=>activeCityProxy(...args),stateRevision:(...args)=>stateRevision(...args),fail:(...args)=>fail(...args)});}
+import {worldAutonomousSource} from './frameworks/world/public.js';
+// Provide this module's original authority, entity creation and input key to the fixed World slot; no other authority is granted.
+worldAutonomousSource.bind({worldAuthority,establishNarrativeEntity,worldInputKey});

@@ -78,3 +78,4 @@ export {createWorldEstablishedEvidenceConsumer,worldEstablishedEvidence} from '.
 export {nativeEstablishedFact} from './established-fact-proof.js';
 export {worldAuthoringContext} from './contracts/authoring-context.js';
 export {worldPersonalContinuity} from './contracts/personal-continuity.js';
+export {worldAutonomousSource} from './contracts/autonomous-source.js';

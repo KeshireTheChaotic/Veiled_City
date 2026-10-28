@@ -4,7 +4,8 @@ import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
-import {establishNarrativeEntity} from './autonomous-world.js';
+import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
+function establishNarrativeEntity(...args){return nativeWorldAutonomy.establishNarrativeEntity(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

@@ -4,7 +4,8 @@ import {dispatchAiIntents} from './ai-intents.js';
 import {validateIntent} from './ai-intent-contracts.js';
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
-import {worldInputKey} from './autonomous-world.js';
+import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
+function worldInputKey(...args){return nativeWorldAutonomy.worldInputKey(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {applicationPrincipal} from './kernel/application-authority.js';

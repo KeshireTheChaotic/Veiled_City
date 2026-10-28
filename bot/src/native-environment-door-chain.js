@@ -4,7 +4,8 @@ import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.
 import {featureDisposition} from './native-feature-catalog.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
-import {establishNarrativeEntity,worldAuthority} from './autonomous-world.js';
+import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
+function establishNarrativeEntity(...args){return nativeWorldAutonomy.establishNarrativeEntity(...args);}function worldAuthority(...args){return nativeWorldAutonomy.worldAuthority(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}

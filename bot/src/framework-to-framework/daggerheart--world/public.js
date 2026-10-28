@@ -29,3 +29,8 @@ export function connectNativeWorldSource(){return nativeWorldSource.bind({requir
 import {nativeNpcAvailability} from '../../frameworks/daggerheart/public.js';
 import {assertNpcAvailability} from '../../frameworks/world/public.js';
 export function connectNativeNpcAvailability(){return nativeNpcAvailability.bind(assertNpcAvailability);}
+
+import {nativeWorldAutonomy} from '../../frameworks/daggerheart/public.js';
+import {worldAutonomousSource} from '../../frameworks/world/public.js';
+/** Pass World's original autonomous authority, entity creation and input key to native rules unchanged. */
+export function connectNativeWorldAutonomy(){return nativeWorldAutonomy.bind({worldAuthority:worldAutonomousSource.worldAuthority,establishNarrativeEntity:worldAutonomousSource.establishNarrativeEntity,worldInputKey:worldAutonomousSource.worldInputKey});}
