@@ -24,3 +24,6 @@ export function movementAdjudication(...args){return rules().movementAdjudicatio
 import {nativeMovementAdjudication} from './frameworks/daggerheart/public.js';
 // Provide this module's original movement adjudication to the fixed native slot; no other authority is granted.
 nativeMovementAdjudication.bind({movementAdjudication});
+import {nativeRulesArbitrationSource} from './frameworks/daggerheart/public.js';
+// Provide this module's original accepted-intent adjudication to the fixed native slot; no other authority is granted.
+nativeRulesArbitrationSource.bind({adjudicateAcceptedIntent});

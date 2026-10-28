@@ -27,3 +27,4 @@ export {sessionIntent} from './contracts/intent.js';
 export {sessionNativeChecks} from './contracts/native-checks.js';
 export {sessionWorldAutonomy} from './contracts/world-autonomy.js';
 export {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource,sessionOpeningCohortSource,sessionOpeningAttendanceSource,sessionOpeningEntrySource} from './contracts/opening-sources.js';
+export {sessionNativeRules} from './contracts/native-rules.js';

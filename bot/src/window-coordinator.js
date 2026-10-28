@@ -9,14 +9,15 @@ import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from './frameworks/session/public.js';
 import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";
 import { validatePvpAgreement } from "./narrative-pvp.js";
-import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
+import {sessionNativeRules} from './frameworks/session/public.js';
+function adjudicateAcceptedIntent(...args){return sessionNativeRules.adjudicateAcceptedIntent(...args);}
 import {sessionIntent} from './frameworks/session/public.js';
 function transitionAction(...args){return sessionIntent.transitionAction(...args);}
 import {sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
-import {actionReviewOperation} from "./gm-action-review.js";
-import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
+function actionReviewOperation(...args){return sessionNativeRules.actionReviewOperation(...args);}
+function clearNativeConditionFromOutcome(...args){return sessionNativeRules.clearNativeConditionFromOutcome(...args);}
 
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 function fail(message){throw Object.assign(new Error(message),{code:"SCENE_ACTION_WINDOW",expected:true});}

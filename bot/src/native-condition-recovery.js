@@ -10,3 +10,6 @@ let nativeRecovery;
 function rules(){return nativeRecovery??=createConditionRecoveryRules({capabilities:{ordinaryActionProof:(...args)=>ordinaryActionProof(...args),ordinaryPrerequisite:(...args)=>ordinaryPrerequisite(...args),validateNativeCondition:(...args)=>validateNativeCondition(...args),assertPcCanAct:(...args)=>assertPcCanAct(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args)}});}
 export function inspectNativeConditionClearAncestry(...args){return rules().inspectNativeConditionClearAncestry(...args);}
 export function clearNativeConditionFromOutcome(...args){return rules().clearNativeConditionFromOutcome(...args);}
+import {nativeConditionRecoverySource} from './frameworks/daggerheart/public.js';
+// Provide this module's original condition recovery to the fixed native slot; no other authority is granted.
+nativeConditionRecoverySource.bind({clearNativeConditionFromOutcome});

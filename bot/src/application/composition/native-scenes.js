@@ -1,3 +1,3 @@
-import {connectNativeScenes,connectSessionRangeBands,connectNativeSessionActionWindow,connectNativeActionContinuation,connectSessionNativeChecks} from '../../framework-to-framework/daggerheart--session/public.js';
+import {connectNativeScenes,connectSessionRangeBands,connectNativeSessionActionWindow,connectNativeActionContinuation,connectSessionNativeChecks,connectSessionNativeRules} from '../../framework-to-framework/daggerheart--session/public.js';
 /** Fixed bootstrap wiring of Session's original scene functions and continuation drain into native rules, and Daggerheart's range bands and continuation checks into Session; no state writes. */
-export function initializeNativeScenes(){connectSessionRangeBands();connectNativeSessionActionWindow();connectNativeActionContinuation();connectSessionNativeChecks();return connectNativeScenes();}
+export function initializeNativeScenes(){connectSessionRangeBands();connectNativeSessionActionWindow();connectNativeActionContinuation();connectSessionNativeChecks();connectSessionNativeRules();return connectNativeScenes();}

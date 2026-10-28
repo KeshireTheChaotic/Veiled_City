@@ -6,7 +6,8 @@ function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProx
 function requireCityRecord(...args){return sessionWorldInstitution.requireCityRecord(...args);}
 function assertInstitutionDelegation(...args){return sessionWorldInstitution.assertInstitutionDelegation(...args);}
 function actorState(...args){return sessionWorldActorState.actorState(...args);}
-import { hasOwnerConsent } from "./owner-consent.js";
+import {sessionNativeRules} from './frameworks/session/public.js';
+function hasOwnerConsent(...args){return sessionNativeRules.hasOwnerConsent(...args);}
 function participants(db,guildId,list,terms){
   if(!Array.isArray(list)||list.length<2||list.length>6||new Set(list.map(p=>`${p.type}:${p.key}`)).size!==list.length) throw new Error("Two to six distinct established participants required.");
   for(const p of list){

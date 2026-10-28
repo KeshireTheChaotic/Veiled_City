@@ -8,7 +8,8 @@ function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...a
 import {randomUUID} from 'node:crypto';
 import {sessionNativeChecks} from './frameworks/session/public.js';
 function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
-import {nativeMovementConditionIssue} from './native-group-features.js';
+import {sessionNativeRules} from './frameworks/session/public.js';
+function nativeMovementConditionIssue(...args){return sessionNativeRules.nativeMovementConditionIssue(...args);}
 import {nativeVipAdmission} from './native-environment-access.js';
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function locationMatches(row,target){

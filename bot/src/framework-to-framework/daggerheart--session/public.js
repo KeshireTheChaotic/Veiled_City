@@ -41,3 +41,8 @@ import {nativePcActionEligibility,nativePvpResolutionReceipt,nativePvpPendingFea
 import {sessionNativeChecks} from '../../frameworks/session/public.js';
 /** Pass native rules' original eligibility, PvP and typed-roll proof checks to Session unchanged. */
 export function connectSessionNativeChecks(){return sessionNativeChecks.bind({assertPcCanAct:nativePcActionEligibility.assertPcCanAct,validatePvpResolutionReceipt:nativePvpResolutionReceipt.validatePvpResolutionReceipt,pendingPvpFear:nativePvpPendingFear.pendingPvpFear,validatePvpDamageApplication:nativePvpDamageApplication.validatePvpDamageApplication,validatePvpAttackRoll:nativePvpAttackRoll.validatePvpAttackRoll,typedRollProof:nativeTypedRollProof.typedRollProof});}
+
+import {nativeMovementCondition,hasOwnerConsent,nativeActionReviewSource,nativeRulesArbitrationSource,nativeConditionRecoverySource} from '../../frameworks/daggerheart/public.js';
+import {sessionNativeRules} from '../../frameworks/session/public.js';
+/** Pass native rules' original movement condition, consent, review, arbitration and recovery functions to Session unchanged. */
+export function connectSessionNativeRules(){return sessionNativeRules.bind({nativeMovementConditionIssue:nativeMovementCondition.nativeMovementConditionIssue,hasOwnerConsent,actionReviewOperation:nativeActionReviewSource.actionReviewOperation,adjudicateAcceptedIntent:nativeRulesArbitrationSource.adjudicateAcceptedIntent,clearNativeConditionFromOutcome:nativeConditionRecoverySource.clearNativeConditionFromOutcome});}

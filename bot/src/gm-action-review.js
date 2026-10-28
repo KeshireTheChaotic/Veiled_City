@@ -19,3 +19,6 @@ let nativeRules;
 function rules(){return nativeRules??=createGmActionReviewRules({capabilities:{consentAction:(...args)=>consentAction(...args),personalCharacter:(...args)=>personalCharacter(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),adjudicateGmRuling:(...args)=>adjudicateGmRuling(...args),currentScene:(...args)=>currentScene(...args),recordOwnerActionTerminal:(...args)=>recordOwnerActionTerminal(...args),ordinaryActionProof:(...args)=>ordinaryActionProof(...args),applyOrdinaryEffects:(...args)=>applyOrdinaryEffects(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args)}});}
 export function actionReviewInbox(...args){return rules().actionReviewInbox(...args);}
 export function actionReviewOperation(...args){return rules().actionReviewOperation(...args);}
+import {nativeActionReviewSource} from './frameworks/daggerheart/public.js';
+// Provide this module's original action review operation to the fixed native slot; no other authority is granted.
+nativeActionReviewSource.bind({actionReviewOperation});
