@@ -1,0 +1,61 @@
+{
+  "feature": "RF04-F03-K02",
+  "records": [
+    {
+      "id": "b434d4774e8daa165dbff9bad936c5f4319f9fa6d6e9765dbd128ffc09c66000",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/evidence-custody.js",
+      "to": "bot/src/personal-continuity.js",
+      "kind": "static",
+      "specifier": "./personal-continuity.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "35840bd80db2a821a1d99024d4abf936df72795e54081b5f46b3a7f6d74d7f74",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/owned-community.js",
+      "to": "bot/src/personal-continuity.js",
+      "kind": "static",
+      "specifier": "./personal-continuity.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "fb23f1d35bec962d650b61a89320c8d7abd5a01f0b4805d76f2dce7820f75f90",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/personal-continuity.js",
+      "to": "bot/src/owned-community.js",
+      "kind": "static",
+      "specifier": "./owned-community.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "a6e91fcc672929d0bdc46c4ad4cc93ae4e4091040f331291fd0c75aa24a321a4",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/personal-continuity.js",
+      "to": "bot/src/evidence-custody.js",
+      "kind": "static",
+      "specifier": "./evidence-custody.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

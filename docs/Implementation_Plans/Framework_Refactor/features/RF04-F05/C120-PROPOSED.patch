@@ -1,0 +1,508 @@
+diff --git a/bot/src/frameworks/narrative/contracts/root-sources.js b/bot/src/frameworks/narrative/contracts/root-sources.js
+index 00070dc9..90495c10 100644
+--- a/bot/src/frameworks/narrative/contracts/root-sources.js
++++ b/bot/src/frameworks/narrative/contracts/root-sources.js
+@@ -4,3 +4,4 @@ export const narrativeSalienceSource=createFunctionPort(['canonicalInterestEvide
+ export const narrativeAuthorityContextSource=createFunctionPort(['narrativeVisible','buildNarrativeContext'],{code:'NARRATIVE_AUTHORITY_CONTEXT_SOURCE_COMPOSITION',label:'Narrative authority context source'});
+ export const narrativePortrayalSource=createFunctionPort(['configurePortrayal'],{code:'NARRATIVE_PORTRAYAL_SOURCE_COMPOSITION',label:'Narrative portrayal source'});
+ export const narrativeRelevanceSource=createFunctionPort(['narrativeQueryRelevance','narrativeIdentityRelevance'],{code:'NARRATIVE_RELEVANCE_SOURCE_COMPOSITION',label:'Narrative relevance source'});
++export const narrativeUnitSource=createFunctionPort(['renderNarrativeUnit'],{code:'NARRATIVE_UNIT_SOURCE_COMPOSITION',label:'Narrative unit source'});
+diff --git a/bot/src/frameworks/narrative/public.js b/bot/src/frameworks/narrative/public.js
+index 94cdae40..7375bbdb 100644
+--- a/bot/src/frameworks/narrative/public.js
++++ b/bot/src/frameworks/narrative/public.js
+@@ -28,6 +28,6 @@ export {narrativeContextEligible} from './eligibility-source.js';
+ export {createNarrativeNpcVisibilityConsumer,narrativeNpcVisibility} from './contracts/npc-visibility.js';
+ export {narrativeAudienceSource,narrativeNativeEnvironment} from './contracts/environment-sources.js';
+ export {rankWorldNarrativeOpportunities,WORLD_NARRATIVE_OPPORTUNITY_ORDER} from './narrative-opportunity-policy.js';
+-export {narrativeSalienceSource,narrativeAuthorityContextSource,narrativePortrayalSource,narrativeRelevanceSource} from './contracts/root-sources.js';
++export {narrativeSalienceSource,narrativeAuthorityContextSource,narrativePortrayalSource,narrativeRelevanceSource,narrativeUnitSource} from './contracts/root-sources.js';
+ 
+ export {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './contracts/bridge-sources.js';
+diff --git a/bot/src/frameworks/world/contracts/root-sources.js b/bot/src/frameworks/world/contracts/root-sources.js
+index 3a26cc5e..04f94fc8 100644
+--- a/bot/src/frameworks/world/contracts/root-sources.js
++++ b/bot/src/frameworks/world/contracts/root-sources.js
+@@ -4,3 +4,5 @@ export const worldLongProjectSource=createFunctionPort(['manageLongProject','pro
+ export const worldCityCivicSource=createFunctionPort(['updateCityCivic'],{code:'WORLD_CITY_CIVIC_SOURCE_COMPOSITION',label:'World city civic source'});
+ export const worldObservationSource=createFunctionPort(['renderWorldObservation'],{code:'WORLD_OBSERVATION_SOURCE_COMPOSITION',label:'World observation source'});
+ export const worldCityDepthSource=createFunctionPort(['validateMinorIdentity'],{code:'WORLD_CITY_DEPTH_SOURCE_COMPOSITION',label:'World city depth source'});
++export const worldSimulationReceiptSource=createFunctionPort(['worldSimulationReceiptForAudience'],{code:'WORLD_SIMULATION_RECEIPT_SOURCE_COMPOSITION',label:'World simulation receipt source'});
++export const worldEncounterBeatSource=createFunctionPort(['inspectNativeEncounterCandidate'],{code:'WORLD_ENCOUNTER_BEAT_SOURCE_COMPOSITION',label:'World encounter beat source'});
+diff --git a/bot/src/frameworks/world/public.js b/bot/src/frameworks/world/public.js
+index 62f4f4eb..6fac73b6 100644
+--- a/bot/src/frameworks/world/public.js
++++ b/bot/src/frameworks/world/public.js
+@@ -84,7 +84,7 @@ export {worldSessionContinuation} from './contracts/session-continuation.js';
+ export {worldIntentDispatch} from './contracts/intent-dispatch.js';
+ export {worldContextMemory} from './contracts/context-memory.js';
+ export {worldNarrativeSources} from './contracts/narrative-sources.js';
+-export {worldLongProjectSource,worldCityCivicSource,worldObservationSource,worldCityDepthSource} from './contracts/root-sources.js';
++export {worldLongProjectSource,worldCityCivicSource,worldObservationSource,worldCityDepthSource,worldSimulationReceiptSource,worldEncounterBeatSource} from './contracts/root-sources.js';
+ export {worldStoryContinuity} from './contracts/story-continuity.js';
+ export {worldCharacterObservation} from './contracts/character-observation.js';
+ 
+diff --git a/bot/src/narrative-authority.js b/bot/src/narrative-authority.js
+index 10fa8ff1..15f91f20 100644
+--- a/bot/src/narrative-authority.js
++++ b/bot/src/narrative-authority.js
+@@ -261,3 +261,6 @@ export function renderNarrativeUnit(db,guild,key,scope){
+   if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9,{db,guild}))!==hash(d.unit)))throw fail('v9_act_revalidation');
+   return d.text;
+ }
++import {narrativeUnitSource} from './frameworks/narrative/public.js';
++// Provide this module's original narrative unit rendering to the fixed Narrative slot; no other authority is granted.
++narrativeUnitSource.bind({renderNarrativeUnit});
+diff --git a/bot/src/world-encounter-beats.js b/bot/src/world-encounter-beats.js
+index b7da2e5e..6aca04b2 100644
+--- a/bot/src/world-encounter-beats.js
++++ b/bot/src/world-encounter-beats.js
+@@ -129,3 +129,6 @@ export function inspectNativeEncounterCandidate(db,guild,proof,scope,{library}={
+   const current=inspect(db,guild,proof.proposal_ref,scope,library).proof;
+   return current&&hash(current)===hash(proof)?Object.freeze({...current,execution_authority:false,publication_authority:false}):null;
+ }
++import {worldEncounterBeatSource} from './frameworks/world/public.js';
++// Provide this module's original native encounter candidate inspection to the fixed World slot; no other authority is granted.
++worldEncounterBeatSource.bind({inspectNativeEncounterCandidate});
+diff --git a/bot/src/world-narrative-bridge.js b/bot/src/world-narrative-bridge.js
+index 092c6a32..23ca1032 100644
+--- a/bot/src/world-narrative-bridge.js
++++ b/bot/src/world-narrative-bridge.js
+@@ -4,12 +4,13 @@ import {narrativeSourceVisible,rankWorldNarrativeOpportunities} from './framewor
+ import {worldKnowledgeSources,worldSessionScene,worldConversationPrincipal} from './frameworks/world/public.js';
+ function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
+ import {findNpcConversationMemory,npcSignalMemoryReferenceValid,activeCityProxy} from './frameworks/world/public.js';
+-import {renderNarrativeUnit} from './narrative-authority.js';
++import {narrativeUnitSource} from './frameworks/narrative/public.js';
++function renderNarrativeUnit(...args){return narrativeUnitSource.renderNarrativeUnit(...args);}
+ import {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './frameworks/narrative/public.js';
+ function inspectOpeningEntryOpportunity(...args){return narrativeBridgeSessionSources.inspectOpeningEntryOpportunity(...args);}function inspectSessionOpening(...args){return narrativeBridgeSessionSources.inspectSessionOpening(...args);}function assemblyDeliverySummary(...args){return narrativeBridgeSessionSources.assemblyDeliverySummary(...args);}
+ function completedActionSource(...args){return narrativeBridgeNativeSources.completedActionSource(...args);}function historicalActionSource(...args){return narrativeBridgeNativeSources.historicalActionSource(...args);}function typedRollProof(...args){return narrativeBridgeNativeSources.typedRollProof(...args);}function validateFearEffect(...args){return narrativeBridgeNativeSources.validateFearEffect(...args);}
+-import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
+-import {inspectNativeEncounterCandidate} from './world-encounter-beats.js';
++import {worldSimulationReceiptSource,worldEncounterBeatSource} from './frameworks/world/public.js';
++function worldSimulationReceiptForAudience(...args){return worldSimulationReceiptSource.worldSimulationReceiptForAudience(...args);}function inspectNativeEncounterCandidate(...args){return worldEncounterBeatSource.inspectNativeEncounterCandidate(...args);}
+ const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
+   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
+ const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
+diff --git a/bot/src/world-simulation-receipts.js b/bot/src/world-simulation-receipts.js
+index 114be88a..f65782a4 100644
+--- a/bot/src/world-simulation-receipts.js
++++ b/bot/src/world-simulation-receipts.js
+@@ -142,3 +142,6 @@ export function worldSimulationReceiptForAudience(db,guild,actionId,scope,{sourc
+     visibility,actor:Object.freeze({type:'npc',key:context.actor}),location_key:context.location,outcome:'observed_arrival',
+     execution_authority:false,publication_authority:false});
+ }
++import {worldSimulationReceiptSource} from './frameworks/world/public.js';
++// Provide this module's original audience receipt reader to the fixed World slot; no other authority is granted.
++worldSimulationReceiptSource.bind({worldSimulationReceiptForAudience});
+diff --git a/docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json b/docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json
+index 7703ea30..d9f56bc4 100644
+--- a/docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json
++++ b/docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json
+@@ -12604,48 +12604,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+     },
+-    {
+-      "id": "b749993b40541b19325f318321ac624cc099c497597c6cfa09f3019b353a29ed",
+-      "code": "PAIR_IMPORTS_PRIVATE_API",
+-      "from": "bot/src/world-narrative-bridge.js",
+-      "to": "bot/src/narrative-authority.js",
+-      "kind": "static",
+-      "specifier": "./narrative-authority.js",
+-      "owner": "narrative--world",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F05",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+-    },
+-    {
+-      "id": "58cbd13d657271c24a1698513ee72ff8f866df78f35d891f60e5e9e895d65171",
+-      "code": "PAIR_IMPORTS_PRIVATE_API",
+-      "from": "bot/src/world-narrative-bridge.js",
+-      "to": "bot/src/world-simulation-receipts.js",
+-      "kind": "static",
+-      "specifier": "./world-simulation-receipts.js",
+-      "owner": "narrative--world",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F05",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+-    },
+-    {
+-      "id": "7e5e5a641e0506643cfaf6b086e4b9b3477a7087e579c80b460f492f7e5501cf",
+-      "code": "PAIR_IMPORTS_PRIVATE_API",
+-      "from": "bot/src/world-narrative-bridge.js",
+-      "to": "bot/src/world-encounter-beats.js",
+-      "kind": "static",
+-      "specifier": "./world-encounter-beats.js",
+-      "owner": "narrative--world",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F05",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+-    },
+     {
+       "id": "749a1bdb3ec09e058ff31877bb81280d3cb2477a5e19ae926fe3fd6807c171ac",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -12688,34 +12646,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "81546e7d061441a4cf38adccdda096153124bc891fdb2191ae0495b9003a3f54",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/assembly-context.js",
+-      "to": "bot/src/opening-world-bridge.js",
+-      "kind": "static",
+-      "specifier": "./opening-world-bridge.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "0386daaa9ab6733a35e17cdbb9d10b27ba168596cf4660c06afff9d2d7687b69",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/assembly-state.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "ba811d0ac5b2e026a48dd7e78eb018a7b69893e5974da2161771e91ebe77a07e",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -13234,20 +13164,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "11fd3f249104c1e2fe84f8e4b27bb5724b15c04c7f201077fba60f69e9e27bbe",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-authority-context.js",
+-      "to": "bot/src/assembly-state.js",
+-      "kind": "static",
+-      "specifier": "./assembly-state.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "a5cdaada7f206d680b95cb3e323ad0bafbea47150decce4acf0b0bd315445b62",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -13332,48 +13248,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "0614e52f53e9cc42c2f8aeb5cdd732b706b4151eaa188a566bf24c241713b797",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-authority-context.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "f1d75319e4925d8caa55a31eddf547321ff16ff30df104b96b76f6df8a7f9d37",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-authority-context.js",
+-      "to": "bot/src/opening-entry-context.js",
+-      "kind": "static",
+-      "specifier": "./opening-entry-context.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "91b41c83f2fdf53d091ab7171e05a932f63565bd27c41f2faa7cb8fcb4783af0",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-authority-context.js",
+-      "to": "bot/src/opening-cohort-state.js",
+-      "kind": "static",
+-      "specifier": "./opening-cohort-state.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "78ef2445c823aa8555b18982d44672b9a59bb10175c7b9536fc2486190c712ce",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -13598,20 +13472,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "45e38d4ceaac93222fe6ec97625530d7d840be34f2fc927e15688dcd686257fb",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-director-source.js",
+-      "to": "bot/src/world-narrative-bridge.js",
+-      "kind": "static",
+-      "specifier": "./world-narrative-bridge.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "88d8b04c26ed7f6a445079d858a5b46705acbc4e9ad69a7b991d9df9393edf61",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -13780,20 +13640,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "f91efd973479c5b06dbcc5b4eaffc064491276a07580ffa0dff40bae8ffa5118",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/narrative-salience.js",
+-      "to": "bot/src/world-narrative-bridge.js",
+-      "kind": "static",
+-      "specifier": "./world-narrative-bridge.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "e4ed90c516a3feebe7b6639e72c936a84c6e90a870fd342c07817082f418fb99",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -15530,62 +15376,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "9ed575ca46856b673b79164b338cf3b6d44aef6657eee3d6f8913873e4db5354",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/opening-cohort-state.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "99f519ffbf1a77f4a7860d9f8497c39fd4c4562e7c4c57dba76cd6253a16411f",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/opening-cohort-state.js",
+-      "to": "bot/src/session-opening.js",
+-      "kind": "static",
+-      "specifier": "./session-opening.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "25d9a1635ee3d227b46a483a05e6cf32ac800aa9c24b7feaecda1072b9df7bc2",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/opening-entry-context.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "9454e91e533c35e28b99c5a7231b9ee665b890127c020cebdcb4c53179b93e3d",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/opening-world-bridge.js",
+-      "to": "bot/src/world-narrative-bridge.js",
+-      "kind": "static",
+-      "specifier": "./world-narrative-bridge.js",
+-      "owner": "session--world",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F05",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "9b30df7d286ca665283e262d14f98934da685d2b6dad9f6531e3dac53e47f805",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -16944,34 +16734,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "64e56068c501dbd2249d0975f54f04898ceb08ab9462af6a7871e49ff03e6b56",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/pvp-output.js",
+-      "to": "bot/src/assembly-state.js",
+-      "kind": "static",
+-      "specifier": "./assembly-state.js",
+-      "owner": "publication",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF06-F03",
+-      "expires_after": "RF06",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "751e9629547002bfad4bc866764c9aeea3d19315df0b9aa71bd3e0dcfc6e5f59",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/pvp-output.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "publication",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF06-F03",
+-      "expires_after": "RF06",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "cca63f68242c264822f15cb1e950fa5b188cf94aec30117a0e3370cccf65b216",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -17056,48 +16818,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "c2340d1327c64c68117ed6a99fcd16d023996f985fd75003f91d659cd91deacb",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/pvp-output.js",
+-      "to": "bot/src/session-opening.js",
+-      "kind": "static",
+-      "specifier": "./session-opening.js",
+-      "owner": "publication",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF06-F03",
+-      "expires_after": "RF06",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "9380e618159a39bb002e4a881e9387918ecef5434d00b50132adc68c65237842",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/pvp-output.js",
+-      "to": "bot/src/opening-entry-context.js",
+-      "kind": "static",
+-      "specifier": "./opening-entry-context.js",
+-      "owner": "publication",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF06-F03",
+-      "expires_after": "RF06",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "4fa0577c79e561ab363400f5bc0cb37c883966ec30a740787c74b9b199f30532",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/pvp-output.js",
+-      "to": "bot/src/opening-cohort-state.js",
+-      "kind": "static",
+-      "specifier": "./opening-cohort-state.js",
+-      "owner": "publication",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF06-F03",
+-      "expires_after": "RF06",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "382f8c561d7ecde67de7fb890e5021955611a3ecc3961ba0cb66abdd42dee20a",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -17826,20 +17546,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "4e2f9af618feb9ef8e3fb67265ce999900fc75e1e787be900644b3586d3702f0",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/scene-fiction-context.js",
+-      "to": "bot/src/assembly-state.js",
+-      "kind": "static",
+-      "specifier": "./assembly-state.js",
+-      "owner": "narrative",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF05-F03",
+-      "expires_after": "RF05",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "831f23341dbcd24f3fb01588b1a5dfad56fd7efdd27868e90a3e62147527f48a",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -17938,20 +17644,6 @@
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     },
+-    {
+-      "id": "5da69af9b95efb8a00a23dbe32535a71fe99a871a767a592d27a50aa886a555a",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/session-opening.js",
+-      "to": "bot/src/assembly-context.js",
+-      "kind": "static",
+-      "specifier": "./assembly-context.js",
+-      "owner": "session",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F04",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+     {
+       "id": "15ed6a3d8cfa27465e1cb0af351c6316d87a8ada6922796abcf3c79b2931b2f1",
+       "code": "CYCLIC_IMPORT_EDGE",
+@@ -18147,20 +17839,6 @@
+       "expires_after": "RF05",
+       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+-    },
+-    {
+-      "id": "bda71a2e0997cb11d1df420f438ebd5cfa66280edaf49dcf0f910d86030aac8a",
+-      "code": "CYCLIC_IMPORT_EDGE",
+-      "from": "bot/src/world-narrative-bridge.js",
+-      "to": "bot/src/narrative-authority.js",
+-      "kind": "static",
+-      "specifier": "./narrative-authority.js",
+-      "owner": "narrative--world",
+-      "max_occurrences": 1,
+-      "remove_in_feature": "RF04-F05",
+-      "expires_after": "RF04",
+-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+     }
+   ]
+ }
