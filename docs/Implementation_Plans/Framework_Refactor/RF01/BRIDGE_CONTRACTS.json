@@ -2487,36 +2487,36 @@
         "narrative",
         "persistence"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "persistence",
-          "to": "narrative",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "narrative",
           "to": "persistence",
-          "import_occurrences": 0,
-          "injected_calls": 400,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Persistence delegates GM hook package normalization to the original Narrative function through a fixed consumer; other dependencies remain migration obligations."
+        },
+        {
+          "from": "persistence",
+          "to": "narrative",
+          "contract": "Remaining observed dependency only; exact port remains with accountable migration."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/db.js",
-          "to": "bot/src/gm-hook-import.js",
-          "line": 9,
+          "from": "bot/src/application/composition/narrative-persistence.js",
+          "to": "bot/src/framework-to-framework/narrative--persistence/public.js",
+          "line": 1,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
+      "lifecycle": "One fixed consumer port bound by application composition at index bootstrap before runtime services. No database/model/client/state write during composition.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/narrative-persistence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f06-c49.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "persistence",
@@ -2536,7 +2536,9 @@
         "pair": "narrative--persistence",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 401
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/narrative--persistence/public.js",
+      "scope": "GM hook package normalization only; all other Narrative/Persistence dependencies remain migration obligations."
     },
     {
       "pair": "narrative--publication",

@@ -6,7 +6,8 @@
  * one reviewable layer.
  */
 import fs from "node:fs";
-import {normalizeGmHookImport} from './gm-hook-import.js';
+import {persistenceGmHookImport} from './frameworks/persistence/public.js';
+function normalizeGmHookImport(...args){return persistenceGmHookImport.normalizeGmHookImport(...args);}
 import { updateRelationshipDimensions as originalUpdateRelationshipDimensions, relationshipPairKey as originalRelationshipPairKey, relationshipProjection as originalRelationshipProjection } from "./relationship-state.js";
 import path from "node:path";
 import { randomUUID, createHash } from "node:crypto";

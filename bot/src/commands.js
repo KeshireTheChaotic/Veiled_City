@@ -28,7 +28,7 @@ import { buildSessionRosterReport, chunkRosterReport } from "./frameworks/sessio
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
-import {normalizeGmHookImport} from './gm-hook-import.js';
+import {normalizeGmHookImport} from './frameworks/narrative/public.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';

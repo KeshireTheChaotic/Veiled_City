@@ -154,6 +154,9 @@
     ],
     "persistence--world": [
       "bot/src/framework-to-framework/persistence--world/public.js"
+    ],
+    "narrative--persistence": [
+      "bot/src/framework-to-framework/narrative--persistence/public.js"
     ]
   },
   "externalCapabilityOwners": {
