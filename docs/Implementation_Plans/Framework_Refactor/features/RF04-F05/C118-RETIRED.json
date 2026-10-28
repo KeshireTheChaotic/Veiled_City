@@ -1,0 +1,63 @@
+{
+  "feature": "RF04-F05-C118",
+  "original_manifest_sha256": "9FABC0D4E98F6F8259179EC3161314113964E0DE78B2FAC63D41A583B0238FE3",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "098e50593fb201d0bed3556a7974b72e3bc65c03fd9d1d2e758b78b395938d99",
+      "code": "PAIR_IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-world-bridge.js",
+      "to": "bot/src/scene-continuity.js",
+      "kind": "static",
+      "specifier": "./scene-continuity.js",
+      "owner": "session--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "53118d78f782a531013ae4b162876c3edc3d4319f22484dd67011b7e979d3f61",
+      "code": "PAIR_IMPORTS_THIRD_OWNER",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/narrative-records.js",
+      "kind": "static",
+      "specifier": "./narrative-records.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "acaa3afad3da09893fc5496b3d1a9779acd3786cf1daf9bd494e4192fddf4fdd",
+      "code": "PAIR_IMPORTS_THIRD_OWNER",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/scene-continuity.js",
+      "kind": "static",
+      "specifier": "./scene-continuity.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "2ada272ec292ab342ed66b6d5ea6ccec718aac317a142bf1abb2c75734e4bce4",
+      "code": "PAIR_IMPORTS_THIRD_OWNER",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/conversation-principal.js",
+      "kind": "static",
+      "specifier": "./conversation-principal.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# RF04-F05 C118 — Narrative-World and Session-World bridges read scene, principal and records through their own frameworks' public APIs
+
+Base e450024a. The narrative--world pair module world-narrative-bridge.js stops importing the Knowledge shim narrative-records.js and the Session shims scene-continuity.js and conversation-principal.js; it now reads listNarrativeRecords, currentScene, scenePresence and conversationPrincipal through World's existing public ports worldKnowledgeSources, worldSessionScene and worldConversationPrincipal (same originals, bound at bootstrap). The session--world pair module opening-world-bridge.js imports currentScene from Session's public API instead of the scene-continuity.js shim. No new ports or slots. Four tests that reach the bridge uncomposed now import compose-startup.mjs (two tracked: p08-f07-correction, rf04-f04-c05; two local-only).
+
+Rollback: Revert only the C118 commit: restore the narrative-records.js, scene-continuity.js and conversation-principal.js imports in world-narrative-bridge.js and the scene-continuity.js import in opening-world-bridge.js, and restore the exact transitions from C118-RETIRED.json.

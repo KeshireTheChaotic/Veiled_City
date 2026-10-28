@@ -1,0 +1,322 @@
+{
+  "feature": "RF04-F05-C118",
+  "base_head": "e450024a2bb67bd543df050a5a9cc5a2af40a248",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/world-narrative-bridge.js",
+      "bot/src/opening-world-bridge.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c118.test.mjs"
+    ],
+    "passed": 3,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f04.test.mjs",
+        "sha256": "5A895F10D80D251947B4B1D2313FD2A102E942777D039308B6FBF838832588CB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f03.test.mjs",
+        "sha256": "21F1EE619842504FC3FC66B2ABD297286A9B0FE7B4C8AA57D055B2A0025A3273"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f06.test.mjs",
+        "sha256": "B22F3C2B661CF4F1641F5DDB614E30CF001452C57CC55ED00BCB49057D53F087"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f09.test.mjs",
+        "sha256": "77740F34E12718EDB6A47D816AD2935707C2919C14489A53423D75027DC7AF5E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f10.test.mjs",
+        "sha256": "D34E703BA344AFC0BE04D978C0BBA9BBE535813BE5CCAA825CD9049F21D2F266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f12.test.mjs",
+        "sha256": "156098128C2E78C3A87FA5ADA5D670A158D9E1EC338C28B672C0ABE831AB9A8D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f13.test.mjs",
+        "sha256": "28556ACCF35260B1784167940D2551B54A59D74692ACD0617C6331126D221066"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f14.test.mjs",
+        "sha256": "F7880794D688314D95CCCB8C37B9E0BDC6A1BA6BCF3597FF7658C88365B749F0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f17.test.mjs",
+        "sha256": "6E5A278284275829F0A1EE3405169ECA6B813CEFD8ED14E30FFDD04578888811"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f19.test.mjs",
+        "sha256": "FD95F632E51B6437BCBA670ED6F7326104F3C2A10A9076FD2710B389B3366B30"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f20.test.mjs",
+        "sha256": "6F01E0D0643ECDA4D3CA8678656C9EB544223622B74DEB6E500AA2731A4C236B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f22.test.mjs",
+        "sha256": "49977D0C91782B788AACB55667ACAFB47E7A303420F78EC33B30EBD7CE48894B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c118.test.mjs",
+        "sha256": "4F65849083D3734609320971B6E825485300060C320F54FA891AF9BED69C1030"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c79.test.mjs",
+        "sha256": "9B29ADD02FB79602EC636815130599F0693FE238A4CA960A7E2C6B1DF53B18BC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c91.test.mjs",
+        "sha256": "377F1DF4F9C32E624D2DE76597F9D743434A73FA94465E1A179CA979C6714774"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T11:19:51.296Z",
+    "end": "2026-10-28T11:20:04.327Z",
+    "exit_code": 0,
+    "tests": 36,
+    "passed": 36,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 12994.7935,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c118-test.log",
+    "log_sha256": "F1089BCE21022725C49A8382BB206AE2250D6800ADF2D672DC2D08A135C2813D",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 824,
+      "unowned": 0,
+      "imports": 3355,
+      "largest_cycle": 85,
+      "accepted_legacy_occurrences": 1382,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c118-rf04-architecture.log",
+      "log_sha256": "088662E93B2C81B3776745DE36E28496996A8283E3D47E6A10442C8A8B8F0B89",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 824,
+      "unowned": 0,
+      "imports": 3355,
+      "largest_cycle": 85,
+      "accepted_legacy_occurrences": 1242,
+      "active_violation_groups": 140,
+      "transition_errors": 140,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c118-rf05-architecture.log",
+      "log_sha256": "DB07C376008582982EC6674F1F31060E742B2D359E14CCD17A8983AE794DBAEE",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/opening-world-bridge.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-narrative-bridge.js -> ",
+        "FRAMEWORK_IMPORTS_PAIR bot/src/assembly-context.js -> bot/src/opening-world-bridge.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/opening-world-bridge.js -> bot/src/world-narrative-bridge.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/typed-roll-proof.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/session-opening-attendance.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/session-opening.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/assembly-state.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/narrative-authority.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-simulation-receipts.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-encounter-beats.js",
+        "CYCLIC_IMPORT_EDGE bot/src/assembly-context.js -> bot/src/opening-world-bridge.js",
+        "CYCLIC_IMPORT_EDGE bot/src/opening-world-bridge.js -> bot/src/world-narrative-bridge.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/typed-roll-proof.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/session-opening.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/assembly-state.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/narrative-authority.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "EXPIRED_TRANSITION bot/src/opening-world-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-world-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-world-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "098e50593fb201d0bed3556a7974b72e3bc65c03fd9d1d2e758b78b395938d99",
+      "53118d78f782a531013ae4b162876c3edc3d4319f22484dd67011b7e979d3f61",
+      "acaa3afad3da09893fc5496b3d1a9779acd3786cf1daf9bd494e4192fddf4fdd",
+      "2ada272ec292ab342ed66b6d5ea6ccec718aac317a142bf1abb2c75734e4bce4"
+    ],
+    "original_manifest_sha256": "9FABC0D4E98F6F8259179EC3161314113964E0DE78B2FAC63D41A583B0238FE3",
+    "manifest_sha256_after": "504A794F363E38060BB3EF02CAC0C4D688543E673CFF7C3BC68454C549ACC964",
+    "entries_after": 1371,
+    "remaining_by_feature": {
+      "RF04-F01": 32,
+      "RF04-F03": 24,
+      "RF04-F04": 38,
+      "RF04-F05": 46,
+      "RF05-F02": 182,
+      "RF05-F03": 220,
+      "RF05-F04": 42,
+      "RF05-F05": 391,
+      "RF06-F02": 17,
+      "RF06-F03": 176,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/world-narrative-bridge.js": "F7B0BED19E10D6845D33FE043BD98CB73F13C1B927ABF31CABBBFB0C6E215A38",
+    "bot/src/opening-world-bridge.js": "29830FBFBB3C2D7E743707C41A1B560EC96D8435D27E2C549394127F8076C0DA"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C118 commit: restore the narrative-records.js, scene-continuity.js and conversation-principal.js imports in world-narrative-bridge.js and the scene-continuity.js import in opening-world-bridge.js, and restore the exact transitions from C118-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED",
+  "supplemental_tests": {
+    "reason": "tests reaching the bridges through narrative-director-source, narrative-salience, opening-world-bridge or assembly-context; four uncomposed tests now import compose-startup.mjs because the bridge reads World's composed scene/principal/record ports",
+    "start": "2026-10-28T11:21:24.968Z",
+    "end": "2026-10-28T11:22:00.180Z",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f02.test.mjs",
+        "sha256": "B0EF1DAD83AFBA23E6A12D13016526A7A44F32091AF447ACFA8B254CC1F4DFFA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f19.test.mjs",
+        "sha256": "FD95F632E51B6437BCBA670ED6F7326104F3C2A10A9076FD2710B389B3366B30"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f20.test.mjs",
+        "sha256": "6F01E0D0643ECDA4D3CA8678656C9EB544223622B74DEB6E500AA2731A4C236B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f24.test.mjs",
+        "sha256": "BD38DFEB8AC1885AF1FAB134D46C128655FBE87FEF7D4FC71D8D1A062D1C1E1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "2A333BC4A4F25921DD454942B6E2295591449CA0B655D6F28048BBD566732FFD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs",
+        "sha256": "C032C9B9606388B71B688D935B6D4760E68CC67865BCD9B99F061B4A44B234D9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02.test.mjs",
+        "sha256": "AF364B15EB2DF781AA99D59B4D1E3ADB074E54061630D75EA6F2299AF39C4657"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-c01.test.mjs",
+        "sha256": "2224C8505CDEF31278DE30B42D9176B233AA47BE13B1EF115CF875955BF67B0A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs",
+        "sha256": "48C5D98D49EF3BFE8A44781AECD8B67A75B8367310B6A802FBA112F790886B84"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03.test.mjs",
+        "sha256": "B7818A1D69D3047DB26413506C53D59BE2ED1CF16BECB2AF4009367197DF4351"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f05-correction.test.mjs",
+        "sha256": "84D07BABF44784DC044E81AC27CB00C4802DB3E8981427AC284FA591F8205581"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f07-correction.test.mjs",
+        "sha256": "B39A5E8908D90721194F1EC30F3EA1CB489A2D7C652B76253F9A90E5D57DA501"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "D325AFE65B91A22667B04FEC68FD2613D7EA8E999087FD4415B44AAF3F92FBF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "66A628692BD1BD516E0475F3F05B0A0DAD91F4A01151694813F6BFE48A47A6E7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s02.test.mjs",
+        "sha256": "50B03BDF5C13CA4ABF75ECCA97997A5C6AAE4CA0207FB3FE3B86BCD987DFDD7C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "53A755D7F3067C27C36CB172816ECE2B0DD1CFF8B70DBBFEE2450C09996E6DC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c105.test.mjs",
+        "sha256": "2E81C91C834C948001B9D54FB3F9A8221921E7AF4763877E07F8E04E1A9502B4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c106.test.mjs",
+        "sha256": "488BE5AA10B100173C7F15E80202B87579F637A91351D2954D1FE208C530CC95"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      }
+    ],
+    "exit_code": 0,
+    "tests": 68,
+    "passed": 68,
+    "failed": 0,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c118-supplemental.log",
+    "log_sha256": "2D63BA88808432B488C814C7FB7A9CEB0955A40101557466CA787562AE5D4228"
+  }
+}

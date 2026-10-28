@@ -1,9 +1,8 @@
 /** Read-only native causal signals for the existing GM request. No world effects, disclosure or provider calls. */
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {narrativeSourceVisible,rankWorldNarrativeOpportunities} from './frameworks/narrative/public.js';
-import {listNarrativeRecords} from './narrative-records.js';
-import {currentScene,scenePresence} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {worldKnowledgeSources,worldSessionScene,worldConversationPrincipal} from './frameworks/world/public.js';
+function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {completedActionSource,historicalActionSource} from './action-consent.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {findNpcConversationMemory,npcSignalMemoryReferenceValid,activeCityProxy} from './frameworks/world/public.js';

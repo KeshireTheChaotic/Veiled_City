@@ -1,5 +1,5 @@
 /** Audience-bound Director metadata for existing opening requests. No prose, world effects, new knowledge or provider calls. */
-import {currentScene} from './scene-continuity.js';
+import {currentScene} from './frameworks/session/public.js';
 import {worldDirectorBridgeBeats,openingOpportunityRequests} from './world-narrative-bridge.js';
 export function openingWorldOpportunities(db,guild,scope){
   const out={version:1,beats:[],requests:[],examined_limit:12,source_limit_reached:false,
