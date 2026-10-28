@@ -1,7 +1,7 @@
 import {connectUnifiedArbitration} from './framework-to-framework/daggerheart--intent/public.js';
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
 import { randomUUID, createHash } from "node:crypto";
-import {applyAuthoredInitialPosition} from './scene-setup.js';
+import {applyAuthoredInitialPosition} from './frameworks/session/public.js';
 import {noteNarrativeInterest} from './narrative-salience.js';
 import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './narrative-director-source.js';
 import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './scene-continuity.js';

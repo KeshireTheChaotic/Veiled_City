@@ -32,7 +32,7 @@ import {normalizeGmHookImport} from './gm-hook-import.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
 import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
-import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './scene-setup.js';
+import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './frameworks/session/public.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { PermissionError, NotFoundError, StateConflictError, UserInputError } from './kernel/errors.js';
 import {isExpectedError} from './frameworks/operations/public.js';

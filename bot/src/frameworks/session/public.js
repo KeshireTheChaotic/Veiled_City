@@ -36,3 +36,4 @@ export {sessionIntentLanguage} from './contracts/intent-language.js';
 export {sessionWorldNpcAvailability} from './contracts/world-npc-availability.js';
 export {sessionNarrativeSources} from './contracts/narrative-sources.js';
 export {sessionOpeningWorld} from './contracts/opening-world.js';
+export {sceneSetupAvailability,prepareSceneSetup,confirmSceneSetup,applyAuthoredInitialPosition} from './scene-setup-service.js';

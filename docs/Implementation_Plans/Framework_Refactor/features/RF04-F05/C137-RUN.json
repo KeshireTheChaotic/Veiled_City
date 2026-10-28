@@ -1,0 +1,279 @@
+{
+  "feature": "RF04-F05-C137",
+  "base_head": "631c31eccaa2efd0a19ce1c61e1efee5ff4faef1",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/commands.js",
+      "bot/src/state.js",
+      "bot/src/frameworks/session/public.js",
+      "bot/src/frameworks/session/scene-setup-service.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c137.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p04-f01.test.mjs",
+        "sha256": "4EF59ED3313AB37D2BA8A53073FD9BAA790D4FAD174729F56D670166D46EEBE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f24.test.mjs",
+        "sha256": "BD38DFEB8AC1885AF1FAB134D46C128655FBE87FEF7D4FC71D8D1A062D1C1E1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f06.test.mjs",
+        "sha256": "E374867949573CD9B92D4328C5388B79A22056888C2D61203331455AB8123AB4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f07.test.mjs",
+        "sha256": "FF45418519E552E0CE052BAC3943DF0300DE0D9944815120271381AFD0E3681E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
+        "sha256": "9C6A504A5B8A3584A95EB9D1091D96692F650C08DED99CC19EA6041531EAA7C3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "63316974CFBE6067358F776FAA7C8F26E381ACCDABE06203169BF294F4240A64"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "435A2A57C79CEE4CD5B138DF1AA3B6491EEDFDC2E5E62260179DA26F3D9738F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "643D0AB2D15AF174626D2C61181DDB0AC46188DF10C4A0C5099A289546717F9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "3A2350B66CC62CE09A331EA21FA1E446BC085FBAB88761E2484AAE3C782DD23A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "D325AFE65B91A22667B04FEC68FD2613D7EA8E999087FD4415B44AAF3F92FBF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+        "sha256": "9AD0116D6DAD800919950EEE9436C45ECDC0EA9989A169E561C90D1276BEFCF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c12.test.mjs",
+        "sha256": "E1FF74E09EA6F7C55E506E87FA83CAD621DD6E6B8A93FFBB969867D7FB87CB12"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-forward.test.mjs",
+        "sha256": "A9F828250A56F002F9EC19D12EE182DE42B06E223B377D6F2F087D19A4269681"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-native.test.mjs",
+        "sha256": "813828FBBA4009CA7EF080E065F82E2222299A614B2A73A304E92B85573F0886"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-forward.test.mjs",
+        "sha256": "6F11DD6167CD36EC9A5C2F1FBDCA4E9FCA0836854E17EFA7A1F820DB4A99DF82"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s04.test.mjs",
+        "sha256": "91A0F7C14780D8EA418009C79F64EF991CBB9E91F14F0222FA263671AC08FA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-boundary.test.mjs",
+        "sha256": "B8AB9489DF541E72DC19E207B5272F37D071865A9B1949020812BBEA95D867A7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-positive-consent.test.mjs",
+        "sha256": "343A9515663DFF1422821E46F644FCB59EA8FC5F2C12D92D9FD2DE22C332EE9F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05.test.mjs",
+        "sha256": "7934E1CF34964014D049C20CE5EC3E9637C7E5544748C29F117EDE0E4BC4A63B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s06.test.mjs",
+        "sha256": "28501903F6C2E87B619DF2A54E73A3C64DDB15A1CC3A58EA24A20974E9D08738"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "34B8F216F661A0D23080F42C09B9D97A87FB541BEE9904418A61F3F212D9CED1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "B362359DE2CA989879055DD313E41DE82A5BBBEC01D936C4553385D1A3058EE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "DFF6703A0365619ED5E2C0073A1A4B44C10F466559E6C1C5DF199134153BB84C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c132.test.mjs",
+        "sha256": "FFC9D5DAB295B996E24C0AC9C0169FF81DD65A8A1B78C3ECBDA041B4A4384FF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c137.test.mjs",
+        "sha256": "0C354EF46B63605EC4538628FEE27914A1C47F8844A7212BA721C705BF43CF57"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "1F0E29EDC40043B93ABDCF5F4EABFB863B3893E24AA797DA1EBAB54D4D470BE5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "4A2FCCA91FBC976277ECDCAEF5A11DD6498E08BDAD435F94114A2C1E18B3FA45"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c52.test.mjs",
+        "sha256": "992340C0C887E723704AC04CF0768F3B10F25BF9F388AAFDC5F342260C74EA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c57.test.mjs",
+        "sha256": "90F4773A077BAD2CB161C8E8D3729A1758D537B19E395D2AA82F415C2FA52EE3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "sha256": "7A773E094C1063C56FF432651FFB00C37A79316220F583C0F45CAE643F5FFC08"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-instance.test.mjs",
+        "sha256": "2443895443BF6BE02981B41345425D460C51141F20BBE39737A2C0F14502E7F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs",
+        "sha256": "680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T15:02:18.920Z",
+    "end": "2026-10-28T15:03:59.602Z",
+    "exit_code": 0,
+    "tests": 193,
+    "passed": 193,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 100642.1079,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c137-test.log",
+    "log_sha256": "BD5DFDD82891EBA3DA6DE816AF44B4D113939500A24CE612D8D773CD81CFFE86",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 818,
+      "unowned": 0,
+      "imports": 3381,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1305,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c137-rf04-architecture.log",
+      "log_sha256": "B28DDC5088B24249F3FC6BF2187510C633B42A550C64F7EBE6369188ADAC2928",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 818,
+      "unowned": 0,
+      "imports": 3381,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1223,
+      "active_violation_groups": 82,
+      "transition_errors": 82,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c137-rf05-architecture.log",
+      "log_sha256": "C5D97D4C9A9DE0BFCE67DE30924AE04AD2FCAEBBA907C64CBDF8BDE60A333AB0",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "03090e0be81f410d983688f612a6d43d88ade4d6df3247f9430a684e340db583",
+      "3c6e03010e8973783d38a91b5d58517bf4a98bdabfb74b445e6a0b61038bf2ca",
+      "f23fb915f1dcf4ddc9790eb6956ee3595fc80ea11cd33692dd1c18808323ec59"
+    ],
+    "original_manifest_sha256": "631E44ADE358625E55841567D61BACEF68570D8E1D18C06A187B08833164B2BC",
+    "manifest_sha256_after": "0C3229C7ED648253374E75252F14AF7245D6C1C46B434917A40D55A8B33FE28B",
+    "entries_after": 1294,
+    "remaining_by_feature": {
+      "RF04-F01": 29,
+      "RF04-F03": 20,
+      "RF04-F04": 27,
+      "RF04-F05": 6,
+      "RF05-F02": 182,
+      "RF05-F03": 215,
+      "RF05-F04": 41,
+      "RF05-F05": 389,
+      "RF06-F02": 17,
+      "RF06-F03": 171,
+      "RF06-F04": 149,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/commands.js": "27AF67F16D7F6D0136E1005947CDE1408F19A248D57CC73362C673C8D6D5EA30",
+    "bot/src/state.js": "C9AD28AC096AECA975B4B57C29F48FE599D9D628A82103300F3A99EEDEB9E9FF",
+    "bot/src/frameworks/session/public.js": "7E059AA301EE8F08AF25CA24A30EE1DB8DCF43A19AC5C6C5FC2D2A6C0294A67F",
+    "bot/src/frameworks/session/scene-setup-service.js": "97830AB6941A10F3BACAA46389ADB84EEA5DD5C84EA4D1710B3EC9734DC60B04"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C137 commit: move frameworks/session/scene-setup-service.js back to root scene-setup.js with its original imports, drop the Session public export, restore commands.js/state.js imports and test paths, and restore the exact transitions from C137-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

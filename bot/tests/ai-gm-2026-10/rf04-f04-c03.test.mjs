@@ -9,7 +9,7 @@ import {VeiledDB} from '../../src/db.js';
 import {createSceneSetup} from '../../src/frameworks/session/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {currentScene,recordScenePresence,scenePresence} from '../../src/scene-continuity.js';
-import * as original from '../../src/scene-setup.js';
+import * as original from '../../src/frameworks/session/scene-setup-service.js';
 import {captureWorldInput} from '../../src/autonomous-world.js';
 import {persistPlayerIntents} from '../../src/typed-intents.js';
 function foyer(t){

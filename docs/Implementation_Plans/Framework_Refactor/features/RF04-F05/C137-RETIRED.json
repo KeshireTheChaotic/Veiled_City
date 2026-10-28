@@ -1,0 +1,46 @@
+{
+  "feature": "RF04-F05-C137",
+  "original_manifest_sha256": "631E44ADE358625E55841567D61BACEF68570D8E1D18C06A187B08833164B2BC",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "03090e0be81f410d983688f612a6d43d88ade4d6df3247f9430a684e340db583",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-setup.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3c6e03010e8973783d38a91b5d58517bf4a98bdabfb74b445e6a0b61038bf2ca",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/scene-setup.js",
+      "kind": "static",
+      "specifier": "./scene-setup.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "f23fb915f1dcf4ddc9790eb6956ee3595fc80ea11cd33692dd1c18808323ec59",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/scene-setup.js",
+      "kind": "static",
+      "specifier": "./scene-setup.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

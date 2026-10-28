@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {fixture} from './p10-fixture.mjs';
-import {sceneSetupAvailability,prepareSceneSetup,confirmSceneSetup} from '../../src/scene-setup.js';
+import {sceneSetupAvailability,prepareSceneSetup,confirmSceneSetup} from '../../src/frameworks/session/scene-setup-service.js';
 import {deliverOpeningEntry} from '../../src/opening-entry.js';
 test('typed setup diagnostics preserve owner boundary, history and explicit decline',()=>{
  const f=fixture();try{const a=f.attend('a');assert.equal(sceneSetupAvailability(f.db,'g','b',a.pc.id).code,'owner_invalid');
