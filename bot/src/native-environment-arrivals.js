@@ -6,7 +6,8 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
 function establishNarrativeEntity(...args){return nativeWorldAutonomy.establishNarrativeEntity(...args);}
-import {worldIdentityOrigin} from './world-authorship.js';
+import {nativeWorldAuthoring} from './frameworks/daggerheart/public.js';
+function worldIdentityOrigin(...args){return nativeWorldAuthoring.worldIdentityOrigin(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';

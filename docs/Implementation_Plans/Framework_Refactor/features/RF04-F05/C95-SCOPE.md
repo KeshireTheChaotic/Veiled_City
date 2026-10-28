@@ -1,0 +1,5 @@
+# RF04-F05 C95 — native environment modules read World identity origin via the authoring port
+
+Base 8dc86f25. Two Daggerheart legacy modules (native-environment-arrivals, native-environment-door-chain) stop importing worldIdentityOrigin from the World root composition world-authorship.js. The existing Daggerheart nativeWorldAuthoring port gains worldIdentityOrigin, bound to World's public original by the existing daggerheart--world connectNativeWorldAuthoring from the existing initializeEnvironmentScene bootstrap (no test binds that port with a fixed key list; no index.js change). The new test imports only the changed port contract and adapter, per TEST_PROTOCOL.md. Supplemental run of the seven initiative tests that compose the environment scene or import the migrated modules: 23/23 pass.
+
+Rollback: Revert only the C95 commit: restore the two direct ./world-authorship.js worldIdentityOrigin imports, return nativeWorldAuthoring to its single verifiedWorldAuthoringContext function and connectNativeWorldAuthoring to its original binding, remove the C95 test reference in BRIDGE_CONTRACTS.json, and restore the 2 exact transitions from C95-RETIRED.json.

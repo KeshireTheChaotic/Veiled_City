@@ -1,0 +1,114 @@
+{
+  "feature": "RF04-F05-C95",
+  "base_head": "8dc86f259deccc07f9e4bfd017af7d69b7eecfb2",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/frameworks/daggerheart/contracts/environment-sources.js",
+      "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "bot/src/native-environment-arrivals.js",
+      "bot/src/native-environment-door-chain.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c95.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f14.test.mjs",
+        "sha256": "862B6D0482AFF84A4819C447A8DCE7377C60A1ACAFCB7757F0F3AE5FD2ACBAB2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c95.test.mjs",
+        "sha256": "A0A01FBEACF2F40502B9D5366653D648B682B899CA7020089E7DFFE5940FEC39"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T08:59:43.937Z",
+    "end": "2026-10-28T08:59:44.377Z",
+    "exit_code": 0,
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 405.0649,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c95-test.log",
+    "log_sha256": "0D609A8369FECAD543F286C5159311DB806A068B92C26F5708AD30C16CCC374C",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3223,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1538,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c95-rf04-architecture.log",
+      "log_sha256": "2616E1E20952BD18AF7857192C664ECBB51CD2941454ED558F392B8BC8F271AC",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3223,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1273,
+      "active_violation_groups": 264,
+      "transition_errors": 264,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c95-rf05-architecture.log",
+      "log_sha256": "21335695DF287CA32C83859F413C29F7360562EF5EF2671EA1AD62AEF46799FC",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "151e2ab4899e414fe92a5df94f6abbf98ec3cf9235a418397d1c7139f29006e3",
+      "e79f341eab55f819162b3f84905c8f3e0e19738c24af9e9249477d2afc499e1e"
+    ],
+    "original_manifest_sha256": "1DBB59E1518FA487CB18B8128E765F581FAD37A8DAFCAC538D76787AF6B7503C",
+    "manifest_sha256_after": "12F83D182E01F8CC185EFE46AAFD3949CAC4096628971A27033C24C8108B7C31",
+    "entries_after": 1526,
+    "remaining_by_feature": {
+      "RF04-F01": 74,
+      "RF04-F03": 43,
+      "RF04-F04": 94,
+      "RF04-F05": 53,
+      "RF05-F02": 192,
+      "RF05-F03": 225,
+      "RF05-F04": 42,
+      "RF05-F05": 405,
+      "RF06-F02": 17,
+      "RF06-F03": 178,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/frameworks/daggerheart/contracts/environment-sources.js": "5C714DA1AEBC745C6F52B5584AC61BA910F3471684929107073BFD2A9B58E2A5",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "DD6FE3CE7642E90E37479E31C34DC25CA700F64FB8AE657021945FB5972572CC",
+    "bot/src/native-environment-arrivals.js": "B93A9B82A877851C569218369DF303C8EAC25B24AF7B7AE8E2C787941A59D640",
+    "bot/src/native-environment-door-chain.js": "7218C9033DEC57B5D8ED15CB769AB110AD3280EE5B3977A7F6B94096EC058483"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C95 commit: restore the two direct ./world-authorship.js worldIdentityOrigin imports, return nativeWorldAuthoring to its single verifiedWorldAuthoringContext function and connectNativeWorldAuthoring to its original binding, remove the C95 test reference in BRIDGE_CONTRACTS.json, and restore the 2 exact transitions from C95-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

@@ -1,7 +1,7 @@
 import {nativeWorldAuthoring} from '../../frameworks/daggerheart/public.js';
-import {worldAuthoringContext} from '../../frameworks/world/public.js';
-/** Native environment provenance reads World's original verified authoring context; World keeps every authorship rule. */
-export function connectNativeWorldAuthoring(){return nativeWorldAuthoring.bind({verifiedWorldAuthoringContext:worldAuthoringContext.verifiedWorldAuthoringContext});}
+import {worldAuthoringContext,worldIdentityOrigin} from '../../frameworks/world/public.js';
+/** Native environment provenance reads World's original verified authoring context and identity origin; World keeps every authorship rule. */
+export function connectNativeWorldAuthoring(){return nativeWorldAuthoring.bind({verifiedWorldAuthoringContext:worldAuthoringContext.verifiedWorldAuthoringContext,worldIdentityOrigin});}
 
 import {nativeActorControl,nativeWorldProxy} from '../../frameworks/daggerheart/public.js';
 import {activeCityProxy,worldNativeActorControl} from '../../frameworks/world/public.js';

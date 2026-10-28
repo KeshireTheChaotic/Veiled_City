@@ -1,6 +1,6 @@
 /** Native environment rules reach other frameworks' original functions, and legacy native peers, only through these fixed ports. */
 import {createFunctionPort} from '../../../kernel/function-port.js';
-export const nativeWorldAuthoring=createFunctionPort(['verifiedWorldAuthoringContext'],{code:'NATIVE_WORLD_AUTHORING_COMPOSITION',label:'Native World authoring context'});
+export const nativeWorldAuthoring=createFunctionPort(['verifiedWorldAuthoringContext','worldIdentityOrigin'],{code:'NATIVE_WORLD_AUTHORING_COMPOSITION',label:'Native World authoring context'});
 export const nativeNarrativeAudience=createFunctionPort(['mintNarrativeAudience','revalidateNarrativeAudience'],{code:'NATIVE_NARRATIVE_AUDIENCE_COMPOSITION',label:'Native narrative audience'});
 export const nativeArbitrationOrigin=createFunctionPort(['inspectArbitrationOrigin'],{code:'NATIVE_ARBITRATION_ORIGIN_COMPOSITION',label:'Native arbitration origin'});
 /** Legacy native modules that stay at their root paths provide these when they load. */
