@@ -19,8 +19,8 @@ test('sends a streamed, unstored Responses request signed with the ChatGPT login
   assert.equal(init.headers.authorization, 'Bearer test-access');
   assert.equal(init.headers['chatgpt-account-id'], 'acct-1');
   assert.equal(body.stream, true); assert.equal(body.store, false);
-  assert.equal('max_output_tokens' in body, false);
-  assert.ok(body.instructions);
+  assert.equal(body.max_output_tokens, 200);
+  assert.equal('instructions' in body, false);
   assert.deepEqual(body.input, [{ role: 'user', content: [{ type: 'input_text', text: 'hello' }] }]);
   assert.deepEqual(body.text, { format: { type: 'json_schema' } });
   assert.equal(response.output_text, '{"hi":"there"}');

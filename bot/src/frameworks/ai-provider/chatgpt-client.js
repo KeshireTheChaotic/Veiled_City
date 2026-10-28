@@ -3,8 +3,6 @@ import os from 'node:os';
 import path from 'node:path';
 
 const ENDPOINT='https://chatgpt.com/backend-api/codex/responses';
-// Fields the ChatGPT Codex backend rejects or ignores without server-side storage.
-const UNSUPPORTED=['max_output_tokens','previous_response_id','prompt_cache_retention'];
 
 /** LOCAL TESTING ONLY: Responses-shaped client signed in through the Codex CLI's ChatGPT login (auth.json).
  * Not a supported OpenAI API; never use it for a live deployment. */
@@ -18,9 +16,9 @@ export function createChatGptClient({authPath=path.join(process.env.CODEX_HOME||
   }
   async function create(request,{signal}={}){
     const {access_token,account_id}=credentials();
-    const body={...request,stream:true,store:false,instructions:request.instructions||'Follow the request in the input.',
+    // The backend only serves streamed, unstored responses; output caps and missing instructions are accepted (probed 2026-10-28).
+    const body={...request,stream:true,store:false,
       input:typeof request.input==='string'?[{role:'user',content:[{type:'input_text',text:request.input}]}]:request.input};
-    for(const key of UNSUPPORTED)delete body[key];
     const timeout=AbortSignal.timeout(timeoutMs);
     let res;
     try{
