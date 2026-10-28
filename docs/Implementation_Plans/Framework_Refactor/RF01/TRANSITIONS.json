@@ -586,17 +586,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "1cc98a3bbb97b8bbd8e7cb125cd6e0b6d46d61fec94979cd1ff669855c3efddd",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/environment-observation.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "4d49610c9b0ddab7ae73402cde5f707524a2072a0d954beba0aa96c391e75ad5",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/epistemic.js",
@@ -10409,20 +10398,6 @@
       "to": "bot/src/epistemic.js",
       "kind": "static",
       "specifier": "./epistemic.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "6a7abd3fc652e79f7a7073bb52c6434374d8347c5d245ba3aa748c77aeaaed79",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-description.js",
-      "to": "bot/src/environment-observation.js",
-      "kind": "static",
-      "specifier": "./environment-observation.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

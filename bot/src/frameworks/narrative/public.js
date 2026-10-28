@@ -32,3 +32,4 @@ export {narrativeSalienceSource,narrativeAuthorityContextSource,narrativePortray
 export {normalizeGmHookImport} from './gm-hook-import.js';
 
 export {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './contracts/bridge-sources.js';
+export {narrativeEnvironmentalText} from './contracts/environmental-text.js';

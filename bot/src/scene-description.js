@@ -4,7 +4,8 @@ import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
-import {environmentalText} from './environment-observation.js';
+import {narrativeEnvironmentalText} from './frameworks/narrative/public.js';
+function environmentalText(...args){return narrativeEnvironmentalText.environmentalText(...args);}
 import {sceneAtmosphereSubjects as subjects,sceneAtmosphereVerbs as verbs,sceneAtmosphereEndings as endings} from './gm-fiction-schema.js';
 export {sceneDescriptionSchema} from './gm-fiction-schema.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value??null)).digest('hex');

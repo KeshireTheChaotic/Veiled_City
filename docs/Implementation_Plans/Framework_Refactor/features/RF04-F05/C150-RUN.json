@@ -1,0 +1,122 @@
+{
+  "feature": "RF04-F05-C150",
+  "base_head": "924defea6460c3d6dac06e8908cf7dcbeb2aef6d",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/scene-description.js",
+      "bot/src/frameworks/narrative/contracts/environmental-text.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c50.test.mjs"
+    ],
+    "passed": 3,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f06.test.mjs",
+        "sha256": "E374867949573CD9B92D4328C5388B79A22056888C2D61203331455AB8123AB4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "435A2A57C79CEE4CD5B138DF1AA3B6491EEDFDC2E5E62260179DA26F3D9738F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "3A2350B66CC62CE09A331EA21FA1E446BC085FBAB88761E2484AAE3C782DD23A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "34B8F216F661A0D23080F42C09B9D97A87FB541BEE9904418A61F3F212D9CED1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c50.test.mjs",
+        "sha256": "03E9800DB57C9212EB472A636918734C13F91721255BFBB5138DBEB440CFE687"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T18:59:47.453Z",
+    "end": "2026-10-28T18:59:56.223Z",
+    "exit_code": 0,
+    "tests": 38,
+    "passed": 38,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 8733.6672,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c150-test.log",
+    "log_sha256": "BA5080E3BEB673495515DBAFAA730262BFE1A07ABD96FC38224FC734312F27C5",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 838,
+      "unowned": 0,
+      "imports": 3431,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1294,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c150-rf04-architecture.log",
+      "log_sha256": "A9912C50AFD1486F4206AA55F0AA6A8BE7ED237382FA50405488462C453B3E31",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 838,
+      "unowned": 0,
+      "imports": 3431,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1215,
+      "active_violation_groups": 79,
+      "transition_errors": 79,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c150-rf05-architecture.log",
+      "log_sha256": "92170BE64A9F4777853CB35517E3A8398540881C7425718A0B7B5CEFB303227C",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "1cc98a3bbb97b8bbd8e7cb125cd6e0b6d46d61fec94979cd1ff669855c3efddd",
+      "6a7abd3fc652e79f7a7073bb52c6434374d8347c5d245ba3aa748c77aeaaed79"
+    ],
+    "original_manifest_sha256": "2028145426D272E1684DDF08E1F3544CE8B718C7C69A99F97993CFE4E59D292C",
+    "manifest_sha256_after": "147B2350C719766DBC3828200F1F1EC3EF410B43A565FDA4C9FCAB6809C0A196",
+    "entries_after": 1283,
+    "remaining_by_feature": {
+      "RF04-F01": 27,
+      "RF04-F03": 20,
+      "RF04-F04": 26,
+      "RF04-F05": 6,
+      "RF05-F02": 181,
+      "RF05-F03": 213,
+      "RF05-F04": 41,
+      "RF05-F05": 388,
+      "RF06-F02": 16,
+      "RF06-F03": 171,
+      "RF06-F04": 146,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/scene-description.js": "DCD5E041A94CC10730F3174686FEBDDFFDF0241531DDF28EC08CD47A63592863",
+    "bot/src/frameworks/narrative/contracts/environmental-text.js": "91A03F0E52912608AAA8AF0B336CC44FAF7F12F8FE816015681F56C010D127C7"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C150 commit: restore root environment-observation.js and the scene-description.js import, drop the Narrative consumer and adapter binding, and restore the transitions from C150-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

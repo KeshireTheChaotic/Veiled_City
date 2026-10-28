@@ -10,3 +10,7 @@ import {narrativeSourceVisible,nativeSalienceAvailable,narrativeImportanceSource
 import {worldNarrativeSources} from '../../frameworks/world/public.js';
 /** Pass Narrative's original visibility, salience, context and portrayal functions to World unchanged. */
 export function connectWorldNarrativeSources(){return worldNarrativeSources.bind({narrativeSourceVisible,nativeSalienceAvailable,narrativeImportance:narrativeImportanceSource.narrativeImportance,canonicalInterestEvidence:narrativeSalienceSource.canonicalInterestEvidence,buildNarrativeContext:narrativeAuthorityContextSource.buildNarrativeContext,configurePortrayal:narrativePortrayalSource.configurePortrayal});}
+import {narrativeEnvironmentalText} from '../../frameworks/narrative/public.js';
+import {environmentalText} from '../../frameworks/world/public.js';
+/** Bind World's original environmental text function to Narrative's fixed consumer. */
+export function connectNarrativeEnvironmentalText(){return narrativeEnvironmentalText.bind({environmentalText});}
