@@ -10,12 +10,11 @@ test('docs-only selects static/registry/reporter gates without removing historic
   assert.equal(r.mode,'focused');assert.equal(r.suites.length,7);
   for(const id of ['quality-check','format-check','check-source','validate-command-schema','critical-validation-profile-test',
     'v95-validation-reporter-test','validation-selection-test'])assert(r.suites.includes(id));
-  assert(inventory.includes('v9-pvp-authorship-test'));assert(inventory.includes('d08-window-security-test'));
+  assert(inventory.includes('h05-discord-delivery-test'));assert(inventory.includes('d08-observability-test'));
 });
 test('registered test-only changes run the exact behavioral suite and historical assertion guard',()=>{
-  const r=selectValidationSuites(inventory,['bot/scripts/v95-protected-narrative-test.mjs']);
-  assert.equal(r.mode,'focused');assert(r.suites.includes('v95-protected-narrative-test'));
-  assert(r.suites.includes('v95-deprecation-coverage-test'));assert.equal(r.suites.length,9);
+  const r=selectValidationSuites(inventory,['bot/scripts/h05-discord-delivery-test.mjs']);
+  assert.equal(r.mode,'focused');assert(r.suites.includes('h05-discord-delivery-test'));assert.equal(r.suites.length,8);
 });
 test('shared code, fixtures, rules, workflows, unknown or deleted tests always run every current critical suite',()=>{
   for(const file of ['bot/src/db.js','bot/sql/schema.sql','bot/scripts/fixtures/case.json','content/GM/rules.md',

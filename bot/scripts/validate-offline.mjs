@@ -4,102 +4,29 @@ import fs from "node:fs";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import {selectValidationSuites} from './validation-selection.mjs';
-const suites=["quality-check","format-check","check-source","validate-command-schema","i-heard-you-1-test","i-heard-you-2-test","i-heard-you-3-test","i-heard-you-4-test","i-heard-you-5-test","i-heard-you-6-test","i-heard-you-7-test","i-heard-you-9-test","i-heard-you-integration-test","offline-smoke-test","production-regression-test",
-  "refactor-regression-test","operations-regression-test","npc-cognition-regression-test","audit-regression-test","simulation-regression-test",
-  "seed-data-regression-test","seed-drafts-regression-test","city-regression-test","city-core-regression-test","city-civic-regression-test","city-depth-regression-test","narrative-contract-test",
-  "context-conversation-test","prompt-budget-test","scene-entry-test","autonomous-world-test","typed-intents-regression-test","typed-intent-lifecycle-test","h01-source-recovery-test","h02-referent-movement-test","h03-post-turn-review-test","h04-narrative-claim-evidence-test","h05-discord-delivery-test","d01-roll-lifecycle-test","d02-roll-options-test","d03-roll-menu-test","d04-trait-sharing-test","d05-live-window-test","d06-continuation-test","d07-scoped-memory-test","session2-replay-test","session2-message-contract-test","typed-routing-authority-test","rules-adjudication-test","compound-action-test","scene-action-window-test","memory-lifecycle-test","consequence-reconciliation-test","legacy-authority-migration-test","gm-recovery-regression-test","movement-authorization-regression-test","memory-audience-isolation-test","relax-end-to-end-test","interaction-lifecycle-test","narrative-understanding-test","narrative-inference-test","natural-language-scope-test","rules-srd-test","story-continuity-test","negotiation-preview-test","endurance-test","portrayal-authoring-test",
-  "expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test","expansion-quality-test","expansion-h-test",
-  "end-to-end-a-test","end-to-end-b-test","end-to-end-c-test","end-to-end-d-test","end-to-end-e-test","end-to-end-f-test","end-to-end-g-test","end-to-end-h-test","end-to-end-i-test","systems-to-players-1-test","systems-to-players-2-test","systems-to-players-3-test","systems-to-players-4-test","systems-to-players-5-test","systems-to-players-6-test","systems-to-players-7-test","systems-to-players-9-test","implementation-phase-a-test","implementation-phase-b-test","implementation-phase-c-test","implementation-phase-d-test","implementation-phase-e-test","implementation-evaluation","typed-intent-qualification-test"];
-suites.push("v94-pc-effect-authority-test","v94-pvp-profile-test","v94-pvp-attack-test","v94-pvp-reaction-test","v94-pvp-damage-test","v94-pc-death-test","v94-pc-recovery-test","v94-pvp-multiplayer-test","d08-window-security-test","v9-action-consent-test","v9-pvp-agreement-test","v9-pvp-typed-roll-test","v9-window-lifecycle-test",
-  "v9-pvp-rounds-test","v9-pvp-authorship-test","v9-observation-compatibility-test","v9-npc-observation-test","v9-pvp-hope-fear-test","v94-pvp-qualification-test","v9-continuation-test","v9-roll-truth-test","v9-publication-test","v9-roll-ux-test","v9-discord-hardening-test",
-  "d08-observability-test","v9-baseline-regressions-test","v9-release-qualification-test","v95-protected-narrative-test","v95-autonomous-fear-test","v95-pvp-ux-test","v95-operational-metrics-test");
-suites.push("v95-validation-reporter-test","v95-deprecation-coverage-test");
-suites.push("v96-baseline-test");
-suites.push("v96-rules-discretion-test");
-suites.push("v96-native-actions-test");
-suites.push("v96-action-review-test");
-suites.push("v96-semantic-intake-test");
-suites.push("v96-semantic-output-p0-test");
-suites.push("v96-05r-fiction-test","v96-fresh-authoring-test");
-suites.push("v96-semantic-proposals-test");
-suites.push("v96-ordinary-effects-test");
-suites.push("v96-context-efficiency-test");
-suites.push("candidate-claim-quarantine-test","v96-candidate-audit-test");
-suites.push("v96-routing-efficiency-test");
-suites.push("historical-archive-test");
-suites.push("session5-diagnostics-test","session5-narrative-test","session5-latency-test","session5-routing-test");
-suites.push("assembly-authority-test");
-suites.push("assembly-hooks-test");
-suites.push("scene-narration-repair-test");
-suites.push("playable-narration-test");
+const suites=["quality-check","format-check","check-source","validate-command-schema",
+  "refactor-regression-test","audit-regression-test",
+  "typed-intent-lifecycle-test","h01-source-recovery-test","h02-referent-movement-test","h05-discord-delivery-test","session2-message-contract-test","typed-routing-authority-test","legacy-authority-migration-test","interaction-lifecycle-test","rules-srd-test",
+  "implementation-phase-a-test","implementation-phase-d-test","implementation-phase-e-test","implementation-evaluation","typed-intent-qualification-test"];
+suites.push("v9-action-consent-test",
+  "d08-observability-test");
+suites.push("v95-validation-reporter-test");
+suites.push("session5-routing-test");
 suites.push("critical-validation-profile-test");
 suites.push("validation-selection-test");
-suites.push("narrative-freedom-test","narrative-salience-test","narrative-deployment-safety-test");
-suites.push("delegation-quality-test");
-suites.push("narrative-publication-hotfix-test");
-suites.push("semantic-language-robustness-test");
-suites.push("semantic-first-residuals-test");
-suites.push("semantic-owner-appearance-test");
+suites.push("narrative-deployment-safety-test");
 suites.push("semantic-native-alias-recall-test");
-suites.push("world-authorship-test");
-suites.push("world-background-identity-test");
-suites.push("world-background-memory-test");
-suites.push("world-identity-persistence-test");
-suites.push("world-sanctioned-sources-test");
-suites.push("world-narrative-bridge-test");
-suites.push("world-director-beats-test");
-suites.push("world-resolution-test");
-suites.push("world-simulation-receipts-test");
-suites.push("world-encounter-beats-test");
-suites.push("world-information-transfer-test");
-suites.push("native-world-operations-test");
-suites.push("native-world-strategy-test");
-suites.push("world-clock-beats-test");
-suites.push("native-actor-control-test");
-suites.push("native-veil-defense-test");
-suites.push("native-group-completion-test");
-suites.push("native-experience-eligibility-test");
-suites.push("native-adjudication-replay-test","native-roll-modifiers-test");
-suites.push("native-roll-participation-test","native-evidence-analysis-test");
-suites.push("native-equipped-attack-test","native-encounter-activation-test");
-suites.push("native-unarmed-attack-test");
-suites.push("native-unarmed-traits-test");
-suites.push("pvp-campaign-safety-test","pvp-safety-command-test");
-suites.push("pvp-campaign-execution-test","pvp-campaign-turn-test","pvp-campaign-multiplayer-test","pvp-policy-revision-test","pvp-safety-status-test");
+suites.push("pvp-safety-command-test");
 suites.push("native-feature-rule-context-test");
-suites.push("native-condition-recovery-test");
-suites.push("native-environment-context-test");
-suites.push("native-environment-instance-test");
-suites.push("native-adversary-context-test");
 suites.push("native-environment-proposals-test");
-suites.push("native-environment-noise-test");
-suites.push("native-environment-trace-test");
-suites.push("native-environment-arrivals-test");
-suites.push("native-environment-scene-test");
-suites.push("native-environment-countdown-test");
-suites.push("native-environment-recording-test");
-suites.push("native-environment-witnesses-test");
-suites.push("native-environment-access-test");
-suites.push("pre-roll-fear-test","pre-roll-fear-recovery-test","pre-roll-fear-integration-test");
-suites.push("native-stress-passives-test");
+suites.push("pre-roll-fear-recovery-test");
 suites.push("native-feature-authoring-test");
-suites.push("session-opening-attendance-test");
-suites.push("session-opening-test");
-suites.push("session-opening-integration-test");
-suites.push("session-opening-refresh-test");
-suites.push("session-opening-entry-test");
-suites.push("narrative-correctness-retirement-test");
-suites.push("audience-first-framework-test","audience-first-integration-test","gm-unified-arbitration-test");
+suites.push("audience-first-framework-test");
 // Critical is the release gate. Optional feature/history matrices remain executable via --extended;
 // no source assertion is deleted, and historical registration inventory stays intact above.
 const extendedSuiteInventory=[...suites];
 const optionalFeatureMatrices=new Set([
-  "refactor-regression-test","operations-regression-test","audit-regression-test","city-regression-test","city-core-regression-test",
-  "city-civic-regression-test","city-depth-regression-test","seed-drafts-regression-test","context-conversation-test","negotiation-preview-test",
-  "portrayal-authoring-test","expansion-a-test","expansion-b-test","expansion-c-test","expansion-d-test","expansion-e-test","expansion-f-test","expansion-h-test",
-  "end-to-end-a-test","end-to-end-b-test","end-to-end-c-test","end-to-end-d-test","end-to-end-e-test","end-to-end-f-test","end-to-end-g-test","end-to-end-h-test","end-to-end-i-test",
-  "systems-to-players-1-test","systems-to-players-2-test","systems-to-players-4-test","systems-to-players-5-test","systems-to-players-6-test","systems-to-players-7-test",
-  "implementation-phase-a-test","implementation-phase-b-test","implementation-phase-c-test","implementation-phase-d-test","implementation-phase-e-test","implementation-evaluation"
+  "refactor-regression-test","audit-regression-test","implementation-phase-a-test","implementation-phase-d-test","implementation-phase-e-test","implementation-evaluation"
 ]);
 const validationProfile=process.argv.includes('--extended')?'extended':'critical';
 if(validationProfile==='critical')suites.splice(0,suites.length,...suites.filter(id=>!optionalFeatureMatrices.has(id)));
@@ -124,13 +51,11 @@ if(process.argv.includes('--changed')){
   report.selection={mode:selection.mode,reason:selection.reason};
 }
 report.release_qualified=false; // Whole-plan completion and exact-SHA release gates are separate.
-
 // VC_VALIDATION_REPORT_V1: compact, atomic, local-only suite diagnostics.
 const reportPath=path.resolve(process.env.VC_VALIDATION_REPORT_PATH||path.join(".reports","offline-validation.json"));
 const reportStarted=performance.now();
 report.started_at=new Date().toISOString();
 report.suites=suites.map(id=>({id,status:"not_run",duration_ms:null,exit_code:null,signal:null,failure:null}));
-
 function safeTail(value){
   const output=String(value||"").replace(/\x1b\[[0-9;]*m/g,"")
     .replace(/\b(?:(?:sk-proj|sk|xox[baprs])-|gh[pousr]_)[A-Za-z0-9_-]{12,}\b/g,"[REDACTED_TOKEN]");
@@ -152,7 +77,6 @@ function saveReport(status){
   fs.renameSync(temp,reportPath);
 }
 saveReport("running");
-
 for(let i=0;i<suites.length;i++){
   const suite=suites[i],started=performance.now();
   const result=spawnSync(process.execPath,["--test-reporter=spec","--import","./scripts/offline-guard.mjs",`scripts/${suite}.mjs`],{

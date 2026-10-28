@@ -1,0 +1,221 @@
+# RF04 legacy script suite retirement
+
+Date: 2026-10-28. Authority: owner decision of 2026-10-28, "Retire those suites": delete the legacy `bot/scripts/*-test.mjs` suites that import RF04 root modules (`bot/src/*.js` files that still had an open RF04 `LEGACY_MODULE_LOCATION` record). Fresh framework tests under `bot/tests/ai-gm-2026-10` cover the moved modules instead.
+
+## Reason
+
+These suites import root modules through relative paths (`../src/<module>.js`). Each such module must move into its owning framework during RF04, which would break the import. The owner chose retirement over repointing 194 suites.
+
+## Deleted suites (194, direct relative import of an open RF04 root module)
+
+- `assembly-authority-test.mjs`
+- `assembly-hooks-test.mjs`
+- `audience-first-integration-test.mjs`
+- `autonomous-world-test.mjs`
+- `candidate-claim-quarantine-test.mjs`
+- `city-civic-regression-test.mjs`
+- `city-core-regression-test.mjs`
+- `city-depth-regression-test.mjs`
+- `city-regression-test.mjs`
+- `compound-action-test.mjs`
+- `consequence-reconciliation-test.mjs`
+- `context-conversation-test.mjs`
+- `d01-roll-lifecycle-test.mjs`
+- `d02-roll-options-test.mjs`
+- `d03-roll-menu-test.mjs`
+- `d04-trait-sharing-test.mjs`
+- `d05-live-window-test.mjs`
+- `d06-continuation-test.mjs`
+- `d07-scoped-memory-test.mjs`
+- `d08-window-security-test.mjs`
+- `delegation-quality-test.mjs`
+- `end-to-end-a-test.mjs`
+- `end-to-end-b-test.mjs`
+- `end-to-end-c-test.mjs`
+- `end-to-end-d-test.mjs`
+- `end-to-end-e-test.mjs`
+- `end-to-end-f-test.mjs`
+- `end-to-end-g-test.mjs`
+- `end-to-end-h-test.mjs`
+- `end-to-end-i-test.mjs`
+- `endurance-test.mjs`
+- `expansion-a-test.mjs`
+- `expansion-b-test.mjs`
+- `expansion-c-test.mjs`
+- `expansion-d-test.mjs`
+- `expansion-e-test.mjs`
+- `expansion-f-test.mjs`
+- `expansion-h-test.mjs`
+- `expansion-quality-test.mjs`
+- `gm-recovery-regression-test.mjs`
+- `gm-unified-arbitration-test.mjs`
+- `h03-post-turn-review-test.mjs`
+- `h04-narrative-claim-evidence-test.mjs`
+- `historical-archive-test.mjs`
+- `i-heard-you-1-test.mjs`
+- `i-heard-you-2-test.mjs`
+- `i-heard-you-3-test.mjs`
+- `i-heard-you-4-test.mjs`
+- `i-heard-you-5-test.mjs`
+- `i-heard-you-6-test.mjs`
+- `i-heard-you-7-test.mjs`
+- `i-heard-you-9-test.mjs`
+- `i-heard-you-integration-test.mjs`
+- `implementation-phase-b-test.mjs`
+- `implementation-phase-c-test.mjs`
+- `lifecycle-publication-test.mjs`
+- `memory-audience-isolation-test.mjs`
+- `memory-lifecycle-test.mjs`
+- `movement-authorization-regression-test.mjs`
+- `narrative-contract-test.mjs`
+- `narrative-correctness-retirement-test.mjs`
+- `narrative-freedom-test.mjs`
+- `narrative-inference-test.mjs`
+- `narrative-publication-hotfix-test.mjs`
+- `narrative-salience-test.mjs`
+- `narrative-understanding-test.mjs`
+- `native-actor-control-test.mjs`
+- `native-adjudication-replay-test.mjs`
+- `native-adversary-context-test.mjs`
+- `native-condition-recovery-test.mjs`
+- `native-encounter-activation-test.mjs`
+- `native-environment-access-test.mjs`
+- `native-environment-arrivals-test.mjs`
+- `native-environment-context-test.mjs`
+- `native-environment-countdown-test.mjs`
+- `native-environment-instance-test.mjs`
+- `native-environment-noise-test.mjs`
+- `native-environment-recording-test.mjs`
+- `native-environment-scene-test.mjs`
+- `native-environment-trace-test.mjs`
+- `native-environment-witnesses-test.mjs`
+- `native-equipped-attack-test.mjs`
+- `native-evidence-analysis-test.mjs`
+- `native-experience-eligibility-test.mjs`
+- `native-group-completion-test.mjs`
+- `native-roll-modifiers-test.mjs`
+- `native-roll-participation-test.mjs`
+- `native-stress-passives-test.mjs`
+- `native-unarmed-attack-test.mjs`
+- `native-unarmed-traits-test.mjs`
+- `native-veil-defense-test.mjs`
+- `native-world-operations-test.mjs`
+- `native-world-strategy-test.mjs`
+- `natural-language-scope-test.mjs`
+- `negotiation-preview-test.mjs`
+- `npc-cognition-regression-test.mjs`
+- `offline-smoke-test.mjs`
+- `operations-regression-test.mjs`
+- `playable-narration-test.mjs`
+- `portrayal-authoring-test.mjs`
+- `pre-roll-fear-integration-test.mjs`
+- `pre-roll-fear-test.mjs`
+- `production-regression-test.mjs`
+- `prompt-budget-test.mjs`
+- `pvp-campaign-execution-test.mjs`
+- `pvp-campaign-multiplayer-test.mjs`
+- `pvp-campaign-safety-test.mjs`
+- `pvp-campaign-turn-test.mjs`
+- `pvp-policy-revision-test.mjs`
+- `pvp-safety-status-test.mjs`
+- `recipient-publication-test.mjs`
+- `relax-end-to-end-test.mjs`
+- `rules-adjudication-test.mjs`
+- `scene-action-window-test.mjs`
+- `scene-entry-test.mjs`
+- `scene-narration-repair-test.mjs`
+- `seed-data-regression-test.mjs`
+- `seed-drafts-regression-test.mjs`
+- `semantic-first-residuals-test.mjs`
+- `semantic-language-robustness-test.mjs`
+- `semantic-owner-appearance-test.mjs`
+- `session2-replay-test.mjs`
+- `session5-diagnostics-test.mjs`
+- `session5-latency-test.mjs`
+- `session5-narrative-test.mjs`
+- `session-opening-attendance-test.mjs`
+- `session-opening-entry-test.mjs`
+- `session-opening-integration-test.mjs`
+- `session-opening-refresh-test.mjs`
+- `session-opening-test.mjs`
+- `simulation-regression-test.mjs`
+- `story-continuity-test.mjs`
+- `systems-to-players-1-test.mjs`
+- `systems-to-players-2-test.mjs`
+- `systems-to-players-3-test.mjs`
+- `systems-to-players-4-test.mjs`
+- `systems-to-players-5-test.mjs`
+- `systems-to-players-6-test.mjs`
+- `systems-to-players-7-test.mjs`
+- `systems-to-players-9-test.mjs`
+- `typed-intents-regression-test.mjs`
+- `v94-pc-death-test.mjs`
+- `v94-pc-effect-authority-test.mjs`
+- `v94-pc-recovery-test.mjs`
+- `v94-pvp-attack-test.mjs`
+- `v94-pvp-damage-test.mjs`
+- `v94-pvp-multiplayer-test.mjs`
+- `v94-pvp-profile-test.mjs`
+- `v94-pvp-qualification-test.mjs`
+- `v94-pvp-reaction-test.mjs`
+- `v95-autonomous-fear-test.mjs`
+- `v95-operational-metrics-test.mjs`
+- `v95-protected-narrative-test.mjs`
+- `v95-pvp-ux-test.mjs`
+- `v96-05r-fiction-test.mjs`
+- `v96-action-review-test.mjs`
+- `v96-baseline-test.mjs`
+- `v96-candidate-audit-test.mjs`
+- `v96-context-efficiency-test.mjs`
+- `v96-fresh-authoring-test.mjs`
+- `v96-native-actions-test.mjs`
+- `v96-ordinary-effects-test.mjs`
+- `v96-routing-efficiency-test.mjs`
+- `v96-rules-discretion-test.mjs`
+- `v96-semantic-intake-test.mjs`
+- `v96-semantic-output-p0-test.mjs`
+- `v96-semantic-proposals-test.mjs`
+- `v9-baseline-regressions-test.mjs`
+- `v9-continuation-test.mjs`
+- `v9-discord-hardening-test.mjs`
+- `v9-npc-observation-test.mjs`
+- `v9-observation-compatibility-test.mjs`
+- `v9-publication-test.mjs`
+- `v9-pvp-agreement-test.mjs`
+- `v9-pvp-authorship-test.mjs`
+- `v9-pvp-hope-fear-test.mjs`
+- `v9-pvp-rounds-test.mjs`
+- `v9-pvp-typed-roll-test.mjs`
+- `v9-release-qualification-test.mjs`
+- `v9-roll-truth-test.mjs`
+- `v9-roll-ux-test.mjs`
+- `v9-window-lifecycle-test.mjs`
+- `world-authorship-test.mjs`
+- `world-background-identity-test.mjs`
+- `world-background-memory-test.mjs`
+- `world-clock-beats-test.mjs`
+- `world-director-beats-test.mjs`
+- `world-encounter-beats-test.mjs`
+- `world-identity-persistence-test.mjs`
+- `world-information-transfer-test.mjs`
+- `world-narrative-bridge-test.mjs`
+- `world-resolution-test.mjs`
+- `world-sanctioned-sources-test.mjs`
+- `world-simulation-receipts-test.mjs`
+
+## Also deleted (consequence of the above)
+
+- `v95-deprecation-coverage-test.mjs`: audits the source text of the retired suites (`publicationFixtureMigrations` and the evidence JSON) and cannot pass once they are gone. `validation-selection.mjs` no longer pairs it with every registered test change.
+
+## Runner and registry edits
+
+- `bot/package.json`: removed 14 `test:*` scripts whose only targets were retired suites (`test:seed` and `test:city` chained several retired files, so nothing remained). `test:audit` is kept.
+- `bot/scripts/validate-offline.mjs`: removed the retired ids from `suites` and from `optionalFeatureMatrices`.
+- `bot/scripts/fixtures/i-heard-you-acceptance.json`: removed retired ids from every row. All 26 acceptance rows were backed only by retired suites, so each now has an empty `suites` list and `status` `legacy_suites_retired_rf04`. The offline acceptance gate therefore passes vacuously until framework tests are registered for these rows (known gap).
+- `bot/scripts/critical-validation-profile-test.mjs`, `typed-intent-qualification-test.mjs`, `validation-selection-test.mjs`, `validation-selection.mjs`, `v7-delta-baseline-test.mjs`: dropped assertions and spawns that named retired suites. These surviving suites were not executed (repository rule against running `bot/scripts/*-test.mjs`); only `node --check` was run.
+
+## Not changed
+
+- Non-test scripts (`offline-guard.mjs`, `check-source`, fixtures such as `narrative-fixtures.mjs`) stay. Fixtures that import open RF04 modules are repointed when those modules move.
+- `manifest.json` and `MANIFEST.txt` (generated release manifests, already out of date) were not regenerated.
+- Historical evidence JSON under `bot/scripts/fixtures/historical` is unchanged.

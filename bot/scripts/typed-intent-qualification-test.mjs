@@ -3,9 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { qualifyTypedIntentRelease } from "../src/typed-intent-qualification.js";
 
-const required=["typed-intent-lifecycle-test","typed-routing-authority-test","rules-adjudication-test","compound-action-test",
-  "scene-action-window-test","memory-audience-isolation-test","memory-lifecycle-test","consequence-reconciliation-test",
-  "legacy-authority-migration-test"];
+const required=["typed-intent-lifecycle-test","typed-routing-authority-test","legacy-authority-migration-test"];
 const validator=fs.readFileSync(new URL("./validate-offline.mjs",import.meta.url),"utf8");
 for(const id of required)assert(validator.includes(`"${id}"`),`${id} must be in the default offline gate`);
 const zero={semantic_omissions:0,semantic_overreach:0,false_success:0,false_refusal:0,mis_scoped_npc_knowledge:0,
