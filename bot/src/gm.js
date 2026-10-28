@@ -9,7 +9,7 @@ import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CAND
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./frameworks/knowledge/public.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./frameworks/knowledge/public.js";
-import { presentationContext } from "./presentation-evidence.js";
+import { presentationContext } from "./frameworks/knowledge/public.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
 import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';

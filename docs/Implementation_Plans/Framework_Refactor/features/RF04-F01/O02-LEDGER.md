@@ -1,0 +1,11 @@
+# RF04-F01 O02 ledger
+
+At base `b93a1e0203b7e3f63bdd91e4115fc40912e50295` with unrelated concurrent work, environmental observation grammar moved into World and the original root reader re-exports the exact function. The normalized moved source equals the entire prior source, SHA-256 `4E0A168BCEA018018E2A3419B45DB6CB97293AEE4E1D1783B89CCF5A398E51C9`. Standalone calls require no composition or saved-state conversion.
+
+One frozen fresh batch from `bot/`: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f01-environment-grammar.test.mjs`; exit 0, 2/2 passed, 0 failed/skipped/cancelled, TAP 128.7802 ms. Three changed production modules and the test passed syntax checks. Fresh cases check root/public function identity, exact certified prose, malformed provenance, unexpected fields, unsupported subjects and mismatched content. The actual scene-description and audience pipeline remain unqualified. No network, provider or production DB use; cost $0. The test remains local and ignored.
+
+Frozen SHA-256: root reader `31F6102872F5E2A48EC9C11AA417073BEC9DFF1287CB197BD133C36F8A98E80A`; World source `043CB77AD45CE6F31C78C739FAC7105ED364B22D27D829D254E3A33D3EDEBFE7`; World public `28C81A34276062CEAC2FA0058617FA68D36831FC93E469920152696A7EB5CA47`; fresh test `6310D67BA70136E18FF66E63DB56B280C88D9B04358F6F19B4C188AF72C2C887`.
+
+The root compatibility reader remains necessary: production `bot/src/scene-description.js` imports it. Its exact `LEGACY_MODULE_LOCATION` record `1cc98a3bbb97b8bbd8e7cb125cd6e0b6d46d61fec94979cd1ff669855c3efddd` stays open; retirement requires migrating that supported caller and reviewing other supported readers. This restriction also applies to the final RF04 gate; a compatibility reader is not considered retired merely because its implementation moved. Current shared graph snapshot: 831 modules, zero unowned, two cycles, largest 85, zero active violations and transition errors, pass. Concurrent changes prevent treating this snapshot as a frozen phase gate. RELEASE NOT AUTHORIZED.
+
+Coordinated RF04 ratchet passed: 831 modules, zero unowned/active/errors, largest cycle85. RF05 failed with124 groups/errors. Retained root readers and stated test limits remain; release unauthorized.

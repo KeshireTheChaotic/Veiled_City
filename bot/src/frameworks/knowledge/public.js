@@ -23,6 +23,7 @@ export {createKnowledgeWorldIdentityConsumer,knowledgeWorldIdentities} from './c
 export {createKnowledgeNarrativeVisibilityConsumer,knowledgeNarrativeVisibility} from './contracts/narrative-visibility.js';
 export {createHistoryReconciliation} from './history-reconciliation.js';
 export {createPresentationEvidence} from './presentation-evidence.js';
+export {inferredSource,relationshipEvidence,relationshipProvenance,artifactProvenance,reviewPresentation,presentationContext,presentationView} from './presentation-evidence-service.js';
 export {createEvidenceCustody} from './evidence-custody.js';
 export {createOwnedCommunity} from './owned-community.js';
 export {createPersonalContinuity} from './personal-continuity.js';

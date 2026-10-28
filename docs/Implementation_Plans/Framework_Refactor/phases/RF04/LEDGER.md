@@ -815,3 +815,7 @@ Latest committed migration inspected: b816b014 (C119). The inherited C120 propos
 ## 2026-10-28 O01 and C121
 
 O01 extracts the original pure World simulation overview with root function identity retained (2/2 focused tests). C121 moves original World receipt implementation into its framework and keeps root re-exports, replacing one C120 provider-slot proposal with cold-reader-compatible public ownership (2/2 focused tests). RF04 ratchet passes at 828 modules, zero unowned/active/transition errors, largest cycle85; RF05 remains failing at124 groups/errors. Actual native receipt and saved-database replay remain outside these fake-boundary tests. RF04 INCOMPLETE; release unauthorized.
+
+## 2026-10-28 C122, C123 and O02
+
+Knowledge presentation evidence composition moved with root singleton readers retained; application callers adopt public API (C122 split focused evidence). EncounterLibrary class moved to Daggerheart with exact class identity and file-backed tests2/2 (C123). World environmental grammar moved with original root function identity and tests2/2 (O02). Three exact application import records retired; required root readers remain. RF04 ratchet passed at831 modules, zero unowned/active/errors, largest cycle85; RF05 remains at124 groups/errors. Full receipts, gameplay and live behavior remain unqualified. RF04 incomplete; release unauthorized.

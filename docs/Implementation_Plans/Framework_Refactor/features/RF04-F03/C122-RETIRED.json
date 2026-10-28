@@ -1,0 +1,47 @@
+{
+  "reason": "Application consumers adopt original Knowledge public presentation service",
+  "entries": [
+    {
+      "id": "7c35c09e630afd871ab8950a944490d816adf7f1437ed6976678f111469987be",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/presentation-evidence.js",
+      "kind": "static",
+      "specifier": "./presentation-evidence.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "55d75f176c4d2a6df76c77b867a1a874962ff6f2ee5d4e979fbf7104a92ad67f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/presentation-evidence.js",
+      "kind": "static",
+      "specifier": "./presentation-evidence.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b2667385cd53db5e9bca6dfef05498a89180fec3bc038768f0d87bf6c7bf34b4",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/presentation-evidence.js",
+      "kind": "static",
+      "specifier": "./presentation-evidence.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

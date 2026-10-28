@@ -25,7 +25,7 @@ import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";
 import { reviewSceneEntry, configureEntryPolicy } from "./scene-entry-native.js";
 import { configureWorldAuthority, worldAuthority, retconAutonomousEntity } from "./autonomous-world.js";
-import { reviewPresentation, presentationView } from "./presentation-evidence.js";
+import { reviewPresentation, presentationView } from "./frameworks/knowledge/public.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&
     !interaction.member?.roles?.cache?.has(db.getCampaign(interaction.guildId)?.gm_role_id)) throw new PermissionError("GM/admin permission required.");
