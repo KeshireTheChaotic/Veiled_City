@@ -12535,20 +12535,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "7e5e5a641e0506643cfaf6b086e4b9b3477a7087e579c80b460f492f7e5501cf",
-      "code": "PAIR_IMPORTS_PRIVATE_API",
-      "from": "bot/src/world-narrative-bridge.js",
-      "to": "bot/src/world-encounter-beats.js",
-      "kind": "static",
-      "specifier": "./world-encounter-beats.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "749a1bdb3ec09e058ff31877bb81280d3cb2477a5e19ae926fe3fd6807c171ac",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/action-consent.js",

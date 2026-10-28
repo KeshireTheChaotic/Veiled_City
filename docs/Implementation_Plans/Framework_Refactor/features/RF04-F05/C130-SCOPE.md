@@ -1,0 +1,5 @@
+# RF04-F05 C130 — World owns encounter beat candidates
+
+Base e9e841d5. The read-only encounter candidate implementation moved from root world-encounter-beats.js into frameworks/world/encounter-beats.js (imports remapped to World-internal contracts, identity-origin and kernel; body unchanged) and is exported from the World public API. The Narrative-World bridge imports inspectNativeEncounterCandidate from World public; root world-encounter-beats.js remains a compatibility re-export for gm.js and narrative-director-source.js. No slot or composition prerequisite added: the cold missing-library hold is unchanged. c73-forwarding fixture repointed to the moved module (its stale registration assertion fails identically on committed files).
+
+Rollback: Revert only the C130 commit: restore the encounter beat implementation in root world-encounter-beats.js, remove frameworks/world/encounter-beats.js and its World public export, restore the bridge import of ./world-encounter-beats.js, and restore the exact transition from C130-RETIRED.json.

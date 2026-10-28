@@ -1,0 +1,21 @@
+{
+  "feature": "RF04-F05-C130",
+  "original_manifest_sha256": "FDF70B2577A5556F0935BB6921FF290C6806EFADE7942B11465EE77F88831723",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "7e5e5a641e0506643cfaf6b086e4b9b3477a7087e579c80b460f492f7e5501cf",
+      "code": "PAIR_IMPORTS_PRIVATE_API",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/world-encounter-beats.js",
+      "kind": "static",
+      "specifier": "./world-encounter-beats.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

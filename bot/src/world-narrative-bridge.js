@@ -8,7 +8,7 @@ import {renderNarrativeUnit} from './narrative-authority.js';
 import {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './frameworks/narrative/public.js';
 function inspectOpeningEntryOpportunity(...args){return narrativeBridgeSessionSources.inspectOpeningEntryOpportunity(...args);}function inspectSessionOpening(...args){return narrativeBridgeSessionSources.inspectSessionOpening(...args);}function assemblyDeliverySummary(...args){return narrativeBridgeSessionSources.assemblyDeliverySummary(...args);}
 function completedActionSource(...args){return narrativeBridgeNativeSources.completedActionSource(...args);}function historicalActionSource(...args){return narrativeBridgeNativeSources.historicalActionSource(...args);}function typedRollProof(...args){return narrativeBridgeNativeSources.typedRollProof(...args);}function validateFearEffect(...args){return narrativeBridgeNativeSources.validateFearEffect(...args);}
-import {inspectNativeEncounterCandidate} from './world-encounter-beats.js';
+import {inspectNativeEncounterCandidate} from './frameworks/world/public.js';
 const entitled=(row,scope)=>['public','party'].includes(row.visibility)||scope.mode==='private'&&row.visibility==='character'
   &&row.subject_key===scope.actorCharacterId&&!!scope.actorUserId;
 const audience=s=>s.mode==='private'?{visibility:'character',character:s.actorCharacterId,user:s.actorUserId}:{visibility:'party',character:null,user:null};
