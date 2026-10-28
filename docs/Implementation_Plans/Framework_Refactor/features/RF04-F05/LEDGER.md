@@ -492,3 +492,9 @@ Tests: one frozen batch of 82 files: 509 tests, 509 pass, 0 fail. Architecture: 
 Daggerheart's pvp-rounds.js stops importing the Session root module window-coordinator.js. Native rules gain a fixed nativePvpWindow port; Session gains a PvP window slot filled at load by window-coordinator.js. The adopted daggerheart--session adapter binds the port via connectNativePvpWindow from initializeNativeScenes (no index.js change). Breaking the pvp-rounds/window-coordinator cycle also retires three cyclic-edge records. Static reachability from index.js unchanged.
 
 Tests: one frozen batch of 69 files: 399 tests, 399 pass, 0 fail. Architecture: 4 exact records retired. RF04 exit 0, 0 active violations, 819 modules; RF05 152 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-28 C115 Session dialogue and story continuity read Intent language readings and World NPC availability through Session ports
+
+Session's dialogue-continuity.js stops importing the World shim city-constraints.js and the Intent root module authored-turn-envelope.js; story-continuity.js stops importing the Intent root module gameplay-intake.js. activeCityProxy now uses the existing Session scene World port (same World original). Session gains fixed sessionIntentLanguage and sessionWorldNpcAvailability ports; Intent gains authored turn and gameplay intake slots filled at load by authored-turn-envelope.js and gameplay-intake.js. The adopted intent--session and session--world adapters bind the ports from initializeSessionIntent and initializeSessionSceneWorld (no index.js change). Static reachability from index.js unchanged.
+
+Tests: one frozen batch of 56 files: 251 tests, 251 pass, 0 fail. Architecture: 3 exact records retired. RF04 exit 0, 0 active violations, 822 modules; RF05 149 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

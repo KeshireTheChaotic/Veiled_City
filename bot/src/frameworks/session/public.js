@@ -32,3 +32,5 @@ export {sessionKnowledgeSources} from './contracts/knowledge-sources.js';
 export {sessionStoryContinuitySource} from './contracts/story-continuity-source.js';
 
 export {sessionPvpWindowSource} from './contracts/pvp-window-source.js';
+export {sessionIntentLanguage} from './contracts/intent-language.js';
+export {sessionWorldNpcAvailability} from './contracts/world-npc-availability.js';

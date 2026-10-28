@@ -15,3 +15,4 @@ export {intentArbitrationOrigin,intentNativeEnvironment} from './contracts/envir
 export {authoredTurnEnvelope,authoredTurnHash,authoredTurnKey,authoredAnnotationKey} from './authored-turn-reader.js';
 export {intentPlayerLanguage} from './contracts/player-language.js';
 export {intentAiIntentDispatch,intentTypedIntentReaders} from './contracts/world-dispatch-sources.js';
+export {intentAuthoredTurnSource,intentGameplayIntakeSource} from './contracts/turn-language-sources.js';

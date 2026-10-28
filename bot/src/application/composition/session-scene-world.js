@@ -1,2 +1,2 @@
-import {connectSessionSceneWorld,connectSessionWorldInstitution,connectSessionWorldActorState,connectSessionWorldAutonomy} from '../../framework-to-framework/session--world/public.js';
-export function initializeSessionSceneWorld(){connectSessionWorldInstitution();connectSessionWorldActorState();connectSessionWorldAutonomy();return connectSessionSceneWorld();}
+import {connectSessionSceneWorld,connectSessionWorldInstitution,connectSessionWorldActorState,connectSessionWorldAutonomy,connectSessionWorldNpcAvailability} from '../../framework-to-framework/session--world/public.js';
+export function initializeSessionSceneWorld(){connectSessionWorldInstitution();connectSessionWorldActorState();connectSessionWorldAutonomy();connectSessionWorldNpcAvailability();return connectSessionSceneWorld();}

@@ -33,3 +33,6 @@ export function semanticResponseObligation(value,intents,{authenticated=false,en
     reason:needed?'source_grounded_semantic_engagement':noResponse?'classified_non_world_communication':'no_current_semantic_engagement',
     authority:'Response obligation only; never a listener, action, roll, consent or effect receipt.'};
 }
+import {intentGameplayIntakeSource} from './frameworks/intent/public.js';
+// Provide this module's original silence and response-obligation readings to the fixed Intent slot; no other authority is granted.
+intentGameplayIntakeSource.bind({explicitSilence,semanticResponseObligation});

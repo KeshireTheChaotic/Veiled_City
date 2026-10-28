@@ -37,3 +37,8 @@ import {sessionStoryContinuitySource} from '../../frameworks/session/public.js';
 import {worldStoryContinuity} from '../../frameworks/world/public.js';
 /** Pass Session's original pacing advice and mystery configuration to World unchanged. */
 export function connectWorldStoryContinuity(){return worldStoryContinuity.bind({pacingAdvice:sessionStoryContinuitySource.pacingAdvice,configureMystery:sessionStoryContinuitySource.configureMystery});}
+
+import {sessionWorldNpcAvailability} from '../../frameworks/session/public.js';
+import {assertNpcAvailability} from '../../frameworks/world/public.js';
+/** Pass World's original NPC availability check to Session unchanged. */
+export function connectSessionWorldNpcAvailability(){return sessionWorldNpcAvailability.bind({assertNpcAvailability});}

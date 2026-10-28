@@ -57,3 +57,6 @@ export function recordNativeConsumedSpans(db,guild,user,character,messageId,span
 export function overlapsConsumedSpan(envelope,start,end){
   return (envelope?.native_consumed_spans||[]).some(span=>start<span.end&&end>span.start);
 }
+import {intentAuthoredTurnSource} from './frameworks/intent/public.js';
+// Provide this module's original quote span reading to the fixed Intent slot; no other authority is granted.
+intentAuthoredTurnSource.bind({sourceSpanInsideQuote});

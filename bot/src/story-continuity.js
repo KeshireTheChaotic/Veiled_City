@@ -7,7 +7,8 @@ import {sessionPersonalContinuity} from './frameworks/session/public.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
 import {stateRevision} from './kernel/state-revision.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import {explicitSilence,semanticResponseObligation} from './gameplay-intake.js';
+import {sessionIntentLanguage} from './frameworks/session/public.js';
+function explicitSilence(...args){return sessionIntentLanguage.explicitSilence(...args);}function semanticResponseObligation(...args){return sessionIntentLanguage.semanticResponseObligation(...args);}
 export function setPacingCues(db,guildId,input,actorId){
   if(input?.op==="setup") return manageNarrativeSetup(db,guildId,input,actorId);
   cityObject(input);requireCitySource(db,guildId,input.source_event);

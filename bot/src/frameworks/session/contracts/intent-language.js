@@ -1,0 +1,3 @@
+import {createFunctionPort} from '../../../kernel/function-port.js';
+/** Session asks Intent for its original quote-span, silence and response-obligation readings without owning language rules. */
+export const sessionIntentLanguage=createFunctionPort(['sourceSpanInsideQuote','explicitSilence','semanticResponseObligation'],{code:'SESSION_INTENT_LANGUAGE_COMPOSITION',label:'Session Intent language'});

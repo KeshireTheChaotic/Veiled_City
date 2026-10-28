@@ -7,13 +7,15 @@ function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...a
 import {sessionSceneWorldSources} from './frameworks/session/public.js';
 function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import { activeCityProxy } from "./city-constraints.js";
-import {assertNpcAvailability} from './city-constraints.js';
+function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProxy(...args);}
+import {sessionWorldNpcAvailability} from './frameworks/session/public.js';
+function assertNpcAvailability(...args){return sessionWorldNpcAvailability.assertNpcAvailability(...args);}
 import {conversationPrincipal} from './frameworks/session/public.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {sessionKnowledgeSources} from './frameworks/session/public.js';
 function factVisibleTo(...args){return sessionKnowledgeSources.factVisibleTo(...args);}
-import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
+import {sessionIntentLanguage} from './frameworks/session/public.js';
+function sourceSpanInsideQuote(...args){return sessionIntentLanguage.sourceSpanInsideQuote(...args);}
 import {sessionIntent} from './frameworks/session/public.js';
 function interpretAuthoredText(...args){return sessionIntent.interpretAuthoredText(...args);}
 function mentionsPublicIdentity(...args){return sessionKnowledgeSources.mentionsPublicIdentity(...args);}
