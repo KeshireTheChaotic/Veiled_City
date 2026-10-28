@@ -16,4 +16,5 @@ export function connectKnowledgeNarrativeSources(){return knowledgeNarrativeSour
 import {narrativeKnowledgeReaders} from '../../frameworks/narrative/public.js';
 import {mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts,listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from '../../frameworks/knowledge/public.js';
 /** Bind Knowledge's original public referent and scoped query readers to Narrative's fixed consumer. */
-export function connectNarrativeKnowledgeReaders(){return narrativeKnowledgeReaders.bind({mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts,listNarrativeRecords,narrativeRecordLimit:()=>NARRATIVE_RECORD_LIMIT});}
+const narrativeRecordLimit=()=>NARRATIVE_RECORD_LIMIT;
+export function connectNarrativeKnowledgeReaders(){return narrativeKnowledgeReaders.bind({mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts,listNarrativeRecords,narrativeRecordLimit});}
