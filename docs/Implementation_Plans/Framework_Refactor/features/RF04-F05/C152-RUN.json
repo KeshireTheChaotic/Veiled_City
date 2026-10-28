@@ -1,0 +1,138 @@
+{
+  "feature": "RF04-F05-C152",
+  "base_head": "6ad6f0a1e6a90ff26f205b3e2d56f684a12fc14f",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/typed-intents.js",
+      "bot/src/frameworks/intent/contracts/owner-action-terminal.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c52.test.mjs"
+    ],
+    "passed": 3,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f03.test.mjs",
+        "sha256": "4F65D9059A1014A9BC13263359D3A6823584F50AC55DFBFD06182D6ED97CDF0A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f06.test.mjs",
+        "sha256": "E374867949573CD9B92D4328C5388B79A22056888C2D61203331455AB8123AB4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c23.test.mjs",
+        "sha256": "99AB1672CC089AA993B3BB023AA7B8460FE7189D7F67BC4EE0330E5E012E98ED"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "B7BC26FB3AF53B10C632037BA32F6662E4BFC3259867B9A9EB4E822EE4A7436B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "435A2A57C79CEE4CD5B138DF1AA3B6491EEDFDC2E5E62260179DA26F3D9738F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "3A2350B66CC62CE09A331EA21FA1E446BC085FBAB88761E2484AAE3C782DD23A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-positive-consent.test.mjs",
+        "sha256": "25620418B4DD188FEF0CF18D2EC2F7F934F657F5FBA8913851E967E14ED45D7E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "34B8F216F661A0D23080F42C09B9D97A87FB541BEE9904418A61F3F212D9CED1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c52.test.mjs",
+        "sha256": "41F9F337252D96CC288D145649103C80508EB45619CF59AB7B6C78427A78E107"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T19:03:15.521Z",
+    "end": "2026-10-28T19:03:32.997Z",
+    "exit_code": 0,
+    "tests": 61,
+    "passed": 61,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 17441.2976,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c152-test.log",
+    "log_sha256": "A088B613C5C8E632404E7471F5BE06558A52094446B6D9A33B281B870F49E0EC",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3437,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1288,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c152-rf04-architecture.log",
+      "log_sha256": "FD34D9448C98B14F9231ABE3B7657B7168413C6E485CBEE1F81B934B58DF0D71",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3437,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1212,
+      "active_violation_groups": 76,
+      "transition_errors": 76,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c152-rf05-architecture.log",
+      "log_sha256": "7B337310C17D89C769CE12F70E3C48DA79A7D2A3A050E96B313FBF382BD52C55",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "8552b8050fdac6bbc78dd157024c9b504b1ad4e24a119e4dbac95200940e7c48",
+      "b6174525197888c5cb8cf1d449435154c7266c5dac9559c2035072901716180d"
+    ],
+    "original_manifest_sha256": "F70F789C15FCCD162009B49D6963A76589C4BC968295C425F7D92BA9CE8D8F5C",
+    "manifest_sha256_after": "F47DB0970A1C221D5A193828B0E93D68B30DCEF785E3CCE84E6BCA801ECE638E",
+    "entries_after": 1277,
+    "remaining_by_feature": {
+      "RF04-F01": 27,
+      "RF04-F03": 20,
+      "RF04-F04": 23,
+      "RF04-F05": 6,
+      "RF05-F02": 180,
+      "RF05-F03": 213,
+      "RF05-F04": 41,
+      "RF05-F05": 388,
+      "RF06-F02": 16,
+      "RF06-F03": 169,
+      "RF06-F04": 146,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/typed-intents.js": "D63C413380E42AA78048B8045D093C3477E9583049B1B2EC644C3950547BCE19",
+    "bot/src/frameworks/intent/contracts/owner-action-terminal.js": "DDB7BCF9AE6684EC5CD014C4FEC54E190C4DF80C9FB27B22FD19ACBFD82773BD"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C152 commit: restore root owner-action-terminal.js and the typed-intents.js import, drop the Intent consumer and adapter binding, and restore the transitions from C152-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

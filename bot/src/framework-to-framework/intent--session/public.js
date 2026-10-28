@@ -7,3 +7,7 @@ import {sessionIntentLanguage} from '../../frameworks/session/public.js';
 import {intentAuthoredTurnSource,intentGameplayIntakeSource} from '../../frameworks/intent/public.js';
 /** Pass Intent's original quote-span, silence and response-obligation readings to Session unchanged. */
 export function connectSessionIntentLanguage(){return sessionIntentLanguage.bind({sourceSpanInsideQuote:intentAuthoredTurnSource.sourceSpanInsideQuote,explicitSilence:intentGameplayIntakeSource.explicitSilence,semanticResponseObligation:intentGameplayIntakeSource.semanticResponseObligation});}
+import {overlapsOwnerActionTerminal} from '../../frameworks/session/public.js';
+import {intentOwnerActionTerminal} from '../../frameworks/intent/public.js';
+/** Bind Session's original owner action terminal reader to Intent's fixed consumer. */
+export function connectIntentOwnerActionTerminal(){return intentOwnerActionTerminal.bind({overlapsOwnerActionTerminal});}

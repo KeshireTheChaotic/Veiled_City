@@ -8,7 +8,8 @@ import { resolvePlaceReference } from './location-language.js';
 import { captureDialogue } from './dialogue-continuity.js';
 import { resolveScopedMemoryReference } from './scoped-memory.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
-import {overlapsOwnerActionTerminal} from './owner-action-terminal.js';
+import {intentOwnerActionTerminal} from './frameworks/intent/public.js';
+function overlapsOwnerActionTerminal(...args){return intentOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {isCharacterSourceSpan} from './source-communication.js';
 import {
   authoredTurnEnvelope,

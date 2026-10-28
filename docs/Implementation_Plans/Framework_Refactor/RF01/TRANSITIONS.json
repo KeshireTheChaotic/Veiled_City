@@ -1855,17 +1855,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "8552b8050fdac6bbc78dd157024c9b504b1ad4e24a119e4dbac95200940e7c48",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/owner-action-terminal.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "f488a54b80413140e57b89859f89347138d3f0789403d2a18b47689e98e59d5c",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/owner-consent.js",
@@ -11801,20 +11790,6 @@
       "to": "bot/src/gm-ruling-schema.js",
       "kind": "static",
       "specifier": "./gm-ruling-schema.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "b6174525197888c5cb8cf1d449435154c7266c5dac9559c2035072901716180d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/typed-intents.js",
-      "to": "bot/src/owner-action-terminal.js",
-      "kind": "static",
-      "specifier": "./owner-action-terminal.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",

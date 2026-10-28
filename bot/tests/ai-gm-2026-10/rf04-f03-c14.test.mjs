@@ -12,7 +12,7 @@ import {VeiledDB} from '../../src/db.js';
 import {createSemanticCandidateProof} from '../../src/frameworks/knowledge/public.js';
 import {conversationPrincipal} from '../../src/conversation-principal.js';
 import {currentScene} from '../../src/scene-continuity.js';
-import {overlapsOwnerActionTerminal} from '../../src/owner-action-terminal.js';
+import {overlapsOwnerActionTerminal} from '../../src/frameworks/session/public.js';
 import {authoredTurnEnvelope,captureAuthoredTurnEnvelope,recordNativeConsumedSpans} from '../../src/authored-turn-envelope.js';
 import {captureWorldInput} from '../../src/autonomous-world.js';
 import {persistPlayerIntents} from '../../src/typed-intents.js';
