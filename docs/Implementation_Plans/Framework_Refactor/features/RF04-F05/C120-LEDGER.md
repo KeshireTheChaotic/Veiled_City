@@ -7,3 +7,5 @@ Fresh changed-code-only cold-process tests demonstrated an observation and encou
 The proposal and its exact temporary manifest retirement are preserved in `C120-PROPOSED.patch`; the eight production files and the 23 transition records were restored to C119 behavior. `C120-RETIRED.json` is historical attempted retirement evidence only: those entries remain active. The inherited `C120-RUN.json` is retained unchanged. C120 remains locally held pending a compatibility-preserving provider migration; it is not completed or a global blocker.
 
 Observation test SHA256 `30CC7AC1030AC5BBE17E9CA05E0093CEC754B9050D9B52E71FE41F0068D4FF03`; encounter test `16831132ADDC06569F30B0D6369F2E04CD4F6B47816E798F6B08572462E9169B`. Tests/logs are local only. No provider, live service or production database use. Release unauthorized.
+
+C121 subsequently resolves only the World receipt boundary by moving the original implementation into World and retaining its root re-export; it avoids the receipt provider slot. C120's Narrative unit and encounter parts remain held.

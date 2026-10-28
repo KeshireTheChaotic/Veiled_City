@@ -12619,20 +12619,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "58cbd13d657271c24a1698513ee72ff8f866df78f35d891f60e5e9e895d65171",
-      "code": "PAIR_IMPORTS_PRIVATE_API",
-      "from": "bot/src/world-narrative-bridge.js",
-      "to": "bot/src/world-simulation-receipts.js",
-      "kind": "static",
-      "specifier": "./world-simulation-receipts.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7e5e5a641e0506643cfaf6b086e4b9b3477a7087e579c80b460f492f7e5501cf",
       "code": "PAIR_IMPORTS_PRIVATE_API",
       "from": "bot/src/world-narrative-bridge.js",

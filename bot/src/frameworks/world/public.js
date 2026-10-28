@@ -89,3 +89,5 @@ export {worldStoryContinuity} from './contracts/story-continuity.js';
 export {worldCharacterObservation} from './contracts/character-observation.js';
 
 export {worldIntentValidation} from './contracts/intent-validation.js';
+export {simulationOverview} from './simulation-overview.js';
+export {prepareWorldSimulationObservation,worldSimulationReceiptForAudience} from './simulation-receipts.js';

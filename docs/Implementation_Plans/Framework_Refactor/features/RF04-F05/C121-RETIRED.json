@@ -1,0 +1,21 @@
+{
+  "retired": [
+    {
+      "id": "58cbd13d657271c24a1698513ee72ff8f866df78f35d891f60e5e9e895d65171",
+      "code": "PAIR_IMPORTS_PRIVATE_API",
+      "from": "bot/src/world-narrative-bridge.js",
+      "to": "bot/src/world-simulation-receipts.js",
+      "kind": "static",
+      "specifier": "./world-simulation-receipts.js",
+      "owner": "narrative--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ],
+  "feature": "RF04-F05-C121",
+  "original_manifest_sha256": "9D76FE718AD1EC701E62B51802455DC12231B9334815476A24E4902D3E676EB1",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3"
+}
