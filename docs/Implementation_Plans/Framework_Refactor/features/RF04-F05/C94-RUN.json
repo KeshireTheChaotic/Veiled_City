@@ -1,0 +1,133 @@
+{
+  "feature": "RF04-F05-C94",
+  "base_head": "1544a5b6fbac813c1f55e8c1089b2bdb2683cc89",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/encounter.js",
+      "bot/src/roll-collaboration.js",
+      "bot/src/roll-requests.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c94.test.mjs"
+    ],
+    "passed": 4,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c06.test.mjs",
+        "sha256": "EBB1E04688DEC1906256ADE1713F69052B88ADD7AE46B8128AD713A05BDD4543"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c07.test.mjs",
+        "sha256": "109D5FCC770AD72AB1EBE9766FC0D49EF4105A5621D7E700B20059FC6DE1DFC9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c29.test.mjs",
+        "sha256": "4A5452283BF8F9B238000BBF974F31651462A41084C63A65328BFEB7A6F41250"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs",
+        "sha256": "32D252062913C098679D5E9BB87D6CB3F46F427DCBC58C96956526641D8AB12C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c67.test.mjs",
+        "sha256": "3B199FA4C206CD4CBCB50A90CEB6A2070D5622490C2C0C615F7DCE2FC494A3EA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c94.test.mjs",
+        "sha256": "2591AA0DC73DE0D0BC46B9721EBFB6C5AA146E091B35488481702EFA9C8DCC6D"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T08:58:31.100Z",
+    "end": "2026-10-28T08:58:33.533Z",
+    "exit_code": 0,
+    "tests": 39,
+    "passed": 39,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 2400.1374,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c94-test.log",
+    "log_sha256": "A4422054D07E9455AF3C1A2ACD502543DCF8DA6A168A44B8B8CFA920365E0D97",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3223,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1540,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c94-rf04-architecture.log",
+      "log_sha256": "FB2A836B29188E5011F0269E8900AA13B964C5AC8B97242ABC249EA3722614B7",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3223,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1273,
+      "active_violation_groups": 266,
+      "transition_errors": 266,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c94-rf05-architecture.log",
+      "log_sha256": "A2C18E5FC6AFE3B17AEEF750F935B64CDC9C92B1317D73BA6CA10359E777E33A",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/encounter.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-encounter-beats.js -> bot/src/encounter.js",
+        "EXPIRED_TRANSITION bot/src/encounter.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "7416d76ea3e44f552b76a6f6e6665aca6dc038450736a70e065ae108dc173a97",
+      "0152b98db2833200409fc094771ad5c45c84e099460f30944fa7b1fba83cf1f5",
+      "27191077a3247205178d67c162f2aa0ae24bfef65117db0da6263e3f154310d4"
+    ],
+    "original_manifest_sha256": "169AF64F577A3EC9742A15F486521E76ED4C1D0261F6E30D993035C1526057EB",
+    "manifest_sha256_after": "1DBB59E1518FA487CB18B8128E765F581FAD37A8DAFCAC538D76787AF6B7503C",
+    "entries_after": 1528,
+    "remaining_by_feature": {
+      "RF04-F01": 76,
+      "RF04-F03": 43,
+      "RF04-F04": 94,
+      "RF04-F05": 53,
+      "RF05-F02": 192,
+      "RF05-F03": 225,
+      "RF05-F04": 42,
+      "RF05-F05": 405,
+      "RF06-F02": 17,
+      "RF06-F03": 178,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/encounter.js": "4387B685570D8A7A53977D5F3225FD5756AEDDC313656E9DA2439451A339A540",
+    "bot/src/roll-collaboration.js": "008568C58178C05EDF03123FC170A3398093AB2773CAE5ABEED36226F3236883",
+    "bot/src/roll-requests.js": "F522AF136E29FA7374D57BFA4D1061C3FCC73B4E71DF5604ED10172FA233DAA0"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C94 commit: restore the three direct ./city-core.js requireCitySource imports in encounter.js, roll-collaboration.js and roll-requests.js, and restore the 3 exact transitions from C94-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

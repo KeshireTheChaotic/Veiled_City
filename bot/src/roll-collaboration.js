@@ -3,7 +3,8 @@ import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
 function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
-import { requireCitySource } from "./city-core.js";
+import {nativeWorldSource} from './frameworks/daggerheart/public.js';
+function requireCitySource(...args){return nativeWorldSource.requireCitySource(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { rollRevision, rollBreakdown, rollTraitBreakdown, reserveRollAmendment } from "./roll-requests.js";
