@@ -10691,20 +10691,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "65ee01df31086022b86daf01465df0ee775a96a2311457e0ced6bf0b5f81c245",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-rounds.js",
-      "to": "bot/src/window-coordinator.js",
-      "kind": "static",
-      "specifier": "./window-coordinator.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b67614407bf6aed65f88d65e59fd66311fce72a32585355cd563e55ef38e5a57",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-rounds.js",
@@ -17477,20 +17463,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "85bde2debdb737fa843952753f58882f210388a15e11e2bfadf13e9b40d41814",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-rounds.js",
-      "to": "bot/src/window-coordinator.js",
-      "kind": "static",
-      "specifier": "./window-coordinator.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "2b5b3fd9ccb86f839c62d568f57841dd6b29e03f397e7d0f23f0203a84304712",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/pvp-rounds.js",
@@ -18453,34 +18425,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "5437d4f8cd4c644bc86074060e505193d4a04ea427221d519e4e9bcb4acb8aaf",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/window-coordinator.js",
-      "to": "bot/src/narrative-pvp.js",
-      "kind": "static",
-      "specifier": "./narrative-pvp.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "b11fe361b36fee17f8e354cf9e3aa21d34cd31d5f2a6e18ad9ffaffa531502f2",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/window-coordinator.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },

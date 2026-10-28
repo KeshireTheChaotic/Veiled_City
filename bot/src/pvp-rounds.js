@@ -2,7 +2,8 @@
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
-import { synchronizePvpWindow } from "./window-coordinator.js";
+import {nativePvpWindow} from './frameworks/daggerheart/public.js';
+function synchronizePvpWindow(...args){return nativePvpWindow.synchronizePvpWindow(...args);}
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 import {nativeActionContinuation} from './frameworks/daggerheart/public.js';

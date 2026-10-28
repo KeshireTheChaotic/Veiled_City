@@ -238,3 +238,6 @@ function operateWindow(db,guild,user,input,{gm=false}={}){
   }
   return rows;
 }
+import {sessionPvpWindowSource} from './frameworks/session/public.js';
+// Provide this module's original PvP window synchronization to the fixed Session slot; no other authority is granted.
+sessionPvpWindowSource.bind({synchronizePvpWindow});

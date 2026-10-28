@@ -30,3 +30,5 @@ export {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSo
 export {sessionNativeRules} from './contracts/native-rules.js';
 export {sessionKnowledgeSources} from './contracts/knowledge-sources.js';
 export {sessionStoryContinuitySource} from './contracts/story-continuity-source.js';
+
+export {sessionPvpWindowSource} from './contracts/pvp-window-source.js';

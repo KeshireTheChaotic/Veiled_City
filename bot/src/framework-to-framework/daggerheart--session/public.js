@@ -46,3 +46,8 @@ import {nativeMovementCondition,hasOwnerConsent,nativeActionReviewSource,nativeR
 import {sessionNativeRules} from '../../frameworks/session/public.js';
 /** Pass native rules' original movement condition, consent, review, arbitration and recovery functions to Session unchanged. */
 export function connectSessionNativeRules(){return sessionNativeRules.bind({nativeMovementConditionIssue:nativeMovementCondition.nativeMovementConditionIssue,hasOwnerConsent,actionReviewOperation:nativeActionReviewSource.actionReviewOperation,adjudicateAcceptedIntent:nativeRulesArbitrationSource.adjudicateAcceptedIntent,clearNativeConditionFromOutcome:nativeConditionRecoverySource.clearNativeConditionFromOutcome});}
+
+import {nativePvpWindow} from '../../frameworks/daggerheart/public.js';
+import {sessionPvpWindowSource} from '../../frameworks/session/public.js';
+/** Pass Session's original PvP window synchronization to native PvP rounds unchanged. */
+export function connectNativePvpWindow(){return nativePvpWindow.bind({synchronizePvpWindow:sessionPvpWindowSource.synchronizePvpWindow});}
