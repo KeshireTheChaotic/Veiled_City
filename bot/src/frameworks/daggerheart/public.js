@@ -147,3 +147,4 @@ export {nativeIncomingInjurySource} from './contracts/incoming-injury-source.js'
 
 export {nativeKnowledgeActions} from './contracts/knowledge-actions.js';
 export {nativePvpWindow} from './contracts/pvp-window.js';
+export {nativeFearEffectSource} from './contracts/fear-effect-source.js';

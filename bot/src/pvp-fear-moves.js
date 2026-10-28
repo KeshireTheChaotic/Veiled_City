@@ -195,3 +195,6 @@ export function resolveAutonomousPvpFear(...args){return rules().resolveAutonomo
 export function resumeAutonomousPvpFear(...args){return rules().resumeAutonomousPvpFear(...args);}
 export function fearInbox(...args){return rules().fearInbox(...args);}
 export function reconcileFearMove(...args){return rules().reconcileFearMove(...args);}
+import {nativeFearEffectSource} from './frameworks/daggerheart/public.js';
+// Provide this module's original Fear effect validation to the fixed native slot; no other authority is granted.
+nativeFearEffectSource.bind({validateFearEffect});

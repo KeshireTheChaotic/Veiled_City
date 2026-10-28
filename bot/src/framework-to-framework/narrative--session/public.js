@@ -10,3 +10,8 @@ import {narrativeSourceVisible,pvpAgreementConsumer} from '../../frameworks/narr
 import {sessionNarrativeSources} from '../../frameworks/session/public.js';
 /** Pass Narrative's original source visibility and PvP agreement validation to Session unchanged. */
 export function connectSessionNarrativeSources(){return sessionNarrativeSources.bind({narrativeSourceVisible,validatePvpAgreement:pvpAgreementConsumer.validatePvpAgreement});}
+
+import {narrativeBridgeSessionSources} from '../../frameworks/narrative/public.js';
+import {sessionOpeningAttendanceSource,sessionOpeningSource,sessionAssemblyStateSource} from '../../frameworks/session/public.js';
+/** Pass Session's original opening and assembly readers to the Narrative-World bridge unchanged. */
+export function connectNarrativeBridgeSessionSources(){return narrativeBridgeSessionSources.bind({inspectOpeningEntryOpportunity:sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity,inspectSessionOpening:sessionOpeningSource.inspectSessionOpening,assemblyDeliverySummary:sessionAssemblyStateSource.assemblyDeliverySummary});}
