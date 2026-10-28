@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentLastTrainRulesContext} from '../../src/native-environment-last-train-rules.js';
+import {projectNativeEnvironmentLastTrainRulesContext} from '../../src/frameworks/daggerheart/native-environment-last-train-rules.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:dead-platform:last-train-rules';
@@ -36,7 +36,7 @@ test('scoped GM context preserves the departure rule without inferring a lie or 
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-last-train-rules.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-last-train-rules.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentLastTrainRulesSituation\(db,guild,scope,location\)/);

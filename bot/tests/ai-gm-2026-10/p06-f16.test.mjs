@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentProcedureContext} from '../../src/native-environment-procedure.js';
+import {projectNativeEnvironmentProcedureContext} from '../../src/frameworks/daggerheart/native-environment-procedure.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:after-hours-emergency-department:hipaa-and-procedure';
@@ -40,7 +40,7 @@ test('entitled native profile receives source text only, with no inferred creden
 });
 
 test('passive source context is delivered through current audience scene construction without committing state',()=>{
-  const procedure=fs.readFileSync(new URL('../../src/native-environment-procedure.js',import.meta.url),'utf8'),
+  const procedure=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-procedure.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8'),
     authority=fs.readFileSync(new URL('../../src/narrative-authority-context.js',import.meta.url),'utf8');
   

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentPrivateRoomContext} from '../../src/native-environment-private-room.js';
+import {projectNativeEnvironmentPrivateRoomContext} from '../../src/frameworks/daggerheart/native-environment-private-room.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:pale-court-townhouse:private-room';
@@ -36,7 +36,7 @@ test('entitled profile returns the source prompt and preserves GM narration and 
 });
 
 test('scene context wiring remains a read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-private-room.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-private-room.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentPrivateRoomSituation\(db,guild,scope,location\)/);

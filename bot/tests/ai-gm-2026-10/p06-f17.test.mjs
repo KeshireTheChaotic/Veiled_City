@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentThinWallsContext} from '../../src/native-environment-thin-walls.js';
+import {projectNativeEnvironmentThinWallsContext} from '../../src/frameworks/daggerheart/native-environment-thin-walls.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:apartment-veil-breach:thin-walls';
@@ -37,7 +37,7 @@ test('current entitled profile receives exact risk cue without an automatic witn
 });
 
 test('scene delivery is audience scoped and adds no persisted state',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-thin-walls.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-thin-walls.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentThinWallsSituation\(db,guild,scope,location\)/);

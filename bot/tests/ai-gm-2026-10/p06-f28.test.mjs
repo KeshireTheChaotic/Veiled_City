@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentSealedDocketContext} from '../../src/native-environment-sealed-docket.js';
+import {projectNativeEnvironmentSealedDocketContext} from '../../src/frameworks/daggerheart/native-environment-sealed-docket.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:archive-beneath-the-courthouse:sealed-docket';
@@ -36,7 +36,7 @@ test('scoped GM context preserves source prompt and PC response ownership',()=>{
 });
 
 test('scene context wiring remains an entitled read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-sealed-docket.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-sealed-docket.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentSealedDocketSituation\(db,guild,scope,location\)/);

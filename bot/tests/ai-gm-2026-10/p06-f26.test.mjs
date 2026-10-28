@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentAuctionContext} from '../../src/native-environment-auction.js';
+import {projectNativeEnvironmentAuctionContext} from '../../src/frameworks/daggerheart/native-environment-auction.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:glass-market-grand-concourse:auction-of-consequences';
@@ -36,7 +36,7 @@ test('current scoped GM context returns exact auction prompt without a bid or tr
 });
 
 test('scene context wiring is source-bound projection only',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-auction.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-auction.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentAuctionSituation\(db,guild,scope,location\)/);

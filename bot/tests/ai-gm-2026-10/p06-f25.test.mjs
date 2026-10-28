@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentPriceOfferContext} from '../../src/native-environment-price-offer.js';
+import {projectNativeEnvironmentPriceOfferContext} from '../../src/frameworks/daggerheart/native-environment-price-offer.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:abandoned-mall-glass-market:everything-has-a-price';
@@ -36,7 +36,7 @@ test('entitled current profile exposes the creative prompt and preserves PC acce
 });
 
 test('scene context wiring projects only and does not record a trade',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-price-offer.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-price-offer.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentPriceOfferSituation\(db,guild,scope,location\)/);

@@ -6,154 +6,154 @@ import * as native from '../../src/frameworks/daggerheart/environment-rule-conte
 const occurrences=[
   {
     "feature": "environment:glass-market-grand-concourse:auction-of-consequences",
-    "provider": "bot/src/native-environment-auction.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-auction.js",
     "factory": "createNativeEnvironmentAuctionContext",
     "projector": "projectNativeEnvironmentAuctionContext",
     "situation": "nativeEnvironmentAuctionSituation"
   },
   {
     "feature": "environment:archive-beneath-the-courthouse:chain-of-title",
-    "provider": "bot/src/native-environment-chain-of-title.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
     "factory": "createNativeEnvironmentChainOfTitleContext",
     "projector": "projectNativeEnvironmentChainOfTitleContext",
     "situation": "nativeEnvironmentChainOfTitleSituation"
   },
   {
     "feature": "environment:veil-anchor-chamber:consensus-engine",
-    "provider": "bot/src/native-environment-consensus-engine.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
     "factory": "createNativeEnvironmentConsensusEngineContext",
     "projector": "projectNativeEnvironmentConsensusEngineContext",
     "situation": "nativeEnvironmentConsensusEngineSituation"
   },
   {
     "feature": "environment:aster-vale-predictive-lab:containment-shutters",
-    "provider": "bot/src/native-environment-containment-shutters.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
     "factory": "createNativeEnvironmentContainmentShuttersContext",
     "projector": "projectNativeEnvironmentContainmentShuttersContext",
     "situation": "nativeEnvironmentContainmentShuttersSituation"
   },
   {
     "feature": "environment:occult-crime-scene:contaminated-scene",
-    "provider": "bot/src/native-environment-contaminated-scene.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
     "factory": "createNativeEnvironmentContaminatedSceneContext",
     "projector": "projectNativeEnvironmentContaminatedSceneContext",
     "situation": "nativeEnvironmentContaminatedSceneSituation"
   },
   {
     "feature": "environment:glass-market-grand-concourse:everyone-is-watching",
-    "provider": "bot/src/native-environment-everyone-is-watching.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
     "factory": "createNativeEnvironmentEveryoneIsWatchingContext",
     "projector": "projectNativeEnvironmentEveryoneIsWatchingContext",
     "situation": "nativeEnvironmentEveryoneIsWatchingSituation"
   },
   {
     "feature": "environment:dead-platform:express-through-memory",
-    "provider": "bot/src/native-environment-express-through-memory.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
     "factory": "createNativeEnvironmentExpressThroughMemoryContext",
     "projector": "projectNativeEnvironmentExpressThroughMemoryContext",
     "situation": "nativeEnvironmentExpressThroughMemorySituation"
   },
   {
     "feature": "environment:pale-court-townhouse:guest-right",
-    "provider": "bot/src/native-environment-guest-right.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
     "factory": "createNativeEnvironmentGuestRightContext",
     "projector": "projectNativeEnvironmentGuestRightContext",
     "situation": "nativeEnvironmentGuestRightSituation"
   },
   {
     "feature": "environment:dead-platform:last-train-rules",
-    "provider": "bot/src/native-environment-last-train-rules.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
     "factory": "createNativeEnvironmentLastTrainRulesContext",
     "projector": "projectNativeEnvironmentLastTrainRulesContext",
     "situation": "nativeEnvironmentLastTrainRulesSituation"
   },
   {
     "feature": "environment:abandoned-mall-glass-market:no-violence-in-the-aisles",
-    "provider": "bot/src/native-environment-market-neutrality.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
     "factory": "createNativeEnvironmentMarketNeutralityContext",
     "projector": "projectNativeEnvironmentMarketNeutralityContext",
     "situation": "nativeEnvironmentMarketNeutralitySituation"
   },
   {
     "feature": "environment:networked-dream:metaphor-is-physics",
-    "provider": "bot/src/native-environment-metaphor-physics.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
     "factory": "createNativeEnvironmentMetaphorPhysicsContext",
     "projector": "projectNativeEnvironmentMetaphorPhysicsContext",
     "situation": "nativeEnvironmentMetaphorPhysicsSituation"
   },
   {
     "feature": "environment:aster-vale-predictive-lab:model-room",
-    "provider": "bot/src/native-environment-model-room.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
     "factory": "createNativeEnvironmentModelRoomContext",
     "projector": "projectNativeEnvironmentModelRoomContext",
     "situation": "nativeEnvironmentModelRoomSituation"
   },
   {
     "feature": "environment:rupture-district:no-consensus",
-    "provider": "bot/src/native-environment-no-consensus.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
     "factory": "createNativeEnvironmentNoConsensusContext",
     "projector": "projectNativeEnvironmentNoConsensusContext",
     "situation": "nativeEnvironmentNoConsensusSituation"
   },
   {
     "feature": "environment:district-blackout:no-ordinary-signal",
-    "provider": "bot/src/native-environment-no-ordinary-signal.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
     "factory": "createNativeEnvironmentNoOrdinarySignalContext",
     "projector": "projectNativeEnvironmentNoOrdinarySignalContext",
     "situation": "nativeEnvironmentNoOrdinarySignalSituation"
   },
   {
     "feature": "environment:abandoned-mall-glass-market:everything-has-a-price",
-    "provider": "bot/src/native-environment-price-offer.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
     "factory": "createNativeEnvironmentPriceOfferContext",
     "projector": "projectNativeEnvironmentPriceOfferContext",
     "situation": "nativeEnvironmentPriceOfferSituation"
   },
   {
     "feature": "environment:pale-court-townhouse:private-room",
-    "provider": "bot/src/native-environment-private-room.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
     "factory": "createNativeEnvironmentPrivateRoomContext",
     "projector": "projectNativeEnvironmentPrivateRoomContext",
     "situation": "nativeEnvironmentPrivateRoomSituation"
   },
   {
     "feature": "environment:after-hours-emergency-department:hipaa-and-procedure",
-    "provider": "bot/src/native-environment-procedure.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
     "factory": "createNativeEnvironmentProcedureContext",
     "projector": "projectNativeEnvironmentProcedureContext",
     "situation": "nativeEnvironmentProcedureSituation"
   },
   {
     "feature": "environment:archive-beneath-the-courthouse:sealed-docket",
-    "provider": "bot/src/native-environment-sealed-docket.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
     "factory": "createNativeEnvironmentSealedDocketContext",
     "projector": "projectNativeEnvironmentSealedDocketContext",
     "situation": "nativeEnvironmentSealedDocketSituation"
   },
   {
     "feature": "environment:apartment-veil-breach:thin-walls",
-    "provider": "bot/src/native-environment-thin-walls.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
     "factory": "createNativeEnvironmentThinWallsContext",
     "projector": "projectNativeEnvironmentThinWallsContext",
     "situation": "nativeEnvironmentThinWallsSituation"
   },
   {
     "feature": "environment:dead-platform:third-rail-spirit",
-    "provider": "bot/src/native-environment-third-rail-spirit.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
     "factory": "createNativeEnvironmentThirdRailSpiritContext",
     "projector": "projectNativeEnvironmentThirdRailSpiritContext",
     "situation": "nativeEnvironmentThirdRailSpiritSituation"
   },
   {
     "feature": "environment:occult-crime-scene:three-vectors",
-    "provider": "bot/src/native-environment-three-vectors.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
     "factory": "createNativeEnvironmentThreeVectorsContext",
     "projector": "projectNativeEnvironmentThreeVectorsContext",
     "situation": "nativeEnvironmentThreeVectorsSituation"
   },
   {
     "feature": "environment:storm-drain-shrine:wrong-offering",
-    "provider": "bot/src/native-environment-wrong-offering.js",
+    "provider": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
     "factory": "createNativeEnvironmentWrongOfferingContext",
     "projector": "projectNativeEnvironmentWrongOfferingContext",
     "situation": "nativeEnvironmentWrongOfferingSituation"
@@ -185,7 +185,7 @@ for(const occurrence of occurrences)test(occurrence.feature+' exact native sourc
   const scope={mode:'private',actorUserId:'owner',actorCharacterId:'pc'};
   assert.deepEqual(service[occurrence.situation]('repository','guild',scope,'location'),expected);
   assert.deepEqual(calls.find(Array.isArray),['repository','guild',scope,'location']);
-  const provider=await import(new URL('../../src/'+occurrence.provider.split('/').at(-1),import.meta.url));
+  const provider=await import(new URL('../../'+occurrence.provider.replace(/^bot\//,''),import.meta.url));
   assert.deepEqual(provider[occurrence.projector](capabilities),expected);
   status='needs_rules_review';assert.deepEqual(service[occurrence.projector](capabilities),[]);status='supported';
   for(const [field,value] of [['catalog_status','review_only'],['source_hash','changed'],['template_hash','changed'],['printed_rule',printed+' altered']]){

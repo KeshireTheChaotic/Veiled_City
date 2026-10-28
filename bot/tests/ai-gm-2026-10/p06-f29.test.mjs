@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentThreeVectorsContext} from '../../src/native-environment-three-vectors.js';
+import {projectNativeEnvironmentThreeVectorsContext} from '../../src/frameworks/daggerheart/native-environment-three-vectors.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:occult-crime-scene:three-vectors';
@@ -36,7 +36,7 @@ test('scoped GM context preserves clue domains, PC choice and GM-authored respon
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-three-vectors.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-three-vectors.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentThreeVectorsSituation\(db,guild,scope,location\)/);

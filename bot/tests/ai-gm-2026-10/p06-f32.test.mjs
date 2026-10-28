@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentEveryoneIsWatchingContext} from '../../src/native-environment-everyone-is-watching.js';
+import {projectNativeEnvironmentEveryoneIsWatchingContext} from '../../src/frameworks/daggerheart/native-environment-everyone-is-watching.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:glass-market-grand-concourse:everyone-is-watching';
@@ -36,7 +36,7 @@ test('scoped GM context preserves PC speech ownership and faction fiction autono
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-everyone-is-watching.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-everyone-is-watching.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentEveryoneIsWatchingSituation\(db,guild,scope,location\)/);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentMetaphorPhysicsContext} from '../../src/native-environment-metaphor-physics.js';
+import {projectNativeEnvironmentMetaphorPhysicsContext} from '../../src/frameworks/daggerheart/native-environment-metaphor-physics.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:networked-dream:metaphor-is-physics';
@@ -37,7 +37,7 @@ test('entitled current profile receives the invitation without an authored playe
 });
 
 test('scene delivery is scoped and creates no state, choice, or mechanical result',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-metaphor-physics.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-metaphor-physics.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentMetaphorPhysicsSituation\(db,guild,scope,location\)/);

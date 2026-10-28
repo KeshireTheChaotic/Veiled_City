@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentContainmentShuttersContext} from '../../src/native-environment-containment-shutters.js';
+import {projectNativeEnvironmentContainmentShuttersContext} from '../../src/frameworks/daggerheart/native-environment-containment-shutters.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:aster-vale-predictive-lab:containment-shutters';

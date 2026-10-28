@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentThirdRailSpiritContext} from '../../src/native-environment-third-rail-spirit.js';
+import {projectNativeEnvironmentThirdRailSpiritContext} from '../../src/frameworks/daggerheart/native-environment-third-rail-spirit.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:dead-platform:third-rail-spirit';
@@ -36,7 +36,7 @@ test('scoped GM context preserves mechanics as a cue without spending or attacki
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-third-rail-spirit.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-third-rail-spirit.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentThirdRailSpiritSituation\(db,guild,scope,location\)/);

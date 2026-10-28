@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentExpressThroughMemoryContext} from '../../src/native-environment-express-through-memory.js';
+import {projectNativeEnvironmentExpressThroughMemoryContext} from '../../src/frameworks/daggerheart/native-environment-express-through-memory.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:dead-platform:express-through-memory';
@@ -36,7 +36,7 @@ test('scoped GM context preserves the roll and failure cue without choosing for 
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-express-through-memory.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-express-through-memory.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentExpressThroughMemorySituation\(db,guild,scope,location\)/);

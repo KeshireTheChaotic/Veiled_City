@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentNoConsensusContext} from '../../src/native-environment-no-consensus.js';
+import {projectNativeEnvironmentNoConsensusContext} from '../../src/frameworks/daggerheart/native-environment-no-consensus.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:rupture-district:no-consensus';
@@ -37,7 +37,7 @@ test('entitled current profile receives exact cue without invented rule or perce
 });
 
 test('scene delivery is scoped and makes no persistent or mechanical change',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-no-consensus.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-no-consensus.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentNoConsensusSituation\(db,guild,scope,location\)/);

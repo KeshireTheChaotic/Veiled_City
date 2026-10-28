@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentMarketNeutralityContext} from '../../src/native-environment-market-neutrality.js';
+import {projectNativeEnvironmentMarketNeutralityContext} from '../../src/frameworks/daggerheart/native-environment-market-neutrality.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:abandoned-mall-glass-market:no-violence-in-the-aisles';
@@ -36,7 +36,7 @@ test('scoped GM context exposes the rule without recording a violation',()=>{
 });
 
 test('scene wiring is a scoped read-only projection',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-market-neutrality.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-market-neutrality.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentMarketNeutralitySituation\(db,guild,scope,location\)/);

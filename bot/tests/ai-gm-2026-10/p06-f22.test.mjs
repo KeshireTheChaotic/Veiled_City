@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentConsensusEngineContext} from '../../src/native-environment-consensus-engine.js';
+import {projectNativeEnvironmentConsensusEngineContext} from '../../src/frameworks/daggerheart/native-environment-consensus-engine.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:veil-anchor-chamber:consensus-engine';
@@ -37,7 +37,7 @@ test('entitled current profile receives risk cue without invented Exposure resul
 });
 
 test('scene delivery is scoped and makes no Exposure state change',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-consensus-engine.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-consensus-engine.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentConsensusEngineSituation\(db,guild,scope,location\)/);

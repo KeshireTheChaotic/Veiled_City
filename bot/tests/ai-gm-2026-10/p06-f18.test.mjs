@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {featureDisposition,executableNativeFeatures,inspectNativeFeatureOccurrence} from '../../src/native-feature-catalog.js';
 import {environmentProposalContract} from '../../src/native-environment-capabilities.js';
-import {projectNativeEnvironmentChainOfTitleContext} from '../../src/native-environment-chain-of-title.js';
+import {projectNativeEnvironmentChainOfTitleContext} from '../../src/frameworks/daggerheart/native-environment-chain-of-title.js';
 import {sceneFictionHash as hash} from '../../src/scene-fiction-context.js';
 
 const FEATURE='environment:archive-beneath-the-courthouse:chain-of-title';
@@ -37,7 +37,7 @@ test('entitled current profile receives the source cue without an inferred recor
 });
 
 test('scene delivery uses current scope and has no persistent or mechanical effect',()=>{
-  const source=fs.readFileSync(new URL('../../src/native-environment-chain-of-title.js',import.meta.url),'utf8'),
+  const source=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-chain-of-title.js',import.meta.url),'utf8'),
     scene=fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-environment-scene.js',import.meta.url),'utf8');
   
   assert.match(scene,/nativeEnvironmentChainOfTitleSituation\(db,guild,scope,location\)/);
