@@ -6,6 +6,8 @@ export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseB
 import { randomInt } from "node:crypto";
 export {EncounterLibrary} from './frameworks/daggerheart/public.js';
 export {livePcRoster,partyTier,autoBuildComposition} from './frameworks/daggerheart/public.js';
+import {encounterActors} from './frameworks/daggerheart/public.js';
+export {encounterActors};
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {nativeWorldSource} from './frameworks/daggerheart/public.js';
@@ -21,8 +23,6 @@ export function encounterProposalContext(db,guild){
   if(db.getCityCalendar(guild).flags.encounter_intelligence!==true) return [];
   return db.listCityRecords(guild,{kind:"encounter_actor",status:"active",includeGM:true,limit:16});
 }
-export function encounterActors(...args){return groundingRules().encounterActors(...args);}
-
 export function proposeWorldEncounter(db,guild,input,actorId){
   if(db.getCityCalendar(guild).flags.encounter_intelligence!==true) throw new Error("Encounter intelligence is opt-in.");
   const key=cityKey(input.key),prior=db.getCityRecord(guild,"encounter_proposal",key);if(prior) return prior;

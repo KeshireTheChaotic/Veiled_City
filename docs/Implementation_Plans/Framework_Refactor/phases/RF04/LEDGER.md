@@ -823,3 +823,9 @@ Knowledge presentation evidence composition moved with root singleton readers re
 ## 2026-10-28 C124, C125 and O03
 
 C124 moves the original history singleton into Knowledge with the root reader retained (1/1 focused test); C125 moves original encounter composition wrappers and their lazy instance into Daggerheart (2/2); O03 adopts World public actor configuration in four same-owner callers (2/2 tested draft cases, other callers source-reviewed). RF04 gate passes at833 modules, zero unowned/active/errors, largest cycle85; RF05 remains at124 groups/errors. The F07 compatibility-exit audit identifies103 retained root locations and specific RF05/RF06 reverse callers; it authorizes no blanket deadline or policy waiver. Phase incomplete; release unauthorized.
+
+## 2026-10-28 C126 Daggerheart-owned encounter actor validation
+
+The original encounterActors body moved from the Daggerheart grounding factory into frameworks/daggerheart/encounter-actors.js; the grounding factory delegates to it and a lazy Daggerheart source (encounter-actors-source.js, exported from the Daggerheart public API) supplies the same World source/key, Session scene/presence and NPC evidence ports. Root encounter.js re-exports that source. No rule, check or state changed; no transition retired (completion of Codex's uncommitted C126 work).
+
+Tests: one frozen batch of 49 files: 292 tests, 292 pass, 0 fail. Architecture: 0 exact records retired. RF04 exit 0, 0 active violations, 836 modules; RF05 124 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
