@@ -1,2 +1,3 @@
 import {connectNativeWorldEstablishedEvidence} from '../../framework-to-framework/daggerheart--world/public.js';
-export function initializeNativeWorldEvidence(){return connectNativeWorldEstablishedEvidence();}
+import {connectNativeKnowledgeEvidence} from '../../framework-to-framework/daggerheart--knowledge/public.js';
+export function initializeNativeWorldEvidence(){connectNativeKnowledgeEvidence();return connectNativeWorldEstablishedEvidence();}

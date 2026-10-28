@@ -11,7 +11,8 @@ function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...arg
 import {nativeActorControl} from './native-actor-control.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}
-import {objectiveEvidence,evidenceType} from './epistemic.js';
+import {nativeKnowledgeEvidence} from './frameworks/daggerheart/public.js';
+function objectiveEvidence(...args){return nativeKnowledgeEvidence.objectiveEvidence(...args);}function evidenceType(...args){return nativeKnowledgeEvidence.evidenceType(...args);}
 import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';

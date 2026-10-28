@@ -9320,20 +9320,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "19f978644823a2a80296e23046c1e5ed3dde2e441e4d7b05710541376ba5674f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-witnesses.js",
-      "to": "bot/src/epistemic.js",
-      "kind": "static",
-      "specifier": "./epistemic.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c254a39d60ec5eaa0400b158abc6ae5b754f25dfd2d8dcb14172836ccc444598",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-witnesses.js",

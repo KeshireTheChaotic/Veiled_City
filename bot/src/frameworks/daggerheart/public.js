@@ -119,6 +119,7 @@ export {nativeActorControl} from './actor-control-source.js';
 export {externalConsentTerms,externalConsentKey,hasOwnerConsent} from './owner-consent-source.js';
 export {createNativeMovementReaderSource,nativeMovementReaderSource} from './contracts/movement-reader-source.js';
 export {createNativeNpcEvidenceConsumer,nativeNpcEvidence} from './contracts/npc-evidence.js';
+export {nativeKnowledgeEvidence} from './contracts/knowledge-evidence.js';
 export {createNativeEnvironmentNarrativeConsumer,nativeEnvironmentNarrative} from './contracts/environment-narrative.js';
 export {createNativeEnvironmentSessionConsumer,nativeEnvironmentSession} from './contracts/environment-session.js';
 export {assertEnvironmentAudience} from './environment-audience-source.js';

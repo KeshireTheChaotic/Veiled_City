@@ -698,14 +698,14 @@
         "daggerheart",
         "knowledge"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "daggerheart",
           "to": "knowledge",
           "import_occurrences": 18,
           "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Knowledge supplies its original read-only evidence classification and objective-evidence checks to native Daggerheart witness rules."
         }
       ],
       "source_evidence": [
@@ -714,13 +714,23 @@
           "to": "bot/src/personal-continuity.js",
           "line": 2,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/native-world-evidence.js",
+          "to": "bot/src/framework-to-framework/daggerheart--knowledge/public.js",
+          "line": 2,
+          "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fixed Daggerheart consumer fails closed before composition and rejects replacement; it forwards original Knowledge evidence rules.",
+      "lifecycle": "Consumer bound in native World evidence startup before runtime services; no database construction or mutation.",
+      "adoption_feature": "RF04-F05",
+      "consumers": [
+        "bot/src/application/composition/native-world-evidence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c78.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "daggerheart",
@@ -734,7 +744,9 @@
         "pair": "daggerheart--knowledge",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 18
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--knowledge/public.js",
+      "scope": "Native witness evidence type and objective evidence only; other dependencies remain migration obligations."
     },
     {
       "pair": "daggerheart--narrative",
