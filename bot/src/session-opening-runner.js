@@ -1,6 +1,8 @@
 /** One bounded opening execution per native session. No background actor loop or blind provider/send retry. */
-import {inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAttempt,assertSessionOpeningFence,rebaseSessionOpening,bindSessionOpeningTurn} from './session-opening.js';
-import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
+import {sessionOpeningSource} from './frameworks/session/public.js';
+function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}function beginSessionOpeningAttempt(...args){return sessionOpeningSource.beginSessionOpeningAttempt(...args);}function assertSessionOpeningAttempt(...args){return sessionOpeningSource.assertSessionOpeningAttempt(...args);}function assertSessionOpeningFence(...args){return sessionOpeningSource.assertSessionOpeningFence(...args);}function rebaseSessionOpening(...args){return sessionOpeningSource.rebaseSessionOpening(...args);}function bindSessionOpeningTurn(...args){return sessionOpeningSource.bindSessionOpeningTurn(...args);}
+import {sessionAssemblyContextSource} from './frameworks/session/public.js';
+function certifyAssemblyPlan(...args){return sessionAssemblyContextSource.certifyAssemblyPlan(...args);}function assemblyPlanFreshness(...args){return sessionAssemblyContextSource.assemblyPlanFreshness(...args);}
 import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
 import {measureStage,operationalMetrics} from './frameworks/operations/public.js';

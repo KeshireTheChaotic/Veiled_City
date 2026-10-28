@@ -1,7 +1,8 @@
 /** One additive public opportunity after a verified zero-attendee camera and a genuinely owner-controlled cohort. */
-import {assemblyInputFingerprint,certifyAssemblyPlan,assemblySourceError} from './assembly-context.js';
-import {currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,
-  inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive,independentOpeningCameraBasis} from './opening-cohort-state.js';
+import {sessionAssemblyContextSource,assemblySourceError} from './frameworks/session/public.js';
+function assemblyInputFingerprint(...args){return sessionAssemblyContextSource.assemblyInputFingerprint(...args);}function certifyAssemblyPlan(...args){return sessionAssemblyContextSource.certifyAssemblyPlan(...args);}
+import {sessionOpeningCohortSource} from './frameworks/session/public.js';
+function currentOpeningCohort(...args){return sessionOpeningCohortSource.currentOpeningCohort(...args);}function openingCohortHash(...args){return sessionOpeningCohortSource.openingCohortHash(...args);}function openingCohortNarrativeCandidate(...args){return sessionOpeningCohortSource.openingCohortNarrativeCandidate(...args);}function inspectOpeningCohortSource(...args){return sessionOpeningCohortSource.inspectOpeningCohortSource(...args);}function openingCohortEligible(...args){return sessionOpeningCohortSource.openingCohortEligible(...args);}function openingCohortIsAdditive(...args){return sessionOpeningCohortSource.openingCohortIsAdditive(...args);}function independentOpeningCameraBasis(...args){return sessionOpeningCohortSource.independentOpeningCameraBasis(...args);}
 import {prepareOpeningCohortOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';

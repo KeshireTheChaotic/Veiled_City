@@ -1,10 +1,13 @@
 /** Native entry delivery uses the existing certified output and outbox; it never calls a planner or publishes shared prose. */
-import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
-import {openingEntryProjection,openingEntryNarrativeCandidate} from './opening-entry-context.js';
+import {sessionOpeningAttendanceSource} from './frameworks/session/public.js';
+function inspectOpeningEntryOpportunity(...args){return sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity(...args);}
+import {sessionOpeningEntrySource} from './frameworks/session/public.js';
+function openingEntryProjection(...args){return sessionOpeningEntrySource.openingEntryProjection(...args);}function openingEntryNarrativeCandidate(...args){return sessionOpeningEntrySource.openingEntryNarrativeCandidate(...args);}
 import {prepareOpeningEntryOutput} from './pvp-output.js';
 import {queueTurnPublications} from './publication-outbox.js';
 import {deliverQueuedTurn} from './publishing.js';
-import {inspectSessionOpening} from './session-opening.js';
+import {sessionOpeningSource} from './frameworks/session/public.js';
+function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './frameworks/session/public.js';
 import {openingErrorCode} from './frameworks/operations/public.js';

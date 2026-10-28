@@ -79,3 +79,6 @@ export function openingCohortNarrativeCandidate(db,guild,key){
   return {job,session,plan:d.plan,scope,source,revision,candidate:{narration:'',player_summary:'',private_messages:[],narrative_claims:[],
     gm_world_parts:[{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]}]}};
 }
+import {sessionOpeningCohortSource} from './frameworks/session/public.js';
+// Provide this module's original opening cohort functions to the fixed Session slot; no other authority is granted.
+sessionOpeningCohortSource.bind({currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive,independentOpeningCameraBasis});

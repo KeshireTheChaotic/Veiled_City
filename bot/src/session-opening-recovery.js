@@ -1,11 +1,14 @@
 /** Authenticated exact-state recovery of prepared, demonstrably unsent openings. Never calls a provider or resets uncertainty. */
 import {randomUUID} from 'node:crypto';
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {assemblyDeliverySummary,assemblyPlanHash} from './assembly-state.js';
-import {assertSessionOpeningAttempt,inspectSessionOpening,rebaseSessionOpening} from './session-opening.js';
+import {sessionAssemblyStateSource} from './frameworks/session/public.js';
+function assemblyDeliverySummary(...args){return sessionAssemblyStateSource.assemblyDeliverySummary(...args);}function assemblyPlanHash(...args){return sessionAssemblyStateSource.assemblyPlanHash(...args);}
+import {sessionOpeningSource} from './frameworks/session/public.js';
+function assertSessionOpeningAttempt(...args){return sessionOpeningSource.assertSessionOpeningAttempt(...args);}function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}function rebaseSessionOpening(...args){return sessionOpeningSource.rebaseSessionOpening(...args);}
 import {sessionOpeningFlight,deliverSessionOpening,runSessionOpening} from './session-opening-runner.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
-import {assemblyInputFingerprint} from './assembly-context.js';
+import {sessionAssemblyContextSource} from './frameworks/session/public.js';
+function assemblyInputFingerprint(...args){return sessionAssemblyContextSource.assemblyInputFingerprint(...args);}
 function fail(){throw Object.assign(new Error('Original authenticated GM and exact current prepared opening review required.'),{code:'SESSION_OPENING',expected:true});}
 function operator(db,i,authorize){
   if(typeof authorize!=='function'||authorize(db,i)!==true||!i?.id||!i.guildId||!i.user?.id)fail();

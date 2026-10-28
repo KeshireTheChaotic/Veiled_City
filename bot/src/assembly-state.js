@@ -84,3 +84,6 @@ export function assemblyOrientation(db,guild,sessionId,scope){
     :'\nYou may compare the observations you choose to share. Cooperation and party formation remain your choices.';
   return {text,state,revision:assemblyHash(state)};
 }
+import {sessionAssemblyStateSource} from './frameworks/session/public.js';
+// Provide this module's original assembly state functions to the fixed Session slot; no other authority is granted.
+sessionAssemblyStateSource.bind({assemblyDeliverySummary,assemblyPlanHash});

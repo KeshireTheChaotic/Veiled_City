@@ -5,3 +5,6 @@ export function registerOpeningAttendance(...args){return attendance.registerOpe
 export function carryOpeningAttendance(...args){return attendance.carryOpeningAttendance(...args);}
 export function inspectOpeningEntryOpportunity(...args){return attendance.inspectOpeningEntryOpportunity(...args);}
 export function prepareOpeningEntryOpportunity(...args){return attendance.prepareOpeningEntryOpportunity(...args);}
+import {sessionOpeningAttendanceSource} from './frameworks/session/public.js';
+// Provide this module's original opening attendance functions to the fixed Session slot; no other authority is granted.
+sessionOpeningAttendanceSource.bind({inspectOpeningEntryOpportunity});
