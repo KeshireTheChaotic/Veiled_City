@@ -7,7 +7,8 @@ const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args)
 const completedActionSource=(...args)=>sessionNativeActionConsent.completedActionSource(...args);
 const historicalActionSource=(...args)=>sessionNativeActionConsent.historicalActionSource(...args);
 import {currentScene} from "./scene-continuity.js";
-import {applyAutonomousWorld} from "./autonomous-world.js";
+import {sessionWorldAutonomy} from './frameworks/session/public.js';
+function applyAutonomousWorld(...args){return sessionWorldAutonomy.applyAutonomousWorld(...args);}
 import {sessionNativeChecks} from './frameworks/session/public.js';
 function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
 function validatePvpResolutionReceipt(...args){return sessionNativeChecks.validatePvpResolutionReceipt(...args);}

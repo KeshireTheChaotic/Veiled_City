@@ -22,3 +22,8 @@ export function connectSessionWorldActorState(){return sessionWorldActorState.bi
 import {currentScene,reconcileSceneArrival,scenePresence,sceneAccess,recordScenePresence} from '../../frameworks/session/public.js';
 import {worldSessionScene} from '../../frameworks/world/public.js';
 export function connectWorldSessionScene(){return worldSessionScene.bind({currentScene,reconcileSceneArrival,scenePresence,sceneAccess,recordScenePresence});}
+
+import {sessionWorldAutonomy} from '../../frameworks/session/public.js';
+import {worldAutonomousApplication} from '../../frameworks/world/public.js';
+/** Pass World's original autonomous application to Session unchanged. */
+export function connectSessionWorldAutonomy(){return sessionWorldAutonomy.bind({applyAutonomousWorld:worldAutonomousApplication.applyAutonomousWorld});}

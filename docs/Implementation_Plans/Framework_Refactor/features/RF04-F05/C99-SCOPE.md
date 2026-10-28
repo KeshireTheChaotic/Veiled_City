@@ -1,0 +1,5 @@
+# RF04-F05 C99 — Session applies autonomous World narrative through a Session port
+
+Base 78fd5bc6. Session's action-continuation.js stops importing applyAutonomousWorld from the World root module autonomous-world.js. Session gains a fixed sessionWorldAutonomy port; World gains a worldAutonomousApplication provider slot (separate from the C92 worldAutonomousSource slot, which a test binds with a fixed key list) that autonomous-world.js fills at load with its original. The existing session--world adapter binds the port via connectSessionWorldAutonomy from the existing initializeSessionSceneWorld bootstrap (no index.js change). The new test imports only changed contracts and the bootstrap with a feature-local fake original.
+
+Rollback: Revert only the C99 commit: restore the direct ./autonomous-world.js import in action-continuation.js, remove the Session sessionWorldAutonomy port, the World worldAutonomousApplication slot and its binding in autonomous-world.js, connectSessionWorldAutonomy and its call in initializeSessionSceneWorld, the C99 test reference in BRIDGE_CONTRACTS.json, and restore the 2 exact transitions from C99-RETIRED.json.

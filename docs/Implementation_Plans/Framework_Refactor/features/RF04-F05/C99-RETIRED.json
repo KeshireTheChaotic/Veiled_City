@@ -1,0 +1,35 @@
+{
+  "feature": "RF04-F05-C99",
+  "original_manifest_sha256": "25A1A13857566F6A6746CC60B3139DE1E541CAB290981DD935C4053B806B8317",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "5a3884e95702fc57bb88f6804027f5d55670fa643b8525b3089c7d13652739f3",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/action-continuation.js",
+      "to": "bot/src/autonomous-world.js",
+      "kind": "static",
+      "specifier": "./autonomous-world.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "70526fc6b547ecb712033709996c69bea03598bca26eb3fd5c72e37cee59a355",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/action-continuation.js",
+      "to": "bot/src/autonomous-world.js",
+      "kind": "static",
+      "specifier": "./autonomous-world.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}
