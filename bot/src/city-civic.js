@@ -231,3 +231,6 @@ export {historyContext} from './frameworks/world/public.js';
 
 import {requireWorldLocation as location,queueCivicChange,connectCity,recalculateInfrastructure,changeCityService,applyNpcServiceOutcome} from './frameworks/world/public.js';
 export {connectCity,changeCityService,applyNpcServiceOutcome} from './frameworks/world/public.js';
+import {worldCityCivicSource} from './frameworks/world/public.js';
+// Provide this module's original civic update to the fixed World slot; no other authority is granted.
+worldCityCivicSource.bind({updateCityCivic});

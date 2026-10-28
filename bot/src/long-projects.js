@@ -160,3 +160,6 @@ export function reconcileLongProject(db,guild,row){
       {principal:applicationPrincipal(guild,"project.pause","continuity_guard")});
   }
 }
+import {worldLongProjectSource} from './frameworks/world/public.js';
+// Provide this module's original long project functions to the fixed World slot; no other authority is granted.
+worldLongProjectSource.bind({manageLongProject,projectPhaseRevision});

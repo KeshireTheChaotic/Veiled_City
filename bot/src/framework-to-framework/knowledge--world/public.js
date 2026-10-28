@@ -38,3 +38,8 @@ import {knowledgeContextMemorySource} from '../../frameworks/knowledge/public.js
 import {worldContextMemory} from '../../frameworks/world/public.js';
 /** Pass Knowledge's original scoped context memory reader to World unchanged. */
 export function connectWorldContextMemory(){return worldContextMemory.bind({contextMemoriesForScope:knowledgeContextMemorySource.contextMemoriesForScope});}
+
+import {knowledgeWorldCommunity} from '../../frameworks/knowledge/public.js';
+import {worldLongProjectSource,worldCityCivicSource} from '../../frameworks/world/public.js';
+/** Pass World's original long project and civic update functions to Knowledge unchanged. */
+export function connectKnowledgeWorldCommunity(){return knowledgeWorldCommunity.bind({manageLongProject:worldLongProjectSource.manageLongProject,updateCityCivic:worldCityCivicSource.updateCityCivic});}

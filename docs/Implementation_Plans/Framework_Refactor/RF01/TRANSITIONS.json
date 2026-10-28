@@ -7416,20 +7416,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "f7a84e4b3c5b7c9fa1381c0466ed5ecd33a67940634359ad2f17cd51de280061",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/memory-lifecycle.js",
-      "to": "bot/src/world-authorship.js",
-      "kind": "static",
-      "specifier": "./world-authorship.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "3b8e386f4acf01092f593fa4d9220000e74881d25731514022f7477d001fc88f",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/movement-language.js",
@@ -9610,34 +9596,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a9f5def925645cf31a0ac7252872cfda9e6c34fc96ef9488d02e9e03355187c7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/owned-community.js",
-      "to": "bot/src/city-civic.js",
-      "kind": "static",
-      "specifier": "./city-civic.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a4734667d3e92c9f6fb83e93faa63e4afeb876325f04092b658f773696a86c99",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/owned-community.js",
-      "to": "bot/src/long-projects.js",
-      "kind": "static",
-      "specifier": "./long-projects.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

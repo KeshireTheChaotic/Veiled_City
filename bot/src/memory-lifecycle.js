@@ -3,7 +3,8 @@ import {knowledgeNarrativeSources} from './frameworks/knowledge/public.js';
 function narrativeSourceVisible(...args){return knowledgeNarrativeSources.narrativeSourceVisible(...args);}
 function narrativeImportance(...args){return knowledgeNarrativeSources.narrativeImportance(...args);}
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
-import {worldIdentityOrigin} from './world-authorship.js';
+import {knowledgeWorldIdentities} from './frameworks/knowledge/public.js';
+function worldIdentityOrigin(...args){return knowledgeWorldIdentities.worldIdentityOrigin(...args);}
 import {createMemoryLifecycle} from './frameworks/knowledge/public.js';
 let lifecycleRules;
 function lifecycle(){return lifecycleRules??=createMemoryLifecycle({narrativeSourceVisible:(...args)=>narrativeSourceVisible(...args),narrativeImportance:(...args)=>narrativeImportance(...args),BACKGROUND_WORLD_KINDS,worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args)});}

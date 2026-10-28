@@ -3,8 +3,9 @@ import {knowledgeWorldMemory,knowledgeWorldEvents,knowledgeWorldRecord} from './
 function cityObject(...args){return knowledgeWorldMemory.cityObject(...args);}function cityKey(...args){return knowledgeWorldMemory.cityKey(...args);}function cityAudit(...args){return knowledgeWorldMemory.cityAudit(...args);}function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 import {personalCharacter} from './personal-continuity.js';
 function requireCitySource(...args){return knowledgeWorldMemory.requireCitySource(...args);}function requireCityRecord(...args){return knowledgeWorldRecord.requireCityRecord(...args);}
-import {updateCityCivic} from './city-civic.js';
-import {manageLongProject} from './long-projects.js';
+import {knowledgeWorldCommunity} from './frameworks/knowledge/public.js';
+function updateCityCivic(...args){return knowledgeWorldCommunity.updateCityCivic(...args);}
+function manageLongProject(...args){return knowledgeWorldCommunity.manageLongProject(...args);}
 import {knowledgeNpcActorSource} from './frameworks/knowledge/public.js';
 const {actorSource}=knowledgeNpcActorSource;
 import {createOwnedCommunity} from './frameworks/knowledge/public.js';
