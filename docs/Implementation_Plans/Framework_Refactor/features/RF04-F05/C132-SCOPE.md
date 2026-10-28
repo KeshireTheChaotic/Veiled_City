@@ -1,0 +1,5 @@
+# RF04-F05 C132 — Session assembly reads World opening opportunities through a Session slot
+
+Base 2ac849b7. assembly-context.js no longer imports the session--world opening-world-bridge.js; it reads the original openingWorldOpportunities through the new Session slot sessionOpeningWorld (frameworks/session/contracts/opening-world.js), which opening-world-bridge.js binds at load (startup-reached via gm.js). This removes the framework-to-pair import and its cycle, and the checker reports three more edges no longer cyclic (opening-world-bridge -> world-narrative-bridge, narrative-authority-context/pvp-output -> assembly-context), retired with them. Supplemental cold-import batch of 73 fresh files importing the opening consumers: 306/306 pass.
+
+Rollback: Revert only the C132 commit: restore the opening-world-bridge.js import in assembly-context.js, remove the Session opening World slot, its public export and the bind in opening-world-bridge.js, and restore the exact transitions from C132-RETIRED.json.

@@ -28,3 +28,6 @@ export function openingWorldOpportunities(db,guild,scope){
   }
   return out;
 }
+import {sessionOpeningWorld} from './frameworks/session/public.js';
+// Provide this module's original opening opportunities to the fixed Session slot; no other authority is granted.
+sessionOpeningWorld.bind({openingWorldOpportunities});

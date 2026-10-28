@@ -1,0 +1,308 @@
+{
+  "feature": "RF04-F05-C132",
+  "base_head": "2ac849b7e7fedb2624920a7eaa994f8e4422b656",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/frameworks/session/contracts/opening-world.js",
+      "bot/src/frameworks/session/public.js",
+      "bot/src/assembly-context.js",
+      "bot/src/opening-world-bridge.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c132.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "2A333BC4A4F25921DD454942B6E2295591449CA0B655D6F28048BBD566732FFD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs",
+        "sha256": "C032C9B9606388B71B688D935B6D4760E68CC67865BCD9B99F061B4A44B234D9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02.test.mjs",
+        "sha256": "AF364B15EB2DF781AA99D59B4D1E3ADB074E54061630D75EA6F2299AF39C4657"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-c01.test.mjs",
+        "sha256": "2224C8505CDEF31278DE30B42D9176B233AA47BE13B1EF115CF875955BF67B0A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs",
+        "sha256": "48C5D98D49EF3BFE8A44781AECD8B67A75B8367310B6A802FBA112F790886B84"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03.test.mjs",
+        "sha256": "B7818A1D69D3047DB26413506C53D59BE2ED1CF16BECB2AF4009367197DF4351"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f05-correction.test.mjs",
+        "sha256": "84D07BABF44784DC044E81AC27CB00C4802DB3E8981427AC284FA591F8205581"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f07-correction.test.mjs",
+        "sha256": "B39A5E8908D90721194F1EC30F3EA1CB489A2D7C652B76253F9A90E5D57DA501"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
+        "sha256": "9C6A504A5B8A3584A95EB9D1091D96692F650C08DED99CC19EA6041531EAA7C3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "8E54B8245F786BB7887634E175B5F950080CC051B04B127EF1B074B4857CB288"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "643D0AB2D15AF174626D2C61181DDB0AC46188DF10C4A0C5099A289546717F9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "D278FDE4F98BCDC2B3B5FB5733864D5ABDAB947B49901E49A96F20F48FEF7535"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "D325AFE65B91A22667B04FEC68FD2613D7EA8E999087FD4415B44AAF3F92FBF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "66A628692BD1BD516E0475F3F05B0A0DAD91F4A01151694813F6BFE48A47A6E7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c12.test.mjs",
+        "sha256": "BFA8F223C14AF4238D08305253FE3F84CA23BADA5131171191912BA5C4C1F1E9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-forward.test.mjs",
+        "sha256": "A9F828250A56F002F9EC19D12EE182DE42B06E223B377D6F2F087D19A4269681"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-native.test.mjs",
+        "sha256": "813828FBBA4009CA7EF080E065F82E2222299A614B2A73A304E92B85573F0886"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-forward.test.mjs",
+        "sha256": "6F11DD6167CD36EC9A5C2F1FBDCA4E9FCA0836854E17EFA7A1F820DB4A99DF82"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s02.test.mjs",
+        "sha256": "50B03BDF5C13CA4ABF75ECCA97997A5C6AAE4CA0207FB3FE3B86BCD987DFDD7C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-boundary.test.mjs",
+        "sha256": "5ABAEA0D0CA05AFC0EC8A08B59A8022FC3E25EFF1E9C4B9982FFDC2ABE6D27A9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05.test.mjs",
+        "sha256": "58C5453BE2FFF5F12C2AD73055C8A2A31FF2E0D53A5B6D9F5A28DE09D599CF93"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s06.test.mjs",
+        "sha256": "FA132719806F0463324778D7CDBF30636E89B304A7B408C66F8C64E06833F78F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "850D75C34EF0689B45D4A77985EF0E6C48BC2F43A2B5E98A4CFADB58F5C48733"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "B362359DE2CA989879055DD313E41DE82A5BBBEC01D936C4553385D1A3058EE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "DFF6703A0365619ED5E2C0073A1A4B44C10F466559E6C1C5DF199134153BB84C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c118.test.mjs",
+        "sha256": "4F65849083D3734609320971B6E825485300060C320F54FA891AF9BED69C1030"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "sha256": "4D777CD9DA0CAA182F7374305985D89FBEBC513EE7A8410FDAF07601432427A1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c132.test.mjs",
+        "sha256": "FFC9D5DAB295B996E24C0AC9C0169FF81DD65A8A1B78C3ECBDA041B4A4384FF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "1F0E29EDC40043B93ABDCF5F4EABFB863B3893E24AA797DA1EBAB54D4D470BE5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c52.test.mjs",
+        "sha256": "992340C0C887E723704AC04CF0768F3B10F25BF9F388AAFDC5F342260C74EA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c57.test.mjs",
+        "sha256": "90F4773A077BAD2CB161C8E8D3729A1758D537B19E395D2AA82F415C2FA52EE3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "sha256": "7A773E094C1063C56FF432651FFB00C37A79316220F583C0F45CAE643F5FFC08"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-instance.test.mjs",
+        "sha256": "2443895443BF6BE02981B41345425D460C51141F20BBE39737A2C0F14502E7F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs",
+        "sha256": "680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T14:26:42.781Z",
+    "end": "2026-10-28T14:28:01.196Z",
+    "exit_code": 0,
+    "tests": 195,
+    "passed": 195,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 78377.9087,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c132-test.log",
+    "log_sha256": "84A4BC058E21B5D3AD324BDFAEC5B8968A826DE6E62D2587152767B0BD36CE0D",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 843,
+      "unowned": 0,
+      "imports": 3401,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1339,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c132-rf04-architecture.log",
+      "log_sha256": "5FA17A4C1DE600691C4B98D4C10D1A0645D1A16631422725F202D54D3E6ABB99",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 843,
+      "unowned": 0,
+      "imports": 3401,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1228,
+      "active_violation_groups": 111,
+      "transition_errors": 111,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c132-rf05-architecture.log",
+      "log_sha256": "41517B6BDCD987CB7293C8FC268E7F00E948728D61B30E25AF006B419E74A13D",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/opening-world-bridge.js -> ",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/opening-world-bridge.js -> bot/src/world-narrative-bridge.js",
+        "EXPIRED_TRANSITION bot/src/assembly-context.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-world-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-world-bridge.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "3e5ad147fd7affe74893604a5abc4c455db23e7cd509fbd4e76f9202e2af78ea",
+      "81546e7d061441a4cf38adccdda096153124bc891fdb2191ae0495b9003a3f54",
+      "0614e52f53e9cc42c2f8aeb5cdd732b706b4151eaa188a566bf24c241713b797",
+      "9454e91e533c35e28b99c5a7231b9ee665b890127c020cebdcb4c53179b93e3d",
+      "751e9629547002bfad4bc866764c9aeea3d19315df0b9aa71bd3e0dcfc6e5f59"
+    ],
+    "original_manifest_sha256": "AF6C01E307EF678C486C66FE9BD1EAD1E12AD597E095C956697C4FBF17DDB90B",
+    "manifest_sha256_after": "8A228C047650B2E428DF5B03626C93853EEDFEE1F22410C733B8F4D7A128B6F9",
+    "entries_after": 1328,
+    "remaining_by_feature": {
+      "RF04-F01": 31,
+      "RF04-F03": 20,
+      "RF04-F04": 29,
+      "RF04-F05": 31,
+      "RF05-F02": 182,
+      "RF05-F03": 215,
+      "RF05-F04": 41,
+      "RF05-F05": 390,
+      "RF06-F02": 17,
+      "RF06-F03": 171,
+      "RF06-F04": 153,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/frameworks/session/contracts/opening-world.js": "ECB910E38C13C23B30606E8CDE332EFD746AF3EBEA998D82BD49889EFFEA07F0",
+    "bot/src/frameworks/session/public.js": "F787B74385CCFEFF8273468FEDCD21501A3720E106C48C37F114C956D939BA75",
+    "bot/src/assembly-context.js": "BCDB858E6956F8EF7C90008980303373EA1BBAF99C0ED2C367894E320A4FB32C",
+    "bot/src/opening-world-bridge.js": "52653BE1B388C56483DE0D0AADC9FA3293121BB1C54750A117AEEA4E4F3B1144"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C132 commit: restore the opening-world-bridge.js import in assembly-context.js, remove the Session opening World slot, its public export and the bind in opening-world-bridge.js, and restore the exact transitions from C132-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

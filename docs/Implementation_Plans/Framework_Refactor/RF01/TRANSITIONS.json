@@ -3682,20 +3682,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "3e5ad147fd7affe74893604a5abc4c455db23e7cd509fbd4e76f9202e2af78ea",
-      "code": "FRAMEWORK_IMPORTS_PAIR",
-      "from": "bot/src/assembly-context.js",
-      "to": "bot/src/opening-world-bridge.js",
-      "kind": "static",
-      "specifier": "./opening-world-bridge.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "5d07526c369226ffb09b816cd2d49649781e42b9d85a78cfff969ff6d3c9fea0",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/assembly-delivery.js",
@@ -12577,20 +12563,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "81546e7d061441a4cf38adccdda096153124bc891fdb2191ae0495b9003a3f54",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/assembly-context.js",
-      "to": "bot/src/opening-world-bridge.js",
-      "kind": "static",
-      "specifier": "./opening-world-bridge.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "06d7a1c0705c3db50bec798d92985f22908fbf026ae177bfc023ea43bb1f287f",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/audience-native-v9.js",
@@ -13157,20 +13129,6 @@
       "to": "bot/src/audience-native-v9.js",
       "kind": "static",
       "specifier": "./audience-native-v9.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "0614e52f53e9cc42c2f8aeb5cdd732b706b4151eaa188a566bf24c241713b797",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/assembly-context.js",
-      "kind": "static",
-      "specifier": "./assembly-context.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -15335,20 +15293,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "9454e91e533c35e28b99c5a7231b9ee665b890127c020cebdcb4c53179b93e3d",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/opening-world-bridge.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
-      "owner": "session--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "9b30df7d286ca665283e262d14f98934da685d2b6dad9f6531e3dac53e47f805",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/ordinary-effect-proof.js",
@@ -16657,20 +16601,6 @@
       "to": "bot/src/native-outcome-output.js",
       "kind": "static",
       "specifier": "./native-outcome-output.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "751e9629547002bfad4bc866764c9aeea3d19315df0b9aa71bd3e0dcfc6e5f59",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-output.js",
-      "to": "bot/src/assembly-context.js",
-      "kind": "static",
-      "specifier": "./assembly-context.js",
       "owner": "publication",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",

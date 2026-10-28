@@ -1,8 +1,8 @@
 /** Original verified source composition; source adapter decomposition remains RF04-F05. */
 import {createAssemblyContext,currentScene,scenePresence} from './frameworks/session/public.js';
 export {hookHash,assemblySourceError} from './frameworks/session/public.js';
-import {openingWorldOpportunities} from './opening-world-bridge.js';
-const context=createAssemblyContext({currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),openingWorldOpportunities:(...args)=>openingWorldOpportunities(...args)});
+import {sessionOpeningWorld} from './frameworks/session/public.js';
+const context=createAssemblyContext({currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),openingWorldOpportunities:(...args)=>sessionOpeningWorld.openingWorldOpportunities(...args)});
 export const assemblyHookSources=(...args)=>context.assemblyHookSources(...args);
 export const assemblyInputs=(...args)=>context.assemblyInputs(...args);
 export const assemblyInputFingerprint=(...args)=>context.assemblyInputFingerprint(...args);
