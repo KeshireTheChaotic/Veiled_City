@@ -11,7 +11,8 @@ function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProx
 import {sessionWorldNpcAvailability} from './frameworks/session/public.js';
 function assertNpcAvailability(...args){return sessionWorldNpcAvailability.assertNpcAvailability(...args);}
 import {conversationPrincipal} from './frameworks/session/public.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {sessionNarrativeSources} from './frameworks/session/public.js';
+function narrativeSourceVisible(...args){return sessionNarrativeSources.narrativeSourceVisible(...args);}
 import {sessionKnowledgeSources} from './frameworks/session/public.js';
 function factVisibleTo(...args){return sessionKnowledgeSources.factVisibleTo(...args);}
 import {sessionIntentLanguage} from './frameworks/session/public.js';

@@ -8,7 +8,8 @@ const validateActionConsent=(...args)=>sessionNativeActionConsent.validateAction
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from './frameworks/session/public.js';
 import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";
-import { validatePvpAgreement } from "./narrative-pvp.js";
+import {sessionNarrativeSources} from './frameworks/session/public.js';
+function validatePvpAgreement(...args){return sessionNarrativeSources.validatePvpAgreement(...args);}
 import {sessionNativeRules} from './frameworks/session/public.js';
 function adjudicateAcceptedIntent(...args){return sessionNativeRules.adjudicateAcceptedIntent(...args);}
 import {sessionIntent} from './frameworks/session/public.js';

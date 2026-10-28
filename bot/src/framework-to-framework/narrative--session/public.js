@@ -5,3 +5,8 @@ import {createOpeningAuthoringPort} from '../../frameworks/session/public.js';
 export function connectOpeningNarrative(author){
   return createOpeningAuthoringPort(createOpeningNarrativeCapability(author));
 }
+
+import {narrativeSourceVisible,pvpAgreementConsumer} from '../../frameworks/narrative/public.js';
+import {sessionNarrativeSources} from '../../frameworks/session/public.js';
+/** Pass Narrative's original source visibility and PvP agreement validation to Session unchanged. */
+export function connectSessionNarrativeSources(){return sessionNarrativeSources.bind({narrativeSourceVisible,validatePvpAgreement:pvpAgreementConsumer.validatePvpAgreement});}

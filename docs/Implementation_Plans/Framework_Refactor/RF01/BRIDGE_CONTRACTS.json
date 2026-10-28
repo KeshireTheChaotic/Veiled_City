@@ -2589,7 +2589,7 @@
         {
           "from": "session",
           "to": "narrative",
-          "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error"
+          "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error; narrativeSourceVisible(...) and validatePvpAgreement(...) -> original Narrative result/error through the Session-owned sessionNarrativeSources port bound at bootstrap by initializePvpAgreements (RF04-F05 C116)."
         }
       ],
       "source_evidence": [
@@ -2605,7 +2605,8 @@
       "adoption_feature": "RF04-F04",
       "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
       "consumers": [
-        "bot/src/application/composition/create-opening-services.js"
+        "bot/src/application/composition/create-opening-services.js",
+        "bot/src/application/composition/pvp-agreements.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
