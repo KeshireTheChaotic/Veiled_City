@@ -1,2 +1,0 @@
-/** Same World runtime: one live grant store, unchanged receipts and strategy frames. */
-export {nativeWorldCoordinatorReady,nativeWorldOperationCatalog,prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldStrategyAllowed,nativeWorldStrategyScope,withNativeStrategyExecution,nativeWorldStrategyStepAllowed} from './frameworks/world/public.js';

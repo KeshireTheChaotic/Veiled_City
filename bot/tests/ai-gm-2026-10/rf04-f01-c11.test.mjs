@@ -8,9 +8,9 @@ import {parse} from '../../node_modules/acorn/dist/acorn.mjs';
 import {normalizeEntityKey} from '../../src/kernel/entity-key.js';
 import {normalizeEntityKey as normalizeNpcKey} from '../../src/kernel/entity-key.js';
 import {VeiledDB} from '../../src/db.js';
-import {resolvePlaceReference,preflightPlaceIdentity} from '../../src/location-language.js';
+import {resolvePlaceReference,preflightPlaceIdentity} from '../../src/frameworks/world/public.js';
 
-const consumers=['autonomous-world','city-depth','db','location-language','seed-data','seed-drafts','simulation-commands','simulation','state','world-authoring'];
+const consumers=['autonomous-world','city-depth','db','seed-data','seed-drafts','simulation-commands','simulation','state','world-authoring'];
 
 test('shared formatter preserves established byte semantics across entity names and accented source keys',()=>{
  for(const [input,expected] of [['  Café d’Argent  ','cafe-d-argent'],['THE West / Gate','the-west-gate'],['--Window___7 --','window-7'],['Straße','stra-e'],['東京',''],['mémô.once','memo-once'],[null,''],[undefined,''],[false,''],[0,''],[{},'object-object'],['e\u0301','e']])assert.equal(normalizeEntityKey(input),expected,String(input));

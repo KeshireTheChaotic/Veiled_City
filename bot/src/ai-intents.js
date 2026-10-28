@@ -31,7 +31,8 @@ import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import { conversationPrincipal } from "./conversation-principal.js";
 import {delegationCatalog} from './delegation-catalog.js';
 import {activateDelegatedEncounter,inspectNativeEncounterActivation} from './native-encounter-activation.js';
-import {prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope} from './native-world-operations.js';
+import {intentWorldOperations} from './frameworks/intent/public.js';
+function prepareNativeWorldOperation(...args){return intentWorldOperations.prepareNativeWorldOperation(...args);}function nativeWorldOperationAllows(...args){return intentWorldOperations.nativeWorldOperationAllows(...args);}function nativeWorldOperationOrigin(...args){return intentWorldOperations.nativeWorldOperationOrigin(...args);}function inspectNativeWorldOperationReceipt(...args){return intentWorldOperations.inspectNativeWorldOperationReceipt(...args);}function nativeWorldOperationCatalog(...args){return intentWorldOperations.nativeWorldOperationCatalog(...args);}function nativeWorldStrategyScope(...args){return intentWorldOperations.nativeWorldStrategyScope(...args);}
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const adapters=new Map();
 export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",

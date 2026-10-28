@@ -11,7 +11,7 @@ import {cityObject,cityKey,cityInteger,cityAudit,indexWorldEvent} from '../../sr
 import {actorSource} from '../../src/frameworks/npc/public.js';
 import {ACTION_TYPES,ACTION_COSTS,actorState,submitNpcAction} from '../../src/simulation.js';
 import {submitInstitutionAction,reviewInstitutionAction} from '../../src/city-core.js';
-import {nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution} from '../../src/native-world-operations.js';
+import {nativeWorldOperationAllows,nativeWorldOperationOrigin,nativeWorldStrategyAllowed,withNativeStrategyExecution} from '../../src/frameworks/world/public.js';
 import * as original from '../../src/frameworks/npc/public.js';
 
 function setup(t,overrides={}){

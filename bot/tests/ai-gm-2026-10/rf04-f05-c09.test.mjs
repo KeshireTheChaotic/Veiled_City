@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {fileURLToPath}from'node:url';
 import {VeiledDB}from'../../src/db.js';
 import * as world from '../../src/frameworks/world/public.js';
-import * as legacy from '../../src/native-world-operations.js';
+import * as legacy from '../../src/frameworks/world/public.js';
 import * as oldAvailability from '../../src/city-constraints.js';
 import {delegationPolicy}from'../../src/frameworks/intent/public.js';
 import {delegationPolicy as oldPolicy}from'../../src/ai-intents.js';

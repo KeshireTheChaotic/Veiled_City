@@ -1901,7 +1901,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f06-c59.test.mjs"
       ],
       "observed_directions": [
         {

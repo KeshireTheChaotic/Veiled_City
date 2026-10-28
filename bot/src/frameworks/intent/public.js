@@ -18,3 +18,4 @@ export {intentAiIntentDispatch,intentTypedIntentReaders} from './contracts/world
 export {intentAuthoredTurnSource,intentGameplayIntakeSource} from './contracts/turn-language-sources.js';
 export {intentOwnerActionTerminal} from './contracts/owner-action-terminal.js';
 export {intentKnowledgeMaintenance} from './contracts/knowledge-maintenance.js';
+export {intentWorldOperations} from './contracts/world-operations.js';

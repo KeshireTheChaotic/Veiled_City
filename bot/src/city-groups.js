@@ -5,7 +5,7 @@ import { updateCityCivic } from './frameworks/world/public.js';
 import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { UserInputError, StateConflictError } from "./kernel/errors.js";
-import {nativeWorldOperationAllows} from './native-world-operations.js';
+import {nativeWorldOperationAllows} from './frameworks/world/public.js';
 const playerCommunity=(db,guild,key)=>db.listCityRecords(guild,{kind:"community_membership",actor:`community:${key}`,status:"active",includeGM:true,limit:1}).length>0;
 function protectPlayerCommunity(db,guild,data){
   if(["join","dissolve"].includes(data.operation)&&playerCommunity(db,guild,data.group_key)

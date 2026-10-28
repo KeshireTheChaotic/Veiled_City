@@ -12,7 +12,7 @@ import {createNpcEvidenceConsumer,indexWorldEvent} from '../../src/frameworks/wo
 import {connectNpcWorldEvidence} from '../../src/framework-to-framework/npc--world/public.js';
 import {initializeNpcWorldEvidence} from '../../src/application/composition/public.js';
 import * as npc from '../../src/frameworks/npc/public.js';
-import * as world from '../../src/native-world-operations.js';
+import * as world from '../../src/frameworks/world/public.js';
 import {transferSupply,supplyRevision} from '../../src/frameworks/world/public.js';
 import {checkProject} from '../../tooling/architecture/read-project.mjs';
 

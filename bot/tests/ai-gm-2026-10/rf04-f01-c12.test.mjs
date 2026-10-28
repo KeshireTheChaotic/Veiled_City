@@ -6,7 +6,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {resolvePlaceReference,preflightPlaceIdentity,preflightNpcIdentity,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import * as original from '../../src/location-language.js';
+import * as original from '../../src/frameworks/world/public.js';
 
 function fixture(t){
  const dir=mkdtempSync(join(tmpdir(),'rf04-world-place-')),file=join(dir,'places.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('g');const pc=db.createCharacter('g','owner','Traveller'),other=db.createCharacter('g','other','Second');

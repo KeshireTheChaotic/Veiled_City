@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createWorldOperationAuthority,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {jsonHash as hash} from '../../src/kernel/json-hash.js';
-import * as original from '../../src/native-world-operations.js';
+import * as original from '../../src/frameworks/world/public.js';
 
 function fixture(t){
  const dir=mkdtempSync(join(tmpdir(),'rf04-world-authority-')),file=join(dir,'grants.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),ownerRevision='owner-v1',knowledge=true,calls=0;
