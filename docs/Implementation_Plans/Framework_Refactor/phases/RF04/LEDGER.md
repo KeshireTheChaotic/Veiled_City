@@ -917,3 +917,7 @@ C144 adopts actual Knowledge–Persistence relationship contract with same-funct
 ## 2026-10-28 C135 compatibility correction
 
 Restored scene-action-window root re-export and exact original location record because preserved legacy workflows still import/read it. Fresh root-reader test2/2 and syntax pass; RF04 snapshot passes831 modules/zero active/unowned/errors; RF05 remains83 expired obligations. Historical v95 mutation test expects implementation guard text at root and is not repaired by a shim; no legacy suite executed or assertion changed. This compatibility limitation blocks root retirement under current import-only scope; no phase completion claimed.
+
+## 2026-10-28 C145 evidence consumer
+
+Original activeEvidence/evidenceType DB reads now use fixed Persistence consumer with original module-load and pair bindings, preserving standalone API (1/1 fresh SQLite test). RF04 gate passes832 modules/zero unowned/active/errors, largest cycle79. Original root dependencies remain; no false retirement or phase completion. Owner separately approved exact computed-import/source-mutation path metadata updates in the scene reader proposal, preserving test logic and assertions without legacy suite execution.

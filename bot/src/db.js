@@ -17,8 +17,8 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
-import {persistenceRelationshipEvidence} from './frameworks/persistence/public.js';
-import { activeEvidence, evidenceType } from "./epistemic.js";
+import {persistenceRelationshipEvidence,persistenceSourceEvidence} from './frameworks/persistence/public.js';
+import { activeEvidence as originalActiveEvidence, evidenceType as originalEvidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
 import {historicalArchiveProjection} from './historical-archive.js';
@@ -27,6 +27,8 @@ import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.j
 
 // Preserve standalone legacy facade reads while this fixed consumer is migrated to application composition.
 persistenceRelationshipEvidence.bind({relationshipEvidence});
+persistenceSourceEvidence.bind({activeEvidence:originalActiveEvidence,evidenceType:originalEvidenceType});
+const {activeEvidence,evidenceType}=persistenceSourceEvidence;
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {

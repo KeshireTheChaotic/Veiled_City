@@ -1,0 +1,5 @@
+# RF06-F02 C145 — Knowledge source evidence consumer
+
+Under the owner's exact RF06 prerequisite authorization, route Persistence's existing `activeEvidence` and `evidenceType` calls through a separate fixed Persistence consumer. The standalone `db.js` facade binds the original `epistemic.js` re-exports at module load; the existing Knowledge–Persistence pair binds the same original public functions in the existing application initializer. Preserve `getRelationship` and fact-read source call order, saved visibility, standalone construction and synchronous transactions.
+
+Update only the adopted pair's actual scope/validation description and local test reference. The legacy `db.js -> epistemic.js` and `db.js -> presentation-evidence.js` imports and their exact transitions remain: these bind the standalone compatibility facade until a later application facade cutover. No root reader, schema, baseline, deadline or policy is removed or waived. Rollback both consumer binding routes, DB call forwarding, Persistence export and pair metadata together.
