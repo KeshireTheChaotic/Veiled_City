@@ -13,7 +13,7 @@ import {typedEvidence,objectiveEvidence,activeEvidence} from '../../src/epistemi
 import {indexWorldEvent,cityAudit} from '../../src/frameworks/world/public.js';
 import {stateRevision} from '../../src/kernel/state-revision.js';
 import {stateRevision as intentRevision} from '../../src/ai-intents.js';
-import * as original from '../../src/presentation-evidence.js';
+import * as original from '../../src/frameworks/knowledge/public.js';
 
 function exhibit(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-presentation-c10-')),file=join(folder,'exhibit.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema);db.ensureCampaign('exhibit');indexWorldEvent(db,'exhibit',{key:'review-source',title:'GM review evidence',source_id:'gm:review'});const handout=db.createHandout('exhibit',{title:'A disputed letter',content:'Original decorative letter text.',metadata:{authored:true}}),api=createPresentationEvidence({typedEvidence,objectiveEvidence,activeEvidence,indexWorldEvent,cityAudit}),input=(patch={})=>({op:'review-presentation',kind:'handout',key:handout.id,decision:'approve',expected_revision:stateRevision(db.getHandout(handout.id)),reason:'A sourced presentation interpretation.',source_refs:['review-source'],...patch});

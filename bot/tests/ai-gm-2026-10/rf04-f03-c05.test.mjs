@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
@@ -7,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {execFileSync} from 'node:child_process';
 import {VeiledDB} from '../../src/db.js';
 import {previewHistoricalArchive,listHistoricalArchive,applyHistoricalArchive,historicalArchiveProjection} from '../../src/frameworks/knowledge/public.js';
-import * as original from '../../src/historical-archive.js';
+import * as original from '../../src/frameworks/knowledge/historical-archive.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
 
 function shelf(t,{end=true}={}){
@@ -48,5 +49,5 @@ test('archive audit failure rolls annotations, backup and receipt back while ori
 });
 
 test('operation receipt replay remains exact after SQLite restart and in a fresh process with a different signer secret',t=>{
- const f=shelf(t),p=f.preview(),result=f.apply(p);f.reopen();assert.deepEqual(f.apply(p),result);assert.throws(()=>f.apply(p,{reason:'A different reason'}),/does not match/);const input={preview:p.preview,interactionId:'archive-click',reason:'Close abandoned historical administration'},code='import {VeiledDB} from '+JSON.stringify(new URL('../../src/db.js',import.meta.url).href)+'; import {applyHistoricalArchive} from '+JSON.stringify(new URL('../../src/historical-archive.js',import.meta.url).href)+'; const db=new VeiledDB(process.argv[1],process.argv[2]);try{process.stdout.write(JSON.stringify(applyHistoricalArchive(db,"archive","gm",JSON.parse(process.argv[3]),{authorized:true,now:999999999})));}finally{db.close();}';const output=execFileSync(process.execPath,['--input-type=module','-e',code,f.file,f.schema,JSON.stringify(input)],{encoding:'utf8',timeout:10000,stdio:['ignore','pipe','pipe']});assert.deepEqual(JSON.parse(output),result);assert.equal(historicalArchiveProjection(f.db,'archive').archived,1);assert.equal(listHistoricalArchive(f.db,'archive','gm',1,f.options).already_archived,1);
+ const f=shelf(t),p=f.preview(),result=f.apply(p);f.reopen();assert.deepEqual(f.apply(p),result);assert.throws(()=>f.apply(p,{reason:'A different reason'}),/does not match/);const input={preview:p.preview,interactionId:'archive-click',reason:'Close abandoned historical administration'},code='import '+JSON.stringify(new URL('./compose-startup.mjs',import.meta.url).href)+'; import {VeiledDB} from '+JSON.stringify(new URL('../../src/db.js',import.meta.url).href)+'; import {applyHistoricalArchive} from '+JSON.stringify(new URL('../../src/frameworks/knowledge/public.js',import.meta.url).href)+'; const db=new VeiledDB(process.argv[1],process.argv[2]);try{process.stdout.write(JSON.stringify(applyHistoricalArchive(db,"archive","gm",JSON.parse(process.argv[3]),{authorized:true,now:999999999})));}finally{db.close();}';const output=execFileSync(process.execPath,['--input-type=module','-e',code,f.file,f.schema,JSON.stringify(input)],{encoding:'utf8',timeout:10000,stdio:['ignore','pipe','pipe']});assert.deepEqual(JSON.parse(output),result);assert.equal(historicalArchiveProjection(f.db,'archive').archived,1);assert.equal(listHistoricalArchive(f.db,'archive','gm',1,f.options).already_archived,1);
 });

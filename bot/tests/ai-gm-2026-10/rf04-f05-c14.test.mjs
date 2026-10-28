@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from'node:test';import assert from'node:assert/strict';import fs from'node:fs';import os from'node:os';import path from'node:path';import{fileURLToPath}from'node:url';
 import{VeiledDB}from'../../src/db.js';import{configureSimulationEntity,submitNpcAction,executeNpcAction}from'../../src/simulation.js';import * as world from'../../src/frameworks/world/public.js';import{ownedKnowledgeSource}from'../../src/frameworks/npc/public.js';import * as old from '../../src/frameworks/world/public.js';import{initializeWorldActorControl,initializeWorldExecution,initializeWorldOwnerConsent,initializeNpcWorldEvidence}from'../../src/application/composition/public.js';
 const schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));initializeWorldActorControl();initializeWorldExecution();initializeWorldOwnerConsent();initializeNpcWorldEvidence();
