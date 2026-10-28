@@ -913,3 +913,7 @@ C143 fixes the Persistence relationship consumer with the original facade module
 ## 2026-10-28 C144 and owner import amendment
 
 C144 adopts actual Knowledge–Persistence relationship contract with same-function module-load/initializer binding, preserving standalone DB construction (1/1 fresh SQLite test, static index order). RF04 gate passes830 modules/zero unowned/active/errors, largest cycle79. No root edge retired. Owner permits mechanical import-only repointing of existing bot/scripts legacy tests, preserving bodies/assertions and without executing legacy suites; exact limits recorded in LEGACY-IMPORT-REPOINT-AUTHORIZATION.md. RF04/RF06 remain incomplete; release unauthorized.
+
+## 2026-10-28 C135 compatibility correction
+
+Restored scene-action-window root re-export and exact original location record because preserved legacy workflows still import/read it. Fresh root-reader test2/2 and syntax pass; RF04 snapshot passes831 modules/zero active/unowned/errors; RF05 remains83 expired obligations. Historical v95 mutation test expects implementation guard text at root and is not repaired by a shim; no legacy suite executed or assertion changed. This compatibility limitation blocks root retirement under current import-only scope; no phase completion claimed.
