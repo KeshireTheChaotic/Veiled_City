@@ -17,3 +17,4 @@ export {intentPlayerLanguage} from './contracts/player-language.js';
 export {intentAiIntentDispatch,intentTypedIntentReaders} from './contracts/world-dispatch-sources.js';
 export {intentAuthoredTurnSource,intentGameplayIntakeSource} from './contracts/turn-language-sources.js';
 export {intentOwnerActionTerminal} from './contracts/owner-action-terminal.js';
+export {intentKnowledgeMaintenance} from './contracts/knowledge-maintenance.js';

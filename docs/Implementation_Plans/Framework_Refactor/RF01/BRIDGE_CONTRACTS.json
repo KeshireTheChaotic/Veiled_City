@@ -1509,10 +1509,12 @@
       "lifecycle": "One fixed consumer bound by application composition before runtime services; no storage construction or mutation.",
       "adoption_feature": "RF04-F03",
       "consumers": [
-        "bot/src/application/composition/knowledge-session.js"
+        "bot/src/application/composition/knowledge-session.js",
+        "bot/src/application/composition/intent-knowledge.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f03-c74.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f03-c74.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f06-c58.test.mjs"
       ],
       "observed_directions": [
         {

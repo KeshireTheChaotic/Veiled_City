@@ -14,14 +14,15 @@ import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
 import { applicationPrincipal } from "./kernel/application-authority.js";
-import { manageMemoryCluster, memoryMaintenanceCandidate } from "./memory-clusters.js";
+import {intentKnowledgeMaintenance} from './frameworks/intent/public.js';
+function manageMemoryCluster(...args){return intentKnowledgeMaintenance.manageMemoryCluster(...args);}function memoryMaintenanceCandidate(...args){return intentKnowledgeMaintenance.memoryMaintenanceCandidate(...args);}
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 import { interpretDialogue } from "./dialogue-continuity.js";
 import { manageEvidence } from "./evidence-custody.js";
 import { attemptCityInfluence } from "./city-civic.js";
 import { inviteOrganization } from "./owned-community.js";
 import { suggestSetupPayoff } from "./story-continuity.js";
-import { reconcileHistory } from "./history-reconciliation.js";
+function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-declaration-review.js";
 import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry-native.js";

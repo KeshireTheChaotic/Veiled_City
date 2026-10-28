@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createMemoryClusters} from '../../src/frameworks/knowledge/public.js';
 import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import * as original from '../../src/memory-clusters.js';
+import * as original from '../../src/frameworks/knowledge/public.js';
 import {retrieveNpcCognition} from '../../src/frameworks/npc/public.js';
 
 function notes(t){

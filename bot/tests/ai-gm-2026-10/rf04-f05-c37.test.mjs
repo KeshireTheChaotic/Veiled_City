@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import {mkdtempSync,rmSync,readFileSync} from 'node:fs';import {tmpdir} from 'node:os';import path from 'node:path';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';import {parse} from 'acorn';
 import {VeiledDB} from '../../src/db.js';import '../../src/audience-native-v9.js';import '../../src/native-group-features.js';import '../../src/ai-intents.js';import {GMService} from '../../src/gm.js';import {handleSimulationCommand} from '../../src/simulation-commands.js';import {handleStoryCommand} from '../../src/story-commands.js';
 import * as World from '../../src/frameworks/world/public.js';import * as Npc from '../../src/frameworks/npc/public.js';

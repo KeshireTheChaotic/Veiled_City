@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createHistoryReconciliation} from '../../src/frameworks/knowledge/public.js';
 import {indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {reconcileHistory as original} from '../../src/history-reconciliation.js';
+import {reconcileHistory as original} from '../../src/frameworks/knowledge/public.js';
 
 function history(t){
  const folder=mkdtempSync(join(tmpdir(),'rf04-history-c09-')),file=join(folder,'history.sqlite'),schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));let db=new VeiledDB(file,schema),occupants=[];db.ensureCampaign('history');db.setCityCalendar('history',{flags:{history_reconciliation:true}});indexWorldEvent(db,'history',{key:'basis',title:'Recorded basis',source_id:'gm:basis'});const api=createHistoryReconciliation({sceneView:()=>({occupants})}),record=(kind,key,data={},patch={})=>db.saveCityRecord('history',{kind,key,source_event:'basis',status:'active',data,...patch}),run=(options={})=>api.reconcileHistory(db,'history',options);
