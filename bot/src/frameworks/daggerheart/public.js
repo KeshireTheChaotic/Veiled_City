@@ -138,3 +138,4 @@ export {nativeActionConsentSource} from './contracts/action-consent-source.js';
 export {nativeSessionActionWindow} from './contracts/session-action-window.js';
 export {nativePersonalContinuity} from './contracts/personal-continuity.js';
 export {nativeWorldAutonomy} from './contracts/world-autonomy.js';
+export {nativeActionContinuation} from './contracts/action-continuation.js';

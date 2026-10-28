@@ -16,7 +16,8 @@ import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";
 import {assertBrawlFearOrder,orderedBrawlFear} from "./pvp-brawl.js";
 import {incomingAttackEvidence,rollAutonomousFearIncomingAttack} from "./pc-incoming.js";
-import {drainActionContinuations} from "./action-continuation.js";
+import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
+function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 import {validateMinorIdentity} from "./city-depth.js";
 import {preflightNpcIdentity} from "./location-language.js";
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';

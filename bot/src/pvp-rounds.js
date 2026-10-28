@@ -5,7 +5,8 @@ import { pvpOwnerContext, validatePvpAgreement } from "./narrative-pvp.js";
 import { synchronizePvpWindow } from "./window-coordinator.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
 import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
-import {drainActionContinuations} from "./action-continuation.js";
+import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
+function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 import {reservePvpNotices} from "./native-publications.js";
 import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';

@@ -31,3 +31,8 @@ export function connectSessionNativeActionConsent(){return sessionNativeActionCo
 import {nativeSessionActionWindow} from '../../frameworks/daggerheart/public.js';
 import {openActionWindow} from '../../frameworks/session/public.js';
 export function connectNativeSessionActionWindow(){return nativeSessionActionWindow.bind({openActionWindow});}
+
+import {nativeActionContinuation} from '../../frameworks/daggerheart/public.js';
+import {sessionActionContinuation} from '../../frameworks/session/public.js';
+/** Pass Session's original continuation drain to native rules unchanged. */
+export function connectNativeActionContinuation(){return nativeActionContinuation.bind({drainActionContinuations:sessionActionContinuation.drainActionContinuations});}

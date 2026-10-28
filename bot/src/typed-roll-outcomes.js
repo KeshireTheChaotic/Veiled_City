@@ -1,6 +1,7 @@
 /** Convert a terminal native roll request into one typed-action outcome receipt and resume its DAG. */
 import { buildActionPlan, transitionAction } from "./action-dependency.js";
-import {drainActionContinuations} from "./action-continuation.js";
+import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
+function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 import {typedRollProof} from "./typed-roll-proof.js";
 import {rollBreakdown,rollRevision,reserveRollAmendment} from "./roll-requests.js";
 import {captureActionFeatureWindows} from './native-feature-windows.js';

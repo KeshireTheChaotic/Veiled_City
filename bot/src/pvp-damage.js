@@ -10,7 +10,8 @@ import {buildActionPlan,transitionAction} from "./action-dependency.js";
 import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertBrawlDamageSources,releaseBrawlLocks,pvpWindowDamageSources} from "./pvp-brawl.js";
-import {drainActionContinuations} from "./action-continuation.js";
+import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
+function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 import {assertPvpSafety} from './pvp-campaign-policy.js';
 import {reserveCampaignDamageNotice} from './native-publications.js';
 import {createPvpDamageRules} from './frameworks/daggerheart/public.js';

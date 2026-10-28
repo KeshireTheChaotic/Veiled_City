@@ -10579,20 +10579,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "11fb03a8a368b664c8d9cccea1f76ab559098d2fe56e90f5cdd7e371273d399f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-damage.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "be120cd5d9f873dd2b882b5c8c9a3f627b3c99c1e3735a2359f2f8bac8da2b57",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-damage.js",
@@ -10630,20 +10616,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "f357b6e3410746a3d2e480da1410b01a70c874507d004a1cc80a0d0adc6ac7e8",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-fear-moves.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -11397,20 +11369,6 @@
       "to": "bot/src/window-coordinator.js",
       "kind": "static",
       "specifier": "./window-coordinator.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a1d43596396e9f1aa72244a21c2353fed210699ba6785ee20469b1fb4defac28",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-rounds.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -13596,20 +13554,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "e2b78e69f6a7c03462e897e405362341d35330d3acd09cde29f1cbae23c2befe",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/typed-roll-outcomes.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -18737,20 +18681,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "963afd81ad62a159b45efed2e0531463edd329a53d6bca63d37c4e5353c3ab68",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-damage.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "3be3021003781802b25eac77cf774ee4f1b9bd4d6cb16b946046ac3a05399381",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/pvp-damage.js",
@@ -18943,20 +18873,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "b09bfac1136166377efb6c841982127e3b7f91edbff0f7d572623323662592bd",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-fear-moves.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
@@ -19363,20 +19279,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "5564f290a1661a2e36de73eb3d8b58e6017b6495e7cc366d59667b6b20967488",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-rounds.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
@@ -20273,20 +20175,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "97194feb6755047d5b2341dc8eda44c69473aa3d823a3d4d0442932ed9b2ca08",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/typed-roll-outcomes.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
