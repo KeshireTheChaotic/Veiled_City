@@ -3,3 +3,4 @@ import {createFunctionPort} from '../../../kernel/function-port.js';
 export const narrativeSalienceSource=createFunctionPort(['canonicalInterestEvidence'],{code:'NARRATIVE_SALIENCE_SOURCE_COMPOSITION',label:'Narrative salience source'});
 export const narrativeAuthorityContextSource=createFunctionPort(['narrativeVisible','buildNarrativeContext'],{code:'NARRATIVE_AUTHORITY_CONTEXT_SOURCE_COMPOSITION',label:'Narrative authority context source'});
 export const narrativePortrayalSource=createFunctionPort(['configurePortrayal'],{code:'NARRATIVE_PORTRAYAL_SOURCE_COMPOSITION',label:'Narrative portrayal source'});
+export const narrativeRelevanceSource=createFunctionPort(['narrativeQueryRelevance','narrativeIdentityRelevance'],{code:'NARRATIVE_RELEVANCE_SOURCE_COMPOSITION',label:'Narrative relevance source'});

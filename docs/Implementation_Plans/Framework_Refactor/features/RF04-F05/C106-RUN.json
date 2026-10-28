@@ -1,0 +1,390 @@
+{
+  "feature": "RF04-F05-C106",
+  "base_head": "db02eb7ecc5bf08acbc9103eb4708537c1584ae8",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/narrative-memory.js",
+      "bot/src/memory-lifecycle.js",
+      "bot/src/narrative-relevance.js",
+      "bot/src/application/composition/knowledge-narrative.js",
+      "bot/src/framework-to-framework/knowledge--narrative/public.js",
+      "bot/src/frameworks/narrative/public.js",
+      "bot/src/frameworks/narrative/contracts/root-sources.js",
+      "bot/src/frameworks/knowledge/public.js",
+      "bot/src/frameworks/knowledge/contracts/narrative-sources.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c106.test.mjs"
+    ],
+    "passed": 10,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c05.test.mjs",
+        "sha256": "45848E51ED84E7BE6C6C166CA83A3A9B29D7F63AB4790F6ABB90765AECCEA726"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs",
+        "sha256": "499BEB636F2743949BE80CD23A0799650464CF777E1A0A6C89C96AE2D35CC9C4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c02.test.mjs",
+        "sha256": "A234288C097BDD4EC9432F324C4AC38A19D4439FACE28612AB3FB81C8AC754C9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs",
+        "sha256": "4B190BAF4990B9020A4C5683A4449FC4551B2BCA58A8810E188FE1F81D5FCFB3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c04.test.mjs",
+        "sha256": "00E780AB0A640EDCCC83C4B8BA6349EF783E282A6DFFEDF49FE25D89E15B97AA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c05.test.mjs",
+        "sha256": "B3569F467A395A194CE328D1FAD5B985001A97892EC61C560B683B13F29D86DD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c06.test.mjs",
+        "sha256": "D2528DDFC758B5629B9543C076EE223A2CC46F48E0998499B503B0D350DC67DB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+        "sha256": "CC7734C7E03C4E99337EA40550D9F6C3055DF023652095107A68DD77C2C56C80"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c08.test.mjs",
+        "sha256": "AF869A0780C20DBEFB8BB1E330B722CD53D9EA97E3A3C66B16037835C0DB0873"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c09.test.mjs",
+        "sha256": "438B0BAE2B37D2E4692CE5799F5C32A57AED18ACEFAFF4FF6431766FD826080C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs",
+        "sha256": "28EFA1FC4D6786C89851C68BCF503E33A17C10E151D01376C9352A969BB6D094"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "sha256": "6ED771B97DEF6187B1462B8F3B949A753CEC1AAACACED44BECAD9FEDAC4FAAD4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "sha256": "DECD364345C5356285DBDAF69C10DE3902483D7FEA5E2ECA8417706A58E0B00C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "sha256": "2ACF463762F71C5FBA7C445D1998B766D764582999CB8BA20A02BA7E3E1CDEF1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "63316974CFBE6067358F776FAA7C8F26E381ACCDABE06203169BF294F4240A64"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "sha256": "C0F9435EB9E505556081C50655D0FAFE6F34CCA04CF7EE9B95665DDA38CCFED7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c68-c69-contract.test.mjs",
+        "sha256": "48DB51E0E6DF37EF78827356B9117AA0CAF391B5BBFA1EE55D30AFEBEB46CEB6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c70.test.mjs",
+        "sha256": "93629A341EE584F8A3035A550EF6D2689770C97B9D30E7A2283EF1CFBF9ED123"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c71.test.mjs",
+        "sha256": "C6E265AA985B46BCCAE6B8DABE4F12C16E81CCA52BABCD399A2F8EDD85291DDC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c74.test.mjs",
+        "sha256": "432B3991340E86746A5FE6B2CC8AEA73E21CE725CB9A53B5584641033D5105FC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-personal-source.test.mjs",
+        "sha256": "3BAF73BCBEF9304B47B9534CEAA1FCE6A010C70074F8B1A09C6E545E2E68F2C4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+        "sha256": "69D7D7464F80CCE77555182F581D4F8C73EF969E8AB30C91A89F0262825BD04F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p02.test.mjs",
+        "sha256": "99DF568B3FD167F02C7DB4A562F91FA34D540A0928BC2895608E4408CEFFC89B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "sha256": "8960542EDF82E7E9010145C6B876C6E2C8B582680228B4A190E65DD088442B55"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "sha256": "CE77D5D06034C3AB5971F07691D8B08F85F3777D9137731BC5D807C0FEA1A9AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "sha256": "C0E5F9249105EF015996F62C0FA4C939AC3AA5FCF9B78BD3C90679E6F67CEB24"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "2C476EB087A2C0C6F9EE5BC3E3B2B0713157C21324843E6162CA1685005D2410"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c105.test.mjs",
+        "sha256": "2E81C91C834C948001B9D54FB3F9A8221921E7AF4763877E07F8E04E1A9502B4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c106.test.mjs",
+        "sha256": "488BE5AA10B100173C7F15E80202B87579F637A91351D2954D1FE208C530CC95"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "FC59F047AF7C882F372C74E2377008EF170E1DEFB87582A2A3DA2A2C44F38FF2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "sha256": "4420D1710E9E09B5C6CE0AA6BFFE605193A45FC2C70F472779484B495970E7A8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "sha256": "317F045FC7105744579B9BB5C9B979EFA80CBB476AFFF4B1281403034D62B6BD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "D28CA8B6B3A62532B0019CDEC7CEBB796E7268C3209339C9020CB6701E92BEC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs",
+        "sha256": "0256F6DEB0BB3DB38FA9505C3800A7F606472B6B3439EB9BF81D7AEDA3BF593A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+        "sha256": "87278FDE1DD65D41F8D2A0C757E52BFE32FF014F1494B3CCB18F83F6F6FAAB70"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+        "sha256": "76F8F77D646588A69A6388A0F50F4F2878646C84B30B21B420A38B243EEA3DD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "sha256": "3076535FC52438549F70C4D4AE2DC7F136A27D9D010C438F88E8A455FA24AD5D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+        "sha256": "DC30857241AFC51425682C8FC0A7EB359082A3F5A5C94F11522FFA61F747ADA7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c53.test.mjs",
+        "sha256": "80ED230219092A09127162FBB3EF1D26986454FA43F6E165E66EAF4C7B27F77A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "sha256": "7A773E094C1063C56FF432651FFB00C37A79316220F583C0F45CAE643F5FFC08"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c63.test.mjs",
+        "sha256": "62595821060979A0037D8FB1A4A528AB0415276F6D2E400CC88E36E69FBF04A5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
+        "sha256": "F6F5743C17EDE6458C002C4171019530FEB6C5B7DCBE4CD658FB70F96963B9F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c66-actor-reopen.test.mjs",
+        "sha256": "3B30C0546C5C12B916BED60F8D067FF6DFF4E8FAD69BEC9E205E70760C55DEC8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c66.test.mjs",
+        "sha256": "1AF0493A15CD945C37174346055CCB35085BEB54563D23E526EE9E835A428B2B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c67.test.mjs",
+        "sha256": "3B199FA4C206CD4CBCB50A90CEB6A2070D5622490C2C0C615F7DCE2FC494A3EA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c71.test.mjs",
+        "sha256": "EEA071354D54621196A39D2F9886B36E58AD6869BE1F1048B7FEC44AE1A24A40"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c79.test.mjs",
+        "sha256": "9B29ADD02FB79602EC636815130599F0693FE238A4CA960A7E2C6B1DF53B18BC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c90.test.mjs",
+        "sha256": "3F86A23F8BFCE1CA62D4A52E1A4B2F8AB08D56FDFC47207FCE9C5630BE0032CF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+        "sha256": "C05E2757860091E8FB147B3F0E9A4D944BDA255213271A3A6F92B6CE7620A412"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-scene-observation.test.mjs",
+        "sha256": "C2433449CF328A60E15797FFDB57F1B8A75A82E4F92CA1438896127202937946"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+        "sha256": "DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c14.test.mjs",
+        "sha256": "7324039282113C0499E17CB1061C6393169A6269A33F4230AAF056C439EC9B52"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs",
+        "sha256": "EDE714B20A51565B523FB403FE032B8A4F807BCEF7255ADAA88EDF88555FF3A1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c16.test.mjs",
+        "sha256": "6E839C073BAB18F1D927CBFDA9FF38312A70AE4F10A09807CB33C115A6665450"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+        "sha256": "515BA265756F9423A7201BB6E69E083E83F19F12372E49B35BF6AD4DF31A7F8B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c18.test.mjs",
+        "sha256": "06EDD801EE4E594A1AA616412372951D2F11FD62DA90AA15E86532CCDACE257F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c22.test.mjs",
+        "sha256": "FEBEDDF6966BDC1E342E8E22A519E02ECB0E71D7616A6599C2A1B8197195C06A"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T10:06:43.338Z",
+    "end": "2026-10-28T10:08:17.182Z",
+    "exit_code": 0,
+    "tests": 307,
+    "passed": 307,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 93808.4234,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c106-test.log",
+    "log_sha256": "C3CF721CF04641AED51975FC98521A55822B78498F81AA293C592245F2AEE883",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 803,
+      "unowned": 0,
+      "imports": 3285,
+      "largest_cycle": 96,
+      "accepted_legacy_occurrences": 1457,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c106-rf04-architecture.log",
+      "log_sha256": "F06D87878E7264DCC6FCDC47D53B47F45FE0C605C651758BD2B081FB53CFFAC2",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 803,
+      "unowned": 0,
+      "imports": 3285,
+      "largest_cycle": 96,
+      "accepted_legacy_occurrences": 1268,
+      "active_violation_groups": 188,
+      "transition_errors": 188,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c106-rf05-architecture.log",
+      "log_sha256": "4F85A767A5A49D03A9687D5925574C882825278639AC3EE56810EC30D407E3DE",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/memory-lifecycle.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/narrative-memory.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/memory-lifecycle.js -> bot/src/world-background-identities.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/memory-lifecycle.js -> bot/src/world-authorship.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/narrative-memory.js -> bot/src/world-background-identities.js",
+        "EXPIRED_TRANSITION bot/src/memory-lifecycle.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> ",
+        "EXPIRED_TRANSITION bot/src/memory-lifecycle.js -> ",
+        "EXPIRED_TRANSITION bot/src/memory-lifecycle.js -> ",
+        "EXPIRED_TRANSITION bot/src/narrative-memory.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "9269a7c5a9a469aca867a87ae4d3fd497ab553e51ff689a2c50a5ef7edb592a5",
+      "bfe414ec15dffe30483afb08995d1be531bef0e190e8a1731bdea6b5f6bbad12",
+      "aac22870b85a8f8efde9ea291dfbb53992b8f4e643eb1a5685f578ab9da4fb5b",
+      "672243130dfecf69020d8c301c37604e3902c338a467b794622ae2362e9288a2",
+      "77ce103a9f5dcfc712eb0a7528d53f459205bcda0f57a8d8f1a3cde313d7f501",
+      "6c6bc2ba26af1c0b16340eeb78f2bd4bdb1c4d92e2298e65733731ed2eb97c56",
+      "7be7197a5aa579cdce9aa811614f714b77490c299023524815fd63ba156f8299",
+      "18d193d34564021412fce7bca8cbc28a3166c74de0b18d64b026c87aed2a37c3",
+      "1618585b78d8a6c963a7766e746e8bd00021759e78bcd0332a585923139e14a9",
+      "8e9fe19d4d3bd62912eef4201a1c18e76a73620a314aa6058277cc7734c80adc",
+      "b9ee9058cc5c1735600698f2b50d9e64f2a5d8497146cf4f04788c91ea85e90b",
+      "3154354f0b5db4987302249c5a98cf6bdd1ad90b4f3628e77d8778498aa192b6",
+      "e71234219474baacc46fa5c236cc700d17f8553aa9bb2638de3986b5f58e9ff8",
+      "e96a398e99030af4e29dbee3c414e76c98e407c54d250cc776209ed6ecd14f7e",
+      "8c283fce066f3d3349b6f279bd1a82ef3ffc141cc8a35737360da37c6f06490c",
+      "d3bfd8e64a1edeb5a86ef81ac82f0bde026edb663c209f329933c2a47e04f2cd",
+      "595837a3a59c66034c816937d89e0fe5555b1eb9b705b747b408b768db8cbff0"
+    ],
+    "original_manifest_sha256": "68E2C54088BAA72E44CFF8AFEB74B93B8AAA6E7551F94B4F684E043670E2B154",
+    "manifest_sha256_after": "3A7D4FFE7366F022D4379A62782300C4E62842B11F90280CE08CD2DE02ACB4B6",
+    "entries_after": 1445,
+    "remaining_by_feature": {
+      "RF04-F01": 43,
+      "RF04-F03": 30,
+      "RF04-F04": 62,
+      "RF04-F05": 53,
+      "RF05-F02": 191,
+      "RF05-F03": 222,
+      "RF05-F04": 42,
+      "RF05-F05": 405,
+      "RF06-F02": 17,
+      "RF06-F03": 177,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/narrative-memory.js": "04241361066FC717138CA9C68B97920E8EEA4E24FE82958F5411B8C3C3E98D9C",
+    "bot/src/memory-lifecycle.js": "BA8C2C61DDE76E3C54DE70B36CFCD12E1D2152DBFDD49F8C7DEF1DA9CEB42257",
+    "bot/src/narrative-relevance.js": "2C79E970CB7F2D7DF8E14F241C32789E96A04277B6EDF26B1DE83A5D14F9C1DF",
+    "bot/src/application/composition/knowledge-narrative.js": "25C297EBCBEA200E46A600715A851689A80908EB2FDAD6EE5EFCC5B1B79DFF5C",
+    "bot/src/framework-to-framework/knowledge--narrative/public.js": "AB6988024FD6DE3A6945C0A4B37ECC1346760B4CFA51EA9D76D421177E0AF499",
+    "bot/src/frameworks/narrative/public.js": "669ED90E47B5DFF6617DDD7CAEEABCD830AA684D38CF2342559B755F6B45020F",
+    "bot/src/frameworks/narrative/contracts/root-sources.js": "103CFE3C94E9C56AB34CAE071EA7503C9876E3D21A618D8FB97BD7AC737474AA",
+    "bot/src/frameworks/knowledge/public.js": "96633B1F437FEEB9A69F88FE9B91F0274F35D93075E254F8C8A9A37C536CABA5",
+    "bot/src/frameworks/knowledge/contracts/narrative-sources.js": "951CC74779CEC854A8F67A528441FF159B4AC015A1D18403484EB8F8BB630B4A"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C106 commit: restore the direct Narrative root imports in narrative-memory.js and memory-lifecycle.js, remove the Knowledge knowledgeNarrativeSources port, the Narrative narrativeRelevanceSource slot and its bind in narrative-relevance.js, connectKnowledgeNarrativeSources and its call in initializeKnowledgeNarrative, and restore the 17 exact transitions from C106-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

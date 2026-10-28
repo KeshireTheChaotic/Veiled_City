@@ -14,3 +14,6 @@ export function narrativeIdentityRelevance(db,guild,entity,scope,query){
   if(!d||!worldIdentityOrigin(db,guild,row,scope))return 0;
   return narrativeQueryRelevance([d.key,d.name,...(Array.isArray(d.aliases)?d.aliases:[])].join(' '),query);
 }
+import {narrativeRelevanceSource} from './frameworks/narrative/public.js';
+// Provide this module's original relevance functions to the fixed Narrative slot; no other authority is granted.
+narrativeRelevanceSource.bind({narrativeQueryRelevance,narrativeIdentityRelevance});

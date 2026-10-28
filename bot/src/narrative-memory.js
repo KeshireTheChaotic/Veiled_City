@@ -1,10 +1,11 @@
 /** Original fixed Narrative/World and same-owner lifecycle composition for disclosed narrative memory. */
-import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {narrativeVisible} from './narrative-authority-context.js';
+import {knowledgeNarrativeSources} from './frameworks/knowledge/public.js';
+function narrativeSourceVisible(...args){return knowledgeNarrativeSources.narrativeSourceVisible(...args);}
+function narrativeVisible(...args){return knowledgeNarrativeSources.narrativeVisible(...args);}
 import {knowledgeWorldEvents} from './frameworks/knowledge/public.js';
 function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 import {rememberEntity,narrativeMemoryEpistemic} from './memory-lifecycle.js';
-import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
+function narrativeQueryRelevance(...args){return knowledgeNarrativeSources.narrativeQueryRelevance(...args);}function narrativeIdentityRelevance(...args){return knowledgeNarrativeSources.narrativeIdentityRelevance(...args);}
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 import {createNarrativeMemory} from './frameworks/knowledge/public.js';
 let narrativeMemoryRules;

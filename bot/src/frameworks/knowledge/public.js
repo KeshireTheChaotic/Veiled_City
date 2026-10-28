@@ -37,3 +37,4 @@ export {createKnowledgeNpcActorSourceConsumer,knowledgeNpcActorSource} from './c
 export {personalCharacter} from './personal-character.js';
 export {knowledgePersonalContinuity} from './contracts/personal-continuity-source.js';
 export {knowledgeContextMemorySource} from './contracts/context-memory-source.js';
+export {knowledgeNarrativeSources} from './contracts/narrative-sources.js';

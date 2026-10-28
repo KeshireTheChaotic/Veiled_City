@@ -1,6 +1,7 @@
 /** Original fixed source composition for Knowledge memory lifecycle. */
-import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {narrativeImportance} from './narrative-salience.js';
+import {knowledgeNarrativeSources} from './frameworks/knowledge/public.js';
+function narrativeSourceVisible(...args){return knowledgeNarrativeSources.narrativeSourceVisible(...args);}
+function narrativeImportance(...args){return knowledgeNarrativeSources.narrativeImportance(...args);}
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {createMemoryLifecycle} from './frameworks/knowledge/public.js';
