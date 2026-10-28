@@ -14,7 +14,8 @@ import { applyNpcServiceOutcome } from "./city-civic.js";
 import { assertServiceAccess } from "./supply-dependencies.js";
 import { coordinateConsequences } from "./city-consequences.js";
 import { proposeContactGroup } from "./city-groups.js";
-import { delegateConsequence, delegateWorldGoal, maintainMemory, continueLongProjects, dispatchAiIntents } from "./ai-intents.js";
+import {worldIntentDispatch} from './frameworks/world/public.js';
+function delegateConsequence(...args){return worldIntentDispatch.delegateConsequence(...args);}function delegateWorldGoal(...args){return worldIntentDispatch.delegateWorldGoal(...args);}function maintainMemory(...args){return worldIntentDispatch.maintainMemory(...args);}function continueLongProjects(...args){return worldIntentDispatch.continueLongProjects(...args);}function dispatchAiIntents(...args){return worldIntentDispatch.dispatchAiIntents(...args);}
 import { pacingAdvice } from "./story-continuity.js";
 import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
 import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';

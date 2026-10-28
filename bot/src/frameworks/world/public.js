@@ -81,3 +81,4 @@ export {worldPersonalContinuity} from './contracts/personal-continuity.js';
 export {worldAutonomousSource,worldAutonomousApplication} from './contracts/autonomous-source.js';
 export {worldNativeMovementChecks} from './contracts/native-movement-checks.js';
 export {worldSessionContinuation} from './contracts/session-continuation.js';
+export {worldIntentDispatch} from './contracts/intent-dispatch.js';

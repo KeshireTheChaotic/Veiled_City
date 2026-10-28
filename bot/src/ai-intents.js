@@ -577,3 +577,6 @@ registerIntentAdapter("density",{
 import {nativeStrategyDelegateSource} from './frameworks/intent/public.js';
 const provideNativeStrategyDelegate=()=>delegateStrategy;
 nativeStrategyDelegateSource.provideSource(provideNativeStrategyDelegate);
+import {intentAiIntentDispatch} from './frameworks/intent/public.js';
+// Provide this module's original AI intent dispatch to the fixed Intent slot; no other authority is granted.
+intentAiIntentDispatch.bind({delegateConsequence,delegateWorldGoal,maintainMemory,continueLongProjects,dispatchAiIntents});

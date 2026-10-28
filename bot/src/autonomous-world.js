@@ -13,9 +13,10 @@ import { activeCityProxy } from "./city-constraints.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { stateRevision } from "./ai-intents.js";
+import {stateRevision} from './kernel/state-revision.js';
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./frameworks/world/public.js";
-import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";
+import {worldIntentDispatch} from './frameworks/world/public.js';
+function currentAcceptedIntent(...args){return worldIntentDispatch.currentAcceptedIntent(...args);}function currentTypedMovement(...args){return worldIntentDispatch.currentTypedMovement(...args);}
 function movementAdjudication(...args){return worldNativeMovementChecks.movementAdjudication(...args);}
 import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";

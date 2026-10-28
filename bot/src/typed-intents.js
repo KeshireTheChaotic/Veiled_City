@@ -603,3 +603,6 @@ export function validateIntentResolutions(result){
   }
   return true;
 }
+import {intentTypedIntentReaders} from './frameworks/intent/public.js';
+// Provide this module's original typed-intent readers to the fixed Intent slot; no other authority is granted.
+intentTypedIntentReaders.bind({currentAcceptedIntent,currentTypedMovement});

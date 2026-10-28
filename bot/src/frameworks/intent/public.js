@@ -14,3 +14,4 @@ export {createIntentNpcEvidenceConsumer,intentNpcEvidence} from './contracts/npc
 export {intentArbitrationOrigin,intentNativeEnvironment} from './contracts/environment-sources.js';
 export {authoredTurnEnvelope,authoredTurnHash,authoredTurnKey,authoredAnnotationKey} from './authored-turn-reader.js';
 export {intentPlayerLanguage} from './contracts/player-language.js';
+export {intentAiIntentDispatch,intentTypedIntentReaders} from './contracts/world-dispatch-sources.js';

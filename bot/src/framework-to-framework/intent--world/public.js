@@ -12,3 +12,8 @@ export function connectWorldDelegation(){return worldDelegationPolicy.bind(deleg
 import {intentWorldPrimitives,intentWorldActions} from '../../frameworks/intent/public.js';
 import {requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent,inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction} from '../../frameworks/world/public.js';
 export function connectIntentWorldNative(){intentWorldPrimitives.bind({requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent});return intentWorldActions.bind({inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction});}
+
+import {intentAiIntentDispatch,intentTypedIntentReaders} from '../../frameworks/intent/public.js';
+import {worldIntentDispatch} from '../../frameworks/world/public.js';
+/** Pass Intent's original AI intent dispatch and typed-intent readers to World unchanged. */
+export function connectWorldIntentDispatch(){const d=intentAiIntentDispatch,r=intentTypedIntentReaders;return worldIntentDispatch.bind({delegateConsequence:d.delegateConsequence,delegateWorldGoal:d.delegateWorldGoal,maintainMemory:d.maintainMemory,continueLongProjects:d.continueLongProjects,dispatchAiIntents:d.dispatchAiIntents,currentAcceptedIntent:r.currentAcceptedIntent,currentTypedMovement:r.currentTypedMovement});}
