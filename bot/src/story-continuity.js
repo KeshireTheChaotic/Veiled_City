@@ -139,3 +139,6 @@ export function recordMysteryAttempt(db,guildId,input,actorId){
   return db.transaction(()=>{const after=db.saveCityRecord(guildId,{kind:"clue_attempt",key,source_event:input.source_event,data});
     cityAudit(db,guildId,"mystery_attempt",key,null,after,actorId);return after;});
 }
+import {sessionStoryContinuitySource} from './frameworks/session/public.js';
+// Provide this module's original pacing advice and mystery configuration to the fixed Session slot; no other authority is granted.
+sessionStoryContinuitySource.bind({pacingAdvice,configureMystery});

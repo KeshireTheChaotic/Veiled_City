@@ -1,0 +1,49 @@
+{
+  "feature": "RF04-F05-C111",
+  "original_manifest_sha256": "3713C23001BDE82292E97866420FB47F7659EC25ADBC64F6C59FB6BF203B787E",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "37cb912e3cae4fc29263ba13794a208e68350a235f2fc0d44cc0ee5c986460c3",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/seed-drafts.js",
+      "to": "bot/src/story-continuity.js",
+      "kind": "static",
+      "specifier": "./story-continuity.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "1cab08174f7cc20299760e5094c6fa1c9dd0b70d40cb159e7a6761a70b60bfcb",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/simulation.js",
+      "to": "bot/src/story-continuity.js",
+      "kind": "static",
+      "specifier": "./story-continuity.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "6cb57e25e2d981bd93967a7c0907a6107c5cd392f21af31fe0ef14040b09e58f",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-authoring.js",
+      "to": "bot/src/story-continuity.js",
+      "kind": "static",
+      "specifier": "./story-continuity.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

@@ -32,3 +32,8 @@ import {sessionContinuationAuthorization} from '../../frameworks/session/public.
 import {worldSessionContinuation} from '../../frameworks/world/public.js';
 /** Pass Session's original continuation authorization to World unchanged. */
 export function connectWorldSessionContinuation(){return worldSessionContinuation.bind({continuationAuthorization:sessionContinuationAuthorization.continuationAuthorization});}
+
+import {sessionStoryContinuitySource} from '../../frameworks/session/public.js';
+import {worldStoryContinuity} from '../../frameworks/world/public.js';
+/** Pass Session's original pacing advice and mystery configuration to World unchanged. */
+export function connectWorldStoryContinuity(){return worldStoryContinuity.bind({pacingAdvice:sessionStoryContinuitySource.pacingAdvice,configureMystery:sessionStoryContinuitySource.configureMystery});}

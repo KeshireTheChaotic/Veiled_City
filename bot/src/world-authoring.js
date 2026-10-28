@@ -2,7 +2,8 @@
 import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
 import { requireCitySource, updateCityCore } from "./city-core.js";
 import { configureSimulationEntity } from "./simulation.js";
-import { configureMystery } from "./story-continuity.js";
+import {worldStoryContinuity} from './frameworks/world/public.js';
+function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}
 import { validateMinorIdentity } from "./city-depth.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 const kinds=["faction","location","institution","npc","mystery","relationship"];

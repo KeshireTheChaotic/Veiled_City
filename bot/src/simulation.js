@@ -16,7 +16,8 @@ import { coordinateConsequences } from "./city-consequences.js";
 import { proposeContactGroup } from "./city-groups.js";
 import {worldIntentDispatch} from './frameworks/world/public.js';
 function delegateConsequence(...args){return worldIntentDispatch.delegateConsequence(...args);}function delegateWorldGoal(...args){return worldIntentDispatch.delegateWorldGoal(...args);}function maintainMemory(...args){return worldIntentDispatch.maintainMemory(...args);}function continueLongProjects(...args){return worldIntentDispatch.continueLongProjects(...args);}function dispatchAiIntents(...args){return worldIntentDispatch.dispatchAiIntents(...args);}
-import { pacingAdvice } from "./story-continuity.js";
+import {worldStoryContinuity} from './frameworks/world/public.js';
+function pacingAdvice(...args){return worldStoryContinuity.pacingAdvice(...args);}
 import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
 import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {nativeWorldStrategyAllowed} from './native-world-operations.js';

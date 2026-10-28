@@ -6,7 +6,8 @@ import { requireCitySource, updateCityCore } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic } from "./city-civic.js";
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function configurePortrayal(...args){return worldNarrativeSources.configurePortrayal(...args);}
-import { configureMystery } from "./story-continuity.js";
+import {worldStoryContinuity} from './frameworks/world/public.js';
+function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}
 import { configureSimulationEntity } from "./simulation.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';

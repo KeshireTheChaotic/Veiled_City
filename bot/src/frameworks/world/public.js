@@ -85,3 +85,4 @@ export {worldIntentDispatch} from './contracts/intent-dispatch.js';
 export {worldContextMemory} from './contracts/context-memory.js';
 export {worldNarrativeSources} from './contracts/narrative-sources.js';
 export {worldLongProjectSource,worldCityCivicSource,worldObservationSource,worldCityDepthSource} from './contracts/root-sources.js';
+export {worldStoryContinuity} from './contracts/story-continuity.js';

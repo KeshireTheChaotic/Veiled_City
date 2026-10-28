@@ -29,3 +29,4 @@ export {sessionWorldAutonomy} from './contracts/world-autonomy.js';
 export {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource,sessionOpeningCohortSource,sessionOpeningAttendanceSource,sessionOpeningEntrySource} from './contracts/opening-sources.js';
 export {sessionNativeRules} from './contracts/native-rules.js';
 export {sessionKnowledgeSources} from './contracts/knowledge-sources.js';
+export {sessionStoryContinuitySource} from './contracts/story-continuity-source.js';
