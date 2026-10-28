@@ -1,6 +1,6 @@
 {
   "branch": "codex/clean-ai-gm-2026-10",
-  "through_head": "e10aadefec4688da1b2a58ba5b47df1ccd9cf772",
+  "through_head": "7055e001edb69f830871b134eb01a9914dd67d9a",
   "slices": [
     {
       "slice": "RF04-F05-C07",
@@ -252,8 +252,269 @@
       "status": "SCOPED_WORLD_NPC_GOAL_CONSEQUENCE_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
       "evidence": "features/RF04-F05/C40-RUN.json",
       "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. C39/C40 retain explicitly split final-file gaps."
+    },
+    {
+      "slice": "RF04-F05-C41",
+      "implementation_commit": "ee60faae3b939e64dce774bd9331557ee11c7473",
+      "status": "SCOPED_WORLD_NATIVE_NPC_SEED_QUALIFIED",
+      "evidence": "features/RF04-F05/C41-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C42",
+      "implementation_commit": "77a1711fa06ecd80a8a7e789662a09049f1dc527",
+      "status": "SCOPED_NARRATIVE_NPC_TESTIMONY_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+      "evidence": "features/RF04-F05/C42-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. Repair evidence in C42-REPAIR.json."
+    },
+    {
+      "slice": "RF04-F05-C43",
+      "implementation_commit": "fe2b1a95ac47b0c95cb0f60ddce912e9c9581e72",
+      "status": "SCOPED_KNOWLEDGE_NPC_STAFFING_EVIDENCE_QUALIFIED",
+      "evidence": "features/RF04-F05/C43-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C44",
+      "implementation_commit": "49465be3f28eba19001b9f67fe3d92b6c63f7449",
+      "status": "SCOPED_INTENT_NPC_REFERENCE_EVIDENCE_QUALIFIED",
+      "evidence": "features/RF04-F05/C44-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C45",
+      "implementation_commit": "278cd7a5189010d04c69136f3ee870070aafe19c",
+      "status": "SCOPED_WORLD_NPC_SIGNAL_MEMORY_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+      "evidence": "features/RF04-F05/C45-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. Repair evidence in C45-REPAIR.json."
+    },
+    {
+      "slice": "RF04-F05-C46",
+      "implementation_commit": "13af2aefabfceb37128f2717032250f792d55ef1",
+      "status": "SCOPED_WORLD_PUBLIC_CALENDAR_CALLERS_QUALIFIED_WITH_SPLIT_TEST_EVIDENCE",
+      "evidence": "features/RF04-F05/C46-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence. Repair evidence in C46-REPAIR.json."
+    },
+    {
+      "slice": "RF04-F05-C47",
+      "implementation_commit": "477628e62367e4042e062195d46b862a37d791c5",
+      "status": "SCOPED_NATIVE_ENVIRONMENT_AUDIENCE_SOURCE_QUALIFIED",
+      "evidence": "features/RF04-F05/C47-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C48",
+      "implementation_commit": "a9dac3b7cc928d184d589571f6519ff68e2ba8f2",
+      "status": "SCOPED_NEUTRAL_ARBITRATION_FAILURE_QUALIFIED",
+      "evidence": "features/RF04-F05/C48-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C49",
+      "implementation_commit": "379a47a15722620a105175634e67be4b45379cbb",
+      "status": "SCOPED_WORLD_EXACT_NATIVE_FACT_PROOF_QUALIFIED",
+      "evidence": "features/RF04-F05/C49-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C50",
+      "implementation_commit": "5d5dd1b52450f07c641bc1e3e71070d1dc8527ee",
+      "status": "SCOPED_NATIVE_ENVIRONMENT_WORLD_FACT_PROOF_ADOPTION_QUALIFIED",
+      "evidence": "features/RF04-F05/C50-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C51",
+      "implementation_commit": "b05a48481732ea0832ba0123686dbf126c2bb12c",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C51-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C52",
+      "implementation_commit": "10e11e20546b2c7ec30b0a8ac9e3ef636153675e",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C52-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C53",
+      "implementation_commit": "a5c885d5a9928e5ebe9364ab82c84b8d6a65efe8",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C53-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C54",
+      "implementation_commit": "1b2127449085a5f5460737cd6b894f43f3713d7a",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C54-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C55",
+      "implementation_commit": "5b6275d879655395a4fa42bb0dae20c1edc2206b",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C55-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C56",
+      "implementation_commit": "a5d0f91e477a8f7f2211817cacb34bae1a737db6",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C56-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C57",
+      "implementation_commit": "e1ff412e4a652c5c4b0783dfde8fe6b1c61cc1c1",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C57-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C58",
+      "implementation_commit": "1b30d37c9c1768cdca8e7f0feb67386b7a273106",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C58-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C59",
+      "implementation_commit": "c5dec3746e80e7ad6b9f56dc2debb8ae410b7558",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C59-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C60",
+      "implementation_commit": "bff1db445a5cf95848fd03e8232608f5122092e1",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C60-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C61",
+      "implementation_commit": "1fdc879752e62899802c825ca4d6760a15a951ee",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C61-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C62",
+      "implementation_commit": "5ad59454249bf7f5401b571d08fe0cfddf4cbfa0",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C62-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C63",
+      "implementation_commit": "77760392a5240d4e008ed3ac53ec1430be81e3bf",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C63-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C64",
+      "implementation_commit": "6b3d4fef0f34f1ed5f66c3a9bccf13370db54165",
+      "status": "SCOPED_QUALIFIED",
+      "evidence": "features/RF04-F05/C64-RUN.json",
+      "qualification": "Local ignored new test/logs per owner; working-tree pass only, clean checkout lacks registered evidence."
+    },
+    {
+      "slice": "RF04-F05-C65",
+      "implementation_commit": "08f0fae6ef5b60fc61d96faf91cadf7b5e3a514a",
+      "status": "SCOPED_QUALIFIED_WITH_UNEXPLAINED_BATCH_FAILURE_AND_RECURSION_REPAIR",
+      "evidence": "features/RF04-F05/C65-RUN.json",
+      "qualification": "Frozen 196-file batch 1153/1154; rf04-f05-c01 failed, later rerun alone passed 13/13 without establishing the cause (C65-FOLLOWUP.json). Local tests per owner.",
+      "final_file_followup": "Private-lookup recursion repaired in 6e932cd4eb5904993598506d61a2119a4cbec99a; real SQLite run is diagnostic only under TEST_PROTOCOL.md, compliant guard test 1/1 with fakes (C65-RECURSION-LEDGER.md, C65-PRIVACY-FOLLOWUP.md).",
+      "current_scoped_status": "QUALIFIED_AT_FAKE_BOUNDARY_ONLY"
+    },
+    {
+      "slice": "RF04-F05-C66",
+      "implementation_commit": "6e223547e4e939475fe433a0dc90a620c8e16bdc",
+      "status": "SCOPED_WORLD_IDENTITY_RECORD_PAGING_QUALIFIED_BY_COMPLIANT_CONTRACT_TEST",
+      "evidence": "features/RF04-F05/C66-LEDGER.md",
+      "qualification": "Initial four tests diagnostic only (imported unchanged modules); compliant test 3/3 with fake pages. Actor-bearing saved-reader and production-startup qualification open."
+    },
+    {
+      "slice": "RF04-F05-C67",
+      "implementation_commit": "6e223547e4e939475fe433a0dc90a620c8e16bdc",
+      "status": "SCOPED_ENCOUNTER_NARRATIVE_SOURCE_FORWARDING_QUALIFIED_WITH_FAKES",
+      "evidence": "features/RF04-F05/C67-LEDGER.md",
+      "qualification": "Initial test diagnostic only; compliant focused test 1/1 with fakes. Positive encounter, partial composition and saved database unqualified."
+    },
+    {
+      "slice": "RF04-F03-C68",
+      "implementation_commit": "6e223547e4e939475fe433a0dc90a620c8e16bdc",
+      "status": "SCOPED_KNOWLEDGE_CUSTODY_WORLD_SOURCE_FORWARDING_QUALIFIED_WITH_FAKES",
+      "evidence": "features/RF04-F03/C68-LEDGER.md",
+      "qualification": "Initial test diagnostic only; compliant C68/C69 contract test 1/1. Native provider semantics and actual startup unqualified."
+    },
+    {
+      "slice": "RF04-F03-C69",
+      "implementation_commit": "6e223547e4e939475fe433a0dc90a620c8e16bdc",
+      "status": "SCOPED_KNOWLEDGE_PERSONAL_CONTINUITY_WORLD_SOURCE_FORWARDING_QUALIFIED_WITH_FAKES",
+      "evidence": "features/RF04-F03/C69-LEDGER.md",
+      "qualification": "Initial test diagnostic only; compliant C68/C69 contract test 1/1. Native provider semantics and actual startup unqualified."
+    },
+    {
+      "slice": "RF04-F03-C70",
+      "implementation_commit": "6e223547e4e939475fe433a0dc90a620c8e16bdc",
+      "status": "SCOPED_KNOWLEDGE_SESSION_TERMINAL_PORT_QUALIFIED",
+      "evidence": "features/RF04-F03/C70-LEDGER.md",
+      "qualification": "1/1 with fabricated in-memory records. Positive semantic-candidate flow, persisted database and live behavior untested."
+    },
+    {
+      "slice": "RF04-F03-C71",
+      "implementation_commit": "7055e001edb69f830871b134eb01a9914dd67d9a",
+      "status": "SCOPED_KNOWLEDGE_ORGANIZATION_WORLD_SOURCE_QUALIFIED_WITH_FAKE_DATABASE",
+      "evidence": "features/RF04-F03/C71-LEDGER.md",
+      "qualification": "1/1 with a fake read-only database. Positive organization review, SQLite transactions and live delivery unqualified."
+    },
+    {
+      "slice": "RF04-F05-C71",
+      "implementation_commit": "7055e001edb69f830871b134eb01a9914dd67d9a",
+      "status": "SCOPED_WORLD_OBSERVATION_NARRATIVE_SOURCE_FORWARDING_QUALIFIED_WITH_FAKES",
+      "evidence": "features/RF04-F05/C71-LEDGER.md",
+      "qualification": "Initial test diagnostic only; compliant focused test 1/1 with fakes. Native receipt verification, saved database and live service unqualified."
+    },
+    {
+      "slice": "RF04-F03-C72",
+      "implementation_commit": null,
+      "status": "LOCAL_HOLD_NO_RUNTIME_CHANGE",
+      "evidence": "features/RF04-F03/C72-LOCAL-HOLD.md",
+      "qualification": "Recorded in 7055e001edb69f830871b134eb01a9914dd67d9a. Saved-memory visibility routing held until a saved-source scenario shows retrieval is unchanged without the Knowledge-Narrative initializer. No test ran."
+    },
+    {
+      "slice": "RF04-F05-C73",
+      "implementation_commit": "7055e001edb69f830871b134eb01a9914dd67d9a",
+      "status": "SCOPED_WORLD_ENCOUNTER_ACTOR_CONTROL_FORWARDING_QUALIFIED_WITH_FAKES",
+      "evidence": "features/RF04-F05/C73-LEDGER.md",
+      "qualification": "Initial test diagnostic only; compliant tests 1/1 and forwarding 1/1 with fakes. Positive sourced candidate, proxy turnover and production composition unqualified."
     }
   ],
+  "latest_recorded_gates": {
+    "at_commit": "7055e001edb69f830871b134eb01a9914dd67d9a",
+    "source": "phases/RF04/LEDGER.md, 2026-10-27 coordinated continuation, test protocol correction and next checkpoint",
+    "RF04": {
+      "sourceModules": 765,
+      "unowned": 0,
+      "cycleComponents": 3,
+      "largestCycle": 104,
+      "acceptedLegacyOccurrences": 1604,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "RF05": {
+      "activeViolationGroups": 328,
+      "transitionErrors": 328,
+      "pass": false
+    },
+    "RF03_RF06_RF07": "NOT_REMEASURED_SINCE_C40",
+    "transition_manifest_entries": 1590
+  },
   "current": {
     "RF03": {
       "sourceModules": 640,
@@ -391,9 +652,14 @@
       "pass": false
     }
   },
+  "phase_gates_as_of": "RF04-F05-C40 (e10aadefec4688da1b2a58ba5b47df1ccd9cf772); see latest_recorded_gates for later RF04/RF05 figures",
   "current_exact_open": 1958,
   "resolved_since_audit": 433,
-  "final_file_evidence_gap_scope": "Through C40: C39 and C40 have documented final-file gaps after isolated fixture repairs; passing cases not rerun without associated source changes. C38–C40 new tests/logs intentionally local only by owner decision; clean checkout lacks registered test references. Historical suites and full clean HEAD remain unqualified.",
+  "exact_open_as_of": "RF04-F05-C40; not re-derived since. RF01/TRANSITIONS.json holds 1,590 entries at 7055e001 versus 1,961 at C40.",
+  "final_file_evidence_gap_scope": "Through C40: C39 and C40 have documented final-file gaps after isolated fixture repairs; passing cases not rerun without associated source changes. C38–C40 new tests/logs intentionally local only by owner decision; clean checkout lacks registered test references. Historical suites and full clean HEAD remain unqualified. C65–C73: initial C65 SQLite recursion, C66, C67, C68, C69, C71 and C73 tests imported unchanged production modules and are diagnostic only under TEST_PROTOCOL.md; compliant replacements qualify forwarding with fakes, not positive workflows, saved databases or startup.",
+  "local_holds": [
+    "RF04-F03-C72 saved-memory visibility composition (features/RF04-F03/C72-LOCAL-HOLD.md)"
+  ],
   "owner_evidence_decision": {
     "commit": "d9df140b2df5dd76c67d9fab90558af0dfae0712",
     "policy": "All new tests and logs local only, committed terminal results/hashes, no checker exemptions. Previously tracked tests/logs preserved."
