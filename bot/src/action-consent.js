@@ -19,4 +19,4 @@ export function completedActionSource(...args){return rules().completedActionSou
 export function requestActionConsent(...args){return rules().requestActionConsent(...args);}
 export function respondActionConsent(...args){return rules().respondActionConsent(...args);}
 export function validateActionConsent(...args){return rules().validateActionConsent(...args);}
-nativeActionConsentSource.bind({consentAction,validateActionConsent,requestActionConsent,respondActionConsent});
+nativeActionConsentSource.bind({consentAction,validateActionConsent,requestActionConsent,respondActionConsent,completedActionSource,historicalActionSource});

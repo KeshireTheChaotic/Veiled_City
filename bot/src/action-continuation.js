@@ -1,7 +1,10 @@
 /** Durable native-result continuation. No model call, replacement declaration, implicit consent or effect replay. */
 import {createHash} from "node:crypto";
 import {buildActionPlan,transitionAction,signalActionContinuation} from "./action-dependency.js";
-import {consentAction,completedActionSource,historicalActionSource} from "./action-consent.js";
+import {sessionNativeActionConsent} from './frameworks/session/public.js';
+const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
+const completedActionSource=(...args)=>sessionNativeActionConsent.completedActionSource(...args);
+const historicalActionSource=(...args)=>sessionNativeActionConsent.historicalActionSource(...args);
 import {currentScene} from "./scene-continuity.js";
 import {applyAutonomousWorld} from "./autonomous-world.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
