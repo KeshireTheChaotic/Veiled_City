@@ -29,8 +29,9 @@ import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
 import {openingEntryNarrativeCandidate,openingEntryProjection} from './opening-entry-context.js';
-import {openingEntryEvidence} from './opening-entry-evidence.js';
-import {assemblyCoverageEvidence} from './assembly-evidence.js';
+import {publicationSessionEvidence} from './frameworks/publication/public.js';
+function openingEntryEvidence(...args){return publicationSessionEvidence.openingEntryEvidence(...args);}
+function assemblyCoverageEvidence(...args){return publicationSessionEvidence.assemblyCoverageEvidence(...args);}
 import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';

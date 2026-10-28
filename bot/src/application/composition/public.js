@@ -41,3 +41,4 @@ export {initializeSessionIntent} from './session-intent.js';
 export {initializeOperationsWorldOverview} from './operations-world-overview.js';
 export {initializeWorldNativeEncounter} from './world-native-encounter.js';
 export {initializeNarrativePersistence} from './narrative-persistence.js';
+export {initializePublicationSession} from './publication-session.js';

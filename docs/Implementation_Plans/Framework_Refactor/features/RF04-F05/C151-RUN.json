@@ -1,0 +1,152 @@
+{
+  "feature": "RF04-F05-C151",
+  "base_head": "afbd0a63b9b78f821a11b89e6de0953514088f30",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/pvp-output.js",
+      "bot/src/frameworks/publication/contracts/session-evidence.js",
+      "bot/src/framework-to-framework/publication--session/public.js",
+      "bot/src/application/composition/publication-session.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c51.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "2A333BC4A4F25921DD454942B6E2295591449CA0B655D6F28048BBD566732FFD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f06.test.mjs",
+        "sha256": "E374867949573CD9B92D4328C5388B79A22056888C2D61203331455AB8123AB4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "sha256": "C0F9435EB9E505556081C50655D0FAFE6F34CCA04CF7EE9B95665DDA38CCFED7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "435A2A57C79CEE4CD5B138DF1AA3B6491EEDFDC2E5E62260179DA26F3D9738F2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "3A2350B66CC62CE09A331EA21FA1E446BC085FBAB88761E2484AAE3C782DD23A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "sha256": "2A46F9E77ABEE6669660E2B6D3343218CB5CAFF5F2BE1D540349B46E866E85D2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "34B8F216F661A0D23080F42C09B9D97A87FB541BEE9904418A61F3F212D9CED1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c51.test.mjs",
+        "sha256": "33FEF162E1B07CAC07C8E23D6D770C3DE68A6E2AEF6BC43863E9FE1388F4C003"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T19:01:17.226Z",
+    "end": "2026-10-28T19:01:46.663Z",
+    "exit_code": 0,
+    "tests": 72,
+    "passed": 72,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 29402.2938,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c151-test.log",
+    "log_sha256": "BF2F3549D617820CB2563BDE8FBF7C17D7973CC39698EC1333B9820A3AE4E6ED",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3434,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1290,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c151-rf04-architecture.log",
+      "log_sha256": "C0EF980ABF3D53910CAEE02A17BADE0D9F65936F9A55E33516A07A1A68C4E71A",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3434,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1213,
+      "active_violation_groups": 77,
+      "transition_errors": 77,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c151-rf05-architecture.log",
+      "log_sha256": "085A6B4FDA01A649D5A1F04ED1BF57283C41AF17D4776DFAD983081B34616DB1",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "59506524ae6190df21533648e05493f37ed24d6492a2af14098caaa112568644",
+      "c232431d2a501cee17f9472e53b314259dcb8f436140ddaefc35f190eb976ca7",
+      "fff77d47cd9900c6a80cbda7ae3b238fb3cd19dc2ada5e78f9b127a1f710c0be",
+      "e3589de21453ac2c32bb1f958e4bea1eb66660997525a00075e5c28a6d5e3353"
+    ],
+    "original_manifest_sha256": "147B2350C719766DBC3828200F1F1EC3EF410B43A565FDA4C9FCAB6809C0A196",
+    "manifest_sha256_after": "F70F789C15FCCD162009B49D6963A76589C4BC968295C425F7D92BA9CE8D8F5C",
+    "entries_after": 1279,
+    "remaining_by_feature": {
+      "RF04-F01": 27,
+      "RF04-F03": 20,
+      "RF04-F04": 24,
+      "RF04-F05": 6,
+      "RF05-F02": 181,
+      "RF05-F03": 213,
+      "RF05-F04": 41,
+      "RF05-F05": 388,
+      "RF06-F02": 16,
+      "RF06-F03": 169,
+      "RF06-F04": 146,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/pvp-output.js": "C91103D50E869579B1BA7D083616A49D4AABEFFAED9BAD75ED1B49A3BAAD6A2A",
+    "bot/src/frameworks/publication/contracts/session-evidence.js": "7F67DDBBD313F3F0DD91199281ACA78EAAE5CEF70E8BD6026F95E91E85C912FB",
+    "bot/src/framework-to-framework/publication--session/public.js": "3515892EDA3132E46BFC5A6C18B3E6CF5378E913EED24673BC493232D81A6870",
+    "bot/src/application/composition/publication-session.js": "F6E82A683E16C61BBCF446A7F8965420D8F0C2D09BE92D3B9A4F50EFBCE1FCD9"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C151 commit: restore root opening-entry-evidence.js and assembly-evidence.js, the pvp-output.js imports, drop the Publication consumer, publication--session adapter and initializer, and restore the transitions from C151-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

@@ -157,6 +157,9 @@
     ],
     "narrative--persistence": [
       "bot/src/framework-to-framework/narrative--persistence/public.js"
+    ],
+    "publication--session": [
+      "bot/src/framework-to-framework/publication--session/public.js"
     ]
   },
   "externalCapabilityOwners": {
