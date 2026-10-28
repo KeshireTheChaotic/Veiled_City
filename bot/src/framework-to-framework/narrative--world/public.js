@@ -19,3 +19,8 @@ import {narrativeWorldEncounters} from '../../frameworks/narrative/public.js';
 import {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates} from '../../frameworks/world/public.js';
 /** Bind World's original encounter catalog configuration and candidate snapshot to Narrative's fixed consumer. */
 export function connectNarrativeWorldEncounters(){return narrativeWorldEncounters.bind({configureWorldEncounterCatalog,snapshotNativeEncounterCandidates});}
+
+import {narrativeWorldSimulation} from '../../frameworks/narrative/public.js';
+import {prepareWorldSimulationObservation} from '../../frameworks/world/public.js';
+/** Bind World's original simulation observation preparation to Narrative's fixed consumer. */
+export function connectNarrativeWorldSimulation(){return narrativeWorldSimulation.bind({prepareWorldSimulationObservation});}

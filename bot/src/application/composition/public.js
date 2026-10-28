@@ -43,3 +43,4 @@ export {initializeWorldNativeEncounter} from './world-native-encounter.js';
 export {initializeNarrativePersistence} from './narrative-persistence.js';
 export {initializePublicationSession} from './publication-session.js';
 export {initializeIntentKnowledge} from './intent-knowledge.js';
+export {initializePublicationWorld} from './publication-world.js';

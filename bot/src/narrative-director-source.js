@@ -5,7 +5,8 @@ import {indexWorldEvent} from './city-calendar.js';
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
 import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
 import {applicationPrincipal} from './kernel/application-authority.js';
-import {prepareWorldSimulationObservation} from './world-simulation-receipts.js';
+import {narrativeWorldSimulation} from './frameworks/narrative/public.js';
+function prepareWorldSimulationObservation(...args){return narrativeWorldSimulation.prepareWorldSimulationObservation(...args);}
 import {narrativeWorldEncounters} from './frameworks/narrative/public.js';
 function configureWorldEncounterCatalog(...args){return narrativeWorldEncounters.configureWorldEncounterCatalog(...args);}function snapshotNativeEncounterCandidates(...args){return narrativeWorldEncounters.snapshotNativeEncounterCandidates(...args);}
 const sourceBinding=Symbol('native-director-narrative-source');

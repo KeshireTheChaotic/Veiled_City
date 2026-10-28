@@ -8,7 +8,8 @@ import {visibleIncomingInjury} from './pc-incoming.js';
 import {renderNativeNotice} from './native-notice.js';
 import {nativeOutcomeKinds as kinds} from './gm-fiction-schema.js';
 import {ordinaryEffectProjection} from './ordinary-effect-proof.js';
-import {worldSimulationReceiptForAudience} from './world-simulation-receipts.js';
+import {publicationWorldReceipts} from './frameworks/publication/public.js';
+function worldSimulationReceiptForAudience(...args){return publicationWorldReceipts.worldSimulationReceiptForAudience(...args);}
 import {validatePvpAttackRoll} from './pvp-attacks.js';
 import {validatePvpDamageApplication,validatePvpDamageRoll} from './pvp-damage.js';
 import {nativeEnvironmentOutput} from './native-environment-output.js';

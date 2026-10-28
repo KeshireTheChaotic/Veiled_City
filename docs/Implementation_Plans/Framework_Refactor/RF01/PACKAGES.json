@@ -160,6 +160,9 @@
     ],
     "publication--session": [
       "bot/src/framework-to-framework/publication--session/public.js"
+    ],
+    "publication--world": [
+      "bot/src/framework-to-framework/publication--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

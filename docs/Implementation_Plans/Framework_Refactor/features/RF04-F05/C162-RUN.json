@@ -1,0 +1,155 @@
+{
+  "feature": "RF04-F05-C162",
+  "base_head": "b6f3b167441ab85babfa8927a75745f7031e0765",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/native-outcome-output.js",
+      "bot/src/narrative-director-source.js",
+      "bot/src/frameworks/publication/contracts/world-receipts.js",
+      "bot/src/frameworks/narrative/contracts/world-simulation.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c62.test.mjs"
+    ],
+    "passed": 5,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f19.test.mjs",
+        "sha256": "FD95F632E51B6437BCBA670ED6F7326104F3C2A10A9076FD2710B389B3366B30"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f20.test.mjs",
+        "sha256": "6F01E0D0643ECDA4D3CA8678656C9EB544223622B74DEB6E500AA2731A4C236B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f24.test.mjs",
+        "sha256": "BD38DFEB8AC1885AF1FAB134D46C128655FBE87FEF7D4FC71D8D1A062D1C1E1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs",
+        "sha256": "65137932335C4FB6078B76FE3BF2D62A35415DDE6AA45F6340D4486BF1082B61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "523F922F766B425E4871E92B9746F535D100A6B917136A97510F680D35FD44B0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "71A364290A81E7E7B2C5EF1DC8561FDA952019FB284166832AC1CED367769FE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "2461002919EC9EABA856A426989F8A705EBCB47F7FD417B35FA48A85BBEC6624"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c71.test.mjs",
+        "sha256": "7BEA7BDFF259B8A7764475C5DC6F5C3ECDB8FA5F81AD940248F78E265CBB7ED3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c60.test.mjs",
+        "sha256": "36EE8ABD76A28FC822DEFCADD05FDD5FD441F67AE6DD5B76DEBE823CD42D7C9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c62.test.mjs",
+        "sha256": "8627E01BCC5163D11F1C4B42A5E846CDAEEB903262F198399272503293450D3D"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T20:45:21.104Z",
+    "end": "2026-10-28T20:45:35.201Z",
+    "exit_code": 0,
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 14058.4184,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c162-test.log",
+    "log_sha256": "D3077D353332B9CF130DC4E5F9FF8F3647BF073BA328567BE410E7EF5B3DCC92",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 838,
+      "unowned": 0,
+      "imports": 3456,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1253,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c162-rf04-architecture.log",
+      "log_sha256": "75CCD01B1B0094B8597673D29DAE8489BE757C961F6E01932F9D77E19D9AD3C1",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 838,
+      "unowned": 0,
+      "imports": 3456,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1191,
+      "active_violation_groups": 62,
+      "transition_errors": 62,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c162-rf05-architecture.log",
+      "log_sha256": "78A7D2E05641472425EA8C4822C0C90C744E1870FA1FDB22AB206C50C005650E",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "6a3aedd2566f4901cc38bb95d4b416eed7055a6c62ded9e7ec32989552f6d412",
+      "fd950399ba458f8fb75469262a20a00ee9b19208706bbd8124f85a575cec20bd",
+      "8c5ee0edb9f6a73296e8f0a0798bf0558c0645f0997a060aa3fb63944cab3522"
+    ],
+    "original_manifest_sha256": "4C6D1A26315D7E4E96D6FE0FFB48DFF98B2D53704EC86F93CF0B766D0318C04C",
+    "manifest_sha256_after": "8EC2656AE827D285FEE498BD1B285DA6DCE66610F6EA99CA82878C3AD05DD17C",
+    "entries_after": 1242,
+    "remaining_by_feature": {
+      "RF04-F01": 23,
+      "RF04-F03": 12,
+      "RF04-F04": 21,
+      "RF04-F05": 6,
+      "RF05-F02": 176,
+      "RF05-F03": 206,
+      "RF05-F04": 38,
+      "RF05-F05": 388,
+      "RF06-F02": 13,
+      "RF06-F03": 166,
+      "RF06-F04": 145,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/native-outcome-output.js": "726B6047220DC2D35767EB516497B8C0D708E96B51DEBB48FA6F5A580B71C171",
+    "bot/src/narrative-director-source.js": "D61D00524E5B6E5BCB3945E82F36CB46266F2D3E9F1CE796DC5ADDA6539808B6",
+    "bot/src/frameworks/publication/contracts/world-receipts.js": "B147AEB324B61F59B1342CE973A6BBFF986A3F80E136725D9D6D63DB6E5C8C10",
+    "bot/src/frameworks/narrative/contracts/world-simulation.js": "A9B381E4AA262499CF09EFA245ECD84A9BC4763CFC61E2368803881918E54F3E"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C162 commit: restore bot/src/world-simulation-receipts.js, the native-outcome-output.js and narrative-director-source.js imports, repointed tests, BRIDGE_CONTRACTS.json and PACKAGES.json, drop the publicationWorldReceipts and narrativeWorldSimulation ports, the publication--world adapter and initializePublicationWorld, and restore the transitions from C162-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}
