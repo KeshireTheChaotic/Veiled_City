@@ -133,6 +133,9 @@
     ],
     "character--session": [
       "bot/src/framework-to-framework/character--session/public.js"
+    ],
+    "intent--knowledge": [
+      "bot/src/framework-to-framework/intent--knowledge/public.js"
     ]
   },
   "externalCapabilityOwners": {

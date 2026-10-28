@@ -1,5 +1,6 @@
 /** Read-only native causal signals for the existing GM request. No world effects, disclosure or provider calls. */
-import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {narrativeSourceVisible} from './frameworks/narrative/public.js';
 import {listNarrativeRecords} from './narrative-records.js';
 import {currentScene,scenePresence} from './scene-continuity.js';
 import {conversationPrincipal} from './conversation-principal.js';

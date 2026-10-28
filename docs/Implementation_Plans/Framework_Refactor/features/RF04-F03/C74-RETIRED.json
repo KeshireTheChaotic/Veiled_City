@@ -1,0 +1,19 @@
+{
+  "reason": "Original direct import replaced with Knowledge Intent reader",
+  "entries": [
+    {
+      "id": "59c048b39585eabfd45be32ddaec12516f34f159f6efbb498b35a47c6789a72d",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/semantic-candidate-source.js",
+      "to": "bot/src/authored-turn-envelope.js",
+      "kind": "static",
+      "specifier": "./authored-turn-envelope.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

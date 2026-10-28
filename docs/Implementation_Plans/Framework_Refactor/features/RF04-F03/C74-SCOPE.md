@@ -1,0 +1,7 @@
+# RF04-F03 C74 — Saved authored-turn reader
+
+Extract the immutable authored-turn envelope reader and its original key/hash helpers into Session. The original mixed capture module retains its source and exports the same reader identity; saved reads remain available before bootstrap. Route the Knowledge semantic-candidate source through a fixed Knowledge-owned consumer bound to that same reader by the existing Knowledge–Session pair and initializer. Existing terminal validation, source identity and native annotation rules remain unchanged. The semantic consumer already requires the Session terminal consumer before its authored-turn read.
+
+Coordinate retirement of direct-import record `59c048b39585eabfd45be32ddaec12516f34f159f6efbb498b35a47c6789a72d` and inspect resulting cycle changes. Rollback the extraction, original-reader import, public exports, port and pair/initializer together, restoring the retired record. No persisted data conversion.
+
+Correction: RF04 enforcement rejected the first Session placement because the original mixed root module is Intent-owned. The repaired extraction places the reader in Intent and adopts the observed `intent--knowledge` pair for the same Knowledge consumer; the root saved reader remains independent of initialization. Rollback includes that pair's registry and package adoption. The Session placement above is historical, not the final implementation.

@@ -1,12 +1,9 @@
 /** Immutable authenticated player source plus additive native-consumption annotations. */
-import { createHash } from "node:crypto";
+import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,authoredAnnotationKey as annotationKey} from './frameworks/intent/public.js';
+export {authoredTurnEnvelope};
 import { conversationPrincipal } from "./conversation-principal.js";
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
-
-const hash=value=>createHash("sha256").update(String(value)).digest("hex");
-const keyFor=(messageId,character)=>`authored-turn:${hash(JSON.stringify([messageId,character])).slice(0,40)}`;
-const annotationKey=(messageId,character)=>`authored-envelope:${hash(JSON.stringify([messageId,character])).slice(0,40)}`;
 
 function fail(message){throw Object.assign(new Error(message),{code:"AUTHORED_TURN_ENVELOPE"});}
 
@@ -41,17 +38,6 @@ export function sourceSpanInsideQuote(text,start){
     else if(c==='"'||c==="'")quote=c;else if(c==='“')quote='”';else if(c==='‘')quote='’';
   }return quote!==null;
 }
-export function authoredTurnEnvelope(db,guild,messageId,character){
-  const event=db.getWorldEvent(guild,keyFor(messageId,character));
-  if(!event)return null;
-  const annotation=db.getCityRecord(guild,"authored_turn_envelope",annotationKey(messageId,character));
-  return {version:1,source_event:event.event_key,discord_message_id:event.details.discord_message_id,
-    guild_id:guild,session_id:event.details.session_id,scene_id:event.details.scene_id,user_id:event.details.author,
-    character_id:event.details.character_id,control_role:event.details.control_role,
-    principal_revision:event.details.principal_revision,visibility:event.visibility,subject_key:event.subject_key||null,
-    raw_text:event.details.raw_text,raw_hash:event.details.raw_hash,native_consumed_spans:annotation?.data.native_consumed_spans||[]};
-}
-
 export function recordNativeConsumedSpans(db,guild,user,character,messageId,spans=[]){
   const envelope=authoredTurnEnvelope(db,guild,messageId,character);
   if(!envelope||envelope.user_id!==user)fail("Current authenticated authored envelope required.");

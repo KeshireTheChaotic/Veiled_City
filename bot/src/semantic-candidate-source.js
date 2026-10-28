@@ -4,7 +4,8 @@ import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
 function currentScene(...args){return knowledgeSessionScene.currentScene(...args);}
 import {knowledgeSessionOwnerTerminal} from './frameworks/knowledge/public.js';
 function overlapsOwnerActionTerminal(...args){return knowledgeSessionOwnerTerminal.overlapsOwnerActionTerminal(...args);}
-import {authoredTurnEnvelope} from './authored-turn-envelope.js';
+import {knowledgeIntentAuthoredTurn} from './frameworks/knowledge/public.js';
+function authoredTurnEnvelope(...args){return knowledgeIntentAuthoredTurn.authoredTurnEnvelope(...args);}
 import {createSemanticCandidateProof} from './frameworks/knowledge/public.js';
 let candidateRules;
 function candidates(){return candidateRules??=createSemanticCandidateProof({conversationPrincipal:(...args)=>conversationPrincipal(...args),currentScene:(...args)=>currentScene(...args),overlapsOwnerActionTerminal:(...args)=>overlapsOwnerActionTerminal(...args),authoredTurnEnvelope:(...args)=>authoredTurnEnvelope(...args)});}
