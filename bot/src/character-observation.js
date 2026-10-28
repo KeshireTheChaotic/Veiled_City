@@ -5,8 +5,8 @@ import {characterSession} from './frameworks/character/public.js';
 function currentScene(...args){return characterSession.currentScene(...args);}function sceneAccess(...args){return characterSession.sceneAccess(...args);}function scenePresence(...args){return characterSession.scenePresence(...args);}
 import {characterWorldEvents} from './frameworks/character/public.js';
 function indexWorldEvent(...args){return characterWorldEvents.indexWorldEvent(...args);}
-import { renderWorldObservation } from "./world-observation.js";
-import { visibleIncomingInjury } from "./pc-incoming.js";
+import {characterWorldObservation,characterIncomingInjury} from './frameworks/character/public.js';
+function renderWorldObservation(...args){return characterWorldObservation.renderWorldObservation(...args);}function visibleIncomingInjury(...args){return characterIncomingInjury.visibleIncomingInjury(...args);}
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 const vocabulary={
@@ -305,3 +305,6 @@ export function renderObservation(db,guild,query,scope){
   }
   return {kind:"observation_answer",state,text,query,proof_refs};
 }
+import {characterObservationSource} from './frameworks/character/public.js';
+// Provide this module's original departure witness capture to the fixed Character slot; no other authority is granted.
+characterObservationSource.bind({captureDepartureWitnesses});

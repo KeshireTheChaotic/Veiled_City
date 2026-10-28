@@ -43,3 +43,6 @@ export function incomingAttackEvidence(...args){return rules().incomingAttackEvi
 export function resolveIncomingDamage(...args){return rules().resolveIncomingDamage(...args);}
 export function validateIncomingDamageApplication(...args){return rules().validateIncomingDamageApplication(...args);}
 export function visibleIncomingInjury(...args){return rules().visibleIncomingInjury(...args);}
+import {nativeIncomingInjurySource} from './frameworks/daggerheart/public.js';
+// Provide this module's original visible incoming injury to the fixed native slot; no other authority is granted.
+nativeIncomingInjurySource.bind({visibleIncomingInjury});

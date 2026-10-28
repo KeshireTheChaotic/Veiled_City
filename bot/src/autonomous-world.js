@@ -20,7 +20,8 @@ function currentAcceptedIntent(...args){return worldIntentDispatch.currentAccept
 function movementAdjudication(...args){return worldNativeMovementChecks.movementAdjudication(...args);}
 import {worldContextMemory} from './frameworks/world/public.js';
 function contextMemoriesForScope(...args){return worldContextMemory.contextMemoriesForScope(...args);}
-import { captureDepartureWitnesses } from "./character-observation.js";
+import {worldCharacterObservation} from './frameworks/world/public.js';
+function captureDepartureWitnesses(...args){return worldCharacterObservation.captureDepartureWitnesses(...args);}
 function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct(...args);}
 import {worldSessionContinuation} from './frameworks/world/public.js';
 function continuationAuthorization(...args){return worldSessionContinuation.continuationAuthorization(...args);}

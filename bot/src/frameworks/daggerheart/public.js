@@ -143,3 +143,4 @@ export {nativePcActionEligibility,nativePvpResolutionReceipt,nativePvpPendingFea
 export {nativeMovementAdjudication,nativeMovementCondition,nativeVipAdmissionSource} from './contracts/movement-checks.js';
 export {nativeWorldActions} from './contracts/world-actions.js';
 export {nativeActionReviewSource,nativeRulesArbitrationSource,nativeConditionRecoverySource} from './contracts/session-rule-sources.js';
+export {nativeIncomingInjurySource} from './contracts/incoming-injury-source.js';
