@@ -34,3 +34,8 @@ import {nativeWorldAutonomy} from '../../frameworks/daggerheart/public.js';
 import {worldAutonomousSource} from '../../frameworks/world/public.js';
 /** Pass World's original autonomous authority, entity creation and input key to native rules unchanged. */
 export function connectNativeWorldAutonomy(){return nativeWorldAutonomy.bind({worldAuthority:worldAutonomousSource.worldAuthority,establishNarrativeEntity:worldAutonomousSource.establishNarrativeEntity,worldInputKey:worldAutonomousSource.worldInputKey});}
+
+import {nativeMovementAdjudication,nativeMovementCondition,nativePcActionEligibility,nativeVipAdmissionSource} from '../../frameworks/daggerheart/public.js';
+import {worldNativeMovementChecks} from '../../frameworks/world/public.js';
+/** Pass native rules' original movement, eligibility and VIP admission checks to World unchanged. */
+export function connectWorldNativeMovementChecks(){return worldNativeMovementChecks.bind({movementAdjudication:nativeMovementAdjudication.movementAdjudication,nativeMovementConditionIssue:nativeMovementCondition.nativeMovementConditionIssue,assertPcCanAct:nativePcActionEligibility.assertPcCanAct,nativeVipAdmission:nativeVipAdmissionSource.nativeVipAdmission});}

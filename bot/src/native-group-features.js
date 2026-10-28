@@ -51,3 +51,6 @@ export function nativeAttackExpiryRevision(...args){return rules().nativeAttackE
 import {nativeMovementReaderSource} from './frameworks/daggerheart/public.js';
 const provideNativeMovementReader=()=>rules().nativeMovementConditionIssue;
 nativeMovementReaderSource.provideSource(provideNativeMovementReader);
+import {nativeMovementCondition} from './frameworks/daggerheart/public.js';
+// Provide this module's original movement condition check to the fixed native slot; no other authority is granted.
+nativeMovementCondition.bind({nativeMovementConditionIssue});

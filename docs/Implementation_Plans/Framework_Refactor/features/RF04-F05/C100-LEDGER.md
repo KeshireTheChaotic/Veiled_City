@@ -1,0 +1,7 @@
+# C100 ledger
+
+## 2026-10-28 C100 World autonomous movement reads native movement, eligibility and VIP admission checks through a World port
+
+World's autonomous-world.js stops importing four Daggerheart root modules (rules-arbitration, native-group-features, pc-native-eligibility, native-environment-access). World gains a fixed worldNativeMovementChecks port; Daggerheart gains three single-function provider slots (movement adjudication, movement condition, VIP admission) filled at load by their native modules, and reuses the C98 PC action eligibility slot. The existing daggerheart--world adapter binds the port via connectWorldNativeMovementChecks from the existing initializeNativeWorldEvents bootstrap (no index.js change). The new test imports only changed contracts, Daggerheart public and the bootstrap with feature-local fake originals. Tracked test rf04-f05-c18 asserted the removed autonomous-world -> native-group-features edge as the startup reachability path; it now asserts the remaining static path index -> gm -> ordinary-effects -> native-group-features and the World port delegation (6/6 pass).
+
+Tests: one frozen batch of 137 files: 938 tests, 937 pass, 1 fail (named in C100-RUN.json: rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability). Architecture: 8 exact records retired. RF04 exit 0, 0 active violations, 794 modules; RF05 234 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

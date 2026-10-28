@@ -19,3 +19,6 @@ function rules(){return nativeRules??=createEnvironmentAccessRules({capabilities
 export function establishEnvironmentAdmission(...args){return rules().establishEnvironmentAdmission(...args);}
 export function inspectEnvironmentAdmission(...args){return rules().inspectEnvironmentAdmission(...args);}
 export function nativeVipAdmission(...args){return rules().nativeVipAdmission(...args);}
+import {nativeVipAdmissionSource} from './frameworks/daggerheart/public.js';
+// Provide this module's original VIP admission check to the fixed native slot; no other authority is granted.
+nativeVipAdmissionSource.bind({nativeVipAdmission});

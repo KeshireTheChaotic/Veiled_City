@@ -7,7 +7,8 @@ function personalCharacter(...args){return worldPersonalContinuity.personalChara
 import { indexWorldEvent, cityAudit, cityObject } from "./city-calendar.js";
 import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}
-import {nativeMovementConditionIssue} from './native-group-features.js';
+import {worldNativeMovementChecks} from './frameworks/world/public.js';
+function nativeMovementConditionIssue(...args){return worldNativeMovementChecks.nativeMovementConditionIssue(...args);}
 import { activeCityProxy } from "./city-constraints.js";
 import { configureSimulationEntity } from "./simulation.js";
 import { validateMinorIdentity } from "./city-depth.js";
@@ -15,15 +16,15 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { stateRevision } from "./ai-intents.js";
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./frameworks/world/public.js";
 import { currentAcceptedIntent, currentTypedMovement } from "./typed-intents.js";
-import { movementAdjudication } from "./rules-arbitration.js";
+function movementAdjudication(...args){return worldNativeMovementChecks.movementAdjudication(...args);}
 import { contextMemoriesForScope } from "./context-memory.js";
 import { captureDepartureWitnesses } from "./character-observation.js";
-import {assertPcCanAct} from "./pc-native-eligibility.js";
+function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct(...args);}
 import {continuationAuthorization} from "./action-continuation.js";
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {validateBackgroundIdentity} from './world-background-identities.js';
-import {nativeVipAdmission} from './native-environment-access.js';
+function nativeVipAdmission(...args){return worldNativeMovementChecks.nativeVipAdmission(...args);}
 import {AUTONOMOUS_WORLD_PROMPT} from './frameworks/world/autonomous-world-contract.js';
 export {AUTONOMOUS_WORLD_PROMPT};
 import {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema} from './frameworks/world/world-proposal-schema.js';

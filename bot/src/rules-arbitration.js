@@ -21,3 +21,6 @@ export function adjudicationEnvelope(...args){return rules().adjudicationEnvelop
 export function selectRuleBasis(...args){return rules().selectRuleBasis(...args);}
 export function adjudicateAcceptedIntent(...args){return rules().adjudicateAcceptedIntent(...args);}
 export function movementAdjudication(...args){return rules().movementAdjudication(...args);}
+import {nativeMovementAdjudication} from './frameworks/daggerheart/public.js';
+// Provide this module's original movement adjudication to the fixed native slot; no other authority is granted.
+nativeMovementAdjudication.bind({movementAdjudication});

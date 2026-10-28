@@ -79,3 +79,4 @@ export {nativeEstablishedFact} from './established-fact-proof.js';
 export {worldAuthoringContext} from './contracts/authoring-context.js';
 export {worldPersonalContinuity} from './contracts/personal-continuity.js';
 export {worldAutonomousSource,worldAutonomousApplication} from './contracts/autonomous-source.js';
+export {worldNativeMovementChecks} from './contracts/native-movement-checks.js';
