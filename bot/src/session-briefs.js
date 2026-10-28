@@ -1,8 +1,9 @@
 /** Read-only reconstructed brief views. Public text never inherits GM planning, private thoughts or raw event details. */
 import {sessionPersonalContinuity} from './frameworks/session/public.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}function personalInbox(...args){return sessionPersonalContinuity.personalInbox(...args);}
-import { reconcileHistory } from "./history-reconciliation.js";
-import { evidenceType, activeEvidence } from "./epistemic.js";
+import {sessionKnowledgeSources} from './frameworks/session/public.js';
+function reconcileHistory(...args){return sessionKnowledgeSources.reconcileHistory(...args);}
+function evidenceType(...args){return sessionKnowledgeSources.evidenceType(...args);}function activeEvidence(...args){return sessionKnowledgeSources.activeEvidence(...args);}
 import { scopedSessionRecap } from "./pvp-output.js";
 export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   if(db.getCityCalendar(guild).flags.session_briefs!==true) throw new Error("Session briefs are opt-in.");

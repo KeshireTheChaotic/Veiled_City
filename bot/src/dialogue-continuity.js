@@ -11,11 +11,12 @@ import { activeCityProxy } from "./city-constraints.js";
 import {assertNpcAvailability} from './city-constraints.js';
 import {conversationPrincipal} from './frameworks/session/public.js';
 import {narrativeSourceVisible} from './scene-fiction-context.js';
-import {factVisibleTo} from './disclosure-authority.js';
+import {sessionKnowledgeSources} from './frameworks/session/public.js';
+function factVisibleTo(...args){return sessionKnowledgeSources.factVisibleTo(...args);}
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 import {sessionIntent} from './frameworks/session/public.js';
 function interpretAuthoredText(...args){return sessionIntent.interpretAuthoredText(...args);}
-import {mentionsPublicIdentity} from './public-referents.js';
+function mentionsPublicIdentity(...args){return sessionKnowledgeSources.mentionsPublicIdentity(...args);}
 export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false,candidate=null,typedIntentKey=null}={}){
   const flags=db.getCityCalendar(guild).flags;
   if(flags.dialogue_history!==true||flags.scene_continuity!==true||!characterId||!messageId||typeof message!=="string") return null;

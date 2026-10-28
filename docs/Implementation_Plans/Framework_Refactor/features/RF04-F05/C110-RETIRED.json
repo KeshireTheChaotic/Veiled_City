@@ -1,0 +1,63 @@
+{
+  "feature": "RF04-F05-C110",
+  "original_manifest_sha256": "F1BF35129419D2D97DA86CBD2AF63EFBF053C3B9B705E318F90AFD9B82E36A89",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "20e2a458459565751e5b2d4f48fe1447e70096e859f9d179773134892642082f",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/disclosure-authority.js",
+      "kind": "static",
+      "specifier": "./disclosure-authority.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "4954bb91386178acd3c97b45980d7be2e47c05f2629654e859d4279c71a810fd",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/public-referents.js",
+      "kind": "static",
+      "specifier": "./public-referents.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "895b12b327ff9f6532603e289c8e5c40e01716448bc299b6b5edbae05d43c127",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/session-briefs.js",
+      "to": "bot/src/history-reconciliation.js",
+      "kind": "static",
+      "specifier": "./history-reconciliation.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b3452aae0ec4b7d95276b229bf63e2dd63d67712ee8fb8ea7b6ea793eadf24a2",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/session-briefs.js",
+      "to": "bot/src/epistemic.js",
+      "kind": "static",
+      "specifier": "./epistemic.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

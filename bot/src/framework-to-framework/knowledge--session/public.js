@@ -7,3 +7,8 @@ export function connectKnowledgeSessionOwnerTerminal(){return knowledgeSessionOw
 import {knowledgePersonalContinuity,personalCharacter} from '../../frameworks/knowledge/public.js';
 import {sessionPersonalContinuity} from '../../frameworks/session/public.js';
 export function connectSessionPersonalContinuity(){return sessionPersonalContinuity.bind({personalCharacter,personalInbox:knowledgePersonalContinuity.personalInbox});}
+
+import {factVisibleTo,mentionsPublicIdentity,evidenceType,activeEvidence,knowledgeHistoryReconciliationSource} from '../../frameworks/knowledge/public.js';
+import {sessionKnowledgeSources} from '../../frameworks/session/public.js';
+/** Pass Knowledge's original visibility, referent, evidence and history functions to Session unchanged. */
+export function connectSessionKnowledgeSources(){return sessionKnowledgeSources.bind({factVisibleTo,mentionsPublicIdentity,evidenceType,activeEvidence,reconcileHistory:knowledgeHistoryReconciliationSource.reconcileHistory});}

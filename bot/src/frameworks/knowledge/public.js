@@ -39,3 +39,4 @@ export {knowledgePersonalContinuity} from './contracts/personal-continuity-sourc
 export {knowledgeContextMemorySource} from './contracts/context-memory-source.js';
 export {knowledgeNarrativeSources} from './contracts/narrative-sources.js';
 export {knowledgeWorldCommunity} from './contracts/world-community.js';
+export {knowledgeHistoryReconciliationSource} from './contracts/history-reconciliation-source.js';

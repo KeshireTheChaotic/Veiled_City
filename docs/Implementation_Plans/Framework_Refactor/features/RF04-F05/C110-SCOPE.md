@@ -1,0 +1,5 @@
+# RF04-F05 C110 — Session reads Knowledge visibility, referents, evidence and history through a Session port
+
+Base 6e537795. Session's dialogue-continuity.js and session-briefs.js stop importing the Knowledge root modules disclosure-authority.js, public-referents.js, epistemic.js (shims) and history-reconciliation.js. Session gains a fixed sessionKnowledgeSources port; Knowledge gains a history reconciliation provider slot filled at load by history-reconciliation.js and supplies factVisibleTo, mentionsPublicIdentity, evidenceType and activeEvidence from its public API. The existing knowledge--session adapter binds the port via connectSessionKnowledgeSources from initializeKnowledgeSession (no index.js change). Static reachability from index.js is unchanged.
+
+Rollback: Revert only the C110 commit: restore the direct Knowledge root imports in dialogue-continuity.js and session-briefs.js, remove the Session sessionKnowledgeSources port, the Knowledge history reconciliation slot and its bind in history-reconciliation.js, connectSessionKnowledgeSources and its call in initializeKnowledgeSession, and restore the 4 exact transitions from C110-RETIRED.json.
