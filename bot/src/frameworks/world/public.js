@@ -92,3 +92,4 @@ export {worldIntentValidation} from './contracts/intent-validation.js';
 export {simulationOverview} from './simulation-overview.js';
 export {prepareWorldSimulationObservation,worldSimulationReceiptForAudience} from './simulation-receipts.js';
 export {environmentalText} from './environment-observation.js';
+export {CIVIC_KINDS,updateCityCivic,reviewCivicChange,transmitCityBelief,attemptCityInfluence} from './city-civic.js';

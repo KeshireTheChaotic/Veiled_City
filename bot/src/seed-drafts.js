@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from './frameworks/world/public.js';
 import { requireCitySource, updateCityCore } from "./city-core.js";
-import { CIVIC_KINDS, updateCityCivic } from "./city-civic.js";
+import { CIVIC_KINDS, updateCityCivic } from './frameworks/world/public.js';
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function configurePortrayal(...args){return worldNarrativeSources.configurePortrayal(...args);}
 import {worldStoryContinuity} from './frameworks/world/public.js';
