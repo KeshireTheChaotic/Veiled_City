@@ -909,3 +909,7 @@ C141 moves original native access provider with cold root registration/singleton
 ## 2026-10-28 C143 and CHUNK01 prerequisites
 
 C143 fixes the Persistence relationship consumer with the original facade module-load binding, preserving standalone constructor and exact callback order (two fresh tests passed). CHUNK01 moves original Discord splitting into its owner and adopts its public API in assembly delivery, preserving saved keys/no-resend behavior (3/3). One exact later-phase private import retired; Session/application and Persistence/Knowledge root edges remain. RF04 gate passes827 modules/zero unowned/active/errors, largest cycle79; RF05 remains82 groups/errors. RF04 incomplete; release unauthorized.
+
+## 2026-10-28 C144 and owner import amendment
+
+C144 adopts actual Knowledge–Persistence relationship contract with same-function module-load/initializer binding, preserving standalone DB construction (1/1 fresh SQLite test, static index order). RF04 gate passes830 modules/zero unowned/active/errors, largest cycle79. No root edge retired. Owner permits mechanical import-only repointing of existing bot/scripts legacy tests, preserving bodies/assertions and without executing legacy suites; exact limits recorded in LEGACY-IMPORT-REPOINT-AUTHORIZATION.md. RF04/RF06 remain incomplete; release unauthorized.

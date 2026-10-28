@@ -145,6 +145,12 @@
     ],
     "operations--world": [
       "bot/src/framework-to-framework/operations--world/public.js"
+    ],
+    "persistence": [
+      "bot/src/frameworks/persistence/public.js"
+    ],
+    "knowledge--persistence": [
+      "bot/src/framework-to-framework/knowledge--persistence/public.js"
     ]
   },
   "externalCapabilityOwners": {

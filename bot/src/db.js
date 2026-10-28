@@ -17,7 +17,7 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
-import {persistenceRelationshipEvidence} from './frameworks/persistence/contracts/relationship-evidence.js';
+import {persistenceRelationshipEvidence} from './frameworks/persistence/public.js';
 import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
