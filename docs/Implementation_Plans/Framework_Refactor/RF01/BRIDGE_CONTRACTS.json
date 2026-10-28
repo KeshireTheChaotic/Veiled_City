@@ -1966,7 +1966,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c53.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c53.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f06-c54.test.mjs"
       ],
       "observed_directions": [
         {

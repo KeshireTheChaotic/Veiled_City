@@ -1162,17 +1162,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "dab59acecc31dcf78307d3ee70272b83375384751e8711eefcd2114547294b54",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/narrative-records.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "2a36dff6245e97ba2d5b1146a972d4b110ab46d214d02129033fdc9903b682b5",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/narrative-relevance.js",
@@ -7558,20 +7547,6 @@
       "to": "bot/src/city-constraints.js",
       "kind": "static",
       "specifier": "./city-constraints.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "7041bbe6ae24a12ed9bd2ead68baf6cb308c5ea3f075ea28ddc13761bb804145",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/narrative-records.js",
-      "kind": "static",
-      "specifier": "./narrative-records.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

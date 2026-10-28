@@ -1,0 +1,130 @@
+{
+  "feature": "RF04-F05-C154",
+  "base_head": "6b1863dec6f32013ab8f1b2d6705a2cbf3440101",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/narrative-salience.js",
+      "bot/src/frameworks/narrative/contracts/knowledge-readers.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c54.test.mjs"
+    ],
+    "passed": 3,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f02.test.mjs",
+        "sha256": "B0EF1DAD83AFBA23E6A12D13016526A7A44F32091AF447ACFA8B254CC1F4DFFA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+        "sha256": "52F2AE48DAEEED702131C028A6B790073DB62611D78147B5E824A117F7E7D5DA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs",
+        "sha256": "18E5969956BB5A8F7A9364F0089A98C9F1146C4A02D6C1AB1CE8E718E0E8FBDC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "5393B5BF96F3045BCC1C1639FBAC13DCF1E47D6B23269F5DDA62201CADCB54EA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c53.test.mjs",
+        "sha256": "CA4615C6CADC6AA814714BEF07E8E86E0201C6E08FD35A1410BD24D22C86D515"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c54.test.mjs",
+        "sha256": "42F5CE4E79CF0C1ADFD89B93BC22EB7C2347D89133D7192D919020A5CBE76711"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T19:09:53.365Z",
+    "end": "2026-10-28T19:10:04.676Z",
+    "exit_code": 0,
+    "tests": 37,
+    "passed": 37,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 11275.2651,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c154-test.log",
+    "log_sha256": "68E22AA633399B7972BFBE9E5FB638AF3097EC7AE5A31F211FAF1BCCDEBC4295",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 837,
+      "unowned": 0,
+      "imports": 3438,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1282,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c154-rf04-architecture.log",
+      "log_sha256": "23ACA0C51093CC88575A159B2195B1EB1FF574E6694B9F03F640F0342AFC93FA",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 837,
+      "unowned": 0,
+      "imports": 3438,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1209,
+      "active_violation_groups": 73,
+      "transition_errors": 73,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c154-rf05-architecture.log",
+      "log_sha256": "FEB3AA73E45228970D551F407937203B0301C4577474853AFEA5C81AFB2E96A1",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "dab59acecc31dcf78307d3ee70272b83375384751e8711eefcd2114547294b54",
+      "7041bbe6ae24a12ed9bd2ead68baf6cb308c5ea3f075ea28ddc13761bb804145"
+    ],
+    "original_manifest_sha256": "5DC299F356A884C0F03E3F7FE11EEFCEAC50B2EFB051875271C265DD7228D0CA",
+    "manifest_sha256_after": "9F07F27AAEF7BFEE41323B3080FF41FBA68C6FCDB90F9AB07AC1547039C0F1D8",
+    "entries_after": 1271,
+    "remaining_by_feature": {
+      "RF04-F01": 27,
+      "RF04-F03": 17,
+      "RF04-F04": 23,
+      "RF04-F05": 6,
+      "RF05-F02": 180,
+      "RF05-F03": 210,
+      "RF05-F04": 41,
+      "RF05-F05": 388,
+      "RF06-F02": 16,
+      "RF06-F03": 169,
+      "RF06-F04": 146,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/narrative-salience.js": "F7CA15588DA6A6664BF4E4C2C94584C2F1DF2B4C5424BD98D4B82D1D3EAE4703",
+    "bot/src/frameworks/narrative/contracts/knowledge-readers.js": "C31608745E8E1F4A3669746CF4C09A0AA99033596F443CEA9477933351BFC1D4"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C154 commit: restore root narrative-records.js, the narrative-salience.js import, drop the added port names and adapter bindings, and restore the transitions from C154-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

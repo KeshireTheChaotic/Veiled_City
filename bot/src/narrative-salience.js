@@ -6,7 +6,8 @@ import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fict
 import {conversationPrincipal} from './conversation-principal.js';
 import {currentScene} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
-import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from './narrative-records.js';
+import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
+const listNarrativeRecords=(...args)=>narrativeKnowledgeReaders.listNarrativeRecords(...args),NARRATIVE_RECORD_LIMIT=()=>narrativeKnowledgeReaders.narrativeRecordLimit();
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
@@ -36,10 +37,10 @@ function pinReasons(db,guild,entity){
   if(session&&db.getCurrentEncounter(session.id)?.status==='active')reasons.push('active_encounter_conservative');
   const pending=['compound_action','roll_request','scene_action_window','commitment','evidence_receipt','arc','lead','debt','continuation','npc_proxy'];
   for(const type of pending){const rows=records(db,guild,type);
-    if(rows.length>=NARRATIVE_RECORD_LIMIT||rows.some(r=>!['resolved','completed','rejected','withdrawn','expired','cancelled','superseded'].includes(r.status)
+    if(rows.length>=NARRATIVE_RECORD_LIMIT()||rows.some(r=>!['resolved','completed','rejected','withdrawn','expired','cancelled','superseded'].includes(r.status)
       &&!['resolved','completed','failed','cancelled'].includes(r.data.status)&&JSON.stringify(r.data).includes(JSON.stringify(key))))reasons.push(type);
   }
-  if(records(db,guild,'narrative_interest').length>=NARRATIVE_RECORD_LIMIT)reasons.push('interest_scan_limit_conservative');
+  if(records(db,guild,'narrative_interest').length>=NARRATIVE_RECORD_LIMIT())reasons.push('interest_scan_limit_conservative');
   if(db.listCanon(guild,{includeGM:true,limit:500}).some(r=>JSON.stringify(r).includes(key)))reasons.push('committed_canon');
   if(db.listSimulationEntities(guild,'location').some(r=>r.state.parent_location===key||r.state.parent_location_key===key))reasons.push('parent_location');
   return reasons;

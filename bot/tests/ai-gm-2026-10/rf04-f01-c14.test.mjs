@@ -7,7 +7,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createBackgroundIdentityRules,BACKGROUND_WORLD_KINDS,createWorldIdentityRules,indexWorldEvent} from '../../src/frameworks/world/public.js';
-import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from '../../src/narrative-records.js';
+import {listNarrativeRecords,NARRATIVE_RECORD_LIMIT} from '../../src/frameworks/knowledge/narrative-records.js';
 import {sceneFictionFailure} from '../../src/scene-fiction-context.js';
 import * as original from '../../src/world-background-identities.js';
 

@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {createWorldAuthorshipRules,indexWorldEvent} from '../../src/frameworks/world/public.js';
 import {jsonHash as hash} from '../../src/kernel/json-hash.js';
-import {listNarrativeRecords} from '../../src/narrative-records.js';
+import {listNarrativeRecords} from '../../src/frameworks/knowledge/narrative-records.js';
 import {factVisibleTo} from '../../src/disclosure-authority.js';
 import {sceneFictionFailure} from '../../src/scene-fiction-context.js';
 import * as original from '../../src/world-authorship.js';

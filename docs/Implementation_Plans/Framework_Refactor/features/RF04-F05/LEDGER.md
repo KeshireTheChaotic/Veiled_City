@@ -618,3 +618,9 @@ Tests: one frozen batch of 9 files: 61 tests, 61 pass, 0 fail. Architecture: 2 e
 Narrative context modules read Knowledge public identity mentions and scoped fact queries through a fixed Narrative consumer bound by the knowledge--narrative pair; both root readers are removed. Four RF04 records retired. Fresh bridge test is named rf04-f06-c53 (two-digit reference).
 
 Tests: one frozen batch of 13 files: 59 tests, 59 pass, 0 fail. Architecture: 4 exact records retired. RF04 exit 0, 0 active violations, 838 modules; RF05 74 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-28 C154 Narrative salience reads record listing through the Knowledge readers port
+
+Narrative salience reads Knowledge narrative record listing and limit through the existing Narrative Knowledge readers port; root narrative-records shim retired.
+
+Tests: one frozen batch of 7 files: 37 tests, 37 pass, 0 fail. Architecture: 2 exact records retired. RF04 exit 0, 0 active violations, 837 modules; RF05 73 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
