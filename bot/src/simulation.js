@@ -21,7 +21,6 @@ function pacingAdvice(...args){return worldStoryContinuity.pacingAdvice(...args)
 import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
 import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {nativeWorldStrategyAllowed} from './native-world-operations.js';
-export { updateRelationshipDimensions } from "./relationship-state.js";
 
 export {ACTION_TYPES,MAJOR_IMPACTS};
 export {ACTION_COSTS} from './frameworks/world/public.js';

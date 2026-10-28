@@ -87,3 +87,5 @@ export {worldNarrativeSources} from './contracts/narrative-sources.js';
 export {worldLongProjectSource,worldCityCivicSource,worldObservationSource,worldCityDepthSource} from './contracts/root-sources.js';
 export {worldStoryContinuity} from './contracts/story-continuity.js';
 export {worldCharacterObservation} from './contracts/character-observation.js';
+
+export {worldIntentValidation} from './contracts/intent-validation.js';

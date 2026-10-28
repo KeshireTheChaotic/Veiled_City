@@ -17,3 +17,8 @@ import {intentAiIntentDispatch,intentTypedIntentReaders} from '../../frameworks/
 import {worldIntentDispatch} from '../../frameworks/world/public.js';
 /** Pass Intent's original AI intent dispatch and typed-intent readers to World unchanged. */
 export function connectWorldIntentDispatch(){const d=intentAiIntentDispatch,r=intentTypedIntentReaders;return worldIntentDispatch.bind({delegateConsequence:d.delegateConsequence,delegateWorldGoal:d.delegateWorldGoal,maintainMemory:d.maintainMemory,continueLongProjects:d.continueLongProjects,dispatchAiIntents:d.dispatchAiIntents,currentAcceptedIntent:r.currentAcceptedIntent,currentTypedMovement:r.currentTypedMovement});}
+
+import {validateIntent} from '../../frameworks/intent/public.js';
+import {worldIntentValidation} from '../../frameworks/world/public.js';
+/** Pass Intent's original AI intent validation to World unchanged. */
+export function connectWorldIntentValidation(){return worldIntentValidation.bind({validateIntent});}

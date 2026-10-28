@@ -11,7 +11,8 @@ function configureMystery(...args){return worldStoryContinuity.configureMystery(
 import { configureSimulationEntity } from "./simulation.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import { validateIntent } from "./ai-intent-contracts.js";
+import {worldIntentValidation} from './frameworks/world/public.js';
+function validateIntent(...args){return worldIntentValidation.validateIntent(...args);}
 
 const plain=value=>value&&typeof value==="object"&&!Array.isArray(value);
 const hash=value=>createHash("sha256").update(value).digest("hex").slice(0,32);

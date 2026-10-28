@@ -1,0 +1,5 @@
+# RF04-F05 C117 — World seed drafts validate AI intents through a World port; simulation drops an unused Knowledge re-export
+
+Base 5297a028. World's seed-drafts.js stops importing the Intent shim ai-intent-contracts.js: World gains a fixed worldIntentValidation port bound by the adopted intent--world adapter from Intent's public validateIntent via connectWorldIntentValidation in initializeWorldExecution. World's simulation.js drops its unused re-export of Knowledge's updateRelationshipDimensions from the relationship-state.js shim (no importer in bot/src, bot/tests or bot/scripts; db.js imports the shim directly). No new provider slot; no index.js change; static reachability from index.js unchanged.
+
+Rollback: Revert only the C117 commit: restore the ai-intent-contracts.js import in seed-drafts.js and the unused updateRelationshipDimensions re-export in simulation.js, remove the World Intent validation port, connectWorldIntentValidation and its call in initializeWorldExecution, and restore the exact transitions from C117-RETIRED.json.
