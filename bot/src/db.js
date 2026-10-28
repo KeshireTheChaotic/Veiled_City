@@ -7,7 +7,7 @@
  */
 import fs from "node:fs";
 import {normalizeGmHookImport} from './gm-hook-import.js';
-import { updateRelationshipDimensions, relationshipPairKey, relationshipProjection } from "./relationship-state.js";
+import { updateRelationshipDimensions as originalUpdateRelationshipDimensions, relationshipPairKey as originalRelationshipPairKey, relationshipProjection as originalRelationshipProjection } from "./relationship-state.js";
 import path from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
@@ -17,7 +17,7 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
-import {persistenceRelationshipEvidence,persistenceSourceEvidence} from './frameworks/persistence/public.js';
+import {persistenceRelationshipEvidence,persistenceSourceEvidence,persistenceRelationshipState} from './frameworks/persistence/public.js';
 import { activeEvidence as originalActiveEvidence, evidenceType as originalEvidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
@@ -28,7 +28,9 @@ import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.j
 // Preserve standalone legacy facade reads while this fixed consumer is migrated to application composition.
 persistenceRelationshipEvidence.bind({relationshipEvidence});
 persistenceSourceEvidence.bind({activeEvidence:originalActiveEvidence,evidenceType:originalEvidenceType});
+persistenceRelationshipState.bind({updateRelationshipDimensions:originalUpdateRelationshipDimensions,relationshipPairKey:originalRelationshipPairKey,relationshipProjection:originalRelationshipProjection});
 const {activeEvidence,evidenceType}=persistenceSourceEvidence;
+const {updateRelationshipDimensions,relationshipPairKey,relationshipProjection}=persistenceRelationshipState;
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {

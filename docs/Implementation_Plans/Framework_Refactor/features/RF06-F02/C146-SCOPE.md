@@ -1,0 +1,5 @@
+# RF06-F02 C146 — Knowledge relationship state consumer
+
+Under the owner's exact RF06 prerequisite authorization, route `VeiledDB`'s existing `relationshipPairKey`, `updateRelationshipDimensions` and `relationshipProjection` calls through a fixed Persistence-owned consumer. The standalone facade binds the exact original `relationship-state.js` re-exports at module load, before construction; the existing Knowledge–Persistence pair binds the same Knowledge public functions. Preserve the constructor's relationship backfill order, original state/memory writes, projections, return values and synchronous transaction boundaries.
+
+Update only the adopted pair's actual API scope and local test reference. The legacy `db.js -> relationship-state.js` import and exact transition remain until a standalone-compatible application facade is available; no root reader, schema, baseline, deadline or policy is removed or waived. Rollback the consumer, both binding routes, DB forwarding, Persistence export and pair metadata together.

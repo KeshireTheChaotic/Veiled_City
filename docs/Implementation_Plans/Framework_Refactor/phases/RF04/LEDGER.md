@@ -925,3 +925,7 @@ Original activeEvidence/evidenceType DB reads now use fixed Persistence consumer
 ## 2026-10-28 authorized scene root retirement
 
 Exact approved import/computed-source/mutation-target path substitutions applied in eleven legacy scripts, with test logic/assertions unchanged and no legacy suites executed. Node-only path-contract tests2/2 passed. Scene setup/action-window roots removed after source reference audit; two exact location records retired. Original local root compatibility tests are obsolete historical evidence. RF04 gate passes831 modules/zero unowned/active/errors, largest cycle79; RF05 remains81 groups/errors. Gate includes concurrent C146. Phase incomplete; release unauthorized.
+
+## 2026-10-28 C146 constructor prerequisite
+
+Original relationship key/dimensions/projection helpers now use fixed Persistence consumer with existing standalone and pair bindings. Fresh SQLite test1/1 covers both composition orders, actual constructor backfill, saved projection and reopen; root imports retained. RF04 gate passes831 modules/zero active/errors; no false retirement, phase incomplete and release unauthorized.

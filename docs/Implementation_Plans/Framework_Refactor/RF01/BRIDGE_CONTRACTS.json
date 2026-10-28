@@ -2130,7 +2130,7 @@
           "to": "persistence",
           "import_occurrences": 0,
           "injected_calls": 261,
-          "contract": "Knowledge supplies the original relationship classifier, evidence type and active-source checks to fixed Persistence consumers; other observed dependencies remain migration obligations."
+          "contract": "Knowledge supplies original relationship classification, source evidence, relationship keys, dimension updates and projections to fixed Persistence consumers; other dependencies remain migration obligations."
         }
       ],
       "source_evidence": [
@@ -2147,15 +2147,16 @@
           "type": "import"
         }
       ],
-      "validation": "Consumers fail closed before binding, forward original Knowledge classification and source checks, and forbid replacement; standalone facade and pair bind the same functions.",
-      "lifecycle": "The existing standalone facade binds the original readers on module load; application composition rebinds the same originals before database construction.",
+      "validation": "Consumers fail closed before binding, forward original Knowledge functions and forbid replacement; standalone facade and pair bind the same originals.",
+      "lifecycle": "The standalone facade binds original readers on module load before database construction or migration; application composition rebinds the same originals.",
       "adoption_feature": "RF06-F02",
       "consumers": [
         "bot/src/application/composition/persistence-knowledge.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f02.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f02-c45.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f02-c45.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f02-c46.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2178,7 +2179,7 @@
         "occurrences": 266
       },
       "public_api": "bot/src/framework-to-framework/knowledge--persistence/public.js",
-      "scope": "Relationship evidence classification, evidence type and active-source reads only; other Knowledge/Persistence dependencies and the legacy facade imports remain migration obligations."
+      "scope": "Relationship classification, source evidence, relationship keys, dimension updates and projections only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations."
     },
     {
       "pair": "knowledge--publication",
