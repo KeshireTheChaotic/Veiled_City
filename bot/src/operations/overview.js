@@ -4,7 +4,8 @@
  * Keeps the `/vc-gm overview` query/aggregation logic out of the Discord
  * dispatcher and exposes one stable read model for future web/CLI surfaces.
  */
-import { simulationOverview } from "../simulation.js";
+import {operationsWorldOverview} from '../frameworks/operations/public.js';
+function simulationOverview(...args){return operationsWorldOverview.simulationOverview(...args);}
 export function buildGmOverview(db,guildId){
   const session=db.getActiveSession(guildId);
   const campaign=db.getCampaign(guildId);

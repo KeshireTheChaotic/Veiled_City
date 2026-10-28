@@ -142,6 +142,9 @@
     ],
     "intent--session": [
       "bot/src/framework-to-framework/intent--session/public.js"
+    ],
+    "operations--world": [
+      "bot/src/framework-to-framework/operations--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

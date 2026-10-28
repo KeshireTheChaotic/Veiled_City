@@ -1,0 +1,490 @@
+{
+  "feature": "RF04-F05-C128",
+  "base_head": "fca840c2d15c1fbec332bf9269678b7c010a46ad",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/operations/overview.js",
+      "bot/src/frameworks/operations/contracts/world-overview.js",
+      "bot/src/frameworks/operations/public.js",
+      "bot/src/framework-to-framework/operations--world/public.js",
+      "bot/src/application/composition/operations-world-overview.js",
+      "bot/src/application/composition/public.js",
+      "bot/src/index.js",
+      "bot/tests/ai-gm-2026-10/compose-startup.mjs",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c28.test.mjs"
+    ],
+    "passed": 9,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p02-f01.test.mjs",
+        "sha256": "1349676FFD325C3ABDD4898A3F149478DB31FFF215190715C0E44DEC0BE4359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "2A333BC4A4F25921DD454942B6E2295591449CA0B655D6F28048BBD566732FFD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p09-f06.test.mjs",
+        "sha256": "DDF8D8E63BDCEF129301651AEF54B87C197A23D9FE41B9AA89724C310BCD5B1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f07.test.mjs",
+        "sha256": "FF45418519E552E0CE052BAC3943DF0300DE0D9944815120271381AFD0E3681E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f08-c01.test.mjs",
+        "sha256": "DC926EE56A37DB288FD2C868EB7F6D4652914CE6C098CAA521592E3B08845E66"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
+        "sha256": "C5E380C73A1F82BE5E6A4522ACA873807DAF9EA8FE527B76504E81EA2E35804E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf02-f01.test.mjs",
+        "sha256": "1772F6A37CAF634B1A133CFCC725E701DADFB198914A6AB78FF009E4FEC65ED2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf02-f03.test.mjs",
+        "sha256": "D0C70FAD1CF78FC353E20129BFD50012D51352E82CDDF1D35C5E737D5203AD71"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c30.test.mjs",
+        "sha256": "32D252062913C098679D5E9BB87D6CB3F46F427DCBC58C96956526641D8AB12C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c34.test.mjs",
+        "sha256": "C7D637967DA96F294A62B36022BEA514AEDC22E373D0F8C3B9A1C2D49FC123B0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs",
+        "sha256": "65137932335C4FB6078B76FE3BF2D62A35415DDE6AA45F6340D4486BF1082B61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f05-c07.test.mjs",
+        "sha256": "88B9788ADF89D52FD36A30D39A32FC5D3220163F57DD1673360BA88385CBB264"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06.test.mjs",
+        "sha256": "0C6EA4380BF99F7A7BF69393B17A36D33E013074D248D1C15C3CB6CEB6E6A2C1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs",
+        "sha256": "28EFA1FC4D6786C89851C68BCF503E33A17C10E151D01376C9352A969BB6D094"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "sha256": "6ED771B97DEF6187B1462B8F3B949A753CEC1AAACACED44BECAD9FEDAC4FAAD4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "sha256": "DECD364345C5356285DBDAF69C10DE3902483D7FEA5E2ECA8417706A58E0B00C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "sha256": "2ACF463762F71C5FBA7C445D1998B766D764582999CB8BA20A02BA7E3E1CDEF1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "sha256": "63316974CFBE6067358F776FAA7C8F26E381ACCDABE06203169BF294F4240A64"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "8E54B8245F786BB7887634E175B5F950080CC051B04B127EF1B074B4857CB288"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
+        "sha256": "D8318537BDF0633FDFA4CEE67A7DA315C65B3D58553BB4426AA00FF3FC001B92"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "sha256": "2A46F9E77ABEE6669660E2B6D3343218CB5CAFF5F2BE1D540349B46E866E85D2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "sha256": "793E64D990F57FD010A1973D0AA64D81D1C3D349C2C9FCB6512423D2EA956A3B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "66A628692BD1BD516E0475F3F05B0A0DAD91F4A01151694813F6BFE48A47A6E7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+        "sha256": "9AD0116D6DAD800919950EEE9436C45ECDC0EA9989A169E561C90D1276BEFCF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-positive-consent.test.mjs",
+        "sha256": "1B177B43C05E92FE3A1920619C32252814D299641B5F1797EA4D694FDBDBB247"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "sha256": "E2D3168030223F6BBBA1A0C5416E0F3ACCC8B6176DA6BF10490375B009E2EF8C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "850D75C34EF0689B45D4A77985EF0E6C48BC2F43A2B5E98A4CFADB58F5C48733"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "sha256": "8960542EDF82E7E9010145C6B876C6E2C8B582680228B4A190E65DD088442B55"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "sha256": "CE77D5D06034C3AB5971F07691D8B08F85F3777D9137731BC5D807C0FEA1A9AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "sha256": "C0E5F9249105EF015996F62C0FA4C939AC3AA5FCF9B78BD3C90679E6F67CEB24"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "2C476EB087A2C0C6F9EE5BC3E3B2B0713157C21324843E6162CA1685005D2410"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
+        "sha256": "AED561CBD52DCA47A6E3A005F7F92454515691F5E147BA38D5927AE935083ECB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "B362359DE2CA989879055DD313E41DE82A5BBBEC01D936C4553385D1A3058EE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "sha256": "28D36B3DF950B8E0CDC489B4D497465329C95DC7D6F78A2679D5921AC3085320"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "sha256": "7B00130B3E1A5A59488E78259E3AE627AA2A641ECEF157517A3C52A92C430FF5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "E623AFBCD172192A6270DAACB91C1099D87AB0A04DFD86D40FE063223DB9B40C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "39846BFAF23C0AE22C9CEEC4E80CA0556F791C96DA26CCC0713CABEE9BCC9266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c15.test.mjs",
+        "sha256": "3041436BCD207CC2D6CB44965688CE8AB7D27DD09715ED238841D1973F95EE4B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+        "sha256": "1BD1153331AC693BB3E8A669EF4E2BFA57CF73C6AEC0262D4699BECDA3CCD892"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "sha256": "A8EE71F1EB781F41FDE2D2BB85D745E7A82440FCC1190FE03334C0B675E0321C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "1F0E29EDC40043B93ABDCF5F4EABFB863B3893E24AA797DA1EBAB54D4D470BE5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c21.test.mjs",
+        "sha256": "6430FD4C457FB406B62237043F2B9DFAAE86727D2CE1665F19221DA3A11F6CE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
+        "sha256": "FC59F047AF7C882F372C74E2377008EF170E1DEFB87582A2A3DA2A2C44F38FF2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c23.test.mjs",
+        "sha256": "4BAC9EB3AAF8C6927C13610DFF177E1937B47E6D8ED72096530ED3D5BC127FF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "sha256": "4420D1710E9E09B5C6CE0AA6BFFE605193A45FC2C70F472779484B495970E7A8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c25.test.mjs",
+        "sha256": "23C1D8B0E126C1AFF77212D7A913CC585C3BF93F16A4C2712E0933AF6CDA359B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "sha256": "317F045FC7105744579B9BB5C9B979EFA80CBB476AFFF4B1281403034D62B6BD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c27.test.mjs",
+        "sha256": "D28CA8B6B3A62532B0019CDEC7CEBB796E7268C3209339C9020CB6701E92BEC0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "F250B0F7E4C1A1358444946B9F7483E6FD454DBCB7DE954C0FECA8CA8A749445"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "1B37FFAB3BE9C12A83321BA588A4C39DC34C4668DBC5B63527FCF76F6D5FC83F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "sha256": "E0E4B657B21877C724E785C150C007CE2F86808C364A3DA14B990E6BFF16F4E2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c32.test.mjs",
+        "sha256": "500DBF41A1536A5C140B4A0368C0C5507D14A6AF3EE09C130E8DD041C543D1A7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs",
+        "sha256": "885DF00D964358E29FBCC32CA50F0CD6DC35F414BC731C97CDB346BCFB526311"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs",
+        "sha256": "0256F6DEB0BB3DB38FA9505C3800A7F606472B6B3439EB9BF81D7AEDA3BF593A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c36.test.mjs",
+        "sha256": "4FED9FFD3AE0D9C805C0F5444584CFEFE14B88039BA7AB0A9075C6CE5E4C42AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c38.test.mjs",
+        "sha256": "318E43D37CE6221695EA5C77C0C55127B9497C915318E77BF755475B70CE7D9D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "sha256": "B2EE38BECA6B4D000444C7159CB19C5BDDF69BAF7493E170694167B9A9A390E9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+        "sha256": "EFE933485D2F40E91D1363782EB3558F3C652016FBF2D79A756873E82FB74087"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+        "sha256": "90EB296F9EB7FDE6EE59C79290874E4393B9BA193EB41DE8804FB96926CA2F8B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+        "sha256": "17EDE9B3ACB9DA5BB93FA9CCCE4E3A2679BCA4714A2E466F387AACA5B2AF2134"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+        "sha256": "76F8F77D646588A69A6388A0F50F4F2878646C84B30B21B420A38B243EEA3DD0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+        "sha256": "4E6463DB2B4A16B5EBB9B3C58B7193B514645E9E93CBD82CC730715F476A31BC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c45.test.mjs",
+        "sha256": "14ED3BB2D8C726278848602BF21F54E161CC6F8C776970D58ECAAFAFC954FF18"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "sha256": "3076535FC52438549F70C4D4AE2DC7F136A27D9D010C438F88E8A455FA24AD5D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c50.test.mjs",
+        "sha256": "DC30857241AFC51425682C8FC0A7EB359082A3F5A5C94F11522FFA61F747ADA7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c51.test.mjs",
+        "sha256": "FF61600DD096058952CBAB632FEBBCA6F5720452213AA79537D6ECAE462BD770"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c52.test.mjs",
+        "sha256": "992340C0C887E723704AC04CF0768F3B10F25BF9F388AAFDC5F342260C74EA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c53.test.mjs",
+        "sha256": "80ED230219092A09127162FBB3EF1D26986454FA43F6E165E66EAF4C7B27F77A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs",
+        "sha256": "F7D42E57A978C6357B27C91E20F29A557D7DF1B27005CE14E074D9F10C08DEDB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c60.test.mjs",
+        "sha256": "FA6A46AB2101890F85D3F102AEF982064D056B0880E6BCBB7F4E293EB466F3EA"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "sha256": "7A773E094C1063C56FF432651FFB00C37A79316220F583C0F45CAE643F5FFC08"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-instance.test.mjs",
+        "sha256": "2443895443BF6BE02981B41345425D460C51141F20BBE39737A2C0F14502E7F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs",
+        "sha256": "680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c81.test.mjs",
+        "sha256": "AA835DA6ABFA8F17E9558DAF287B8B7696B4B04082A16EF6731DB7A2AADF8CD4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c28.test.mjs",
+        "sha256": "725F9F119853390FB5B59CFCBDC01B0BAB85E3626E943C3AA5D47B99EA6C98C8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-c02.test.mjs",
+        "sha256": "0157AA933AD6D51386569CB1402F4508BC3D525DF71C22FB6BF86AC562A6BDA7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c11.test.mjs",
+        "sha256": "1BC733EC4ED89572D335FE524D289C227860F113212B066937B44888CFC0DF2B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs",
+        "sha256": "A7069E8A42A29A001CDFB83BEB725ED4AEDABB161385E40DFFD4696D8D4F88F0"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T13:54:39.539Z",
+    "end": "2026-10-28T13:57:50.913Z",
+    "exit_code": 1,
+    "tests": 527,
+    "passed": 523,
+    "failed": 4,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 191338.4575,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c128-test.log",
+    "log_sha256": "39BDFB37D2328242FAD9C21A972F12C5DCFC3453D6EEB45A28E3D9A5A043B183",
+    "failing": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability",
+      "rf04-f05-c39.test.mjs | both World consumers preserve original bodies and use their own exact native evidence interface",
+      "rf04-f05-c41.test.mjs | World seed implementation body remains byte-identical after exact import replacement",
+      "rf04-f05-c42.test.mjs | original Narrative authority and speaker bodies including pre-existing dirty source are unchanged"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability",
+      "rf04-f05-c39.test.mjs | both World consumers preserve original bodies and use their own exact native evidence interface",
+      "rf04-f05-c41.test.mjs | World seed implementation body remains byte-identical after exact import replacement",
+      "rf04-f05-c42.test.mjs | original Narrative authority and speaker bodies including pre-existing dirty source are unchanged"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3392,
+      "largest_cycle": 85,
+      "accepted_legacy_occurrences": 1361,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c128-rf04-architecture.log",
+      "log_sha256": "95D63C21F39B763CD9C59B1E9CE860CF3877561CC464D989E2E8C6D3AAEF21C9",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3392,
+      "largest_cycle": 85,
+      "accepted_legacy_occurrences": 1238,
+      "active_violation_groups": 123,
+      "transition_errors": 123,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c128-rf05-architecture.log",
+      "log_sha256": "8D0B844C9DC2EBE945833899FE5DB545A7102F74F05CF12D7A201CAC20931FCE",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/operations/overview.js -> ",
+        "EXPIRED_TRANSITION bot/src/operations/overview.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "a8ec0bbf62e0ce1c3b61180e387c7834c4b6bad38035a82225a9f4c6da2ba445"
+    ],
+    "original_manifest_sha256": "37056E1C9782FA1C99745860A1FC4397379611F254E4C6E0B02D6ED80CF65297",
+    "manifest_sha256_after": "43B0DE650D5667DEFF9F1EC7D6EC6A3F4972ABCB1179074851151BE11C64308E",
+    "entries_after": 1350,
+    "remaining_by_feature": {
+      "RF04-F01": 32,
+      "RF04-F03": 20,
+      "RF04-F04": 38,
+      "RF04-F05": 33,
+      "RF05-F02": 182,
+      "RF05-F03": 220,
+      "RF05-F04": 41,
+      "RF05-F05": 390,
+      "RF06-F02": 17,
+      "RF06-F03": 176,
+      "RF06-F04": 153,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/operations/overview.js": "5AF715D5DCA461251631BA0D26F09677C42BB2FEE6D2F25FCC6DA1E3F671DABC",
+    "bot/src/frameworks/operations/contracts/world-overview.js": "02027CB9ADD34AFBA72B2566E8BC1427157DC8257665C47D3DFEFA9B0E039BC4",
+    "bot/src/frameworks/operations/public.js": "F05BF55C5AAC0797C788FD4C9725ADD7B363727A90633A3A6A2DC63E6E95FC33",
+    "bot/src/framework-to-framework/operations--world/public.js": "F8CD6F49ED8B0C09EC49313A40994D3678EC0D5EFD78811C95D0F19CE347BCC2",
+    "bot/src/application/composition/operations-world-overview.js": "5DB270BDF20236D535C1D7F4BC9442C3CEB3D9EFA602533C15AB224527D71BFA",
+    "bot/src/application/composition/public.js": "816089BCB97C2E77306E3E6FE83ADA7C13A92425516385082C1A81D811CD991A",
+    "bot/src/index.js": "82CB8BEE36DA564479E800B236CBEA3D9FA782DB7F099E200AE25A7A497E55B6",
+    "bot/tests/ai-gm-2026-10/compose-startup.mjs": "B3BEB745148A878F2DE3D6DCF265D1C2679FB0AE55324F5696BB97696ABA27C4"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C128 commit: restore the simulation.js import in operations/overview.js, remove the Operations World overview port, operations--world adapter, initializer, its index/compose-startup calls and the pair adoption, and restore the exact transition from C128-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}
