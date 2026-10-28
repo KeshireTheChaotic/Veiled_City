@@ -1,0 +1,35 @@
+{
+  "feature": "RF04-F05-C96",
+  "original_manifest_sha256": "12F83D182E01F8CC185EFE46AAFD3949CAC4096628971A27033C24C8108B7C31",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "4dc2f4bb13f791338345a2876125abb78bd93e71b0249edd63326b596d690fcc",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "c6446691d48e680b0c717031abf2ec2a2e74d96d491a6221521d6ad8464602e1",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/story-continuity.js",
+      "to": "bot/src/city-core.js",
+      "kind": "static",
+      "specifier": "./city-core.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

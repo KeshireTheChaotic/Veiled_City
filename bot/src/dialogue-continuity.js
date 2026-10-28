@@ -4,7 +4,8 @@ function personalCharacter(...args){return sessionPersonalContinuity.personalCha
 import { sceneAccess, sceneView, scenePresence, currentScene } from "./scene-continuity.js";
 import {sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
-import { requireCitySource } from "./city-core.js";
+import {sessionSceneWorldSources} from './frameworks/session/public.js';
+function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { activeCityProxy } from "./city-constraints.js";
 import {assertNpcAvailability} from './city-constraints.js';

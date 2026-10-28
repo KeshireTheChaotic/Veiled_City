@@ -1,7 +1,7 @@
 /** Descriptive pacing and source-linked mystery routes; no new PC mechanics, dice or mutable truth store. */
 import {sessionSceneWorldSources} from './frameworks/session/public.js';
 function cityObject(...args){return sessionSceneWorldSources.cityObject(...args);}function cityKey(...args){return sessionSceneWorldSources.cityKey(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
-import { requireCitySource } from "./city-core.js";
+function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
 function cityVisibility(...args){return sessionSceneWorldSources.cityVisibility(...args);}
 import {sessionPersonalContinuity} from './frameworks/session/public.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}

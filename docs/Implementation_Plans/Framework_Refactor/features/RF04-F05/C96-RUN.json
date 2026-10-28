@@ -1,0 +1,130 @@
+{
+  "feature": "RF04-F05-C96",
+  "base_head": "d96de0d2eabc2aa9220c499260f4ec20542fd179",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/dialogue-continuity.js",
+      "bot/src/story-continuity.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c96.test.mjs"
+    ],
+    "passed": 3,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c96.test.mjs",
+        "sha256": "726381CED8583E4A2802E4A4B29C1056EB08470150E710C383C92B9A3FD5061A"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T09:07:14.918Z",
+    "end": "2026-10-28T09:07:15.208Z",
+    "exit_code": 0,
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 254.5867,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c96-test.log",
+    "log_sha256": "B1CE5D8952B6B790C8E373CF6AAA50C593BB227F01DC7BB5DB68FCDBA7F14D90",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3222,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1536,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c96-rf04-architecture.log",
+      "log_sha256": "37F3281610CA24D59AD5803ABAC4915C9D959A5592E7BB0D874C474619043AE2",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 785,
+      "unowned": 0,
+      "imports": 3222,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1273,
+      "active_violation_groups": 262,
+      "transition_errors": 262,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c96-rf05-architecture.log",
+      "log_sha256": "7D35A539D692230F17914DBE0EF1E9AB6C44625B483C68F9D5E6F9ADD1303FA0",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/dialogue-continuity.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/story-continuity.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/city-constraints.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/scene-fiction-context.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/disclosure-authority.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/authored-turn-envelope.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/player-language.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/dialogue-continuity.js -> bot/src/public-referents.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/seed-drafts.js -> bot/src/story-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/simulation.js -> bot/src/story-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/story-continuity.js -> bot/src/gameplay-intake.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-authoring.js -> bot/src/story-continuity.js",
+        "CYCLIC_IMPORT_EDGE bot/src/dialogue-continuity.js -> bot/src/scene-fiction-context.js",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/story-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/story-continuity.js -> ",
+        "EXPIRED_TRANSITION bot/src/dialogue-continuity.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "4dc2f4bb13f791338345a2876125abb78bd93e71b0249edd63326b596d690fcc",
+      "c6446691d48e680b0c717031abf2ec2a2e74d96d491a6221521d6ad8464602e1"
+    ],
+    "original_manifest_sha256": "12F83D182E01F8CC185EFE46AAFD3949CAC4096628971A27033C24C8108B7C31",
+    "manifest_sha256_after": "2A996827EF9FD59FAADBD9AE328AC6D2C48AEB7F42296EA9BB0BF25E12132B2D",
+    "entries_after": 1524,
+    "remaining_by_feature": {
+      "RF04-F01": 74,
+      "RF04-F03": 43,
+      "RF04-F04": 92,
+      "RF04-F05": 53,
+      "RF05-F02": 192,
+      "RF05-F03": 225,
+      "RF05-F04": 42,
+      "RF05-F05": 405,
+      "RF06-F02": 17,
+      "RF06-F03": 178,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/dialogue-continuity.js": "A258B2B795B334B332E47A1459DB99FCA76262FF9FD300D5F1B471FD79894FD8",
+    "bot/src/story-continuity.js": "993CF9346B98E2D976B72D7403F6EE0C4CA1E85583D4775170617E9C09BFE8DA"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C96 commit: restore the two direct ./city-core.js requireCitySource imports in dialogue-continuity.js and story-continuity.js, and restore the 2 exact transitions from C96-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

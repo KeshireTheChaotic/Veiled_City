@@ -378,3 +378,9 @@ Tests: one frozen batch of 6 files: 39 tests, 39 pass, 0 fail. Architecture: 3 e
 Two Daggerheart legacy modules (native-environment-arrivals, native-environment-door-chain) stop importing worldIdentityOrigin from the World root composition world-authorship.js. The existing Daggerheart nativeWorldAuthoring port gains worldIdentityOrigin, bound to World's public original by the existing daggerheart--world connectNativeWorldAuthoring from the existing initializeEnvironmentScene bootstrap (no test binds that port with a fixed key list; no index.js change). The new test imports only the changed port contract and adapter, per TEST_PROTOCOL.md. Supplemental run of the seven initiative tests that compose the environment scene or import the migrated modules: 23/23 pass.
 
 Tests: one frozen batch of 2 files: 8 tests, 8 pass, 0 fail. Architecture: 2 exact records retired. RF04 exit 0, 0 active violations, 785 modules; RF05 264 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-28 C96 Session continuity reads World sources through the existing scene World port
+
+Two Session legacy modules (dialogue-continuity, story-continuity) stop importing requireCitySource from the World root module city-core.js and delegate to the existing Session sessionSceneWorldSources port, already bound to World's public requireCitySource by session--world connectSessionSceneWorld from initializeSessionSceneWorld (no port, adapter, initializer or index.js change). The new test imports only the two changed modules and checks fail-closed reads before composition plus the removed import.
+
+Tests: one frozen batch of 1 files: 2 tests, 2 pass, 0 fail. Architecture: 2 exact records retired. RF04 exit 0, 0 active violations, 785 modules; RF05 262 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
