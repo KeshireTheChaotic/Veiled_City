@@ -1,6 +1,7 @@
 /** Native exact owner roll preauthorization review; no prose routing. */
 import {personalCharacter} from './personal-continuity.js';
-import {requireCitySource} from './city-core.js';
+import {nativeWorldSource} from './frameworks/daggerheart/public.js';
+function requireCitySource(...args){return nativeWorldSource.requireCitySource(...args);}
 import {adjudicateRollSource,contributeRoll} from './roll-collaboration.js';
 
 import {createRollDeclarationReviewRules} from './frameworks/daggerheart/public.js';
