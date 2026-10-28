@@ -574,3 +574,6 @@ export function canonicalNarrativeCause(db,guild,sourceRef,scope){
   }
   const roots=[...new Set([...signals.map(s=>s.causation_ref),...consequences.map(c=>c.causation_ref),...observationRoots,...encounterRoots])];return roots.length===1?roots[0]:null;
 }
+import {worldNarrativeBridgeSource} from './frameworks/world/public.js';
+// Provide this module's original Director beats and opening requests to the fixed World slot; no other authority is granted.
+worldNarrativeBridgeSource.bind({worldDirectorBridgeBeats,openingOpportunityRequests});

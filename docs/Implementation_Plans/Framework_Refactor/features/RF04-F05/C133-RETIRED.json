@@ -1,0 +1,21 @@
+{
+  "feature": "RF04-F05-C133",
+  "original_manifest_sha256": "8A228C047650B2E428DF5B03626C93853EEDFEE1F22410C733B8F4D7A128B6F9",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "6a40a70c5043825a653629ded2b4a9d489a00bc2d0ec62c8930fdddd564ae5ce",
+      "code": "PAIR_IMPORTS_THIRD_OWNER",
+      "from": "bot/src/opening-world-bridge.js",
+      "to": "bot/src/world-narrative-bridge.js",
+      "kind": "static",
+      "specifier": "./world-narrative-bridge.js",
+      "owner": "session--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

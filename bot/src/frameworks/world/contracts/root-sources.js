@@ -4,3 +4,4 @@ export const worldLongProjectSource=createFunctionPort(['manageLongProject','pro
 export const worldCityCivicSource=createFunctionPort(['updateCityCivic'],{code:'WORLD_CITY_CIVIC_SOURCE_COMPOSITION',label:'World city civic source'});
 export const worldObservationSource=createFunctionPort(['renderWorldObservation'],{code:'WORLD_OBSERVATION_SOURCE_COMPOSITION',label:'World observation source'});
 export const worldCityDepthSource=createFunctionPort(['validateMinorIdentity'],{code:'WORLD_CITY_DEPTH_SOURCE_COMPOSITION',label:'World city depth source'});
+export const worldNarrativeBridgeSource=createFunctionPort(['worldDirectorBridgeBeats','openingOpportunityRequests'],{code:'WORLD_NARRATIVE_BRIDGE_SOURCE_COMPOSITION',label:'World narrative bridge source'});
