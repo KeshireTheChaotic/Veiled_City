@@ -10,7 +10,8 @@ import { conversationPrincipal } from './frameworks/session/public.js';
 import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";
 import { validatePvpAgreement } from "./narrative-pvp.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
-import { transitionAction } from "./action-dependency.js";
+import {sessionIntent} from './frameworks/session/public.js';
+function transitionAction(...args){return sessionIntent.transitionAction(...args);}
 import {sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 import {drainActionContinuations,continuationInbox} from "./action-continuation.js";

@@ -139,6 +139,9 @@
     ],
     "daggerheart--knowledge": [
       "bot/src/framework-to-framework/daggerheart--knowledge/public.js"
+    ],
+    "intent--session": [
+      "bot/src/framework-to-framework/intent--session/public.js"
     ]
   },
   "externalCapabilityOwners": {

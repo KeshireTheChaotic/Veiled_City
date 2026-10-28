@@ -1,0 +1,7 @@
+# C97 ledger
+
+## 2026-10-28 C97 Session reads Intent action scheduling and authored-text interpretation through a Session port
+
+Four Session legacy modules (action-continuation, window-coordinator, scene-entry, dialogue-continuity) stop importing the Intent root modules action-dependency.js and player-language.js. Session gains a fixed sessionIntent port; Intent gains an intentPlayerLanguage provider slot that player-language.js fills at load with its original interpretAuthoredText and captureDeclaration. The new intent--session adapter (pair adopted from PROPOSED_NO_API) binds the port to Intent's public buildActionPlan/transitionAction/signalActionContinuation and the slot, from the new initializeSessionIntent called in index.js and mirrored in compose-startup.mjs. The new test imports only changed modules.
+
+Tests: one frozen batch of 110 files: 598 tests, 595 pass, 3 fail (named in C97-RUN.json: rf04-f03-c74-session-diagnostic.test.mjs | tests\\ai-gm-2026-10\\rf04-f03-c74-session-diagnostic.test.mjs; rf04-f04-s08-notice.test.mjs | a saved private continuation notice revalidates the original action through the composed source; rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability). Architecture: 4 exact records retired. RF04 exit 0, 0 active violations, 789 modules; RF05 258 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

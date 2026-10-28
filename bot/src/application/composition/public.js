@@ -35,3 +35,4 @@ export {initializeNativePrincipals} from './native-principals.js';
 export {initializeKnowledgeSession} from './knowledge-session.js';
 export {initializeCharacterSession} from './character-session.js';
 export {initializePersonalContinuity} from './personal-continuity.js';
+export {initializeSessionIntent} from './session-intent.js';

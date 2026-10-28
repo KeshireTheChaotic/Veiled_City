@@ -77,3 +77,6 @@ export function captureDeclaration(db,guild,user,character,messageId,message,{pr
     visibility:"character",subject_key:pc.id,details:{author:user,character_id:pc.id,message_id:messageId,text:message,kind:parsed.kind,private_scene:privateScene,
       candidate_span:candidate?.source_span||null,authority:"Declared attempt only; not movement, success, knowledge, spending or consent."}},user);
 }
+import {intentPlayerLanguage} from './frameworks/intent/public.js';
+// Provide this module's original interpretation and declaration capture to the fixed Intent slot; no other authority is granted.
+intentPlayerLanguage.bind({interpretAuthoredText,captureDeclaration});

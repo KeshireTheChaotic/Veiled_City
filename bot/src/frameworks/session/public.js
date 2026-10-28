@@ -23,3 +23,4 @@ export {currentScene,scenePresence,lastVerifiedCharacterPresence,reconcileSceneA
 export {createSessionNpcObservationConsumer,sessionNpcObservations,npcEvidenceActive,assertNpcObservation} from './contracts/npc-observation.js';
 export {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 export {sessionActionContinuation} from './contracts/action-continuation.js';
+export {sessionIntent} from './contracts/intent.js';

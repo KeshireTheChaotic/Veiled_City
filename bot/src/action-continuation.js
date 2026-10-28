@@ -1,6 +1,7 @@
 /** Durable native-result continuation. No model call, replacement declaration, implicit consent or effect replay. */
 import {createHash} from "node:crypto";
-import {buildActionPlan,transitionAction,signalActionContinuation} from "./action-dependency.js";
+import {sessionIntent} from './frameworks/session/public.js';
+function buildActionPlan(...args){return sessionIntent.buildActionPlan(...args);}function transitionAction(...args){return sessionIntent.transitionAction(...args);}function signalActionContinuation(...args){return sessionIntent.signalActionContinuation(...args);}
 import {sessionNativeActionConsent} from './frameworks/session/public.js';
 const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
 const completedActionSource=(...args)=>sessionNativeActionConsent.completedActionSource(...args);

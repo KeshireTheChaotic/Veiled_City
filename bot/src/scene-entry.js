@@ -1,7 +1,8 @@
 /** Authenticated entry declarations preserve intended destinations; native autonomous actions adjudicate ordinary travel separately. */
 import {sessionPersonalContinuity} from './frameworks/session/public.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
-import { captureDeclaration, interpretAuthoredText } from "./player-language.js";
+import {sessionIntent} from './frameworks/session/public.js';
+function captureDeclaration(...args){return sessionIntent.captureDeclaration(...args);}function interpretAuthoredText(...args){return sessionIntent.interpretAuthoredText(...args);}
 import { recordCharacterArrival, currentScene } from "./scene-continuity.js";
 import {stateRevision} from './kernel/state-revision.js';
 import {sessionSceneWorldSources} from './frameworks/session/public.js';

@@ -1,0 +1,63 @@
+{
+  "feature": "RF04-F05-C97",
+  "original_manifest_sha256": "2A996827EF9FD59FAADBD9AE328AC6D2C48AEB7F42296EA9BB0BF25E12132B2D",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "3a918cc06566a6bdfdb18c83692c81a0df6134059319fcc65143f2754582c7b7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/action-continuation.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "08a94f72d0cd62eb734b12f2f585078f5afd4df3e0f949a79916b4d98dd6b6ea",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/dialogue-continuity.js",
+      "to": "bot/src/player-language.js",
+      "kind": "static",
+      "specifier": "./player-language.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "53f1b8ea290a5055fc401514b6320cc421182864db2fc9237d86b377495b775b",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-entry.js",
+      "to": "bot/src/player-language.js",
+      "kind": "static",
+      "specifier": "./player-language.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "9ccfa7d1a448103d48e089395661f9a4e09682150f3032385ee93bc6adb3ebbe",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/window-coordinator.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
