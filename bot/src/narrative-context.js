@@ -2,7 +2,8 @@
 import { createHash } from "node:crypto";
 import { personalCharacter } from "./personal-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
-import { scopedQueryPlan, queryScopedFacts } from "./scoped-query.js";
+import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
+function scopedQueryPlan(...args){return narrativeKnowledgeReaders.scopedQueryPlan(...args);}function queryScopedFacts(...args){return narrativeKnowledgeReaders.queryScopedFacts(...args);}
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";
 import { locationMatches } from "./scene-entry.js";
 import { interpretationSchema } from "./frameworks/narrative/interpretation-schema.js";

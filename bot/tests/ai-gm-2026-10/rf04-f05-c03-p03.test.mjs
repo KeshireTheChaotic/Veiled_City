@@ -21,7 +21,7 @@ import {selectDisclosedNarrativeMemory} from '../../src/narrative-memory.js';
 import {rankNarrativeMemory} from '../../src/narrative-salience.js';
 import {speakerBrief} from '../../src/narrative-speakers.js';
 import {directorBriefForAudience} from '../../src/narrative-director-source.js';
-import {mentionsPublicIdentity} from '../../src/public-referents.js';
+import {mentionsPublicIdentity} from '../../src/frameworks/knowledge/public.js';
 import {registerNarrativeContext} from '../../src/audience-native-v9.js';
 import {assemblyWriterBrief} from '../../src/assembly-context.js';
 import {worldIdentityOrigin} from '../../src/world-authorship.js';

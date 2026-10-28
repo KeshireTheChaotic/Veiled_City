@@ -13,3 +13,7 @@ import {knowledgeNarrativeSources} from '../../frameworks/knowledge/public.js';
 import {narrativeSourceVisible,narrativeImportanceSource,narrativeAuthorityContextSource,narrativeRelevanceSource} from '../../frameworks/narrative/public.js';
 /** Pass Narrative's original visibility, importance and relevance functions to Knowledge unchanged. */
 export function connectKnowledgeNarrativeSources(){return knowledgeNarrativeSources.bind({narrativeSourceVisible,narrativeImportance:narrativeImportanceSource.narrativeImportance,narrativeVisible:narrativeAuthorityContextSource.narrativeVisible,narrativeQueryRelevance:narrativeRelevanceSource.narrativeQueryRelevance,narrativeIdentityRelevance:narrativeRelevanceSource.narrativeIdentityRelevance});}
+import {narrativeKnowledgeReaders} from '../../frameworks/narrative/public.js';
+import {mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts} from '../../frameworks/knowledge/public.js';
+/** Bind Knowledge's original public referent and scoped query readers to Narrative's fixed consumer. */
+export function connectNarrativeKnowledgeReaders(){return narrativeKnowledgeReaders.bind({mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts});}

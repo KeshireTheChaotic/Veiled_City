@@ -1,0 +1,57 @@
+{
+  "feature": "RF04-F05-C153",
+  "original_manifest_sha256": "F47DB0970A1C221D5A193828B0E93D68B30DCEF785E3CCE84E6BCA801ECE638E",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "be9045bdfe4eba48407e88b3f55689f013c5e61400e0db8eb596dd20250d1489",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/public-referents.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3dd380163c2a6037304b7f079d86cfb55d1afc7926a1c99835cf361bd8a094e1",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scoped-query.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "d7002b9417a589d558c395efa0296778e1a6c9abe329976c94578e99662292b6",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-authority-context.js",
+      "to": "bot/src/public-referents.js",
+      "kind": "static",
+      "specifier": "./public-referents.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "1e79a2c5fd58446c6d2dbd59792fd5e95bcc628a42320079e5125ca5955f12e6",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-context.js",
+      "to": "bot/src/scoped-query.js",
+      "kind": "static",
+      "specifier": "./scoped-query.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
