@@ -1,0 +1,34 @@
+{
+  "feature": "RF04-F05-C77",
+  "original_manifest_sha256": "39a7cfb11b02309e89844d7578d1b251b7a6a63ad08ae52db077c8207fce1e0e",
+  "retired": [
+    {
+      "id": "cd4c01b95569e299106c93adb9dcdaa69d82094b95a38ca4c91ac8877c4a48fa",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/world-background-identities.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "659cdef863311e40b387369666f6d92f128462a645add959222e29c23d9e14f5",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/world-background-identities.js",
+      "to": "bot/src/scene-fiction-context.js",
+      "kind": "static",
+      "specifier": "./scene-fiction-context.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}

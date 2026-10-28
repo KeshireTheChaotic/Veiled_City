@@ -14187,20 +14187,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "cd4c01b95569e299106c93adb9dcdaa69d82094b95a38ca4c91ac8877c4a48fa",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-background-identities.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "595b7a23c9bd1ee1779904dd164e09a101d776fc96eb9e40158daad1902e12b5",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/world-encounter-beats.js",
@@ -14915,20 +14901,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "fa1af5397fb5efa761e7e132d3a227dbf1944d9366d0a09972078000db1ac523",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/autonomous-world.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "b1b1e9f8624496d65f49e66ab833f160bdb53c4485d1c41ad35d5763432d7b44",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/autonomous-world.js",
@@ -15559,20 +15531,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "104deadd4364159d8e3584400aa86786e393f537e318987511cb042d9c2287c8",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/memory-lifecycle.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "7aeef85091dc3c763869a9ccaf9714cc017d05272f7c0af7342fbe5f4123384f",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/narrative-artifacts.js",
@@ -15705,20 +15663,6 @@
       "to": "bot/src/assembly-context.js",
       "kind": "static",
       "specifier": "./assembly-context.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "2c03afdcceed9813ec5a4316ac06031410cf51facb8ea002d93df17f5fa0806f",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -15937,20 +15881,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "d8757652ad3d5501aa94039e0200f2c3172c81f45229f69de8eb1384f73ab083",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "983ddd4d45340bba3bbb020c87cdc3f6b517fa4fa92f87579a354f806590ef62",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/narrative-clauses-v9.js",
@@ -16097,20 +16027,6 @@
       "to": "bot/src/memory-lifecycle.js",
       "kind": "static",
       "specifier": "./memory-lifecycle.js",
-      "owner": "knowledge",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "bdd231136e1d4836bc0c3a09705d7cda67c63b812d15e0f6e7daa815bdbe018b",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-memory.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
       "owner": "knowledge",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F03",
@@ -21154,20 +21070,6 @@
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "659cdef863311e40b387369666f6d92f128462a645add959222e29c23d9e14f5",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/world-background-identities.js",
-      "to": "bot/src/scene-fiction-context.js",
-      "kind": "static",
-      "specifier": "./scene-fiction-context.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."

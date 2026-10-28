@@ -3,17 +3,9 @@ import {PermissionError,StateConflictError,UserInputError} from '../../kernel/er
 import {stateRevision} from '../../kernel/state-revision.js';
 import {jsonHash} from '../../kernel/json-hash.js';
 import {scopedQueryPlan,queryScopedFacts} from './scoped-query.js';
+import {personalCharacter} from './personal-character.js';
 const motivationKey=value=>jsonHash(value).slice(0,32);
 export function createPersonalContinuity({cityObject,cityKey,cityInteger,cityAudit,indexWorldEvent,requireCitySource,handoutPlayerView,organizationInbox,evidenceView,evidenceType,activeEvidence,conversationPrincipal,ownerSemanticSource,assertSemanticCandidateProof}){
-function personalCharacter(db,guild,userId,characterId){
-  const session=db.getActiveSession(guild),assignment=session?db.activeAssignment(session.id,userId):null;
-  const id=characterId||assignment?.character_id,character=id?db.getCharacter(id):null;
-  if(!character||character.guild_id!==guild||character.owner_user_id!==userId||assignment?.character_id!==id||!["active","reserve","guest"].includes(character.status))
-    throw new PermissionError("An active owned character assignment is required; proxies do not gain private continuity.");
-  const present=db.roster(session.id).some(row=>row.character_id===id&&["present","late","guest"].includes(row.presence));
-  if(!present) throw new PermissionError("Personal continuity requires attendance.");
-  return character;
-}
 function personalArc(db,guild,userId,input){
   cityObject(input);if(db.getCityCalendar(guild).flags.personal_arcs!==true) throw new StateConflictError("Personal arcs are opt-in.");
   const character=personalCharacter(db,guild,userId,input.character_id),rawKey=cityKey(input.key),

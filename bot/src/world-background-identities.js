@@ -1,5 +1,5 @@
 /** Original World background reader; provenance and record retrieval remain fixed source capabilities. */
-import {sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {createBackgroundIdentityRules,worldKnowledgeSources} from './frameworks/world/public.js';
 const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords(...args);
