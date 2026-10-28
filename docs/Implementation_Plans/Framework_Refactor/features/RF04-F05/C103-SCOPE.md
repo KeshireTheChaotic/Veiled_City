@@ -1,0 +1,5 @@
+# RF04-F05 C103 — World autonomous context reads Knowledge scoped memories through a World port
+
+Base e984aa7b. World's autonomous-world.js stops importing contextMemoriesForScope from the Knowledge root module context-memory.js. World gains a fixed worldContextMemory port; Knowledge gains a knowledgeContextMemorySource provider slot that context-memory.js fills at load with its original. The existing knowledge--world adapter binds the port via connectWorldContextMemory from the existing initializeKnowledgeWorld bootstrap (no index.js change). The new test imports only changed contracts and the bootstrap with a feature-local fake original.
+
+Rollback: Revert only the C103 commit: restore the direct ./context-memory.js import in autonomous-world.js, remove the World worldContextMemory port, the Knowledge knowledgeContextMemorySource slot and its binding in context-memory.js, connectWorldContextMemory and its call in initializeKnowledgeWorld, and restore the 2 exact transitions from C103-RETIRED.json.

@@ -82,3 +82,4 @@ export {worldAutonomousSource,worldAutonomousApplication} from './contracts/auto
 export {worldNativeMovementChecks} from './contracts/native-movement-checks.js';
 export {worldSessionContinuation} from './contracts/session-continuation.js';
 export {worldIntentDispatch} from './contracts/intent-dispatch.js';
+export {worldContextMemory} from './contracts/context-memory.js';

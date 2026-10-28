@@ -33,3 +33,8 @@ export function connectWorldEstablishedEvidence(){return worldEstablishedEvidenc
 import {personalCharacter as knowledgePersonalCharacter} from '../../frameworks/knowledge/public.js';
 import {worldPersonalContinuity} from '../../frameworks/world/public.js';
 export function connectWorldPersonalContinuity(){return worldPersonalContinuity.bind({personalCharacter:knowledgePersonalCharacter});}
+
+import {knowledgeContextMemorySource} from '../../frameworks/knowledge/public.js';
+import {worldContextMemory} from '../../frameworks/world/public.js';
+/** Pass Knowledge's original scoped context memory reader to World unchanged. */
+export function connectWorldContextMemory(){return worldContextMemory.bind({contextMemoriesForScope:knowledgeContextMemorySource.contextMemoriesForScope});}

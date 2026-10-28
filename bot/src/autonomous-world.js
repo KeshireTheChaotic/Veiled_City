@@ -18,7 +18,8 @@ import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } f
 import {worldIntentDispatch} from './frameworks/world/public.js';
 function currentAcceptedIntent(...args){return worldIntentDispatch.currentAcceptedIntent(...args);}function currentTypedMovement(...args){return worldIntentDispatch.currentTypedMovement(...args);}
 function movementAdjudication(...args){return worldNativeMovementChecks.movementAdjudication(...args);}
-import { contextMemoriesForScope } from "./context-memory.js";
+import {worldContextMemory} from './frameworks/world/public.js';
+function contextMemoriesForScope(...args){return worldContextMemory.contextMemoriesForScope(...args);}
 import { captureDepartureWitnesses } from "./character-observation.js";
 function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct(...args);}
 import {worldSessionContinuation} from './frameworks/world/public.js';

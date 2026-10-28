@@ -1,4 +1,4 @@
-import {connectKnowledgeWorld,connectWorldKnowledge,connectKnowledgeIdentities,connectKnowledgeMemory,connectKnowledgeWorldRecord,connectKnowledgeHistory,connectWorldEstablishedEvidence} from '../../framework-to-framework/knowledge--world/public.js';
+import {connectKnowledgeWorld,connectWorldKnowledge,connectKnowledgeIdentities,connectKnowledgeMemory,connectKnowledgeWorldRecord,connectKnowledgeHistory,connectWorldEstablishedEvidence,connectWorldContextMemory} from '../../framework-to-framework/knowledge--world/public.js';
 import {knowledgeWorldEvents,knowledgeWorldIdentities} from '../../frameworks/knowledge/public.js';
 import {worldKnowledgeSources} from '../../frameworks/world/public.js';
 let composed=null;
@@ -11,6 +11,7 @@ export function initializeKnowledgeWorld(){
     connectKnowledgeMemory();
     connectKnowledgeWorldRecord();
     connectKnowledgeHistory();
+    connectWorldContextMemory();
     composed=connectKnowledgeWorld({consumer:knowledgeWorldEvents});
   }
   return composed;
