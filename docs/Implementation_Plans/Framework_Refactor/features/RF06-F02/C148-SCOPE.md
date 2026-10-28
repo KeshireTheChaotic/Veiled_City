@@ -1,0 +1,5 @@
+# RF06-F02 C148 — World city deadline consumer
+
+Under the owner's exact RF06 prerequisite authorization, route `VeiledDB.advanceSimulationClock`'s existing synchronous `processCityDue` call through a fixed Persistence-owned consumer. The standalone database module binds the exact original function from the legacy root re-export at module load; the adopted Persistence–World pair binds that same original World public function through application composition before database construction. Preserve call arguments, order inside the existing transaction, rollback behavior, standalone construction and saved formats.
+
+Adopt only the existing `persistence--world` pair for this consumer and register the new focused test reference. Retain the `db.js -> city-calendar.js` transition and root re-export; do not alter `TRANSITIONS.json`, remove compatibility readers, change schemas/gameplay, or expand the baseline. Roll back the fixed consumer, standalone and application bindings, initializer, DB forwarding, pair metadata and local test reference together.

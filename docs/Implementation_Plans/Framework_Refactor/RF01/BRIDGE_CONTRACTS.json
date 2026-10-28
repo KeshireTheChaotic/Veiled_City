@@ -3276,14 +3276,14 @@
         "persistence",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "persistence",
           "to": "world",
           "import_occurrences": 1,
           "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Persistence delegates scheduled city deadline processing to the original World calendar function through a fixed consumer; other dependencies remain migration obligations."
         },
         {
           "from": "world",
@@ -3299,13 +3299,23 @@
           "to": "bot/src/city-calendar.js",
           "line": 15,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/persistence-world.js",
+          "to": "bot/src/framework-to-framework/persistence--world/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "validation": "The fixed Persistence consumer fails closed before binding, forwards the original World public function unchanged, and forbids replacement; standalone facade and application pair bind the same original.",
+      "lifecycle": "The standalone facade binds the original root re-export on module load; application composition binds the same original World public function before database construction.",
+      "adoption_feature": "RF06-F02",
+      "consumers": [
+        "bot/src/application/composition/persistence-world.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf06-f02-c48.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "persistence",
@@ -3325,7 +3335,9 @@
         "pair": "persistence--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 881
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/persistence--world/public.js",
+      "scope": "Scheduled city deadline processing only; all other Persistence/World dependencies and legacy facade imports remain migration obligations."
     },
     {
       "pair": "publication--session",

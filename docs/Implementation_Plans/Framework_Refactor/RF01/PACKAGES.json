@@ -151,6 +151,9 @@
     ],
     "knowledge--persistence": [
       "bot/src/framework-to-framework/knowledge--persistence/public.js"
+    ],
+    "persistence--world": [
+      "bot/src/framework-to-framework/persistence--world/public.js"
     ]
   },
   "externalCapabilityOwners": {
