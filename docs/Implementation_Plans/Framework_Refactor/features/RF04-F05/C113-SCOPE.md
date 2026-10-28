@@ -1,0 +1,5 @@
+# RF04-F05 C113 — Native consent responses read Knowledge organization requests and evidence custody through a native port
+
+Base e150557e. Daggerheart's consent-native.js stops importing the Knowledge root modules owned-community.js and evidence-custody.js. Native rules gain a fixed nativeKnowledgeActions port; Knowledge gains organization request and evidence custody slots filled at load by owned-community.js and evidence-custody.js. The adopted daggerheart--knowledge adapter binds the port via connectNativeKnowledgeActions from initializePersonalContinuity (no index.js change). Static reachability from index.js unchanged.
+
+Rollback: Revert only the C113 commit: restore the direct owned-community.js and evidence-custody.js imports in consent-native.js, remove the native Knowledge actions port, the Knowledge organization and evidence custody slots, their binds and connectNativeKnowledgeActions with its call in initializePersonalContinuity, and restore the 2 exact transitions from C113-RETIRED.json.

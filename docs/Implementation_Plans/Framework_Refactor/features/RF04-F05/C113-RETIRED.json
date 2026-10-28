@@ -1,0 +1,35 @@
+{
+  "feature": "RF04-F05-C113",
+  "original_manifest_sha256": "B64C89AC2141C7F3965CBD070AC4C9E4888BD4EB130F3AE04395B2DB6CA18BA8",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "00f0786d900b8ee56176737b01f84bccac6ab4b63411193b1c714db5df91fa48",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/consent-native.js",
+      "to": "bot/src/owned-community.js",
+      "kind": "static",
+      "specifier": "./owned-community.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "3d6cd298411bdd0bd91ef82237dcf105a285961f29bac86ca1763741a62f277d",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/consent-native.js",
+      "to": "bot/src/evidence-custody.js",
+      "kind": "static",
+      "specifier": "./evidence-custody.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

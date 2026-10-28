@@ -1,9 +1,9 @@
 import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
 function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}function personalArc(...args){return nativePersonalContinuity.personalArc(...args);}
-import { organizationRequest } from "./owned-community.js";
+import {nativeKnowledgeActions} from './frameworks/daggerheart/public.js';
+function organizationRequest(...args){return nativeKnowledgeActions.organizationRequest(...args);}function manageEvidence(...args){return nativeKnowledgeActions.manageEvidence(...args);}
 import {nativeWorldActions} from './frameworks/daggerheart/public.js';
 function manageLongProject(...args){return nativeWorldActions.manageLongProject(...args);}function projectPhaseRevision(...args){return nativeWorldActions.projectPhaseRevision(...args);}
-import { manageEvidence } from "./evidence-custody.js";
 import {stateRevision} from './kernel/state-revision.js';
 import {nativeWorldSource} from './frameworks/daggerheart/public.js';
 function requireCitySource(...args){return nativeWorldSource.requireCitySource(...args);}

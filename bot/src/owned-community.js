@@ -15,3 +15,6 @@ export function inviteOrganization(...args){return organizations().inviteOrganiz
 export function organizationRequest(...args){return organizations().organizationRequest(...args);}
 export function reviewOrganization(...args){return organizations().reviewOrganization(...args);}
 export function organizationInbox(...args){return organizations().organizationInbox(...args);}
+import {knowledgeOrganizationSource} from './frameworks/knowledge/public.js';
+// Provide this module's original organization request to the fixed Knowledge slot; no other authority is granted.
+knowledgeOrganizationSource.bind({organizationRequest});

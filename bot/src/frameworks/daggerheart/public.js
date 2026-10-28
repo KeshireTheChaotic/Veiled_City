@@ -144,3 +144,5 @@ export {nativeMovementAdjudication,nativeMovementCondition,nativeVipAdmissionSou
 export {nativeWorldActions} from './contracts/world-actions.js';
 export {nativeActionReviewSource,nativeRulesArbitrationSource,nativeConditionRecoverySource} from './contracts/session-rule-sources.js';
 export {nativeIncomingInjurySource} from './contracts/incoming-injury-source.js';
+
+export {nativeKnowledgeActions} from './contracts/knowledge-actions.js';
