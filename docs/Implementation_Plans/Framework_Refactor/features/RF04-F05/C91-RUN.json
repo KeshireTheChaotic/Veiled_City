@@ -1,0 +1,381 @@
+{
+  "feature": "RF04-F05-C91",
+  "base_head": "45df09f21d418e7ff2f12b38d0542e5802034865",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/application/composition/session-scene-world.js",
+      "bot/src/framework-to-framework/session--world/public.js",
+      "bot/src/frameworks/session/public.js",
+      "bot/src/negotiations.js",
+      "bot/src/frameworks/session/contracts/world-actor-state.js",
+      "bot/src/roll-declaration-review.js",
+      "bot/src/world-identity-persistence.js",
+      "bot/src/world-narrative-bridge.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c91.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c82.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-forward.test.mjs",
+      "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-native.test.mjs"
+    ],
+    "passed": 12,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p03-f04.test.mjs",
+        "sha256": "5A895F10D80D251947B4B1D2313FD2A102E942777D039308B6FBF838832588CB"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f03.test.mjs",
+        "sha256": "21F1EE619842504FC3FC66B2ABD297286A9B0FE7B4C8AA57D055B2A0025A3273"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f06.test.mjs",
+        "sha256": "B22F3C2B661CF4F1641F5DDB614E30CF001452C57CC55ED00BCB49057D53F087"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f09.test.mjs",
+        "sha256": "77740F34E12718EDB6A47D816AD2935707C2919C14489A53423D75027DC7AF5E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f10.test.mjs",
+        "sha256": "D34E703BA344AFC0BE04D978C0BBA9BBE535813BE5CCAA825CD9049F21D2F266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f12.test.mjs",
+        "sha256": "156098128C2E78C3A87FA5ADA5D670A158D9E1EC338C28B672C0ABE831AB9A8D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f13.test.mjs",
+        "sha256": "28556ACCF35260B1784167940D2551B54A59D74692ACD0617C6331126D221066"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f14.test.mjs",
+        "sha256": "F7880794D688314D95CCCB8C37B9E0BDC6A1BA6BCF3597FF7658C88365B749F0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f17.test.mjs",
+        "sha256": "6E5A278284275829F0A1EE3405169ECA6B813CEFD8ED14E30FFDD04578888811"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f19.test.mjs",
+        "sha256": "FD95F632E51B6437BCBA670ED6F7326104F3C2A10A9076FD2710B389B3366B30"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f20.test.mjs",
+        "sha256": "6F01E0D0643ECDA4D3CA8678656C9EB544223622B74DEB6E500AA2731A4C236B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f22.test.mjs",
+        "sha256": "49977D0C91782B788AACB55667ACAFB47E7A303420F78EC33B30EBD7CE48894B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
+        "sha256": "9C6A504A5B8A3584A95EB9D1091D96692F650C08DED99CC19EA6041531EAA7C3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f01-c26.test.mjs",
+        "sha256": "E2685B6FCED0D2AF78D72D2DE777FE9D57B5E242921370A1DE782AD6D94E99B4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c74-session-diagnostic.test.mjs",
+        "sha256": "36F0ED670E9932D0C4AB6A5114AFEECCCBC0DCF1DF17BD5BA5D320A7DC4A55C0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "sha256": "8E54B8245F786BB7887634E175B5F950080CC051B04B127EF1B074B4857CB288"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "sha256": "643D0AB2D15AF174626D2C61181DDB0AC46188DF10C4A0C5099A289546717F9B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "sha256": "D278FDE4F98BCDC2B3B5FB5733864D5ABDAB947B49901E49A96F20F48FEF7535"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "sha256": "616C0009540602A255534368D9C660FE49646D762FDECC0AF3E2608D9890BD88"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "7EB161A31BEE37CF197007EC11C759B1B0826D4B2195A2479034001A6817690E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c12.test.mjs",
+        "sha256": "BFA8F223C14AF4238D08305253FE3F84CA23BADA5131171191912BA5C4C1F1E9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-forward.test.mjs",
+        "sha256": "A9F828250A56F002F9EC19D12EE182DE42B06E223B377D6F2F087D19A4269681"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-native.test.mjs",
+        "sha256": "813828FBBA4009CA7EF080E065F82E2222299A614B2A73A304E92B85573F0886"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-forward.test.mjs",
+        "sha256": "6F11DD6167CD36EC9A5C2F1FBDCA4E9FCA0836854E17EFA7A1F820DB4A99DF82"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-native.test.mjs",
+        "sha256": "F4A5AF505ED17FBCD54944E674BEB6B81B6C49668C4B320533CB0D1D11D8B4EE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-boundary.test.mjs",
+        "sha256": "633C7BBEDD433E129B792247E77809C05D6DEA24638CE9764C2021526D6C3FB1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05.test.mjs",
+        "sha256": "58C5453BE2FFF5F12C2AD73055C8A2A31FF2E0D53A5B6D9F5A28DE09D599CF93"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s06.test.mjs",
+        "sha256": "FA132719806F0463324778D7CDBF30636E89B304A7B408C66F8C64E06833F78F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "sha256": "850D75C34EF0689B45D4A77985EF0E6C48BC2F43A2B5E98A4CFADB58F5C48733"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "sha256": "B362359DE2CA989879055DD313E41DE82A5BBBEC01D936C4553385D1A3058EE8"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "sha256": "9598EB050D7611737871C493D3FE65DF470AC8F9FA8D6906550CFDD5F9DCBB5C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "sha256": "BF6655F4E15ADF73842F20B409DD3D91F6616F62648289331CAA2DDA59748A86"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "sha256": "DF209944DBB1008DFA2F7B4A02BDB3539F73469B91B64B4E1A5524F0CA9576D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "EF1656C437D6C0519F7BD8A14FB14654F5D16F993D233A460667257A69734407"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c52.test.mjs",
+        "sha256": "992340C0C887E723704AC04CF0768F3B10F25BF9F388AAFDC5F342260C74EA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c55.test.mjs",
+        "sha256": "E0E5F1ACDC948AB1F691118D6F17D399140BF7C86285C8E26FE0E89CD307EACC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c56.test.mjs",
+        "sha256": "5AB0BBFCA17B4E85D591C2D1D32A8270F164256501B793564B3EBC595FC72D61"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c57.test.mjs",
+        "sha256": "1414E4C8CC94F0464BFDF71968321D1BC60F03C545088676552F6EDA81F2796F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c61.test.mjs",
+        "sha256": "40F96B16A13EA75B9F64FBCA1A9B8D4EF863F85C44323E22B28CC9F089408E2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "sha256": "2919F779ADB73B21EFAAFA823E8F84061A3D787E3BB14DD400EECE6C75F89E04"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c64.test.mjs",
+        "sha256": "01DE4110EFB7B7E455D83E4082BEF312D3ED536CF1E4D3EB8342168BEFF38E97"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-instance.test.mjs",
+        "sha256": "2443895443BF6BE02981B41345425D460C51141F20BBE39737A2C0F14502E7F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs",
+        "sha256": "680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c79.test.mjs",
+        "sha256": "9B29ADD02FB79602EC636815130599F0693FE238A4CA960A7E2C6B1DF53B18BC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c82.test.mjs",
+        "sha256": "969D257134CBB24BE4C0ACA84347A17E5529FB69E5B772FD07BB69EF056E52F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c91.test.mjs",
+        "sha256": "377F1DF4F9C32E624D2DE76597F9D743434A73FA94465E1A179CA979C6714774"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T02:56:48.072Z",
+    "end": "2026-10-28T02:57:47.099Z",
+    "exit_code": 1,
+    "tests": 200,
+    "passed": 197,
+    "failed": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 58991.4472,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c91-test.log",
+    "log_sha256": "62B0736CC5BFFA5F1315C96F49352AC146964123C73DC6959C889CF0FC680851",
+    "failing": [
+      "rf04-f03-c74-session-diagnostic.test.mjs | tests\\\\ai-gm-2026-10\\\\rf04-f03-c74-session-diagnostic.test.mjs",
+      "rf04-f04-s05-boundary.test.mjs | actual Session caller reaches native accepted action checks and refuses replacement",
+      "rf04-f05-c57.test.mjs | migrated World consumers dropped the root Session re-exports and use World public ports"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f03-c74-session-diagnostic.test.mjs | tests\\\\ai-gm-2026-10\\\\rf04-f03-c74-session-diagnostic.test.mjs",
+      "rf04-f04-s05-boundary.test.mjs | actual Session caller reaches native accepted action checks and refuses replacement",
+      "rf04-f05-c57.test.mjs | migrated World consumers dropped the root Session re-exports and use World public ports"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 776,
+      "unowned": 0,
+      "imports": 3190,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1579,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c91-rf04-architecture.log",
+      "log_sha256": "8DEE8776791272A618017045145376979BADA2DD5F81DEF4BECD2B8D8F63A7E7",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 776,
+      "unowned": 0,
+      "imports": 3190,
+      "largest_cycle": 103,
+      "accepted_legacy_occurrences": 1273,
+      "active_violation_groups": 305,
+      "transition_errors": 305,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c91-rf05-architecture.log",
+      "log_sha256": "37E83B987E86E7600363EA84F0513E4D26DD7013B2986EE9AEC2B7BCB31C8AB1",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/negotiations.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-identity-persistence.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/world-narrative-bridge.js -> ",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/negotiations.js -> bot/src/owner-consent.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/opening-world-bridge.js -> bot/src/world-narrative-bridge.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/roll-declaration-review.js -> bot/src/personal-continuity.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/narrative-salience.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/narrative-records.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/scene-continuity.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/conversation-principal.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/typed-roll-proof.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/session-opening-attendance.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/session-opening.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/assembly-state.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/narrative-authority.js",
+        "PAIR_IMPORTS_THIRD_OWNER bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-simulation-receipts.js",
+        "PAIR_IMPORTS_PRIVATE_API bot/src/world-narrative-bridge.js -> bot/src/world-encounter-beats.js",
+        "CYCLIC_IMPORT_EDGE bot/src/opening-world-bridge.js -> bot/src/world-narrative-bridge.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/narrative-salience.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-identity-persistence.js -> bot/src/narrative-authority-context.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/action-consent.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/typed-roll-proof.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/session-opening.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/assembly-state.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/narrative-authority.js",
+        "CYCLIC_IMPORT_EDGE bot/src/world-narrative-bridge.js -> bot/src/pvp-fear-moves.js",
+        "EXPIRED_TRANSITION bot/src/negotiations.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/negotiations.js -> ",
+        "EXPIRED_TRANSITION bot/src/roll-declaration-review.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-identity-persistence.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> ",
+        "EXPIRED_TRANSITION bot/src/world-narrative-bridge.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "ef873d5c9bbaf1115ca6e1721f520977a49b147410ab14d7fe2dc95897489382",
+      "078c8d48d85128ccca498950725fe0c2d0880d968a771b26f3c5990de2a7e4bd",
+      "d688ef1a971a6eb6ae354a91fdaf5b1260e69cd8a50d68afb1f68a88da20c2d3",
+      "6e09d80a18a70fc094d5cae87d45a15ffea50d6f4cf916fd072b4ab72ddedc5c",
+      "7c7db7c338e436ee32ad47709d04df9a960c02cf69270e3e3838c7b41dba85f8"
+    ],
+    "original_manifest_sha256": "81C5AEAD660C16F93DC1D62C76BF9947E78AA1B003025DC549E5403CC602D8B0",
+    "manifest_sha256_after": "375B410ECDAF652BBE6C937043831C285A60E5C2559EE0B13B6DB6E09C892201",
+    "entries_after": 1567,
+    "remaining_by_feature": {
+      "RF04-F01": 87,
+      "RF04-F03": 58,
+      "RF04-F04": 107,
+      "RF04-F05": 53,
+      "RF05-F02": 192,
+      "RF05-F03": 225,
+      "RF05-F04": 42,
+      "RF05-F05": 405,
+      "RF06-F02": 17,
+      "RF06-F03": 178,
+      "RF06-F04": 155,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/application/composition/session-scene-world.js": "1C80006F60D087E73709556D9D0ECDEA0EC03084C84FB8E19F6AF3E36A46A810",
+    "bot/src/framework-to-framework/session--world/public.js": "25FC88592E0E547A49DA7E50530CF2792A24ECE451DD9543C95352E9D5A648D3",
+    "bot/src/frameworks/session/public.js": "6A0BF2C3A818DAC7EC696C06DD8C9CAA28458948EA3899B022C736D4C89FE476",
+    "bot/src/negotiations.js": "92E85BC063201C26FB40B509376839DF27F55E64533205D323AC4E3277831CC5",
+    "bot/src/frameworks/session/contracts/world-actor-state.js": "0CD919295BDB8504FCAA30DBCFCA5594A3E6297964E0C3F5B760C9DFBF7FF9D2",
+    "bot/src/roll-declaration-review.js": "499292259434C325F47807CACCFFEC447A6D8B9CC6EE19472C26A4D9DC6448E3",
+    "bot/src/world-identity-persistence.js": "3AF3F019C25EC744F766AEE7AD4700FA38C3B4CE9EF46969932D3A06EAF30C4E",
+    "bot/src/world-narrative-bridge.js": "2954D424E773DF5A671CC34B548BED3DB621024355EA9D9C65BF5BF62697381B"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the commit for the affected piece (S10, C82 or C91) and restore its exact transitions from the matching RETIRED record.",
+  "status": "SCOPED_QUALIFIED"
+}

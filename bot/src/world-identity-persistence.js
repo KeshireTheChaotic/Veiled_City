@@ -2,10 +2,12 @@
 import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authorship.js';
 import {canonicalInterestEvidence,nativeSalienceAvailable} from './narrative-salience.js';
 import {buildNarrativeContext} from './narrative-authority-context.js';
-import {sceneFictionHash as hash,narrativeSourceVisible,sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
 import {indexWorldEvent} from './frameworks/world/public.js';
-import {worldKnowledgeSources} from './frameworks/world/public.js';
+import {worldKnowledgeSources,worldNarrativeAuthorship} from './frameworks/world/public.js';
+function narrativeSourceVisible(...args){return worldNarrativeAuthorship.narrativeSourceVisible(...args);}
 function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}
 const issuer='native:world-identity-persistence';
 export function verifiedIdentityPersistence(db,guild,key,scope){
