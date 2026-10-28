@@ -1,0 +1,5 @@
+# RF06-F02 C143 — Standalone relationship evidence consumer
+
+Under the owner's exact RF06 prerequisite authorization, introduce a fixed Persistence-owned consumer for the original Knowledge relationship evidence function. The existing `db.js` compatibility facade binds its already-imported function at module load, so a standalone `new VeiledDB(path,schema)` remains usable before application startup. The C140 Persistence reader calls the fixed consumer and the existing active-evidence function in the same order. Binding constructs no database and changes no schema, audience, native evidence or transaction policy.
+
+This is an intermediate migration: the original `db.js -> presentation-evidence.js` edge remains, as does the root compatibility reader and its RF04 location record. A future application facade/pair composition must preserve standalone identity and eliminate that edge without importing a pair from Persistence. No transition retirement, deadline extension or baseline change is claimed. Rollback the consumer, module-load binding and changed callback argument together; no persisted data conversion.

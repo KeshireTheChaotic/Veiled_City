@@ -17,12 +17,16 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
+import {persistenceRelationshipEvidence} from './frameworks/persistence/contracts/relationship-evidence.js';
 import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
 import {historicalArchiveProjection} from './historical-archive.js';
 import {instrumentSqlReads} from './turn-trace-context.js';
 import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.js';
+
+// Preserve standalone legacy facade reads while this fixed consumer is migrated to application composition.
+persistenceRelationshipEvidence.bind({relationshipEvidence});
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {
@@ -2158,7 +2162,7 @@ export class VeiledDB {
     });
   }
 
-  getRelationship(id){return readRelationship(this,id,relationshipEvidence,activeEvidence);}
+  getRelationship(id){return readRelationship(this,id,persistenceRelationshipEvidence.relationshipEvidence,activeEvidence);}
   listRelationships(guildId,{includeGM=false,characterId=null,userId=null}={}){
     const rows=this.db.prepare("SELECT * FROM relationships WHERE guild_id=? ORDER BY updated_at DESC").all(guildId);
     return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="character"&&characterId&&(r.from_key===characterId||r.to_key===characterId||r.source_character_id===characterId))||(r.visibility==="player"&&userId&&r.note.includes(`player:${userId}`)))

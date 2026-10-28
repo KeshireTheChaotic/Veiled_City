@@ -1,0 +1,11 @@
+# RF06-F03 CHUNK01 ledger
+
+At base `38330afb0bb6157ea28108fa126e4ae2581761f4` with concurrent independent work, the two Discord text splitting functions moved unchanged to Discord public. The root reader re-exports the same function objects; application assembly delivery now imports public. Full moved source equals the original after line-ending normalization, SHA-256 `80619A583B08B9FC54D9AD96F89F73AF67ACF8D24A71858AAC0AB903C6E5E147`. Application-to-Discord public import is valid; the exact unused old private import record is preserved in CHUNK01-RETIRED.json. Session's application dependency remains and requires a separate ownership/compatibility design.
+
+One frozen fresh batch from `bot/`: `node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf06-f03-assembly-chunking.test.mjs`; exit 0, 3/3 passed, 0 failed/skipped/cancelled, TAP 413.132 ms. Four changed production JS files and the test passed syntax checks. The fresh tests verify root/public function identity, bounded Unicode/mention splitting and Markdown fence handling, exact saved private/public delivery keys, and no resend of an already delivered private part using mock callbacks. This does not qualify real Discord, process crash recovery, full delivery or all text inputs. No provider, network or production DB use; cost $0. Test remains local and ignored.
+
+Frozen SHA-256: root reader `555220DAAB0BFC0F7EBB6DDAE02239B8D8EB8DCB6538ECC259FA7BD2C9C431BD`; Discord source `01E60A9AAF30F7FA6BAFC01F844111E164B0CA961BF3411ABE986102807B7C1F`; Discord public `DC94B37935D378C48073B2083C9E22EA016F296C8FF4A6D2FCD112875A7BEEDD`; assembly delivery `2B1A46DCABF8E01F812FB43C09B014549404DF47A52B3FCC12A4EAB2B36E4F2A`; test `A4F139635AE2018B89686C53500579C463B726889CDDB7956086F37EB129E43E`.
+
+Shared RF04 graph snapshot: 827 modules, zero unowned, two cycles with largest 79, zero active violations and one unused transition matching the preserved record. Manifest retirement and a final coordinated ratchet are pending. RELEASE NOT AUTHORIZED.
+
+Coordinated RF04 ratchet passed827 modules, zero unowned/active/errors, largest cycle79. RF05 remains82 groups/errors. Remaining facade and Session boundaries are not completed; release unauthorized.

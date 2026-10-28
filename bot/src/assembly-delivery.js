@@ -1,6 +1,6 @@
 /** Restart-safe, per-part Discord delivery for generated party assembly plans. */
 import { createHash } from "node:crypto";
-import { splitDiscordText } from "./discord/chunking.js";
+import { splitDiscordText } from './frameworks/discord/public.js';
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex").slice(0,24);
 

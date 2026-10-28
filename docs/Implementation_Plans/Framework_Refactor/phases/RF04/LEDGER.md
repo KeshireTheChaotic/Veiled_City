@@ -905,3 +905,7 @@ Under RF06-PREREQUISITE-AUTHORIZATION, exact relationship SQL/projection extract
 ## 2026-10-28 C141-C142
 
 C141 moves original native access provider with cold root registration/singleton retained, Session VIP port and existing-bootstrap composition (2/2 tests); partial manual composition and positive saved admission remain unqualified. C142 extracts exact Knowledge relationship policy into per-instance factory as authorized persistence prerequisite (2/2 tests), preserving root/public behavior; no record retired for C142. Two exact C141 import records retired. RF04 ratchet passes825 modules/zero unowned/active/errors, largest cycle79; RF05 remains82 groups/errors. RF04/RF06 incomplete; release unauthorized.
+
+## 2026-10-28 C143 and CHUNK01 prerequisites
+
+C143 fixes the Persistence relationship consumer with the original facade module-load binding, preserving standalone constructor and exact callback order (two fresh tests passed). CHUNK01 moves original Discord splitting into its owner and adopts its public API in assembly delivery, preserving saved keys/no-resend behavior (3/3). One exact later-phase private import retired; Session/application and Persistence/Knowledge root edges remain. RF04 gate passes827 modules/zero unowned/active/errors, largest cycle79; RF05 remains82 groups/errors. RF04 incomplete; release unauthorized.
