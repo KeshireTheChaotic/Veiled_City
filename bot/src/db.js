@@ -17,11 +17,11 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
-import {persistenceRelationshipEvidence,persistenceSourceEvidence,persistenceRelationshipState} from './frameworks/persistence/public.js';
+import {persistenceRelationshipEvidence,persistenceSourceEvidence,persistenceRelationshipState,persistenceArchiveProjection} from './frameworks/persistence/public.js';
 import { activeEvidence as originalActiveEvidence, evidenceType as originalEvidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
-import {historicalArchiveProjection} from './historical-archive.js';
+import {historicalArchiveProjection as originalHistoricalArchiveProjection} from './historical-archive.js';
 import {instrumentSqlReads} from './turn-trace-context.js';
 import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.js';
 
@@ -29,8 +29,10 @@ import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.j
 persistenceRelationshipEvidence.bind({relationshipEvidence});
 persistenceSourceEvidence.bind({activeEvidence:originalActiveEvidence,evidenceType:originalEvidenceType});
 persistenceRelationshipState.bind({updateRelationshipDimensions:originalUpdateRelationshipDimensions,relationshipPairKey:originalRelationshipPairKey,relationshipProjection:originalRelationshipProjection});
+persistenceArchiveProjection.bind({historicalArchiveProjection:originalHistoricalArchiveProjection});
 const {activeEvidence,evidenceType}=persistenceSourceEvidence;
 const {updateRelationshipDimensions,relationshipPairKey,relationshipProjection}=persistenceRelationshipState;
+const {historicalArchiveProjection}=persistenceArchiveProjection;
 
 /** SQLite repository facade and transaction boundary for campaign state. */
 export class VeiledDB {

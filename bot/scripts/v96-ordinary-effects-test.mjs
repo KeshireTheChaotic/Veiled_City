@@ -6,7 +6,7 @@ import {captureWorldInput} from '../src/autonomous-world.js';
 import {persistPlayerIntents} from '../src/typed-intents.js';
 import {applyAuthoritativeMutation} from '../src/state.js';
 import {actionFixture} from './v96-action-fixture.mjs';
-import {establishWorldDescription} from '../src/world-observation.js';
+import {establishWorldDescription} from '../src/frameworks/world/observation-reader.js';
 import {contributeRoll} from '../src/roll-collaboration.js';
 import {rollRevision} from '../src/roll-requests.js';
 import {configureDelegation,stateRevision,reviewAiIntent} from '../src/ai-intents.js';

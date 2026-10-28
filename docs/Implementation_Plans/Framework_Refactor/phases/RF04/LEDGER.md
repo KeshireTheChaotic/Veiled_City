@@ -929,3 +929,7 @@ Exact approved import/computed-source/mutation-target path substitutions applied
 ## 2026-10-28 C146 constructor prerequisite
 
 Original relationship key/dimensions/projection helpers now use fixed Persistence consumer with existing standalone and pair bindings. Fresh SQLite test1/1 covers both composition orders, actual constructor backfill, saved projection and reopen; root imports retained. RF04 gate passes831 modules/zero active/errors; no false retirement, phase incomplete and release unauthorized.
+
+## 2026-10-28 C147 and observation reader retirement
+
+C147 forwards original archive projection through fixed Persistence contract and exact standalone/pair binding (fresh SQLite1/1); original root dependency retained. Observation registration reader moved unchanged into World, two approved legacy imports repointed, root removed; fresh module-fake/path checks2/2 pass. Legacy suites unexecuted and assertions unchanged. One exact location record retired. Cheaper worker verified RF04 gate832 modules/zero unowned/active/errors and RF05 remains80 groups/errors; no passing-test reruns. RF04 incomplete; release unauthorized.

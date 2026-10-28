@@ -13,7 +13,7 @@ import {buildNarrativeContext} from '../src/narrative-authority-context.js';
 import {establishNarrativeEntity} from '../src/autonomous-world.js';
 import {createPrivateSeedOrigin,bindPrivateSeedTurn,applyPrivateSeedTurn} from '../src/world-private-seeds.js';
 import {applyAuthoritativeMutation,previewAuthoritativeMutation} from '../src/state.js';
-import {renderWorldObservation} from '../src/world-observation.js';
+import {renderWorldObservation} from '../src/frameworks/world/observation-reader.js';
 const packet=pc=>({character_name:pc.name,hooks:[{key:'rival',title:'Private rival',premise:'A Copper Sparrow contact may seek the character.',permission:'open_question'}]});
 let sequence=0;
 function interaction(f){

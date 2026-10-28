@@ -2130,7 +2130,7 @@
           "to": "persistence",
           "import_occurrences": 0,
           "injected_calls": 261,
-          "contract": "Knowledge supplies original relationship classification, source evidence, relationship keys, dimension updates and projections to fixed Persistence consumers; other dependencies remain migration obligations."
+          "contract": "Knowledge supplies original relationship classification, source evidence, relationship state and archive projection to fixed Persistence consumers; other dependencies remain migration obligations."
         }
       ],
       "source_evidence": [
@@ -2156,7 +2156,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f02-c45.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f02-c46.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f02-c46.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f02-c47.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2179,7 +2180,7 @@
         "occurrences": 266
       },
       "public_api": "bot/src/framework-to-framework/knowledge--persistence/public.js",
-      "scope": "Relationship classification, source evidence, relationship keys, dimension updates and projections only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations."
+      "scope": "Relationship classification, source evidence, relationship keys, dimension updates, projections and historical archive projection only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations."
     },
     {
       "pair": "knowledge--publication",
