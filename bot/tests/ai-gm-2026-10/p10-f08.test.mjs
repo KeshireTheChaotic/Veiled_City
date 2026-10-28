@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Worker} from 'node:worker_threads';
 import {GMService} from '../../src/gm.js';
-import {openingEntryAuthoringCode} from '../../src/opening-entry-evidence.js';
+import {openingEntryAuthoringCode} from '../../src/frameworks/session/opening-entry-evidence.js';
 import {prepareAssemblyRefresh,refreshAssemblyPlan} from '../../src/assembly-planning.js';
 import {assertSessionOpeningAttempt} from '../../src/session-opening.js';
 import {fixture,barrier} from './p10-fixture.mjs';
