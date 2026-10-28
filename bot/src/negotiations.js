@@ -1,11 +1,11 @@
 /** Reviewable bargaining revisions; explicit consent and bounded existing resources, never automatic PC spend. */
-import {sessionSceneWorldSources,sessionWorldInstitution} from './frameworks/session/public.js';
+import {sessionSceneWorldSources,sessionWorldInstitution,sessionWorldActorState} from './frameworks/session/public.js';
 function cityObject(...args){return sessionSceneWorldSources.cityObject(...args);}function cityKey(...args){return sessionSceneWorldSources.cityKey(...args);}function cityInteger(...args){return sessionSceneWorldSources.cityInteger(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
 function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProxy(...args);}
 function requireCityRecord(...args){return sessionWorldInstitution.requireCityRecord(...args);}
 function assertInstitutionDelegation(...args){return sessionWorldInstitution.assertInstitutionDelegation(...args);}
-import { actorState } from "./simulation.js";
+function actorState(...args){return sessionWorldActorState.actorState(...args);}
 import { hasOwnerConsent } from "./owner-consent.js";
 function participants(db,guildId,list,terms){
   if(!Array.isArray(list)||list.length<2||list.length>6||new Set(list.map(p=>`${p.type}:${p.key}`)).size!==list.length) throw new Error("Two to six distinct established participants required.");
