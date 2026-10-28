@@ -1,8 +1,10 @@
 /** Additive post-start opening identity. It is deliberately separate from the immutable start job and plan. */
 import {createHash} from 'node:crypto';
-import {assemblySourceError,sessionAssemblyContextSource,sessionOpeningSource} from './frameworks/session/public.js';
+import {assemblySourceError} from './assembly-context.js';
+import {sessionAssemblyContextSource,sessionOpeningSource,sessionOpeningCohortSource} from './contracts/opening-sources.js';
 const {assemblyInputFingerprint}=sessionAssemblyContextSource,{inspectSessionOpening}=sessionOpeningSource;
-import {currentScene,sessionWorldEvents} from './frameworks/session/public.js';
+import {currentScene} from './scene-source.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
 
 export const openingCohortHash=value=>createHash('sha256').update(JSON.stringify(value??null)).digest('hex');
@@ -79,6 +81,5 @@ export function openingCohortNarrativeCandidate(db,guild,key){
   return {job,session,plan:d.plan,scope,source,revision,candidate:{narration:'',player_summary:'',private_messages:[],narrative_claims:[],
     gm_world_parts:[{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]}]}};
 }
-import {sessionOpeningCohortSource} from './frameworks/session/public.js';
 // Provide this module's original opening cohort functions to the fixed Session slot; no other authority is granted.
 sessionOpeningCohortSource.bind({currentOpeningCohort,openingCohortHash,openingCohortNarrativeCandidate,inspectOpeningCohortSource,openingCohortEligible,openingCohortIsAdditive,independentOpeningCameraBasis});

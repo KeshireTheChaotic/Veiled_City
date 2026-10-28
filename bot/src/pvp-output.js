@@ -32,7 +32,7 @@ import {openingEntryNarrativeCandidate,openingEntryProjection} from './opening-e
 import {publicationSessionEvidence} from './frameworks/publication/public.js';
 function openingEntryEvidence(...args){return publicationSessionEvidence.openingEntryEvidence(...args);}
 function assemblyCoverageEvidence(...args){return publicationSessionEvidence.assemblyCoverageEvidence(...args);}
-import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
+function openingCohortNarrativeCandidate(...args){return publicationSessionEvidence.openingCohortNarrativeCandidate(...args);}
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 

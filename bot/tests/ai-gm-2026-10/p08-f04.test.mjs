@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {openingCohortEligible,openingCohortIsAdditive,openingCohortRoster,openingCohortRosterRevision} from '../../src/opening-cohort-state.js';
+import {openingCohortEligible,openingCohortIsAdditive,openingCohortRoster,openingCohortRosterRevision} from '../../src/frameworks/session/opening-cohort-state.js';
 import {runOpeningCohort,openingCohortStatus} from '../../src/opening-cohort-runner.js';
 
 test('cohort requires two distinct currently owner-controlled players',()=>{

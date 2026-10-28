@@ -63,7 +63,7 @@ import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
-import {openingCohortNarrativeCandidate} from './opening-cohort-state.js';
+import {openingCohortNarrativeCandidate} from './frameworks/session/public.js';
 import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js';
 import {sceneObservationOperation,narrativeModel} from './frameworks/narrative/public.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';

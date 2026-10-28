@@ -10,7 +10,7 @@ import {beginSessionOpeningAttempt,scheduleSessionOpening} from '../../src/sessi
 import {runSessionOpening} from '../../src/session-opening-runner.js';
 import {assemblyInputs} from '../../src/assembly-context.js';
 import {assemblyNarrativeCandidate} from '../../src/pvp-output.js';
-import {openingCohortNarrativeCandidate} from '../../src/opening-cohort-state.js';
+import {openingCohortNarrativeCandidate} from '../../src/frameworks/session/opening-cohort-state.js';
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
 import {recordCharacterArrival} from '../../src/scene-continuity.js';
 import {disposableCampaign} from './p08-correction-fixture.mjs';

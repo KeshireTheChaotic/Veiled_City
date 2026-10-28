@@ -16,7 +16,7 @@ import {runSessionOpening} from '../../src/session-opening-runner.js';
 import {runOpeningCohort} from '../../src/opening-cohort-runner.js';
 import {assemblyInputs} from '../../src/assembly-context.js';
 import {assemblyNarrativeCandidate} from '../../src/pvp-output.js';
-import {openingCohortNarrativeCandidate} from '../../src/opening-cohort-state.js';
+import {openingCohortNarrativeCandidate} from '../../src/frameworks/session/opening-cohort-state.js';
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
 import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
 initializeSessionWorldEvents();

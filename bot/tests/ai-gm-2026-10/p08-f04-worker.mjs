@@ -2,7 +2,7 @@ import './compose-startup.mjs';
 import {VeiledDB} from '../../src/db.js';
 import {runOpeningCohort} from '../../src/opening-cohort-runner.js';
 import {assemblyInputs} from '../../src/assembly-context.js';
-import {openingCohortNarrativeCandidate} from '../../src/opening-cohort-state.js';
+import {openingCohortNarrativeCandidate} from '../../src/frameworks/session/opening-cohort-state.js';
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
 
 const [dbPath,schemaPath]=process.argv.slice(2),db=new VeiledDB(dbPath,schemaPath),guildId='guild-correction';

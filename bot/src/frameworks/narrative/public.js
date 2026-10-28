@@ -34,3 +34,4 @@ export {normalizeGmHookImport} from './gm-hook-import.js';
 export {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './contracts/bridge-sources.js';
 export {narrativeEnvironmentalText} from './contracts/environmental-text.js';
 export {narrativeKnowledgeReaders} from './contracts/knowledge-readers.js';
+export {narrativeOpeningCohort} from './contracts/opening-cohort.js';

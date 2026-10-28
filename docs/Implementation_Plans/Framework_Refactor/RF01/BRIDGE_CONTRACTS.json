@@ -3379,7 +3379,8 @@
         "bot/src/application/composition/publication-session.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f06-c51.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c51.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f06-c55.test.mjs"
       ],
       "observed_directions": [
         {

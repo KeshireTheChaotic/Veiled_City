@@ -20,7 +20,8 @@ import {backgroundIdentityContext} from './world-background-identities.js';
 import {openingEntryProjection} from './opening-entry-context.js';
 import {narrativeNativeEnvironment} from './frameworks/narrative/public.js';
 function nativeEnvironmentSituation(...args){return narrativeNativeEnvironment.nativeEnvironmentSituation(...args);}
-import {inspectOpeningCohortSource} from './opening-cohort-state.js';
+import {narrativeOpeningCohort} from './frameworks/narrative/public.js';
+function inspectOpeningCohortSource(...args){return narrativeOpeningCohort.inspectOpeningCohortSource(...args);}
 import {createNarrativeContextBuilder} from './frameworks/narrative/public.js';
 let contextBuilder;
 function builder(){return contextBuilder??=createNarrativeContextBuilder({

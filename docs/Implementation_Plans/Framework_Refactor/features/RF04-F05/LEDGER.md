@@ -624,3 +624,9 @@ Tests: one frozen batch of 13 files: 59 tests, 59 pass, 0 fail. Architecture: 4 
 Narrative salience reads Knowledge narrative record listing and limit through the existing Narrative Knowledge readers port; root narrative-records shim retired.
 
 Tests: one frozen batch of 7 files: 37 tests, 37 pass, 0 fail. Architecture: 2 exact records retired. RF04 exit 0, 0 active violations, 837 modules; RF05 73 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-28 C155 Session owns opening cohort state; Narrative and Publication read it through ports
+
+Opening cohort state moves into Session; Narrative inspects cohort sources and Publication reads cohort candidates through consumer-owned ports; gm.js uses Session public API. Root opening-cohort-state retired. Test: rf04-f06-c55 (untracked per repo test policy).
+
+Tests: one frozen batch of 43 files: 128 tests, 128 pass, 0 fail. Architecture: 4 exact records retired. RF04 exit 0, 0 active violations, 839 modules; RF05 72 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

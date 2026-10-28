@@ -15,3 +15,7 @@ import {narrativeBridgeSessionSources} from '../../frameworks/narrative/public.j
 import {sessionOpeningAttendanceSource,sessionOpeningSource,sessionAssemblyStateSource} from '../../frameworks/session/public.js';
 /** Pass Session's original opening and assembly readers to the Narrative-World bridge unchanged. */
 export function connectNarrativeBridgeSessionSources(){return narrativeBridgeSessionSources.bind({inspectOpeningEntryOpportunity:sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity,inspectSessionOpening:sessionOpeningSource.inspectSessionOpening,assemblyDeliverySummary:sessionAssemblyStateSource.assemblyDeliverySummary});}
+import {narrativeOpeningCohort} from '../../frameworks/narrative/public.js';
+import {inspectOpeningCohortSource} from '../../frameworks/session/public.js';
+/** Pass Session's original opening cohort source inspection to Narrative's fixed consumer. */
+export function connectNarrativeOpeningCohort(){return narrativeOpeningCohort.bind({inspectOpeningCohortSource});}

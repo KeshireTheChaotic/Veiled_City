@@ -28,7 +28,7 @@ import {worldIdentityOrigin} from '../../src/world-authorship.js';
 import {backgroundIdentityContext} from '../../src/world-background-identities.js';
 import {openingEntryProjection} from '../../src/opening-entry-context.js';
 import {nativeEnvironmentSituation} from '../../src/frameworks/daggerheart/native-environment-scene.js';
-import {inspectOpeningCohortSource} from '../../src/opening-cohort-state.js';
+import {inspectOpeningCohortSource} from '../../src/frameworks/session/opening-cohort-state.js';
 import {indexWorldEvent} from '../../src/city-calendar.js';
 
 test('Narrative-owned context builder preserves authorized context and compatibility behavior',t=>{
