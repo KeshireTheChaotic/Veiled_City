@@ -152,3 +152,5 @@ export {EncounterLibrary,loadEncounterLibrary,isEncounterLibrary} from './encoun
 export {livePcRoster,partyTier,autoBuildComposition} from './encounter-composition-source.js';
 export {encounterActors} from './encounter-actors-source.js';
 export {previewOutcomes} from './outcome-preview.js';
+export {nativeAccessOrdinaryProof,nativeAccessCountdownAncestry} from './contracts/environment-access-peers.js';
+export {establishEnvironmentAdmission,inspectEnvironmentAdmission,nativeVipAdmission,registerNativeEnvironmentAccess} from './native-environment-access.js';

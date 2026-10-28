@@ -1,13 +1,9 @@
 /** Review metadata preserves originals and source perspective; never grants PC feelings, consent or canon. */
 import {randomUUID} from 'node:crypto';
 import {stateRevision} from '../../kernel/state-revision.js';
+import {createRelationshipEvidenceRules} from './relationship-evidence.js';
 export function createPresentationEvidence({typedEvidence,objectiveEvidence,activeEvidence,cityAudit,indexWorldEvent}){
-const inferredSource=source=>!['gm','human_gm','hook_import','external_character_creator'].includes(source)&&!String(source).startsWith('seed');
-function relationshipEvidence(row){
-  let data={};try{data=JSON.parse(row?.provenance_json||"{}");}catch{/* Preserve malformed legacy originals as uncertain. */}
-  return data.epistemic||{kind:inferredSource(row?.source)?"hypothesis":"testimony",source_refs:[],
-    perspective:`${row?.from_type||"unknown"}:${row?.from_key||"legacy"}`,authority:"Directional interpretation; never PC feelings, debt or agreement"};
-}
+const {inferredSource,relationshipEvidence}=createRelationshipEvidenceRules();
 function relationshipProvenance(db,guild,draft,scope,existing){
   const epistemic=typedEvidence(db,guild,{value:draft.note||"",epistemic:draft.epistemic||null},scope);
   // Relationship interpretation always belongs to a perspective, even if it cites an observation.

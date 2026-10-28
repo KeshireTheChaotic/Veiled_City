@@ -1,0 +1,5 @@
+# RF06-F02 C142 — Knowledge relationship evidence policy prerequisite
+
+Under the owner's exact RF06 prerequisite authorization, extract the original directional relationship evidence classifier and source classification from the Knowledge presentation factory into a Knowledge-owned per-instance policy factory. Keep the original creation of distinct functions per presentation factory, provenance parse and fallback semantics, source classifications, presentation source wrappers and standalone database path. The new leaf has no storage or authority and does not create a Persistence-to-Knowledge import or bind a consumer.
+
+This is a preparatory source contract for the Knowledge–Persistence boundary. No transition is retired: `db.js` still imports the historical reader, and root compatibility and the RF04 location obligation remain. Rollback the new factory and restore the original definitions inside the Knowledge presentation factory together. No persisted format, schema, deadline, baseline or policy change.

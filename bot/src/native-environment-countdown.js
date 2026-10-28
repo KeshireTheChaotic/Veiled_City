@@ -26,3 +26,5 @@ export function inspectEnvironmentCountdown(...args){return rules().inspectEnvir
 export function environmentCountdownProjection(...args){return rules().environmentCountdownProjection(...args);}
 export function environmentUploadState(...args){return rules().environmentUploadState(...args);}
 export function closingTimeMovesReadiness(...args){return rules().closingTimeMovesReadiness(...args);}
+import {nativeAccessCountdownAncestry} from './frameworks/daggerheart/public.js';
+nativeAccessCountdownAncestry.bind({captureCountdownActionAncestry,inspectCountdownActionAncestry});

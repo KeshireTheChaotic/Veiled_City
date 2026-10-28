@@ -901,3 +901,7 @@ C138 moves World observation into World with root identity/registration retained
 ## 2026-10-28 authorized C140 prerequisite
 
 Under RF06-PREREQUISITE-AUTHORIZATION, exact relationship SQL/projection extracted to Persistence with original callbacks; constructor remains independent of bootstrap. Fresh disposable SQLite tests2/2 cover call order, saved values/retraction/reopen and nested rollback. Original Knowledge import and root location remain; no record retired. RF04 ratchet passes821 modules/zero unowned/active/errors, largest cycle79. RF04 and RF06 remain incomplete; standalone facade composition is next. Release unauthorized.
+
+## 2026-10-28 C141-C142
+
+C141 moves original native access provider with cold root registration/singleton retained, Session VIP port and existing-bootstrap composition (2/2 tests); partial manual composition and positive saved admission remain unqualified. C142 extracts exact Knowledge relationship policy into per-instance factory as authorized persistence prerequisite (2/2 tests), preserving root/public behavior; no record retired for C142. Two exact C141 import records retired. RF04 ratchet passes825 modules/zero unowned/active/errors, largest cycle79; RF05 remains82 groups/errors. RF04/RF06 incomplete; release unauthorized.

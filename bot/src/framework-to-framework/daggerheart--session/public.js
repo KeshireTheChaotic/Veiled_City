@@ -51,3 +51,6 @@ import {nativePvpWindow} from '../../frameworks/daggerheart/public.js';
 import {sessionPvpWindowSource} from '../../frameworks/session/public.js';
 /** Pass Session's original PvP window synchronization to native PvP rounds unchanged. */
 export function connectNativePvpWindow(){return nativePvpWindow.bind({synchronizePvpWindow:sessionPvpWindowSource.synchronizePvpWindow});}
+import {nativeVipAdmissionSource} from '../../frameworks/daggerheart/public.js';
+import {sessionNativeVipAdmission} from '../../frameworks/session/public.js';
+export function connectSessionNativeVipAdmission(){return sessionNativeVipAdmission.bind({nativeVipAdmission:nativeVipAdmissionSource.nativeVipAdmission});}

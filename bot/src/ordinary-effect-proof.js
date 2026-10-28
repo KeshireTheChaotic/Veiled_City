@@ -30,3 +30,5 @@ export function assertOrdinaryBinding(...args){return rules().assertOrdinaryBind
 export function effectObservation(...args){return rules().effectObservation(...args);}
 export function verifyOrdinaryEffect(...args){return rules().verifyOrdinaryEffect(...args);}
 export function ordinaryEffectProjection(...args){return rules().ordinaryEffectProjection(...args);}
+import {nativeAccessOrdinaryProof} from './frameworks/daggerheart/public.js';
+nativeAccessOrdinaryProof.bind({ordinaryActionProof,ordinaryPrerequisite});

@@ -1,0 +1,5 @@
+# RF04-F05 C141 — Native VIP source and Session entry
+
+Move the original single cached native environment access provider into Daggerheart. Two fixed same-owner peer ports receive the original ordinary-action proofs and countdown ancestry functions from their existing source modules. The original root reader continues to import those peers, re-export the same provider functions and register the VIP source on cold import. Native scene bootstrap registers that same singleton and composes a Session-owned VIP consumer; the original Session entry function calls it through the existing pair. Kernel's arbitration failure export is the same function previously re-exported through Intent. No access policy, receipt, owner or scene rule is copied or changed.
+
+Rollback provider move, root reader, peer registrations/ports, public exports, Session consumer/pair/bootstrap and caller as one unit; restore the exact records in C141-RETIRED.json. The root reader remains for legacy/saved callers. Partial manual composition of Session entry is a local compatibility question in the ledger.

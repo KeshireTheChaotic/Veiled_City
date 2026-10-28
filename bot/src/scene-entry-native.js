@@ -10,7 +10,8 @@ import {sessionNativeChecks} from './frameworks/session/public.js';
 function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
 import {sessionNativeRules} from './frameworks/session/public.js';
 function nativeMovementConditionIssue(...args){return sessionNativeRules.nativeMovementConditionIssue(...args);}
-import {nativeVipAdmission} from './native-environment-access.js';
+import {sessionNativeVipAdmission} from './frameworks/session/public.js';
+function nativeVipAdmission(...args){return sessionNativeVipAdmission.nativeVipAdmission(...args);}
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function locationMatches(row,target){
   return [row.entity_key,row.state?.name,row.state?.title,row.state?.display_name].filter(Boolean).some(value=>normalized(value)===normalized(target));
