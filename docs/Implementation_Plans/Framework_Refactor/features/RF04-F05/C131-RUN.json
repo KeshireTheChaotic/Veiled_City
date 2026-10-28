@@ -1,0 +1,244 @@
+{
+  "feature": "RF04-F05-C131",
+  "base_head": "68186984d99762b361b394ccc8cca3ca08b8d5d9",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/frameworks/session/contracts/opening-sources.js",
+      "bot/src/assembly-context.js",
+      "bot/src/session-opening.js",
+      "bot/src/assembly-state.js",
+      "bot/src/opening-cohort-state.js",
+      "bot/src/opening-entry-context.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs"
+    ],
+    "passed": 7,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "2A333BC4A4F25921DD454942B6E2295591449CA0B655D6F28048BBD566732FFD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs",
+        "sha256": "C032C9B9606388B71B688D935B6D4760E68CC67865BCD9B99F061B4A44B234D9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02.test.mjs",
+        "sha256": "AF364B15EB2DF781AA99D59B4D1E3ADB074E54061630D75EA6F2299AF39C4657"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-c01.test.mjs",
+        "sha256": "2224C8505CDEF31278DE30B42D9176B233AA47BE13B1EF115CF875955BF67B0A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-correction.test.mjs",
+        "sha256": "48C5D98D49EF3BFE8A44781AECD8B67A75B8367310B6A802FBA112F790886B84"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03.test.mjs",
+        "sha256": "B7818A1D69D3047DB26413506C53D59BE2ED1CF16BECB2AF4009367197DF4351"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "397937C8F28957B279E21C4E5A74CF07F04120C48867E1BF0C5AEE6AF1E976B3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04.test.mjs",
+        "sha256": "C99D7B5FF950CB7F44FF6166894D2AF79B04E9E79629FB51336667B3E3843878"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f05-correction.test.mjs",
+        "sha256": "84D07BABF44784DC044E81AC27CB00C4802DB3E8981427AC284FA591F8205581"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f07-correction.test.mjs",
+        "sha256": "B39A5E8908D90721194F1EC30F3EA1CB489A2D7C652B76253F9A90E5D57DA501"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f02.test.mjs",
+        "sha256": "2DF56BDC9C3A4861EDD4B3BB6BBE4071DBB84D24A25DE9A41C33A39CFD3F9D1C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f08-c01.test.mjs",
+        "sha256": "DC926EE56A37DB288FD2C868EB7F6D4652914CE6C098CAA521592E3B08845E66"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f08.test.mjs",
+        "sha256": "89CE662BE023382D1FB1BD89B7120E28A2A0D63D5A89DE3C09655E60CDD1F1F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "sha256": "D325AFE65B91A22667B04FEC68FD2613D7EA8E999087FD4415B44AAF3F92FBF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
+        "sha256": "D8318537BDF0633FDFA4CEE67A7DA315C65B3D58553BB4426AA00FF3FC001B92"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "sha256": "2A46F9E77ABEE6669660E2B6D3343218CB5CAFF5F2BE1D540349B46E866E85D2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "sha256": "793E64D990F57FD010A1973D0AA64D81D1C3D349C2C9FCB6512423D2EA956A3B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "66A628692BD1BD516E0475F3F05B0A0DAD91F4A01151694813F6BFE48A47A6E7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s01.test.mjs",
+        "sha256": "98EDFED7983E593E524D43887AE1523FB5C49ABD4435352A904797C78A3B76B4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s02.test.mjs",
+        "sha256": "50B03BDF5C13CA4ABF75ECCA97997A5C6AAE4CA0207FB3FE3B86BCD987DFDD7C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s03.test.mjs",
+        "sha256": "2132AFF41A9024AEB4E1BDD70777B4A6925B07D7A67B5CB5103BAE2FA87FCD6C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "FE1EABD9B4E011C315DA8D83E36D263F5252C0FE59202554B63859F90011532F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "DFF6703A0365619ED5E2C0073A1A4B44C10F466559E6C1C5DF199134153BB84C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "sha256": "4D777CD9DA0CAA182F7374305985D89FBEBC513EE7A8410FDAF07601432427A1"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T14:21:29.724Z",
+    "end": "2026-10-28T14:22:23.258Z",
+    "exit_code": 0,
+    "tests": 94,
+    "passed": 94,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 53498.1395,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c131-test.log",
+    "log_sha256": "40C10B94039A906542ADC1C18B1E74B559E03D47DAE687BF18D46151BE176619",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 842,
+      "unowned": 0,
+      "imports": 3398,
+      "largest_cycle": 81,
+      "accepted_legacy_occurrences": 1344,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c131-rf04-architecture.log",
+      "log_sha256": "EA429632CAC430DD50D33581387DDF9F8E61DE5D6B7C3DEEC9C29D6833A09770",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 842,
+      "unowned": 0,
+      "imports": 3398,
+      "largest_cycle": 81,
+      "accepted_legacy_occurrences": 1230,
+      "active_violation_groups": 114,
+      "transition_errors": 114,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c131-rf05-architecture.log",
+      "log_sha256": "363A62C081088FA28EA289CEC7E3D9387EC49116D09C7F8446110F96778A195C",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/opening-cohort-state.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/opening-entry-context.js -> ",
+        "LEGACY_MODULE_LOCATION bot/src/session-opening.js -> ",
+        "FRAMEWORK_IMPORTS_PAIR bot/src/assembly-context.js -> bot/src/opening-world-bridge.js",
+        "DIRECT_CROSS_FRAMEWORK_IMPORT bot/src/assembly-state.js -> bot/src/assembly-delivery.js",
+        "CYCLIC_IMPORT_EDGE bot/src/assembly-context.js -> bot/src/opening-world-bridge.js",
+        "EXPIRED_TRANSITION bot/src/assembly-context.js -> ",
+        "EXPIRED_TRANSITION bot/src/assembly-state.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-cohort-state.js -> ",
+        "EXPIRED_TRANSITION bot/src/opening-entry-context.js -> ",
+        "EXPIRED_TRANSITION bot/src/session-opening.js -> ",
+        "EXPIRED_TRANSITION bot/src/assembly-context.js -> ",
+        "EXPIRED_TRANSITION bot/src/assembly-state.js -> ",
+        "EXPIRED_TRANSITION bot/src/assembly-context.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "0386daaa9ab6733a35e17cdbb9d10b27ba168596cf4660c06afff9d2d7687b69",
+      "ba811d0ac5b2e026a48dd7e78eb018a7b69893e5974da2161771e91ebe77a07e",
+      "11fd3f249104c1e2fe84f8e4b27bb5724b15c04c7f201077fba60f69e9e27bbe",
+      "f1d75319e4925d8caa55a31eddf547321ff16ff30df104b96b76f6df8a7f9d37",
+      "91b41c83f2fdf53d091ab7171e05a932f63565bd27c41f2faa7cb8fcb4783af0",
+      "9ed575ca46856b673b79164b338cf3b6d44aef6657eee3d6f8913873e4db5354",
+      "99f519ffbf1a77f4a7860d9f8497c39fd4c4562e7c4c57dba76cd6253a16411f",
+      "25d9a1635ee3d227b46a483a05e6cf32ac800aa9c24b7feaecda1072b9df7bc2",
+      "64e56068c501dbd2249d0975f54f04898ceb08ab9462af6a7871e49ff03e6b56",
+      "c2340d1327c64c68117ed6a99fcd16d023996f985fd75003f91d659cd91deacb",
+      "9380e618159a39bb002e4a881e9387918ecef5434d00b50132adc68c65237842",
+      "4fa0577c79e561ab363400f5bc0cb37c883966ec30a740787c74b9b199f30532",
+      "4e2f9af618feb9ef8e3fb67265ce999900fc75e1e787be900644b3586d3702f0",
+      "5da69af9b95efb8a00a23dbe32535a71fe99a871a767a592d27a50aa886a555a",
+      "15ed6a3d8cfa27465e1cb0af351c6316d87a8ada6922796abcf3c79b2931b2f1"
+    ],
+    "original_manifest_sha256": "77CA5FCDB2B2364FD8B2F36EEE9479CF90C4728A06439C52929EA93E40740BB1",
+    "manifest_sha256_after": "AF6C01E307EF678C486C66FE9BD1EAD1E12AD597E095C956697C4FBF17DDB90B",
+    "entries_after": 1333,
+    "remaining_by_feature": {
+      "RF04-F01": 31,
+      "RF04-F03": 20,
+      "RF04-F04": 31,
+      "RF04-F05": 32,
+      "RF05-F02": 182,
+      "RF05-F03": 216,
+      "RF05-F04": 41,
+      "RF05-F05": 390,
+      "RF06-F02": 17,
+      "RF06-F03": 172,
+      "RF06-F04": 153,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/frameworks/session/contracts/opening-sources.js": "4B37EEF603977CD3FEFE9FF0D9C8C6467E3AD7F65D800D78DBDAB9924DA1A23E",
+    "bot/src/assembly-context.js": "BC2C71D430747A259B056BEA5C133FAAE429AE0D496726E8BB0B84B5EDB4C11B",
+    "bot/src/session-opening.js": "10BBF817014B0AFEA6B6D04165CBD0A911673312905880F9B957DF9AEA8BBEC2",
+    "bot/src/assembly-state.js": "80E02A1A92119DB0B2ACC911563AC2C8CE40F8DC2D5EB60DC607148573AA846A",
+    "bot/src/opening-cohort-state.js": "F66D40A1463F68D41F94D1FFAA72E2E93D5256813B1C4E1DC4FAABCC4DA60F95",
+    "bot/src/opening-entry-context.js": "606A523008C7DACE45F45EBCDEC111CF3717D3EB097E66C78314CA7A2E7DC36F"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C131 commit: restore the direct assembly-context, assembly-state and session-opening imports in session-opening.js, assembly-state.js, opening-cohort-state.js and opening-entry-context.js, remove assemblyHookSources from the Session assembly context slot and its bind, and restore the exact transitions from C131-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

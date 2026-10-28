@@ -1,6 +1,6 @@
 /** Session's original opening and assembly functions, each provided at load by the Session root module that composes it; Session keeps every opening rule. */
 import {createFunctionPort} from '../../../kernel/function-port.js';
-export const sessionAssemblyContextSource=createFunctionPort(['assemblyInputFingerprint','certifyAssemblyPlan','assemblyPlanFreshness'],{code:'SESSION_ASSEMBLY_CONTEXT_SOURCE_COMPOSITION',label:'Session assembly context source'});
+export const sessionAssemblyContextSource=createFunctionPort(['assemblyInputFingerprint','certifyAssemblyPlan','assemblyPlanFreshness','assemblyHookSources'],{code:'SESSION_ASSEMBLY_CONTEXT_SOURCE_COMPOSITION',label:'Session assembly context source'});
 export const sessionAssemblyStateSource=createFunctionPort(['assemblyDeliverySummary','assemblyPlanHash'],{code:'SESSION_ASSEMBLY_STATE_SOURCE_COMPOSITION',label:'Session assembly state source'});
 export const sessionOpeningSource=createFunctionPort(['inspectSessionOpening','beginSessionOpeningAttempt','assertSessionOpeningAttempt','assertSessionOpeningFence','rebaseSessionOpening','bindSessionOpeningTurn'],{code:'SESSION_OPENING_SOURCE_COMPOSITION',label:'Session opening source'});
 export const sessionOpeningCohortSource=createFunctionPort(['currentOpeningCohort','openingCohortHash','openingCohortNarrativeCandidate','inspectOpeningCohortSource','openingCohortEligible','openingCohortIsAdditive','independentOpeningCameraBasis'],{code:'SESSION_OPENING_COHORT_SOURCE_COMPOSITION',label:'Session opening cohort source'});

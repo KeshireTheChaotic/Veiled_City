@@ -2,8 +2,8 @@
 import {createHash} from 'node:crypto';
 import {currentScene,scenePresence,conversationPrincipal} from './frameworks/session/public.js';
 import {assemblyPartsFor} from './assembly-delivery.js';
-import {assemblyInputFingerprint} from './assembly-context.js';
-import {assertSessionOpeningAttempt} from './session-opening.js';
+import {sessionAssemblyContextSource,sessionOpeningSource} from './frameworks/session/public.js';
+const {assemblyInputFingerprint}=sessionAssemblyContextSource,{assertSessionOpeningAttempt}=sessionOpeningSource;
 export const assemblyHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const display=value=>JSON.stringify(value).replaceAll('@','@\u200b');
 export function assemblyPlanHash(plan){

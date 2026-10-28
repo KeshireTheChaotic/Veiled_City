@@ -1,7 +1,7 @@
 /** Session source composition; native World event issuance is fixed at application bootstrap. */
 import {createSessionOpening,sessionWorldEvents} from './frameworks/session/public.js';
-import {assemblyInputFingerprint} from './assembly-context.js';
-import {assemblyPlanHash} from './assembly-state.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource} from './frameworks/session/public.js';
+const {assemblyInputFingerprint}=sessionAssemblyContextSource,{assemblyPlanHash}=sessionAssemblyStateSource;
 const opening=createSessionOpening({assemblyInputFingerprint:(...args)=>assemblyInputFingerprint(...args),assemblyPlanHash:(...args)=>assemblyPlanHash(...args),indexWorldEvent:(...args)=>sessionWorldEvents.indexWorldEvent(...args)});
 export function rebaseSessionOpening(...args){return opening.rebaseSessionOpening(...args);}
 export function assertSessionOpeningFence(...args){return opening.assertSessionOpeningFence(...args);}
