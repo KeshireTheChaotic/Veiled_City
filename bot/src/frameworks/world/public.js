@@ -95,3 +95,4 @@ export {environmentalText} from './environment-observation.js';
 export {CIVIC_KINDS,updateCityCivic,reviewCivicChange,transmitCityBelief,attemptCityInfluence} from './city-civic.js';
 export {worldNativeEncounter} from './contracts/native-encounter.js';
 export {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates,inspectNativeEncounterCandidate} from './encounter-beats.js';
+export {establishWorldDescription,renderWorldObservation,registerWorldObservation} from './world-observation.js';

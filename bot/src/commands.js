@@ -37,7 +37,7 @@ import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/priva
 import { PermissionError, NotFoundError, StateConflictError, UserInputError } from './kernel/errors.js';
 import {isExpectedError} from './frameworks/operations/public.js';
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
-import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './historical-archive.js';
+import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
@@ -75,7 +75,7 @@ import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./character-observation.js";
-import { establishWorldDescription } from "./world-observation.js";
+import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
 import {lifecycleHash} from './lifecycle-output.js';

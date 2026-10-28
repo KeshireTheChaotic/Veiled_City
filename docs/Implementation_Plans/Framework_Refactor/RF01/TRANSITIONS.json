@@ -4058,20 +4058,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "55d71ea9a1bb29efeedb73008518de803f8a3fc72544dc7d3e2e3d0602198490",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/historical-archive.js",
-      "kind": "static",
-      "specifier": "./historical-archive.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4390084f45a33c4455ba64e614a29f09a7edcd259f187187002c5675d1799c48",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/commands.js",
@@ -4386,20 +4372,6 @@
       "to": "bot/src/character-observation.js",
       "kind": "static",
       "specifier": "./character-observation.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "14b4bc537075bda9e7c942db6e2b74523d4e2c16f7e5d9d26cc7681907a8c04c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/world-observation.js",
-      "kind": "static",
-      "specifier": "./world-observation.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

@@ -893,3 +893,7 @@ Tests: one frozen batch of 61 files: 327 tests, 327 pass, 0 fail. Architecture: 
 ## 2026-10-28 C137 corrected continuation
 
 Reviewed HEAD631c31ec and inherited C137. Session setup implementation moved into Session and application callers use public API; preserved root re-export because existing documented legacy validation scripts still import it. Restored exact root location obligation; two app import records retired. Original193/193 batch retained as diagnostic under strict test policy. Fresh changed-code compatibility test1/1 passes with exact function identity; current RF04 gate passes819 modules/zero unowned/active/errors, largest cycle79, RF05 remains83 groups/errors. Positive setup workflow and live behavior remain unqualified. RF04 incomplete; release unauthorized.
+
+## 2026-10-28 C138-C139
+
+C138 moves World observation into World with root identity/registration retained and explicit existing-bootstrap registration (3/3 fresh tests). C139 adopts Knowledge archive public API in command dispatch (1/1 fresh hook/fake dispatcher test). Two exact import records retired; required root readers remain. Source fingerprints distinguish the earlier C138 and later C139 commands bytes. RF04 ratchet passes820 modules/zero unowned/active/errors, largest cycle79; RF05 remains83 groups/errors. Exact RF06 prerequisite authority is recorded in RF06-PREREQUISITE-AUTHORIZATION.md; no blanket phase waiver. RF04 incomplete; release unauthorized.
