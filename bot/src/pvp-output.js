@@ -28,7 +28,7 @@ import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
 import {projectNarrativeArtifact} from './narrative-artifacts.js';
 import {assertSessionOpeningPublication} from './session-opening.js';
-import {openingEntryNarrativeCandidate,openingEntryProjection} from './opening-entry-context.js';
+function openingEntryNarrativeCandidate(...args){return publicationSessionEvidence.openingEntryNarrativeCandidate(...args);}function openingEntryProjection(...args){return publicationSessionEvidence.openingEntryProjection(...args);}
 import {publicationSessionEvidence} from './frameworks/publication/public.js';
 function openingEntryEvidence(...args){return publicationSessionEvidence.openingEntryEvidence(...args);}
 function assemblyCoverageEvidence(...args){return publicationSessionEvidence.assemblyCoverageEvidence(...args);}

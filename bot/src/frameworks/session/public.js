@@ -39,3 +39,4 @@ export {sessionOpeningWorld} from './contracts/opening-world.js';
 export {sceneSetupAvailability,prepareSceneSetup,confirmSceneSetup,applyAuthoredInitialPosition} from './scene-setup-service.js';
 export {sessionNativeVipAdmission} from './contracts/native-vip-admission.js';
 export {openingCohortNarrativeCandidate,inspectOpeningCohortSource} from './opening-cohort-state.js';
+export {openingEntryProjection,openingEntryNarrativeCandidate} from './opening-entry-source.js';

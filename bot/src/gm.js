@@ -69,7 +69,7 @@ import {sceneObservationOperation,narrativeModel} from './frameworks/narrative/p
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,narrativeResponseSchema} from './narrative-authority.js';
 import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/public.js';
-import {openingEntryNarrativeCandidate} from './opening-entry-context.js';
+import {openingEntryNarrativeCandidate} from './frameworks/session/public.js';
 import {nativeOutcomeSchema,narrativeRequestSchema} from './frameworks/narrative/public.js';
 import {coordinateNarrative} from './narrative-delegation.js';
 import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';

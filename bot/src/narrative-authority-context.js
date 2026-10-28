@@ -17,7 +17,7 @@ import {registerNarrativeContext} from './audience-native-v9.js';
 import {assemblyWriterBrief} from './assembly-context.js';
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';
-import {openingEntryProjection} from './opening-entry-context.js';
+function openingEntryProjection(...args){return narrativeOpeningCohort.openingEntryProjection(...args);}
 import {narrativeNativeEnvironment} from './frameworks/narrative/public.js';
 function nativeEnvironmentSituation(...args){return narrativeNativeEnvironment.nativeEnvironmentSituation(...args);}
 import {narrativeOpeningCohort} from './frameworks/narrative/public.js';

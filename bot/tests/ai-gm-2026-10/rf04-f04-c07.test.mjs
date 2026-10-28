@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {initializeSessionWorldEvents} from '../../src/application/composition/public.js';
 import {prepareOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
-import {openingEntryProjection,openingEntryNarrativeCandidate} from '../../src/opening-entry-context.js';
+import {openingEntryProjection,openingEntryNarrativeCandidate} from '../../src/frameworks/session/opening-entry-source.js';
 import {authorNarrativeRequests} from '../../src/narrative-authority.js';
 import {prepareOpeningEntryOutput,assertPvpOutput} from '../../src/pvp-output.js';
 import {scenePresence} from '../../src/scene-continuity.js';

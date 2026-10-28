@@ -1,12 +1,12 @@
 /** Original source composition; native World event issuance is fixed at Session bootstrap. */
-import {createOpeningEntryContext,sessionWorldEvents} from './frameworks/session/public.js';
-import {inspectOpeningEntryOpportunity} from './session-opening-attendance.js';
-import {sessionAssemblyContextSource} from './frameworks/session/public.js';
+import {createOpeningEntryContext} from './opening-entry-context.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
+import {sessionAssemblyContextSource,sessionOpeningAttendanceSource,sessionOpeningEntrySource} from './contracts/opening-sources.js';
+import {currentScene} from './scene-source.js';
 const {assemblyHookSources}=sessionAssemblyContextSource;
-import {currentScene} from './scene-continuity.js';
+const inspectOpeningEntryOpportunity=(...args)=>sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity(...args);
 const entry=createOpeningEntryContext({inspectOpeningEntryOpportunity:(...args)=>inspectOpeningEntryOpportunity(...args),assemblyHookSources:(...args)=>assemblyHookSources(...args),currentScene:(...args)=>currentScene(...args),indexWorldEvent:(...args)=>sessionWorldEvents.indexWorldEvent(...args)});
 export function openingEntryProjection(...args){return entry.openingEntryProjection(...args);}
 export function openingEntryNarrativeCandidate(...args){return entry.openingEntryNarrativeCandidate(...args);}
-import {sessionOpeningEntrySource} from './frameworks/session/public.js';
 // Provide this module's original opening entry functions to the fixed Session slot; no other authority is granted.
 sessionOpeningEntrySource.bind({openingEntryProjection,openingEntryNarrativeCandidate});

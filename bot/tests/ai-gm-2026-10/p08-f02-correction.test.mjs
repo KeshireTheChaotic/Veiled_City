@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {assemblyHookSources,assemblyInputFingerprint,assemblyWriterBrief,assemblyInputs} from '../../src/assembly-context.js';
 import {prepareOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
-import {openingEntryProjection} from '../../src/opening-entry-context.js';
+import {openingEntryProjection} from '../../src/frameworks/session/opening-entry-source.js';
 import {disposableCampaign} from './p08-correction-fixture.mjs';
 
 test('nested export visibility stays out of owner and writer projections while GM planning retains its separate hook source',()=>{

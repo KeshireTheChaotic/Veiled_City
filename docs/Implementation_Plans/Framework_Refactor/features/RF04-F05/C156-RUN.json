@@ -1,0 +1,288 @@
+{
+  "feature": "RF04-F05-C156",
+  "base_head": "d2c724473c21453bfa8bfcec84d3fcec6e95fdb6",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/gm.js",
+      "bot/src/pvp-output.js",
+      "bot/src/narrative-authority-context.js",
+      "bot/src/frameworks/session/opening-entry-source.js",
+      "bot/src/frameworks/narrative/contracts/opening-cohort.js",
+      "bot/src/frameworks/publication/contracts/session-evidence.js",
+      "bot/tests/ai-gm-2026-10/rf04-f06-c56.test.mjs"
+    ],
+    "passed": 7,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p05-f01.test.mjs",
+        "sha256": "FBB28BAB0BAD7A3FE389D4A7153B6C1999EEE17F75B1C2A49D76FB6E58E355E9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f23.test.mjs",
+        "sha256": "C7B71D912F038D8231EABCAA9001C2F04EF5F8A6D23E968AD1F9FD63882C3949"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p07-f24.test.mjs",
+        "sha256": "BD38DFEB8AC1885AF1FAB134D46C128655FBE87FEF7D4FC71D8D1A062D1C1E1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-correction-completion.test.mjs",
+        "sha256": "8813D1B052AD4601F880033D3C90F9A5B990CEA161E5B6E0919FBDABA3C5920A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f02-correction.test.mjs",
+        "sha256": "1AB11E8E46FF0C47203B844A8A587DB33AB3871DBF228473871A25CD57EAC342"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f03-final-three-20261022.test.mjs",
+        "sha256": "77DCEC7E9DFEAB76DBAEB93F4F692B696401036633FC3AEFE7446EF4312B13CC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p08-f04-correction.test.mjs",
+        "sha256": "EDFF51C692E8E45CA28780416B3FF3FBCA09F56103353F16D844C4933363351C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p10-f08.test.mjs",
+        "sha256": "A0A8B624D3178A147FCD2518EC466571C444FBE4E4873161A63344D65E87FFD9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "sha256": "C0F9435EB9E505556081C50655D0FAFE6F34CCA04CF7EE9B95665DDA38CCFED7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "sha256": "5342B579BA70F9E051802DC5FB282B8EAFFD0CC44D2F211E70578C9430A3A201"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "sha256": "793E64D990F57FD010A1973D0AA64D81D1C3D349C2C9FCB6512423D2EA956A3B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "sha256": "66A628692BD1BD516E0475F3F05B0A0DAD91F4A01151694813F6BFE48A47A6E7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "sha256": "75ECF7262E7F5A4CE19994A10D0A2D580FCDF741CD7BB1FB09C72D15FB49F8D5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c11.test.mjs",
+        "sha256": "9AD0116D6DAD800919950EEE9436C45ECDC0EA9989A169E561C90D1276BEFCF3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-positive-consent.test.mjs",
+        "sha256": "25620418B4DD188FEF0CF18D2EC2F7F934F657F5FBA8913851E967E14ED45D7E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "sha256": "523F922F766B425E4871E92B9746F535D100A6B917136A97510F680D35FD44B0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "sha256": "8960542EDF82E7E9010145C6B876C6E2C8B582680228B4A190E65DD088442B55"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "sha256": "2C476EB087A2C0C6F9EE5BC3E3B2B0713157C21324843E6162CA1685005D2410"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c104.test.mjs",
+        "sha256": "71A364290A81E7E7B2C5EF1DC8561FDA952019FB284166832AC1CED367769FE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "sha256": "F5F6D6FFFDF58F2D6B880E73E9C71589247E87AB35EBFCA75CE5DF8011D3CC24"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-instance.test.mjs",
+        "sha256": "2443895443BF6BE02981B41345425D460C51141F20BBE39737A2C0F14502E7F9"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c65-private-port.test.mjs",
+        "sha256": "680F494AB6494F6661C756C8654BDF4D2872B91EA16218903CBC0E12ED3B938F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c53.test.mjs",
+        "sha256": "CA4615C6CADC6AA814714BEF07E8E86E0201C6E08FD35A1410BD24D22C86D515"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c54.test.mjs",
+        "sha256": "42F5CE4E79CF0C1ADFD89B93BC22EB7C2347D89133D7192D919020A5CBE76711"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c55.test.mjs",
+        "sha256": "8A19C6A64AFA4D9779A09273ECFDD256B52DC093F1483B27ED211CD0AE55604F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-c56.test.mjs",
+        "sha256": "F52B834C4FEC606F9CFB7B5F1C5BECF1AB3CD1FAF0C8F14EA0DA1F97C5307462"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+        "sha256": "C05E2757860091E8FB147B3F0E9A4D944BDA255213271A3A6F92B6CE7620A412"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f02-model-transport.test.mjs",
+        "sha256": "61CB01C78EF723F69777FA6969FF321E16A33A88C9637FB7AB3207EC464F705A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f03-c02.test.mjs",
+        "sha256": "4AC2DB877406009C2FD44568C6EE2836FFC7CCE75DCF0F2988B0685FC11D3BA5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c02.test.mjs",
+        "sha256": "46BBA60461D70518285805D7DB789A86D02A97DB5DDA4F33AEAFFFB37800E7A5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c03.test.mjs",
+        "sha256": "70C5CFE574BAED1818BD3F05F8698AB9758A61C2A1FE44883ADE0FE8DD43ACD5"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c05.test.mjs",
+        "sha256": "25A121360C5271ED88BA639EAA7BF8F43F45ADB4F5FEA0B3B4C760243B38EDDF"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c06.test.mjs",
+        "sha256": "5C53AA6A251724612EC7146B4B6D527D5534941C79C206820C3F04417C9C236F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c07.test.mjs",
+        "sha256": "DB50482D430F738D6A3BDF8FB652196541C3B2FF89440E9825F052C7D54A9527"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c08.test.mjs",
+        "sha256": "2E5BE6A3554C78944F60749FAB274D2498CABB5B28273FFC72B2286BBBFD6DD7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs",
+        "sha256": "633666D3FB093868003B9D11F00173E40757B35145F04D066B270EF9BDB44194"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c10.test.mjs",
+        "sha256": "083E2A6EB26E12F73030930C8745D86EE5B9D4406C665D4876BD3A5C7BB33EC3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c11.test.mjs",
+        "sha256": "1BC733EC4ED89572D335FE524D289C227860F113212B066937B44888CFC0DF2B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c12.test.mjs",
+        "sha256": "A7069E8A42A29A001CDFB83BEB725ED4AEDABB161385E40DFFD4696D8D4F88F0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c13.test.mjs",
+        "sha256": "75E2403A1C7BA35DA1C7BF967FBA58783C9F90FF731174E4C9177F7EDC00A907"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c15.test.mjs",
+        "sha256": "EDE714B20A51565B523FB403FE032B8A4F807BCEF7255ADAA88EDF88555FF3A1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+        "sha256": "515BA265756F9423A7201BB6E69E083E83F19F12372E49B35BF6AD4DF31A7F8B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf05-f04-c23.test.mjs",
+        "sha256": "8DDEBA0771FCEC25A7666F2F0108828CE9D67F24BF630E3B76BDF43FDA219E38"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T19:42:26.437Z",
+    "end": "2026-10-28T19:43:32.386Z",
+    "exit_code": 0,
+    "tests": 128,
+    "passed": 128,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 65912.6215,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c156-test.log",
+    "log_sha256": "57193EDD1299F976F61E7C3E754473718C55DEC78D3BC7CB87E6E14BED990F50",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3445,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1274,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c156-rf04-architecture.log",
+      "log_sha256": "DD417B82ECC815A4F557758F7DF5E6FEEDFDD5D9D929105E20C25C57B2514957",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 839,
+      "unowned": 0,
+      "imports": 3445,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1203,
+      "active_violation_groups": 71,
+      "transition_errors": 71,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c156-rf05-architecture.log",
+      "log_sha256": "E83C2D503C4EA5C680F8E34F6A38440ADA197D81DDF852EC168CF9C78DD9F7AE",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "5d0bc66de6a617da09be159d56ee11efa42075606711c4ad31b675173223d3b8",
+      "9a0e13102bc672a47791ea16baca6eed083e28e8c286aab9c022cbdb43676fab",
+      "bf2492689883974403a199167cbff77cdf7b904a52ef5bf1717c9f9813655c0a",
+      "217dfb10d18f25819d09fa39365ec6cb38f985ebcf82e6444b76eddcb27ff399"
+    ],
+    "original_manifest_sha256": "FE8DF49662116A568FFFB037B410C115FC3A1E1E452CCCBD98C3DAEFC2B3F47D",
+    "manifest_sha256_after": "E166FA60847DF25F1782E9D4A4BB1BF4299BEF4EA312BA2AB0BF272539B167FA",
+    "entries_after": 1263,
+    "remaining_by_feature": {
+      "RF04-F01": 27,
+      "RF04-F03": 17,
+      "RF04-F04": 21,
+      "RF04-F05": 6,
+      "RF05-F02": 180,
+      "RF05-F03": 208,
+      "RF05-F04": 39,
+      "RF05-F05": 388,
+      "RF06-F02": 16,
+      "RF06-F03": 167,
+      "RF06-F04": 146,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/gm.js": "A29D550185A4462590B47D7B5FAB70DD881F00D1EB6C1BA27308F31BE3BA2F77",
+    "bot/src/pvp-output.js": "9976C1ED97289D9476AB8D1F63393BD0AB473709B404F49EDF393D3582B2D238",
+    "bot/src/narrative-authority-context.js": "940969FFA0C4C2CA990B417DAA21B508200A4D72361038B30660663CC80C2D33",
+    "bot/src/frameworks/session/opening-entry-source.js": "E49347D8F4328865188E75C0C007CDD3B28E43E2D32890E86C180646A9722556",
+    "bot/src/frameworks/narrative/contracts/opening-cohort.js": "2665AC1FB503F36D86FE692E19ABD678780BA717BBE40C15B96908FECB8F1993",
+    "bot/src/frameworks/publication/contracts/session-evidence.js": "31B015292F59E78D083975F060AC58563A0DAFFFCC68E02C4B95C0CFD9BAACFF"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C156 commit: move opening-entry-source.js back to bot/src/opening-entry-context.js, restore gm.js, pvp-output.js and narrative-authority-context.js imports, drop the added port names and adapter bindings, and restore the transitions from C156-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}
