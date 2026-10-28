@@ -726,10 +726,12 @@
       "lifecycle": "Consumer bound in native World evidence startup before runtime services; no database construction or mutation.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/native-world-evidence.js"
+        "bot/src/application/composition/native-world-evidence.js",
+        "bot/src/application/composition/personal-continuity.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c78.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c78.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c90.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2245,10 +2247,12 @@
       "lifecycle": "One fixed consumer port bound by application composition at index bootstrap before runtime services. No database/model/client/state write during composition.",
       "adoption_feature": "RF04-F05",
       "consumers": [
-        "bot/src/application/composition/knowledge-session.js"
+        "bot/src/application/composition/knowledge-session.js",
+        "bot/src/application/composition/personal-continuity.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c62.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c90.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2311,7 +2315,8 @@
       "adoption_feature": "RF04-F05",
       "consumers": [
         "bot/src/application/composition/knowledge-world.js",
-        "bot/src/application/composition/world-candidate-context.js"
+        "bot/src/application/composition/world-candidate-context.js",
+        "bot/src/application/composition/personal-continuity.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
@@ -2320,7 +2325,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c22.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c49.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c90.test.mjs"
       ],
       "observed_directions": [
         {

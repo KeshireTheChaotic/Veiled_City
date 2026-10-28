@@ -1,5 +1,6 @@
 /** Closed native renderers. Persisted text is never an authorization or a model-controlled template. */
-import {personalCharacter} from './personal-continuity.js';
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {formatRollRequest} from './roll-requests.js';
 import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 import {inspectOrdinaryRollModifier} from './native-roll-modifiers.js';

@@ -3,7 +3,8 @@ const openActionWindow=(...args)=>nativeSessionActionWindow.openActionWindow(...
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {validateDamagePvp} from "./pvp-profiles.js";
-import {personalCharacter} from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {validatePvpAttackRoll,attackReviewAuthority} from "./pvp-attacks.js";

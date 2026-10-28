@@ -1,5 +1,6 @@
 /** Existing provider composition only; native policy is implemented in Daggerheart. */
-import { personalCharacter } from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import { requireCitySource } from "./city-core.js";

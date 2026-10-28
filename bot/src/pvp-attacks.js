@@ -1,6 +1,7 @@
 /** Native PC attacks. A model cannot select mechanics, sign for either owner, roll or mint receipts. */
 import {validateDamageAttackIntent} from "./pvp-profiles.js";
-import {personalCharacter} from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

@@ -136,3 +136,4 @@ export {establishNativeEnvironmentInstance,inspectNativeEnvironmentInstance,nati
 export {environmentSceneCapabilities,environmentSceneService,validateMundaneEnvironmentDetail,validateMaintenanceMemoryFact,applyEnvironmentSceneAction,inspectEnvironmentSceneEffect,environmentSceneProjection,nativeEnvironmentSituation} from './native-environment-scene.js';
 export {nativeActionConsentSource} from './contracts/action-consent-source.js';
 export {nativeSessionActionWindow} from './contracts/session-action-window.js';
+export {nativePersonalContinuity} from './contracts/personal-continuity.js';

@@ -4088,20 +4088,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "b390cfb12898be3db4d658922b26df7efa96727ed1cc922d09a65759c8976416",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/autonomous-world.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "ec0b7ffe219dc1c0a43b2ac443c539ce7f2d3ec78511315ce8c13b22c082fc13",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/autonomous-world.js",
@@ -5444,20 +5430,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "bb642377751bdbc8f1319efe49dd8a5aa7d26ecce395cbb17b6d4e14626babf2",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/consent-native.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "00f0786d900b8ee56176737b01f84bccac6ab4b63411193b1c714db5df91fa48",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/consent-native.js",
@@ -5779,20 +5751,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ef29050a18b631e5454ac26e58e52e73bf628e63c5d4365a129ff60761e2379c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/dialogue-continuity.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "4dc2f4bb13f791338345a2876125abb78bd93e71b0249edd63326b596d690fcc",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/dialogue-continuity.js",
@@ -6031,20 +5989,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "69731f3682a203967989ed62490d3df5dd7984a612a556325e895bfb187fe197",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-action-review.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "bb4ac86e5af903b380e468d8055e6ce9c58326087a18978b490308246ee1fa3c",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-arbitration-output.js",
@@ -6237,20 +6181,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "b2b57c848ea3654c4dae37dc8c1090daf90e5b8042a9ea440b7d07029b975125",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-native-rolls.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -9362,20 +9292,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "8236572e64d935e705de713ecbd92ca5a68fcdc8a55d2ee9f2fa294abe9948cb",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-experience-eligibility.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "29ac5f619d283b4b7d34074134120e20a7ca44f28d2fd5203712c15cc61df58d",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-feature-effects.js",
@@ -9400,20 +9316,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "d0a669e119d9adfcfe6fa143d8d64b111569bd74e9f476fb1707226df4089821",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-group-features.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -9484,20 +9386,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "458ed966ac1af86bdb0a548311d0f2a9d1b89242c51f318bd8072a88d2861df7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-notice.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -10258,34 +10146,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "38a38088d2465ea0604d07c25129176196a3b9090806bdfef6b357bcf8a3d928",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pc-effects.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "2b9b768c23428cae26b9d302ea65d140d8a33886b2eeb9adb9f5be40553c932c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pc-incoming.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d145aa35abdeaaea76d27a9d9152bc61a5b793f450d0568e685e9caaea6bef22",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/personal-continuity.js",
@@ -10677,20 +10537,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "8fbf456942933d97c4727acac9a9f08ff11d85185a9852ba31f50688cd5f47e2",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-attacks.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "6aadf1bc90dcf0e4e902fae3516bde641bd1abcba506563ebf735bab843787b3",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-attacks.js",
@@ -10757,34 +10603,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "562a805ceda66a6b8f5c86d2d0ce7d54dc3e3fdb2abd2a7e8806f9932ac213de",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-brawl.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "efc72a35200484b37dbfd9b18a2523ca764f944c0628dc8ea521e52241024607",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-damage.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -11615,20 +11433,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "d7c542f28bd09d14972411f9f0e9b0e811599ae61dbb83c5ad2157ae8ef8ebc7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-reactions.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "5d239cb5ae332cc5b327f98654d6f0e5128b717fa41ef0d8452a69ad40882199",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-rounds.js",
@@ -11741,20 +11545,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "6b5134e25aa0e8a18d668a48f2d7a450ca47925dfa4d3a17d3392db673dac4c6",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/roll-collaboration.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "0152b98db2833200409fc094771ad5c45c84e099460f30944fa7b1fba83cf1f5",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/roll-collaboration.js",
@@ -11764,20 +11554,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "b8344ccdf84095dfe0766ba3ee92be6554f957a21988be9019efe314d87eac5c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/roll-declaration-review.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -11877,20 +11653,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "1115f3a7952eb48e3bb2ab276779db6ddfbf0ef225b3edf6b3743d202a8e9699",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/roll-requests.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F03",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -12035,20 +11797,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "3fa46447aea3b0d8e66781566b7066a0e56c04e348ca75d5456359f38eed0bfa",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-entry-native.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "763acf68745c78ae37b24adc3f4c1bc6dfa3be9b04f03b492ab5f0d3b2b254e7",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/scene-entry-native.js",
@@ -12083,20 +11831,6 @@
       "to": "bot/src/native-environment-access.js",
       "kind": "static",
       "specifier": "./native-environment-access.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "71a732a87bfe5055792dfd1990878f1f3f463758962279f6302c004b083a69b7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-entry.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
@@ -12562,20 +12296,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "11e24ee6520db2b3238f3b198b1e929f5998814fa630833cfba847f1445ae4f5",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/session-briefs.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -13550,20 +13270,6 @@
       "to": "bot/src/city-core.js",
       "kind": "static",
       "specifier": "./city-core.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "3fe279d5db4a37d4c7a9bd8353e17520bf9929244e47f19dcbc5a4371d577a89",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/story-continuity.js",
-      "to": "bot/src/personal-continuity.js",
-      "kind": "static",
-      "specifier": "./personal-continuity.js",
       "owner": "session",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",

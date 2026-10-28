@@ -1,5 +1,6 @@
 /** Native saved entry review/policy/resolve; no lexical route or capture. */
-import {personalCharacter} from './personal-continuity.js';
+import {sessionPersonalContinuity} from './frameworks/session/public.js';
+function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
 import {currentScene,recordScenePresence} from './scene-continuity.js';
 import {stateRevision} from './kernel/state-revision.js';
 import {sessionWorldEvents,sessionSceneWorldSources} from './frameworks/session/public.js';

@@ -3,7 +3,8 @@ import {sessionSceneWorldSources} from './frameworks/session/public.js';
 function cityObject(...args){return sessionSceneWorldSources.cityObject(...args);}function cityKey(...args){return sessionSceneWorldSources.cityKey(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 import { requireCitySource } from "./city-core.js";
 function cityVisibility(...args){return sessionSceneWorldSources.cityVisibility(...args);}
-import { personalCharacter } from "./personal-continuity.js";
+import {sessionPersonalContinuity} from './frameworks/session/public.js';
+function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
 import {stateRevision} from './kernel/state-revision.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import {explicitSilence,semanticResponseObligation} from './gameplay-intake.js';

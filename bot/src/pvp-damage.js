@@ -1,7 +1,8 @@
 /** Native damage is a separate target-owned transaction, never narration or a narrative contest score. */
 import {validatePvpAttackRoll,campaignAttackActorHash} from "./pvp-attacks.js";
 import {validateDamagePvp} from "./pvp-profiles.js";
-import {personalCharacter} from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {pendingPvpFear} from "./pvp-fear-gate.js";

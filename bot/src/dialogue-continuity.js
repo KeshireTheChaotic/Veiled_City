@@ -1,5 +1,6 @@
 /** Authored speech and actor-owned interpretations extend native NPC memories, never canon or consent. */
-import { personalCharacter } from "./personal-continuity.js";
+import {sessionPersonalContinuity} from './frameworks/session/public.js';
+function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
 import { sceneAccess, sceneView, scenePresence, currentScene } from "./scene-continuity.js";
 import {sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}

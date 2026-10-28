@@ -1,4 +1,5 @@
-import { personalCharacter, personalArc } from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}function personalArc(...args){return nativePersonalContinuity.personalArc(...args);}
 import { organizationRequest } from "./owned-community.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { manageEvidence } from "./evidence-custody.js";

@@ -2,6 +2,8 @@ import {createHash} from 'node:crypto';
 import {initializeNativeWorldEvents} from '../../src/application/composition/public.js';
 initializeNativeWorldEvents();
 import test from 'node:test';import assert from 'node:assert/strict';
+import {initializePersonalContinuity} from '../../src/application/composition/public.js';
+initializePersonalContinuity();
 import {initializeNativeScenes} from '../../src/application/composition/public.js';
 initializeNativeScenes();
 import {initializeNativePrincipals} from '../../src/application/composition/public.js';

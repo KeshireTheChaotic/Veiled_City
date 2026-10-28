@@ -77,3 +77,4 @@ export {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './npc-sig
 export {createWorldEstablishedEvidenceConsumer,worldEstablishedEvidence} from './contracts/established-evidence.js';
 export {nativeEstablishedFact} from './established-fact-proof.js';
 export {worldAuthoringContext} from './contracts/authoring-context.js';
+export {worldPersonalContinuity} from './contracts/personal-continuity.js';

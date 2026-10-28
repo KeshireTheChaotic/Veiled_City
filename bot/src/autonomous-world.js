@@ -2,7 +2,8 @@
 import { createHash } from "node:crypto";
 import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
-import { personalCharacter } from "./personal-continuity.js";
+import {worldPersonalContinuity} from './frameworks/world/public.js';
+function personalCharacter(...args){return worldPersonalContinuity.personalCharacter(...args);}
 import { indexWorldEvent, cityAudit, cityObject } from "./city-calendar.js";
 import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}

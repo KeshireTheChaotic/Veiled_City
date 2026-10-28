@@ -35,3 +35,4 @@ export {ContextPlanner} from './context-planner.js';
 export {createKnowledgeWorldHistoryConsumer,knowledgeWorldHistory} from './contracts/world-history.js';
 export {createKnowledgeNpcActorSourceConsumer,knowledgeNpcActorSource} from './contracts/npc-actor-source.js';
 export {personalCharacter} from './personal-character.js';
+export {knowledgePersonalContinuity} from './contracts/personal-continuity-source.js';

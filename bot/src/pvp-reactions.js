@@ -1,7 +1,8 @@
 /** Source-backed hazard reactions during PvP reuse native owner roll requests; they never change an independent attack. */
 import {validatePvpAttackRoll} from "./pvp-attacks.js";
 import {consentAction,completedActionSource} from "./action-consent.js";
-import {personalCharacter} from "./personal-continuity.js";
+import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
+function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {prepareRollRequest,formatRollRequest,rollRevision} from "./roll-requests.js";
 import {adjudicateRollSource,contributeRoll} from "./roll-collaboration.js";
 

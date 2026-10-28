@@ -29,3 +29,7 @@ export function connectWorldKnowledgeClusters(){return worldKnowledgeClusters.bi
 import {evidenceType,objectiveEvidence} from '../../frameworks/knowledge/public.js';
 import {worldEstablishedEvidence} from '../../frameworks/world/public.js';
 export function connectWorldEstablishedEvidence(){return worldEstablishedEvidence.bind({evidenceType,objectiveEvidence});}
+
+import {personalCharacter as knowledgePersonalCharacter} from '../../frameworks/knowledge/public.js';
+import {worldPersonalContinuity} from '../../frameworks/world/public.js';
+export function connectWorldPersonalContinuity(){return worldPersonalContinuity.bind({personalCharacter:knowledgePersonalCharacter});}

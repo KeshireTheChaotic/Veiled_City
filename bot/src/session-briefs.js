@@ -1,5 +1,6 @@
 /** Read-only reconstructed brief views. Public text never inherits GM planning, private thoughts or raw event details. */
-import { personalCharacter, personalInbox } from "./personal-continuity.js";
+import {sessionPersonalContinuity} from './frameworks/session/public.js';
+function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}function personalInbox(...args){return sessionPersonalContinuity.personalInbox(...args);}
 import { reconcileHistory } from "./history-reconciliation.js";
 import { evidenceType, activeEvidence } from "./epistemic.js";
 import { scopedSessionRecap } from "./pvp-output.js";

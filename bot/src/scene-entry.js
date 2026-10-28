@@ -1,5 +1,6 @@
 /** Authenticated entry declarations preserve intended destinations; native autonomous actions adjudicate ordinary travel separately. */
-import { personalCharacter } from "./personal-continuity.js";
+import {sessionPersonalContinuity} from './frameworks/session/public.js';
+function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
 import { captureDeclaration, interpretAuthoredText } from "./player-language.js";
 import { recordCharacterArrival, currentScene } from "./scene-continuity.js";
 import {stateRevision} from './kernel/state-revision.js';

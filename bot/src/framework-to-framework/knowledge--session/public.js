@@ -3,3 +3,7 @@ import {currentScene,sceneView,scenePresence,conversationPrincipal,overlapsOwner
 /** Pass Session's original scene and principal readers to Knowledge unchanged. */
 export function connectKnowledgeSessionScene(){return knowledgeSessionScene.bind({currentScene,sceneView,scenePresence,conversationPrincipal});}
 export function connectKnowledgeSessionOwnerTerminal(){return knowledgeSessionOwnerTerminal.bind({overlapsOwnerActionTerminal});}
+
+import {knowledgePersonalContinuity,personalCharacter} from '../../frameworks/knowledge/public.js';
+import {sessionPersonalContinuity} from '../../frameworks/session/public.js';
+export function connectSessionPersonalContinuity(){return sessionPersonalContinuity.bind({personalCharacter,personalInbox:knowledgePersonalContinuity.personalInbox});}

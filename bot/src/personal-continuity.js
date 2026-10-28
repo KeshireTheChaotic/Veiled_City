@@ -18,3 +18,6 @@ export function proposeArcBeat(...args){return personal().proposeArcBeat(...args
 export function captureArcCandidate(...args){return personal().captureArcCandidate(...args);}
 export function personalInbox(...args){return personal().personalInbox(...args);}
 export function discoverPersonal(...args){return personal().discoverPersonal(...args);}
+import {knowledgePersonalContinuity} from './frameworks/knowledge/public.js';
+// Provide this module's original readers to the fixed Knowledge slot; no other authority is granted.
+knowledgePersonalContinuity.bind({personalArc,personalInbox});
