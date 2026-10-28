@@ -141,3 +141,4 @@ export {nativeWorldAutonomy} from './contracts/world-autonomy.js';
 export {nativeActionContinuation} from './contracts/action-continuation.js';
 export {nativePcActionEligibility,nativePvpResolutionReceipt,nativePvpPendingFear,nativePvpDamageApplication,nativePvpAttackRoll,nativeTypedRollProof} from './contracts/continuation-checks.js';
 export {nativeMovementAdjudication,nativeMovementCondition,nativeVipAdmissionSource} from './contracts/movement-checks.js';
+export {nativeWorldActions} from './contracts/world-actions.js';

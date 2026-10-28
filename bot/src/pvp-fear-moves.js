@@ -8,7 +8,8 @@ import { pvpOwnerContext } from "./narrative-pvp.js";
 import { validatePvpRoundReceipt } from "./pvp-rounds.js";
 import { fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
-import { configureSimulationEntity, submitNpcAction } from "./simulation.js";
+import {nativeWorldActions} from './frameworks/daggerheart/public.js';
+function configureSimulationEntity(...args){return nativeWorldActions.configureSimulationEntity(...args);}function submitNpcAction(...args){return nativeWorldActions.submitNpcAction(...args);}
 import {nativeWorldProxy,nativeNpcAvailability} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}function assertNpcAvailability(...args){return nativeNpcAvailability.assertNpcAvailability(...args);}
 import { validateWorldEncounterActivation, EncounterLibrary } from "./encounter.js";
@@ -18,8 +19,8 @@ import {assertBrawlFearOrder,orderedBrawlFear} from "./pvp-brawl.js";
 import {incomingAttackEvidence,rollAutonomousFearIncomingAttack} from "./pc-incoming.js";
 import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
 function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
-import {validateMinorIdentity} from "./city-depth.js";
-import {preflightNpcIdentity} from "./location-language.js";
+function validateMinorIdentity(...args){return nativeWorldActions.validateMinorIdentity(...args);}
+function preflightNpcIdentity(...args){return nativeWorldActions.preflightNpcIdentity(...args);}
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
 function worldAuthority(...args){return nativeWorldAutonomy.worldAuthority(...args);}
 import {consentAction} from "./action-consent.js";

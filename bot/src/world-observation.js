@@ -85,3 +85,6 @@ export function renderWorldObservation(db,guild,query,scope){
       :greeting||descriptions.length&&`Visible established details of ${name}: ${descriptions.join(", ")}.`
         ||`${name} is nearby, but those visible details are not established in enough detail to report reliably.`};
 }
+import {worldObservationSource} from './frameworks/world/public.js';
+// Provide this module's original observation renderer to the fixed World slot; no other authority is granted.
+worldObservationSource.bind({renderWorldObservation});

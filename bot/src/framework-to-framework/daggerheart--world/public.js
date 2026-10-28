@@ -39,3 +39,8 @@ import {nativeMovementAdjudication,nativeMovementCondition,nativePcActionEligibi
 import {worldNativeMovementChecks} from '../../frameworks/world/public.js';
 /** Pass native rules' original movement, eligibility and VIP admission checks to World unchanged. */
 export function connectWorldNativeMovementChecks(){return worldNativeMovementChecks.bind({movementAdjudication:nativeMovementAdjudication.movementAdjudication,nativeMovementConditionIssue:nativeMovementCondition.nativeMovementConditionIssue,assertPcCanAct:nativePcActionEligibility.assertPcCanAct,nativeVipAdmission:nativeVipAdmissionSource.nativeVipAdmission});}
+
+import {nativeWorldActions} from '../../frameworks/daggerheart/public.js';
+import {worldLongProjectSource,worldObservationSource,worldCityDepthSource,configureSimulationEntity,submitNpcAction,preflightNpcIdentity} from '../../frameworks/world/public.js';
+/** Pass World's original project, observation, simulation and identity functions to native rules unchanged. */
+export function connectNativeWorldActions(){return nativeWorldActions.bind({manageLongProject:worldLongProjectSource.manageLongProject,projectPhaseRevision:worldLongProjectSource.projectPhaseRevision,renderWorldObservation:worldObservationSource.renderWorldObservation,configureSimulationEntity,submitNpcAction,validateMinorIdentity:worldCityDepthSource.validateMinorIdentity,preflightNpcIdentity});}

@@ -122,3 +122,6 @@ export function reviewMinorNpc({db,content,guildId,input,actorId}){
     cityAudit(db,guildId,"minor_npc_review",before.record_key,before,after,actorId);return after;
   });
 }
+import {worldCityDepthSource} from './frameworks/world/public.js';
+// Provide this module's original minor identity validator to the fixed World slot; no other authority is granted.
+worldCityDepthSource.bind({validateMinorIdentity});

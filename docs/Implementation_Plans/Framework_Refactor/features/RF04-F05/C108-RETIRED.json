@@ -1,0 +1,77 @@
+{
+  "feature": "RF04-F05-C108",
+  "original_manifest_sha256": "1490A68882BA4C609F1CDD3F671D6BB120009BD2E9EBBB5FFBD0F58C6DBE7F2A",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "58dbfece33ad021b4c12dd1425085eef6d2ea678d79daa84fcb810c4587168f0",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/consent-native.js",
+      "to": "bot/src/long-projects.js",
+      "kind": "static",
+      "specifier": "./long-projects.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "a582e8111d5d1a4e56bc4136bb49a323533511f8ac15c2ec57e08d871762a787",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/ordinary-effect-proof.js",
+      "to": "bot/src/world-observation.js",
+      "kind": "static",
+      "specifier": "./world-observation.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "0d7af920f5adc6b80d0b69dd3bbb23c34e74daf02754c0e0ce0c586fcc1b35a1",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-fear-moves.js",
+      "to": "bot/src/simulation.js",
+      "kind": "static",
+      "specifier": "./simulation.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "77817785b3bca5b86828aa8fd04da440ba0adeef5322e77e009667646d5427c7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-fear-moves.js",
+      "to": "bot/src/city-depth.js",
+      "kind": "static",
+      "specifier": "./city-depth.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "de6364b3f4e74f18da7271dde6a4098946aaa795451475c2a49fa6205b9ecaff",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-fear-moves.js",
+      "to": "bot/src/location-language.js",
+      "kind": "static",
+      "specifier": "./location-language.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

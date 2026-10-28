@@ -6,7 +6,8 @@ import {nativeOwnerActionTerminal} from './frameworks/daggerheart/public.js';
 function overlapsOwnerActionTerminal(...args){return nativeOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
-import {renderWorldObservation} from './world-observation.js';
+import {nativeWorldActions} from './frameworks/daggerheart/public.js';
+function renderWorldObservation(...args){return nativeWorldActions.renderWorldObservation(...args);}
 import {verifyRoutineEvidenceAnalysis} from './native-evidence-analysis.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}
