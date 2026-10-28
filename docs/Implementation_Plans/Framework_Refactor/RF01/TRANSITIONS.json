@@ -12521,20 +12521,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "595b7a23c9bd1ee1779904dd164e09a101d776fc96eb9e40158daad1902e12b5",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/world-encounter-beats.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b749993b40541b19325f318321ac624cc099c497597c6cfa09f3019b353a29ed",
       "code": "PAIR_IMPORTS_PRIVATE_API",
       "from": "bot/src/world-narrative-bridge.js",

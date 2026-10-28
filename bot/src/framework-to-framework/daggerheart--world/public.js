@@ -44,3 +44,7 @@ import {nativeWorldActions} from '../../frameworks/daggerheart/public.js';
 import {worldLongProjectSource,worldObservationSource,worldCityDepthSource,configureSimulationEntity,submitNpcAction,preflightNpcIdentity} from '../../frameworks/world/public.js';
 /** Pass World's original project, observation, simulation and identity functions to native rules unchanged. */
 export function connectNativeWorldActions(){return nativeWorldActions.bind({manageLongProject:worldLongProjectSource.manageLongProject,projectPhaseRevision:worldLongProjectSource.projectPhaseRevision,renderWorldObservation:worldObservationSource.renderWorldObservation,configureSimulationEntity,submitNpcAction,validateMinorIdentity:worldCityDepthSource.validateMinorIdentity,preflightNpcIdentity});}
+import {loadEncounterLibrary,isEncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget} from '../../frameworks/daggerheart/public.js';
+import {worldNativeEncounter} from '../../frameworks/world/public.js';
+/** World encounter beats read the original native catalog, actor, roster and budget rules unchanged. */
+export function connectWorldNativeEncounter(){return worldNativeEncounter.bind({loadEncounterLibrary,isEncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget});}

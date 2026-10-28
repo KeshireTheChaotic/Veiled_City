@@ -1,5 +1,6 @@
 /** Read-only pending encounter metadata. A candidate never activates combat or grants publication. */
-import {EncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget} from './encounter.js';
+import {worldNativeEncounter} from './frameworks/world/public.js';
+const {loadEncounterLibrary,isEncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget}=worldNativeEncounter;
 import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function sceneAccess(...args){return worldSessionScene.sceneAccess(...args);}
 import {worldConversationPrincipal} from './frameworks/world/public.js';
@@ -28,7 +29,7 @@ export function configureWorldEncounterCatalog(db,contentRoot){
 function configuredLibrary(db,library){
   if(library!==undefined)return library;
   const root=catalogRoots.get(db);if(!root)return null;
-  try{return new EncounterLibrary(root);}catch(error){if(error.code==='ENOENT')return null;throw error;}
+  try{return loadEncounterLibrary(root);}catch(error){if(error.code==='ENOENT')return null;throw error;}
 }
 function audited(db,guild,row,type){
   return db.mutationsForEntity(guild,row.record_key,20).some(m=>m.source_layer==='city'&&m.visibility==='gm'&&m.mutation_type===type
@@ -44,7 +45,7 @@ function identity(db,guild,type,key,scope){
   return hash([entity,authored,reference]);
 }
 function inspect(db,guild,ref,scope,library){
-  if(!(library instanceof EncounterLibrary))return hold('missing_native_library');
+  if(library==null||!isEncounterLibrary(library))return hold('missing_native_library');
   if(!['party','private'].includes(scope?.mode)||!db.getActiveSession(guild))return hold('missing_current_scope');
   const actorless=scope.mode==='party'&&scope.actorCharacterId==null&&scope.actorUserId==null;
   if(!actorless&&(!scope.actorCharacterId||!scope.actorUserId))return hold('missing_current_owner');

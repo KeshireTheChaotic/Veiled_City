@@ -93,3 +93,4 @@ export {simulationOverview} from './simulation-overview.js';
 export {prepareWorldSimulationObservation,worldSimulationReceiptForAudience} from './simulation-receipts.js';
 export {environmentalText} from './environment-observation.js';
 export {CIVIC_KINDS,updateCityCivic,reviewCivicChange,transmitCityBelief,attemptCityInfluence} from './city-civic.js';
+export {worldNativeEncounter} from './contracts/native-encounter.js';

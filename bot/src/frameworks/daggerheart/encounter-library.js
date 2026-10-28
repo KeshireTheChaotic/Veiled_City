@@ -22,3 +22,5 @@ export class EncounterLibrary{
     return pool.find(x=>slug(x.name)===s)||pool.find(x=>slug(x.name).includes(s))||null;
   }
 }
+export const loadEncounterLibrary=root=>new EncounterLibrary(root);
+export const isEncounterLibrary=value=>value instanceof EncounterLibrary;
