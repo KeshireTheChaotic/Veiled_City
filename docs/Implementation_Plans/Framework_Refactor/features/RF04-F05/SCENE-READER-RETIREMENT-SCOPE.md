@@ -1,0 +1,5 @@
+# RF04-F05 — Scene reader path retirement
+
+The owner explicitly authorized the path-only legacy script changes, including the computed scene-setup import target and the action-window source mutation target described in SCENE_READER_PATH_PROPOSAL.md. Point legacy script imports to Session public, point the computed standalone setup import to the Session setup service, and point the existing mutation test at the actual Session action-window source. Preserve every test assertion, source guard, mutation, setup and expected result. Retire the two root re-export readers after reviewing production and historical script references. No legacy test or suite is run.
+
+Rollback by restoring the two root re-export readers and restoring only the eleven script paths from baseline `8ac8f745fccb184de69b45cdd3ba684272dbdaa0`, together with the exact architecture records in SCENE-READER-RETIREMENT-RECORDS.json. Prior local root-compatibility tests describe those restored paths and become applicable again only to matching bytes.

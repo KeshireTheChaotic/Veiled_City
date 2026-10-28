@@ -10,7 +10,7 @@ import {buildActionPlan} from '../src/action-dependency.js';
 import {prepareRollRequest,rollRevision,pendingRollRequests,publishRollAmendment} from '../src/roll-requests.js';
 import {contributeRoll,adjudicateRollSource} from '../src/roll-collaboration.js';
 import {finalizeTypedRollAction} from '../src/typed-roll-outcomes.js';
-import {openActionWindow} from '../src/scene-action-window.js';
+import {openActionWindow} from '../src/frameworks/session/public.js';
 import {windowOperation} from '../src/window-coordinator.js';
 import {publishRollPartyDisclosure,formatSharedRoll} from '../src/roll-sharing.js';
 

@@ -3,17 +3,6 @@
   "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
   "entries": [
     {
-      "id": "c8e6dc8c8d9a5a6db6352e1469b68e9393a647efa3a06b2e3ad6afe89bb58c93",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/scene-action-window.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "8582448487fc2df59ae1abe802672b8c6cc56cc502936ce6b4a0a5f2ef75bfb1",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/action-consent.js",
@@ -17262,17 +17251,6 @@
       "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "03090e0be81f410d983688f612a6d43d88ade4d6df3247f9430a684e340db583",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/scene-setup.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     }
   ]
 }

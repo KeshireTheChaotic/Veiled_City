@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { nativeFixture, pvpTerms } from "./v9-fixtures.mjs";
-import { coordinateTypedActionWindows, openActionWindow, joinActionWindow } from "../src/scene-action-window.js";
+import { coordinateTypedActionWindows, openActionWindow, joinActionWindow } from "../src/frameworks/session/public.js";
 import { buildActionPlan } from "../src/action-dependency.js";
 import { advanceActionWindow, reconcileWindowCustody, synchronizePvpWindow, windowOperation } from "../src/window-coordinator.js";
 import { proposePvp, reviewPvp, respondPvp } from "../src/narrative-pvp.js";

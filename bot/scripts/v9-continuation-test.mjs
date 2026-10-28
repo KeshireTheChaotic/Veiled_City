@@ -20,7 +20,7 @@ import {proposePvp,reviewPvp,respondPvp,choosePvp,rollPvp,progressPvp,continuePv
 import {handleCommand} from "../src/commands.js";
 import {refreshActionContinuations} from "../src/action-continuation.js";
 import {fearRevision,establishFearContext,selectFearMove,applyFearMove} from "../src/pvp-fear-moves.js";
-import {coordinateTypedActionWindows} from "../src/scene-action-window.js";
+import {coordinateTypedActionWindows} from "../src/frameworks/session/public.js";
 import {advanceActionWindow,reconcileWindowCustody} from "../src/window-coordinator.js";
 import {manageEvidence} from "../src/evidence-custody.js";
 import {stateRevision} from "../src/ai-intents.js";

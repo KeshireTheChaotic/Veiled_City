@@ -1,0 +1,27 @@
+{
+  "feature": "RF04-F05 scene-reader retirement",
+  "records": [
+    {
+      "id": "c8e6dc8c8d9a5a6db6352e1469b68e9393a647efa3a06b2e3ad6afe89bb58c93",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-action-window.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "03090e0be81f410d983688f612a6d43d88ade4d6df3247f9430a684e340db583",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-setup.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

@@ -6,7 +6,7 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { captureAuthoredTurnEnvelope } from "../src/authored-turn-envelope.js";
 import { proposeIntents, acceptIntentForAdjudication } from "../src/typed-intents.js";
-import { openActionWindow, joinActionWindow } from "../src/scene-action-window.js";
+import { openActionWindow, joinActionWindow } from "../src/frameworks/session/public.js";
 import { requestActionConsent, respondActionConsent, validateActionConsent } from "../src/action-consent.js";
 
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-v9-consent-"));

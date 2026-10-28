@@ -128,7 +128,7 @@ test('N08 exact owner initial-position declaration uses native setup once, never
   const arrivals=f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival');
   assert.equal(arrivals.length,1);assert.equal(arrivals[0].details.initial_setup,true);assert.equal(arrivals[0].details.not_travel,true);
   assert(out.rows.some(row=>row.payload.includes('slate counter')));assert.equal(f.db.getCharacter(x.pc.id).data.resources.hp.current,0);
-  const {applyAuthoredInitialPosition}=await import('../src/scene-setup.js');
+  const {applyAuthoredInitialPosition}=await import('../src/frameworks/session/public.js');
   const accepted=f.db.listCityRecords(f.guild,{kind:'typed_intent',includeGM:true}).find(i=>i.data.operation==='initial_position');
   applyAuthoredInitialPosition(f.db,f.guild,accepted,x.scope);assert.equal(f.db.listWorldEvents(f.guild,{includeGM:true,limit:500}).filter(e=>e.kind==='arrival').length,1);
 }));
@@ -136,7 +136,7 @@ test('N08 exact owner initial-position declaration uses native setup once, never
 test('N08 initial setup cannot bypass protected access or previous position history',()=>nativeFixture(async f=>{
   const x=setup(f,{placed:false,text:'My initial position is the Public Terminal.'});
   f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Public Terminal',visibility:'party',locked:true});
-  const {prepareSceneSetup}=await import('../src/scene-setup.js');assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
+  const {prepareSceneSetup}=await import('../src/frameworks/session/public.js');assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
   f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Public Terminal',visibility:'party'});
   setup(f,{placed:true});f.db.updateCharacterData(x.pc.id,d=>{delete d.location;});assert.equal(prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),null);
 }));

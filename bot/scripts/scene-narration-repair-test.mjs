@@ -73,7 +73,7 @@ test('SCENE03 public question cannot reveal private saved position; private owne
 }));
 
 test('SETUP01 initial position requires exact owner selection and native receipts, never resolves earlier actions',()=>nativeFixture(async f=>{
-  const api=await import('../src/scene-setup.js'),x=setup(f,{placed:false}),before=f.db.getCharacter(x.pc.id).data.resources;
+  const api=await import('../src/frameworks/session/public.js'),x=setup(f,{placed:false}),before=f.db.getCharacter(x.pc.id).data.resources;
   const offer=api.prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),choice=offer.options.find(o=>o.location==='terminal'&&o.visibility==='party');
   assert(choice);assert.equal(f.db.getCharacter(x.pc.id).data.location,undefined);
   const receipt=api.confirmSceneSetup(f.db,f.guild,x.pc.owner_user_id,offer.key,choice.value,{interactionId:'setup-choice'});
@@ -85,7 +85,7 @@ test('SETUP01 initial position requires exact owner selection and native receipt
 }));
 
 test('SETUP02 forwarded GM choice, stale source, locked location and existing placement history cannot authorize setup',()=>nativeFixture(async f=>{
-  const api=await import('../src/scene-setup.js'),x=setup(f,{placed:false});
+  const api=await import('../src/frameworks/session/public.js'),x=setup(f,{placed:false});
   const offer=api.prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),choice=offer.options.find(o=>o.location==='terminal'&&o.visibility==='party');
   assert.throws(()=>api.confirmSceneSetup(f.db,f.guild,f.pcs[1].owner_user_id,offer.key,choice.value),/owner|source|setup/i);
   f.db.setSimulationEntity(f.guild,'location','terminal',{name:'Terminal',visibility:'party',locked:true});
@@ -98,7 +98,7 @@ test('SETUP02 forwarded GM choice, stale source, locked location and existing pl
 }));
 
 test('SETUP03 withholding initial setup is neutral and does not create arrival or public presence',()=>nativeFixture(async f=>{
-  const api=await import('../src/scene-setup.js'),x=setup(f,{placed:false}),offer=api.prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id);
+  const api=await import('../src/frameworks/session/public.js'),x=setup(f,{placed:false}),offer=api.prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id);
   const receipt=api.confirmSceneSetup(f.db,f.guild,x.pc.owner_user_id,offer.key,'decline',{interactionId:'declined'});
   assert.equal(receipt.status,'declined');assert.equal(f.db.getCharacter(x.pc.id).data.location,undefined);
   assert.equal(f.db.listCityRecords(f.guild,{kind:'scene_presence',includeGM:true}).length,0);
@@ -182,7 +182,7 @@ test('FRESHSCENE06 durable scene/NPC writer budget survives restart and never re
 }));
 
 test('SETUP05 source retraction, changed ownership and revised immutable options reject confirmation',()=>nativeFixture(async f=>{
-  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/scene-setup.js'),x=setup(f,{placed:false});
+  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/frameworks/session/public.js'),x=setup(f,{placed:false});
   const offer=prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id),row=f.db.getCityRecord(f.guild,'scene_setup',offer.key);
   f.db.saveCityRecord(f.guild,{...row,key:offer.key,data:{...row.data,options:[{value:'0',location:'forged-vault',visibility:'party'}]}});
   assert.throws(()=>confirmSceneSetup(f.db,f.guild,x.pc.owner_user_id,offer.key,'0'),/setup|owner/i);
@@ -197,7 +197,7 @@ test('SETUP05 source retraction, changed ownership and revised immutable options
 
 test('SCENE04 all supported flags enabled: owner setup then actual scene GM/outbox, without replay or extra provider calls',()=>nativeFixture(async f=>{
   const x=setup(f,{placed:false});configureCityFlags(f.db,f.guild,Object.fromEntries(CITY_FEATURE_FLAGS.map(flag=>[flag,true])),'offline-gm');
-  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/scene-setup.js'),offer=prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id);
+  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/frameworks/session/public.js'),offer=prepareSceneSetup(f.db,f.guild,x.pc.owner_user_id,x.pc.id);
   confirmSceneSetup(f.db,f.guild,x.pc.owner_user_id,offer.key,offer.options.find(o=>o.visibility==='party').value,{interactionId:'all-flags-owner-choice'});
   const candidate=response(f,x.text);candidate.decision_advisory={mode:'narrate',check:'',reason:'Owner asks for surroundings, not a check.',
     uncertainty:'',consequence:'',referent_uncertainty:'',fictional_uncertainty:''};
@@ -224,7 +224,7 @@ test('FRESHSCENE08 framing authorship cannot become objective facts or general s
 }));
 
 test('SCENE05 independent scene service entrypoints initialize without circular schema dependencies',()=>{
-  for(const file of ['fresh-scene-authoring.js','scene-description.js','scene-setup.js']){
+  for(const file of ['fresh-scene-authoring.js','scene-description.js','frameworks/session/scene-setup-service.js']){
     const url=new URL(`../src/${file}`,import.meta.url).href;
     const child=spawnSync(process.execPath,['--import','./scripts/offline-guard.mjs','--input-type=module','-e',`await import(${JSON.stringify(url)});`],
       {encoding:'utf8',timeout:10000,env:{...process.env,OPENAI_API_KEY:'offline-dummy',DISCORD_TOKEN:'offline-dummy'}});
@@ -233,7 +233,7 @@ test('SCENE05 independent scene service entrypoints initialize without circular 
 });
 
 for(const deathStatus of [null,'pending_choice','unconscious'])test(`SCENE06 fully marked HP allows descriptive setup/narration but not ordinary actions: ${deathStatus}`,()=>nativeFixture(async f=>{
-  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/scene-setup.js'),x=setup(f,{placed:false});
+  const {prepareSceneSetup,confirmSceneSetup}=await import('../src/frameworks/session/public.js'),x=setup(f,{placed:false});
   f.db.updateCharacterData(x.pc.id,data=>{
     data.resources.hp.current=data.resources.hp.max;
     if(deathStatus)data.death_state={status:deathStatus,request:'unresolved-death'};

@@ -1,0 +1,72 @@
+{
+  "baseline_scripts": "8ac8f745fccb184de69b45cdd3ba684272dbdaa0",
+  "checkout_at_test": "96093e40347ef8103a34f8673fc3c47ed4558a83",
+  "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-scene-paths.test.mjs",
+  "exit_code": 0,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "duration_ms": 588.9525,
+  "files": [
+    {
+      "path": "bot/scripts/d05-live-window-test.mjs",
+      "sha256": "57e44e60d495a2afc881177ff67f485d5f0b4f6c4ec46c96ae1ac166dc1f4248"
+    },
+    {
+      "path": "bot/scripts/d08-window-security-test.mjs",
+      "sha256": "feed444fd3e3eb6e1bd2c4a41943fb233a33b5ff5f198fda8f185fc4d80e89db"
+    },
+    {
+      "path": "bot/scripts/scene-action-window-test.mjs",
+      "sha256": "1f211daeee0b964fa3f1c559db08213fb6660f50dc88278fc3557dc36c55e8b2"
+    },
+    {
+      "path": "bot/scripts/v9-action-consent-test.mjs",
+      "sha256": "77606763400c5b8abe9ec8166ac726242b0594f5b3d6849c4c43a22708d58538"
+    },
+    {
+      "path": "bot/scripts/v9-baseline-regressions-test.mjs",
+      "sha256": "5d160a02d2ca70bd6dec66013b027aec5b229027191e104cbd783e509c84ea23"
+    },
+    {
+      "path": "bot/scripts/v9-continuation-test.mjs",
+      "sha256": "552778779a87cfe0ef8b80648742265b8ff8423746faba066cdc6cb05fc7f7b7"
+    },
+    {
+      "path": "bot/scripts/v9-window-lifecycle-test.mjs",
+      "sha256": "7e54a48bdff5242e9685451bb364d0ee698dc98fa772aedc379b81aba86fc442"
+    },
+    {
+      "path": "bot/scripts/v94-pvp-multiplayer-test.mjs",
+      "sha256": "770d949ba863609a2a66c9f07c0ccebe547316c3ad3fd1eeafa1414d01f16274"
+    },
+    {
+      "path": "bot/scripts/narrative-freedom-test.mjs",
+      "sha256": "380c66a6ea0a5ee5df2ab9e8a98efa086b630fd7276f387f0347d296b9c83b7f"
+    },
+    {
+      "path": "bot/scripts/scene-narration-repair-test.mjs",
+      "sha256": "04d7292fb2e8e4e34d4aefde97c04880c19137199e55fc6f7a1d08f61a2c1fbe"
+    },
+    {
+      "path": "bot/scripts/v95-deprecation-coverage-test.mjs",
+      "sha256": "939cf6083160c08eb3e57dae5c00318e437bb5413072cccbc975fe098b8b65c8"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "sha256": "3244b571265fed2ca335b6917a47e485f2269fd9471bc4a3b3ea1ed56950fcba"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-setup-service.js",
+      "sha256": "97830ab6941a10f3bacaa46389adb84eea5dd5c84ea4d1710b3ec9734dc60b04"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-action-window.js",
+      "sha256": "eff4903342e4367320ec72f3cb19ed6ecb2ec9b9d06289cbecc5ac4921b6ad2f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f05-scene-paths.test.mjs",
+      "sha256": "011fede9d785994aa23c46c7199e5617335cd9d5b93491d8fc33b98a0ee7c198"
+    }
+  ]
+}

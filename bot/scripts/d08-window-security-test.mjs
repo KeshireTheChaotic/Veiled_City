@@ -6,7 +6,7 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { currentScene } from "../src/scene-continuity.js";
-import { openActionWindow, joinActionWindow } from "../src/scene-action-window.js";
+import { openActionWindow, joinActionWindow } from "../src/frameworks/session/public.js";
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),"vc-d08-consent-"));
 const db=new VeiledDB(path.join(dir,"fixture.sqlite"),path.resolve("sql/schema.sql"));
 try{

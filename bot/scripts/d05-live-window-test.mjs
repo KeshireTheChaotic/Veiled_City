@@ -6,7 +6,7 @@ import path from "node:path";
 import { VeiledDB } from "../src/db.js";
 import { indexWorldEvent } from "../src/city-calendar.js";
 import { currentScene } from "../src/scene-continuity.js";
-import { coordinateTypedActionWindows } from "../src/scene-action-window.js";
+import { coordinateTypedActionWindows } from "../src/frameworks/session/public.js";
 import { captureAuthoredTurnEnvelope } from "../src/authored-turn-envelope.js";
 import { proposeIntents, acceptIntentForAdjudication } from "../src/typed-intents.js";
 

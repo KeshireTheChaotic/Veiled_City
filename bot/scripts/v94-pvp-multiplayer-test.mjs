@@ -8,7 +8,7 @@ import {preparePvpAttack,reviewPvpAttack,authorizePvpAttack,rollPvpAttack} from 
 import {rollPvpDamage,preparePvpDamage,reviewPvpDamage,resolvePvpDamage} from "../src/pvp-damage.js";
 import {reviewPcDeathMove,choosePcDeathMove,approveBlazeAction} from "../src/pc-death.js";
 import {indexWorldEvent} from "../src/city-calendar.js";
-import {lockActionWindow} from "../src/scene-action-window.js";
+import {lockActionWindow} from "../src/frameworks/session/public.js";
 import {fakeInteraction} from "./contract-fixtures.mjs";
 import {handleCommand} from "../src/commands.js";
 import {establishFearContext,selectFearMove,applyFearMove,fearRevision,resumeAutonomousPvpFear,resolveAutonomousPvpFear} from "../src/pvp-fear-moves.js";

@@ -921,3 +921,7 @@ Restored scene-action-window root re-export and exact original location record b
 ## 2026-10-28 C145 evidence consumer
 
 Original activeEvidence/evidenceType DB reads now use fixed Persistence consumer with original module-load and pair bindings, preserving standalone API (1/1 fresh SQLite test). RF04 gate passes832 modules/zero unowned/active/errors, largest cycle79. Original root dependencies remain; no false retirement or phase completion. Owner separately approved exact computed-import/source-mutation path metadata updates in the scene reader proposal, preserving test logic and assertions without legacy suite execution.
+
+## 2026-10-28 authorized scene root retirement
+
+Exact approved import/computed-source/mutation-target path substitutions applied in eleven legacy scripts, with test logic/assertions unchanged and no legacy suites executed. Node-only path-contract tests2/2 passed. Scene setup/action-window roots removed after source reference audit; two exact location records retired. Original local root compatibility tests are obsolete historical evidence. RF04 gate passes831 modules/zero unowned/active/errors, largest cycle79; RF05 remains81 groups/errors. Gate includes concurrent C146. Phase incomplete; release unauthorized.

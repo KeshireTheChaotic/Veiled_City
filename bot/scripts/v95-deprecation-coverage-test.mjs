@@ -104,7 +104,7 @@ test("DEP11 unchanged D08 negative detects removal of consent authority in an is
     const run=()=>spawnSync(process.execPath,["--import","./scripts/offline-guard.mjs","scripts/d08-window-security-test.mjs"],
       {cwd:dir,encoding:"utf8",env:{...process.env,OPENAI_API_KEY:"offline-dummy",DISCORD_TOKEN:"offline-dummy"}});
     const before=run();assert.equal(before.status,0,before.stderr);
-    const file=path.join(dir,"src/scene-action-window.js"),source=fs.readFileSync(file,"utf8");
+    const file=path.join(dir,"src/frameworks/session/scene-action-window.js"),source=fs.readFileSync(file,"utf8");
     const guard="&&(!required.length||!validateActionConsent(db,guild,input.consent_refs||[],{window,accepted,input})))";
     assert.equal(source.split(guard).length,2,"mutant must remove exactly the native consent guard");
     fs.writeFileSync(file,source.replace(guard,"&&false)"));
