@@ -25,7 +25,8 @@ function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct
 import {worldSessionContinuation} from './frameworks/world/public.js';
 function continuationAuthorization(...args){return worldSessionContinuation.continuationAuthorization(...args);}
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './world-authorship.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {worldNarrativeSources} from './frameworks/world/public.js';
+function narrativeSourceVisible(...args){return worldNarrativeSources.narrativeSourceVisible(...args);}
 import {validateBackgroundIdentity} from './world-background-identities.js';
 function nativeVipAdmission(...args){return worldNativeMovementChecks.nativeVipAdmission(...args);}
 import {AUTONOMOUS_WORLD_PROMPT} from './frameworks/world/autonomous-world-contract.js';

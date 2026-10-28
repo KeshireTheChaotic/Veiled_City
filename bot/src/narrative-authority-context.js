@@ -30,3 +30,6 @@ function builder(){return contextBuilder??=createNarrativeContextBuilder({
 });}
 export function narrativeVisible(...args){return builder().narrativeVisible(...args);}
 export function buildNarrativeContext(...args){return builder().buildNarrativeContext(...args);}
+import {narrativeAuthorityContextSource} from './frameworks/narrative/public.js';
+// Provide this module's original narrative context functions to the fixed Narrative slot; no other authority is granted.
+narrativeAuthorityContextSource.bind({narrativeVisible,buildNarrativeContext});

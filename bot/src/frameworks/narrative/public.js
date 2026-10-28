@@ -28,3 +28,4 @@ export {narrativeContextEligible} from './eligibility-source.js';
 export {createNarrativeNpcVisibilityConsumer,narrativeNpcVisibility} from './contracts/npc-visibility.js';
 export {narrativeAudienceSource,narrativeNativeEnvironment} from './contracts/environment-sources.js';
 export {rankWorldNarrativeOpportunities,WORLD_NARRATIVE_OPPORTUNITY_ORDER} from './narrative-opportunity-policy.js';
+export {narrativeSalienceSource,narrativeAuthorityContextSource,narrativePortrayalSource} from './contracts/root-sources.js';

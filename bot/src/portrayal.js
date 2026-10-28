@@ -20,3 +20,6 @@ export function portrayalPacket(db,guildId,npc,{publicVoice=false}={}){
   return {npc,display_name:profile.display_name,...(!publicVoice?{portrayal:profile.portrayal}:{}),direction,
     authority:"Diction/emotional presentation only; never facts, consent, thoughts or new mechanics."};
 }
+import {narrativePortrayalSource} from './frameworks/narrative/public.js';
+// Provide this module's original portrayal configuration to the fixed Narrative slot; no other authority is granted.
+narrativePortrayalSource.bind({configurePortrayal});

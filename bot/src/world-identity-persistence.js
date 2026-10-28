@@ -1,7 +1,8 @@
 /** Native scoped mundane-identity persistence. Never creates canon allegations, actors, powers or execution permission. */
 import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './world-authorship.js';
-import {canonicalInterestEvidence,nativeSalienceAvailable} from './narrative-salience.js';
-import {buildNarrativeContext} from './narrative-authority-context.js';
+import {worldNarrativeSources} from './frameworks/world/public.js';
+function canonicalInterestEvidence(...args){return worldNarrativeSources.canonicalInterestEvidence(...args);}function nativeSalienceAvailable(...args){return worldNarrativeSources.nativeSalienceAvailable(...args);}
+function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}

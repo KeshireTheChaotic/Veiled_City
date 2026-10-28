@@ -4,7 +4,8 @@ import path from "node:path";
 import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from './frameworks/world/public.js';
 import { requireCitySource, updateCityCore } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic } from "./city-civic.js";
-import { configurePortrayal } from "./portrayal.js";
+import {worldNarrativeSources} from './frameworks/world/public.js';
+function configurePortrayal(...args){return worldNarrativeSources.configurePortrayal(...args);}
 import { configureMystery } from "./story-continuity.js";
 import { configureSimulationEntity } from "./simulation.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';

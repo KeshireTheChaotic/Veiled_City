@@ -152,7 +152,7 @@ test('actual bootstrap reaches the pair before services; the adapter imports onl
   assert.ok(startup.includes('initializeNarrativeWorld();'));
   assert.ok(startup.indexOf('initializeNarrativeWorld();')<startup.indexOf('const config=loadConfig()'));
   const pair=fs.readFileSync(path.join(root,'bot/src/framework-to-framework/narrative--world/public.js'),'utf8');
-  assert.deepEqual([...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]).sort(),
+  assert.deepEqual([...new Set([...pair.matchAll(/from ['"]([^'"]+)['"]/g)].map(m=>m[1]))].sort(),
     ['../../frameworks/narrative/public.js','../../frameworks/world/public.js']);
   const legacy=fs.readFileSync(path.join(root,'bot/src/world-authorship.js'),'utf8');
   assert.ok(legacy.includes('worldNarrativeAuthorship'));

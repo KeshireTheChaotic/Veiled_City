@@ -1,3 +1,4 @@
+import './compose-startup.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import {mkdtempSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import path from 'node:path';import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';import '../../src/audience-native-v9.js';import '../../src/native-group-features.js';
 import {initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeNpcEvidenceProjection,initializeNpcObservations,initializeNpcCognition,initializeNpcStrategy,initializeNpcWorldEvidence,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeNativeSessionMovement,initializeWorldCandidateContext,initializeWorldNpcOpportunity} from '../../src/application/composition/public.js';

@@ -179,3 +179,6 @@ export function rankNarrativeMemory(db,guild,scope,rows,{query='',location=null,
 
 
 narrativeImportanceSource.provide(narrativeImportance);
+import {narrativeSalienceSource} from './frameworks/narrative/public.js';
+// Provide this module's original canonical interest evidence reader to the fixed Narrative slot; no other authority is granted.
+narrativeSalienceSource.bind({canonicalInterestEvidence});

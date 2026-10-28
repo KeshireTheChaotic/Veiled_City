@@ -1,5 +1,8 @@
-import {connectNarrativeWorld} from '../../framework-to-framework/narrative--world/public.js';
+import {connectNarrativeWorld,connectWorldNarrativeSources} from '../../framework-to-framework/narrative--world/public.js';
 import {worldNarrativeAuthorship} from '../../frameworks/world/public.js';
 let composed=null;
 /** Fixed startup binding, before service construction; no database/client/model or state writes. */
-export function initializeNarrativeWorld(){return composed??=connectNarrativeWorld({consumer:worldNarrativeAuthorship});}
+export function initializeNarrativeWorld(){
+  if(!composed){connectWorldNarrativeSources();composed=connectNarrativeWorld({consumer:worldNarrativeAuthorship});}
+  return composed;
+}

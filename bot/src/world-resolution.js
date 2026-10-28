@@ -6,7 +6,8 @@ const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
 import {worldActorControl} from './city-constraints.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
-import {narrativeImportance,nativeSalienceAvailable} from './narrative-salience.js';
+import {worldNarrativeSources} from './frameworks/world/public.js';
+function narrativeImportance(...args){return worldNarrativeSources.narrativeImportance(...args);}function nativeSalienceAvailable(...args){return worldNarrativeSources.nativeSalienceAvailable(...args);}
 
 const issuer='native:world-resolution';
 const MAX_SCOPES=4,MAX_ACTORS=8;
