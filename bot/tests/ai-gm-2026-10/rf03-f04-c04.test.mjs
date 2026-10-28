@@ -55,5 +55,5 @@ test('same private recipient current inspection preserves principal revision and
   f.setVisible(false);assert.throws(()=>f.audience.assertEnvironmentAudience(f.db,f.guild,f.camera,f.camera,f.origin),/original_source_visibility/);
 });
 test('actual environment proof providers cold-import with unchanged reader APIs',async()=>{
-  const a=await import('../../src/native-environment-audience.js'),b=await import('../../src/native-environment-context.js');assert.equal(typeof a.assertEnvironmentAudience,'function');assert.equal(typeof b.nativeEnvironmentBinding,'function');assert.equal(typeof b.inspectNativeEnvironmentBinding,'function');
+  const a=await import('../../src/frameworks/daggerheart/public.js'),b=await import('../../src/native-environment-context.js');assert.equal(typeof a.assertEnvironmentAudience,'function');assert.equal(typeof b.nativeEnvironmentBinding,'function');assert.equal(typeof b.inspectNativeEnvironmentBinding,'function');
 });

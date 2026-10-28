@@ -74,5 +74,5 @@ test('audit failure rolls back both actual SQL balances and receipt; later retry
 });
 
 test('original World source reader reaches moved validation and stable revision identity',async t=>{
- const f=fixture(t),source=await import('../../src/supply-dependencies.js');assert.equal(source.supplyRevision,supplyRevision);assert.throws(()=>source.validateServiceAccess(f.db,'g',{consumer_type:'character'}),/cannot be PCs/);f.access({access:false});assert.throws(()=>source.assertServiceAccess(f.db,'g',{actor_type:'npc',actor_key:'receiver',type:'repair'}),/blocks this world action/);
+ const f=fixture(t),source=await import('../../src/frameworks/world/public.js');assert.equal(source.supplyRevision,supplyRevision);assert.throws(()=>source.validateServiceAccess(f.db,'g',{consumer_type:'character'}),/cannot be PCs/);f.access({access:false});assert.throws(()=>source.assertServiceAccess(f.db,'g',{actor_type:'npc',actor_key:'receiver',type:'repair'}),/blocks this world action/);
 });

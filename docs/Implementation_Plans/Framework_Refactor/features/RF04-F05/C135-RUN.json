@@ -1,0 +1,257 @@
+{
+  "feature": "RF04-F05-C135",
+  "base_head": "ab8239ff25266cf3beefb10477e62736c817a8f5",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/src/native-environment-arrivals.js",
+      "bot/src/native-environment-door-chain.js",
+      "bot/src/native-environment-imaging.js",
+      "bot/src/native-environment-output.js",
+      "bot/src/native-environment-witnesses.js",
+      "bot/src/simulation-commands.js",
+      "bot/src/simulation.js",
+      "bot/tests/ai-gm-2026-10/rf04-f05-c135.test.mjs"
+    ],
+    "passed": 8,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p04-f01.test.mjs",
+        "sha256": "4EF59ED3313AB37D2BA8A53073FD9BAA790D4FAD174729F56D670166D46EEBE1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f11.test.mjs",
+        "sha256": "4C9962B323BD481D9EC41F8C36651F5E2F7CE06121F8500D476CDB12B30FB630"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f14.test.mjs",
+        "sha256": "862B6D0482AFF84A4819C447A8DCE7377C60A1ACAFCB7757F0F3AE5FD2ACBAB2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f15.test.mjs",
+        "sha256": "DF2479ED3B8EE885989C91D495F023EE840CB7706F714CC999E286B749569E9E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c04.test.mjs",
+        "sha256": "B2B2B69A42706AFD14A137DE2D148117FB2F2E182DED3F753A82F964F4469290"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c14.test.mjs",
+        "sha256": "A598583F3290DFBC802B290D4F170C99B5395AFB0113E0829AA459E864AD0489"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c15.test.mjs",
+        "sha256": "3AF9257E51CC756F9A4FDDFB1556F27A0BA7937D9E8303FE271FCD2562AA2F2C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f06-c04.test.mjs",
+        "sha256": "20B91B9F54BA7F2650B3999A5D155FBBFD189338636DD551F1E6E7789CA1289B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c07.test.mjs",
+        "sha256": "FF5D18B56D8C491F7A296A50A05EC2A11C0963F61C60DC8AFA344676AB5AA573"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "sha256": "E4B1F4E031CC0A4BB24AB6C9AEA19386178F0E15FC433B5C4D01E99678409C6F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f01-simulation-overview.test.mjs",
+        "sha256": "549C56243702B0CCC8967A4716F3595C80EAA3B801C39B6B1A86966E40974505"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs",
+        "sha256": "4D05BC4DE05FCBDB34AC2D050DCB9B7B86849E67D12808E5E93C53AE4B0BF98D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs",
+        "sha256": "B7D8534187228A9956921246FC4E44B9B90210B8ABE028C3BD309B73959A88D6"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-c12.test.mjs",
+        "sha256": "E1FF74E09EA6F7C55E506E87FA83CAD621DD6E6B8A93FFBB969867D7FB87CB12"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s04.test.mjs",
+        "sha256": "91A0F7C14780D8EA418009C79F64EF991CBB9E91F14F0222FA263671AC08FA1F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-boundary.test.mjs",
+        "sha256": "B8AB9489DF541E72DC19E207B5272F37D071865A9B1949020812BBEA95D867A7"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05-positive-consent.test.mjs",
+        "sha256": "343A9515663DFF1422821E46F644FCB59EA8FC5F2C12D92D9FD2DE22C332EE9F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s05.test.mjs",
+        "sha256": "7934E1CF34964014D049C20CE5EC3E9637C7E5544748C29F117EDE0E4BC4A63B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f04-s06.test.mjs",
+        "sha256": "28501903F6C2E87B619DF2A54E73A3C64DDB15A1CC3A58EA24A20974E9D08738"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c01.test.mjs",
+        "sha256": "5FF65ADAB1ECB46B13842D84888AEA187D1E96FF573910A48E3C4E8F349A978D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "sha256": "8923BE69FB366AC6D756354F8550091467EC0F8DDE703C0A9B98E231848ED7AE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "sha256": "E623AFBCD172192A6270DAACB91C1099D87AB0A04DFD86D40FE063223DB9B40C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c135.test.mjs",
+        "sha256": "1C5A8B62555F91A01DFDE2D82E8FD0714CBD6388D3489E26F115E1C372383DCD"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "sha256": "39846BFAF23C0AE22C9CEEC4E80CA0556F791C96DA26CCC0713CABEE9BCC9266"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+        "sha256": "1BD1153331AC693BB3E8A669EF4E2BFA57CF73C6AEC0262D4699BECDA3CCD892"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "sha256": "A8EE71F1EB781F41FDE2D2BB85D745E7A82440FCC1190FE03334C0B675E0321C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "sha256": "96CBF5E447630D756677F9A14D88BB161751A9DCC5FAAB282EB110DD00C2664A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "sha256": "853735814E4A43A9051B118D2451F7C74559BA5AE8ED50C6E563A361718D551C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "sha256": "F250B0F7E4C1A1358444946B9F7483E6FD454DBCB7DE954C0FECA8CA8A749445"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "sha256": "1B37FFAB3BE9C12A83321BA588A4C39DC34C4668DBC5B63527FCF76F6D5FC83F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+        "sha256": "E0E4B657B21877C724E785C150C007CE2F86808C364A3DA14B990E6BFF16F4E2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c37.test.mjs",
+        "sha256": "146CAFD088B52F392696E299A020037A947B4F9B2295F209968D129E51271B68"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c47.test.mjs",
+        "sha256": "4A2FCCA91FBC976277ECDCAEF5A11DD6498E08BDAD435F94114A2C1E18B3FA45"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c78.test.mjs",
+        "sha256": "19185E996173B3B432AF9A8488E6D85ACD18EB697B424D5E1B413664C6B90F33"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T14:47:43.482Z",
+    "end": "2026-10-28T14:48:43.091Z",
+    "exit_code": 1,
+    "tests": 207,
+    "passed": 206,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 59570.6681,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c135-test.log",
+    "log_sha256": "D387D1DBC48024951DD7DBB5BF536CEAD69FBE9F9CA257F08497DB0EEC446BB1",
+    "failing": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "known_preexisting_failures": [
+      "rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability"
+    ],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 818,
+      "unowned": 0,
+      "imports": 3377,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1312,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c135-rf04-architecture.log",
+      "log_sha256": "A0C2110C1AF2487F78F8AF1FB32D7723883868288248400ACFD1BBBCD2F38B43",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 818,
+      "unowned": 0,
+      "imports": 3377,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1227,
+      "active_violation_groups": 85,
+      "transition_errors": 85,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c135-rf05-architecture.log",
+      "log_sha256": "538F13FD0C66A607B6569D8F4EC75C933383B36508BE83A8C1192E0C2C750B3F",
+      "changed_path_active_findings": [
+        "LEGACY_MODULE_LOCATION bot/src/simulation.js -> ",
+        "EXPIRED_TRANSITION bot/src/simulation.js -> "
+      ]
+    }
+  },
+  "transition": {
+    "retired": [
+      "dfd38e4f690d96e2a70d0c68da15953bcc30a9dde0dd2df10b7b144f1de9f0d3",
+      "c8e6dc8c8d9a5a6db6352e1469b68e9393a647efa3a06b2e3ad6afe89bb58c93",
+      "2083fcb226c01681d5a54a71f697cc59d10451fbc0b8ccbfe3e41095a46369bb",
+      "c86e85451fdaa0a318a12bf29e3b4012eefe40871769985f681c25b22819ff7a"
+    ],
+    "original_manifest_sha256": "068F18BEF3DD8ADA19FD04742CAB6F9D9401E27F7F1C308D038E2061BF7B33EA",
+    "manifest_sha256_after": "AF5E3546343CF50D144714B602EC5A20609FFE79F47E7D8A46A45DCB3A0647CE",
+    "entries_after": 1301,
+    "remaining_by_feature": {
+      "RF04-F01": 30,
+      "RF04-F03": 20,
+      "RF04-F04": 28,
+      "RF04-F05": 7,
+      "RF05-F02": 182,
+      "RF05-F03": 215,
+      "RF05-F04": 41,
+      "RF05-F05": 390,
+      "RF06-F02": 17,
+      "RF06-F03": 171,
+      "RF06-F04": 152,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {
+    "bot/src/native-environment-arrivals.js": "23713BBEF6A80B49D4D4C51DFA09A77F6F34305B4236092A96B484C067A1708C",
+    "bot/src/native-environment-door-chain.js": "2F31CB749C8A6C81CA94DD9BEFF0BC2C16F0BF4079CA4439CD797AAA4B7E542C",
+    "bot/src/native-environment-imaging.js": "FC64C6D626F3769DC4EEFDD7E93A059CC1D948DBF736623D6D3128859FD4880D",
+    "bot/src/native-environment-output.js": "04EE1BD6EC8E6369834F6CA503DF0A48C22E2394635273E745BF552D045B7811",
+    "bot/src/native-environment-witnesses.js": "EE330DFF34BB7510ACA882D16BE33E3B0E7DEEA4DEE333C4E2DAA58D4F412AE6",
+    "bot/src/simulation-commands.js": "023617B567D94D7402052A2123D80FE1B139D5821E89297290D8095C7351A3C7",
+    "bot/src/simulation.js": "564ABE53456AE87D03BB73280E837CDCA2B7EFA2A24E31396A007AFE2B8C9562"
+  },
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C135 commit: restore root native-environment-audience.js, supply-dependencies.js and scene-action-window.js re-export shims and their importers' root imports, repoint the local tests back, and restore the exact transitions from C135-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

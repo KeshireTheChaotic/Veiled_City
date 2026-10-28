@@ -877,3 +877,9 @@ Tests: one frozen batch of 139 files: 814 tests, 805 pass, 9 fail (named in C133
 The 22 root native-environment-<name>.js files were single-line re-exports of their Daggerheart framework modules with no production importer (Daggerheart's native-environment-scene.js already imports the framework files). They are deleted; the local fresh tests (p06-f16..f36, f38, rf03-f04-c03) were repointed to frameworks/daggerheart/native-environment-<name>.js. No behavior change; startup reachability unchanged.
 
 Tests: one frozen batch of 24 files: 112 tests, 112 pass, 0 fail. Architecture: 22 exact records retired. RF04 exit 0, 0 active violations, 821 modules; RF05 88 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.
+
+## 2026-10-28 C135 Remove three root shims whose importers use owner public APIs
+
+Deleted root re-export shims native-environment-audience.js (five Daggerheart legacy importers now import assertEnvironmentAudience from the Daggerheart public API), supply-dependencies.js (application simulation-commands.js and World simulation.js now import from the World public API) and scene-action-window.js (no production importer; Session public already exports its functions). The application import from the World public API also clears simulation-commands.js's later-phase private-API record. Local fresh tests repointed to the owner public APIs. No behavior change.
+
+Tests: one frozen batch of 34 files: 207 tests, 206 pass, 1 fail (named in C135-RUN.json: rf04-f05-c01.test.mjs | current startup source binds pair before runtime services and retains static NPC provider registration reachability). Architecture: 4 exact records retired. RF04 exit 0, 0 active violations, 818 modules; RF05 85 groups/errors. Provider 0 tokens, $0. RELEASE NOT AUTHORIZED.

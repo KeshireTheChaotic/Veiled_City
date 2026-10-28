@@ -8,7 +8,7 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {assertEnvironmentAudience} from './native-environment-audience.js';
+import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentImagingRules} from './frameworks/daggerheart/public.js';
 import {imagingSituationPeer} from './frameworks/daggerheart/public.js';

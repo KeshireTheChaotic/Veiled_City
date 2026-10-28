@@ -11,7 +11,7 @@ import {ACTION_TYPES,MAJOR_IMPACTS} from './frameworks/world/action-catalog.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
 import { applyNpcServiceOutcome } from "./city-civic.js";
-import { assertServiceAccess } from "./supply-dependencies.js";
+import { assertServiceAccess } from './frameworks/world/public.js';
 import { coordinateConsequences } from "./city-consequences.js";
 import { proposeContactGroup } from "./city-groups.js";
 import {worldIntentDispatch} from './frameworks/world/public.js';

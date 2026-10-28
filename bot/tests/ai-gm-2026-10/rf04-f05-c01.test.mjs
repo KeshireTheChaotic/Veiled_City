@@ -13,7 +13,7 @@ import {connectNpcWorldEvidence} from '../../src/framework-to-framework/npc--wor
 import {initializeNpcWorldEvidence} from '../../src/application/composition/public.js';
 import * as npc from '../../src/frameworks/npc/public.js';
 import * as world from '../../src/native-world-operations.js';
-import {transferSupply,supplyRevision} from '../../src/supply-dependencies.js';
+import {transferSupply,supplyRevision} from '../../src/frameworks/world/public.js';
 import {checkProject} from '../../tooling/architecture/read-project.mjs';
 
 function fixture(t){
@@ -74,13 +74,13 @@ test('actual PC identity cannot be disguised as an autonomous NPC through the co
 
 test('current startup source binds pair before runtime services and retains static NPC provider registration reachability',()=>{
  const root=fileURLToPath(new URL('../../../',import.meta.url)),r=checkProject(root,{phase:'RF04'}),source=readFileSync(new URL('../../src/index.js',import.meta.url),'utf8');const call=source.indexOf('initializeNpcWorldEvidence();');assert.ok(call>=0);assert.ok(call<source.indexOf('const config=loadConfig()'));assert.ok(call<source.indexOf('const db=new VeiledDB'));
- const pair='bot/src/framework-to-framework/npc--world/public.js',targets=r.edges.filter(e=>e.from===pair).map(e=>e.to);assert.deepEqual(new Set(targets),new Set(['bot/src/frameworks/npc/public.js','bot/src/frameworks/world/public.js']));for(const from of ['bot/src/native-world-operations.js','bot/src/supply-dependencies.js'])assert.equal(r.edges.some(e=>e.from===from&&e.to==='bot/src/simulation-motivation.js'),false);
+ const pair='bot/src/framework-to-framework/npc--world/public.js',targets=r.edges.filter(e=>e.from===pair).map(e=>e.to);assert.deepEqual(new Set(targets),new Set(['bot/src/frameworks/npc/public.js','bot/src/frameworks/world/public.js']));for(const from of ['bot/src/native-world-operations.js','bot/src/frameworks/world/public.js'])assert.equal(r.edges.some(e=>e.from===from&&e.to==='bot/src/simulation-motivation.js'),false);
  const seen=new Set(),queue=['bot/src/index.js'];while(queue.length){const next=queue.shift();if(seen.has(next))continue;seen.add(next);for(const edge of r.edges)if(edge.from===next&&edge.to)queue.push(edge.to);}assert.equal(r.summary.pass,true);assert.equal(r.summary.unowned,0);
 });
 
 
 test('saved supply receipt replays in a fresh process without live NPC/World composition', {timeout:15000},async t=>{
- const f=fixture(t),input=f.supply(),saved=transferSupply(f.db,'g',input,'human-gm'),dbModule=new URL('../../src/db.js',import.meta.url).href,supplyModule=new URL('../../src/supply-dependencies.js',import.meta.url).href;
+ const f=fixture(t),input=f.supply(),saved=transferSupply(f.db,'g',input,'human-gm'),dbModule=new URL('../../src/db.js',import.meta.url).href,supplyModule=new URL('../../src/frameworks/world/public.js',import.meta.url).href;
  const result=await new Promise((resolve,reject)=>{let terminal;const worker=new Worker(
   "const {parentPort,workerData}=require('node:worker_threads');(async()=>{let db;try{const {VeiledDB}=await import(workerData.dbModule);const {transferSupply}=await import(workerData.supplyModule);db=new VeiledDB(workerData.file,workerData.schema);const row=transferSupply(db,'g',workerData.input,'fresh-reader');parentPort.postMessage({row});}catch(e){parentPort.postMessage({error:e.message});}finally{db?.close();}})();",
   {eval:true,workerData:{file:f.file,schema:f.schema,input,dbModule,supplyModule}});worker.on('message',value=>{terminal=value;});worker.once('error',reject);worker.once('exit',code=>code===0&&terminal&&!terminal.error?resolve(terminal.row):reject(Error(terminal?.error||'Fresh reader worker exit '+code)));});

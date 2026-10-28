@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {classifyResourceOverlap} from '../../src/scene-action-window.js';
+import {classifyResourceOverlap} from '../../src/frameworks/session/public.js';
 const action=(operation,reads=[],writes=[])=>({operation,reads,writes});
 test('independent testimony does not force unrelated players into a contested beat',()=>{
  assert.equal(classifyResourceOverlap(action('testimony',['clue:harbor']),action('observe',['door:archive'])),'independent');

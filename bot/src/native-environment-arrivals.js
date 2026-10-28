@@ -12,7 +12,7 @@ import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {assertEnvironmentAudience} from './native-environment-audience.js';
+import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {createEnvironmentArrivalRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createEnvironmentArrivalRules({capabilities:{inspectArbitrationOrigin:(...args)=>inspectArbitrationOrigin(...args),buildNarrativeContext:(...args)=>buildNarrativeContext(...args),inspectNativeEnvironmentInstance:(...args)=>inspectNativeEnvironmentInstance(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeGmOpportunity:(...args)=>nativeGmOpportunity(...args),reservedCampaignFear:(...args)=>reservedCampaignFear(...args),establishNarrativeEntity:(...args)=>establishNarrativeEntity(...args),worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),hash:(...args)=>hash(...args),fail:(...args)=>fail(...args),assertEnvironmentAudience:(...args)=>assertEnvironmentAudience(...args)}});}

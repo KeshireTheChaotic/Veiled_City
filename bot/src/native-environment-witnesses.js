@@ -16,7 +16,7 @@ function objectiveEvidence(...args){return nativeKnowledgeEvidence.objectiveEvid
 import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {assertEnvironmentAudience} from './native-environment-audience.js';
+import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

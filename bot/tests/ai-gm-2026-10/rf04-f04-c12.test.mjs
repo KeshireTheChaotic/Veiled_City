@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {classifyResourceOverlap as sessionClassifier} from '../../src/frameworks/session/public.js';
-import {classifyResourceOverlap as compatibilityClassifier} from '../../src/scene-action-window.js';
+import {classifyResourceOverlap as compatibilityClassifier} from '../../src/frameworks/session/public.js';
 
 const action=(operation,reads=[],writes=[])=>({operation,reads,writes});
 

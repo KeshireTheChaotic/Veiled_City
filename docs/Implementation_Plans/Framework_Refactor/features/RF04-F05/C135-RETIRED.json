@@ -1,0 +1,54 @@
+{
+  "feature": "RF04-F05-C135",
+  "original_manifest_sha256": "068F18BEF3DD8ADA19FD04742CAB6F9D9401E27F7F1C308D038E2061BF7B33EA",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "dfd38e4f690d96e2a70d0c68da15953bcc30a9dde0dd2df10b7b144f1de9f0d3",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-audience.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "c8e6dc8c8d9a5a6db6352e1469b68e9393a647efa3a06b2e3ad6afe89bb58c93",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-action-window.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "2083fcb226c01681d5a54a71f697cc59d10451fbc0b8ccbfe3e41095a46369bb",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/supply-dependencies.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "c86e85451fdaa0a318a12bf29e3b4012eefe40871769985f681c25b22819ff7a",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/simulation-commands.js",
+      "to": "bot/src/supply-dependencies.js",
+      "kind": "static",
+      "specifier": "./supply-dependencies.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

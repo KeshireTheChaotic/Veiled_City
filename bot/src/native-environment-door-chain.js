@@ -13,7 +13,7 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}functi
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {assertEnvironmentAudience} from './native-environment-audience.js';
+import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentDoorChainRules} from './frameworks/daggerheart/public.js';
 import {doorChainSituationPeer} from './frameworks/daggerheart/public.js';
