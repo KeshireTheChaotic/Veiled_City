@@ -22,6 +22,7 @@ export {tierWorldAdditions} from './entity-memory-source.js';
 export {createKnowledgeWorldIdentityConsumer,knowledgeWorldIdentities} from './contracts/world-identities.js';
 export {createKnowledgeNarrativeVisibilityConsumer,knowledgeNarrativeVisibility} from './contracts/narrative-visibility.js';
 export {createHistoryReconciliation} from './history-reconciliation.js';
+export {reconcileHistory} from './history-reconciliation-service.js';
 export {createPresentationEvidence} from './presentation-evidence.js';
 export {inferredSource,relationshipEvidence,relationshipProvenance,artifactProvenance,reviewPresentation,presentationContext,presentationView} from './presentation-evidence-service.js';
 export {createEvidenceCustody} from './evidence-custody.js';

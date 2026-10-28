@@ -1,0 +1,19 @@
+{
+  "reason": "Application story command adopts original Knowledge public service",
+  "entries": [
+    {
+      "id": "5d847be2f6deaed1f9b14b9342868c24a90700efe8052abc0de27b452c8b097f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/history-reconciliation.js",
+      "kind": "static",
+      "specifier": "./history-reconciliation.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

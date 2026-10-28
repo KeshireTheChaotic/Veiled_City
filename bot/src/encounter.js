@@ -5,6 +5,7 @@ export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseB
 /** Encounter budget, composition, and adversary-library helpers. */
 import { randomInt } from "node:crypto";
 export {EncounterLibrary} from './frameworks/daggerheart/public.js';
+export {livePcRoster,partyTier,autoBuildComposition} from './frameworks/daggerheart/public.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {nativeWorldSource} from './frameworks/daggerheart/public.js';
@@ -14,9 +15,6 @@ function scenePresence(...args){return nativeScenes.scenePresence(...args);}func
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
-
-export function livePcRoster(...args){return compositionRules().livePcRoster(...args);}
-export function partyTier(...args){return compositionRules().partyTier(...args);}
 
 /** Explicit GM template bindings, sourced proposals and review use the existing encounter resolver. */
 export function encounterProposalContext(db,guild){
@@ -105,8 +103,6 @@ export function bindWorldCombatants(...args){return groundingRules().bindWorldCo
 export function validateWorldEncounterActivation(...args){return groundingRules().validateWorldEncounterActivation(...args);}
 
 function pick(a){ return a.length?a[randomInt(a.length)]:null; }
-export function autoBuildComposition(...args){return compositionRules().autoBuildComposition(...args);}
-
 export function defaultObjective(style="balanced"){
   const sets={
     boss:["Stop the central threat before it completes its objective.","Contain or defeat the major entity while preventing collateral damage."],
@@ -117,10 +113,6 @@ export function defaultObjective(style="balanced"){
   };
   return pick(sets[style]||sets.balanced);
 }
-
-import {createEncounterCompositionRules} from './frameworks/daggerheart/public.js';
-let nativeComposition;
-function compositionRules(){return nativeComposition??=createEncounterCompositionRules({randomInt});}
 
 import {createEncounterGroundingRules} from './frameworks/daggerheart/public.js';
 let nativeGrounding;

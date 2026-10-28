@@ -819,3 +819,7 @@ O01 extracts the original pure World simulation overview with root function iden
 ## 2026-10-28 C122, C123 and O02
 
 Knowledge presentation evidence composition moved with root singleton readers retained; application callers adopt public API (C122 split focused evidence). EncounterLibrary class moved to Daggerheart with exact class identity and file-backed tests2/2 (C123). World environmental grammar moved with original root function identity and tests2/2 (O02). Three exact application import records retired; required root readers remain. RF04 ratchet passed at831 modules, zero unowned/active/errors, largest cycle85; RF05 remains at124 groups/errors. Full receipts, gameplay and live behavior remain unqualified. RF04 incomplete; release unauthorized.
+
+## 2026-10-28 C124, C125 and O03
+
+C124 moves the original history singleton into Knowledge with the root reader retained (1/1 focused test); C125 moves original encounter composition wrappers and their lazy instance into Daggerheart (2/2); O03 adopts World public actor configuration in four same-owner callers (2/2 tested draft cases, other callers source-reviewed). RF04 gate passes at833 modules, zero unowned/active/errors, largest cycle85; RF05 remains at124 groups/errors. The F07 compatibility-exit audit identifies103 retained root locations and specific RF05/RF06 reverse callers; it authorizes no blanket deadline or policy waiver. Phase incomplete; release unauthorized.

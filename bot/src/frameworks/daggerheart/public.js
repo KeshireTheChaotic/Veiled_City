@@ -149,3 +149,4 @@ export {nativeKnowledgeActions} from './contracts/knowledge-actions.js';
 export {nativePvpWindow} from './contracts/pvp-window.js';
 export {nativeFearEffectSource} from './contracts/fear-effect-source.js';
 export {EncounterLibrary} from './encounter-library.js';
+export {livePcRoster,partyTier,autoBuildComposition} from './encounter-composition-source.js';

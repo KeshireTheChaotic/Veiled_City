@@ -19,7 +19,7 @@ import { manageMemoryCluster } from "./memory-clusters.js";
 import { expansionStatus } from "./expansion-contracts.js";
 import { delegationOperation, stateRevision, projectPrivateEffect } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
-import { reconcileHistory } from "./history-reconciliation.js";
+import { reconcileHistory } from "./frameworks/knowledge/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from "./session-briefs.js";

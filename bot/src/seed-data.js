@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import {worldNpcSeed} from './frameworks/world/public.js';
 const {seedNpcCognition}=worldNpcSeed;
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { configureSimulationEntity } from "./simulation.js";
+import { configureSimulationEntity } from './frameworks/world/public.js';
 import { backfillSeedData } from "./seed-drafts.js";
 
 const TEXT_EXTENSIONS=new Set([".md",".txt",".json",".csv",".yaml",".yml",".html",".xml"]);

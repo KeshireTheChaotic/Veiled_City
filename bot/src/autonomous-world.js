@@ -10,7 +10,7 @@ function currentScene(...args){return worldSessionScene.currentScene(...args);}f
 import {worldNativeMovementChecks} from './frameworks/world/public.js';
 function nativeMovementConditionIssue(...args){return worldNativeMovementChecks.nativeMovementConditionIssue(...args);}
 import { activeCityProxy } from "./city-constraints.js";
-import { configureSimulationEntity } from "./simulation.js";
+import { configureSimulationEntity } from './frameworks/world/public.js';
 import { validateMinorIdentity } from "./city-depth.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import {stateRevision} from './kernel/state-revision.js';
