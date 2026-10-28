@@ -14,3 +14,8 @@ import {narrativeEnvironmentalText} from '../../frameworks/narrative/public.js';
 import {environmentalText} from '../../frameworks/world/public.js';
 /** Bind World's original environmental text function to Narrative's fixed consumer. */
 export function connectNarrativeEnvironmentalText(){return narrativeEnvironmentalText.bind({environmentalText});}
+
+import {narrativeWorldEncounters} from '../../frameworks/narrative/public.js';
+import {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates} from '../../frameworks/world/public.js';
+/** Bind World's original encounter catalog configuration and candidate snapshot to Narrative's fixed consumer. */
+export function connectNarrativeWorldEncounters(){return narrativeWorldEncounters.bind({configureWorldEncounterCatalog,snapshotNativeEncounterCandidates});}

@@ -2694,7 +2694,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c50.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c50.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f06-c60.test.mjs"
       ],
       "observed_directions": [
         {

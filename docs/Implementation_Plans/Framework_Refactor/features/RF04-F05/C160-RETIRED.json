@@ -1,0 +1,46 @@
+{
+  "feature": "RF04-F05-C160",
+  "original_manifest_sha256": "568D1E6B004387AE97E1897B8D3E9EC8331F4465F8E01808E44A0D326D542CEA",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "4ba139dd609d7044b3dd6f0dcb4467f20cf9b76b4f181b56048882b1eaf7e93b",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-encounter-beats.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "36fc7def836538bcec924680075789e8e7b714767ad4427eed5036bb81a2d7c6",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/world-encounter-beats.js",
+      "kind": "static",
+      "specifier": "./world-encounter-beats.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "b9d67305428a1867c621afa52352bf51f375cb0254badcdf0c8743c4874623e4",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-director-source.js",
+      "to": "bot/src/world-encounter-beats.js",
+      "kind": "static",
+      "specifier": "./world-encounter-beats.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

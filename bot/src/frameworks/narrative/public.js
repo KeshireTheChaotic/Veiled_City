@@ -35,3 +35,4 @@ export {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './cont
 export {narrativeEnvironmentalText} from './contracts/environmental-text.js';
 export {narrativeKnowledgeReaders} from './contracts/knowledge-readers.js';
 export {narrativeOpeningCohort} from './contracts/opening-cohort.js';
+export {narrativeWorldEncounters} from './contracts/world-encounters.js';

@@ -6,7 +6,8 @@ import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} fro
 import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
 import {applicationPrincipal} from './kernel/application-authority.js';
 import {prepareWorldSimulationObservation} from './world-simulation-receipts.js';
-import {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates} from './world-encounter-beats.js';
+import {narrativeWorldEncounters} from './frameworks/narrative/public.js';
+function configureWorldEncounterCatalog(...args){return narrativeWorldEncounters.configureWorldEncounterCatalog(...args);}function snapshotNativeEncounterCandidates(...args){return narrativeWorldEncounters.snapshotNativeEncounterCandidates(...args);}
 const sourceBinding=Symbol('native-director-narrative-source');
 export const nativeDirectorNarrativeSource=result=>result?.[sourceBinding]?.ref||null;
 export const nativeDirectorNarrativeContent=result=>result?.[sourceBinding]?.content||null;
