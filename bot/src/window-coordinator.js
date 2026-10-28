@@ -1,6 +1,10 @@
 /** Native window lifecycle. Closing participation never grants a result, dice, cost or custody. */
 import { createHash } from "node:crypto";
-import { consentAction, requestActionConsent, respondActionConsent, validateActionConsent } from "./action-consent.js";
+import {sessionNativeActionConsent} from './frameworks/session/public.js';
+const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
+const requestActionConsent=(...args)=>sessionNativeActionConsent.requestActionConsent(...args);
+const respondActionConsent=(...args)=>sessionNativeActionConsent.respondActionConsent(...args);
+const validateActionConsent=(...args)=>sessionNativeActionConsent.validateActionConsent(...args);
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from './frameworks/session/public.js';
 import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";

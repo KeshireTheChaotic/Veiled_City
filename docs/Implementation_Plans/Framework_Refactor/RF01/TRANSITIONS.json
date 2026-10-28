@@ -14131,20 +14131,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "a084461be50805c09f48ebb326aabfb87304c4e67e74d1602a972c4e6990facc",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/window-coordinator.js",
-      "to": "bot/src/action-consent.js",
-      "kind": "static",
-      "specifier": "./action-consent.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "26f8f9ac7d7e6aa468c56d9bcf05a8314a8d5fa0d7a0bfbdefe476e61e5a6a93",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/window-coordinator.js",
@@ -21155,20 +21141,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "96b4651dee751e3ae291948d900ef74de67503a16a4bcdd85d9f578f36c43937",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/window-coordinator.js",
-      "to": "bot/src/action-consent.js",
-      "kind": "static",
-      "specifier": "./action-consent.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
