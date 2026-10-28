@@ -897,3 +897,7 @@ Reviewed HEAD631c31ec and inherited C137. Session setup implementation moved int
 ## 2026-10-28 C138-C139
 
 C138 moves World observation into World with root identity/registration retained and explicit existing-bootstrap registration (3/3 fresh tests). C139 adopts Knowledge archive public API in command dispatch (1/1 fresh hook/fake dispatcher test). Two exact import records retired; required root readers remain. Source fingerprints distinguish the earlier C138 and later C139 commands bytes. RF04 ratchet passes820 modules/zero unowned/active/errors, largest cycle79; RF05 remains83 groups/errors. Exact RF06 prerequisite authority is recorded in RF06-PREREQUISITE-AUTHORIZATION.md; no blanket phase waiver. RF04 incomplete; release unauthorized.
+
+## 2026-10-28 authorized C140 prerequisite
+
+Under RF06-PREREQUISITE-AUTHORIZATION, exact relationship SQL/projection extracted to Persistence with original callbacks; constructor remains independent of bootstrap. Fresh disposable SQLite tests2/2 cover call order, saved values/retraction/reopen and nested rollback. Original Knowledge import and root location remain; no record retired. RF04 ratchet passes821 modules/zero unowned/active/errors, largest cycle79. RF04 and RF06 remain incomplete; standalone facade composition is next. Release unauthorized.

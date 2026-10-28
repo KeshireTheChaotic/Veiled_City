@@ -16,6 +16,7 @@ import { processCityDue } from "./city-calendar.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
 import { relationshipEvidence } from "./presentation-evidence.js";
+import {readRelationship} from './frameworks/persistence/relationship-reader.js';
 import { activeEvidence, evidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
@@ -2157,8 +2158,7 @@ export class VeiledDB {
     });
   }
 
-  getRelationship(id){ const row=this.db.prepare("SELECT * FROM relationships WHERE id=?").get(id);return row?{...row,epistemic:relationshipEvidence(row),
-    evidence_active:relationshipEvidence(row).source_refs.every(ref=>activeEvidence(this,row.guild_id,ref))}:row; }
+  getRelationship(id){return readRelationship(this,id,relationshipEvidence,activeEvidence);}
   listRelationships(guildId,{includeGM=false,characterId=null,userId=null}={}){
     const rows=this.db.prepare("SELECT * FROM relationships WHERE guild_id=? ORDER BY updated_at DESC").all(guildId);
     return rows.filter(r=>includeGM||["public","party"].includes(r.visibility)||(r.visibility==="character"&&characterId&&(r.from_key===characterId||r.to_key===characterId||r.source_character_id===characterId))||(r.visibility==="player"&&userId&&r.note.includes(`player:${userId}`)))
