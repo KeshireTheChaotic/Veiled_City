@@ -1,0 +1,213 @@
+{
+  "feature": "RF04-F05-C134",
+  "base_head": "745a19b4b7d31cff04f381877d34ade6a89d667b",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "syntax": {
+    "files": [
+      "bot/tests/ai-gm-2026-10/rf04-f05-c134.test.mjs"
+    ],
+    "passed": 1,
+    "failed": 0
+  },
+  "tests": {
+    "selection": "new slice tests + fresh ai-gm-2026-10 tests directly importing a changed production module",
+    "files": [
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f16.test.mjs",
+        "sha256": "6EB54A2952396ADA98C9A730E25224BD269F327492A64E2189B3BB7986809EEC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f17.test.mjs",
+        "sha256": "AFA4FAF2C189D6FC89ECAA8B2FBB5EF104518B3E0FABF08C48B82E55567569C0"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f18.test.mjs",
+        "sha256": "C5EA899204A4C67B9B656B2E0F4D8424B51147261DF57B1E1CBEC90232EE10BE"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f19.test.mjs",
+        "sha256": "C0B57240512B342822A06493FAC6C8AE902524C276676D3638E54EE63096BE3E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f20.test.mjs",
+        "sha256": "123AC52910FA74AF4A91F588926D23BD45892B9B57811E3A5BE68600D9F8961B"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f21.test.mjs",
+        "sha256": "94CAF1A858B5E76B7F1037E88DA2DBE044A7CECAC4368EC8028D289E7F30762A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f22.test.mjs",
+        "sha256": "9BB5575EC394094AE11CD71726D94181AFF70EB3BAF00656F98F69D0A3AB93E3"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f23.test.mjs",
+        "sha256": "B44D379059A1690F4A4227278D73C4CECD3A438A9943EBF8F68BE0280AE6CD7F"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f24.test.mjs",
+        "sha256": "70C8B88ABE68CFA4BFC0309D63AB06327414B04E5E85EAAAC0CA47FA4BD31AC1"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f25.test.mjs",
+        "sha256": "B574F035AD7F9365B397C746CB38088B94BBA173CBA92670FEE0B5584ED0C10A"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f26.test.mjs",
+        "sha256": "7B721DF6E30F78F4CFCB607E4B981830ECE01669F2197838EF986EAF09F2A1C4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f27.test.mjs",
+        "sha256": "56894D677AB7C5DEA44D1B7BF4096980DEB17A286FF04FFE29462DD01E37FD36"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f28.test.mjs",
+        "sha256": "7E30D62DDCADC94A2809729ABC68E7D24637B564F26FEC6CED49BBB51DEA8B1C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f29.test.mjs",
+        "sha256": "F525E7BC32E5C55CD181EC15B9955FADFAE5A5793EE6FF7E2FF872E7743377B4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f30.test.mjs",
+        "sha256": "2ED55FB68C0273E9CD7AE6D161C760DC214E9A99826208267A7D97837A7986B2"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f31.test.mjs",
+        "sha256": "9B9043AD8DD1ABA74CA62152BBDFC695A54579BDAB568C66BB2C101042E36DA4"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f32.test.mjs",
+        "sha256": "51242461B81BC0A6C48B3E0BE3628CED40B510DAB31A73817C5C5B22FADA1D3C"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f33.test.mjs",
+        "sha256": "358866813745947E7995EEB9D8FEA3B51197F1493C135B888326387529C18265"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f34.test.mjs",
+        "sha256": "EA55F10007B4AD4E4151923613C8A91CA0C0AB9989A903568F7FAC924E8EB03D"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f35.test.mjs",
+        "sha256": "ACD4BD30DB721B2E3B413F49DADB32F6465A2B2EC441DA9B93C6C69BE6D96BEC"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f36.test.mjs",
+        "sha256": "3DAE01059233BC9EC9B12975CEE6B7B9F1D4CB15BE56D73359A6C778A1D74774"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/p06-f38.test.mjs",
+        "sha256": "ECEAFD27E9790C7A22571DE64646B9D5733371172EDFE54BB2D3B911A5BDC893"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs",
+        "sha256": "16B555EF3D90783EF12F7EAC8C50B6B6FAA8689E687255C96BAE141B1515303E"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/rf04-f05-c134.test.mjs",
+        "sha256": "7F9C2F5E6B7DC53B6E855886B6FF3E2AFC14AB5452667354BAB293E9700E4549"
+      }
+    ],
+    "command": "cd bot; node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap <files>",
+    "launches": 1,
+    "start": "2026-10-28T14:46:03.513Z",
+    "end": "2026-10-28T14:46:09.780Z",
+    "exit_code": 0,
+    "tests": 112,
+    "passed": 112,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "duration_ms": 6229.2579,
+    "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c134-test.log",
+    "log_sha256": "D3B03389B63665536D466CE767ABE636B727D1EC7F2BDF5823B79D37198534A6",
+    "failing": [],
+    "known_preexisting_failures": [],
+    "unknown_failures": []
+  },
+  "architecture": {
+    "RF04": {
+      "exit_code": 0,
+      "source_modules": 821,
+      "unowned": 0,
+      "imports": 3380,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1316,
+      "active_violation_groups": 0,
+      "transition_errors": 0,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c134-rf04-architecture.log",
+      "log_sha256": "9104F4D6D6F80B5806171FEEBBF59EA05EEAA4B8F86D3355B136EB1A72C86F45",
+      "changed_path_active_findings": []
+    },
+    "RF05": {
+      "exit_code": 1,
+      "source_modules": 821,
+      "unowned": 0,
+      "imports": 3380,
+      "largest_cycle": 79,
+      "accepted_legacy_occurrences": 1228,
+      "active_violation_groups": 88,
+      "transition_errors": 88,
+      "log": "docs/Implementation_Plans/Framework_Refactor/phases/RF04/rf04-f05-c134-rf05-architecture.log",
+      "log_sha256": "285EA5DD722BAF75FC88F6F2740494D67EBE32F2711B43320B75CC114A00380B",
+      "changed_path_active_findings": []
+    }
+  },
+  "transition": {
+    "retired": [
+      "4c4d89fe328ac91097198b559f12a8f57d532be2b231edb8e2f134e2715697b7",
+      "d0688df753416d73226e56034a2085c10132b2e0d1c8dd09af0e3cd1f6122032",
+      "ae41ea246cf1c4218ca11b5384bb20a625d53087e64ec7c1fb092479eef1174e",
+      "d01bee87d9718733921e2d2fbdf88563bef7798dc81e028de5f9bb7f3b6f8bd7",
+      "321c22e4707c922655c1eb2f8b0dd4b4437ef042b784bb9d4276db4a72305cab",
+      "b7e5704977231ae149cbb81f3f75ec255f7cb67bd506698ec3dda1a6b699e182",
+      "8703e51f6e7d8a18cb5ebc7542546340b50aa9f2091d98029001d43740069425",
+      "4d6a8b3cfa8dee2cbd78be9d8290db96019ddb43cdd48be3ef4f9282d45818b5",
+      "3bfbf1a5b38b593efac6719baf4217612b99b387da67675c0ff9b0b58e7b931f",
+      "9df8aa773b58831737a3d05fd2dceba03bbb374566d61a875fe285597b266ad0",
+      "d33db8cad75b7db2781644eed5145c0915ccc256e17fbfe50f70f6afbdd643e8",
+      "2dce5aeff8730988652673d7552bc242953eae1a9ee6a7bb70ebc713d9b2e2e3",
+      "b84eee334f2699f09011e5c4c1abfbfef2f1e647c29f148d95635bb84c699410",
+      "f37c4fccf798447c22cf10c1ad157a6b36866416ea616ee724f53f7940b4e6ca",
+      "5525d06cbdf3e59c2d7c1da12b4de88b01664527732699348d747a1ffdaf1dca",
+      "958063850586e1de140363c542568d4b794dabe072f7be3e0b181fc7f9d00cd3",
+      "cd5ebae3ddebd42b2d3156cd41ca2a587fafee1947c24a72d5e5f7bb2ecb5375",
+      "149b3fe3025a3b28b7607c47b63c5a05c61d2dcc148f48463e26bad156df68cf",
+      "2330967b5330ec6c297d96d3e326e3f4c985290573b5df11ca4c434e915a38b2",
+      "9b9647d2b38898697e59888a89d9fd051ff1e5f4d16e50ba7d24df59056d1231",
+      "df0b27789ccec51eed667407a211fc2ce7aff95331a2fcb1919814eda9283209",
+      "85f157200ee744e19fb24ba20003965c628e0a947ef2998555f5e0bc23ad0d5e"
+    ],
+    "original_manifest_sha256": "477F7ED8779209D88D29AF9A90770F5E500704005E047E45F283C27D70F04567",
+    "manifest_sha256_after": "068F18BEF3DD8ADA19FD04742CAB6F9D9401E27F7F1C308D038E2061BF7B33EA",
+    "entries_after": 1305,
+    "remaining_by_feature": {
+      "RF04-F01": 31,
+      "RF04-F03": 20,
+      "RF04-F04": 29,
+      "RF04-F05": 8,
+      "RF05-F02": 182,
+      "RF05-F03": 215,
+      "RF05-F04": 41,
+      "RF05-F05": 390,
+      "RF06-F02": 17,
+      "RF06-F03": 171,
+      "RF06-F04": 153,
+      "RF06-F05": 43,
+      "RF06-F07": 5
+    }
+  },
+  "changed_sha256": {},
+  "cost": {
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0,
+    "network": 0,
+    "production_database": 0,
+    "agent_usage": "UNMEASURED"
+  },
+  "release": "NOT AUTHORIZED",
+  "rollback": "Revert only the C134 commit: restore the 22 root native-environment-*.js re-export shims, repoint the local fresh tests back, and restore the exact transitions from C134-RETIRED.json.",
+  "status": "SCOPED_QUALIFIED"
+}

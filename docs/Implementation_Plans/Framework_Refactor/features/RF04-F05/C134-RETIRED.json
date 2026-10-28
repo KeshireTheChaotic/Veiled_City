@@ -1,0 +1,249 @@
+{
+  "feature": "RF04-F05-C134",
+  "original_manifest_sha256": "477F7ED8779209D88D29AF9A90770F5E500704005E047E45F283C27D70F04567",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "4c4d89fe328ac91097198b559f12a8f57d532be2b231edb8e2f134e2715697b7",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-auction.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "d0688df753416d73226e56034a2085c10132b2e0d1c8dd09af0e3cd1f6122032",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-chain-of-title.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "ae41ea246cf1c4218ca11b5384bb20a625d53087e64ec7c1fb092479eef1174e",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-consensus-engine.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "d01bee87d9718733921e2d2fbdf88563bef7798dc81e028de5f9bb7f3b6f8bd7",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-containment-shutters.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "321c22e4707c922655c1eb2f8b0dd4b4437ef042b784bb9d4276db4a72305cab",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-contaminated-scene.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "b7e5704977231ae149cbb81f3f75ec255f7cb67bd506698ec3dda1a6b699e182",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-everyone-is-watching.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "8703e51f6e7d8a18cb5ebc7542546340b50aa9f2091d98029001d43740069425",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-express-through-memory.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "4d6a8b3cfa8dee2cbd78be9d8290db96019ddb43cdd48be3ef4f9282d45818b5",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-guest-right.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3bfbf1a5b38b593efac6719baf4217612b99b387da67675c0ff9b0b58e7b931f",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-last-train-rules.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "9df8aa773b58831737a3d05fd2dceba03bbb374566d61a875fe285597b266ad0",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-market-neutrality.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "d33db8cad75b7db2781644eed5145c0915ccc256e17fbfe50f70f6afbdd643e8",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-metaphor-physics.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "2dce5aeff8730988652673d7552bc242953eae1a9ee6a7bb70ebc713d9b2e2e3",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-model-room.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "b84eee334f2699f09011e5c4c1abfbfef2f1e647c29f148d95635bb84c699410",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-no-consensus.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "f37c4fccf798447c22cf10c1ad157a6b36866416ea616ee724f53f7940b4e6ca",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-no-ordinary-signal.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "5525d06cbdf3e59c2d7c1da12b4de88b01664527732699348d747a1ffdaf1dca",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-price-offer.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "958063850586e1de140363c542568d4b794dabe072f7be3e0b181fc7f9d00cd3",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-private-room.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "cd5ebae3ddebd42b2d3156cd41ca2a587fafee1947c24a72d5e5f7bb2ecb5375",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-procedure.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "149b3fe3025a3b28b7607c47b63c5a05c61d2dcc148f48463e26bad156df68cf",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-sealed-docket.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "2330967b5330ec6c297d96d3e326e3f4c985290573b5df11ca4c434e915a38b2",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-thin-walls.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "9b9647d2b38898697e59888a89d9fd051ff1e5f4d16e50ba7d24df59056d1231",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-third-rail-spirit.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "df0b27789ccec51eed667407a211fc2ce7aff95331a2fcb1919814eda9283209",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-three-vectors.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "85f157200ee744e19fb24ba20003965c628e0a947ef2998555f5e0bc23ad0d5e",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-wrong-offering.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}
