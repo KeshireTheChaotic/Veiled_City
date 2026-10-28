@@ -1866,17 +1866,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "b7682ad347d561ab4ee444166fe6f11df6141b613e7bb66a9d2bfc7c15a28334",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/operations/overview.js",
-      "owner": "operations",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "7315d68b8b98aae1ce12e70498d2654490012f9a979a99571f76bc1f89a51f5e",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/ordinary-effect-proof.js",
@@ -1895,17 +1884,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "d7579d619910c92f2e8c61cb2caf861e95e5a2a9a948431a04f76b32afe93a6c",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/outcome-preview.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
@@ -4153,20 +4131,6 @@
       "to": "bot/src/operational-metrics.js",
       "kind": "static",
       "specifier": "./operational-metrics.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "8a1f30a91cfceb0baec3e26812b60690a0bca96595d63d0f443a5acf50f7a7b8",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/operations/overview.js",
-      "kind": "static",
-      "specifier": "./operations/overview.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
@@ -11567,20 +11531,6 @@
       "to": "bot/src/negotiations.js",
       "kind": "static",
       "specifier": "./negotiations.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "b6c6b7e5448019841df3684aea035e0906d808c92e414c07df7cef225712683c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/outcome-preview.js",
-      "kind": "static",
-      "specifier": "./outcome-preview.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

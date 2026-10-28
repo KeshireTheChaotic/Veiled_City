@@ -5,3 +5,4 @@ export {currentTurnTrace,instrumentSqlReads,turnTraceFor,withTurnTrace} from './
 export {OperationalMetrics,measureNative,measureStage,operationalMetrics,parseModelPricing} from './operational-metrics.js';
 export {createOperationsNpcReviewConsumer,operationsNpcReview} from './contracts/npc-review.js';
 export {operationsWorldOverview} from './contracts/world-overview.js';
+export {buildGmOverview,formatGmOverview} from './overview.js';

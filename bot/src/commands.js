@@ -41,7 +41,7 @@ import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} f
 import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
-import { buildGmOverview, formatGmOverview } from "./operations/overview.js";
+import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';
 import { seedData } from "./seed-data.js";
 import { handleSeedCommand } from "./seed-commands.js";
 import { KeyedSerialQueue } from "./kernel/serial-queue.js";

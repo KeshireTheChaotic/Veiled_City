@@ -1,0 +1,5 @@
+# RF04-F05 C136 — Move outcome preview and GM overview into their owners
+
+Base f96b9e45. outcome-preview.js moved unchanged to frameworks/daggerheart/outcome-preview.js and operations/overview.js to frameworks/operations/overview.js (its port import now the Operations contract file); both are exported from their owner public APIs and the application importers (story-commands.js, commands.js) import from those APIs, which also clears their two later-phase private-API records. Also tried and backed out in this slice: negotiations.js, session-opening-attendance.js and world-sanctioned-sources.js, whose moves break source-text, hook-fake and cold-slot fixtures (c02, c52, c80, c104, c109, c119, rf04-f04-c01) and need their own fixture rework.
+
+Rollback: Revert only the C136 commit: move outcome-preview.js and operations/overview.js back to their root paths, drop their owner public exports, restore the commands.js and story-commands.js imports and the rf04-f06-c28 test path, and restore the exact transitions from C136-RETIRED.json.

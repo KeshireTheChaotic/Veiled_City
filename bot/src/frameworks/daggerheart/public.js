@@ -151,3 +151,4 @@ export {nativeFearEffectSource} from './contracts/fear-effect-source.js';
 export {EncounterLibrary,loadEncounterLibrary,isEncounterLibrary} from './encounter-library.js';
 export {livePcRoster,partyTier,autoBuildComposition} from './encounter-composition-source.js';
 export {encounterActors} from './encounter-actors-source.js';
+export {previewOutcomes} from './outcome-preview.js';
