@@ -3,8 +3,7 @@ import {knowledgeWorldMemory,knowledgeWorldEvents} from './frameworks/knowledge/
 function cityObject(...args){return knowledgeWorldMemory.cityObject(...args);}function cityKey(...args){return knowledgeWorldMemory.cityKey(...args);}function cityInteger(...args){return knowledgeWorldMemory.cityInteger(...args);}function cityAudit(...args){return knowledgeWorldMemory.cityAudit(...args);}function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 function requireCitySource(...args){return knowledgeWorldMemory.requireCitySource(...args);}
 import {handoutPlayerView} from './handout.js';
-import {organizationInbox} from './owned-community.js';
-import {evidenceView} from './evidence-custody.js';
+import {organizationInbox,evidenceView} from './frameworks/knowledge/public.js';
 import {evidenceType,activeEvidence} from './epistemic.js';
 import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
 function conversationPrincipal(...args){return knowledgeSessionScene.conversationPrincipal(...args);}

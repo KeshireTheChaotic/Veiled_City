@@ -6,7 +6,8 @@ const {reviewGoalTransition,manageStrategy}=operationsNpcReview;
 import { reviewConsequence } from "./city-consequences.js";
 import { manageGroup } from "./city-groups.js";
 import { cityAudit } from "./city-calendar.js";
-import { reviewOrganization } from "./owned-community.js";
+import {operationsKnowledgeOrganizationReview} from './frameworks/operations/public.js';
+const {reviewOrganization}=operationsKnowledgeOrganizationReview;
 const REVIEW_KINDS=["ai_intent","goal_transition","consequence","group_transition","strategy","seed_draft","organization_request"];
 function reviewPreview(row){
   const data=row.data,intent=data.intent,feature=intent?.feature||row.kind;

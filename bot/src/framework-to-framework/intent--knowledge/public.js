@@ -8,3 +8,8 @@ import {intentKnowledgeMaintenance} from '../../frameworks/intent/public.js';
 import {reconcileHistory,manageMemoryCluster,memoryMaintenanceCandidate} from '../../frameworks/knowledge/public.js';
 /** Bind Knowledge's original history reconciliation and memory cluster maintenance to Intent's fixed consumer. */
 export function connectIntentKnowledgeMaintenance(){return intentKnowledgeMaintenance.bind({reconcileHistory,manageMemoryCluster,memoryMaintenanceCandidate});}
+
+import {intentKnowledgeActions} from '../../frameworks/intent/public.js';
+import {manageEvidence,inviteOrganization} from '../../frameworks/knowledge/public.js';
+/** Bind only the two existing Knowledge effects requested by Intent workflows. */
+export function connectIntentKnowledgeActions(){return intentKnowledgeActions.bind({manageEvidence,inviteOrganization});}

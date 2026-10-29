@@ -14,12 +14,11 @@ import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
 import { applicationPrincipal } from "./kernel/application-authority.js";
-import {intentKnowledgeMaintenance} from './frameworks/intent/public.js';
+import {intentKnowledgeMaintenance,intentKnowledgeActions} from './frameworks/intent/public.js';
 function manageMemoryCluster(...args){return intentKnowledgeMaintenance.manageMemoryCluster(...args);}function memoryMaintenanceCandidate(...args){return intentKnowledgeMaintenance.memoryMaintenanceCandidate(...args);}
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
 import { interpretDialogue } from "./dialogue-continuity.js";
-import { manageEvidence } from "./evidence-custody.js";
-import { inviteOrganization } from "./owned-community.js";
+const {manageEvidence,inviteOrganization}=intentKnowledgeActions;
 import { suggestSetupPayoff } from "./story-continuity.js";
 function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}
 import { prepareRollRequest } from "./roll-requests.js";

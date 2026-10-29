@@ -164,6 +164,9 @@
     ],
     "publication--world": [
       "bot/src/framework-to-framework/publication--world/public.js"
+    ],
+    "knowledge--operations": [
+      "bot/src/framework-to-framework/knowledge--operations/public.js"
     ]
   },
   "externalCapabilityOwners": {

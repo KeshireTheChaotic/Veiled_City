@@ -1503,9 +1503,21 @@
           "to": "bot/src/framework-to-framework/intent--knowledge/public.js",
           "line": 2,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/intent-knowledge.js",
+          "to": "bot/src/framework-to-framework/intent--knowledge/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 17,
+          "type": "import"
         }
       ],
-      "validation": "The fixed Knowledge consumer fails closed before composition, forbids replacement, and forwards the original Intent reader. The historical root reader remains independently callable.",
+      "validation": "Keep the existing authored-turn API and bindings unchanged. Intent actions bind exactly the original Knowledge functions; no extra validation or policy is added in the adapter. Fresh C180/C181 coverage is pending; no test artifact is claimed here.",
       "lifecycle": "One fixed consumer bound by application composition before runtime services; no storage construction or mutation.",
       "adoption_feature": "RF04-F03",
       "consumers": [
@@ -1514,7 +1526,9 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f03-c74.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c58.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c58.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f03-c80.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1537,7 +1551,7 @@
         "occurrences": 13
       },
       "public_api": "bot/src/framework-to-framework/intent--knowledge/public.js",
-      "scope": "Knowledge authored-turn envelope read only; other Intent/Knowledge dependencies remain migration obligations."
+      "scope": "Existing Knowledge authored-turn binding remains qualified. C180/C181 add only Intent calls to Knowledge manageEvidence and inviteOrganization through the fixed intentKnowledgeActions port; these two effectful additions remain awaiting fresh C180/C181 boundary coverage."
     },
     {
       "pair": "intent--narrative",
@@ -2058,63 +2072,6 @@
       },
       "public_api": "bot/src/framework-to-framework/knowledge--npc/public.js",
       "scope": "NPC observation source direction only. Legacy path/caller retirement and other observed knowledge/session integrations remain explicit migration work. C25 original NPC cognition receives exact Narrative eligibility, actor-relative Knowledge clusters and Session sceneView as applicable; original Narrative ranking producer remains explicitly unisolated. C27 exact native World methods and Knowledge ContextPlanner class feed original autonomous NPC conversations; original actor/privacy/native receipts unchanged. C43 actual organization staffing review consumes own NPC source callback. No copied owner/NPC consent or policy. Test local only per owner."
-    },
-    {
-      "pair": "knowledge--operations",
-      "endpoints": [
-        "knowledge",
-        "operations"
-      ],
-      "status": "PROPOSED_NO_API",
-      "directions": [
-        {
-          "from": "operations",
-          "to": "knowledge",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
-        {
-          "from": "knowledge",
-          "to": "operations",
-          "import_occurrences": 3,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        }
-      ],
-      "source_evidence": [
-        {
-          "from": "bot/src/ai-review.js",
-          "to": "bot/src/owned-community.js",
-          "line": 9,
-          "type": "import"
-        }
-      ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
-      "observed_directions": [
-        {
-          "from": "operations",
-          "to": "knowledge",
-          "import_occurrences": 2,
-          "injected_calls": 0
-        },
-        {
-          "from": "knowledge",
-          "to": "operations",
-          "import_occurrences": 3,
-          "injected_calls": 0
-        }
-      ],
-      "evidence_reference": {
-        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
-        "pair": "knowledge--operations",
-        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
-        "occurrences": 5
-      }
     },
     {
       "pair": "knowledge--persistence",
@@ -3534,6 +3491,75 @@
       },
       "public_api": "bot/src/framework-to-framework/session--world/public.js",
       "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted. C175 exposes the original Session openingWorldOpportunities provider to the application GM through the pair public API; its saved source_ref/signal_ref references and audience checks remain unchanged. Remaining orchestration and source contracts remain open."
+    },
+    {
+      "pair": "knowledge--operations",
+      "endpoints": [
+        "knowledge",
+        "operations"
+      ],
+      "status": "ADOPTED",
+      "directions": [
+        {
+          "from": "operations",
+          "to": "knowledge",
+          "import_occurrences": 2,
+          "injected_calls": 0,
+          "contract": "Observed dependency only; its exact APIs remain with accountable migrations."
+        },
+        {
+          "from": "knowledge",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 1,
+          "contract": "Knowledge exposes only its original reviewOrganization function to the Operations organization_request workflow."
+        }
+      ],
+      "source_evidence": [
+        {
+          "from": "bot/src/application/composition/knowledge-operations.js",
+          "to": "bot/src/framework-to-framework/knowledge--operations/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/knowledge--operations/public.js",
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "line": 2,
+          "type": "import"
+        }
+      ],
+      "validation": "The pair binds the original synchronous Knowledge reviewOrganization function to one Operations-owned function port; no adapter policy, validation, storage, or authority is added. Adoption covers only this review operation; the reverse observed direction remains unqualified.",
+      "lifecycle": "One fixed consumer bound by application startup after Knowledge World event, memory, record, community, and NPC actor sources are composed; before runtime review calls.",
+      "adoption_feature": "RF05-F05",
+      "consumers": [
+        "bot/src/application/composition/knowledge-operations.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs"
+      ],
+      "observed_directions": [
+        {
+          "from": "operations",
+          "to": "knowledge",
+          "import_occurrences": 2,
+          "injected_calls": 0
+        },
+        {
+          "from": "knowledge",
+          "to": "operations",
+          "import_occurrences": 3,
+          "injected_calls": 0
+        }
+      ],
+      "evidence_reference": {
+        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
+        "pair": "knowledge--operations",
+        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
+        "occurrences": 5
+      },
+      "public_api": "bot/src/framework-to-framework/knowledge--operations/public.js",
+      "scope": "Only the existing Operations reviewWorkflow organization_request call to Knowledge reviewOrganization. No other Operations-to-Knowledge or Knowledge-to-Operations capability is adopted."
     }
   ]
 }

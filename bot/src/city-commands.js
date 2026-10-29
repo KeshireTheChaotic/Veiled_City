@@ -6,7 +6,7 @@ import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorld
   establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";
 import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./frameworks/world/public.js";
 import { recordCityUpkeep, draftMinorNpc, reviewMinorNpc } from "./city-depth.js";
-import { reviewOrganization } from "./owned-community.js";
+import { reviewOrganization } from "./frameworks/knowledge/public.js";
 
 export async function handleCityCommand(interaction,{db,gm}){
   const guildId=interaction.guildId;

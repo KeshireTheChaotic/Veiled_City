@@ -27,6 +27,8 @@ export {createPresentationEvidence} from './presentation-evidence.js';
 export {inferredSource,relationshipEvidence,relationshipProvenance,artifactProvenance,reviewPresentation,presentationContext,presentationView} from './presentation-evidence-service.js';
 export {createEvidenceCustody} from './evidence-custody.js';
 export {createOwnedCommunity} from './owned-community.js';
+export {evidenceView,manageEvidence} from './evidence-custody-service.js';
+export {inviteOrganization,organizationRequest,reviewOrganization,organizationInbox} from './owned-community-service.js';
 export {createPersonalContinuity} from './personal-continuity.js';
 export {createSemanticCandidateProof} from './semantic-candidate-source.js';
 export {createNarrativeMemory} from './narrative-memory.js';

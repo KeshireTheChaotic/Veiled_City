@@ -32,7 +32,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | discord--publication | CONTRACT_ONLY_UNWIRED | publication → discord | 1 / 2 | RF06-F03 |
 | discord--session | PROPOSED_NO_API | discord → session | 0 / 0 | RF06 |
 | discord--world | PROPOSED_NO_API | discord → world | 0 / 0 | RF06 |
-| intent--knowledge | PROPOSED_NO_API | intent → knowledge; knowledge → intent | 0 / 0 | RF05 |
+| intent--knowledge | ADOPTED | intent → knowledge (existing authored-turn API; C180/C181 fixed actions) ; knowledge → intent (observed, unqualified) | 2 / 4 | RF04-F03 |
 | intent--narrative | PROPOSED_NO_API | intent → narrative; narrative → intent | 0 / 0 | RF05 |
 | intent--npc | ADOPTED | npc → intent; intent → npc | 1 / 3 | RF04-F05 |
 | intent--operations | PROPOSED_NO_API | operations → intent | 0 / 0 | RF05 |
@@ -42,7 +42,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | intent--world | ADOPTED | world → intent | 3 / 3 | RF05-F04 |
 | knowledge--narrative | ADOPTED | knowledge → narrative; narrative → knowledge | 1 / 2 | RF04-F05 |
 | knowledge--npc | ADOPTED | npc → knowledge; knowledge → npc | 3 / 4 | RF04-F05 |
-| knowledge--operations | PROPOSED_NO_API | operations → knowledge; knowledge → operations | 0 / 0 | RF04 |
+| knowledge--operations | ADOPTED | knowledge → operations (`reviewOrganization` only); operations → knowledge (observed, unqualified) | 1 / 1 | RF05-F05 |
 | knowledge--persistence | PROPOSED_NO_API | persistence → knowledge; knowledge → persistence | 0 / 0 | RF06 |
 | knowledge--publication | PROPOSED_NO_API | publication → knowledge; knowledge → publication | 0 / 0 | RF06 |
 | knowledge--session | PROPOSED_NO_API | session → knowledge; knowledge → session | 0 / 0 | RF04 |
@@ -69,3 +69,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | session--world | ADOPTED | session → world; world → session | 3 / 5 | RF04 |
 
 Test-path validation is separate from actual execution evidence. Pairs import only their two public owners and neutral kernel; application owns orchestration. No source/canon, PC choice, mechanics, secrecy or delivery authority is inferred from integration. RELEASE NOT AUTHORIZED.
+
+
+
+
