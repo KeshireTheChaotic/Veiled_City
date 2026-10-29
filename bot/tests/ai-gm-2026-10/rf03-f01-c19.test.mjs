@@ -47,6 +47,14 @@ test('a mundane capability that repeats an SRD rule already in raw_refs still cr
  assert.equal(g.adjudicate().data.review_reason,'CAPABILITY_ADAPTER_REQUIRED','a real feature reference still needs its adapter');
 });
 
+test('a re-proposal for an already-ruled action returns the saved ruling instead of failing',t=>{
+ // Mirrors the live 2026-10-28 world-director failure "Ruling terms changed" on a re-read of a ruled player action.
+ const f=fixture(t),first=f.adjudicate();assert.equal(first.status,'roll_pending');
+ Object.assign(f.proposal,{difficulty:15,context_refs:['fact-c19']});
+ const again=f.adjudicate();assert.equal(again.record_key,first.record_key);assert.equal(again.data.proposal.difficulty,12,'saved terms are unchanged');
+ assert.equal(f.requests(),1,'no second roll request is prepared');
+});
+
 test('invented context labels are ignored while real cited evidence still grounds the ruling',t=>{
  // Mirrors the live 2026-10-28 ruling held as CONTEXT_UNVERIFIED for refs like 'presence:npc-nessa-vale'.
  const f=fixture(t);f.proposal.context_refs=['fact-c19','presence:npc-c19'];

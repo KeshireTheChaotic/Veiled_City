@@ -71,7 +71,12 @@ function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
       authorizedRecovery=true;
     }else if(Object.keys(recovery).length)throw new Error("Closed native recovery context required.");
     if(accepted.status==="resolved"&&!prior)throw new Error("Historical completion cannot authorize a new ruling interpretation.");
-    if(prior&&prior.data.proposal_hash!==proposalHash)throw new Error("Ruling terms changed; explicit revision/review is required.");
+    if(prior&&prior.data.proposal_hash!==proposalHash){
+      if(authorizedRecovery)throw new Error("Ruling terms changed; explicit revision/review is required.");
+      // One ruling per action: a re-proposal (the world director re-reading the scene, a replay) gets the saved,
+      // immutable ruling back instead of failing; new terms still need explicit human revision.
+      return prior;
+    }
     const nativeContext=nativeGmSceneContext(db,guild,scope);
     // Invented labels that name no saved event (live: "presence:npc-nessa-vale") are ignored and, if nothing real is
     // cited, the native scene context grounds the current-scene attempt. A real but ineligible event still fails.
