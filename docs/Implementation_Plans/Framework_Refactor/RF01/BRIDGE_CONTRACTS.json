@@ -587,7 +587,7 @@
         "occurrences": 3
       },
       "public_api": "bot/src/framework-to-framework/content--world/public.js",
-      "scope": "Only requireCitySource is adopted; package event and seed draft dependencies remain unisolated. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
+      "scope": "Only requireCitySource is adopted; package event and seed draft dependencies remain unisolated. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C216 supplies original addSeedDraft/reviewSeedDraft through fixed Content consumer; World retains review/materialization rules."
     },
     {
       "pair": "daggerheart--discord",
@@ -3273,7 +3273,7 @@
         "occurrences": 10
       },
       "public_api": "bot/src/framework-to-framework/operations--world/public.js",
-      "scope": "RF04-F05 C128: GM overview simulation read only. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C193 forwards original World manageGroup through the fixed owner consumer; World retains opt-in, NPC response, player-membership, source and transaction rules."
+      "scope": "RF04-F05 C128: GM overview simulation read only. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C193 forwards original World manageGroup through the fixed owner consumer; World retains opt-in, NPC response, player-membership, source and transaction rules. C216 supplies only original reviewSeedDraft through fixed Operations consumer."
     },
     {
       "pair": "persistence--publication",

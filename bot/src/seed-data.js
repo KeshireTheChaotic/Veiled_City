@@ -6,7 +6,7 @@ import {worldNpcSeed} from './frameworks/world/public.js';
 const {seedNpcCognition}=worldNpcSeed;
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { configureSimulationEntity } from './frameworks/world/public.js';
-import { backfillSeedData } from "./seed-drafts.js";
+import { backfillSeedData } from "./frameworks/world/public.js";
 
 const TEXT_EXTENSIONS=new Set([".md",".txt",".json",".csv",".yaml",".yml",".html",".xml"]);
 const PRIVATE_LABELS=new Set(["gm","gm_private","private","player","character"]);

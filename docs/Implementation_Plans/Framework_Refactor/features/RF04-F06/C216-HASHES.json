@@ -1,0 +1,19 @@
+{
+  "feature": "RF04-C216",
+  "sha256": {
+    "bot/src/ai-review.js": "5b65cd8173493e2ae3d4f07d0ee63b43afbff5043ad902ed76c7deaac80a3a3e",
+    "bot/src/application/composition/content-world.js": "840dd187ab64bba754e66264a15a23b629c382159ab0fe1ef86b64040dc97ddf",
+    "bot/src/application/composition/operations-world-overview.js": "5cbf4a9157d08e510a857c8a4e299f322da1dc8956d18b4fda86a4d217822709",
+    "bot/src/content-packages.js": "ac0e7380af3bdf0097fb711c1f26cd30b8dfee3104480bbf91c38e500548b20f",
+    "bot/src/framework-to-framework/content--world/public.js": "cf10886db78c0b28eb93efdaf8861b27b9ac95e59b931d899b8e3e70ec947916",
+    "bot/src/framework-to-framework/operations--world/public.js": "ea666e009da1ad7e6d342d0365bd4865a91cedba8cb8048d468a59d604f184ea",
+    "bot/src/frameworks/content/public.js": "79273e717b87b14e30f928b55b4de47313574f960e54b3868f959b6f021480a4",
+    "bot/src/frameworks/operations/public.js": "35d9f6db11f8df9ffe39acd9be967fbdc16380acbfa361008c8a7a632ddde9ad",
+    "bot/src/frameworks/world/public.js": "55c63177a10d7038315baaab35d8b5974ff5d5bacfa8f24780a2b8b05c81fb2d",
+    "bot/src/seed-commands.js": "03f58893fd5ee4033c9abca4e7b8d34fa03b09ea4d5582818c06c2e94c4fed42",
+    "bot/src/seed-data.js": "40cf8fc2c4a3ec65024615f4bb015a9997a686a064ecd1fb6a9540e3a1402bbb",
+    "bot/src/frameworks/world/seed-drafts.js": "3eb19953fd02ab2ab44b5ac6d7300dfc731357fe01cbc58d361652fcfa0d3ed9",
+    "bot/src/frameworks/content/contracts/world-seed-drafts.js": "7d0d79d9355c721bf91c7490a28e5a887e65bac8d32a17cbff3a171c3d9c6095",
+    "bot/src/frameworks/operations/contracts/world-seed-drafts.js": "0dadaac6e1fdb30a38466bcf3dbd00d945a313eab2c1845114f4b0922a993c88"
+  }
+}

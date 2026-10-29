@@ -1,17 +1,18 @@
 /** Add-only bulk projections and GM-reviewed seed drafts. Archives are sources, never shared knowledge or automatic canon. */
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
-import { cityObject, cityKey, cityInteger, cityAudit, indexWorldEvent } from './frameworks/world/public.js';
-import { requireCitySource, updateCityCore } from './frameworks/world/public.js';
-import { CIVIC_KINDS, updateCityCivic } from './frameworks/world/public.js';
-import {worldNarrativeSources} from './frameworks/world/public.js';
+import {cityObject,cityKey,cityInteger,cityAudit,indexWorldEvent} from './city-calendar.js';
+import {requireCitySource} from './city-source.js';
+import {updateCityCore} from './civic-service-source.js';
+import {CIVIC_KINDS,updateCityCivic} from './city-civic.js';
+import {worldNarrativeSources} from './contracts/narrative-sources.js';
 function configurePortrayal(...args){return worldNarrativeSources.configurePortrayal(...args);}
-import {worldStoryContinuity} from './frameworks/world/public.js';
+import {worldStoryContinuity} from './contracts/story-continuity.js';
 function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}
-import { configureSimulationEntity } from './frameworks/world/public.js';
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import {worldIntentValidation} from './frameworks/world/public.js';
+import {configureSimulationEntity} from './actor-state.js';
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
+import {jsonKey32 as motivationKey} from '../../kernel/json-key32.js';
+import {worldIntentValidation} from './contracts/intent-validation.js';
 function validateIntent(...args){return worldIntentValidation.validateIntent(...args);}
 
 const plain=value=>value&&typeof value==="object"&&!Array.isArray(value);

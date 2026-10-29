@@ -13,3 +13,7 @@ export function connectOperationsWorldAudit(){return operationsWorldAudit.bind({
 import {operationsWorldGroups} from '../../frameworks/operations/public.js';
 import {manageGroup} from '../../frameworks/world/public.js';
 export function connectOperationsWorldGroups(){return operationsWorldGroups.bind({manageGroup});}
+
+import {operationsWorldSeedDrafts} from '../../frameworks/operations/public.js';
+import {reviewSeedDraft} from '../../frameworks/world/public.js';
+export function connectOperationsWorldSeedDrafts(){return operationsWorldSeedDrafts.bind({reviewSeedDraft});}

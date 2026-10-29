@@ -3,7 +3,8 @@ import { createHash } from "node:crypto";
 
 import {contentWorldSource} from './frameworks/content/public.js';
 const {requireCitySource,cityObject,cityKey,cityAudit,indexWorldEvent}=contentWorldSource;
-import { addSeedDraft, reviewSeedDraft } from "./seed-drafts.js";
+import {contentWorldSeedDrafts} from './frameworks/content/public.js';
+const {addSeedDraft,reviewSeedDraft}=contentWorldSeedDrafts;
 import {stateRevision} from './kernel/state-revision.js';
 const format="veiled-city-content-package-v1";
 const fields={npc:["name","occupation","public_identity","portrayal","gm_notes"],location:["name","description","gm_notes"],

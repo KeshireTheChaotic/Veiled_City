@@ -129,3 +129,5 @@ export {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn,applyPriva
 export {projectPhaseRevision,manageLongProject,reconcileLongProject} from './long-projects.js';
 
 export {shareInformation,applySimulationUpdates,prepareNpcDirector,commitNpcDirector,runNpcDirector,simulationContext,acknowledgeSimulationHook} from './simulation.js';
+
+export {SEED_TEMPLATE_FEATURES,SEED_DRAFT_KINDS,addSeedDraft,editSeedDraft,reviewSeedDraft,backfillSeedData} from './seed-drafts.js';
