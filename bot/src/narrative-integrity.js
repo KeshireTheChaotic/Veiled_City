@@ -157,11 +157,16 @@ export function validateCandidateClaims(db,guildId,result,scope,eventResults,{ou
       if(error.code!=='NARRATIVE_INTEGRITY')throw error;
       const disclosure=error.diagnostic?.category==='scoped_disclosure';
       if(!disclosure&&!['actor_status','uncertainty_framing'].includes(error.diagnostic?.category))throw error;
-      const index=remaining.findIndex(raw=>raw?.entity_type==='world'&&raw.action===(disclosure?'disclosure':'status')&&!raw.authored_source_span
+      const matches=raw=>raw?.action===(disclosure?'disclosure':'status')&&!raw.authored_source_span
         &&raw.entity===error.diagnostic.entity&&raw.actor===error.diagnostic.actor
-        &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span);
+        &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span;
+      // An NPC line labelled as disclosing a fact that cites none reveals no stored fact; its speech stays
+      // attributed testimony under the output checks. A cited fact that is missing or denied still fails.
+      const unbacked=disclosure&&error.diagnostic.reason_code==='fact_missing'
+        ?remaining.findIndex(raw=>matches(raw)&&raw.entity_type==='npc'&&!raw.source_ref):-1;
+      const index=unbacked>=0?unbacked:remaining.findIndex(raw=>raw?.entity_type==='world'&&matches(raw));
       if(index<0)throw error;
-      if(disclosure&&!canQuarantineDisclosure(db,guildId,output,remaining[index],scope,eventResults))throw error;
+      if(unbacked<0&&disclosure&&!canQuarantineDisclosure(db,guildId,output,remaining[index],scope,eventResults))throw error;
       diagnostics.push({index:claims.indexOf(remaining[index]),...error.diagnostic});remaining.splice(index,1);
     }
   }
