@@ -85,7 +85,8 @@ function reconcileConsequences(db,guild,{intents=[],narration="",private_message
       disposition=adjudication.data.disposition;refs=[request.record_key];
     }else if(["blocked","needs_clarification"].includes(row.data.resolution))disposition=row.data.resolution;
     else if(["speak","observe","other"].includes(row.data.type))disposition="acknowledged_nonconsequential";
-    else if(strict)fail("Immediate actionable intent has no native resolved, pending, blocked or clarification state.");
+    else if(strict)throw Object.assign(new Error("Immediate actionable intent has no native resolved, pending, blocked or clarification state."),
+      {code:"CONSEQUENCE_RECONCILIATION",diagnostic:{source_span:row.data.source_span,type:row.data.type,resolution:row.data.resolution,target:row.data.target_key||''}});
     const claim=row.data.authored_outcome_claim;
     if(claim?.status==="unverified"&&disposition!=="resolved"&&!uncertain(String(narration),claim.text))
       fail("Unverified player outcome claim cannot be narrated as success while resolution is pending.");
