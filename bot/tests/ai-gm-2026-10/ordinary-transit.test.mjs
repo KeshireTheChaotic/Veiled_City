@@ -15,6 +15,7 @@ for(const locked of [false,true])test(`cross-town public transit ${locked?'prese
   const {scope}=declare(f,'bus-trip',message,[move]);
   const result={world_additions:[],scene_actions:[],player_intents:[move]};
   autoCompleteOrdinaryMovements(f.db,f.guild,result,scope);
+  result.scene_actions[0].zone='interior';
   const run=()=>applyAutonomousWorld(f.db,f.guild,result,scope,{messageId:'bus-trip'});
   if(locked){assert.throws(run,/accessible local geography/);assert.equal(f.db.getCharacter(f.pcs[0].id).data.location,'p07-station');}
   else{run();assert.equal(f.db.getCharacter(f.pcs[0].id).data.location,'archive');}

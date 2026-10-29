@@ -228,7 +228,7 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
         const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
         if(semantic.data.target_key&&semantic.data.target_key!==target||resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)
           fail("Arrival destination must match the current typed owner's explicit target.");
-        if(semantic.data.destination==="exterior"&&action.zone!=="exterior"||semantic.data.destination!=="interior"&&action.zone==="interior"
+        if(semantic.data.destination==="exterior"&&action.zone!=="exterior"
           ||semantic.data.destination==="interior"&&action.zone!=="interior")
           fail("Movement destination scope cannot broaden approach/exterior into interior entry.");
       }else if(!locationIdentityMatches(location,entrySource.data.target)){
