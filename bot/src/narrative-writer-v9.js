@@ -11,7 +11,9 @@ export function actToNativeUnit(act,binding,{db,guild}={}){
     ||!NARRATIVE_ACT_KINDS.includes(act.kind)||act.kind==='gm_internal_note')throw fail('v9_act_shape');
   const speech=['npc_speech','npc_offer','npc_allegation'].includes(act.kind);
   if(speech&&!act.speaker_key||!speech&&act.kind!=='scene_description'&&act.speaker_key)throw fail('v9_actor_role');
-  const text=act.construction?constructNativeClause(db,guild,act,binding):act.text;
+  // Model paragraph breaks become spaces; the unit validator still rejects every other control character.
+  const text=act.construction?constructNativeClause(db,guild,act,binding)
+    :typeof act.text==='string'?act.text.replace(/\s*[\r\n\t]\s*/g,' '):act.text;
   return {id:act.id,kind:speech?'npc_speech':'scene',text:act.kind==='artifact_text'?`A sign reads: ${text}`:text,
     subject_key:act.speaker_key,location_key:act.location_key,visibility:binding.scope.mode==='private'?'character':'party',
     epistemic:'observation',source_refs:act.source_refs,receipt_kind:'',receipt_ref:''};

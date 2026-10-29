@@ -6,7 +6,8 @@ import {nativeClauseSchema} from './native-clause-schema-v9.js';
 const str=maxLength=>({type:'string',maxLength});
 const closed=properties=>({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});
 const actProperties={
-  id:str(64),task_id:str(160),kind:{type:'string',enum:NARRATIVE_ACT_KINDS.filter(k=>k!=='gm_internal_note')},
+  // Same id rule the narrative unit validator enforces; models otherwise emit ids such as "act:scene:1".
+  id:{...str(64),pattern:'^[a-z][a-z0-9-]{0,63}$'},task_id:str(160),kind:{type:'string',enum:NARRATIVE_ACT_KINDS.filter(k=>k!=='gm_internal_note')},
   speaker_key:str(160),location_key:str(160),text:str(1800),source_refs:{type:'array',maxItems:8,items:str(160)}
 };
 export const narrativeResponseV9Schema=closed({version:{type:'integer',enum:[9]},acts:{type:'array',maxItems:8,
