@@ -22,7 +22,9 @@ export function narrativeTasks(db,guild,result,scope,sourceRef){
     const matches=acceptedRows.filter(row=>row.data.type===i.type&&row.data.start===start&&row.data.end===end
       &&row.data.source_span===i.source_span&&(row.data.target_key||'')===(i.target_key||''));
     const accepted=matches.length===1?matches[0]:null;
-    const kind=['speak','interact'].includes(i.type)&&db.getNpcProfile(guild,i.target_key)?'npc_response'
+    // Dice own a pending roll's outcome: the writer may set up the attempt but never answer or resolve it.
+    const kind=i.resolution==='roll_required'?'pending_roll'
+      :['speak','interact'].includes(i.type)&&db.getNpcProfile(guild,i.target_key)?'npc_response'
       :i.type==='observe'?'observation':i.type==='move'?'arrival':i.type==='search'?'investigation'
       :['describe_scene','current_situation'].includes(i.operation)?'scene':null;
     if(!kind)continue;
@@ -38,6 +40,7 @@ export function taskDispositions(db,guild,result,parts,scope,sourceRef){
     .filter(p=>p.row?.data.binding.source===sourceRef&&hash(p.row.data.binding.scope)===hash(scope));
   const answers=tasks.map(t=>{
     if(!t.accepted_intent)return {...t,disposition:'needs_clarification',output_parts:[]};
+    if(t.kind==='pending_roll')return {...t,disposition:'awaiting_roll',output_parts:[]};
     const same=tasks.filter(other=>other.kind===t.kind&&other.binding.target===t.binding.target),unique=same.length===1;
     const matched=units.filter(({row})=>{
       const u=row.data.unit;
@@ -61,7 +64,7 @@ export function taskDispositions(db,guild,result,parts,scope,sourceRef){
       output_parts:matched.map(m=>m.part).concat(observation?[observation.record_key]:[])};
   });
   if(tasks.length)db.saveCityRecord(guild,{kind:'narrative_task_coverage',key:`narrative-tasks:${hash([sourceRef,scope])}`,source_event:sourceRef,
-    visibility:'gm',status:answers.every(t=>['answered','legitimately_unavailable'].includes(t.disposition))?'covered':'incomplete',
+    visibility:'gm',status:answers.every(t=>['answered','legitimately_unavailable','awaiting_roll'].includes(t.disposition))?'covered':'incomplete',
     data:{version:1,source:sourceRef,scope,tasks:answers,authority:'coverage_only_not_effect_authority'}});
   return answers;
 }

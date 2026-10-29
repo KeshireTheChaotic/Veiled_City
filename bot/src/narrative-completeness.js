@@ -24,7 +24,7 @@ export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],
   if(status==='complete'&&combat&&!units.some(u=>['scene','npc_speech','npc_action_attempt','native_outcome_render'].includes(u.kind)))status='combat_fiction_missing';
   if(status==='complete'&&director&&!units.length)status='director_continuation_missing';
   const tasks=scope&&sourceRef?taskDispositions(db,guild,result,actual,scope,sourceRef):[];
-  if(status==='complete'&&tasks.some(t=>!['answered','legitimately_unavailable'].includes(t.disposition)))status='task_response_missing';
+  if(status==='complete'&&tasks.some(t=>!['answered','legitimately_unavailable','awaiting_roll'].includes(t.disposition)))status='task_response_missing';
   const matches=r=>r.source_event===sourceRef&&(!scope||hash(r.data.scope)===hash(scope)),
     fates=sourceRef?db.listCityRecords(guild,{kind:'narrative_unit_fates',includeGM:true,limit:100}).filter(matches).flatMap(r=>r.data.fates):[],
     reviews=sourceRef?db.listCityRecords(guild,{kind:'narrative_unit_review',includeGM:true,limit:100}).filter(matches):[],

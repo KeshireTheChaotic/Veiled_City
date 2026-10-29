@@ -31,10 +31,12 @@ export function coordinateNarrative(db,guild,result,{scope,sourceRef,movement=fa
 }
 export function creativeBrief(ctx,result,input){
   const selected=briefs.get(result)||{tasks:[taskFor(input.operation)||'scene'],speakers:[]};
-  return {version:1,tasks:selected.tasks,priority:selected.tasks.includes('conversation')?'answer_or_react_as_npc':'ground_the_situation',
-    source_tasks:narrativeTasks(ctx.db,ctx.binding.guild,result,ctx.scope,ctx.sourceRef),
+  const sourceTasks=narrativeTasks(ctx.db,ctx.binding.guild,result,ctx.scope,ctx.sourceRef),pendingRoll=sourceTasks.some(t=>t.kind==='pending_roll');
+  return {version:1,tasks:selected.tasks,priority:pendingRoll?'set_up_pending_roll':selected.tasks.includes('conversation')?'answer_or_react_as_npc':'ground_the_situation',
+    source_tasks:sourceTasks,
     speakers:ctx.packet.npcs.filter(n=>!n.human_controlled&&selected.speakers.includes(n.key)).map(n=>n.key),
     viewpoint:ctx.binding.viewpoint,source_refs:[ctx.sourceRef,...input.source_refs],
     response_obligation:'Address every requested task coherently in ONE response; preserve uncertainty and leave player decisions open.',
-    constraints:['No new native outcomes.','No PC or proxy agency.','No hidden or cross-audience knowledge.']};
+    constraints:['No new native outcomes.','No PC or proxy agency.','No hidden or cross-audience knowledge.',
+      ...(pendingRoll?['A pending_roll task awaits the player\'s dice: show the attempt beginning and how the scene or NPC reacts to the attempt itself, never its success, failure, agreement, refusal or result.']:[])]};
 }
