@@ -1,0 +1,8 @@
+{
+  "feature": "RF04-C206",
+  "sha256": {
+    "bot/src/frameworks/session/window-coordinator.js": "671c4c58f21ced9a026b04a4f9e2fd885df53e57a49d2e474bf988e5debaabd3",
+    "bot/src/frameworks/session/public.js": "7c9ab611394771a671c568ed7b8dd696e62e6a63db70f7ee49fb4745a3c95732",
+    "bot/src/commands.js": "a931134a8c84e81654340771c563369b33e2b1f2e5379818bd25c6d2b5e6a2ed"
+  }
+}

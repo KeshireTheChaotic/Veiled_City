@@ -68,7 +68,7 @@ import {handlePvpMenuInteraction,isPvpMenuInteraction,openPvpMenu} from './pvp-m
 import {handlePvpSafetyCommand} from './pvp-safety-commands.js';
 import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, rollPvp, continuePvp, progressPvp,
   authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative, pvpComplication } from "./narrative-pvp.js";
-import { synchronizePvpWindow, windowOperation } from "./window-coordinator.js";
+import { synchronizePvpWindow, windowOperation } from "./frameworks/session/public.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
 import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./character-observation.js";

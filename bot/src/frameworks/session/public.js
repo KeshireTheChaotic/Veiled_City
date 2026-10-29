@@ -63,3 +63,5 @@ export {entryTarget,prepareSceneEntry,routeSceneEntryMessage,entryReferenceConte
 export {sessionPublicationContinuation,sessionContinuationNoticeSource} from './contracts/publication-continuation.js';
 
 export {continuationAuthorization,renderContinuationNotice,drainActionContinuations,continuationInbox,refreshActionContinuations} from './action-continuation.js';
+
+export {advanceActionWindow,reconcileWindowCustody,synchronizePvpWindow,windowOperation} from './window-coordinator.js';

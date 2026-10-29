@@ -1,22 +1,22 @@
 /** Native window lifecycle. Closing participation never grants a result, dice, cost or custody. */
 import { createHash } from "node:crypto";
-import {sessionNativeActionConsent} from './frameworks/session/public.js';
+import {sessionNativeActionConsent} from './contracts/native-action-consent.js';
 const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
 const requestActionConsent=(...args)=>sessionNativeActionConsent.requestActionConsent(...args);
 const respondActionConsent=(...args)=>sessionNativeActionConsent.respondActionConsent(...args);
 const validateActionConsent=(...args)=>sessionNativeActionConsent.validateActionConsent(...args);
-import { currentScene } from "./scene-continuity.js";
-import { conversationPrincipal } from './frameworks/session/public.js';
-import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./frameworks/session/public.js";
-import {sessionNarrativeSources} from './frameworks/session/public.js';
+import { currentScene } from "./scene-source.js";
+import { conversationPrincipal } from './conversation-principal.js';
+import { joinActionWindow, lockActionWindow, resolveActionWindow } from "./scene-action-window.js";
+import {sessionNarrativeSources} from './contracts/narrative-sources.js';
 function validatePvpAgreement(...args){return sessionNarrativeSources.validatePvpAgreement(...args);}
-import {sessionNativeRules} from './frameworks/session/public.js';
+import {sessionNativeRules} from './contracts/native-rules.js';
 function adjudicateAcceptedIntent(...args){return sessionNativeRules.adjudicateAcceptedIntent(...args);}
-import {sessionIntent} from './frameworks/session/public.js';
+import {sessionIntent} from './contracts/intent.js';
 function transitionAction(...args){return sessionIntent.transitionAction(...args);}
-import {sessionWorldEvents} from './frameworks/session/public.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
-import {drainActionContinuations,continuationInbox} from "./frameworks/session/public.js";
+import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
 function actionReviewOperation(...args){return sessionNativeRules.actionReviewOperation(...args);}
 function clearNativeConditionFromOutcome(...args){return sessionNativeRules.clearNativeConditionFromOutcome(...args);}
 
@@ -239,6 +239,6 @@ function operateWindow(db,guild,user,input,{gm=false}={}){
   }
   return rows;
 }
-import {sessionPvpWindowSource} from './frameworks/session/public.js';
+import {sessionPvpWindowSource} from './contracts/pvp-window-source.js';
 // Provide this module's original PvP window synchronization to the fixed Session slot; no other authority is granted.
 sessionPvpWindowSource.bind({synchronizePvpWindow});
