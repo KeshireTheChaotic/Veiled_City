@@ -241,16 +241,25 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
       failedEntities.add(identityKey(e));entityResults.push({kind:e.kind,key:e.key,status:'rejected',reason:error.diagnostic?.category||'native_identity_validation'});}
   }
   const rows=[];
-  for(const u of units){
+  for(let u of units){
+    let act=d.acts_v9?.find(a=>a.id===u.id);
+    // A rejected location record need not erase visible scenery or a sign. Retain
+    // that description from the current viewpoint without claiming travel or a new identity.
+    if(failedEntities.has(`location:${u.location_key}`)&&u.kind==='scene'&&!u.subject_key
+      &&ctx.binding.location&&!act?.construction){
+      u={...u,location_key:ctx.binding.location};
+      if(act)act={...act,location_key:ctx.binding.location};
+      entityResults.push({kind:'narrative_repair',key:u.id,status:'reanchored',reason:'rejected_place_description_retained_at_current_viewpoint'});
+    }
     const key=`narrative-unit:${hash([d.binding,u])}`,prior=db.getCityRecord(guild,'narrative_unit',key);
     // Only structured identity dependencies confer placement/speaker authority; a name appearing in prose is not a dependency.
     if(failedEntities.has(`location:${u.location_key}`)||entities.some(e=>e.key===u.subject_key&&failedEntities.has(identityKey(e)))){
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{
-      const text=validateUnit(db,guild,u,ctx,[],false,d.acts_v9?.find(a=>a.id===u.id)),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
+      const text=validateUnit(db,guild,u,ctx,[],false,act),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
         ...(d.audience_v9?{audience_v9:d.audience_v9}:{}),
-        ...(d.version===9?{act_v9:d.acts_v9.find(a=>a.id===u.id)}:{}),
+        ...(d.version===9?{act_v9:act}:{}),
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
       projectNarrativeArtifact(db,guild,u,ctx,{establish:true});
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}

@@ -18,7 +18,12 @@ test('a rejected writer identity retains its native diagnostic instead of a gene
         location_key:'',parent_location_key:'p07-station',role:'',aliases:[]}],acts:[{id:'yard-scene',task_id:task,kind:'scene_description',speaker_key:'',
         location_key:'folding-yard',text:'A wide paved yard opens behind the station.',source_refs:[]}]};
     }});
-    assert.equal(establishNarrativeUnits(f.db,f.guild,request,scope,sourceRef).length,0);
+    const rows=establishNarrativeUnits(f.db,f.guild,request,scope,sourceRef);
+    assert.equal(rows.length,1);
+    assert.equal(rows[0].data.unit.location_key,'p07-station');
+    assert.match(rows[0].data.text,/wide paved yard/);
+    assert.equal(f.db.getSimulationEntity(f.guild,'location','folding-yard'),null);
+    assert.equal(f.db.getCharacter(f.pcs[0].id).data.location,'p07-station');
     const review=f.db.listCityRecords(f.guild,{kind:'narrative_unit_fates',includeGM:true,limit:10})
       .find(row=>row.source_event===sourceRef);
     assert.equal(review.data.entity_results[0].reason,'owner_named_identity_requires_independent_authoring_source');
