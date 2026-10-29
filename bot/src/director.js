@@ -65,7 +65,8 @@ export function lowConfidenceReviewItems(result,threshold=55){
 
 /** Confidence is advisory. Real native mechanics, scope and canon validators still gate every effect. */
 export function normalizeDirectorConfidence(result,threshold=55){
-  return {...result,review_required:false};
+  // Same object: native turn bindings (arbitration origin, narrative source) are keyed by the director result itself.
+  result.review_required=false;return result;
 }
 
 import {createDirectorCadence,POST_TURN_REVIEW_CATEGORIES} from './frameworks/world/public.js';
