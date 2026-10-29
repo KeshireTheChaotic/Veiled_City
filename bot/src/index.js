@@ -27,7 +27,7 @@ import { queueDirectorAfterPartyTurn, blockedMutationRows, describeBlockedAction
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { createLogger } from "./frameworks/operations/public.js";
-import { runNpcDirector } from "./simulation.js";
+import { runNpcDirector } from "./frameworks/world/public.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { serializeSpanLedger } from "./message-span-ledger.js";
 import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./authored-turn-envelope.js";

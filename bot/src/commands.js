@@ -49,7 +49,7 @@ import { buildGmOverview, formatGmOverview } from './frameworks/operations/publi
 import { seedData } from "./seed-data.js";
 import { handleSeedCommand } from "./seed-commands.js";
 import { KeyedSerialQueue } from "./kernel/serial-queue.js";
-import { prepareNpcDirector, commitNpcDirector } from "./simulation.js";
+import { prepareNpcDirector, commitNpcDirector } from "./frameworks/world/public.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";

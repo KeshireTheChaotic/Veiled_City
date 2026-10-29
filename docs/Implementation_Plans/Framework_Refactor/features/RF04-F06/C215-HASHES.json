@@ -1,0 +1,17 @@
+{
+  "feature": "RF04-C215",
+  "sha256": {
+    "bot/src/application/composition/publication-world.js": "e1348c8597721f176578f7753b65d76e55bbb62bf70788b1db5ee410208660fe",
+    "bot/src/commands.js": "11c5fd1f78122cd9903127d4527869085b3a2362cd1f2b9f07bc013fba4d9bc7",
+    "bot/src/framework-to-framework/publication--world/public.js": "596f2f4fc64b349c72c7a09709be8f2ad0d559c0cc8abf6e7793029c9a680a30",
+    "bot/src/frameworks/publication/public.js": "0fb211c9e7fd459bb508c9c1c7756f30c292c8c9bc2aadbb9247a57a62cce3bd",
+    "bot/src/frameworks/world/public.js": "1c817b8d3c6f10a9613718955f2506323f4d1ce1b7aad568b9039dbd22aa75b2",
+    "bot/src/gm.js": "4c79a1a8cd8d36ef98d3848e5ff63da2b5a55482dbec00addd3b973024650af6",
+    "bot/src/index.js": "d7bcb046f095534acf545dc9f261a85b5080b683c0febfed12ff1d9bb1e7f4c6",
+    "bot/src/publishing.js": "529dd33ad4007f3f392902c2dc9b7f66dffa02f2f69c5aeef3f8b26ba1388380",
+    "bot/src/simulation-commands.js": "266fa375906d89a3ae52b734c449491638318b0b216786d24582de36286cd180",
+    "bot/src/state.js": "561a47eb50d9fe3f81334d06dc175cdc17d1dd6458ffb7629ed35eac9fdf8d21",
+    "bot/src/frameworks/world/simulation.js": "2ae935e9c5e277cd79d221b8a553b4d441022c46e6affc2d314df40b17fe05ce",
+    "bot/src/frameworks/publication/contracts/world-simulation.js": "10edd61870b87bddfa8a89d1945e77b44c16c45f755ec246fe03b5307a455a8a"
+  }
+}

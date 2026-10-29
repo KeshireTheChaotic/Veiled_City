@@ -25,7 +25,7 @@ import { validatePostTurnStateReview } from "./frameworks/world/public.js";
 import { retrieveNpcCognition } from "./frameworks/npc/public.js";
 import { npcDirectorSchema } from "./framework-to-framework/intent--world/public.js";
 import { SIMULATION_PROMPT, simulationUpdateSchema } from "./frameworks/world/public.js";
-import { simulationContext } from "./simulation.js";
+import { simulationContext } from "./frameworks/world/public.js";
 import { cityContext } from "./frameworks/world/public.js";
 import { historyContext } from "./frameworks/world/public.js";
 import { minorNpcSchema } from "./frameworks/world/public.js";

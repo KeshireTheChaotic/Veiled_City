@@ -1,40 +1,41 @@
-import {rankDirectorActions} from './frameworks/world/public.js';
-export {rankDirectorActions} from './frameworks/world/public.js';
-import {worldNpcOpportunity} from './frameworks/world/public.js';
+import {rankDirectorActions} from './director-action-ranking.js';
+export {rankDirectorActions} from './director-action-ranking.js';
+import {worldNpcOpportunity} from './contracts/npc-opportunity.js';
 const {runMotivationCycle,runStrategyOpportunity}=worldNpcOpportunity;
-import {keyOf,text,intersects} from './frameworks/world/simulation-query-primitives.js';
-import {simulationCandidates} from './frameworks/world/public.js';
-export {simulationCandidates} from './frameworks/world/public.js';
+import {keyOf,text,intersects} from './simulation-query-primitives.js';
+import {simulationCandidates} from './simulation-candidates.js';
+export {simulationCandidates} from './simulation-candidates.js';
 /** Fictional-time NPC/faction simulation. Models propose intent; bounded application rules resolve and persist outcomes. */
 import { randomUUID } from "node:crypto";
-import {ACTION_TYPES,MAJOR_IMPACTS} from './frameworks/world/action-catalog.js';
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from './frameworks/world/public.js';
-import { applyNpcServiceOutcome } from "./frameworks/world/public.js";
-import { assertServiceAccess } from './frameworks/world/public.js';
-import { coordinateConsequences } from './frameworks/world/public.js';
-import { proposeContactGroup } from './frameworks/world/public.js';
-import {worldIntentDispatch} from './frameworks/world/public.js';
+import {ACTION_TYPES,MAJOR_IMPACTS} from './action-catalog.js';
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
+import {submitInstitutionAction,runInstitutionDirector} from './civic-service-source.js';
+import {proposeCityOpportunity} from './city-context.js';
+import {applyNpcServiceOutcome} from './infrastructure.js';
+import {assertServiceAccess} from './civic-service-source.js';
+import {coordinateConsequences} from './consequence-source.js';
+import {proposeContactGroup} from './contact-groups.js';
+import {worldIntentDispatch} from './contracts/intent-dispatch.js';
 function delegateConsequence(...args){return worldIntentDispatch.delegateConsequence(...args);}function delegateWorldGoal(...args){return worldIntentDispatch.delegateWorldGoal(...args);}function maintainMemory(...args){return worldIntentDispatch.maintainMemory(...args);}function continueLongProjects(...args){return worldIntentDispatch.continueLongProjects(...args);}function dispatchAiIntents(...args){return worldIntentDispatch.dispatchAiIntents(...args);}
-import {worldStoryContinuity} from './frameworks/world/public.js';
+import {worldStoryContinuity} from './contracts/story-continuity.js';
 function pacingAdvice(...args){return worldStoryContinuity.pacingAdvice(...args);}
-import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './frameworks/world/public.js';
-import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
-import {nativeWorldStrategyAllowed} from './frameworks/world/public.js';
+import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './resolution.js';
+import {inspectWorldSimulationReceipt} from './simulation-receipt-core.js';
+import {nativeWorldStrategyAllowed} from './execution-source.js';
 
 export {ACTION_TYPES,MAJOR_IMPACTS};
-export {ACTION_COSTS} from './frameworks/world/public.js';
+export {ACTION_COSTS} from './action-costs.js';
 
 const bounded=(value,min,max)=>Math.max(min,Math.min(max,Number(value)||0));
 
 
-import {actorState,configureSimulationEntity} from './frameworks/world/public.js';
-export {actorState,configureSimulationEntity} from './frameworks/world/public.js';
+import {actorState,configureSimulationEntity} from './actor-state.js';
+export {actorState,configureSimulationEntity} from './actor-state.js';
 
 
 
 
-import {knownWorldInformation as knownInformation} from './frameworks/world/public.js';
+import {knownInformation} from './action-eligibility.js';
 
 /** Native communication persists a subjective source, never upgrades hearsay into an established fact. */
 
@@ -168,7 +169,7 @@ export function applySimulationUpdates(db,guildId,updates=[],{scope={mode:"party
 
 
 
-export {inspectNpcAction} from './frameworks/world/public.js';
+export {inspectNpcAction} from './action-diagnostics.js';
 
 /** Called only by fictional round/scene/downtime triggers, with a stable retry key. */
 function quietOpportunity(db,guild,query,engagement=null){
@@ -308,7 +309,7 @@ export async function runNpcDirector(options){
   return commitNpcDirector(options.db,await prepareNpcDirector(options),{roll:options.roll});
 }
 
-export {simulationOverview} from './frameworks/world/public.js';
+export {simulationOverview} from './simulation-overview.js';
 
 /** Prompt packet stays bounded as the campaign grows; dashboard/export may inspect full state separately. */
 export function simulationContext(db,guildId,query=""){
@@ -329,6 +330,7 @@ export function acknowledgeSimulationHook(db,guildId,id){
 }
 
 
-import {saveNativeSimulationRecord as saveRecord,recordWorldActorMemory as remember,executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents} from './frameworks/world/public.js';
-export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents} from './frameworks/world/public.js';
+import {saveRecord} from './simulation-record.js';
+import {recordWorldActorMemory as remember,executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents} from './action-execution.js';
+export {executeNpcAction,submitNpcAction,resolveNpcAction,processSimulationEvents} from './action-execution.js';
 

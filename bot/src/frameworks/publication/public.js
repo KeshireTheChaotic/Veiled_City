@@ -13,3 +13,5 @@ export {publicationSessionPrincipal} from './contracts/session-principal.js';
 export {publicationSessionRecapSource} from './contracts/session-recap.js';
 
 export {publicationContinuationOutputSource,publicationSessionContinuation} from './contracts/session-continuation.js';
+
+export {publicationWorldSimulation} from './contracts/world-simulation.js';

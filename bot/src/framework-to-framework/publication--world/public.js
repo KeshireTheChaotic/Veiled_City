@@ -12,3 +12,7 @@ export function connectPublicationWorldConstraints(){return publicationWorldCons
 import {publicationWorldEvents} from '../../frameworks/publication/public.js';
 import {indexWorldEvent} from '../../frameworks/world/public.js';
 export function connectPublicationWorldEvents(){return publicationWorldEvents.bind({indexWorldEvent});}
+
+import {publicationWorldSimulation} from '../../frameworks/publication/public.js';
+import {simulationOverview,acknowledgeSimulationHook} from '../../frameworks/world/public.js';
+export function connectPublicationWorldSimulation(){return publicationWorldSimulation.bind({simulationOverview,acknowledgeSimulationHook});}

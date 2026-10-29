@@ -127,3 +127,5 @@ export {AUTONOMOUS_WORLD_VERSION,worldAuthority,establishNarrativeEntity,configu
 export {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn,applyPrivateSeedTurn} from './private-seeds.js';
 
 export {projectPhaseRevision,manageLongProject,reconcileLongProject} from './long-projects.js';
+
+export {shareInformation,applySimulationUpdates,prepareNpcDirector,commitNpcDirector,runNpcDirector,simulationContext,acknowledgeSimulationHook} from './simulation.js';

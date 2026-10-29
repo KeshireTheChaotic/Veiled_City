@@ -2,7 +2,7 @@
 import { AttachmentBuilder } from "discord.js";
 import { PermissionError, NotFoundError } from "./kernel/errors.js";
 import { applySimulationUpdates, configureSimulationEntity, simulationOverview, submitNpcAction,
-  resolveNpcAction, shareInformation, processSimulationEvents } from "./simulation.js";
+  resolveNpcAction, shareInformation, processSimulationEvents } from "./frameworks/world/public.js";
 import { publishSimulationHooks } from "./publishing.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./frameworks/npc/public.js";

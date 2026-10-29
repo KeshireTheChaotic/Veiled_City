@@ -7,7 +7,7 @@ import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './na
 import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './scene-continuity.js';
 import { indexWorldEvent } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { applySimulationUpdates } from "./simulation.js";
+import { applySimulationUpdates } from "./frameworks/world/public.js";
 import { validateNarrativeClaims, validateCanonAnnotations, validateCandidateClaims, assertNarrativeApplied } from "./narrative-integrity.js";
 import { prepareAuthorizedTurnOutput, candidateNarrative, assertProtectedModelEvents } from "./pvp-output.js";
 import { recordCharacterPerceptions } from "./character-observation.js";
