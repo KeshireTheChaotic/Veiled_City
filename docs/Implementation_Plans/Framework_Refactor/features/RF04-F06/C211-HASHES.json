@@ -1,0 +1,14 @@
+{
+  "feature": "RF04-C211",
+  "sha256": {
+    "bot/src/application/composition/narrative-world.js": "15b1106fc34c6723d47aba97b0e50f4c958b99bf4c355e6b4701b46cf71432ea",
+    "bot/src/autonomous-world.js": "50e98b02b8fce4b3199dfc37df87bfb52d885f1b5a370458550d135061120781",
+    "bot/src/framework-to-framework/narrative--world/public.js": "dcd6f94a0b46cf0532d902762d84740d5b148f68545afe68152f573b4fa78206",
+    "bot/src/frameworks/narrative/public.js": "783d88dab7475e84a21ccb3debb135fb70f534151193d540f733236a820aada4",
+    "bot/src/frameworks/world/public.js": "f213db94b5d2d48ede7802f03cb0cef7a0bce07f088347fccc73274062b78b87",
+    "bot/src/narrative-authority-context.js": "5615fda91778f99d91df371f02ecaacfe3bcece24c0d2554033d252b4a6a1d97",
+    "bot/src/narrative-authority.js": "605689091bcb6c38ed74d036a3f10060b29f8f1e31fbd880994889c451d9ed45",
+    "bot/src/frameworks/world/background-identity-service.js": "7f90b0268c184dac10aa4ef476bbbd503f4bbc18a596034793e542e84f003033",
+    "bot/src/frameworks/narrative/contracts/world-background.js": "f0d9ecb7c12d436e94c0638925df3364d57eb4906c46cf3a33cd28b0bb35aa19"
+  }
+}

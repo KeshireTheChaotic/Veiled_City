@@ -2252,17 +2252,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "5fcc5b7c1cdabb9e7502cc1438f14afdcebbeb6b4fa0476e91970308604963b8",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/world-background-identities.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "4bc95a553bacc6e98c2d56bf7253c21cab5e76e3330084883deb2e18454697b4",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/world-narrative-bridge.js",
@@ -5207,20 +5196,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "e69b1f8c63dd20751407fd59c1e112f13f46632be1bcbf03ce43ec33985c74e9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "7126104a5628e3356cfbca57f6b38adfcdcbe976b56a34e1bc456be9cfddc374",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-authority.js",
@@ -5255,20 +5230,6 @@
       "to": "bot/src/epistemic.js",
       "kind": "static",
       "specifier": "./epistemic.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "9f382df80bbe91555c924fa84455a74b530896ba0ed8f6dbaabc12a63a681b29",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/world-background-identities.js",
-      "kind": "static",
-      "specifier": "./world-background-identities.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

@@ -21,7 +21,8 @@ import {registerNarrativeContext} from './audience-native-v9.js';
 function assemblyWriterBrief(...args){return narrativeBridgeSessionSources.assemblyWriterBrief(...args);}
 import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
-import {backgroundIdentityContext} from './world-background-identities.js';
+import {narrativeWorldBackground} from './frameworks/narrative/public.js';
+function backgroundIdentityContext(...args){return narrativeWorldBackground.backgroundIdentityContext(...args);}
 function openingEntryProjection(...args){return narrativeOpeningCohort.openingEntryProjection(...args);}
 import {narrativeNativeEnvironment} from './frameworks/narrative/public.js';
 function nativeEnvironmentSituation(...args){return narrativeNativeEnvironment.nativeEnvironmentSituation(...args);}

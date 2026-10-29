@@ -52,3 +52,5 @@ export {narrativeSessionContinuation} from './contracts/session-continuation.js'
 export {narrativeWorldIdentityOrigin} from './contracts/world-identity-origin.js';
 
 export {narrativeWorldIdentityPersistence} from './contracts/world-identity-persistence.js';
+
+export {narrativeWorldBackground} from './contracts/world-background.js';

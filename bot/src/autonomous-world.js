@@ -28,7 +28,7 @@ function continuationAuthorization(...args){return worldSessionContinuation.cont
 import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './frameworks/world/public.js';
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function narrativeSourceVisible(...args){return worldNarrativeSources.narrativeSourceVisible(...args);}
-import {validateBackgroundIdentity} from './world-background-identities.js';
+import {validateBackgroundIdentity} from './frameworks/world/public.js';
 function nativeVipAdmission(...args){return worldNativeMovementChecks.nativeVipAdmission(...args);}
 import {AUTONOMOUS_WORLD_PROMPT} from './frameworks/world/autonomous-world-contract.js';
 export {AUTONOMOUS_WORLD_PROMPT};

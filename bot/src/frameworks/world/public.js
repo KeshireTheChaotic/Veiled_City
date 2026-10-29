@@ -119,3 +119,5 @@ export {createSeededWorldContext,assertWorldIdentityNames,assertIndependentWorld
 export {worldResolutionContext,bindWorldResolutionCycle,commitWorldResolutionPulse,readWorldResolutionPulse,finishWorldResolutionCycle} from './resolution.js';
 
 export {verifiedIdentityPersistence,promoteWorldIdentity,maintainIdentityPersistence} from './identity-persistence.js';
+
+export {validateBackgroundIdentity,backgroundIdentityContext} from './background-identity-service.js';

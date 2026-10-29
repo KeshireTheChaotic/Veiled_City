@@ -43,3 +43,8 @@ export function connectNarrativeWorldIdentityOrigin(){return narrativeWorldIdent
 import {narrativeWorldIdentityPersistence} from '../../frameworks/narrative/public.js';
 import {maintainIdentityPersistence} from '../../frameworks/world/public.js';
 export function connectNarrativeWorldIdentityPersistence(){return narrativeWorldIdentityPersistence.bind({maintainIdentityPersistence});}
+
+import {narrativeWorldBackground} from '../../frameworks/narrative/public.js';
+import {backgroundIdentityContext,BACKGROUND_WORLD_KINDS} from '../../frameworks/world/public.js';
+const backgroundWorldKinds=()=>BACKGROUND_WORLD_KINDS;
+export function connectNarrativeWorldBackground(){return narrativeWorldBackground.bind({backgroundIdentityContext,backgroundWorldKinds});}

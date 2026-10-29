@@ -22,7 +22,7 @@ import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
 import {constructNativeClause} from './narrative-clauses-v9.js';
 import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
-import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
+import {narrativeWorldBackground} from './frameworks/narrative/public.js';
 import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/narrative-authority-contract.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 export {NARRATIVE_AUTHORITY_INSTRUCTIONS};
@@ -223,7 +223,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   const failedEntities=new Set(),entityResults=[];
   const identityKey=e=>`${e.kind}:${e.key}`;
   for(let e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
-    const background=BACKGROUND_WORLD_KINDS.includes(e.kind);
+    const background=narrativeWorldBackground.backgroundWorldKinds().includes(e.kind);
     const newLocalPlace=e.kind==='npc'&&entities.some(p=>p.kind==='location'&&p.key===e.location_key
       &&p.parent_location_key===ctx.binding.location&&units.some(u=>u.kind==='scene'&&u.location_key===p.key));
     if(background?!units.some(u=>u.kind==='scene'&&u.location_key===ctx.binding.location)
