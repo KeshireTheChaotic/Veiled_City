@@ -160,10 +160,10 @@ export function validateCandidateClaims(db,guildId,result,scope,eventResults,{ou
       const matches=raw=>raw?.action===(disclosure?'disclosure':'status')&&!raw.authored_source_span
         &&raw.entity===error.diagnostic.entity&&raw.actor===error.diagnostic.actor
         &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span;
-      // An NPC line labelled as disclosing a fact that cites none reveals no stored fact; its speech stays
-      // attributed testimony under the output checks. A cited fact that is missing or denied still fails.
+      // An NPC line labelled as disclosing a fact that matches no stored fact reveals none; the caller records it
+      // as testimony-weighted evidence from that NPC. Denied, archived or mismatched existing facts still fail.
       const unbacked=disclosure&&error.diagnostic.reason_code==='fact_missing'
-        ?remaining.findIndex(raw=>matches(raw)&&raw.entity_type==='npc'&&!raw.source_ref):-1;
+        ?remaining.findIndex(raw=>matches(raw)&&raw.entity_type==='npc'):-1;
       const index=unbacked>=0?unbacked:remaining.findIndex(raw=>raw?.entity_type==='world'&&matches(raw));
       if(index<0)throw error;
       if(unbacked<0&&disclosure&&!canQuarantineDisclosure(db,guildId,output,remaining[index],scope,eventResults))throw error;

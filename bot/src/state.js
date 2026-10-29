@@ -82,6 +82,22 @@ function fail(message){ throw new Error(message); }
 function block(results,e,message){ results.push({type:e?.type||"unknown",ok:false,blocked:true,error:message,event:e}); return true; }
 function cleanKey(value){ return String(value||"").trim(); }
 
+/** An NPC's unsupported disclosure becomes testimony-weighted evidence from that NPC, never objective truth,
+ * plus the NPC's own knowledge of it so a later repeat passes the disclosure check. Failure records nothing. */
+export function recordNpcTestimony(db,guildId,sessionId,claim,diagnostic,scope,sourceRef,provenance={}){
+  if(diagnostic?.reason_code!=='fact_missing'||claim?.entity_type!=='npc'||!sourceRef||!String(claim.proposed||'').trim())return null;
+  const npc=normalizeNpcKey(claim.entity);
+  if(!db.getNpcProfile(guildId,npc))return null;
+  const key=`testimony:${npc}:${createHash('sha256').update(String(claim.proposed)).digest('hex').slice(0,16)}`;
+  try{
+    const [result]=applyGMEvents(db,guildId,sessionId,[{type:'fact',key,value:claim.proposed,
+      epistemic:{kind:'testimony',source_refs:[sourceRef],perspective:`npc:${npc}`}}],scope,provenance);
+    if(!result?.ok)return null;
+    db.upsertNpcKnowledge(guildId,{npcKey:npc,knowledgeKey:key,content:claim.proposed,sourceType:'testimony',sourceRef:result.id});
+    return result.id;
+  }catch{return null;}
+}
+
 /** Apply structured GM events while enforcing private-scene scope boundaries. */
 export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},provenance={}){
   assertProtectedModelEvents(db,guildId,events,scope);
@@ -605,6 +621,8 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
         key:`candidate-claims:${createHash('sha256').update(JSON.stringify([sessionId,outputSource,originalNarrative])).digest('hex')}`,
         status:'needs_review',visibility:'gm',source_event:outputSource||'',data:{version:1,diagnostics:audit.diagnostics,
           authority:'rejected_unpublished_annotations_not_world_state'}});
+      for(const diagnostic of audit?.diagnostics||[])
+        recordNpcTestimony(db,guildId,sessionId,originalNarrative.narrative_claims?.[diagnostic.index],diagnostic,scope,outputSource,provenance);
     }
     const nativeEntries=intents.filter(row=>row.status==='accepted'&&row.data.intent?.feature==='scene'
       &&row.data.intent.payload?.op==='enter'&&row.data.result?.status==='approved').map(row=>row.data.result.record_key);
