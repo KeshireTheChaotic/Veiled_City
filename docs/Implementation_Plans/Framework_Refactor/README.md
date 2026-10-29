@@ -1,6 +1,6 @@
 # Veiled City framework isolation
 
-> Latest qualified checkpoint (2026-10-29): C182-C185 memory services and C186 assembly context on `codex/rf04-memory`. Five fresh cases pass 5/5; source/test and child-script syntax checks pass. RF04 returned exit 0 (detailed summary output was lost); RF05 reports 46 unresolved groups/errors at 851 modules. These are scoped results, not RF04 completion. See the [RF04 ledger](phases/RF04/LEDGER.md) and [current run record](features/RF04-F06/C182-C186-RUN-LEDGER.md). Commit/merge/temporary-worktree cleanup is requested, followed by pause. C187 remains design only. No baseline expansion, deadline renewal or release authorization.
+> Latest qualified checkpoint (2026-10-29): C182-C185 Knowledge memory services and C186 Session assembly context are committed, with Live Play changes integrated at `38e83880`. Five fresh cases pass 5/5; the affected narrative-memory integration case passes 1/1. Merged-source syntax and RF04 ratchet pass; RF05 retains 46 unresolved groups/errors at 851 modules. See the [merge verification](features/RF04-F06/C182-C186-MERGE-VERIFICATION.md) and [RF04 ledger](phases/RF04/LEDGER.md). This finishing checkpoint is ready for the authorized target fast-forward and temporary-worktree archival, followed by pause. RF04 remains incomplete; C187 remains design only.
 
 The following checkpoints are historical. Their counts and holds must be checked against the current phase ledger before resuming work.
 
