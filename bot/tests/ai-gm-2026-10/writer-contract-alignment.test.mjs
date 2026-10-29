@@ -5,7 +5,7 @@ import {createP07NativeFixture} from './p07-native-fixture.mjs';
 import {GMService} from '../../src/gm.js';
 import {applyAuthoritativeMutation} from '../../src/state.js';
 import {nativeDirectorNarrativeSource} from '../../src/narrative-director-source.js';
-import {narrativeResponseV9Schema} from '../../src/frameworks/narrative/writer-contract-v9.js';
+import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS} from '../../src/frameworks/narrative/writer-contract-v9.js';
 import {actToNativeUnit} from '../../src/narrative-writer-v9.js';
 
 test('writer schema constrains act ids to the narrative unit id rule', () => {
@@ -15,6 +15,12 @@ test('writer schema constrains act ids to the narrative unit id rule', () => {
   // Ids observed from gpt-6.1-sol and gpt-6-luna before the pattern existed.
   for (const bad of ['act:scene:1', 'scene:hollow-street:opening', 'act_1', 'Scene-1']) assert.doesNotMatch(bad, rule);
   assert.equal(narrativeResponseV9Schema.properties.acts.items.anyOf[1].properties.id.pattern, id.pattern);
+});
+
+test('writer instructions state the player character name rule the act guard enforces', () => {
+  // Live 2026-10-29: two Nessa replies were held whole because their narration named Tyrell.
+  assert.match(NARRATIVE_V9_INSTRUCTIONS, /never contains a player character name or alias/);
+  assert.match(NARRATIVE_V9_INSTRUCTIONS, /npc_speech may only open with the name as a direct address/);
 });
 
 test('model paragraph breaks become spaces while other text is kept exactly', () => {

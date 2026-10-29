@@ -22,7 +22,8 @@ export const NARRATIVE_V9_INSTRUCTIONS='Return version:9, acts and fiction_delta
   +'speaker_key is an actual native local NPC key (empty for scenery/perception/artifact). artifact_text is ONLY the nonbinding printed words of a local sign. '
   +'NPC offers/questions do not select a player response; allegations are attributed testimony, not truth or binding history. '
   +'No dice, Difficulty, costs, Hope/Fear, success, injury, custody, consent, player reaction or private disclosure is created by prose. '
-  +'Never impersonate a player/proxy. References for NPC factual recall must be native actor-known AND audience-entitled. '
+  +'Never impersonate a player/proxy. Act text never contains a player character name or alias (such acts are held): use a pronoun or a description instead; '
+  +'npc_speech may only open with the name as a direct address ("Name, ..."). References for NPC factual recall must be native actor-known AND audience-entitled. '
   +'Task completion is native and based on actual accepted output; no answered/safe claim. Generated prose retains residual semantic risk.';
 export const NATIVE_CLAUSE_INSTRUCTIONS='For ambiguous weather/PC aliases, physical sensory POV or a known-PC NPC question, use construction with text:"". '
   +'Only closed native primitives are supported; no free text within a construction. Native rendering discards no prose: nonempty text with construction is held. '
