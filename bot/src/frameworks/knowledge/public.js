@@ -14,9 +14,12 @@ export {knowledgeSessionOwnerTerminal} from './contracts/session-owner-terminal.
 export {knowledgeIntentAuthoredTurn} from './contracts/intent-authored-turn.js';
 export {evidenceType,activeEvidence,objectiveEvidence,typedEvidence,establishFact} from './evidence-source.js';
 export {createMemoryLifecycle} from './memory-lifecycle.js';
+export {narrativeMemoryEpistemic,rememberEntity,reviseMemory,retractMemory,retrieveMemoryRevisions} from './memory-lifecycle-service.js';
 export * from './historical-archive.js';
 export {createContextMemory,contextMemorySchema,CONTEXT_MEMORY_PROMPT} from './context-memory.js';
+export {persistentMemories,saveContextMemories,contextMemoriesForScope} from './context-memory-service.js';
 export {createScopedMemory} from './scoped-memory.js';
+export {scopedSceneMemory,resolveScopedMemoryReference} from './scoped-memory-service.js';
 export {createEntityMemory} from './entity-memory.js';
 export {tierWorldAdditions} from './entity-memory-source.js';
 export {createKnowledgeWorldIdentityConsumer,knowledgeWorldIdentities} from './contracts/world-identities.js';
@@ -32,6 +35,7 @@ export {inviteOrganization,organizationRequest,reviewOrganization,organizationIn
 export {createPersonalContinuity} from './personal-continuity.js';
 export {createSemanticCandidateProof} from './semantic-candidate-source.js';
 export {createNarrativeMemory} from './narrative-memory.js';
+export {retainEstablishedNarrative,queueNarrativeMemory,acknowledgeNarrativeMemory,disclosedNarrativeMemory,selectDisclosedNarrativeMemory} from './narrative-memory-service.js';
 export {createKnowledgeWorldMemoryConsumer,knowledgeWorldMemory} from './contracts/world-memory.js';
 export {knowledgeWorldRecord} from './contracts/world-record.js';
 export {manageMemoryCluster,clusterContext,memoryMaintenanceCandidate} from './memory-source.js';

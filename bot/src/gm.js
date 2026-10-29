@@ -8,7 +8,7 @@ import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./frameworks/intent/public.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
 import { tierWorldAdditions } from "./frameworks/knowledge/public.js";
-import { contextMemorySchema, CONTEXT_MEMORY_PROMPT } from "./frameworks/knowledge/public.js";
+import { contextMemorySchema, CONTEXT_MEMORY_PROMPT, scopedSceneMemory } from "./frameworks/knowledge/public.js";
 import { presentationContext } from "./frameworks/knowledge/public.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sources.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
@@ -51,7 +51,7 @@ import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-p
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./frameworks/knowledge/public.js";
 import { operationalMetrics, measureStage, measureNative, createLogger } from "./frameworks/operations/public.js";
-import { scopedSceneMemory } from "./scoped-memory.js";
+
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/public.js';
 import {turnTraceFor} from './frameworks/operations/public.js';
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
@@ -65,7 +65,7 @@ import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionRespon
 import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {openingCohortNarrativeCandidate} from './frameworks/session/public.js';
-import {assemblyInputs,hookHash,certifyAssemblyPlan} from './assembly-context.js';
+import {assemblyInputs,hookHash,certifyAssemblyPlan} from './frameworks/session/public.js';
 import {sceneObservationOperation,narrativeModel} from './frameworks/narrative/public.js';
 import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 import {authorNarrativeRequests,narrativeResponseSchema} from './narrative-authority.js';

@@ -14,6 +14,7 @@ export {createOpeningAttendance} from './opening-attendance.js';
 export {registerOpeningAttendance,carryOpeningAttendance,inspectOpeningEntryOpportunity,prepareOpeningEntryOpportunity} from './opening-attendance-service.js';
 export {createSessionWorldEventConsumer,sessionWorldEvents} from './contracts/world-events.js';
 export {createAssemblyContext,hookHash,assemblySourceError} from './assembly-context.js';
+export {assemblyHookSources,assemblyInputs,assemblyInputFingerprint,certifyAssemblyPlan,assemblyPlanFreshness,assemblyHookSelection,assemblyHookProjection,assemblyWriterBrief} from './assembly-context-service.js';
 export {assemblyReadiness} from './assembly-readiness.js';
 export {createSessionOpening} from './session-opening.js';
 export {rebaseSessionOpening,assertSessionOpeningFence,inspectSessionOpening,scheduleSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAttempt,rebindSessionOpeningRefresh,bindSessionOpeningTurn,assertSessionOpeningPublication} from './session-opening-service.js';

@@ -167,6 +167,9 @@
     ],
     "knowledge--operations": [
       "bot/src/framework-to-framework/knowledge--operations/public.js"
+    ],
+    "knowledge--publication": [
+      "bot/src/framework-to-framework/knowledge--publication/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -1,5 +1,5 @@
 import {createKnowledgeWorldEventConsumer,factVisibleTo,listNarrativeRecords,NARRATIVE_RECORD_LIMIT,createKnowledgeWorldIdentityConsumer} from '../../frameworks/knowledge/public.js';
-import {indexWorldEvent,cityAudit,createWorldKnowledgeConsumer,resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin} from '../../frameworks/world/public.js';
+import {indexWorldEvent,cityAudit,createWorldKnowledgeConsumer,resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin,BACKGROUND_WORLD_KINDS} from '../../frameworks/world/public.js';
 /** Native event/audit identity and transaction forwarding only; no evidence classification copied. */
 export function connectKnowledgeWorld({consumer=createKnowledgeWorldEventConsumer()}={}){
   return consumer.bind({indexWorldEvent,cityAudit});
@@ -8,9 +8,10 @@ export function connectKnowledgeWorld({consumer=createKnowledgeWorldEventConsume
 export function connectWorldKnowledge({consumer=createWorldKnowledgeConsumer()}={}){
   return consumer.bind({factVisibleTo,listNarrativeRecords,narrativeRecordLimit:NARRATIVE_RECORD_LIMIT});
 }
-/** Existing-identity lookup and read-only provenance; no new native entity or PC placement. */
+/** Existing-identity lookup, read-only provenance, and original background kinds; no native entity or PC placement. */
+const backgroundWorldKinds=()=>BACKGROUND_WORLD_KINDS;
 export function connectKnowledgeIdentities({consumer=createKnowledgeWorldIdentityConsumer()}={}){
-  return consumer.bind({resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin});
+  return consumer.bind({resolvePlaceReference,preflightNpcIdentity,worldIdentityOrigin,backgroundWorldKinds});
 }
 
 import {knowledgeWorldMemory,knowledgeWorldRecord} from '../../frameworks/knowledge/public.js';

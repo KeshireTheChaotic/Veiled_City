@@ -1,0 +1,73 @@
+{
+  "feature": "C186",
+  "original_manifest_sha256": "1a5c56faaded88a813c6912ccd640384fb8aaac5e4553a491d4d04cdf59e6bdb",
+  "entries": [
+    {
+      "id": "d031c373914e6b5518cd27ab767de30d7d4e79290668fb680eee946b76599bfb",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-context.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "6841e271008a4a7279cd88683e8ea6f02ce196c8613897381e1b08aca0f096b7",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/assembly-context.js",
+      "kind": "static",
+      "specifier": "./assembly-context.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "eda6b56e9b95802d5fd4fdd72f69422f23f5968d2c19396f2b1621b447d2bbcc",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/assembly-context.js",
+      "kind": "static",
+      "specifier": "./assembly-context.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "a330a3f20285379c60d735c2fbd89856921aaaeb77479fff52f9221ca21a49ca",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-authority-context.js",
+      "to": "bot/src/assembly-context.js",
+      "kind": "static",
+      "specifier": "./assembly-context.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "41890ada13fdd84ca44666a639d5ceca515de4e57ca555914eb40017c61fef0a",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-output.js",
+      "to": "bot/src/assembly-context.js",
+      "kind": "static",
+      "specifier": "./assembly-context.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

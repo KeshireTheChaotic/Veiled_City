@@ -1,6 +1,6 @@
 # C181 — Owned community composition retirement design
 
-Status: design only. No runtime files, transition records, bridge contracts, manifests, or tests were changed for this design. Source hashes are a snapshot of the concurrently edited checkout; re-hash before implementation and preserve C178–C179 plus user Narrative changes.
+Historical design proposal, superseded by [C181-SCOPE.md](C181-SCOPE.md). The proposal recorded a read-only design snapshot; implementation was later performed in the isolated worktree documented by the scope record.
 
 ## Bounded change
 

@@ -1,0 +1,6 @@
+import {publicationKnowledgeNarrativeMemory} from '../../frameworks/publication/public.js';
+import {queueNarrativeMemory,acknowledgeNarrativeMemory} from '../../frameworks/knowledge/public.js';
+/** Bind only the outbox's observed Knowledge narrative-memory operations. */
+export function connectPublicationKnowledgeNarrativeMemory(){
+  return publicationKnowledgeNarrativeMemory.bind({queueNarrativeMemory,acknowledgeNarrativeMemory});
+}

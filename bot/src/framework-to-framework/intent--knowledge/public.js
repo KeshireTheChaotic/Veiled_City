@@ -9,7 +9,11 @@ import {reconcileHistory,manageMemoryCluster,memoryMaintenanceCandidate} from '.
 /** Bind Knowledge's original history reconciliation and memory cluster maintenance to Intent's fixed consumer. */
 export function connectIntentKnowledgeMaintenance(){return intentKnowledgeMaintenance.bind({reconcileHistory,manageMemoryCluster,memoryMaintenanceCandidate});}
 
-import {intentKnowledgeActions} from '../../frameworks/intent/public.js';
-import {manageEvidence,inviteOrganization} from '../../frameworks/knowledge/public.js';
+import {intentKnowledgeActions,intentKnowledgeMemory} from '../../frameworks/intent/public.js';
+import {manageEvidence,inviteOrganization,resolveScopedMemoryReference} from '../../frameworks/knowledge/public.js';
 /** Bind only the two existing Knowledge effects requested by Intent workflows. */
 export function connectIntentKnowledgeActions(){return intentKnowledgeActions.bind({manageEvidence,inviteOrganization});}
+
+
+/** Bind only Knowledge's audience-scoped memory reference resolver. */
+export function connectIntentKnowledgeMemory(){return intentKnowledgeMemory.bind({resolveScopedMemoryReference});}

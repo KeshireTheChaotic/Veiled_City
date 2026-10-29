@@ -24,7 +24,7 @@ import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 import { coordinateTypedActionWindows } from "./frameworks/session/public.js";
 import { buildActionPlan, executableActionSpans, transitionAction } from "./frameworks/intent/public.js";
-import { saveContextMemories } from "./context-memory.js";
+import { saveContextMemories } from './frameworks/knowledge/public.js';
 import { stagePvpAttempts } from "./narrative-pvp.js";
 import {prepareCampaignPvpAttack} from './pvp-attacks.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';

@@ -7,14 +7,16 @@ import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {activeCityProxy} from './city-constraints.js';
-import {selectDisclosedNarrativeMemory} from './narrative-memory.js';
+import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
+function selectDisclosedNarrativeMemory(...args){return narrativeKnowledgeMemory.selectDisclosedNarrativeMemory(...args);}
 import {rankNarrativeMemory} from './narrative-salience.js';
 import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function mentionsPublicIdentity(...args){return narrativeKnowledgeReaders.mentionsPublicIdentity(...args);}
 import {registerNarrativeContext} from './audience-native-v9.js';
-import {assemblyWriterBrief} from './assembly-context.js';
+import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
+function assemblyWriterBrief(...args){return narrativeBridgeSessionSources.assemblyWriterBrief(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';
 function openingEntryProjection(...args){return narrativeOpeningCohort.openingEntryProjection(...args);}

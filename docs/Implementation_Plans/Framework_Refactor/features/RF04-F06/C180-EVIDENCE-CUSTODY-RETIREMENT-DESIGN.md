@@ -1,6 +1,6 @@
 # C180 — Evidence custody composition retirement design
 
-Status: design only. No runtime files, transition records, bridge contracts, manifests, or tests were changed for this design. Source hashes below are a concurrent-work snapshot; re-hash every input immediately before implementation because C178–C179 work is active in the same checkout.
+Historical design proposal, superseded by [C180-SCOPE.md](C180-SCOPE.md). The proposal recorded a read-only design snapshot; implementation was later performed in the isolated worktree documented by the scope record.
 
 ## Bounded change
 

@@ -6,7 +6,7 @@ export function connectKnowledgeNarrative({consumer=createKnowledgeNarrativeVisi
 }
 
 import {narrativeKnowledgeEvidence} from '../../frameworks/narrative/public.js';
-import {factVisibleTo,activeEvidence,evidenceType} from '../../frameworks/knowledge/public.js';
+import {factVisibleTo,activeEvidence,evidenceType,retainEstablishedNarrative,selectDisclosedNarrativeMemory} from '../../frameworks/knowledge/public.js';
 export function connectNarrativeKnowledgeEvidence(){return narrativeKnowledgeEvidence.bind({factVisibleTo,activeEvidence,evidenceType});}
 
 import {knowledgeNarrativeSources} from '../../frameworks/knowledge/public.js';
@@ -18,3 +18,8 @@ import {mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts,listNarrativeRec
 /** Bind Knowledge's original public referent and scoped query readers to Narrative's fixed consumer. */
 const narrativeRecordLimit=()=>NARRATIVE_RECORD_LIMIT;
 export function connectNarrativeKnowledgeReaders(){return narrativeKnowledgeReaders.bind({mentionsPublicIdentity,scopedQueryPlan,queryScopedFacts,listNarrativeRecords,narrativeRecordLimit});}
+
+
+import {narrativeKnowledgeMemory} from '../../frameworks/narrative/public.js';
+/** Bind only Knowledge's accepted-retention and disclosed-memory selection operations. */
+export function connectNarrativeKnowledgeMemory(){return narrativeKnowledgeMemory.bind({retainEstablishedNarrative,selectDisclosedNarrativeMemory});}

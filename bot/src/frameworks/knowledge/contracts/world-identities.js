@@ -1,7 +1,7 @@
 /** Knowledge retrieves established World identities; these callbacks confer no invention or movement authority. */
 export function createKnowledgeWorldIdentityConsumer(){
   let source=null;
-  const keys=['resolvePlaceReference','preflightNpcIdentity','worldIdentityOrigin'];
+  const keys=['resolvePlaceReference','preflightNpcIdentity','worldIdentityOrigin','backgroundWorldKinds'];
   const current=()=>{
     if(!source)throw Object.assign(new Error('Knowledge/World identity sources have not been composed.'),{code:'KNOWLEDGE_WORLD_IDENTITY_COMPOSITION'});
     return source;
@@ -14,7 +14,8 @@ export function createKnowledgeWorldIdentityConsumer(){
     },
     resolvePlaceReference(...args){return current().resolvePlaceReference(...args);},
     preflightNpcIdentity(...args){return current().preflightNpcIdentity(...args);},
-    worldIdentityOrigin(...args){return current().worldIdentityOrigin(...args);}
+    worldIdentityOrigin(...args){return current().worldIdentityOrigin(...args);},
+    backgroundWorldKinds(){return current().backgroundWorldKinds();}
   });
 }
 export const knowledgeWorldIdentities=createKnowledgeWorldIdentityConsumer();

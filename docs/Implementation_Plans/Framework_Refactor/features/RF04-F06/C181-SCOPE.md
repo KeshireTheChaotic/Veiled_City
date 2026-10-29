@@ -35,7 +35,7 @@ The original domain implementation remains byte-for-byte in `bot/src/frameworks/
 - `docs/Implementation_Plans/Framework_Refactor/features/RF04-F06/C181-RETIRED.json`
 - `docs/Implementation_Plans/Framework_Refactor/features/RF04-F06/C181-SCOPE.md`
 
-The Knowledge–Operations bridge adopts only Knowledge → Operations `reviewOrganization`; the observed reverse dependency remains unqualified. The contract records the observed 2/3 dependency counts unchanged. The tester-authored fresh test `rf04-f03-c81.test.mjs` exists and is registered for both pair entries. It has not been executed. Its SHA-256 is `bcf9a54c493977424c52e6111602731204532479da07bfd4e22ac59a5721f845`. The C80 test covering the Intent action port has SHA-256 `78e5e6c5bd16deebc945d8a2af067711ea36c19ee7570160fa10ca03cce3b68c`; it is also registered for Intent–Knowledge.
+The Knowledge–Operations bridge adopts only Knowledge → Operations `reviewOrganization`; the observed reverse dependency remains unqualified. The contract records the observed 2/3 dependency counts unchanged. The fresh bounded C81 test passed in the initial combined batch and is recorded in `C181-RUN.md`; the C80 Intent action test passed after a test-only assertion correction in its targeted run, as recorded in `C180-RUN.md`. SHA-256: C81 `bcf9a54c493977424c52e6111602731204532479da07bfd4e22ac59a5721f845`; C80 `78e5e6c5bd16deebc945d8a2af067711ea36c19ee7570160fa10ca03cce3b68c`. These fake bounded fixtures do not close broader production dependencies.
 
 ## Transition records
 
@@ -51,7 +51,7 @@ The composition-wrapper import in `bot/src/personal-continuity.js` had no transi
 
 ## Verification and open work
 
-Tests and syntax checks: not run in this source-only handoff, as requested. The tester-authored C80/C81 files are present; their hashes are recorded above. No test outcomes are claimed. The next exact work is to execute the authorized fresh changed-code batch and architecture gate, then record outcomes. No runtime, Discord, database, or release qualification is claimed.
+C81 passed in the initial combined C80/C81 batch; C80 passed in a targeted rerun after its test-only assertion correction. Scoped syntax verification passed for 21/21 changed JavaScript and test files. The outcomes are recorded in `C181-RUN.md` and `C180-RUN.md`. Broader production dependencies remain open; no runtime, Discord, production database, or release qualification is claimed.
 
 ## Rollback
 

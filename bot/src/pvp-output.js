@@ -21,7 +21,6 @@ import {validatePostTurnStateReview} from './director.js';
 import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
 import {turnTraceFor} from './turn-trace-context.js';
 import {assemblyOrientation} from './assembly-state.js';
-import {assemblyHookSelection} from './assembly-context.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from './scene-fiction-authority.js';
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
@@ -33,6 +32,7 @@ import {publicationSessionEvidence} from './frameworks/publication/public.js';
 function openingEntryEvidence(...args){return publicationSessionEvidence.openingEntryEvidence(...args);}
 function assemblyCoverageEvidence(...args){return publicationSessionEvidence.assemblyCoverageEvidence(...args);}
 function openingCohortNarrativeCandidate(...args){return publicationSessionEvidence.openingCohortNarrativeCandidate(...args);}
+function assemblyHookSelection(...args){return publicationSessionEvidence.assemblyHookSelection(...args);}
 import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 

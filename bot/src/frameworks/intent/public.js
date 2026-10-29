@@ -19,4 +19,5 @@ export {intentAuthoredTurnSource,intentGameplayIntakeSource} from './contracts/t
 export {intentOwnerActionTerminal} from './contracts/owner-action-terminal.js';
 export {intentKnowledgeMaintenance} from './contracts/knowledge-maintenance.js';
 export {intentKnowledgeActions} from './contracts/knowledge-actions.js';
+export {intentKnowledgeMemory} from './contracts/knowledge-memory.js';
 export {intentWorldOperations} from './contracts/world-operations.js';

@@ -8,7 +8,7 @@ import {materialParaphrases} from './narrative-integrity.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 import {objectiveEvidence} from './epistemic.js';
-import {retainEstablishedNarrative} from './narrative-memory.js';
+import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';
 import {withoutVerifiedVocative} from './narrative-speakers.js';
@@ -251,7 +251,7 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
           payload_hash:hash(data),epistemic:data.epistemic}},issuer);
       const accepted=db.saveCityRecord(guild,{kind:'narrative_unit',key,status:'accepted_established',visibility:u.visibility,subject_key:scope.mode==='private'?scope.actorCharacterId:null,
         source_event:event.event_key,location_key:event.location_key,data});
-      retainEstablishedNarrative(db,guild,accepted);noteNarrativeReuse(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
+      narrativeKnowledgeMemory.retainEstablishedNarrative(db,guild,accepted);noteNarrativeReuse(db,guild,accepted);rows.push(accepted);fates.push({id:u.id,fate:'published'});
     }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;fates.push({id:u.id,fate:error.diagnostic?.category||'held_scope'});}
   }
   db.saveCityRecord(guild,{kind:'narrative_unit_fates',key:draft.record_key,status:'evaluated',visibility:'gm',source_event:sourceRef,

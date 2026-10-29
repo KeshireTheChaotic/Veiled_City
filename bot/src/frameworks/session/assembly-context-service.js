@@ -1,7 +1,9 @@
-/** Original verified source composition; source adapter decomposition remains RF04-F05. */
-import {createAssemblyContext,currentScene,scenePresence} from './frameworks/session/public.js';
-export {hookHash,assemblySourceError} from './frameworks/session/public.js';
-import {sessionOpeningWorld} from './frameworks/session/public.js';
+/** Session's assembly context composition; the factory retains all assembly rules. */
+import {createAssemblyContext} from './assembly-context.js';
+import {currentScene,scenePresence} from './scene-source.js';
+import {sessionAssemblyContextSource} from './contracts/opening-sources.js';
+import {sessionOpeningWorld} from './contracts/opening-world.js';
+
 const context=createAssemblyContext({currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),openingWorldOpportunities:(...args)=>sessionOpeningWorld.openingWorldOpportunities(...args)});
 export const assemblyHookSources=(...args)=>context.assemblyHookSources(...args);
 export const assemblyInputs=(...args)=>context.assemblyInputs(...args);
@@ -11,6 +13,6 @@ export const assemblyPlanFreshness=(...args)=>context.assemblyPlanFreshness(...a
 export const assemblyHookSelection=(...args)=>context.assemblyHookSelection(...args);
 export const assemblyHookProjection=(...args)=>context.assemblyHookProjection(...args);
 export const assemblyWriterBrief=(...args)=>context.assemblyWriterBrief(...args);
-import {sessionAssemblyContextSource} from './frameworks/session/public.js';
-// Provide this module's original assembly context functions to the fixed Session slot; no other authority is granted.
+
+// Preserve the original module-load binding and the five provided functions.
 sessionAssemblyContextSource.bind({assemblyInputFingerprint,certifyAssemblyPlan,assemblyPlanFreshness,assemblyHookSources,assemblyHookSelection});

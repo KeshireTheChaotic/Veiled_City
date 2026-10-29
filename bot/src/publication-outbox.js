@@ -8,7 +8,7 @@ import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 import {operationalMetrics} from './operational-metrics.js';
 import {turnLatency} from './turn-latency.js';
 import {currentTurnTrace,turnTraceFor} from './turn-trace-context.js';
-import {queueNarrativeMemory,acknowledgeNarrativeMemory} from './narrative-memory.js';
+import {publicationKnowledgeNarrativeMemory} from './frameworks/publication/public.js';
 import {recordNarrativeHealth} from './narrative-completeness.js';
 import {nativeDirectorNarrativeSource} from './narrative-director-source.js';
 const deliveryQueues=new WeakMap();
@@ -62,7 +62,7 @@ export function queueTurnPublications(db,{guild,session,result,scope,turnId,chan
       targetCharacterId:assignment?.character_id||null});
   }
   db.updateTurnAttempt(turnId,{publicationId:`publication:${turnId}`});
-  queueNarrativeMemory(db,guild.id,rows);
+  publicationKnowledgeNarrativeMemory.queueNarrativeMemory(db,guild.id,rows);
   const trace=currentTurnTrace();if(trace&&trace.guild===guild.id){trace.publications+=rows.length;trace.private_publications+=rows.filter(row=>row.visibility!=='party').length;}
   return rows;
 }
@@ -124,7 +124,7 @@ export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=fa
       const delivered=db.transaction(()=>{
         const acknowledged=db.updatePublication(row.id,{status:"delivered",discordMessageId:receipt.messageId,
           channelId:receipt.channelId||row.channel_id,lastFailure:""});
-        recordOutputArchive(db,guildId,acknowledged,archive);acknowledgeNarrativeMemory(db,guildId,acknowledged);return acknowledged;
+        recordOutputArchive(db,guildId,acknowledged,archive);publicationKnowledgeNarrativeMemory.acknowledgeNarrativeMemory(db,guildId,acknowledged);return acknowledged;
       });
       operationalMetrics.record('discord',{guildId,durationMs:performance.now()-metricStart});
       turnTraceFor(guildId)?.stage('discord',performance.now()-metricStart);
@@ -160,7 +160,7 @@ export function reconcilePublication(db,guildId,id,{actor,gm=false,decision,reas
       const archive=captureOutputArchive(db,guildId,row);
       after=db.updatePublication(id,{status:"delivered",discordMessageId:message.id,channelId:message.channelId,lastFailure:""});
       recordOutputArchive(db,guildId,after,archive);
-      acknowledgeNarrativeMemory(db,guildId,after);
+      publicationKnowledgeNarrativeMemory.acknowledgeNarrativeMemory(db,guildId,after);
     }else if(decision==="confirmed_not_sent")after=db.updatePublication(id,{status:"pending",lastFailure:"GM attested exact part was not sent."});
     else throw new Error("Use delivered or confirmed_not_sent.");
     db.recordMutation(guildId,{actorType:"human",actorId:actor,sourceLayer:"delivery_reconciliation",mutationType:decision,

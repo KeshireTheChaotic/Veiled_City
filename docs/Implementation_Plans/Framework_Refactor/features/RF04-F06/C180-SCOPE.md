@@ -40,7 +40,7 @@ The additional composition-wrapper imports in `bot/src/personal-continuity.js` w
 
 ## Verification
 
-Fresh tests `rf04-f03-c80.test.mjs` and `rf04-f03-c81.test.mjs` now exist and are registered against the Intent–Knowledge pair; their contents were authored by the tester. Neither test nor syntax checks were run in this handoff. Test SHA-256: C80 `78e5e6c5bd16deebc945d8a2af067711ea36c19ee7570160fa10ca03cce3b68c`; C81 `bcf9a54c493977424c52e6111602731204532479da07bfd4e22ac59a5721f845`. These files match the architecture checker’s two-digit naming rule. No runtime, Discord, database, or release qualification is claimed.
+The fresh bounded tests `rf04-f03-c80.test.mjs` and `rf04-f03-c81.test.mjs` passed; see `C180-RUN.md` and `C181-RUN.md` for the corrected C80 targeted pass and C81 combined-batch pass. Scoped syntax checks passed for 21/21 changed JavaScript and test files. SHA-256: C80 `78e5e6c5bd16deebc945d8a2af067711ea36c19ee7570160fa10ca03cce3b68c`; C81 `bcf9a54c493977424c52e6111602731204532479da07bfd4e22ac59a5721f845`. These fixtures are fake and bounded. No full production database, Discord, runtime, or release qualification is claimed; broader dependencies remain open.
 
 ## Rollback
 

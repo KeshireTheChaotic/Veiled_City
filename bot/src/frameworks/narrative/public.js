@@ -20,6 +20,7 @@ export {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './narrative-authority-contract.j
 export {NARRATIVE_CONTRACT} from './narrative-integrity-contract.js';
 export {materialClaimSchema} from './material-claim-schema.js';
 export {createNarrativeKnowledgeEvidenceConsumer,narrativeKnowledgeEvidence} from './contracts/knowledge-evidence.js';
+export {narrativeKnowledgeMemory} from './contracts/knowledge-memory.js';
 export {createNarrativeNpcEvidenceConsumer,narrativeNpcEvidence} from './contracts/npc-evidence.js';
 export {narrativeSourceVisible} from './visibility-source.js';
 export {nativeSalienceAvailable,names,mentions,createNarrativeContextEligibility} from './context-eligibility.js';

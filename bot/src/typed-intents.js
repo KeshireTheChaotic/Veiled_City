@@ -7,7 +7,7 @@ import {stateRevision} from './kernel/state-revision.js';
 import {intentWorldOperations} from './frameworks/intent/public.js';
 function resolvePlaceReference(...args){return intentWorldOperations.resolvePlaceReference(...args);}
 import { captureDialogue } from './dialogue-continuity.js';
-import { resolveScopedMemoryReference } from './scoped-memory.js';
+import { intentKnowledgeMemory } from './frameworks/intent/public.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
 import {intentOwnerActionTerminal} from './frameworks/intent/public.js';
 function overlapsOwnerActionTerminal(...args){return intentOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
@@ -493,7 +493,7 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
         resolvedTargetKey=reference.location.entity_key;nativeGrounded=true;
       }else targetCandidates=reference.candidates||[];
     }else if(!resolvedTargetKey&&intent.target_name){
-      const reference=resolveScopedMemoryReference(db,guild,scope,intent.target_name,
+      const reference=intentKnowledgeMemory.resolveScopedMemoryReference(db,guild,scope,intent.target_name,
         {currentLocation:pc.data.location||'',sourceEvent:source.event_key});
       if(reference.status==='resolved'){
         resolvedTargetKey=reference.entity_key;nativeGrounded=true;
