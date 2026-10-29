@@ -498,10 +498,12 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
       if(reference.status==='resolved'){
         resolvedTargetKey=reference.entity_key;nativeGrounded=true;
         if(reference.identity)memoryIdentityRefs=[reference.identity];
-      }else if(!reference.candidates?.length&&['interact','observe','search'].includes(intent.type)&&pc.data.location
+      }else if(!reference.candidates?.length&&(intent.type==='observe'||['interact','search'].includes(intent.type)
+        &&['roll_required','blocked','needs_clarification'].includes(intent.resolution))&&pc.data.location
         &&db.getSimulationEntity(guild,'location',pc.data.location)){
         // Narrated scene objects (a tile, a key) are not tracked entities; act on them within the PC's established
-        // location. target_name keeps the object phrase; adjudication still owns any outcome.
+        // location. target_name keeps the object phrase; adjudication still owns any outcome. Auto/conversational
+        // interact or search would have no native receipt for consequence reconciliation, so those keep waiting.
         resolvedTargetKey=pc.data.location;nativeGrounded=true;
       }else targetCandidates=reference.candidates||[];
     }

@@ -5,15 +5,29 @@ import {createP07NativeFixture} from './p07-native-fixture.mjs';
 import {declare,intent} from './play-flow-helpers.mjs';
 import {prepareAuthorizedTurnOutput} from '../../src/pvp-output.js';
 
-test('acting on a narrated object is grounded to the character location instead of parking', () => {
+test('observing or risking an action on a narrated object is grounded to the character location', () => {
+  const f = createP07NativeFixture();
+  try {
+    for (const [id, message, type, resolution] of [
+      ['pfx-observe', 'I study the branching mark on the red tile.', 'observe', 'auto'],
+      ['pfx-risk', 'I pry at the glaze on the red tile with my knife.', 'interact', 'blocked']]) {
+      const {pc, accepted} = declare(f, id, message,
+        [intent(message, {type, operation: 'act on tile', target_key: '', target_name: 'red tile', utterance: '', resolution,
+          reason: resolution === 'blocked' ? 'Nessa stops the attempt.' : ''})]);
+      assert.equal(accepted.length, 1, `${type}/${resolution} is accepted for adjudication`);
+      assert.equal(accepted[0].data.target_key, pc.data.location);
+      assert.equal(accepted[0].data.target_name, 'red tile');
+    }
+  } finally { f.close(); }
+});
+
+test('an auto interaction on a narrated object keeps waiting, since it would have no native receipt', () => {
   const f = createP07NativeFixture();
   try {
     const message = 'I press the old brass key against the red tile.';
-    const {pc, accepted} = declare(f, 'pfx-object', message,
+    const {accepted} = declare(f, 'pfx-auto', message,
       [intent(message, {type: 'interact', operation: 'press key against tile', target_key: '', target_name: 'red tile', utterance: '', resolution: 'auto'})]);
-    assert.equal(accepted.length, 1, 'the action is accepted for adjudication');
-    assert.equal(accepted[0].data.target_key, pc.data.location);
-    assert.equal(accepted[0].data.target_name, 'red tile');
+    assert.equal(accepted.length, 0);
   } finally { f.close(); }
 });
 
