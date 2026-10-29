@@ -219,12 +219,14 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   }
   const failedEntities=new Set(),entityResults=[];
   const identityKey=e=>`${e.kind}:${e.key}`;
-  for(const e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
+  for(let e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
     const background=BACKGROUND_WORLD_KINDS.includes(e.kind);
     const newLocalPlace=e.kind==='npc'&&entities.some(p=>p.kind==='location'&&p.key===e.location_key
       &&p.parent_location_key===ctx.binding.location&&units.some(u=>u.kind==='scene'&&u.location_key===p.key));
     if(background?!units.some(u=>u.kind==='scene'&&u.location_key===ctx.binding.location)
       :!units.some(u=>u.subject_key===e.key||u.location_key===e.key)&&!newLocalPlace)continue;
+    if(e.kind==='npc'&&failedEntities.has(`location:${e.location_key}`)&&ctx.binding.location)
+      e={...e,location_key:ctx.binding.location};
     try{
       // A redundant creation proposal cannot replace an existing identity or poison its independently valid prose.
       // Actual unit placement/visibility/proxy checks still run both before and after this step.
@@ -240,9 +242,25 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
     }catch(error){if(!['SCENE_FICTION','AUTONOMOUS_WORLD'].includes(error.code))throw error;
       failedEntities.add(identityKey(e));entityResults.push({kind:e.kind,key:e.key,status:'rejected',reason:error.diagnostic?.category||'native_identity_validation'});}
   }
+  // Recover dialogue whose only unavailable dependency was a rejected new setting.
+  // The speaker must now have an actual identity at the current viewpoint.
+  for(const act of d.acts_v9||[]){
+    if(units.some(u=>u.id===act.id)||!failedEntities.has(`location:${act.location_key}`)
+      ||db.getSimulationEntity(guild,'npc',act.speaker_key)?.state.location_key!==ctx.binding.location)continue;
+    try{
+      const repaired={...act,location_key:ctx.binding.location},unit=actToNativeUnit(repaired,d.audience_v9,{db,guild});
+      validateUnit(db,guild,unit,ctx,[],false,repaired);units.push(unit);
+    }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;}
+  }
   const rows=[];
   for(let u of units){
     let act=d.acts_v9?.find(a=>a.id===u.id);
+    if(act&&act.location_key!==u.location_key)act={...act,location_key:u.location_key};
+    if(failedEntities.has(`location:${u.location_key}`)&&u.subject_key
+      &&db.getSimulationEntity(guild,'npc',u.subject_key)?.state.location_key===ctx.binding.location){
+      u={...u,location_key:ctx.binding.location};
+      if(act)act={...act,location_key:ctx.binding.location};
+    }
     // A rejected location record need not erase visible scenery or a sign. Retain
     // that description from the current viewpoint without claiming travel or a new identity.
     if(failedEntities.has(`location:${u.location_key}`)&&u.kind==='scene'&&!u.subject_key

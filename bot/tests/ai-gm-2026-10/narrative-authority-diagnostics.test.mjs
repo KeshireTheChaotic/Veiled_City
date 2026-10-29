@@ -15,11 +15,14 @@ test('a rejected writer identity retains its native diagnostic instead of a gene
     await authorNarrativeRequests({db:f.db,guild:f.guild,result,scope,sourceRef,budget:{used:false},generate:async packet=>{
       const task=packet.audience_v9.task_ids[0];
       return {version:9,fiction_delta:[{kind:'location',key:'folding-yard',name:'Folding Yard',summary:'An empty paved yard behind the station.',
-        location_key:'',parent_location_key:'p07-station',role:'',aliases:[]}],acts:[{id:'yard-scene',task_id:task,kind:'scene_description',speaker_key:'',
-        location_key:'folding-yard',text:'A wide paved yard opens behind the station.',source_refs:[]}]};
+        location_key:'',parent_location_key:'p07-station',role:'',aliases:[]},
+        {kind:'npc',key:'nera-voss',name:'Nera Voss',summary:'A local porter waiting by the yard.',location_key:'folding-yard',parent_location_key:'',role:'porter',aliases:[]}],acts:[{id:'yard-scene',task_id:task,kind:'scene_description',speaker_key:'',
+        location_key:'folding-yard',text:'A wide paved yard opens behind the station.',source_refs:[]},
+        {id:'nera-speech',task_id:task,kind:'npc_speech',speaker_key:'nera-voss',location_key:'folding-yard',text:'The cart went east before dawn.',source_refs:[]}]};
     }});
-    const rows=establishNarrativeUnits(f.db,f.guild,request,scope,sourceRef);
-    assert.equal(rows.length,1);
+    const rows=establishNarrativeUnits(f.db,f.guild,request,scope,sourceRef,{content:{read:()=>'',search:()=>[]}});
+    assert.equal(rows.length,2);
+    assert.ok(rows.some(row=>row.data.unit.kind==='npc_speech'));
     assert.equal(rows[0].data.unit.location_key,'p07-station');
     assert.match(rows[0].data.text,/wide paved yard/);
     assert.equal(f.db.getSimulationEntity(f.guild,'location','folding-yard'),null);
