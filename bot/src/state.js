@@ -645,7 +645,12 @@ export function applyAuthoritativeMutation(db,{guildId,sessionId=null,events=[],
 /** Native preview shares the commit resolver and always rolls back; no delivery or paid calls. */
 export function previewAuthoritativeMutation(db,input){
   const rollback={};let result;
-  try{db.transaction(()=>{result=applyAuthoritativeMutation(db,input);throw rollback;});}
+  try{db.transaction(()=>{
+    result=applyAuthoritativeMutation(db,input);
+    // Optional caller check against the staged state, before it is rolled back.
+    input.inspectMutation?.(result);
+    throw rollback;
+  });}
   catch(error){if(error!==rollback)throw error;}
   return result;
 }

@@ -18,6 +18,7 @@ import {openingWorldOpportunities} from './opening-world-bridge.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn} from './world-private-seeds.js';
 import {privateWorldSeedsSchema} from './frameworks/world/public.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
+import { reconcilePreviewConsequences } from "./turn-orchestration.js";
 import { narrativeContext } from "./character-narrative.js";
 import { POST_TURN_REVIEW_CATEGORIES } from "./frameworks/world/public.js";
 import { validatePostTurnStateReview } from "./frameworks/world/public.js";
@@ -863,7 +864,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         narrative:result,events:result.events||[],relationships:result.relationships||[],handouts:result.handouts||[],
         npcMemories:result.npc_memories||[],npcKnowledge:result.npc_knowledge||[],npcGoals:result.npc_goals||[],
         simulationUpdates:result.simulation_updates||[],scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
-        provenance:{messageId,actorId:actorUserId},content:this.content,inspectStaged});
+        provenance:{messageId,actorId:actorUserId},content:this.content,inspectStaged,
+        inspectMutation:mutation=>reconcilePreviewConsequences(this.db,guildId,mutation,result,{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id})});
       if(!privateMode&&result.state_review.scene.decision==="transition"&&
         !(result.simulation_updates||[]).some(update=>update.kind==="residue"))
         throw new Error("A public scene transition requires structured scene residue, including empty lists where nothing was left behind.");
@@ -931,7 +933,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
           this.metrics.record('optional_quarantine',{guildId});return recovered.result;
         }catch{/* Narration-dependent or consequential failures continue through bounded correction. */}
       }
-      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION","DECISION_ADVISORY"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
+      const detail=JSON.stringify(["NARRATIVE_INTEGRITY","NARRATIVE_CONTEXT","POST_TURN_REVIEW","RESPONSE_OBLIGATION","DECISION_ADVISORY","CONSEQUENCE_RECONCILIATION"].includes(err.code)?err.diagnostic||{}:{}).slice(0,800);
       const correction=[
         `STRUCTURED TURN CORRECTION: ${String(err.message||err).slice(0,600)} Diagnostic: ${detail}.`,
         "Return a complete replacement response.",
@@ -947,7 +949,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "Understand scoped context without repeating resolved questions. Ask only for missing information needed to authorize an action.",
         "Use empty actor for narrator claims; character:<id> for a PC observer. State review must agree with mutations.",
         "In particular, references=changed only when events contains npc_update or location_update; native world_additions and scene_actions use their own receipt and do not count as reference review mutations.",
-        "Explicit private canon requests use canon_proposals; never narrate application recording or notification."
+        "Explicit private canon requests use canon_proposals; never narrate application recording or notification.",
+        err.code==="CONSEQUENCE_RECONCILIATION"?"Every immediate interact, search or move needs native state: roll_required with native_adjudication when stakes are uncertain, a gm_ruling with disposition narrative_no_roll for a no-roll outcome, or blocked/needs_clarification with a reason.":""
       ].filter(Boolean).join(" ");
       const retry={...req,input:`${req.input}\n\n${correction}`};
       createLogger(this.config.logLevel||'info').warn(`GM turn correction after ${err.code||err.name}: ${String(err.message||err).slice(0,300)}`,err.diagnostic||'');

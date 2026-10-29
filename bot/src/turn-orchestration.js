@@ -14,6 +14,14 @@ import {executeUnifiedGmActions} from './gm-native-rolls.js';
 import {EncounterLibrary} from './encounter.js';
 import {prepareAuthorizedTurnOutput} from './pvp-output.js';
 import {nativeDirectorNarrativeSource} from './narrative-director-source.js';
+/** The commit's strict consequence check, run on a staged preview so a turn with no native state is corrected
+ * instead of failing at commit. Dice submissions and unified GM actions only gain receipts at commit. */
+export function reconcilePreviewConsequences(db,guildId,mutation,narrative,scope){
+  const unified=new Set((mutation?.unifiedArbitration||[]).map(row=>row.data.entry));
+  const intents=(mutation?.typedIntents||[]).filter(row=>row.data.type!=='roll'&&!unified.has(row.record_key));
+  if(intents.length)reconcileConsequences(db,guildId,{intents,narration:narrative?.narration||'',
+    private_messages:narrative?.private_messages||[],scope,strict:true});
+}
 export function commitGmTurn({db,guild,session,result,scope,speaker,label,meta={},content=null}){
   const decision_advisory=validateDecisionAdvisory(db,guild.id,result);
   const mutates=(result.ai_intents||[]).length||(result.events||[]).some(e=>e.type!=="log_only")||(result.relationships||[]).length||(result.handouts||[]).length||(result.npc_memories||[]).length||(result.npc_knowledge||[]).length||(result.npc_goals||[]).length||(result.simulation_updates||[]).length;
