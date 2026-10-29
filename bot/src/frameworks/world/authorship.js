@@ -29,11 +29,14 @@ function assertWorldIdentityNames(db,guild,definition){
 /** Conservative identity-echo quarantine, NOT semantic interpretation or a grant.
  * An ordinary owner request may inspire a different GM invention; it cannot name a new fact into existence.
  */
-function assertIndependentWorldIdentity(definition,source){
+function assertIndependentWorldIdentity(definition,source,{requestedPhrases=[]}={}){
   if(source?.kind!=='ai_gm_input')return;
   const text=`\u0001${identityTokens(source.details.text)}\u0001`;
-  if([definition.key,definition.name,...(definition.aliases||[])].some(name=>{
+  const requested=new Set(requestedPhrases.map(identityTokens).filter(Boolean));
+  if([definition.key,definition.name].some(name=>{
     const phrase=identityTokens(name);return phrase&&text.includes(`\u0001${phrase}\u0001`);
+  })||(definition.aliases||[]).some(name=>{
+    const phrase=identityTokens(name);return phrase&&text.includes(`\u0001${phrase}\u0001`)&&!requested.has(phrase);
   }))throw fail('owner_named_identity_requires_independent_authoring_source');
 }
 /** Only an actual registered server context can delegate GM-owned ordinary authoring. */

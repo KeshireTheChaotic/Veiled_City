@@ -38,6 +38,22 @@ function actorEvidenceVisible(db,guild,npc,row,scope){
       &&p?.version===1&&p.npc===npc&&p.key===row.knowledge_key&&p.content===row.content
       &&p.belief===row.belief_state&&p.secret===false&&p.disclosure==='nonsecret_actor_testimony';
   }
+  if(row.source_type==='narrative_self_testimony'){
+    const p=event.details.payload,unit=p&&db.getCityRecord(guild,'narrative_unit',p.unit),u=unit?.data?.unit,
+      source=p&&db.getWorldEvent(guild,p.unit_source),ack=p&&db.getWorldEvent(guild,p.ack),publicationIds=ack?.details.publications?.map(item=>item.id)||[];
+    return event.kind==='native_npc_speech_testimony'&&event.source_id==='native:narrative-memory'&&event.visibility==='gm'
+      &&!!p&&event.details.payload_hash===hash(p)&&p.version===1&&Array.isArray(p.publications)&&p.npc===npc&&p.key===row.knowledge_key&&p.content===row.content
+      &&row.belief_state==='known'&&row.is_secret===0&&row.source_ref===event.event_key
+      &&unit?.status==='accepted_established'&&unit.source_event===source?.event_key&&p.unit_hash===hash(unit.data)
+      &&unit.visibility==='party'&&unit.data.binding.scope.mode==='party'&&u?.kind==='npc_speech'&&u.subject_key===npc&&u.text===row.content
+      &&source?.status==='active'&&source.kind==='native_narrative_unit'&&source.source_id==='native:narrative-authority'
+      &&source.details.actor===npc&&source.details.payload_hash===hash(unit.data)
+      &&ack?.status==='active'&&ack.kind==='native_narrative_disclosure'&&ack.source_id==='native:narrative-memory'
+      &&ack.visibility==='party'&&ack.details.unit===unit.record_key&&hash([...p.publications].sort())===hash([...publicationIds].sort())
+      &&ack.details.publications.every(item=>{const publication=db.getPublication(guild,item.id);return publication?.status==='delivered'
+        &&publication.discord_message_id===item.message&&publication.channel_id===item.channel;})
+      &&narrativeSourceVisible(db,guild,ack.event_key,scope);
+  }
   // Avoid recursive actor-proof promotion. Recalled speech needs its original
   // native hearing/import proof, not another actor-relative output certificate.
   if(event.kind==='native_narrative_unit'&&event.details.actor_evidence_refs?.length)return false;

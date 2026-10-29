@@ -14,7 +14,7 @@ export function actToNativeUnit(act,binding,{db,guild}={}){
   // Model paragraph breaks become spaces; the unit validator still rejects every other control character.
   const text=act.construction?constructNativeClause(db,guild,act,binding)
     :typeof act.text==='string'?act.text.replace(/\s*[\r\n\t]\s*/g,' '):act.text;
-  return {id:act.id,kind:speech?'npc_speech':'scene',text:act.kind==='artifact_text'?`A sign reads: ${text}`:text,
+  return {id:act.id,kind:act.kind==='lead'?'lead':speech?'npc_speech':'scene',text:act.kind==='artifact_text'?`A sign reads: ${text}`:text,
     subject_key:act.speaker_key,location_key:act.location_key,visibility:binding.scope.mode==='private'?'character':'party',
     epistemic:'observation',source_refs:act.source_refs,receipt_kind:'',receipt_ref:''};
 }

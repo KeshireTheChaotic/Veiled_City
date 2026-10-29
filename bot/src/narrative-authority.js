@@ -183,7 +183,19 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
       const generated=await generate(ctx.packet);
-      const v9=generated?.version===9?compileWriterV9(generated,audience,(u,entities,act)=>validateUnit(db,guild,u,ctx,entities,false,act),{db,guild}):null;
+      const compile=answer=>compileWriterV9(answer,audience,(u,entities,act)=>validateUnit(db,guild,u,ctx,entities,false,act),{db,guild});
+      let v9=generated?.version===9?compile(generated):null;
+      if(v9?.compiled.some(act=>act.status==='held')){
+        const held=v9.compiled.filter(act=>act.status==='held');
+        // One bounded repair belongs to this authoring attempt. Keep the usable original if repair fails.
+        try{
+          const repaired=compile(await generate({...ctx.packet,repair:{previous:generated,
+            held:held.map(({id,reason})=>({id,reason})),instruction:'Return a complete coherent replacement. Preserve usable dialogue and scenery. Rewrite held acts to satisfy their diagnostics; omit player names and leave player choices open. Keep every act at an available location.'}}));
+          if(repaired.answer.narrative_units.length>=v9.answer.narrative_units.length)v9=repaired;
+        }catch(error){
+          if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;
+        }
+      }
       const answer=v9?v9.answer:generated;shape(answer);
       const data={version:v9?9:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,
         ...(v9?{acts_v9:v9.acts,compiled_v9:v9.compiled}:{}),creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
@@ -207,12 +219,14 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
   }
   const failedEntities=new Set(),entityResults=[];
   const identityKey=e=>`${e.kind}:${e.key}`;
-  for(const e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
+  for(let e of [...entities].sort((a,b)=>Number(a.kind==='npc')-Number(b.kind==='npc'))){
     const background=BACKGROUND_WORLD_KINDS.includes(e.kind);
     const newLocalPlace=e.kind==='npc'&&entities.some(p=>p.kind==='location'&&p.key===e.location_key
       &&p.parent_location_key===ctx.binding.location&&units.some(u=>u.kind==='scene'&&u.location_key===p.key));
     if(background?!units.some(u=>u.kind==='scene'&&u.location_key===ctx.binding.location)
       :!units.some(u=>u.subject_key===e.key||u.location_key===e.key)&&!newLocalPlace)continue;
+    if(e.kind==='npc'&&failedEntities.has(`location:${e.location_key}`)&&ctx.binding.location)
+      e={...e,location_key:ctx.binding.location};
     try{
       // A redundant creation proposal cannot replace an existing identity or poison its independently valid prose.
       // Actual unit placement/visibility/proxy checks still run both before and after this step.
@@ -228,17 +242,42 @@ export function establishNarrativeUnits(db,guild,input,scope,sourceRef,{content=
     }catch(error){if(!['SCENE_FICTION','AUTONOMOUS_WORLD'].includes(error.code))throw error;
       failedEntities.add(identityKey(e));entityResults.push({kind:e.kind,key:e.key,status:'rejected',reason:error.diagnostic?.category||'native_identity_validation'});}
   }
+  // Recover dialogue whose only unavailable dependency was a rejected new setting.
+  // The speaker must now have an actual identity at the current viewpoint.
+  for(const act of d.acts_v9||[]){
+    if(units.some(u=>u.id===act.id)||!failedEntities.has(`location:${act.location_key}`)
+      ||db.getSimulationEntity(guild,'npc',act.speaker_key)?.state.location_key!==ctx.binding.location)continue;
+    try{
+      const repaired={...act,location_key:ctx.binding.location},unit=actToNativeUnit(repaired,d.audience_v9,{db,guild});
+      validateUnit(db,guild,unit,ctx,[],false,repaired);units.push(unit);
+    }catch(error){if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;}
+  }
   const rows=[];
-  for(const u of units){
+  for(let u of units){
+    let act=d.acts_v9?.find(a=>a.id===u.id);
+    if(act&&act.location_key!==u.location_key)act={...act,location_key:u.location_key};
+    if(failedEntities.has(`location:${u.location_key}`)&&u.subject_key
+      &&db.getSimulationEntity(guild,'npc',u.subject_key)?.state.location_key===ctx.binding.location){
+      u={...u,location_key:ctx.binding.location};
+      if(act)act={...act,location_key:ctx.binding.location};
+    }
+    // A rejected location record need not erase visible scenery or a sign. Retain
+    // that description from the current viewpoint without claiming travel or a new identity.
+    if(failedEntities.has(`location:${u.location_key}`)&&u.kind==='scene'&&!u.subject_key
+      &&ctx.binding.location&&!act?.construction){
+      u={...u,location_key:ctx.binding.location};
+      if(act)act={...act,location_key:ctx.binding.location};
+      entityResults.push({kind:'narrative_repair',key:u.id,status:'reanchored',reason:'rejected_place_description_retained_at_current_viewpoint'});
+    }
     const key=`narrative-unit:${hash([d.binding,u])}`,prior=db.getCityRecord(guild,'narrative_unit',key);
     // Only structured identity dependencies confer placement/speaker authority; a name appearing in prose is not a dependency.
     if(failedEntities.has(`location:${u.location_key}`)||entities.some(e=>e.key===u.subject_key&&failedEntities.has(identityKey(e)))){
       fates.push({id:u.id,fate:'held_scope'});continue;
     }
     try{
-      const text=validateUnit(db,guild,u,ctx,[],false,d.acts_v9?.find(a=>a.id===u.id)),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
+      const text=validateUnit(db,guild,u,ctx,[],false,act),data={version:d.version===9?9:1,issuer,binding:d.binding,unit:u,text,semantic_verification:false,
         ...(d.audience_v9?{audience_v9:d.audience_v9}:{}),
-        ...(d.version===9?{act_v9:d.acts_v9.find(a=>a.id===u.id)}:{}),
+        ...(d.version===9?{act_v9:act}:{}),
         epistemic:u.kind==='rumor'?'testimony':u.kind==='npc_speech'?'attributed':u.kind==='native_outcome_render'?'native_outcome':u.epistemic};
       projectNarrativeArtifact(db,guild,u,ctx,{establish:true});
       if(prior){renderNarrativeUnit(db,guild,key,scope);rows.push(prior);fates.push({id:u.id,fate:'published'});continue;}

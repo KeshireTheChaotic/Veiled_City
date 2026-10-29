@@ -89,7 +89,7 @@ function locationIdentityMatches(row,name){
   const expected=normalize(name),values=[row?.entity_key,row?.state?.name,row?.state?.title,row?.state?.display_name];
   return !!expected&&values.filter(Boolean).some(value=>normalize(value)===expected);
 }
-function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_WORLD"});}
+function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_WORLD",diagnostic:{category:message}});}
 function closed(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>closed(s,value));
   if(schema.enum)return schema.enum.includes(value);
@@ -99,20 +99,20 @@ function closed(schema,value){
   return value&&typeof value==="object"&&!Array.isArray(value)&&Object.keys(value).length===schema.required.length
     &&schema.required.every(k=>Object.hasOwn(value,k)&&closed(schema.properties[k],value[k]));
 }
-function localAccess(db,guild,pc,key){
+function localAccess(db,guild,pc,key,ordinaryTravel=false){
   const location=db.getSimulationEntity(guild,"location",key),s=location?.state||{};
   const origin=pc.data.location?db.getSimulationEntity(guild,"location",pc.data.location)?.state||{}:{};
  const admission=location&&s.access==='private'&&s.parent_location_key===pc.data.location
    ?nativeVipAdmission(db,guild,pc,key):null;
  if(!location||["locked","contested","hazard","travel_required","removed","sealed"].some(k=>s[k])||s.restricted&&!admission
-   ||s.hazards?.length||s.wards?.length||Number(s.travel_cost)||Number(s.travel_minutes)||s.access&&s.access!=="public"&&!admission)return false;
+   ||s.hazards?.length||s.wards?.length||Number(s.travel_cost)||!ordinaryTravel&&Number(s.travel_minutes)||s.access&&s.access!=="public"&&!admission)return false;
   if(key!==pc.data.location&&(origin.sealed||origin.locked_exit||origin.blocks_exit||Number(origin.exit_cost)||origin.exit_hazards?.length))return false;
   const policy=db.getCityRecord(guild,"entry_policy",key),scene=currentScene(db,guild);
   const approved=policy?.status==="active"&&db.getWorldEvent(guild,policy.source_event)?.status==="active"
     &&policy.data.session_id===scene.session_id&&policy.data.scene===scene.key
     &&policy.data.from_locations?.includes(pc.data.location)&&policy.data.destination_revision===stateRevision(location)
     &&policy.data.from_revisions?.[pc.data.location]===stateRevision(db.getSimulationEntity(guild,"location",pc.data.location));
-  return key===pc.data.location||s.parent_location_key===pc.data.location&&!!pc.data.location
+  return ordinaryTravel||key===pc.data.location||s.parent_location_key===pc.data.location&&!!pc.data.location
     ||origin.parent_location_key===key||s.ai_gm_origin===true&&!pc.data.location&&!s.parent_location_key||approved;
 }
 /** All calls occur inside the shared turn transaction (preview uses the identical path then rolls back). */
@@ -221,14 +221,14 @@ function applyWorld(db,guild,narrative,scope,provenance,content){
       if(!semantic&&!entrySource)
         fail("Movement requires current verified typed intent authorization or an explicit revalidated legacy scene entry.");
       const location=db.getSimulationEntity(guild,"location",target);
-      if(!location||!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target))fail("Movement requires accessible local geography; adjudicate real travel/access obstacles without inventing an arrival.");
+      if(!location||!visible(db,guild,"location",target,scope)||!localAccess(db,guild,latest,target,semantic?.data.resolution==='auto'))fail("Movement requires accessible local geography; adjudicate real travel/access obstacles without inventing an arrival.");
       if(db.getCurrentEncounter(session.id)?.status==="active")fail("Active encounter movement requires native combat rules.");
       if(semantic){
         const phrase=semantic.data.target_name||semantic.data.target_key;
         const resolved=resolvePlaceReference(db,guild,pc.id,phrase,{mode:scope.mode,user:scope.actorUserId});
         if(semantic.data.target_key&&semantic.data.target_key!==target||resolved.status!=="resolved_existing"||resolved.location.entity_key!==target)
           fail("Arrival destination must match the current typed owner's explicit target.");
-        if(semantic.data.destination==="exterior"&&action.zone!=="exterior"||semantic.data.destination!=="interior"&&action.zone==="interior"
+        if(semantic.data.destination==="exterior"&&action.zone!=="exterior"
           ||semantic.data.destination==="interior"&&action.zone!=="interior")
           fail("Movement destination scope cannot broaden approach/exterior into interior entry.");
       }else if(!locationIdentityMatches(location,entrySource.data.target)){
