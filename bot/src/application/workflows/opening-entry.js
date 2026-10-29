@@ -1,17 +1,17 @@
 /** Native entry delivery uses the existing certified output and outbox; it never calls a planner or publishes shared prose. */
-import {sessionOpeningAttendanceSource} from './frameworks/session/public.js';
+import {sessionOpeningAttendanceSource} from '../../frameworks/session/public.js';
 function inspectOpeningEntryOpportunity(...args){return sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity(...args);}
-import {sessionOpeningEntrySource} from './frameworks/session/public.js';
+import {sessionOpeningEntrySource} from '../../frameworks/session/public.js';
 function openingEntryProjection(...args){return sessionOpeningEntrySource.openingEntryProjection(...args);}function openingEntryNarrativeCandidate(...args){return sessionOpeningEntrySource.openingEntryNarrativeCandidate(...args);}
-import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './frameworks/publication/public.js';
+import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from '../../frameworks/publication/public.js';
 const {prepareOpeningEntryOutput}=publicationOpeningOutput;
 const {queueTurnPublications}=publicationOpeningQueue;
 const {deliverQueuedTurn}=publicationOpeningDelivery;
-import {sessionOpeningSource} from './frameworks/session/public.js';
+import {sessionOpeningSource} from '../../frameworks/session/public.js';
 function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from './frameworks/session/public.js';
-import {openingErrorCode} from './frameworks/operations/public.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {openingEntryDeliveryStatus,openingEntryAuthoringCode} from '../../frameworks/session/public.js';
+import {openingErrorCode} from '../../frameworks/operations/public.js';
 function save(db,guild,key,row,status,data){
   return db.transaction(()=>{
     const live=db.getCityRecord(guild,'opening_entry_delivery',key);

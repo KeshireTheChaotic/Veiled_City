@@ -1,0 +1,98 @@
+{
+  "feature": "RF04-F06-C165-C167",
+  "original_manifest_sha256": "4F4588F4C32E900F2456A39101A1F4483866F420B6A03BED2E7027B65AFC854E",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "a2fb1a12649c28557e2866b2bc705541c200f88551c264be063ed104e0b12615",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-planning.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "b16023669e33d845288394fce430642c9769a4272b6ad842dbff28fba6bf795d",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/assembly-publications.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "1e3110ca8c47dd9ad8df15a89abfa1053468b71960ad9c96c4bbb8527bffbc68",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/opening-entry.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "0193c98beb17137b3d68495e7ac6106a1d3cfb6876a4aa63bb7618e14d5b5754",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/opening-cohort-runner.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "934ec472873895863951f8d5d15991682cce58dc6c4466fd8438eea23bae2557",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/session-opening-runner.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "626dd513cfd5b13a947b142daa00bb37badc0fb90f5dbbe18a8551b502020c4e",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/session-opening-recovery.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "41b258b612f96af68a417cc6079e8bdb2261d7d64709da8092792f1ae9e4c0cd",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/opening-flow.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "596382ba48c6225c4bdd6c17170a6d5e9e8606536ad38c90da4a8e8de16a9618",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/session-opening-runner.js",
+      "kind": "static",
+      "specifier": "./session-opening-runner.js",
+      "owner": "bootstrap",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F05",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

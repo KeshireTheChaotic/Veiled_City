@@ -1,15 +1,15 @@
 /** One additive public opportunity after a verified zero-attendee camera and a genuinely owner-controlled cohort. */
-import {sessionAssemblyContextSource,assemblySourceError} from './frameworks/session/public.js';
+import {sessionAssemblyContextSource,assemblySourceError} from '../../frameworks/session/public.js';
 function assemblyInputFingerprint(...args){return sessionAssemblyContextSource.assemblyInputFingerprint(...args);}function certifyAssemblyPlan(...args){return sessionAssemblyContextSource.certifyAssemblyPlan(...args);}
-import {sessionOpeningCohortSource} from './frameworks/session/public.js';
+import {sessionOpeningCohortSource} from '../../frameworks/session/public.js';
 function currentOpeningCohort(...args){return sessionOpeningCohortSource.currentOpeningCohort(...args);}function openingCohortHash(...args){return sessionOpeningCohortSource.openingCohortHash(...args);}function openingCohortNarrativeCandidate(...args){return sessionOpeningCohortSource.openingCohortNarrativeCandidate(...args);}function inspectOpeningCohortSource(...args){return sessionOpeningCohortSource.inspectOpeningCohortSource(...args);}function openingCohortEligible(...args){return sessionOpeningCohortSource.openingCohortEligible(...args);}function openingCohortIsAdditive(...args){return sessionOpeningCohortSource.openingCohortIsAdditive(...args);}function independentOpeningCameraBasis(...args){return sessionOpeningCohortSource.independentOpeningCameraBasis(...args);}
-import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './frameworks/publication/public.js';
+import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from '../../frameworks/publication/public.js';
 const {prepareOpeningCohortOutput}=publicationOpeningOutput;
 const {queueTurnPublications}=publicationOpeningQueue;
 const {deliverQueuedTurn}=publicationOpeningDelivery;
-import {indexWorldEvent} from './frameworks/world/public.js';
-import {measureStage,measureNative,operationalMetrics} from './frameworks/operations/public.js';
-import {openingErrorCode} from './frameworks/operations/public.js';
+import {indexWorldEvent} from '../../frameworks/world/public.js';
+import {measureStage,measureNative,operationalMetrics} from '../../frameworks/operations/public.js';
+import {openingErrorCode} from '../../frameworks/operations/public.js';
 
 const flights=new WeakMap();
 function publicationStatus(rows){

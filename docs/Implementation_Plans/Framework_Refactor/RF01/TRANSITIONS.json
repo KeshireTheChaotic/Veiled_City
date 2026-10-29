@@ -91,28 +91,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "a2fb1a12649c28557e2866b2bc705541c200f88551c264be063ed104e0b12615",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/assembly-planning.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "b16023669e33d845288394fce430642c9769a4272b6ad842dbff28fba6bf795d",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/assembly-publications.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "57c6e53aebef3e50e6c531a18403543f8d9ff9eb5b4d6872ec10f99b2b4ed362",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/assembly-readiness.js",
@@ -1668,50 +1646,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "0193c98beb17137b3d68495e7ac6106a1d3cfb6876a4aa63bb7618e14d5b5754",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/opening-cohort-runner.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "1e3110ca8c47dd9ad8df15a89abfa1053468b71960ad9c96c4bbb8527bffbc68",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/opening-entry.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "41b258b612f96af68a417cc6079e8bdb2261d7d64709da8092792f1ae9e4c0cd",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/opening-flow.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "3d6d458b6cf66b63e7dcc1b6a87b0cb9f8c7e3b34d601553bc169ed3a562d11f",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/opening-world-bridge.js",
-      "owner": "session--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "c325db32238f8b8c337062787e8ae4e65a4825ea09c608e1929644917ae839d7",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/operational-metrics.js",
@@ -2388,28 +2322,6 @@
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/session-opening-attendance.js",
       "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "626dd513cfd5b13a947b142daa00bb37badc0fb90f5dbbe18a8551b502020c4e",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/session-opening-recovery.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "934ec472873895863951f8d5d15991682cce58dc6c4466fd8438eea23bae2557",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/session-opening-runner.js",
-      "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF04-F04",
       "expires_after": "RF04",
@@ -5493,20 +5405,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "85031f3f44b2e7afac9dffaea17b9f098bac23e569a9aba4d9642133e864ca26",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/opening-world-bridge.js",
-      "kind": "static",
-      "specifier": "./opening-world-bridge.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "9dc36db0fca4f1853fe7108296307ed11279338556ce21e4452da60a7fed8aa3",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -6325,20 +6223,6 @@
       "to": "bot/src/turn-trace-context.js",
       "kind": "static",
       "specifier": "./turn-trace-context.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "596382ba48c6225c4bdd6c17170a6d5e9e8606536ad38c90da4a8e8de16a9618",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/session-opening-runner.js",
-      "kind": "static",
-      "specifier": "./session-opening-runner.js",
       "owner": "bootstrap",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F05",

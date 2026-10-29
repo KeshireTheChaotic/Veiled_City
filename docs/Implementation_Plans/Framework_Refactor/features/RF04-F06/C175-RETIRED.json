@@ -1,0 +1,32 @@
+{
+  "feature": "RF04-F06-C175",
+  "original_manifest_sha256": "3F5B101370F6254DBF1E30CC476134B8B37F66C907D3C7C5DF37EB3CE34304A7",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "3d6d458b6cf66b63e7dcc1b6a87b0cb9f8c7e3b34d601553bc169ed3a562d11f",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/opening-world-bridge.js",
+      "owner": "session--world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F05",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "85031f3f44b2e7afac9dffaea17b9f098bac23e569a9aba4d9642133e864ca26",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/opening-world-bridge.js",
+      "kind": "static",
+      "specifier": "./opening-world-bridge.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

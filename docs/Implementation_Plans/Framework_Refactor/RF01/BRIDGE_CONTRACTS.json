@@ -3501,7 +3501,8 @@
       "consumers": [
         "bot/src/application/composition/session-world-events.js",
         "bot/src/application/composition/world-execution.js",
-        "bot/src/application/composition/session-scene-world.js"
+        "bot/src/application/composition/session-scene-world.js",
+        "bot/src/gm.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
@@ -3532,7 +3533,7 @@
         "occurrences": 39
       },
       "public_api": "bot/src/framework-to-framework/session--world/public.js",
-      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted; remaining orchestration and source contracts remain open."
+      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted. C175 exposes the original Session openingWorldOpportunities provider to the application GM through the pair public API; its saved source_ref/signal_ref references and audience checks remain unchanged. Remaining orchestration and source contracts remain open."
     }
   ]
 }

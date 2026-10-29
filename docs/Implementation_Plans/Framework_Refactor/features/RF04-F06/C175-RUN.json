@@ -1,0 +1,112 @@
+{
+  "feature": "RF04-F06-C175",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+  "combined_batch": {
+    "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+    "exit_code": 0,
+    "this_feature_tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "combined_total": 4,
+    "combined_passed": 4,
+    "tap_duration_ms": 995.5809,
+    "started_utc": "not captured contemporaneously",
+    "ended_utc": "not captured contemporaneously"
+  },
+  "case": "Pair public export resolves to the moved implementation and preserves saved source_ref/signal_ref values while projecting only party beats to party viewers and character-bound beats to the matching private viewer; authority flags remain false.",
+  "prelaunch_fingerprint": {
+    "test_sha256": "D55B9901B90D58FBDED4C8DF3109AD47F55E53EE6D7D767156ADF72A9722F59F",
+    "opening_opportunities_sha256": "BE86835D57589347157F40948507FFB24B2025571FE4F258128E0A2F86B8A3A0",
+    "session_world_public_sha256": "B0A55B6672EBE0CB20E6CA42A72EA6F2D71922A0648ECF1BB66C7943C7A58D92",
+    "gm_sha256": "41DF283F31B6B193DA80B4B7E07FAB39EDFAA0EB85A3533CB25C45BDC39CFE60",
+    "scope_sha256": "2920957B074C3C955B52B1932FD425CBBAEF727098FF1F5F0B354C0D30950916",
+    "retired_transitions_sha256": "42CDAF3DF6909DBAB0E3269E3579161C7769D7E166256AC27A2D3C84FADC4EE2",
+    "active_transitions_sha256": "06E9301691F80CB764B7B04458306B42FCB7DE7DDBC8D3B130C6D654B6079FC8"
+  },
+  "syntax_checks": {
+    "command": "node --check for each of the seven moved workflows, public.js, commands.js, index.js, C175 pair source/public, gm.js, and both new tests",
+    "exit_code": 0,
+    "checked_files": 15
+  },
+  "architecture_gates": {
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 1,
+      "transition_errors": 0,
+      "first_error": "UNREGISTERED_BRIDGE_CONSUMER: bot/src/gm.js imports the session--world public API but is not listed in BRIDGE_CONTRACTS.json consumers."
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 60,
+      "transition_errors": 59,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "architecture_gate_reruns_after_registry_repair": {
+    "registry_sha256": "7B5C11CB428214E61B09C5A896BB3A58862C382D56053EB528BDDCE608930683",
+    "timestamp_capture": "UTC start/end were not captured contemporaneously; each gate was run once after registry freeze.",
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "pass": true,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 0,
+      "transition_errors": 0
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 59,
+      "transition_errors": 59,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "other_checks": {
+    "git_diff_check_exit_code": 0,
+    "transition_and_archive_json_parse_exit_code": 0,
+    "network": 0,
+    "production_database": 0,
+    "live_provider_calls": 0
+  },
+  "postrun_source_match": "All source and test SHA-256 fingerprints matched their captured prelaunch values.",
+  "metadata_repair": {
+    "finding": "The initial RF04 gate reported UNREGISTERED_BRIDGE_CONSUMER for bot/src/gm.js importing the session--world public API.",
+    "registry_file": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+    "pair": "session--world",
+    "change": "Added only bot/src/gm.js to the existing consumers array and narrowly described the C175 openingWorldOpportunities provider in the pair scope. Pair status, directions, other pairs, and the tests array were not changed.",
+    "registry_sha256_after_repair": "7B5C11CB428214E61B09C5A896BB3A58862C382D56053EB528BDDCE608930683",
+    "c175_test_scope": {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+      "sha256": "D55B9901B90D58FBDED4C8DF3109AD47F55E53EE6D7D767156ADF72A9722F59F",
+      "registry_tests_array": "unchanged; this three-digit case suffix is outside the bridge test-selector format"
+    },
+    "rerun_required": "Completed: RF04 passed on the single gate-only rerun after registry repair. RF05 also ran once because its 60-group result included this active consumer-registration error; it remains at 59 existing groups/errors. No tests were rerun."
+  },
+  "qualification": "The combined fresh C165-C167/C175 batch passed 4/4, including C175 1/1. The initial RF04 gate failed on the consumer-registration omission; after the metadata-only repair, the RF04 gate-only rerun passes. RF05 remains incomplete with 59 existing legacy module-location groups/errors. No release qualification is claimed."
+}

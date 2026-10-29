@@ -28,11 +28,12 @@ import {createNarrativeExportPackage} from './character-narrative.js';
 import { buildSessionRosterReport, chunkRosterReport } from "./frameworks/session/public.js";
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
-import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent} from './assembly-publications.js';
+import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent,assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan,
+  runSessionOpening,sessionOpeningStatus,continueSessionOpening,prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery,
+  prepareSessionOpeningPrecommitReview,recoverSessionOpeningPrecommit,deliverOpeningEntry,runOpeningCohort,openingCohortStatus} from './application/workflows/public.js';
 import {normalizeGmHookImport} from './frameworks/narrative/public.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './assembly-context.js';
-import {assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan} from './assembly-planning.js';
 import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './frameworks/session/public.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
 import { PermissionError, NotFoundError, StateConflictError, UserInputError } from './kernel/errors.js';
@@ -53,11 +54,6 @@ import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
 import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
 import {scheduleSessionOpening} from './session-opening.js';
-import {runSessionOpening,sessionOpeningStatus} from './session-opening-runner.js';
-import {continueSessionOpening} from './opening-flow.js';
-import {prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery,prepareSessionOpeningPrecommitReview,recoverSessionOpeningPrecommit} from './session-opening-recovery.js';
-import {deliverOpeningEntry} from './opening-entry.js';
-import {runOpeningCohort,openingCohortStatus} from './opening-cohort-runner.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";

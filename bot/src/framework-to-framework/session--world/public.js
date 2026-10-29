@@ -42,3 +42,4 @@ import {sessionWorldNpcAvailability} from '../../frameworks/session/public.js';
 import {assertNpcAvailability} from '../../frameworks/world/public.js';
 /** Pass World's original NPC availability check to Session unchanged. */
 export function connectSessionWorldNpcAvailability(){return sessionWorldNpcAvailability.bind({assertNpcAvailability});}
+export {openingWorldOpportunities} from './opening-opportunities.js';

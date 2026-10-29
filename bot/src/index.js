@@ -39,7 +39,7 @@ import {beginGenerationFeedback,createChatGptClient} from './frameworks/ai-provi
 import {turnLatency} from './turn-latency.js';
 import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
-import {runSessionOpening} from './session-opening-runner.js';
+import {runSessionOpening} from './application/workflows/public.js';
 
 initializeWorldActorControl();
 initializeWorldExecution();

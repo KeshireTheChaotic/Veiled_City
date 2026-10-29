@@ -14,7 +14,7 @@ import {worldHookSeedForGm,worldRecordOriginForGm} from './world-sanctioned-sour
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
 import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';
 import {worldResolutionContext} from './world-resolution.js';
-import {openingWorldOpportunities} from './opening-world-bridge.js';
+import {openingWorldOpportunities} from './framework-to-framework/session--world/public.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn} from './world-private-seeds.js';
 import {privateWorldSeedsSchema} from './frameworks/world/public.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";

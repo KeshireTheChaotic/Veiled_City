@@ -1,0 +1,111 @@
+{
+  "feature": "RF04-F06-C165-C167",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+  "combined_batch": {
+    "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+    "exit_code": 0,
+    "this_feature_tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "combined_total": 4,
+    "combined_passed": 4,
+    "tap_duration_ms": 995.5809,
+    "started_utc": "not captured contemporaneously",
+    "ended_utc": "not captured contemporaneously"
+  },
+  "cases": [
+    "Registry re-exports every symbol from the seven moved workflow modules and old root paths are absent.",
+    "Manual opening and cohort flows return without work; same-session executions share one in-flight promise and different sessions do not.",
+    "An uncertain saved publication receipt cannot obtain a delivery-recovery review or reach send."
+  ],
+  "prelaunch_fingerprint": {
+    "test_sha256": "D96BA6A532EBCD2EFD751FAB2DF46E19A7364CF9B550121511239BB3F675E600",
+    "assembly_planning_sha256": "9EC70F2E8A29E911AE629E2FF7E3409BBE73E6D6B45B09892BF659948F3D8CA2",
+    "assembly_publications_sha256": "95CB4DADB28A32FB3583F20EE8C54527BB3540FFB2DC42E8A0BD71051447BF9F",
+    "opening_entry_sha256": "9741B7A2E60A2B376DEA1457B5833532231C7D214C46165E38BD8EB33E5769C6",
+    "opening_cohort_runner_sha256": "A73EEA72027B4C96EE27941BCD782E38A0CE60353EF3C97E4651947D0081FEED",
+    "session_opening_runner_sha256": "AFEA65060382673DCBE16CAE889CE851BA44280DB8E6E90C54F4E8522CC7BB99",
+    "session_opening_recovery_sha256": "1C3D73945D7413A686EC76860893E74D2861BDAF318E0CFE43C938648625D152",
+    "opening_flow_sha256": "F14715EEC5A84AEDD41C3D8A36EF8604E1C2557E83E016475DA260B4AD4BB949",
+    "workflows_public_sha256": "E0843B26217D66772044A4F2DBE0D304ACE9E5115DFF5CAE61196541900813FE",
+    "commands_sha256": "2004F88499ED1793AF813CCFCBDDC0D49046CFD690F1BC0D849C90C2580DC05C",
+    "index_sha256": "F6253ECD98B6D6449800435C0A96B2AD5F82A7417EE355A848EE7C46814AD7D8",
+    "packages_sha256": "7D71B745CF0AE9E6F75E40A8704B0CCCE717A89C4927EC057458B5E1B82F111A",
+    "scope_sha256": "9459D7530DDE5456E92C2428A02F06764F35CC2C35AE43D0FD0D53A3A29F3F7D",
+    "retired_transitions_sha256": "6DBFEF15C0C39E6377613FA14174FF1D1FC404136479FF588383D806FDD34FE9",
+    "active_transitions_sha256": "06E9301691F80CB764B7B04458306B42FCB7DE7DDBC8D3B130C6D654B6079FC8"
+  },
+  "syntax_checks": {
+    "command": "node --check for each of the seven moved workflows, public.js, commands.js, index.js, C175 pair source/public, gm.js, and both new tests",
+    "exit_code": 0,
+    "checked_files": 15
+  },
+  "architecture_gates": {
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 1,
+      "transition_errors": 0,
+      "first_error": "UNREGISTERED_BRIDGE_CONSUMER: bot/src/gm.js imports the session--world public API but is not listed in BRIDGE_CONTRACTS.json consumers."
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 60,
+      "transition_errors": 59,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "architecture_gate_reruns_after_registry_repair": {
+    "registry_sha256": "7B5C11CB428214E61B09C5A896BB3A58862C382D56053EB528BDDCE608930683",
+    "timestamp_capture": "UTC start/end were not captured contemporaneously; each gate was run once after registry freeze.",
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "pass": true,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 0,
+      "transition_errors": 0
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 843,
+      "unowned": 0,
+      "active_violation_groups": 59,
+      "transition_errors": 59,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "other_checks": {
+    "git_diff_check_exit_code": 0,
+    "transition_and_archive_json_parse_exit_code": 0,
+    "network": 0,
+    "production_database": 0,
+    "live_provider_calls": 0
+  },
+  "postrun_source_match": "All source and test SHA-256 fingerprints matched their captured prelaunch values.",
+  "qualification": "Focused C165-C167 tests pass 3/3. The initial RF04 gate identified the missing gm.js bridge consumer registration; after the metadata-only repair, the RF04 gate-only rerun passes. RF05 remains incomplete with 59 existing legacy module-location groups and errors. No release qualification is claimed."
+}

@@ -1,10 +1,10 @@
 /** Native assembly projection uses the shared transactional outbox; raw plan prose stays GM-private. */
 import {randomUUID} from 'node:crypto';
-import {sessionAssemblyStateSource} from './frameworks/session/public.js';
-import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './frameworks/publication/public.js';
-import {indexWorldEvent} from './frameworks/world/public.js';
-import {measureNative,measureStage,operationalMetrics} from './frameworks/operations/public.js';
-import {PermissionError,StateConflictError} from "./kernel/errors.js";
+import {sessionAssemblyStateSource} from '../../frameworks/session/public.js';
+import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from '../../frameworks/publication/public.js';
+import {indexWorldEvent} from '../../frameworks/world/public.js';
+import {measureNative,measureStage,operationalMetrics} from '../../frameworks/operations/public.js';
+import {PermissionError,StateConflictError} from "../../kernel/errors.js";
 import {assemblyRefreshRequired,retainedAssemblyDelivery} from './assembly-planning.js';
 const {assemblyHash,assemblyPlanHash,assemblySlots,legacyAssemblyState,assemblyDeliverySummary}=sessionAssemblyStateSource;
 const {prepareAssemblyOutput}=publicationOpeningOutput;

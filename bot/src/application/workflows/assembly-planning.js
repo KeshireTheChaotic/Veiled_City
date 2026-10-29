@@ -1,7 +1,7 @@
 /** GM-reviewed replacement of stale/fallback plans. Delivery acknowledgements are never reset. */
 import {randomUUID} from 'node:crypto';
-import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource,hookHash,assemblySourceError} from './frameworks/session/public.js';
-import {indexWorldEvent} from './frameworks/world/public.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource,hookHash,assemblySourceError} from '../../frameworks/session/public.js';
+import {indexWorldEvent} from '../../frameworks/world/public.js';
 const {assemblyInputFingerprint,assemblyPlanFreshness,certifyAssemblyPlan,assemblyHookSelection}=sessionAssemblyContextSource;
 const {assemblyPlanHash}=sessionAssemblyStateSource;
 const {inspectSessionOpening,rebindSessionOpeningRefresh}=sessionOpeningSource;

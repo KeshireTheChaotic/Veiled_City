@@ -1,12 +1,12 @@
 /** One bounded opening execution per native session. No background actor loop or blind provider/send retry. */
-import {sessionOpeningSource} from './frameworks/session/public.js';
+import {sessionOpeningSource} from '../../frameworks/session/public.js';
 function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}function beginSessionOpeningAttempt(...args){return sessionOpeningSource.beginSessionOpeningAttempt(...args);}function assertSessionOpeningAttempt(...args){return sessionOpeningSource.assertSessionOpeningAttempt(...args);}function assertSessionOpeningFence(...args){return sessionOpeningSource.assertSessionOpeningFence(...args);}function rebaseSessionOpening(...args){return sessionOpeningSource.rebaseSessionOpening(...args);}function bindSessionOpeningTurn(...args){return sessionOpeningSource.bindSessionOpeningTurn(...args);}
-import {sessionAssemblyContextSource} from './frameworks/session/public.js';
+import {sessionAssemblyContextSource} from '../../frameworks/session/public.js';
 function certifyAssemblyPlan(...args){return sessionAssemblyContextSource.certifyAssemblyPlan(...args);}function assemblyPlanFreshness(...args){return sessionAssemblyContextSource.assemblyPlanFreshness(...args);}
 import {assemblyHasHistory} from './assembly-planning.js';
 import {deliverVerifiedAssembly} from './assembly-publications.js';
-import {measureStage,operationalMetrics} from './frameworks/operations/public.js';
-import {openingErrorCode,openingDiagnostic} from './frameworks/operations/public.js';
+import {measureStage,operationalMetrics} from '../../frameworks/operations/public.js';
+import {openingErrorCode,openingDiagnostic} from '../../frameworks/operations/public.js';
 const flights=new WeakMap();
 export function sessionOpeningStatus(job){
   const counts=new Map(),known=new Set(['VERIFIED_SCENE_DELIVERED','FALLBACK_DELIVERED','UNCERTAIN','FAILED','PENDING','BLOCKED','LEGACY_DELIVERED']);

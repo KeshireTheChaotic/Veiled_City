@@ -1,6 +1,6 @@
 /** Audience-bound Director metadata for existing opening requests. No prose, world effects, new knowledge or provider calls. */
-import {currentScene} from './frameworks/session/public.js';
-import {worldNarrativeBridgeSource} from './frameworks/world/public.js';
+import {currentScene} from '../../frameworks/session/public.js';
+import {worldNarrativeBridgeSource} from '../../frameworks/world/public.js';
 const {worldDirectorBridgeBeats,openingOpportunityRequests}=worldNarrativeBridgeSource;
 export function openingWorldOpportunities(db,guild,scope){
   const out={version:1,beats:[],requests:[],examined_limit:12,source_limit_reached:false,
@@ -29,6 +29,6 @@ export function openingWorldOpportunities(db,guild,scope){
   }
   return out;
 }
-import {sessionOpeningWorld} from './frameworks/session/public.js';
+import {sessionOpeningWorld} from '../../frameworks/session/public.js';
 // Provide this module's original opening opportunities to the fixed Session slot; no other authority is granted.
 sessionOpeningWorld.bind({openingWorldOpportunities});

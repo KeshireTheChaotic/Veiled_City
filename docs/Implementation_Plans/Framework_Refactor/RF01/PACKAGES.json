@@ -42,7 +42,8 @@
       "bot/src/framework-to-framework/narrative--session/public.js"
     ],
     "application": [
-      "bot/src/application/composition/public.js"
+      "bot/src/application/composition/public.js",
+      "bot/src/application/workflows/public.js"
     ],
     "operations": [
       "bot/src/frameworks/operations/public.js"
