@@ -160,6 +160,12 @@ function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new Encou
     });
   });
 }
+/** Narrated objects (a tile, a scrap of paper) are not native entities and confer no target authority; an NPC
+ * proposal keeps only its character, NPC and location targets instead of failing the whole player turn. */
+function nativeNpcTargets(db,guild,proposals=[]){
+  return proposals.map(p=>({...p,target_refs:[...new Set(p.target_refs)].filter(key=>
+    db.getCharacter(key)||db.getNpcProfile(guild,key)||db.getSimulationEntity(guild,'location',key))}));
+}
 function applyUnifiedArbitration(db,guild,result,playerRows,options={}){
   return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows,options));
 }
@@ -170,7 +176,7 @@ function prepareUnifiedCollaboration(db,guild,result,playerRows){
   if(!proposals.length)return new Set();
   if(!matchesArbitrationSchema(unifiedArbitrationSchema,result.unified_arbitration))throw fail('transport_shape');
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
-  const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents),classified=new Set();
+  const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,nativeNpcTargets(db,guild,result.unified_arbitration.npc_intents)),classified=new Set();
   for(const p of proposals){
     const entry=board.data.entries.find(e=>e.intent_ref===p.intent_ref||e.proposal_ref===p.intent_ref),a=entry&&db.getCityRecord(guild,'typed_intent',entry.intent_ref);
     if(entry?.actor.type!=='character'||a?.data.type!=='interact'||a.data.operation!=='help_ally'
@@ -189,7 +195,7 @@ function applyUnifiedBatch(db,guild,result,playerRows,{content}={}){
   const origin=arbitrationTurnOrigin(result);if(!origin)throw fail('native_service_origin_required');
   applyNativeEnvironmentProfileProposals(db,guild,origin,result.unified_arbitration.environment_profiles||[]);
   establishPreparedPositions(db,guild,inspectArbitrationOrigin(db,guild,origin).binding,result.unified_arbitration.prepared_positions||[]);
-  const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,result.unified_arbitration.npc_intents);
+  const rows=currentScenePlayerInputs(db,guild,origin,playerRows),board=buildSceneIntentBoard(db,guild,origin,rows,nativeNpcTargets(db,guild,result.unified_arbitration.npc_intents));
   let interrupt=null;
   for(const selection of result.unified_arbitration.pre_roll_fear||[]){
     if(result.unified_arbitration.npc_intents.length!==1)throw fail('one_pre_roll_npc_spotlight_only');
