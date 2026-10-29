@@ -117,3 +117,5 @@ export {importSanctionedGmHooks,worldHookSeedForGm,sanctionedWorldMutation,world
 export {createSeededWorldContext,assertWorldIdentityNames,assertIndependentWorldIdentity,verifiedWorldAuthoringContext,privateWorldIdentityForGm} from './authorship-service.js';
 
 export {worldResolutionContext,bindWorldResolutionCycle,commitWorldResolutionPulse,readWorldResolutionPulse,finishWorldResolutionCycle} from './resolution.js';
+
+export {verifiedIdentityPersistence,promoteWorldIdentity,maintainIdentityPersistence} from './identity-persistence.js';

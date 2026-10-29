@@ -1,13 +1,15 @@
 /** Native scoped mundane-identity persistence. Never creates canon allegations, actors, powers or execution permission. */
-import {verifiedWorldAuthoringContext,worldIdentityOrigin} from './frameworks/world/public.js';
-import {worldNarrativeSources} from './frameworks/world/public.js';
+import {verifiedWorldAuthoringContext} from './authorship-service.js';
+import {worldIdentityOrigin} from './identity-origin.js';
+import {worldNarrativeSources} from './contracts/narrative-sources.js';
 function canonicalInterestEvidence(...args){return worldNarrativeSources.canonicalInterestEvidence(...args);}function nativeSalienceAvailable(...args){return worldNarrativeSources.nativeSalienceAvailable(...args);}
 function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {sceneFictionFailure as fail} from '../../kernel/scene-fiction-failure.js';
 function factVisibleTo(...args){return worldKnowledgeSources.factVisibleTo(...args);}
-import {indexWorldEvent} from './frameworks/world/public.js';
-import {worldKnowledgeSources,worldNarrativeAuthorship} from './frameworks/world/public.js';
+import {indexWorldEvent} from './city-calendar.js';
+import {worldKnowledgeSources} from './contracts/knowledge-records.js';
+import {worldNarrativeAuthorship} from './contracts/narrative-authorship.js';
 function narrativeSourceVisible(...args){return worldNarrativeAuthorship.narrativeSourceVisible(...args);}
 function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}
 const issuer='native:world-identity-persistence';

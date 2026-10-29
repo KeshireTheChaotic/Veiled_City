@@ -15,7 +15,8 @@ import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {characterSourceRanges} from './source-communication.js';
-import {maintainIdentityPersistence} from './world-identity-persistence.js';
+import {narrativeWorldIdentityPersistence} from './frameworks/narrative/public.js';
+function maintainIdentityPersistence(...args){return narrativeWorldIdentityPersistence.maintainIdentityPersistence(...args);}
 import {canonicalNarrativeCause} from './world-narrative-bridge.js';
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;

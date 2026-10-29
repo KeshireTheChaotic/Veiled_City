@@ -1,0 +1,12 @@
+{
+  "feature": "RF04-C210",
+  "sha256": {
+    "bot/src/application/composition/narrative-world.js": "611cb6100188c950c75a43b307d11c8c28948d960b2438b0f1d1798a378dc7b3",
+    "bot/src/framework-to-framework/narrative--world/public.js": "bc45eb5aa8d75ce2fd79fed399fab4ff289c0c57b1de09ea76a917821c78b109",
+    "bot/src/frameworks/narrative/public.js": "7f8716a39fed96d27352d34a9ec04affd6ec367ac7256c18a9b08fb682e53133",
+    "bot/src/frameworks/world/public.js": "a50e18368a84da3969b9fa2181b28cc1276a07ba2d14fd08286186302ac3e168",
+    "bot/src/narrative-salience.js": "2cca97e9400469826e62cc53a4a33eb1cd96476702a8133385525b7c577b2cb8",
+    "bot/src/frameworks/world/identity-persistence.js": "65cfa3f50eeba7078529b90325a2c879328839b2c6dabfa11e448616b95c528c",
+    "bot/src/frameworks/narrative/contracts/world-identity-persistence.js": "cae517b9b91dc8cf887735e1f0392f3a8423805c396a42ed1c1f8d7d23e36b5f"
+  }
+}

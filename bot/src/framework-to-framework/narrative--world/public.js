@@ -39,3 +39,7 @@ export {CITY_FEATURE_FLAGS,configureCityFlags} from './city-flags.js';
 import {narrativeWorldIdentityOrigin} from '../../frameworks/narrative/public.js';
 import {worldIdentityOrigin} from '../../frameworks/world/public.js';
 export function connectNarrativeWorldIdentityOrigin(){return narrativeWorldIdentityOrigin.bind({worldIdentityOrigin});}
+
+import {narrativeWorldIdentityPersistence} from '../../frameworks/narrative/public.js';
+import {maintainIdentityPersistence} from '../../frameworks/world/public.js';
+export function connectNarrativeWorldIdentityPersistence(){return narrativeWorldIdentityPersistence.bind({maintainIdentityPersistence});}

@@ -1,0 +1,30 @@
+{
+  "feature": "RF04-C210",
+  "records": [
+    {
+      "id": "5be236556bc597eaeb27270badfce93c838b1146fb774ce9c95b97ed3fe24713",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-identity-persistence.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "40d076f5edb05c461b1b827a25c8e1875a01dc44669e84caa73943726ab87520",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-salience.js",
+      "to": "bot/src/world-identity-persistence.js",
+      "kind": "static",
+      "specifier": "./world-identity-persistence.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
