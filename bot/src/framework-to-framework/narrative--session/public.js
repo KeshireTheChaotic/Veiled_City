@@ -32,3 +32,7 @@ export function connectNarrativeSessionLocationMatch(){return narrativeSessionLo
 import {narrativeSessionContinuation} from '../../frameworks/narrative/public.js';
 import {sessionActionContinuation} from '../../frameworks/session/public.js';
 export function connectNarrativeSessionContinuation(){return narrativeSessionContinuation.bind({drainActionContinuations:sessionActionContinuation.drainActionContinuations});}
+
+import {narrativeSessionScene} from '../../frameworks/narrative/public.js';
+import {currentScene,lastVerifiedCharacterPresence,npcEvidenceActive,sceneAccess,scenePresence} from '../../frameworks/session/public.js';
+export function connectNarrativeSessionScene(){return narrativeSessionScene.bind({currentScene,lastVerifiedCharacterPresence,npcEvidenceActive,sceneAccess,scenePresence});}

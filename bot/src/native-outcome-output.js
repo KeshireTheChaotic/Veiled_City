@@ -1,6 +1,7 @@
 /** Source/receipt-only narration projections. No effect adapter, RNG, consent or payment is invoked here. */
 import {createHash} from 'node:crypto';
-import {currentScene,scenePresence} from './scene-continuity.js';
+import {publicationSessionScene} from './frameworks/publication/public.js';
+const {currentScene,scenePresence}=publicationSessionScene;
 import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import {hasPcReference} from './fresh-npc-authoring.js';

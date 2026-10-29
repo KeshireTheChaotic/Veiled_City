@@ -28,3 +28,7 @@ export function connectIntentSessionStory(){return intentSessionStory.bind({sugg
 import {intentSessionEntry} from '../../frameworks/intent/public.js';
 import {mundaneEntryImpact,resolveMundaneEntry,prepareSceneEntry} from '../../frameworks/session/public.js';
 export function connectIntentSessionEntry(){return intentSessionEntry.bind({mundaneEntryImpact,resolveMundaneEntry,prepareSceneEntry});}
+
+import {intentSessionScene} from '../../frameworks/intent/public.js';
+import {currentScene,recordScenePresence,scenePresence,sceneView} from '../../frameworks/session/public.js';
+export function connectIntentSessionScene(){return intentSessionScene.bind({currentScene,recordScenePresence,scenePresence,sceneView});}

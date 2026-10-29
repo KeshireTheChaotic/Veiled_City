@@ -54,7 +54,7 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
-import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
+import { recordCharacterArrival,scenePresence } from "./frameworks/session/public.js";
 import { personalContinuityCharacter as personalCharacter, personalArc, discoverPersonal, personalInbox } from "./frameworks/knowledge/public.js";
 import { consentOffers } from "./consent-native.js";
 import { sessionBrief, formatSessionBrief } from './frameworks/session/public.js';

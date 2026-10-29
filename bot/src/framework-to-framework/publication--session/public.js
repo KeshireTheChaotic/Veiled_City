@@ -16,3 +16,7 @@ export function connectSessionPublicationRecap(){return sessionPublicationRecap.
 import {sessionPublicationContinuation,sessionContinuationNoticeSource} from '../../frameworks/session/public.js';
 import {publicationContinuationOutputSource,publicationOpeningQueue,publicationSessionContinuation} from '../../frameworks/publication/public.js';
 export function connectSessionPublicationContinuation(){sessionPublicationContinuation.bind({prepareContinuationOutput:publicationContinuationOutputSource.prepareContinuationOutput,queueTurnPublications:publicationOpeningQueue.queueTurnPublications});return publicationSessionContinuation.bind({renderContinuationNotice:sessionContinuationNoticeSource.renderContinuationNotice});}
+
+import {publicationSessionScene} from '../../frameworks/publication/public.js';
+import {currentScene,scenePresence} from '../../frameworks/session/public.js';
+export function connectPublicationSessionScene(){return publicationSessionScene.bind({currentScene,scenePresence});}

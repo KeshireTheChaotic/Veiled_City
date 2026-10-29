@@ -38,3 +38,5 @@ export {intentWorldProjects} from './contracts/world-projects.js';
 export {intentKnowledgeSemanticProof} from './contracts/knowledge-semantic-proof.js';
 
 export {intentKnowledgePersonal} from './contracts/knowledge-personal.js';
+
+export {intentSessionScene} from './contracts/session-scene.js';

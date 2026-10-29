@@ -1,6 +1,7 @@
 /** Read-only scene composition. Typed sensory grammar is not authority for PC effects or new durable facts. */
 import {createHash} from 'node:crypto';
-import {currentScene,scenePresence} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene,scenePresence}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {factVisibleTo} from './disclosure-authority.js';

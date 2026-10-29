@@ -23,3 +23,5 @@ export {publicationWorldDirectorReview} from './contracts/world-director-review.
 export {handoutPlayerView} from './handout-player-view.js';
 
 export {publicationKnowledgeDiscovery} from './contracts/knowledge-personal.js';
+
+export {publicationSessionScene} from './contracts/session-scene.js';

@@ -11,7 +11,7 @@ import { previewOutcomes } from './frameworks/daggerheart/public.js';
 import { explainWhy } from "./frameworks/knowledge/public.js";
 import { configurePortrayal } from "./portrayal.js";
 import { authorWorldDraft, reviewWorldDraft } from './frameworks/world/public.js';
-import { recordScenePresence, sceneView } from "./scene-continuity.js";
+import { recordScenePresence, sceneView } from "./frameworks/session/public.js";
 import { manageGroup } from './frameworks/world/public.js';
 import { manageStrategy } from "./frameworks/npc/public.js";
 import { proposeArcBeat } from "./frameworks/knowledge/public.js";

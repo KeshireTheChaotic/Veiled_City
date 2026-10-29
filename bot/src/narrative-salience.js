@@ -5,7 +5,8 @@ import {createHash} from 'node:crypto';
 import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {currentScene} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene}=narrativeSessionScene;
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';

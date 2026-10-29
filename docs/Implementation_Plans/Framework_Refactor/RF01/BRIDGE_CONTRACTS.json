@@ -1430,7 +1430,7 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
       ],
       "public_api": "bot/src/framework-to-framework/discord--session/public.js",
-      "scope": "One fixed Discord-owned conversation principal consumer slot; Session retains conversation identity and hashing rules."
+      "scope": "One fixed Discord-owned conversation principal consumer slot; Session retains conversation identity and hashing rules. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained."
     },
     {
       "pair": "discord--world",
@@ -1908,7 +1908,7 @@
         "occurrences": 30
       },
       "public_api": "bot/src/framework-to-framework/intent--session/public.js",
-      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open. C200 forwards only original Session captureDialogue/interpretDialogue to Intent; Session retains listener/source/privacy and subjective-memory rules. C201 forwards original suggestSetupPayoff through a separate fixed Intent story consumer; Session retains source, visibility, authored choice and replay rules. C202 supplies original mundaneEntryImpact/resolveMundaneEntry through a fixed Intent consumer; Session retains saved adjacency, source, owner, audience and movement checks. C203 adds only original prepareSceneEntry to Intent entry consumer; Session retains authenticated declaration and arrival rules."
+      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open. C200 forwards only original Session captureDialogue/interpretDialogue to Intent; Session retains listener/source/privacy and subjective-memory rules. C201 forwards original suggestSetupPayoff through a separate fixed Intent story consumer; Session retains source, visibility, authored choice and replay rules. C202 supplies original mundaneEntryImpact/resolveMundaneEntry through a fixed Intent consumer; Session retains saved adjacency, source, owner, audience and movement checks. C203 adds only original prepareSceneEntry to Intent entry consumer; Session retains authenticated declaration and arrival rules. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained."
     },
     {
       "pair": "intent--world",
@@ -2697,7 +2697,7 @@
       "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
       "adoption_feature": "RF04-F04",
       "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
-      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Narrative-owned narrativeBridgeSessionSources port; Session retains assembly-state rules. C203 forwards only original locationMatches via Narrative fixed consumer; matching grants no entry authority. C205 forwards original Session drainActionContinuations to Narrative through a fixed consumer/source slot; native proof, holds and output ordering remain Session-owned.",
+      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Narrative-owned narrativeBridgeSessionSources port; Session retains assembly-state rules. C203 forwards only original locationMatches via Narrative fixed consumer; matching grants no entry authority. C205 forwards original Session drainActionContinuations to Narrative through a fixed consumer/source slot; native proof, holds and output ordering remain Session-owned. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained.",
       "consumers": [
         "bot/src/application/composition/create-opening-services.js",
         "bot/src/application/composition/pvp-agreements.js"
@@ -3524,7 +3524,7 @@
         "occurrences": 18
       },
       "public_api": "bot/src/framework-to-framework/publication--session/public.js",
-      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations. C187 adds Publication conversation principal reads through publicationSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Publication-owned publicationSessionEvidence port; Session retains assembly-state rules. C199 supplies only the original Publication certified scopedSessionRecap reader to Session brief reconstruction; raw saved prose never becomes certified. C204 connects original continuation output/queue to Session and original notice rendering to Publication via fixed consumer/source contracts; existing authority and ordering unchanged."
+      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations. C187 adds Publication conversation principal reads through publicationSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Publication-owned publicationSessionEvidence port; Session retains assembly-state rules. C199 supplies only the original Publication certified scopedSessionRecap reader to Session brief reconstruction; raw saved prose never becomes certified. C204 connects original continuation output/queue to Session and original notice rendering to Publication via fixed consumer/source contracts; existing authority and ordering unchanged. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained."
     },
     {
       "pair": "publication--world",

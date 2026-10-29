@@ -1,6 +1,7 @@
 /** Read compatibility for complete native nonmaterial renderings, not a classifier for arbitrary prose. */
 import {createHash} from 'node:crypto';
-import {currentScene} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';

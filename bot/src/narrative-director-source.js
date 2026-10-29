@@ -1,6 +1,7 @@
 /** In-process Director provenance. JSON/model fields cannot mint this Symbol binding. */
 import {createHash} from 'node:crypto';
-import {currentScene} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene}=narrativeSessionScene;
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';

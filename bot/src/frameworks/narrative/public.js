@@ -58,3 +58,5 @@ export {narrativeWorldBackground} from './contracts/world-background.js';
 export {narrativeWorldMaterialization} from './contracts/world-materialization.js';
 
 export {narrativeKnowledgePersonal} from './contracts/knowledge-personal.js';
+
+export {narrativeSessionScene} from './contracts/session-scene.js';

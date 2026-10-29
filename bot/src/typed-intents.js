@@ -2,7 +2,8 @@
 import { createHash } from 'node:crypto';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import { currentScene } from './scene-continuity.js';
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {currentScene}=intentSessionScene;
 import {intentWorldInputKey} from './frameworks/intent/public.js';
 function worldInputKey(...args){return intentWorldInputKey.worldInputKey(...args);}
 import {stateRevision} from './kernel/state-revision.js';

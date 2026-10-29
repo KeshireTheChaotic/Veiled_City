@@ -4,7 +4,8 @@ import {createHash,randomUUID} from 'node:crypto';
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,StringSelectMenuBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,AttachmentBuilder} from 'discord.js';
 import {discordSessionPrincipal} from './frameworks/discord/public.js';
 function conversationPrincipal(...args){return discordSessionPrincipal.conversationPrincipal(...args);}
-import {currentScene} from './scene-continuity.js';
+import {discordSessionScene} from './frameworks/discord/public.js';
+const {currentScene}=discordSessionScene;
 import {discordWorldEvents} from './frameworks/discord/public.js';
 const {indexWorldEvent}=discordWorldEvents;
 import {consentAction} from './action-consent.js';

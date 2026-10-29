@@ -6,7 +6,8 @@ const {inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,execute
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
 import { validateIntent } from "./ai-intent-contracts.js";
-import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {recordScenePresence, scenePresence, sceneView}=intentSessionScene;
 import {intentWorldConstraints} from './frameworks/intent/public.js';
 const {activeCityProxy}=intentWorldConstraints;
 const {subscribeConsequence,reviewConsequence}=intentWorldOperations;

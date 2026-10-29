@@ -2,7 +2,8 @@
 import {jsonHash} from './kernel/json-hash.js';
 import {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
 export {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
-import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene,scenePresence,sceneAccess}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {factVisibleTo} from './disclosure-authority.js';

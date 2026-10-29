@@ -3,7 +3,8 @@ import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,
 export {authoredTurnEnvelope};
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import { currentScene } from "./scene-continuity.js";
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {currentScene}=intentSessionScene;
 import {intentWorldPrimitives} from './frameworks/intent/public.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 

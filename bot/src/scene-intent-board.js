@@ -4,7 +4,8 @@ import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-c
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {intentWorldConstraints} from './frameworks/intent/public.js';
 const {activeCityProxy,assertNpcAvailability}=intentWorldConstraints;
-import {scenePresence} from './scene-continuity.js';
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {scenePresence}=intentSessionScene;
 import {intentNpcEvidence} from './frameworks/intent/public.js';
 const {actorReferenceVisible}=intentNpcEvidence;
 import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail} from './gm-arbitration-contract.js';

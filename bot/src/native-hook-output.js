@@ -1,6 +1,7 @@
 /** Read-only native preparation/deadline projections. Arbitrary hook prose never supplies outcome authority. */
 import {createHash} from 'node:crypto';
-import {currentScene} from './scene-continuity.js';
+import {publicationSessionScene} from './frameworks/publication/public.js';
+const {currentScene}=publicationSessionScene;
 import {publicationWorldConstraints} from './frameworks/publication/public.js';
 const {activeCityProxy}=publicationWorldConstraints;
 import {hasPcReference} from './fresh-npc-authoring.js';

@@ -4,7 +4,7 @@ import { randomUUID, createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './frameworks/session/public.js';
 import {noteNarrativeInterest} from './narrative-salience.js';
 import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './narrative-director-source.js';
-import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './scene-continuity.js';
+import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './frameworks/session/public.js';
 import { indexWorldEvent } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { applySimulationUpdates } from "./frameworks/world/public.js";
@@ -13,7 +13,7 @@ import { prepareAuthorizedTurnOutput, candidateNarrative, assertProtectedModelEv
 import { recordCharacterPerceptions } from "./character-observation.js";
 import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.js";
 import { dispatchAiIntents } from "./ai-intents.js";
-import { assertNpcObservation } from "./scene-continuity.js";
+import { assertNpcObservation } from "./frameworks/session/public.js";
 import { persistInterpretation } from "./narrative-context.js";
 import { typedEvidence } from "./epistemic.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";

@@ -7,7 +7,8 @@ import {intentSessionEntry} from "./frameworks/intent/public.js";
 function prepareSceneEntry(...args){return intentSessionEntry.prepareSceneEntry(...args);}
 import {intentSessionDialogue} from './frameworks/intent/public.js';
 const {captureDialogue}=intentSessionDialogue;
-import {currentScene} from './scene-continuity.js';
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {currentScene}=intentSessionScene;
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 import {isCharacterSourceSpan} from './source-communication.js';
 import {explicitSilence} from './gameplay-intake.js';

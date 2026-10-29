@@ -1,5 +1,6 @@
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
-import { sceneAccess, scenePresence, npcEvidenceActive } from "./scene-continuity.js";
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {sceneAccess, scenePresence, npcEvidenceActive}=narrativeSessionScene;
 import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { candidateNarrative,canQuarantineDisclosure,unattributedChoiceText } from "./pvp-output.js";

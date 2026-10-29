@@ -1,5 +1,6 @@
 /** Native creative-GM packet: camera != character position; no secrets, effects, or model-issued authority. */
-import {currentScene,scenePresence,lastVerifiedCharacterPresence} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene,scenePresence,lastVerifiedCharacterPresence}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';

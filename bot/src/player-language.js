@@ -4,7 +4,8 @@ function personalCharacter(...args){return intentKnowledgePersonal.personalChara
 import {intentWorldPrimitives} from './frameworks/intent/public.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import { currentScene } from "./scene-continuity.js";
+import {intentSessionScene} from './frameworks/intent/public.js';
+const {currentScene}=intentSessionScene;
 export function authoredSceneText(value){
   return String(value||"").trim().replace(/^(?:\*\*|\*|_)([\s\S]*?)(?:\*\*|\*|_)$/,"$1").trim();
 }

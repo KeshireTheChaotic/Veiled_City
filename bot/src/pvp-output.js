@@ -1,7 +1,8 @@
 /** Receipt-rendered output authority, independent of triggering user. Raw candidates never certify their own contents. */
 import { createHash } from "node:crypto";
 import {publicationOpeningOutput} from './frameworks/publication/public.js';
-import { currentScene } from "./scene-continuity.js";
+import {publicationSessionScene} from './frameworks/publication/public.js';
+const {currentScene}=publicationSessionScene;
 import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";

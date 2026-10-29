@@ -1,6 +1,7 @@
 /** Shared read-only GM-owned fiction scope. Native occupancy, current control and audience confer no PC effect authority. */
 import {createHash} from 'node:crypto';
-import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
+import {narrativeSessionScene} from './frameworks/narrative/public.js';
+const {currentScene,scenePresence,sceneAccess}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
