@@ -82,7 +82,9 @@ function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
     if(db.getCityCalendar(guild).flags.gm_discretion!==true)review="GM_DISCRETION_DISABLED";
     else if(db.getCityRecord(guild,"gm_authority","campaign")?.data.gm_authority_mode==="manual")review="MANUAL_GM_AUTHORITY";
     else if(proposal.disposition==="needs_review")review="PROPOSED_REVIEW";
-    else if(proposal.capability.kind!=="mundane"||proposal.capability.ref)review="CAPABILITY_ADAPTER_REQUIRED";
+    // A mundane capability that only repeats an SRD rule already cited in raw_refs names no feature to adapt.
+    else if(proposal.capability.kind!=="mundane"||proposal.capability.ref
+      &&!(/^srd:/.test(proposal.capability.ref)&&proposal.raw_refs.includes(proposal.capability.ref)))review="CAPABILITY_ADAPTER_REQUIRED";
     else if(!["observation","attempt_only"].includes(proposal.effect_class)
       ||["move","local_zone","consent"].includes(accepted.data.type)
       ||accepted.data.type==='roll'&&accepted.data.operation!=='request_roll')review="NATIVE_EFFECT_ADAPTER_REQUIRED";

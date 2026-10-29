@@ -38,3 +38,11 @@ test('native envelopes cannot claim resolution without receipts or bypass no-rol
 test('actual arbitration provider cold-imports all original rule and adjudication interfaces',async()=>{
  const p=await import('../../src/rules-arbitration.js');for(const name of ['selectRuleBasis','adjudicationEnvelope','adjudicateAcceptedIntent','movementAdjudication'])assert.equal(typeof p[name],'function');
 });
+
+test('a mundane capability that repeats an SRD rule already in raw_refs still creates the pending roll',t=>{
+ // Mirrors the live 2026-10-28 ruling held as CAPABILITY_ADAPTER_REQUIRED for capability.ref 'srd:action-rolls'.
+ const f=fixture(t);Object.assign(f.proposal,{capability:{kind:'mundane',ref:'srd:action-rolls'},raw_refs:['srd:action-rolls']});
+ const row=f.adjudicate();assert.equal(row.status,'roll_pending');assert.equal(row.data.review_reason??null,null);
+ const g=fixture(t);Object.assign(g.proposal,{capability:{kind:'mundane',ref:'feature:shadow-stepper'},raw_refs:['srd:action-rolls']});
+ assert.equal(g.adjudicate().data.review_reason,'CAPABILITY_ADAPTER_REQUIRED','a real feature reference still needs its adapter');
+});
