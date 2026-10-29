@@ -59,6 +59,24 @@ test('unsupported NPC disclosure is recorded as testimony from that NPC, never o
   } finally { f.close(); }
 });
 
+test('an NPC claim quoting words that are on no output surface is dropped instead of failing the turn', () => {
+  const f = createP07NativeFixture();
+  try {
+    // Mirrors the live claim on writer-authored speech: “I didn’t get a name from the carter.”
+    const result = audit(f, [claim({source_ref: 'transcript:recent-visible', output_claim_span: '“I didn’t get a name from the carter.”'})]);
+    assert.equal(result.ok, true);
+    assert.equal(result.diagnostics[0].category, 'output_claim_span');
+  } finally { f.close(); }
+});
+
+test('a narrator claim quoting text that is on no output surface still fails', () => {
+  const f = createP07NativeFixture();
+  try {
+    assert.throws(() => audit(f, [claim({actor: '', output_claim_span: 'Text that was never narrated.'})]),
+      error => error.code === 'NARRATIVE_INTEGRITY' && error.diagnostic.category === 'output_claim_span');
+  } finally { f.close(); }
+});
+
 test('a PC disclosure claim that cites no fact still fails', () => {
   const f = createP07NativeFixture();
   try {

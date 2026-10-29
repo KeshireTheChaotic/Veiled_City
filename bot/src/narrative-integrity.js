@@ -155,6 +155,14 @@ export function validateCandidateClaims(db,guildId,result,scope,eventResults,{ou
       // status is actor lifecycle, not a generic door/sound/equipment-description
       // handler. These rejected world annotations remain private, never facts.
       if(error.code!=='NARRATIVE_INTEGRITY')throw error;
+      // A claim quoting NPC words found on no output surface (the writer authors that speech separately) annotates
+      // nothing this turn publishes; drop it for review instead of failing the turn. The writer's own checks still apply.
+      if(['output_claim_span','source_span'].includes(error.diagnostic?.category)&&String(error.diagnostic.actor||'').startsWith('npc:')){
+        const index=remaining.findIndex(raw=>raw?.actor===error.diagnostic.actor&&raw.entity===error.diagnostic.entity
+          &&(raw.output_claim_span??raw.source_span)===error.diagnostic.source_span);
+        if(index<0)throw error;
+        diagnostics.push({index:claims.indexOf(remaining[index]),...error.diagnostic});remaining.splice(index,1);continue;
+      }
       const disclosure=error.diagnostic?.category==='scoped_disclosure';
       if(!disclosure&&!['actor_status','uncertainty_framing'].includes(error.diagnostic?.category))throw error;
       const matches=raw=>raw?.action===(disclosure?'disclosure':'status')&&!raw.authored_source_span
