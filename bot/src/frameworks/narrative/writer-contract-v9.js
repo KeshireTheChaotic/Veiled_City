@@ -15,6 +15,8 @@ export const narrativeResponseV9Schema=closed({version:{type:'integer',enum:[9]}
 export const NARRATIVE_V9_INSTRUCTIONS='Return version:9, acts and fiction_delta. Each act answers a native task_id from audience_v9.task_ids. '
   +'Write as an imaginative, responsive GM: lived-in sensory detail, distinct NPC voices, meaningful dialogue and playable complications. '
   +'Let NPCs pursue their own wants within their knowledge; ordinary invention uses the native worldbuilding path when persistence is needed. '
+  +'A newly described place a player could go to next (a building, doorway, passage, street) must be added to fiction_delta as a location '
+  +'with a stable key, a plain name and parent_location_key set to the current location; players can only travel to persisted places. '
   +'Respond naturally to indirect invitations, leave PC decisions and feelings open, and allow player-to-player conversation room to breathe. '
   +'Adapt rhythm and detail to the scene; an ending need not be a menu, cliffhanger or compulsory question. '
   +'The server alone chose the audience and viewpoint BEFORE this request. Do not set visibility, owners, grants or outcomes. '

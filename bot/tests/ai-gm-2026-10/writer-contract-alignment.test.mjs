@@ -23,6 +23,12 @@ test('writer instructions state the player character name rule the act guard enf
   assert.match(NARRATIVE_V9_INSTRUCTIONS, /npc_speech may only open with the name as a direct address/);
 });
 
+test('writer instructions require persisting newly described places players may travel to', () => {
+  // Live 2026-10-29: the narrated bathhouse was never persisted, so moving there asked "Which specific target did you mean".
+  assert.match(NARRATIVE_V9_INSTRUCTIONS, /must be added to fiction_delta as a location/);
+  assert.match(NARRATIVE_V9_INSTRUCTIONS, /parent_location_key set to the current location/);
+});
+
 test('model paragraph breaks become spaces while other text is kept exactly', () => {
   const unit = actToNativeUnit({id: 'a', task_id: 't', kind: 'scene_description', speaker_key: '', location_key: 'stall',
     text: 'Rain needles the awning.\n\nA bus sighs past.\r\n\tNobody gets off.', source_refs: []}, {scope: {mode: 'party'}});
