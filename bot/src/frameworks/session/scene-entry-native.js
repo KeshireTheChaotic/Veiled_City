@@ -1,16 +1,17 @@
 /** Native saved entry review/policy/resolve; no lexical route or capture. */
-import {sessionPersonalContinuity} from './frameworks/session/public.js';
+import {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
-import {currentScene,recordScenePresence} from './scene-continuity.js';
-import {stateRevision} from './kernel/state-revision.js';
-import {sessionWorldEvents,sessionSceneWorldSources} from './frameworks/session/public.js';
+import {currentScene,recordScenePresence} from './scene-source.js';
+import {stateRevision} from '../../kernel/state-revision.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
+import {sessionSceneWorldSources} from './contracts/scene-world-sources.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 import {randomUUID} from 'node:crypto';
-import {sessionNativeChecks} from './frameworks/session/public.js';
+import {sessionNativeChecks} from './contracts/native-checks.js';
 function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
-import {sessionNativeRules} from './frameworks/session/public.js';
+import {sessionNativeRules} from './contracts/native-rules.js';
 function nativeMovementConditionIssue(...args){return sessionNativeRules.nativeMovementConditionIssue(...args);}
-import {sessionNativeVipAdmission} from './frameworks/session/public.js';
+import {sessionNativeVipAdmission} from './contracts/native-vip-admission.js';
 function nativeVipAdmission(...args){return sessionNativeVipAdmission.nativeVipAdmission(...args);}
 const normalized=value=>String(value||"").toLowerCase().replace(/^the\s+/,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 export function locationMatches(row,target){

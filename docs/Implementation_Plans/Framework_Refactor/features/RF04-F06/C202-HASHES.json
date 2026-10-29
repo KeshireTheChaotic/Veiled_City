@@ -1,0 +1,14 @@
+{
+  "feature": "RF04-C202",
+  "sha256": {
+    "bot/src/ai-intents.js": "267c64e72cf6f00b5a24c1d106167ea097733c3f0177d9f9eb43fe8f0efd133e",
+    "bot/src/application/composition/session-intent.js": "d4ab11e711dbc172a9d7cf3eaddf74932117cf7f9e13c1cc0067c6a31c2a5c2d",
+    "bot/src/framework-to-framework/intent--session/public.js": "17006f6f7b2849084a89a7c8a388fbdeaf3135578d1c4abff466599f863eefa2",
+    "bot/src/frameworks/intent/public.js": "fbeb83a169e4f6879c76075677a757e7e496e35eae24621a659e22b858ca7ac5",
+    "bot/src/frameworks/session/public.js": "1b19c6bca96f6fb588e019b036b8e8d20e7742dbdec666ae4113609896c99890",
+    "bot/src/scene-entry.js": "57768f40e6b8095ef5e94c4b49fdc2e0e5613722c6a36f8171cb00c461b69c52",
+    "bot/src/story-commands.js": "4f591724bf4c0037cda5c8ea56528dd7dcf49850448196726720da9d6b2770e5",
+    "bot/src/frameworks/session/scene-entry-native.js": "2d26585bba17a7471fde0217148a8fb374221ea8dc21dec0f613da532070c784",
+    "bot/src/frameworks/intent/contracts/session-entry.js": "f8f1d48cc5ef4d116f0bd4568866a0d63eb90bd789ed5cfc3edb6c7c5e30be3b"
+  }
+}

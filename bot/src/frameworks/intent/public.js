@@ -28,3 +28,5 @@ export {intentSessionPrincipal} from './contracts/session-principal.js';
 export {intentSessionDialogue} from './contracts/session-dialogue.js';
 
 export {intentSessionStory} from './contracts/session-story.js';
+
+export {intentSessionEntry} from './contracts/session-entry.js';

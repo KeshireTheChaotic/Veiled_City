@@ -26,7 +26,9 @@ function suggestSetupPayoff(...args){return intentSessionStory.suggestSetupPayof
 function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-declaration-review.js";
-import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry-native.js";
+import {intentSessionEntry} from "./frameworks/intent/public.js";
+function mundaneEntryImpact(...args){return intentSessionEntry.mundaneEntryImpact(...args);}
+function resolveMundaneEntry(...args){return intentSessionEntry.resolveMundaneEntry(...args);}
 import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
 import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';

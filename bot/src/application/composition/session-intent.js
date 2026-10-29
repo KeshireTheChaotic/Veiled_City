@@ -1,4 +1,4 @@
-import {connectIntentSessionStory,connectIntentSessionPrincipal,connectIntentSessionDialogue} from '../../framework-to-framework/intent--session/public.js';
+import {connectIntentSessionEntry,connectIntentSessionStory,connectIntentSessionPrincipal,connectIntentSessionDialogue} from '../../framework-to-framework/intent--session/public.js';
 import {connectSessionIntent,connectSessionIntentLanguage,connectIntentOwnerActionTerminal} from '../../framework-to-framework/intent--session/public.js';
 /** Fixed bootstrap wiring of Intent's original action, authored-text, quote-span, silence and response-obligation functions into Session; no state writes. */
-export function initializeSessionIntent(){connectIntentSessionStory();connectIntentSessionDialogue();connectIntentSessionPrincipal();connectSessionIntentLanguage();connectIntentOwnerActionTerminal();return connectSessionIntent();}
+export function initializeSessionIntent(){connectIntentSessionEntry();connectIntentSessionStory();connectIntentSessionDialogue();connectIntentSessionPrincipal();connectSessionIntentLanguage();connectIntentOwnerActionTerminal();return connectSessionIntent();}

@@ -24,3 +24,7 @@ export function connectIntentSessionDialogue(){return intentSessionDialogue.bind
 import {intentSessionStory} from '../../frameworks/intent/public.js';
 import {suggestSetupPayoff} from '../../frameworks/session/public.js';
 export function connectIntentSessionStory(){return intentSessionStory.bind({suggestSetupPayoff});}
+
+import {intentSessionEntry} from '../../frameworks/intent/public.js';
+import {mundaneEntryImpact,resolveMundaneEntry} from '../../frameworks/session/public.js';
+export function connectIntentSessionEntry(){return intentSessionEntry.bind({mundaneEntryImpact,resolveMundaneEntry});}

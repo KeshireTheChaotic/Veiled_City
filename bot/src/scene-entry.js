@@ -14,8 +14,8 @@ export function entryTarget(text){
   const match=/^I\s+(?:walk\s+(?:into|inside)|step\s+(?:into|inside)|go\s+(?:into|inside)|enter)\s+(.+?)(?=\s+and\s+|[,.!?;\n]|$)/i.exec(clean);
   return match&&match[1].length<=160?match[1].trim():null;
 }
-import {locationMatches} from './scene-entry-native.js';
-export {locationMatches} from './scene-entry-native.js';
+import {locationMatches} from './frameworks/session/public.js';
+export {locationMatches} from './frameworks/session/public.js';
 export function prepareSceneEntry(db,guild,user,character,messageId,text,{privateScene=false,candidate=null}={}){
   const flags=db.getCityCalendar(guild).flags,target=candidate?.target||entryTarget(text);
   if(!target||!character||flags.natural_language!==true||flags.scene_continuity!==true) return null;
@@ -66,9 +66,9 @@ export function entryReferenceContext(db,guild,user,character,{mode="private"}={
       +"Ask only when ambiguity materially affects an action; do not repeatedly ask for an already understood name. "
       +"Use autonomous world additions/actions for ordinary local creation and entry; keep native travel/encounter/access rules. Review keys and revisions are GM metadata, not dialogue."};
 }
-import {reviewSceneEntry as nativeReviewSceneEntry,configureEntryPolicy as nativeConfigureEntryPolicy} from './scene-entry-native.js';
+import {reviewSceneEntry as nativeReviewSceneEntry,configureEntryPolicy as nativeConfigureEntryPolicy} from './frameworks/session/public.js';
 // Named historical entry points remain for compatibility; all validation and
 // effects live in the extracted native service and execute exactly once.
 export function reviewSceneEntry(db,guild,input,reviewer){return nativeReviewSceneEntry(db,guild,input,reviewer);}
 export function configureEntryPolicy(db,guild,input,reviewer){return nativeConfigureEntryPolicy(db,guild,input,reviewer);}
-export {mundaneEntryImpact,resolveMundaneEntry} from './scene-entry-native.js';
+export {mundaneEntryImpact,resolveMundaneEntry} from './frameworks/session/public.js';
