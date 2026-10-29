@@ -6,7 +6,7 @@ import OpenAI from 'openai';
 import {nativeFixture} from './v9-fixtures.mjs';
 import {FakeResponses} from './contract-fixtures.mjs';
 import {GMService} from '../src/gm.js';
-import {ContentIndex} from '../src/content.js';
+import {ContentIndex} from '../src/frameworks/content/public.js';
 import {OperationalMetrics} from '../src/operational-metrics.js';
 import {shadowEngagement} from '../src/engagement-shadow.js';
 import {routineReplayVariant} from './session5-replay-variants.mjs';

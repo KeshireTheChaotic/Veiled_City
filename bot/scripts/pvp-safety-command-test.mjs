@@ -5,7 +5,7 @@ import {nativeFixture} from './v9-fixtures.mjs';
 import {handleCommand} from '../src/commands.js';
 import {setup} from './narrative-fixtures.mjs';
 import {GMService} from '../src/gm.js';
-import {ContentIndex} from '../src/content.js';
+import {ContentIndex} from '../src/frameworks/content/public.js';
 import path from 'node:path';
 
 let sequence=0;

@@ -1,5 +1,5 @@
 import { buildCommands } from '../src/commands.js';
-import { validateCommandSchema, commandCharacterCount } from '../src/command-schema.js';
+import { validateCommandSchema, commandCharacterCount } from '../src/frameworks/discord/public.js';
 
 const commands=buildCommands();
 const errors=validateCommandSchema(commands);

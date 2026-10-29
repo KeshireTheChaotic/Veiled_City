@@ -3,7 +3,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {nativeFixture} from './v9-fixtures.mjs';
 import {GMService} from '../src/gm.js';
-import {ContentIndex} from '../src/content.js';
+import {ContentIndex} from '../src/frameworks/content/public.js';
 import {captureWorldInput} from '../src/autonomous-world.js';
 import {POST_TURN_REVIEW_CATEGORIES} from '../src/director.js';
 import {commitGmTurn} from '../src/turn-orchestration.js';

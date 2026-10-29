@@ -2,7 +2,7 @@
  * This is not used by production and never grants authority to a model/player field. Raw bypass negatives call production directly.
  */
 import path from 'node:path';
-import {ContentIndex} from '../src/content.js';
+import {ContentIndex} from '../src/frameworks/content/public.js';
 import {worldAdditionsSchema,establishNarrativeEntity,worldAuthority} from '../src/autonomous-world.js';
 import {bindDirectorNarrativeSource} from '../src/narrative-director-source.js';
 import {buildNarrativeContext} from '../src/narrative-authority-context.js';
