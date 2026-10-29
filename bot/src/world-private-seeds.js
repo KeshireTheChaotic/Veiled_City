@@ -3,7 +3,7 @@ import {worldNarrativeSources} from './frameworks/world/public.js';
 function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
 import {createSeededWorldContext} from './frameworks/world/public.js';
 import {worldHookSeedForGm} from './frameworks/world/public.js';
-import {establishNarrativeEntity} from './autonomous-world.js';
+import {establishNarrativeEntity} from './frameworks/world/public.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 import {privateWorldSeedsSchema,PRIVATE_WORLD_SEED_INSTRUCTIONS} from './frameworks/world/private-world-seed-contract.js';

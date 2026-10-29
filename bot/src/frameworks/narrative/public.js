@@ -54,3 +54,5 @@ export {narrativeWorldIdentityOrigin} from './contracts/world-identity-origin.js
 export {narrativeWorldIdentityPersistence} from './contracts/world-identity-persistence.js';
 
 export {narrativeWorldBackground} from './contracts/world-background.js';
+
+export {narrativeWorldMaterialization} from './contracts/world-materialization.js';

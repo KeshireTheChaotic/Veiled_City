@@ -3,7 +3,8 @@ import {buildNarrativeContext,narrativeVisible} from './narrative-authority-cont
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {establishNarrativeEntity} from './autonomous-world.js';
+import {narrativeWorldMaterialization} from './frameworks/narrative/public.js';
+function establishNarrativeEntity(...args){return narrativeWorldMaterialization.establishNarrativeEntity(...args);}
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
 import {materialParaphrases} from './narrative-integrity.js';

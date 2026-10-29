@@ -14,7 +14,7 @@ import { captureContextSource } from "./narrative-context.js";
 import { conversationPrincipal } from "./frameworks/session/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
-import { captureWorldInput,worldInputKey } from "./autonomous-world.js";
+import { captureWorldInput,worldInputKey } from "./frameworks/world/public.js";
 import {currentSemanticEngagement} from './semantic-engagement.js';
 import {routeGameplayIntake,routerFailureEngagement} from "./gameplay-intake.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";

@@ -9,7 +9,7 @@ import {refreshActionContinuations} from "./frameworks/session/public.js";
 import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {recordNarrativeHealth} from './narrative-completeness.js';
-import {worldInputKey} from './autonomous-world.js';
+import {worldInputKey} from './frameworks/world/public.js';
 import {executeUnifiedGmActions} from './gm-native-rolls.js';
 import {EncounterLibrary} from './encounter.js';
 import {prepareAuthorizedTurnOutput} from './pvp-output.js';

@@ -24,7 +24,7 @@ import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
 import { sessionBrief } from './frameworks/session/public.js';
 import { reviewSceneEntry, configureEntryPolicy } from "./frameworks/session/public.js";
-import { configureWorldAuthority, worldAuthority, retconAutonomousEntity } from "./autonomous-world.js";
+import { configureWorldAuthority, worldAuthority, retconAutonomousEntity } from "./frameworks/world/public.js";
 import { reviewPresentation, presentationView } from "./frameworks/knowledge/public.js";
 export async function handleStoryCommand(interaction,{db,gm}){
   if(!interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)&&

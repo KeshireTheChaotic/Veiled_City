@@ -102,17 +102,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "391a26d72f7800ec212fd0a68d8573af8ab80091d77bb36768155ede1d4d658c",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/autonomous-world.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "29b941b6365330bcb377c71ce5ff799f72a39fc4aea130f7bcbacafe3cfb4b32",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/character-export.js",
@@ -3881,20 +3870,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "da0707ea1bcca9656b967d6fd0d662a4dd4ddfaed6b0ee065eb382202d764230",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-native-rolls.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b7f162b58d634af66ab09ae8fdf6879a9f66b149136402ff503c1490e2f96b5b",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-native-rolls.js",
@@ -4412,20 +4387,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "cfa79429dff340246e400e3e6084b753af4758739758a7e9b75827cbef7ca8b3",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "application",
-      "max_occurrences": 2,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "efaa64b43145463e6c9118125e9d6cbb4933e81cd3b52bc46245bd626e2e4528",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -4784,20 +4745,6 @@
       "specifier": "./publishing.js",
       "owner": "bootstrap",
       "max_occurrences": 3,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "6fa5417ee5ea3b0804dce05667b77da48eb62c3f870cac6552543d35b1efc282",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
       "remove_in_feature": "RF06-F05",
       "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
@@ -5188,20 +5135,6 @@
       "to": "bot/src/pvp-output.js",
       "kind": "static",
       "specifier": "./pvp-output.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "7126104a5628e3356cfbca57f6b38adfcdcbe976b56a34e1bc456be9cfddc374",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -8259,20 +8192,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "2045fd52ce4fa2ef6d79b329093197c5f0d893d75c633e0745fcebf515cbd385",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/state.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "66829a4d0787646c3de0ebb64e2ea11b2d8172f6a9c9924daa85adf242bd0eaa",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/state.js",
@@ -8678,20 +8597,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "0aaf7715a58db2aaa128512abd4e71fb61fc2f1ebe27099cf22f44ff22279470",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "03e6160f11e7ff72479f9b1dfbe4ccfebc1c3a3a7bde5bbea2d1d19cdfd954e8",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/turn-orchestration.js",
@@ -8768,20 +8673,6 @@
       "to": "bot/src/narrative-completeness.js",
       "kind": "static",
       "specifier": "./narrative-completeness.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "2663d4d05c88024cff38b7cef83eed6e706c150daaf679c53d6c8cf02755f494",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/turn-orchestration.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
@@ -8894,20 +8785,6 @@
       "to": "bot/src/scene-continuity.js",
       "kind": "static",
       "specifier": "./scene-continuity.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "ee5bf602e1ca3c466133e7cb274bd20b397766b3c4d2724370bbed4ce5bf8d62",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/typed-intents.js",
-      "to": "bot/src/autonomous-world.js",
-      "kind": "static",
-      "specifier": "./autonomous-world.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",

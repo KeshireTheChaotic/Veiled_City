@@ -121,3 +121,5 @@ export {worldResolutionContext,bindWorldResolutionCycle,commitWorldResolutionPul
 export {verifiedIdentityPersistence,promoteWorldIdentity,maintainIdentityPersistence} from './identity-persistence.js';
 
 export {validateBackgroundIdentity,backgroundIdentityContext} from './background-identity-service.js';
+
+export {AUTONOMOUS_WORLD_VERSION,worldAuthority,establishNarrativeEntity,configureWorldAuthority,retconAutonomousEntity,worldInputKey,revalidateWorldEntries,captureWorldInput,applyAutonomousWorld,autonomousWorldContext} from './autonomous-world.js';

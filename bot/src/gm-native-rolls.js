@@ -6,7 +6,8 @@ import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
 function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
-import {captureWorldInput} from './autonomous-world.js';
+import {nativeWorldInput} from './frameworks/daggerheart/public.js';
+function captureWorldInput(...args){return nativeWorldInput.captureWorldInput(...args);}
 import {persistPlayerIntents} from './typed-intents.js';
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 import {contributeRoll} from './roll-collaboration.js';

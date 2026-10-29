@@ -39,7 +39,7 @@ import { intentArraySchema, INTENT_PROMPT, decisionAdvisorySchema, requiredDecis
 import { intentContext } from "./ai-intents.js";
 import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema } from "./frameworks/world/public.js";
-import { autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
+import { autonomousWorldContext, worldAuthority } from "./frameworks/world/public.js";
 import { AUTONOMOUS_WORLD_PROMPT } from "./frameworks/world/public.js";
 import { entryReferenceContext } from "./frameworks/session/public.js";
 import { OnlineSrd } from "./frameworks/daggerheart/public.js";
@@ -58,7 +58,7 @@ import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
 import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './frameworks/daggerheart/public.js';
 import {ordinaryEffectContext} from './ordinary-effects.js';
 import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
-import {worldInputKey} from './autonomous-world.js';
+import {worldInputKey} from './frameworks/world/public.js';
 import {shadowEngagement} from './engagement-shadow.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './fresh-scene-authoring.js';
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './scene-fiction-authority.js';

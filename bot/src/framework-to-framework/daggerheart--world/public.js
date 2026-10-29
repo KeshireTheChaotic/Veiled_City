@@ -48,3 +48,7 @@ import {loadEncounterLibrary,isEncounterLibrary,encounterActors,livePcRoster,par
 import {worldNativeEncounter} from '../../frameworks/world/public.js';
 /** World encounter beats read the original native catalog, actor, roster and budget rules unchanged. */
 export function connectWorldNativeEncounter(){return worldNativeEncounter.bind({loadEncounterLibrary,isEncounterLibrary,encounterActors,livePcRoster,partyTier,baseBattlePoints,battlePointCost,recomputeBudget});}
+
+import {nativeWorldInput} from '../../frameworks/daggerheart/public.js';
+import {captureWorldInput} from '../../frameworks/world/public.js';
+export function connectNativeWorldInput(){return nativeWorldInput.bind({captureWorldInput});}

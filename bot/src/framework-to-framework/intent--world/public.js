@@ -32,3 +32,7 @@ import {intentWorldConstraints} from '../../frameworks/intent/public.js';
 import {activeCityProxy,assertNpcAvailability} from '../../frameworks/world/public.js';
 /** Bind World's original proxy and availability rules to Intent's fixed consumer. */
 export function connectIntentWorldConstraints(){return intentWorldConstraints.bind({activeCityProxy,assertNpcAvailability});}
+
+import {intentWorldInputKey} from '../../frameworks/intent/public.js';
+import {worldInputKey} from '../../frameworks/world/public.js';
+export function connectIntentWorldInputKey(){return intentWorldInputKey.bind({worldInputKey});}

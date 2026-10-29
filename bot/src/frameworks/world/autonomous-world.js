@@ -1,38 +1,39 @@
 /** AI-GM ordinary worldbuilding: authenticated inputs, canonical entities, bounded native actions and atomic replay receipts. */
 import { createHash } from "node:crypto";
-import {worldConversationPrincipal} from './frameworks/world/public.js';
+import {worldConversationPrincipal} from './contracts/conversation-principal.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
-import {worldPersonalContinuity} from './frameworks/world/public.js';
+import {worldPersonalContinuity} from './contracts/personal-continuity.js';
 function personalCharacter(...args){return worldPersonalContinuity.personalCharacter(...args);}
-import { indexWorldEvent, cityAudit, cityObject } from './frameworks/world/public.js';
-import {worldSessionScene} from './frameworks/world/public.js';
+import {indexWorldEvent,cityAudit,cityObject} from './city-calendar.js';
+import {worldSessionScene} from './contracts/session-scene.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}
-import {worldNativeMovementChecks} from './frameworks/world/public.js';
+import {worldNativeMovementChecks} from './contracts/native-movement-checks.js';
 function nativeMovementConditionIssue(...args){return worldNativeMovementChecks.nativeMovementConditionIssue(...args);}
-import {activeCityProxy} from './frameworks/world/public.js';
-import { configureSimulationEntity } from './frameworks/world/public.js';
-import { validateMinorIdentity } from './frameworks/world/public.js';
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import {stateRevision} from './kernel/state-revision.js';
-import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./frameworks/world/public.js";
-import {worldIntentDispatch} from './frameworks/world/public.js';
+import {activeCityProxy} from './active-proxy.js';
+import {configureSimulationEntity} from './actor-state.js';
+import {validateMinorIdentity} from './minor-identity.js';
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
+import {stateRevision} from '../../kernel/state-revision.js';
+import {resolvePlaceReference,preflightPlaceIdentity,preflightNpcIdentity} from './location-language.js';
+import {worldIntentDispatch} from './contracts/intent-dispatch.js';
 function currentAcceptedIntent(...args){return worldIntentDispatch.currentAcceptedIntent(...args);}function currentTypedMovement(...args){return worldIntentDispatch.currentTypedMovement(...args);}
 function movementAdjudication(...args){return worldNativeMovementChecks.movementAdjudication(...args);}
-import {worldContextMemory} from './frameworks/world/public.js';
+import {worldContextMemory} from './contracts/context-memory.js';
 function contextMemoriesForScope(...args){return worldContextMemory.contextMemoriesForScope(...args);}
-import {worldCharacterObservation} from './frameworks/world/public.js';
+import {worldCharacterObservation} from './contracts/character-observation.js';
 function captureDepartureWitnesses(...args){return worldCharacterObservation.captureDepartureWitnesses(...args);}
 function assertPcCanAct(...args){return worldNativeMovementChecks.assertPcCanAct(...args);}
-import {worldSessionContinuation} from './frameworks/world/public.js';
+import {worldSessionContinuation} from './contracts/session-continuation.js';
 function continuationAuthorization(...args){return worldSessionContinuation.continuationAuthorization(...args);}
-import {verifiedWorldAuthoringContext,worldIdentityOrigin,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './frameworks/world/public.js';
-import {worldNarrativeSources} from './frameworks/world/public.js';
+import {verifiedWorldAuthoringContext,privateWorldIdentityForGm,assertIndependentWorldIdentity,assertWorldIdentityNames} from './authorship-service.js';
+import {worldIdentityOrigin} from './identity-origin.js';
+import {worldNarrativeSources} from './contracts/narrative-sources.js';
 function narrativeSourceVisible(...args){return worldNarrativeSources.narrativeSourceVisible(...args);}
-import {validateBackgroundIdentity} from './frameworks/world/public.js';
+import {validateBackgroundIdentity} from './background-identity-service.js';
 function nativeVipAdmission(...args){return worldNativeMovementChecks.nativeVipAdmission(...args);}
-import {AUTONOMOUS_WORLD_PROMPT} from './frameworks/world/autonomous-world-contract.js';
+import {AUTONOMOUS_WORLD_PROMPT} from './autonomous-world-contract.js';
 export {AUTONOMOUS_WORLD_PROMPT};
-import {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema} from './frameworks/world/world-proposal-schema.js';
+import {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema} from './world-proposal-schema.js';
 export {worldAdditionsSchema,sceneActionsSchema,worldConflictsSchema};
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,40);
 export const AUTONOMOUS_WORLD_VERSION=2;
@@ -322,10 +323,10 @@ export function autonomousWorldContext(db,guild,scope,messageId){
     instruction:"GM-only context; may_reveal=false records are not new player knowledge. Missing records are not contradictions."};
 }
 
-import {createWorldIdentityRules} from './frameworks/world/public.js';
+import {createWorldIdentityRules} from './identity-rules.js';
 let worldIdentities;
 function identities(){return worldIdentities??=createWorldIdentityRules({verifiedWorldAuthoringContext:(...args)=>verifiedWorldAuthoringContext(...args),currentScene:(...args)=>currentScene(...args),privateWorldIdentityForGm:(...args)=>privateWorldIdentityForGm(...args),worldIdentityOrigin:(...args)=>worldIdentityOrigin(...args),assertIndependentWorldIdentity:(...args)=>assertIndependentWorldIdentity(...args),assertWorldIdentityNames:(...args)=>assertWorldIdentityNames(...args),validateBackgroundIdentity:(...args)=>validateBackgroundIdentity(...args),configureSimulationEntity:(...args)=>configureSimulationEntity(...args),validateMinorIdentity:(...args)=>validateMinorIdentity(...args),recordScenePresence:(...args)=>recordScenePresence(...args),activeCityProxy:(...args)=>activeCityProxy(...args),stateRevision:(...args)=>stateRevision(...args),fail:(...args)=>fail(...args)});}
-import {worldAutonomousSource,worldAutonomousApplication} from './frameworks/world/public.js';
+import {worldAutonomousSource,worldAutonomousApplication} from './contracts/autonomous-source.js';
 // Provide this module's original authority, entity creation, input key and autonomous application to the fixed World slots; no other authority is granted.
 worldAutonomousSource.bind({worldAuthority,establishNarrativeEntity,worldInputKey});
 worldAutonomousApplication.bind({applyAutonomousWorld});

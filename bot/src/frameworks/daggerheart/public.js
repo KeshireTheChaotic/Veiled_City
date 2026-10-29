@@ -154,3 +154,5 @@ export {encounterActors} from './encounter-actors-source.js';
 export {previewOutcomes} from './outcome-preview.js';
 export {nativeAccessOrdinaryProof,nativeAccessCountdownAncestry} from './contracts/environment-access-peers.js';
 export {establishEnvironmentAdmission,inspectEnvironmentAdmission,nativeVipAdmission,registerNativeEnvironmentAccess} from './native-environment-access.js';
+
+export {nativeWorldInput} from './contracts/world-input.js';

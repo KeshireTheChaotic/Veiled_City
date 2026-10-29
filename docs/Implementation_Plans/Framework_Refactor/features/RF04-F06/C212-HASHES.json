@@ -1,0 +1,28 @@
+{
+  "feature": "RF04-C212",
+  "sha256": {
+    "bot/src/application/composition/narrative-world.js": "43305f00ae5e429366a00633e9a0a7d7b7e2f9c7efca2c80f0e320aa8af8626d",
+    "bot/src/application/composition/native-world-events.js": "0b60c4ce3ba3d92f89cc12c863a3b024999da5bafda8376787cd077026768e10",
+    "bot/src/application/composition/world-execution.js": "426d1f8c6dc038b03ad054d20196024bf5f08c16f8b2aafdf20251c240316439",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "106580b948d0961a7902328138739bf097bad03ca985d0dee7745c556f22e018",
+    "bot/src/framework-to-framework/intent--world/public.js": "658fdd254c3c28230f9d97d9978185fabaec00437d58aae3c7e86315150fb8b1",
+    "bot/src/framework-to-framework/narrative--world/public.js": "94f943af01cc4f4c7d804c199df53e7594c0b8ebc36489f9a4d43ef38d48d0e7",
+    "bot/src/frameworks/daggerheart/public.js": "367948c4970bce2d549c788d631b71b9b9edbfbeaefd8f71b9049c3ee513ef8d",
+    "bot/src/frameworks/intent/public.js": "d8ac26e36c59c09de3becaad4741d8235bcd266798cb81b0a55f2feba9ca7896",
+    "bot/src/frameworks/narrative/public.js": "9aa4484b25f9a611e0580d175f64f0f57122f29b43ea063d7ed0c907da3c6d39",
+    "bot/src/frameworks/world/public.js": "26f4336b0253c2d650dc37870f3a60689b31cd59e3b641e88ddf2e84a468570b",
+    "bot/src/gm-native-rolls.js": "14b54bc57f440c2731c9cd27d13e299bdc2315169c83a4c24bd8e567cb70a7f9",
+    "bot/src/gm.js": "a64d8c2a5bdf6f5c609ce61d14897c32a76f3d167be5bd1f3ea101defd7cdf5f",
+    "bot/src/index.js": "25aeb9bfe1347aa40295c197b90289dc37943453a0000cf5c152189c716e4693",
+    "bot/src/narrative-authority.js": "caf52434645e0b1f0b2a23b26638d323d454e1c8cce9a38af7e6814ecda911ce",
+    "bot/src/state.js": "cd29ee26f7ce0141cec52b70fba5c7db46ad24b457884869ad8889ca0139bb82",
+    "bot/src/story-commands.js": "cda1dbc85f6c574f5f5b71e5ed43c48d6f69123ccb7d3b6cf688c5c07dd7be60",
+    "bot/src/turn-orchestration.js": "728b4309c2199a0a985d27dd4193d3ab5419b344fa72d7e9ea61278dcd6c3f28",
+    "bot/src/typed-intents.js": "c428bf853e34a17b3e6b3f11670fcce77630d8d4c04c712a4a3ac93e6acf3aa4",
+    "bot/src/world-private-seeds.js": "24fdda58a2cf3c63b4d25c02c5b83dad776f3e08a26cdc08c3604b9f9cbbb349",
+    "bot/src/frameworks/world/autonomous-world.js": "21bc6b2e8918b79c1a2586e8c2caf42a79f53e0971322d536c4a613637f93a2c",
+    "bot/src/frameworks/intent/contracts/world-input-key.js": "d0f4c43a1af6b7bbdff62180ad12b9f157fd2ba4eba22beccada46c14a1cfbd8",
+    "bot/src/frameworks/narrative/contracts/world-materialization.js": "6d622d32f2488375ef3f54a9cbde6148f1cf80e782be490a1c6d4a5c740539d4",
+    "bot/src/frameworks/daggerheart/contracts/world-input.js": "dfaff6ecae418ad05d3671b28100ac4af76c1715becd8b0cc03722479fb55e7a"
+  }
+}

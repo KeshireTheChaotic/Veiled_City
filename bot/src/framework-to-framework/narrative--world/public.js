@@ -48,3 +48,7 @@ import {narrativeWorldBackground} from '../../frameworks/narrative/public.js';
 import {backgroundIdentityContext,BACKGROUND_WORLD_KINDS} from '../../frameworks/world/public.js';
 const backgroundWorldKinds=()=>BACKGROUND_WORLD_KINDS;
 export function connectNarrativeWorldBackground(){return narrativeWorldBackground.bind({backgroundIdentityContext,backgroundWorldKinds});}
+
+import {narrativeWorldMaterialization} from '../../frameworks/narrative/public.js';
+import {establishNarrativeEntity} from '../../frameworks/world/public.js';
+export function connectNarrativeWorldMaterialization(){return narrativeWorldMaterialization.bind({establishNarrativeEntity});}

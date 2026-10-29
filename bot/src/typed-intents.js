@@ -3,7 +3,8 @@ import { createHash } from 'node:crypto';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from './scene-continuity.js';
-import { worldInputKey } from './autonomous-world.js';
+import {intentWorldInputKey} from './frameworks/intent/public.js';
+function worldInputKey(...args){return intentWorldInputKey.worldInputKey(...args);}
 import {stateRevision} from './kernel/state-revision.js';
 import {intentWorldOperations} from './frameworks/intent/public.js';
 function resolvePlaceReference(...args){return intentWorldOperations.resolvePlaceReference(...args);}
