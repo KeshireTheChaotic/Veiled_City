@@ -5,7 +5,7 @@ import { cityObject } from './frameworks/world/public.js';
 import { ContextPlanner } from "./context-planner.js";
 import { resolveNpcConversation } from "./frameworks/npc/public.js";
 import { validateNarrativeClaims } from "./narrative-integrity.js";
-import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMysteryAttempt } from "./story-continuity.js";
+import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMysteryAttempt } from "./frameworks/session/public.js";
 import { negotiateAgreement } from './frameworks/session/public.js';
 import { previewOutcomes } from './frameworks/daggerheart/public.js';
 import { explainWhy } from "./frameworks/knowledge/public.js";

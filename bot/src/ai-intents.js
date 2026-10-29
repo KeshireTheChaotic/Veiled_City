@@ -21,7 +21,8 @@ import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js"
 import {intentSessionDialogue} from './frameworks/intent/public.js';
 const {interpretDialogue}=intentSessionDialogue;
 const {manageEvidence,inviteOrganization}=intentKnowledgeActions;
-import { suggestSetupPayoff } from "./story-continuity.js";
+import {intentSessionStory} from "./frameworks/intent/public.js";
+function suggestSetupPayoff(...args){return intentSessionStory.suggestSetupPayoff(...args);}
 function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}
 import { prepareRollRequest } from "./roll-requests.js";
 import { reviewRollDeclaration } from "./roll-declaration-review.js";

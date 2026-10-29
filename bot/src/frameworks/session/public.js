@@ -53,3 +53,5 @@ export {sessionPublicationRecap} from './contracts/publication-recap.js';
 export {sessionBrief,formatSessionBrief} from './session-briefs.js';
 
 export {captureDialogue,interpretDialogue} from './dialogue-continuity.js';
+
+export {setPacingCues,manageNarrativeSetup,suggestSetupPayoff,pacingAdvice,validatePacing,configureMystery,mysteryView,recordMysteryAttempt} from './story-continuity.js';

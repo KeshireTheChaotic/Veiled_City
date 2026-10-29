@@ -1,13 +1,13 @@
 /** Descriptive pacing and source-linked mystery routes; no new PC mechanics, dice or mutable truth store. */
-import {sessionSceneWorldSources} from './frameworks/session/public.js';
+import {sessionSceneWorldSources} from './contracts/scene-world-sources.js';
 function cityObject(...args){return sessionSceneWorldSources.cityObject(...args);}function cityKey(...args){return sessionSceneWorldSources.cityKey(...args);}function cityAudit(...args){return sessionSceneWorldSources.cityAudit(...args);}
 function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
 function cityVisibility(...args){return sessionSceneWorldSources.cityVisibility(...args);}
-import {sessionPersonalContinuity} from './frameworks/session/public.js';
+import {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
-import {stateRevision} from './kernel/state-revision.js';
-import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import {sessionIntentLanguage} from './frameworks/session/public.js';
+import {stateRevision} from '../../kernel/state-revision.js';
+import {jsonKey32 as motivationKey} from '../../kernel/json-key32.js';
+import {sessionIntentLanguage} from './contracts/intent-language.js';
 function explicitSilence(...args){return sessionIntentLanguage.explicitSilence(...args);}function semanticResponseObligation(...args){return sessionIntentLanguage.semanticResponseObligation(...args);}
 export function setPacingCues(db,guildId,input,actorId){
   if(input?.op==="setup") return manageNarrativeSetup(db,guildId,input,actorId);
@@ -140,6 +140,6 @@ export function recordMysteryAttempt(db,guildId,input,actorId){
   return db.transaction(()=>{const after=db.saveCityRecord(guildId,{kind:"clue_attempt",key,source_event:input.source_event,data});
     cityAudit(db,guildId,"mystery_attempt",key,null,after,actorId);return after;});
 }
-import {sessionStoryContinuitySource} from './frameworks/session/public.js';
+import {sessionStoryContinuitySource} from './contracts/story-continuity-source.js';
 // Provide this module's original pacing advice and mystery configuration to the fixed Session slot; no other authority is granted.
 sessionStoryContinuitySource.bind({pacingAdvice,configureMystery});

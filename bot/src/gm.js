@@ -33,7 +33,7 @@ import { materialClaimSchema } from "./frameworks/narrative/public.js";
 import { validateNarrativeClaims } from "./narrative-integrity.js";
 import { NARRATIVE_CONTRACT } from "./frameworks/narrative/public.js";
 import { ContextPlanner } from "./context-planner.js";
-import { pacingAdvice, validatePacing } from "./story-continuity.js";
+import { pacingAdvice, validatePacing } from "./frameworks/session/public.js";
 import { portrayalPacket } from "./portrayal.js";
 import { intentArraySchema, INTENT_PROMPT, decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory, unifiedArbitrationSchema } from "./frameworks/intent/public.js";
 import { intentContext } from "./ai-intents.js";

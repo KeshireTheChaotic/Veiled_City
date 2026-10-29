@@ -20,3 +20,7 @@ export function connectIntentSessionPrincipal(){return intentSessionPrincipal.bi
 import {intentSessionDialogue} from '../../frameworks/intent/public.js';
 import {captureDialogue,interpretDialogue} from '../../frameworks/session/public.js';
 export function connectIntentSessionDialogue(){return intentSessionDialogue.bind({captureDialogue,interpretDialogue});}
+
+import {intentSessionStory} from '../../frameworks/intent/public.js';
+import {suggestSetupPayoff} from '../../frameworks/session/public.js';
+export function connectIntentSessionStory(){return intentSessionStory.bind({suggestSetupPayoff});}

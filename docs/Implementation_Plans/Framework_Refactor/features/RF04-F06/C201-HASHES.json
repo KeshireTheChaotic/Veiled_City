@@ -1,0 +1,9 @@
+{
+  "feature": "RF04-C201",
+  "sha256": {
+    "bot/src/frameworks/session/story-continuity.js": "33a0869da0501421b0f72af43751fdd0b080363273235408740c136c4b0b1f87",
+    "bot/src/frameworks/intent/contracts/session-story.js": "09228f9e5c2aaa972add3eaab4aad54902f365857c44bfdaa607479474c1e859",
+    "bot/src/framework-to-framework/intent--session/public.js": "0fa8c9a9c20bcd0563d49778df818fd35ac4b19f05eaa11527d16cbec754d1b9",
+    "bot/src/application/composition/session-intent.js": "b2b1b3b1a371d9148ea0694cc3e530d1587377f868782ba8008b15f97b52d3b5"
+  }
+}

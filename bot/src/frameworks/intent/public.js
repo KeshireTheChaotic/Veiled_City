@@ -26,3 +26,5 @@ export {intentWorldConstraints} from './contracts/world-constraints.js';
 export {intentSessionPrincipal} from './contracts/session-principal.js';
 
 export {intentSessionDialogue} from './contracts/session-dialogue.js';
+
+export {intentSessionStory} from './contracts/session-story.js';
