@@ -170,6 +170,12 @@ function renderPart(db,guild,part){
     const projection=nativeGmNotice(db,guild,ref,scope);
     if(!projection||projection.revision!==part.notice_revision)fail();return projection.text;
   }
+  if(kind==='referent_clarification'){
+    const p=db.getCityRecord(guild,'semantic_intent_proposal',ref);
+    if(p?.status!=='awaiting_referent'||p.data.owner_user_id!==scope.actorUserId||p.data.actor_character_id!==scope.actorCharacterId
+      ||p.data.session_id!==session||p.data.scene!==scene)fail();
+    return `Which specific target did you mean by "${p.data.target?.phrase||p.data.source_span}"? Nothing was resolved; reply in your own words.`;
+  }
   if(kind==="nonmaterial_grammar")return renderNonmaterialGrammar(db,guild,part);
   if(kind==="gm_world_narrative")return renderGmWorldPart(db,guild,ref,scope);
   if(kind==='gm_fresh_npc'){
@@ -219,6 +225,14 @@ function renderPart(db,guild,part){
     return arrival.details.initial_setup?`${pc.name}'s initial position is ${arrival.location_key}; this is not travel.`:`${pc.name} has arrived at ${arrival.location_key}.`;
   }
   fail();
+}
+/** This turn's owner proposals still waiting for a target: same Discord message as the world input. */
+function awaitingReferents(db,guild,sourceRef,scope){
+  const source=sourceRef&&db.getWorldEvent(guild,sourceRef);
+  if(source?.kind!=='ai_gm_input'||!source.details.message_id||!scope.actorUserId||!scope.actorCharacterId)return [];
+  return db.listCityRecords(guild,{kind:'semantic_intent_proposal',includeGM:true,limit:100})
+    .filter(p=>p.status==='awaiting_referent'&&p.data.owner_user_id===scope.actorUserId&&p.data.actor_character_id===scope.actorCharacterId
+      &&db.getWorldEvent(guild,p.source_event)?.details.discord_message_id===source.details.message_id).map(p=>p.record_key);
 }
 function savePart(db,guild,part){
   if(part.kind==="observation_answer")part={...part,evidence_refs:renderObservation(db,guild,part.query,part.scope).proof_refs};
@@ -439,6 +453,9 @@ export function prepareAuthorizedTurnOutput(db,guild,result,scope,{sourceRef=nul
       // Unsupported parts stay in the private draft quarantine. Independent native work is preserved.
     }
   }
+  // An owner action parked on an unknown target asks the player directly instead of silently vanishing.
+  for(const ref of awaitingReferents(db,guild,sourceRef,scope))
+    parts.push(savePart(db,guild,{...common,kind:'referent_clarification',ref}));
   if(!sourceRef&&parts.length){
     const source=db.getWorldEvent(guild,parts[0].source_event);
     common.source_ref=source.event_key;common.source_hash=hash(source.details);

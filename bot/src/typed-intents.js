@@ -498,6 +498,11 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
       if(reference.status==='resolved'){
         resolvedTargetKey=reference.entity_key;nativeGrounded=true;
         if(reference.identity)memoryIdentityRefs=[reference.identity];
+      }else if(!reference.candidates?.length&&['interact','observe','search'].includes(intent.type)&&pc.data.location
+        &&db.getSimulationEntity(guild,'location',pc.data.location)){
+        // Narrated scene objects (a tile, a key) are not tracked entities; act on them within the PC's established
+        // location. target_name keeps the object phrase; adjudication still owns any outcome.
+        resolvedTargetKey=pc.data.location;nativeGrounded=true;
       }else targetCandidates=reference.candidates||[];
     }
     const pending=resolvedTargetKey&&db.listCityRecords(guild,{kind:'semantic_intent_proposal',includeGM:true,limit:100})
