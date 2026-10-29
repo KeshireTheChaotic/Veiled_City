@@ -2,7 +2,8 @@
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {activeCityProxy,assertNpcAvailability} from './city-constraints.js';
+import {intentWorldConstraints} from './frameworks/intent/public.js';
+const {activeCityProxy,assertNpcAvailability}=intentWorldConstraints;
 import {scenePresence} from './scene-continuity.js';
 import {intentNpcEvidence} from './frameworks/intent/public.js';
 const {actorReferenceVisible}=intentNpcEvidence;

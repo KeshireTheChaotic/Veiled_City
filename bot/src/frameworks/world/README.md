@@ -2,7 +2,7 @@
 
 World/civic state and autonomous environment/event identity; native mechanical authorization remains Daggerheart-owned.
 
-Observed current source candidates: `autonomous-world.js`, `city-calendar.js`, `city-civic.js`, `city-consequences.js`, `city-constraints.js`, `city-core.js`. Complete accountable assignments and mixed-responsibility obligations are in the RF ownership manifest. None of those existing files moved in RF01.
+Observed source candidates at the initial audit: `autonomous-world.js`, `city-calendar.js`, `city-civic.js`, `city-consequences.js`, `city-constraints.js`, `city-core.js`. The `city-constraints.js` compatibility export was retired in RF04-F06 C189; its World implementations remain in their owning World modules, with cross-framework callers routed through the registered pair APIs. Complete accountable assignments and remaining mixed-responsibility obligations are in the RF ownership manifest.
 
 This framework may use its own modules and neutral kernel primitives. Other capabilities arrive through consumer-owned contracts; it must not import another framework or a pair integration. Pair adapters alone map exactly two public framework APIs; application composition wires them.
 

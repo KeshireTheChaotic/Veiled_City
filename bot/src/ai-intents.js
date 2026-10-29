@@ -7,7 +7,8 @@ const {inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,execute
 import { createHash } from "node:crypto";
 import { validateIntent } from "./ai-intent-contracts.js";
 import { recordScenePresence, scenePresence, sceneView } from "./scene-continuity.js";
-import { activeCityProxy } from "./city-constraints.js";
+import {intentWorldConstraints} from './frameworks/intent/public.js';
+const {activeCityProxy}=intentWorldConstraints;
 import { subscribeConsequence, reviewConsequence } from "./city-consequences.js";
 import { manageGroup } from "./city-groups.js";
 import { ContextPlanner } from "./context-planner.js";

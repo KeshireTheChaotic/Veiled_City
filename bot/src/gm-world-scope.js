@@ -3,7 +3,8 @@ import {createHash} from 'node:crypto';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {activeCityProxy,assertNpcAvailability} from './city-constraints.js';
+import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Current native GM-owned fiction scope required.'),{code:'GM_WORLD_NARRATIVE',expected:true});}
 export function gmOwnedScope(db,guild,type,key,scope,{declineOnly=false}={}){

@@ -4,6 +4,7 @@ export {createNativeOutcomeConsumer,nativeOutcomeConsumer} from './contracts/nat
 export {publicationSessionEvidence} from './contracts/session-evidence.js';
 export {publicationKnowledgeNarrativeMemory} from './contracts/knowledge-narrative-memory.js';
 export {publicationWorldReceipts} from './contracts/world-receipts.js';
+export {publicationWorldConstraints} from './contracts/world-constraints.js';
 export {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './contracts/opening-egress.js';
 
 export {publicationSessionPrincipal} from './contracts/session-principal.js';

@@ -24,3 +24,8 @@ import {narrativeWorldSimulation} from '../../frameworks/narrative/public.js';
 import {prepareWorldSimulationObservation} from '../../frameworks/world/public.js';
 /** Bind World's original simulation observation preparation to Narrative's fixed consumer. */
 export function connectNarrativeWorldSimulation(){return narrativeWorldSimulation.bind({prepareWorldSimulationObservation});}
+
+import {narrativeWorldConstraints} from '../../frameworks/narrative/public.js';
+import {activeCityProxy,assertNpcAvailability} from '../../frameworks/world/public.js';
+/** Bind World's original proxy and availability rules to Narrative's fixed consumer. */
+export function connectNarrativeWorldConstraints(){return narrativeWorldConstraints.bind({activeCityProxy,assertNpcAvailability});}

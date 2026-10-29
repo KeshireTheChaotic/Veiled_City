@@ -27,3 +27,8 @@ import {intentWorldOperations} from '../../frameworks/intent/public.js';
 import {prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference,attemptCityInfluence} from '../../frameworks/world/public.js';
 /** Bind World's original operations, receipts, place lookup and callable city influence to Intent's fixed consumer. */
 export function connectIntentWorldOperations(){return intentWorldOperations.bind({prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference,attemptCityInfluence});}
+
+import {intentWorldConstraints} from '../../frameworks/intent/public.js';
+import {activeCityProxy,assertNpcAvailability} from '../../frameworks/world/public.js';
+/** Bind World's original proxy and availability rules to Intent's fixed consumer. */
+export function connectIntentWorldConstraints(){return intentWorldConstraints.bind({activeCityProxy,assertNpcAvailability});}

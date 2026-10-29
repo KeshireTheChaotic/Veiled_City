@@ -2,7 +2,7 @@
 import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
 import { requireCitySource } from "./city-core.js";
 import { updateCityCivic } from './frameworks/world/public.js';
-import { activeCityProxy, assertNpcAvailability } from "./city-constraints.js";
+import {activeCityProxy,assertNpcAvailability} from './frameworks/world/public.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
 import { UserInputError, StateConflictError } from "./kernel/errors.js";
 import {nativeWorldOperationAllows} from './frameworks/world/public.js';

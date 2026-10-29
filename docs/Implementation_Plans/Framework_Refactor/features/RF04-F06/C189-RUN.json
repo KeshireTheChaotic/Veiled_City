@@ -1,0 +1,119 @@
+{
+  "feature": "RF04-F06-C189",
+  "run_id": "2af8c1e5-2ae8-4aab-9805-e19545d8bb41",
+  "base_head": "f534e73e405c1e298fed651609123c849e804180",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "test": {
+    "final_path": "bot/tests/ai-gm-2026-10/rf04-f06.test.mjs",
+    "sha256": "b0fc1ae04fcc19fe2f339e3fdee04855d3916246b00295483e4e0edf48859599",
+    "attempts": [
+      {
+        "command": "node --test tests/ai-gm-2026-10/rf04-f06-c189.test.mjs",
+        "exit_code": 1,
+        "passed": 1,
+        "failed": 1,
+        "reason": "Source-inspection fixture resolved the repository root one parent too high; corrected the test path."
+      },
+      {
+        "command": "node --check tests/ai-gm-2026-10/rf04-f06-c189.test.mjs; node --test tests/ai-gm-2026-10/rf04-f06-c189.test.mjs",
+        "exit_code": 0,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "duration_ms": 67.9163,
+        "qualification": "PASS; the test was subsequently renamed without changing bytes to the registered fresh-test filename."
+      }
+    ]
+  },
+  "syntax": {
+    "command": "node --check each changed/new production JavaScript file and the fresh test module",
+    "exit_code": 0,
+    "production_files": 24,
+    "test_files": 1
+  },
+  "diff_check": {
+    "command": "git diff --check -- bot/src bot/tests/ai-gm-2026-10/rf04-f06.test.mjs docs/Implementation_Plans/Framework_Refactor",
+    "exit_code": 0
+  },
+  "architecture": {
+    "rf04": {
+      "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "source_modules": 860,
+      "unowned": 0,
+      "imports": 3518,
+      "cycle_components": 2,
+      "largest_cycle": 79,
+      "active_groups": 0,
+      "transition_errors": 0,
+      "pass": true
+    },
+    "rf05": {
+      "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "source_modules": 860,
+      "unowned": 0,
+      "imports": 3518,
+      "cycle_components": 2,
+      "largest_cycle": 79,
+      "active_groups": 42,
+      "transition_errors": 42,
+      "pass": false
+    }
+  },
+  "transition_records_retired": [
+    "0e01e199e488dd0d2d15a124e26ab2ba79addf9c70552750ac675cdf6b67f1dc",
+    "060071b59eb3f94c6483220049cece325fc7fd927ccddbec42b8deffcbfa7d2d",
+    "f91b275c9227137c64627f93f894f0d2fcfbe65aca2fdba2cef06d408e07a399",
+    "96d59707d7ac44a1c5659830a9610d8017fe7005009d05e1d4a2ab9eb80d3f2f",
+    "969f93c80df6768ac18760ac183f62cfdae8202b9cc8b33ff22059c034fec5c5",
+    "fbdc73793b720b9f3c456172ac4cabcd2b6761b00173b90a0fc85ea1dac7fc92",
+    "216195898b0a432b9ed5a756d2f5418e4464bdc7014cd041bbb71c4becdb19a3",
+    "72dd0734a0e7b189497f9fe89151dab3087dfe03a41c49dbe67b2a37911d46e1",
+    "8b975d03a1bd6f3e7e07621ec5de8f46235b1d87a223e0325e0a050cf756fec8",
+    "e714f96875acd2817a2ebde8306f73ce9107a807724c10cc5ca519c8186c9d83"
+  ],
+  "provider_calls": 0,
+  "provider_tokens": 0,
+  "provider_cost_usd": 0,
+  "codex_usage": "UNMEASURED",
+  "sqlite_schema_changed": false,
+  "saved_state_changed": false,
+  "release_authorized": false,
+  "file_sha256": {
+    "bot/src/ai-intents.js": "4bf4944db0de21de1b61085a55a8222779a9605e3973d7c1fc259c66efbc7411",
+    "bot/src/scene-intent-board.js": "eb42776d09c573f62ef978d24a336cb1bb158114df4f3cec7505fd599bb9c443",
+    "bot/src/gm-world-scope.js": "14016277699a1587570eff0ff70da1ad9f7a54561610a165a7d75874cc86cc18",
+    "bot/src/narrative-authority.js": "49f2a6be430f67a9652c5dba927ef3e1f1503e67a69ac62e9424cb600caa7d39",
+    "bot/src/narrative-authority-context.js": "26da9d7f247deff5b4cd44b5e9a3425048c1587094287454e5cb36e9e1289cd2",
+    "bot/src/narrative-clauses-v9.js": "22bb68d15786a0fc753db123cc79a361d778dd1066ff9c37bc11add0d3d6f3e7",
+    "bot/src/narrative-speakers.js": "c5cd7d5a32beb10b0e78fb60553454f95c6f5e591a0ea42479d96724c7e9bcea",
+    "bot/src/narrative-salience.js": "6b74f90b492f7234fff8425954dbe4f92d1a0a30f219fdfc3a19dd1fc6bd48e9",
+    "bot/src/native-hook-output.js": "0a1ad33d9df0e3d238ee0549d700f1a5dc2b5d213a2993e8fe6cd942794f8914",
+    "bot/src/autonomous-world.js": "3b8be87a8f007dd41c12f9f54b2ad1d0c02458e7343f97ffe3577094e19fb26c",
+    "bot/src/city-groups.js": "91fb553f6db0347f76073661fed02988a46cb1057cdd18220f6985d560300a8d",
+    "bot/src/world-resolution.js": "1528ee5a64101498b52f3dfb7ca9592e8092dcb6a12b30cf0133c7a00ade89c6",
+    "bot/src/frameworks/intent/contracts/world-constraints.js": "26af58ba29898905e18464f5761c65eb9f0abab1aada553a9a93b1063b988ce1",
+    "bot/src/frameworks/narrative/contracts/world-constraints.js": "a55db29411281a365df5ae318b6219502e6a1a71c441f84ae11ccbc478e9a377",
+    "bot/src/frameworks/publication/contracts/world-constraints.js": "6e8e537bf1fce4cc034ce6739b316a3305cb0acca40232052f02670bb4d654a6",
+    "bot/src/frameworks/intent/public.js": "e4812d8eb25c902d46b125a585cefba7f90e0725226cd8d70cfd9ab9aa1245bf",
+    "bot/src/frameworks/narrative/public.js": "0a2c58e324d7678173497d6e52496db503f8f1b852051b04de1d61a35fe5ff3d",
+    "bot/src/frameworks/publication/public.js": "b308b0b6b4f4115827271e8ee806d315966bb52b17b9f71e77ef5f131252b88d",
+    "bot/src/framework-to-framework/intent--world/public.js": "224bf80374bae723b1b993e6da4d3a1254165643117265fa50a018ccc3aec9c0",
+    "bot/src/framework-to-framework/narrative--world/public.js": "e1fd86b11eaffe08e2dd064c35a459d7f99b6ee5a815de4191a0c476fee45214",
+    "bot/src/framework-to-framework/publication--world/public.js": "f2b73d0fc3541d5a749a700ef75a39a4594cb91ae25a009860525e5f82c33ece",
+    "bot/src/application/composition/world-execution.js": "758ac3404f2cc6d1cd733d66380d5fd420d32d2b9170ed9cec458c4dcdc09bcc",
+    "bot/src/application/composition/narrative-world.js": "46d264625f3a500ac95541dc124134d49c6338c53138a75788a94101b9c141c1",
+    "bot/src/application/composition/publication-world.js": "3e5112a1cb1e50ddc8eb396b98f696e45a6e0236b3ec6787fae2261909efc08d",
+    "bot/tests/ai-gm-2026-10/rf04-f06.test.mjs": "b0fc1ae04fcc19fe2f339e3fdee04855d3916246b00295483e4e0edf48859599",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "18fb2416f766b3b6eaf6596a58f8aff19afc12ceaeb35e044c665f5a8fc9df50",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "e63e7aa23926a4ea6ebee8b39f5133b03b3f03045cb7773c37fc630c5bb1ceb8",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "490483712d42dbbc2a838061db206c819c0857065ace037aeaef66e3bcd4f014",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F06/C189-SCOPE.md": "23fbf949227b668b47b1a1265aaefbdac6c14a2b9702d2abfe0eeb2888f81463",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F06/C189-LEDGER.md": "f54daff8139a7d2fc06c22af4d1a4a12d5b1553e569d63305c4d14efc1fa9c3d",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF04-F06/C189-RETIRED.json": "ef5872e64e5770b1e316e988d971ef00fad0bd7fa669f94869a44dad34cf9274",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF04/LEDGER.md": "bc81d76ef4b14e5bf5b08cf11ddce1f880d1846f19a5193ad31a0c11db709f98",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "428d3937a4064be7242cee666d2196b5c1e5726c96e27ed11d1df44facc8b33d",
+    "bot/src/frameworks/world/README.md": "4aa3fbb6f4a07082bc534c7049a352f6a71435bbc17ba77e1a90f2b4d9f56102"
+  }
+}

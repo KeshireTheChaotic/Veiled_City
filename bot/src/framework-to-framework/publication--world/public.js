@@ -3,3 +3,8 @@ import {worldSimulationReceiptForAudience} from '../../frameworks/world/public.j
 
 /** Bind World's original audience-scoped simulation receipt reader to Publication's fixed consumer. */
 export function connectPublicationWorldReceipts(){return publicationWorldReceipts.bind({worldSimulationReceiptForAudience});}
+
+import {publicationWorldConstraints} from '../../frameworks/publication/public.js';
+import {activeCityProxy} from '../../frameworks/world/public.js';
+/** Bind World's original proxy evidence query to Publication's fixed consumer. */
+export function connectPublicationWorldConstraints(){return publicationWorldConstraints.bind({activeCityProxy});}

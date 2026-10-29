@@ -21,5 +21,6 @@ export {intentKnowledgeMaintenance} from './contracts/knowledge-maintenance.js';
 export {intentKnowledgeActions} from './contracts/knowledge-actions.js';
 export {intentKnowledgeMemory} from './contracts/knowledge-memory.js';
 export {intentWorldOperations} from './contracts/world-operations.js';
+export {intentWorldConstraints} from './contracts/world-constraints.js';
 
 export {intentSessionPrincipal} from './contracts/session-principal.js';

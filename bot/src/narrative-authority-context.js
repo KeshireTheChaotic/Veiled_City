@@ -8,7 +8,8 @@ import {factVisibleTo} from './disclosure-authority.js';
 import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {protectedPvpScope} from './pvp-output.js';
-import {activeCityProxy} from './city-constraints.js';
+import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
 function selectDisclosedNarrativeMemory(...args){return narrativeKnowledgeMemory.selectDisclosedNarrativeMemory(...args);}
 import {rankNarrativeMemory} from './narrative-salience.js';

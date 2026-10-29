@@ -4,7 +4,7 @@ import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.
 import {worldSessionScene,worldKnowledgeSources} from './frameworks/world/public.js';
 const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords(...args);
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
-import {worldActorControl} from './city-constraints.js';
+import {worldActorControl} from './frameworks/world/public.js';
 import {indexWorldEvent} from './frameworks/world/public.js';
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function narrativeImportance(...args){return worldNarrativeSources.narrativeImportance(...args);}function nativeSalienceAvailable(...args){return worldNarrativeSources.nativeSalienceAvailable(...args);}

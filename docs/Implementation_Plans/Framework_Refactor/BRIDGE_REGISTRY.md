@@ -39,7 +39,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | intent--persistence | PROPOSED_NO_API | intent → persistence | 0 / 0 | RF05 |
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |
 | intent--session | PROPOSED_NO_API | session → intent; intent → session | 0 / 0 | RF05 |
-| intent--world | ADOPTED | world → intent | 3 / 3 | RF05-F04 |
+| intent--world | ADOPTED | world → intent (C189 proxy evidence / NPC availability); intent → world | 3 / 3 | RF04-F06 |
 | knowledge--narrative | ADOPTED | knowledge → narrative; narrative → knowledge (C185 retained/disclosed memory operations only) | 1 / 2 | RF04-F05 |
 | knowledge--npc | ADOPTED | npc → knowledge; knowledge → npc | 3 / 4 | RF04-F05 |
 | knowledge--operations | ADOPTED | knowledge → operations (`reviewOrganization` only); operations → knowledge (observed, unqualified) | 1 / 1 | RF05-F05 |
@@ -52,7 +52,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | narrative--persistence | PROPOSED_NO_API | persistence → narrative; narrative → persistence | 0 / 0 | RF05 |
 | narrative--publication | PROPOSED_NO_API | narrative → publication; publication → narrative | 0 / 0 | RF05 |
 | narrative--session | CONTRACT_ONLY_UNWIRED | session → narrative | 1 / 2 | RF04-F04 |
-| narrative--world | ADOPTED | world → narrative | 1 / 1 | RF04-F05 |
+| narrative--world | ADOPTED | world → narrative (C189 proxy evidence / NPC availability) | 1 / 1 | RF04-F06 |
 | npc--operations | ADOPTED | operations → npc | 1 / 1 | RF04-F05 |
 | npc--persistence | PROPOSED_NO_API | persistence → npc; npc → persistence | 0 / 0 | RF06 |
 | npc--session | ADOPTED | npc → session; session → npc | 3 / 3 | RF04-F05 |
@@ -65,7 +65,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | persistence--session | PROPOSED_NO_API | persistence → session; session → persistence | 0 / 0 | RF06 |
 | persistence--world | PROPOSED_NO_API | persistence → world; world → persistence | 0 / 0 | RF06 |
 | publication--session | PROPOSED_NO_API | session → publication; publication → session | 0 / 0 | RF06 |
-| publication--world | PROPOSED_NO_API | publication → world | 0 / 0 | RF06 |
+| publication--world | ADOPTED | world → publication (C189 proxy evidence); publication → world remains open | 0 / 0 | RF04-F06 |
 | session--world | ADOPTED | session → world; world → session | 3 / 5 | RF04 |
 
 Test-path validation is separate from actual execution evidence. Pairs import only their two public owners and neutral kernel; application owns orchestration. No source/canon, PC choice, mechanics, secrecy or delivery authority is inferred from integration. RELEASE NOT AUTHORIZED.

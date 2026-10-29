@@ -9,7 +9,7 @@ import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}
 import {worldNativeMovementChecks} from './frameworks/world/public.js';
 function nativeMovementConditionIssue(...args){return worldNativeMovementChecks.nativeMovementConditionIssue(...args);}
-import { activeCityProxy } from "./city-constraints.js";
+import {activeCityProxy} from './frameworks/world/public.js';
 import { configureSimulationEntity } from './frameworks/world/public.js';
 import { validateMinorIdentity } from "./city-depth.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';

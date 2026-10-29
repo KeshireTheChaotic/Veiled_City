@@ -1,7 +1,8 @@
 /** Read-only native preparation/deadline projections. Arbitrary hook prose never supplies outcome authority. */
 import {createHash} from 'node:crypto';
 import {currentScene} from './scene-continuity.js';
-import {activeCityProxy} from './city-constraints.js';
+import {publicationWorldConstraints} from './frameworks/publication/public.js';
+const {activeCityProxy}=publicationWorldConstraints;
 import {hasPcReference} from './fresh-npc-authoring.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native hook needs its exact current NPC outcome and audience.'),{code:'NARRATIVE_PVP'});}

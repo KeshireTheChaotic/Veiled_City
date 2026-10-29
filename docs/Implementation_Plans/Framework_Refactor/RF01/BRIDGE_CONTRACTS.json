@@ -1910,6 +1910,11 @@
           "from": "world",
           "to": "intent",
           "contract": "Compose the existing World NPC action and Intent array proposal schemas for the actual GM request; grants no execution or disclosure authority. C09 also supplies the original Intent campaign delegation-policy read to World scheduling."
+        },
+        {
+          "from": "world",
+          "to": "intent",
+          "contract": "World binds its original active NPC proxy evidence query and NPC availability guard to Intent's fixed consumer; Intent adds no rules or owner-control authority."
         }
       ],
       "source_evidence": [
@@ -1924,11 +1929,23 @@
           "to": "bot/src/frameworks/world/public.js",
           "line": 2,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--world/public.js",
+          "to": "bot/src/frameworks/world/public.js",
+          "line": 2,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/intent/contracts/world-constraints.js",
+          "to": "bot/src/kernel/function-port.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Exact schema fields, order and nested owner-object identities; actual GM/structured transport request tests. Rules and native receipts remain outside proposal composition.",
+      "validation": "Exact schema fields, order and nested owner-object identities; actual GM/structured transport request tests. Rules and native receipts remain outside proposal composition. The C189 capability passes only the original World function references through a fixed consumer port; construction is state-free and replacement is rejected.",
       "lifecycle": "One static schema per module, consumed directly by the application GM planner. Old World-owned schema source retired after sole live caller switched; not a persisted receipt reader.",
-      "adoption_feature": "RF05-F04",
+      "adoption_feature": "RF04-F06",
       "consumers": [
         "bot/src/gm.js",
         "bot/src/application/composition/world-execution.js",
@@ -1961,7 +1978,7 @@
         "occurrences": 29
       },
       "public_api": "bot/src/framework-to-framework/intent--world/public.js",
-      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open. C179 also routes Intent’s existing attemptCityInfluence call through the existing Intent-owned intentWorldOperations port, bound to the original World function by the existing Intent–World adapter. This is callable state-changing behavior: the original function may persist a transmission, receiver update, influence_action record, and audit in its existing transaction; the port adds no authority, policy, or saved effect."
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open. C179 also routes Intent’s existing attemptCityInfluence call through the existing Intent-owned intentWorldOperations port, bound to the original World function by the existing Intent–World adapter. This is callable state-changing behavior: the original function may persist a transmission, receiver update, influence_action record, and audit in its existing transaction; the port adds no authority, policy, or saved effect. C189 binds connectIntentWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open."
     },
     {
       "pair": "knowledge--narrative",
@@ -2708,6 +2725,11 @@
           "from": "world",
           "to": "narrative",
           "contract": "World authorship consumes the original Narrative runtime audience mint/revalidation, source-visibility and failure capabilities. No copied proof or alternate grant store."
+        },
+        {
+          "from": "world",
+          "to": "narrative",
+          "contract": "World binds its original active NPC proxy evidence query and NPC availability guard to Narrative's fixed consumer; Narrative adds no rules or disclosure authority."
         }
       ],
       "source_evidence": [
@@ -2722,11 +2744,23 @@
           "to": "bot/src/frameworks/world/public.js",
           "line": 2,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/narrative--world/public.js",
+          "to": "bot/src/frameworks/world/public.js",
+          "line": 2,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/narrative/contracts/world-constraints.js",
+          "to": "bot/src/kernel/function-port.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Complete fixed source object, replacement prohibited, original Narrative WeakMap shared with compatibility API. Current source, audience, controller and saved-origin checks stay in their native owners.",
+      "validation": "Complete fixed source object, replacement prohibited, original Narrative WeakMap shared with compatibility API. Current source, audience, controller and saved-origin checks stay in their native owners. The C189 capability passes only the original World function references through a fixed consumer port; construction is state-free and replacement is rejected.",
       "lifecycle": "Inert fixed application initializer called by actual index before service construction. Narrative context factory supplied by original source composition; context-provider decomposition remains explicit residual debt.",
-      "adoption_feature": "RF04-F05",
+      "adoption_feature": "RF04-F06",
       "consumers": [
         "bot/src/application/composition/narrative-world.js"
       ],
@@ -2757,7 +2791,7 @@
         "occurrences": 52
       },
       "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
-      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions."
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open."
     },
     {
       "pair": "npc--operations",
@@ -3481,6 +3515,11 @@
           "from": "world",
           "to": "publication",
           "contract": "Bind World's original audience-scoped simulation receipt reader to Publication's fixed consumer; World keeps every audience and source rule."
+        },
+        {
+          "from": "world",
+          "to": "publication",
+          "contract": "World binds its original active NPC proxy evidence query to Publication's fixed consumer; Publication adds no proxy, consent, or disclosure authority."
         }
       ],
       "source_evidence": [
@@ -3489,11 +3528,23 @@
           "to": "bot/src/framework-to-framework/publication--world/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/publication--world/public.js",
+          "to": "bot/src/frameworks/world/public.js",
+          "line": 2,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/publication/contracts/world-constraints.js",
+          "to": "bot/src/kernel/function-port.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
+      "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules. The C189 capability passes only the original World function references through a fixed consumer port; construction is state-free and replacement is rejected.",
       "lifecycle": "One fixed consumer port bound by application composition at index bootstrap before runtime services. No database/model/client/state write during composition.",
-      "adoption_feature": "RF04-F05",
+      "adoption_feature": "RF04-F06",
       "consumers": [
         "bot/src/application/composition/publication-world.js"
       ],
@@ -3515,7 +3566,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/publication--world/public.js",
-      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations."
+      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations. C189 binds connectPublicationWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open."
     },
     {
       "pair": "session--world",

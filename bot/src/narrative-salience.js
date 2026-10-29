@@ -6,7 +6,8 @@ import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fict
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {currentScene} from './scene-continuity.js';
-import {activeCityProxy} from './city-constraints.js';
+import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 const listNarrativeRecords=(...args)=>narrativeKnowledgeReaders.listNarrativeRecords(...args),NARRATIVE_RECORD_LIMIT=()=>narrativeKnowledgeReaders.narrativeRecordLimit();
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';

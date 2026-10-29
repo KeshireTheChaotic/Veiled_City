@@ -1,7 +1,8 @@
 /** Audience-filtered actor-relative portrayal. Public fiction never receives unrestricted GM dossiers. */
 import {portrayalPacket} from './portrayal.js';
 import {scenePresence,npcEvidenceActive} from './scene-continuity.js';
-import {activeCityProxy} from './city-constraints.js';
+import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeSourceVisible} from './scene-fiction-context.js';
 import {narrativeNpcVisibility} from './frameworks/narrative/public.js';
 const {actorEvidenceVisible}=narrativeNpcVisibility;
