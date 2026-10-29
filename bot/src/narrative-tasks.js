@@ -54,7 +54,7 @@ export function taskDispositions(db,guild,result,parts,scope,sourceRef){
       const taskBound=row.data.act_v9?row.data.act_v9.task_id===t.id||unique:unique;
       if(!taskBound)return false;
       if(t.kind==='npc_response')return u.kind==='npc_speech'&&u.subject_key===t.binding.target;
-      if(t.kind==='observation')return t.binding.operation==='appearance'&&u.kind==='scene'
+      if(t.kind==='observation')return u.kind==='scene'
         &&(db.getNpcProfile(guild,t.binding.target)?u.subject_key===t.binding.target
           :db.getSimulationEntity(guild,'location',t.binding.target)&&(u.location_key||row.data.binding.location)===t.binding.target);
       if(t.kind==='scene')return ['scene','lead','established_observation'].includes(u.kind);
