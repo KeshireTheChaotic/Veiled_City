@@ -1095,3 +1095,7 @@ Original draft/review service moved unchanged into World; root city-depth retire
 ## C197 reviewed authoring — COMPLETE
 
 Original authoring service moved unchanged to World, Application caller public, root retired. Three fresh cases, syntax3/3, original body comparison and RF04 ratchet875modules/zero active/errors pass. Two exact records retired. Feature ledger retains mocked-storage/materializer limits. Next: current RF04 remaining-location reconciliation and next dependency-ready slice. RF04 incomplete; release unauthorized.
+
+## C198 Session negotiation — COMPLETE
+
+Original service moved unchanged to Session; Application public caller, two exact records retired. Fresh2/2pass with explicit contract fakes; syntax3/3/source comparison/RF04 gate875modules zero active/errors pass. Feature ledger records native/storage limits. Next: session briefs and recap dependency. RF04 incomplete; release unauthorized.

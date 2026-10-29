@@ -1,0 +1,3719 @@
+{
+  "base": "43a127bff042d901fbf8e9affab3b156cbfba581",
+  "source_report": ".reports/C197-final.json",
+  "remaining_RF04_records": 36,
+  "rows": [
+    {
+      "path": "bot/src/action-continuation.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "sessionIntent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeActionConsent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ],
+          "to": "bot/src/scene-continuity.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "sessionWorldAutonomy"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeChecks"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./pvp-output.js",
+          "line": 18,
+          "column": 0,
+          "importedNames": [
+            "prepareContinuationOutput"
+          ],
+          "to": "bot/src/pvp-output.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./publication-outbox.js",
+          "line": 19,
+          "column": 0,
+          "importedNames": [
+            "queueTurnPublications"
+          ],
+          "to": "bot/src/publication-outbox.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/action-continuation.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 236,
+          "column": 0,
+          "importedNames": [
+            "sessionActionContinuation",
+            "sessionContinuationAuthorization"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "continuationInbox"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-pvp.js",
+          "symbols": [
+            "drainActionContinuations"
+          ]
+        },
+        {
+          "path": "bot/src/pvp-output.js",
+          "symbols": [
+            "renderContinuationNotice"
+          ]
+        },
+        {
+          "path": "bot/src/turn-orchestration.js",
+          "symbols": [
+            "refreshActionContinuations"
+          ]
+        },
+        {
+          "path": "bot/src/window-coordinator.js",
+          "symbols": [
+            "drainActionContinuations",
+            "continuationInbox"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "9676c4373f5cde43a558d33992d590d0c5972431a7ce050634791bb683d94071",
+        "8d2196eff7a061809e1653be539866fb3dff33eb24a4f31b8b3ad3f269b3993d",
+        "3a6f9fbc1116efd903e5777dd47a8a8943547449c5b14c2ac1e752e959c7b235",
+        "c238f236412baf054eb82cbba24a5b02ddade091e6037ceb3cdcca967d32d3d6",
+        "776bec63f7ea523480f9b47780c65e68a2e60bbf2a064c44491a6dc213a525df",
+        "83897cce02fda11c5bf7ff837d4c6d2377aa6881af6939a7d41a82d296852275",
+        "814a286ed32cbb94bad194a73fc8984579c12120192248fe7ba5ad8f9cf2a750",
+        "34c6306b547c0391cb9c8a80ba54bde784a35667a4004def554a6ce77e55b6e2",
+        "52fcdebfa304f32ad9438d11eead3336fdb318975ea4ca2d353a60d23a693be5",
+        "68ccef96c79700f768b1d735d180b4e1e0e7845e98738b123ce72dec1c31390b",
+        "75210e2b4f47794387fceb0935beb9455a66d5e9c09b9e362e7d7b065c987c26"
+      ]
+    },
+    {
+      "path": "bot/src/autonomous-world.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "worldConversationPrincipal"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "worldPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent",
+            "cityAudit",
+            "cityObject"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "worldSessionScene"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "worldNativeMovementChecks"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "activeCityProxy"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "configureSimulationEntity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "validateMinorIdentity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./kernel/entity-key.js",
+          "line": 15,
+          "column": 0,
+          "importedNames": [
+            "normalizeEntityKey"
+          ],
+          "to": "bot/src/kernel/entity-key.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./kernel/state-revision.js",
+          "line": 16,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ],
+          "to": "bot/src/kernel/state-revision.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 17,
+          "column": 0,
+          "importedNames": [
+            "resolvePlaceReference",
+            "preflightPlaceIdentity",
+            "preflightNpcIdentity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 18,
+          "column": 0,
+          "importedNames": [
+            "worldIntentDispatch"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 21,
+          "column": 0,
+          "importedNames": [
+            "worldContextMemory"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 23,
+          "column": 0,
+          "importedNames": [
+            "worldCharacterObservation"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 26,
+          "column": 0,
+          "importedNames": [
+            "worldSessionContinuation"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./world-authorship.js",
+          "line": 28,
+          "column": 0,
+          "importedNames": [
+            "verifiedWorldAuthoringContext",
+            "worldIdentityOrigin",
+            "privateWorldIdentityForGm",
+            "assertIndependentWorldIdentity",
+            "assertWorldIdentityNames"
+          ],
+          "to": "bot/src/world-authorship.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 29,
+          "column": 0,
+          "importedNames": [
+            "worldNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./world-background-identities.js",
+          "line": 31,
+          "column": 0,
+          "importedNames": [
+            "validateBackgroundIdentity"
+          ],
+          "to": "bot/src/world-background-identities.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/autonomous-world-contract.js",
+          "line": 33,
+          "column": 0,
+          "importedNames": [
+            "AUTONOMOUS_WORLD_PROMPT"
+          ],
+          "to": "bot/src/frameworks/world/autonomous-world-contract.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/world-proposal-schema.js",
+          "line": 35,
+          "column": 0,
+          "importedNames": [
+            "worldAdditionsSchema",
+            "sceneActionsSchema",
+            "worldConflictsSchema"
+          ],
+          "to": "bot/src/frameworks/world/world-proposal-schema.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 325,
+          "column": 0,
+          "importedNames": [
+            "createWorldIdentityRules"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/autonomous-world.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 328,
+          "column": 0,
+          "importedNames": [
+            "worldAutonomousSource",
+            "worldAutonomousApplication"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/gm-native-rolls.js",
+          "symbols": [
+            "captureWorldInput"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "autonomousWorldContext",
+            "worldAuthority"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "worldInputKey"
+          ]
+        },
+        {
+          "path": "bot/src/index.js",
+          "symbols": [
+            "captureWorldInput",
+            "worldInputKey"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority.js",
+          "symbols": [
+            "establishNarrativeEntity"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "applyAutonomousWorld",
+            "worldInputKey"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "configureWorldAuthority",
+            "worldAuthority",
+            "retconAutonomousEntity"
+          ]
+        },
+        {
+          "path": "bot/src/turn-orchestration.js",
+          "symbols": [
+            "worldInputKey"
+          ]
+        },
+        {
+          "path": "bot/src/typed-intents.js",
+          "symbols": [
+            "worldInputKey"
+          ]
+        },
+        {
+          "path": "bot/src/world-private-seeds.js",
+          "symbols": [
+            "establishNarrativeEntity"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "391a26d72f7800ec212fd0a68d8573af8ab80091d77bb36768155ede1d4d658c",
+        "da0707ea1bcca9656b967d6fd0d662a4dd4ddfaed6b0ee065eb382202d764230",
+        "cfa79429dff340246e400e3e6084b753af4758739758a7e9b75827cbef7ca8b3",
+        "6fa5417ee5ea3b0804dce05667b77da48eb62c3f870cac6552543d35b1efc282",
+        "7126104a5628e3356cfbca57f6b38adfcdcbe976b56a34e1bc456be9cfddc374",
+        "2045fd52ce4fa2ef6d79b329093197c5f0d893d75c633e0745fcebf515cbd385",
+        "0aaf7715a58db2aaa128512abd4e71fb61fc2f1ebe27099cf22f44ff22279470",
+        "2663d4d05c88024cff38b7cef83eed6e706c150daaf679c53d6c8cf02755f494",
+        "ee5bf602e1ca3c466133e7cb274bd20b397766b3c4d2724370bbed4ce5bf8d62"
+      ]
+    },
+    {
+      "path": "bot/src/city-calendar.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/city-calendar.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityInteger",
+            "cityVisibility",
+            "cityAudit",
+            "calendarStatus",
+            "configureCalendar",
+            "indexWorldEvent",
+            "scheduleCityEvent",
+            "reviewCityEvent",
+            "processCityDue"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "processCityDue"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "066111eafc97b52af7d2d45cc1c7647fa94dc4858068063c066e6b7c9938c26a",
+        "bb2b74bdf9c031e73643f30834ea1e35c56bc1878f0ddd9aff16f87d3036b044"
+      ]
+    },
+    {
+      "path": "bot/src/dialogue-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "sceneAccess",
+            "sceneView",
+            "scenePresence",
+            "currentScene"
+          ],
+          "to": "bot/src/scene-continuity.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "sessionWorldEvents"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "sessionSceneWorldSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./kernel/json-key32.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "jsonKey32"
+          ],
+          "to": "bot/src/kernel/json-key32.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "sessionWorldNpcAvailability"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "sessionNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 16,
+          "column": 0,
+          "importedNames": [
+            "sessionKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 18,
+          "column": 0,
+          "importedNames": [
+            "sessionIntentLanguage"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/dialogue-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 20,
+          "column": 0,
+          "importedNames": [
+            "sessionIntent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "interpretDialogue"
+          ]
+        },
+        {
+          "path": "bot/src/authored-candidates.js",
+          "symbols": [
+            "captureDialogue"
+          ]
+        },
+        {
+          "path": "bot/src/typed-intents.js",
+          "symbols": [
+            "captureDialogue"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "6d2bcce22ada89ef0af00dd3b08aee6ef10a05c1504b9eff3dcd5c6db6a9ec9a",
+        "dfe36ab4bb877efde5e329386e36bc5cc657ac73a26236fafb671a003501dc6c",
+        "3b555baf74bbf773c3eb772e5d6c3028f51aea5d88ed081809872fdf08c9b7a2",
+        "04c26e9b6453cd3c43873972d58526234769c48db2513288caf5c2c5dbc3b9fa"
+      ]
+    },
+    {
+      "path": "bot/src/director.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/director.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "validatePostTurnStateReview"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/director.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 72,
+          "column": 0,
+          "importedNames": [
+            "createDirectorCadence",
+            "POST_TURN_REVIEW_CATEGORIES"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "normalizeDirectorConfidence"
+          ]
+        },
+        {
+          "path": "bot/src/index.js",
+          "symbols": [
+            "queueDirectorAfterPartyTurn",
+            "blockedMutationRows",
+            "describeBlockedAction",
+            "lowConfidenceReviewItems",
+            "normalizeDirectorConfidence"
+          ]
+        },
+        {
+          "path": "bot/src/pvp-output.js",
+          "symbols": [
+            "validatePostTurnStateReview"
+          ]
+        },
+        {
+          "path": "bot/src/turn-recovery.js",
+          "symbols": [
+            "POST_TURN_REVIEW_CATEGORIES"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "efb7c3576218283bf10e546262059ae36b87ea6cde9fb544a758ab9c837a1f63",
+        "8d0e54c530bfcb8c0915d523981aa8f7ec336f2106b91504e039c0d7a35a6315",
+        "bb50bf20b8ce68cfc8b5e948c1af0dc63f889bbbe715057a3c6a2dc4b1851a8c",
+        "d045302411fe9ab619bba4d97ad3ff53b4978797a04f8825cc3ae2506b30e264",
+        "56d75ea2c23ed42ffaf9150c0cad15a51a27bef6a47c51d5fc1fbf9b635a7369"
+      ]
+    },
+    {
+      "path": "bot/src/disclosure-authority.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/disclosure-authority.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/knowledge/disclosure-authority.js",
+          "line": 2,
+          "column": 0,
+          "star": true,
+          "to": "bot/src/frameworks/knowledge/disclosure-authority.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/diagnostics/session5-reader.js",
+          "symbols": [
+            "disclosureFailureReason",
+            "factVisibleTo"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority-context.js",
+          "symbols": [
+            "factVisibleTo"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-clauses-v9.js",
+          "symbols": [
+            "factVisibleTo"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-integrity.js",
+          "symbols": [
+            "disclosureFailureReason"
+          ]
+        },
+        {
+          "path": "bot/src/publishing.js",
+          "symbols": [
+            "factVisibleTo"
+          ]
+        },
+        {
+          "path": "bot/src/scene-description.js",
+          "symbols": [
+            "factVisibleTo"
+          ]
+        },
+        {
+          "path": "bot/src/scene-fiction-context.js",
+          "symbols": [
+            "factVisibleTo"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "c64664f7ec1d0d29b47bff20e4727c9fd30d4f846ee2bc1a58773f14a2891cba",
+        "229b35bab891989e92e95ec88df73c6032bbb1397389519b780091d9ce3641f5",
+        "f12923a15f12b1c293571fe408fd702ea59bef26466b95f2ed3c495e52ed2b84",
+        "ffc6a25dbc7f74ea18926e8cbd6c9bb2bc0fc64d8579b8935c33190d5e0a658c",
+        "619e2412d550dd01035e4e8e9d03dded3478e1768f2a58fe58839687ed1adb54",
+        "1d98bff497203ace3e9d874669855d3f8180429e8d70da73a06ea99c7bd85a74",
+        "ce0151244377d89210f4757cbfee125f1f65f130641ba0c363793330532d792a",
+        "4dd47a63bf97ea4164d1424fb73cebf0e8d337cdcb2a1a3e928b6ae26aaf07f7"
+      ]
+    },
+    {
+      "path": "bot/src/epistemic.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/epistemic.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "epistemicSchema",
+            "evidenceType",
+            "activeEvidence",
+            "objectiveEvidence",
+            "typedEvidence",
+            "establishFact"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "establishFact"
+          ]
+        },
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "activeEvidence",
+            "evidenceType"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "epistemicSchema",
+            "evidenceType",
+            "activeEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/lifecycle-output.js",
+          "symbols": [
+            "activeEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority-context.js",
+          "symbols": [
+            "objectiveEvidence",
+            "evidenceType"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority.js",
+          "symbols": [
+            "objectiveEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-integrity.js",
+          "symbols": [
+            "objectiveEvidence",
+            "activeEvidence",
+            "evidenceType"
+          ]
+        },
+        {
+          "path": "bot/src/personal-continuity.js",
+          "symbols": [
+            "evidenceType",
+            "activeEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/publishing.js",
+          "symbols": [
+            "activeEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/pvp-output.js",
+          "symbols": [
+            "activeEvidence",
+            "objectiveEvidence",
+            "evidenceType"
+          ]
+        },
+        {
+          "path": "bot/src/scene-description.js",
+          "symbols": [
+            "activeEvidence",
+            "objectiveEvidence",
+            "evidenceType"
+          ]
+        },
+        {
+          "path": "bot/src/scene-fiction-context.js",
+          "symbols": [
+            "objectiveEvidence"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "typedEvidence"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "4d49610c9b0ddab7ae73402cde5f707524a2072a0d954beba0aa96c391e75ad5",
+        "2e902b3c586b927425bb6eabf1f5ae2fd64cb531de0921b1876c9f97c9cd2fd3",
+        "5a09fb82815e6023053989775c661ef638107edaf8bd1154d2085d37ed2e58de",
+        "54ca189ad81acf8fc4caeb4b65ac699201315b9a026bb0a2d908095d3c14814f",
+        "b665a992924d05907d74f2c194f14df0dd39cd4aaae0c0069e7b0c423db1d9c8",
+        "55e5602542306b04e9dd567e7bb786977b854780246ab7ac7bfa80891567b09f",
+        "b0a2931cd7d5e9fa0b6fbc7da28f3e5bf8632727a10adbdcaf44848628109d5e",
+        "3ac5bce2dc3e0bd1202a27eb36401c5e7be79f570e591590d874fe06932ba6b2",
+        "34b7483fb0ddc2e2c2e0e39ba880b8e89db179624266a99439e2d251013dbaab",
+        "c54a120cb0abf23728ecb2ff043b7e366b5353ccda287e288cdd4829b74ec457",
+        "414febd7730a37fb8ee3717f593a4c41436ada2cf6b3a90b790bf42f205d943f",
+        "5e557fa812742f3bf47e91e03bf96ab4bdcfaaef9ecbaa55dfceea722abba5ea",
+        "0459912ee564d1c1ce35107a8a695524ffb6794a380ca6e8412b9cc9e12d4643"
+      ]
+    },
+    {
+      "path": "bot/src/historical-archive.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/historical-archive.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/knowledge/historical-archive.js",
+          "line": 2,
+          "column": 0,
+          "star": true,
+          "to": "bot/src/frameworks/knowledge/historical-archive.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "historicalArchiveProjection"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "14f0d9fe9edb4aa0e7989f8b3acea03d3c3942a098de059565330dbfc7a965e0",
+        "157f42b52048a84578e0d86663a9fd1c5713ac1ac8167ac302f7aa4680235488"
+      ]
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityInteger",
+            "cityAudit"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./kernel/errors.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "PermissionError",
+            "UserInputError",
+            "StateConflictError"
+          ],
+          "to": "bot/src/kernel/errors.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./kernel/application-authority.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "principalAllows",
+            "applicationPrincipal"
+          ],
+          "to": "bot/src/kernel/application-authority.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./kernel/state-revision.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ],
+          "to": "bot/src/kernel/state-revision.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "worldNpcEvidence"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/long-projects.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 163,
+          "column": 0,
+          "importedNames": [
+            "worldLongProjectSource"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "manageLongProject",
+            "projectPhaseRevision",
+            "reconcileLongProject"
+          ]
+        },
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "manageLongProject",
+            "projectPhaseRevision"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "40bc9b087cb5f9aaaf37ddbde0090cebf92b0d470d02a7ce13e84b75aa4023db",
+        "8d206e918f9c206a4f8eadba4ee81d3531fe656bfb6c79c3761a03bfd1883b5e",
+        "ca2e710e2717fd8e31ec71e0d1f36705c2d5c54d2b5f59fcf452aadde8fd67a2"
+      ]
+    },
+    {
+      "path": "bot/src/negotiations.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/negotiations.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionSceneWorldSources",
+            "sessionWorldInstitution",
+            "sessionWorldActorState"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/negotiations.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeRules"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "negotiateAgreement"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "961afd3cbc14b15c849ca3aed14c6a4e5cbcc6a3077cfe890e07256c549743f6",
+        "e802832d7fbc0c22a8ec3d63af7d180969605022ed116cfd9d0c17fd2c32774d"
+      ]
+    },
+    {
+      "path": "bot/src/personal-continuity.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "knowledgeWorldMemory",
+            "knowledgeWorldEvents"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./handout.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "handoutPlayerView"
+          ],
+          "to": "bot/src/handout.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "organizationInbox",
+            "evidenceView"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./epistemic.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "evidenceType",
+            "activeEvidence"
+          ],
+          "to": "bot/src/epistemic.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "knowledgeSessionScene"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./semantic-candidate-source.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "ownerSemanticSource",
+            "assertSemanticCandidateProof"
+          ],
+          "to": "bot/src/semantic-candidate-source.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "createPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/personal-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 20,
+          "column": 0,
+          "importedNames": [
+            "knowledgePersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "proposeArcBeat"
+          ]
+        },
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "personalCharacter",
+            "personalArc",
+            "discoverPersonal",
+            "personalInbox"
+          ]
+        },
+        {
+          "path": "bot/src/continuity-routing.js",
+          "symbols": [
+            "discoverPersonal"
+          ]
+        },
+        {
+          "path": "bot/src/discovery-delivery.js",
+          "symbols": [
+            "discoverPersonal"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-context.js",
+          "symbols": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "path": "bot/src/player-language.js",
+          "symbols": [
+            "personalCharacter"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "captureArcCandidate"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "proposeArcBeat"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "900158e444db7ad7031312273d08364b63cf787a10257243db047eed7f063b29",
+        "ea71f78766f273706598a2bddb08b22cea3f3b55ac6f7be9147d5af21e02db0c",
+        "5925d2cf975b965d249cd26830620b43331bcaa8a8756bbdd25795e7dde3e729",
+        "a73a3b7c6c9b16628cd292c026d61b05f7dd09751b49b4a0aa4408b250ca6897",
+        "962346c2a582c91d1ea1eaf0f36c60185962224e21c7492728f0bc81ac745d03",
+        "6cc8ad11125e6bf7d6c1ec962475f0e2de1ac56761974e4e5f495e5f8b9a9128",
+        "d145aa35abdeaaea76d27a9d9152bc61a5b793f450d0568e685e9caaea6bef22",
+        "8262974480ef39d85f00c4031e28f657b5589abb3ee7d7b895681b4d0f04800f",
+        "746bd106869baf0e7d33811539f268f92a2bf8b89231a2b90e7f79f4cd2898a1",
+        "c7537657ca58bd19a50b06d09b9a2074e40d6698b6977863f5001a25071027fa"
+      ]
+    },
+    {
+      "path": "bot/src/presentation-evidence.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/presentation-evidence.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "inferredSource",
+            "relationshipEvidence",
+            "relationshipProvenance",
+            "artifactProvenance",
+            "reviewPresentation",
+            "presentationContext",
+            "presentationView"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "relationshipEvidence"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "301a4696dc0b88ae402306e5506d18c1ee74d1cd77fce246e4cbf5a860e13154",
+        "0c269fece19bfde92be567f9173c007b496ec90ddf98573fd683dc56bd7ee323"
+      ]
+    },
+    {
+      "path": "bot/src/relationship-state.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/relationship-state.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/knowledge/relationship-state.js",
+          "line": 2,
+          "column": 0,
+          "star": true,
+          "to": "bot/src/frameworks/knowledge/relationship-state.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "updateRelationshipDimensions",
+            "relationshipPairKey",
+            "relationshipProjection"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "60e894cb69735ab4aa103b9d4d57e2546518488079a25d0797b9e0765de468e4",
+        "d1d8a5852ce97106d2e2b2c5c155543f80140f9b031b9638cdda1bda6673f188"
+      ]
+    },
+    {
+      "path": "bot/src/scene-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/scene-continuity.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "scenePresence",
+            "lastVerifiedCharacterPresence",
+            "reconcileSceneArrival",
+            "recordCharacterArrival",
+            "recordScenePresence",
+            "sceneAccess",
+            "sceneView",
+            "archiveScenePresence",
+            "npcEvidenceActive",
+            "assertNpcObservation"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/action-continuation.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "recordScenePresence",
+            "scenePresence",
+            "sceneView"
+          ]
+        },
+        {
+          "path": "bot/src/authored-candidates.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/authored-turn-envelope.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "recordCharacterArrival",
+            "scenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "archiveScenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/dialogue-continuity.js",
+          "symbols": [
+            "sceneAccess",
+            "sceneView",
+            "scenePresence",
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/gm-world-scope.js",
+          "symbols": [
+            "currentScene",
+            "scenePresence",
+            "sceneAccess"
+          ]
+        },
+        {
+          "path": "bot/src/movement-language.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority-context.js",
+          "symbols": [
+            "currentScene",
+            "scenePresence",
+            "lastVerifiedCharacterPresence"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-director-source.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-integrity.js",
+          "symbols": [
+            "sceneAccess",
+            "scenePresence",
+            "npcEvidenceActive"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-pvp.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-salience.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-speakers.js",
+          "symbols": [
+            "scenePresence",
+            "npcEvidenceActive"
+          ]
+        },
+        {
+          "path": "bot/src/native-hook-output.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/native-outcome-output.js",
+          "symbols": [
+            "currentScene",
+            "scenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/native-publications.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/nonmaterial-grammar.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/player-language.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/pvp-menu.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/pvp-output.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/scene-description.js",
+          "symbols": [
+            "currentScene",
+            "scenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry-native.js",
+          "symbols": [
+            "currentScene",
+            "recordScenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry.js",
+          "symbols": [
+            "recordCharacterArrival",
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/scene-fiction-context.js",
+          "symbols": [
+            "currentScene",
+            "scenePresence",
+            "sceneAccess"
+          ]
+        },
+        {
+          "path": "bot/src/scene-intent-board.js",
+          "symbols": [
+            "scenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/semantic-engagement.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "lastVerifiedCharacterPresence",
+            "reconcileSceneArrival",
+            "scenePresence"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "assertNpcObservation"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "recordScenePresence",
+            "sceneView"
+          ]
+        },
+        {
+          "path": "bot/src/typed-intents.js",
+          "symbols": [
+            "currentScene"
+          ]
+        },
+        {
+          "path": "bot/src/window-coordinator.js",
+          "symbols": [
+            "currentScene"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "04d586f2583bddefa11fac7812f127e3e12aef58d983656a515b8e52f1d92955",
+        "aeb6f117bf105421b4bbc607af15265da6714016b6dedb35cdb1470074178bec",
+        "66383ba57f5310ee4b7e0aafd10f5baa5d8d3af4a21e80f4b7dc71c972cf685a",
+        "f7248e2ee257213a651e7dad4f8502eda303132649691609e08e4f858fd8bd93",
+        "8a97f1dd012b4ac46c7db9dce114474be02c2ea1cc6ad6ca2544212e742d2a82",
+        "1f25f23b6ab4987d203be9e8987835fbc765f5909fa9d44d4be897326c4ef139",
+        "6ee6bbb6f31e813f36c7fb4e78ad43e5d23e05ae1a7894510d25eaf989543e3d",
+        "3b8e386f4acf01092f593fa4d9220000e74881d25731514022f7477d001fc88f",
+        "df9ad708f428d1a05766b3592ded0f3dbfec8937982d1004e16266d4affac592",
+        "2df00ef210c13b824c5d97aa69b1457d72d0603a9befc379dc76def9f90bdfc9",
+        "153e47727c628f3ea3e9be4d35ea7f19620bd6047ae22996de704e72f9a3653f",
+        "e949afd9f4132bcb61fbd84dce091c63d0802194ffbed89e2a207de9f13bd1c1",
+        "19fb7e3c7f96622203769e21a0ca8e23266ab0b55073ee52393c8503d332e398",
+        "e50350dfc45b6a58be07c2fb3d575bbea5c28bb970dfb8d4f11ecfcf86bd0f64",
+        "97b62f96a3e22f1cbd524187298de3adc001ddef593e50f9d44e389b89a9b5ab",
+        "d66a0690f58108ed9c819e923051a9139fdebf88ad46386fced52f89c707dcfa",
+        "179e380102704241712a28429d05ca7fa7df13d2eb9f0a6465f8c9741280dd9f",
+        "c138c9d9b808d10e437a15cd63b7122e7d9250138decfce73be9686217950031",
+        "9c517e88e13f3de3e423495e308a0b7775a224b8c903d3cc28d1477f6e9d674b",
+        "349f696eb33cd05707299e9e1c7b9c7fbc26aac9ba90d97049782ba1c0d54dc8",
+        "7a7dbf03b890a5db7cebe89b8f3199a8c483383f7bccf3bf5f9d010379dfbb0b",
+        "385d7267d4751bd0f85624a1166bce8a9452800896c23ff541dcb4e5f284309d",
+        "63ddd7ac46e3eed10212e9a6b179bbd19c669091fb2a4c406b36c3641f028fc2",
+        "f453168cff14eb5535895375e13ce89d42137b4b4c05438aa1fe666e8d2bb93b",
+        "b4d733952299875fdeefa739ddd6a11448160f65376d92c6993a3909c3c5cd59",
+        "6f62e69721e4f9f83adb5115e427cbb0f5eaf1946f6b3061766d417020cccdf9",
+        "293aab9d83d605691c43fcb9d03f25a5198d994908b5b5cf0e3b03c6cfd5b395",
+        "87ba7a0dd221d9c4051d75e453c849a6a06ed0351725e86c015a7feb5d72d0de"
+      ]
+    },
+    {
+      "path": "bot/src/scene-entry-native.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "currentScene",
+            "recordScenePresence"
+          ],
+          "to": "bot/src/scene-continuity.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./kernel/state-revision.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ],
+          "to": "bot/src/kernel/state-revision.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "sessionWorldEvents",
+            "sessionSceneWorldSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "randomUUID"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeChecks"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeRules"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry-native.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeVipAdmission"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "mundaneEntryImpact",
+            "resolveMundaneEntry"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry.js",
+          "symbols": [
+            "locationMatches"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry.js",
+          "symbols": [
+            "locationMatches"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry.js",
+          "symbols": [
+            "reviewSceneEntry",
+            "configureEntryPolicy"
+          ]
+        },
+        {
+          "path": "bot/src/scene-entry.js",
+          "symbols": [
+            "mundaneEntryImpact",
+            "resolveMundaneEntry"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "reviewSceneEntry",
+            "configureEntryPolicy"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "f165113ccbd37a6472f8173d8a02d7a13a1bb455d0ca097e3f3d1468e10a29ce",
+        "6ccdfc2016bb5c71760125b2bcffcc0d63b825182aecf323efca7ab7ad4bdcf5",
+        "a7574f272a654b7a52979c1a01b5783a990d4a6beef0f2fbafbcd032e8210e88"
+      ]
+    },
+    {
+      "path": "bot/src/scene-entry.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "sessionIntent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "recordCharacterArrival",
+            "currentScene"
+          ],
+          "to": "bot/src/scene-continuity.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./kernel/state-revision.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ],
+          "to": "bot/src/kernel/state-revision.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "sessionSceneWorldSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./scene-entry-native.js",
+          "line": 17,
+          "column": 0,
+          "importedNames": [
+            "locationMatches"
+          ],
+          "to": "bot/src/scene-entry-native.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "re-export",
+          "specifier": "./scene-entry-native.js",
+          "line": 18,
+          "column": 0,
+          "importedNames": [
+            "locationMatches"
+          ],
+          "to": "bot/src/scene-entry-native.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "static",
+          "specifier": "./scene-entry-native.js",
+          "line": 69,
+          "column": 0,
+          "importedNames": [
+            "reviewSceneEntry",
+            "configureEntryPolicy"
+          ],
+          "to": "bot/src/scene-entry-native.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/scene-entry.js",
+          "kind": "re-export",
+          "specifier": "./scene-entry-native.js",
+          "line": 74,
+          "column": 0,
+          "importedNames": [
+            "mundaneEntryImpact",
+            "resolveMundaneEntry"
+          ],
+          "to": "bot/src/scene-entry-native.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/authored-candidates.js",
+          "symbols": [
+            "prepareSceneEntry"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "entryReferenceContext"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-context.js",
+          "symbols": [
+            "locationMatches"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "35c35d98f3cb71989f31654a94b473e525c35109cd51966f264be73a6f1eaa76",
+        "10032d4b5b80fd1f27887068250afc85d25b03d09b493e0b3f447919c8777606",
+        "11678e48291b0714be8719bfade82cdf3ca1f8904cd05060f703211f3ea56aa4",
+        "39055da381aa32acf6a21bf971d91caf4392d9b9430004b795e4c4f3ba67df48"
+      ]
+    },
+    {
+      "path": "bot/src/seed-data.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "node:fs",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "default"
+          ],
+          "external": "node:fs",
+          "package": "node:fs",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "node:path",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "default"
+          ],
+          "external": "node:path",
+          "package": "node:path",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "worldNpcSeed"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "./kernel/entity-key.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "normalizeEntityKey"
+          ],
+          "to": "bot/src/kernel/entity-key.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "configureSimulationEntity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-data.js",
+          "kind": "static",
+          "specifier": "./seed-drafts.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "backfillSeedData"
+          ],
+          "to": "bot/src/seed-drafts.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "seedData"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "29f8c31f050957b2c691ad5891f955c180cba2facffa3012f5078f5528ecb0d1",
+        "fa779e764c61ee19d12c5ca987d30089a1b2c336a8caf10b9390b5094e821229"
+      ]
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash",
+            "randomUUID"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "node:path",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "default"
+          ],
+          "external": "node:path",
+          "package": "node:path",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "cityObject",
+            "cityKey",
+            "cityInteger",
+            "cityAudit",
+            "indexWorldEvent"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "requireCitySource",
+            "updateCityCore"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "CIVIC_KINDS",
+            "updateCityCivic"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "worldNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "worldStoryContinuity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "configureSimulationEntity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./kernel/entity-key.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "normalizeEntityKey"
+          ],
+          "to": "bot/src/kernel/entity-key.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./kernel/json-key32.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "jsonKey32"
+          ],
+          "to": "bot/src/kernel/json-key32.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/seed-drafts.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "worldIntentValidation"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-review.js",
+          "symbols": [
+            "reviewSeedDraft"
+          ]
+        },
+        {
+          "path": "bot/src/content-packages.js",
+          "symbols": [
+            "addSeedDraft",
+            "reviewSeedDraft"
+          ]
+        },
+        {
+          "path": "bot/src/seed-commands.js",
+          "symbols": [
+            "addSeedDraft",
+            "editSeedDraft",
+            "reviewSeedDraft"
+          ]
+        },
+        {
+          "path": "bot/src/seed-data.js",
+          "symbols": [
+            "backfillSeedData"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "605567517bdcaec3997ce31383b6bdc91546e8cd46e3b4e51c8399ba467f1af4",
+        "99e2d0c68c6205395186f0d802e6a0485e1704572f00c7282df046526983d488",
+        "2afb3bb46cb33af6c0a55c2299de9cf9c6a2e71634150ad52956415bb1363173",
+        "827c6f0380b2c53f9752af9154a818262316a343f166a85d31e4de9808a00f3a"
+      ]
+    },
+    {
+      "path": "bot/src/semantic-candidate-source.js",
+      "owner": "knowledge",
+      "imports": [
+        {
+          "from": "bot/src/semantic-candidate-source.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "knowledgeSessionScene"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/semantic-candidate-source.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "knowledgeSessionOwnerTerminal"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/semantic-candidate-source.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "knowledgeIntentAuthoredTurn"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        },
+        {
+          "from": "bot/src/semantic-candidate-source.js",
+          "kind": "static",
+          "specifier": "./frameworks/knowledge/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "createSemanticCandidateProof"
+          ],
+          "to": "bot/src/frameworks/knowledge/public.js",
+          "owner": "knowledge"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "assertSemanticCandidateProof"
+          ]
+        },
+        {
+          "path": "bot/src/db.js",
+          "symbols": [
+            "assertCanonProposalProof"
+          ]
+        },
+        {
+          "path": "bot/src/personal-continuity.js",
+          "symbols": [
+            "ownerSemanticSource",
+            "assertSemanticCandidateProof"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "ownerSemanticSource",
+            "semanticCandidateHash"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "df173fedfc2859628ffd907b5f09fe428830750145de1260aa5a6cbe99cf493a",
+        "b64517e9b72d979c424addc1562626e9c81c149bfb0830edda3d48e3020c5b9d",
+        "ee5ffc6df9db277cb1dcaaf4411ffebc2d23bd80e9a77808758a6e189ccd7781",
+        "bc60c4a8b69b6d32c5d40db037bef0a4ccbf1d641e34fe04a631babedf1ccc35"
+      ]
+    },
+    {
+      "path": "bot/src/session-briefs.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/session-briefs.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/session-briefs.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "sessionKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/session-briefs.js",
+          "kind": "static",
+          "specifier": "./pvp-output.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "scopedSessionRecap"
+          ],
+          "to": "bot/src/pvp-output.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "sessionBrief",
+            "formatSessionBrief"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "sessionBrief"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "b4d6f117cf2261c6e96b3792f3368cd17c3a723152f3350bf4e6ce6a39ab5596",
+        "538809318d1a13cb30484ce8240160cfb9ab0fb3cc996cef15dbcafbd1440ffb",
+        "01d7b47cacb68225f6822b7b4b0380b5ac4b88895befe7179799318bdc904844",
+        "20a108fb1165fa693e9da63ae3fbe34b3e3fc2216ef2326e444afcd6d6a71d52"
+      ]
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 1,
+          "column": 0,
+          "importedNames": [
+            "rankDirectorActions"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "rankDirectorActions"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "worldNpcOpportunity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/simulation-query-primitives.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "keyOf",
+            "text",
+            "intersects"
+          ],
+          "to": "bot/src/frameworks/world/simulation-query-primitives.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "simulationCandidates"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "simulationCandidates"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "randomUUID"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/action-catalog.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "ACTION_TYPES",
+            "MAJOR_IMPACTS"
+          ],
+          "to": "bot/src/frameworks/world/action-catalog.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./kernel/entity-key.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "normalizeEntityKey"
+          ],
+          "to": "bot/src/kernel/entity-key.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 12,
+          "column": 0,
+          "importedNames": [
+            "submitInstitutionAction",
+            "runInstitutionDirector",
+            "proposeCityOpportunity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "applyNpcServiceOutcome"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "assertServiceAccess"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 15,
+          "column": 0,
+          "importedNames": [
+            "coordinateConsequences"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 16,
+          "column": 0,
+          "importedNames": [
+            "proposeContactGroup"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 17,
+          "column": 0,
+          "importedNames": [
+            "worldIntentDispatch"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 19,
+          "column": 0,
+          "importedNames": [
+            "worldStoryContinuity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./world-resolution.js",
+          "line": 21,
+          "column": 0,
+          "importedNames": [
+            "worldResolutionContext",
+            "bindWorldResolutionCycle",
+            "finishWorldResolutionCycle"
+          ],
+          "to": "bot/src/world-resolution.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 22,
+          "column": 0,
+          "importedNames": [
+            "inspectWorldSimulationReceipt"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 23,
+          "column": 0,
+          "importedNames": [
+            "nativeWorldStrategyAllowed"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 26,
+          "column": 0,
+          "importedNames": [
+            "ACTION_COSTS"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 31,
+          "column": 0,
+          "importedNames": [
+            "actorState",
+            "configureSimulationEntity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 32,
+          "column": 0,
+          "importedNames": [
+            "actorState",
+            "configureSimulationEntity"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 37,
+          "column": 0,
+          "importedNames": [
+            "knownWorldInformation"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 171,
+          "column": 0,
+          "importedNames": [
+            "inspectNpcAction"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 311,
+          "column": 0,
+          "importedNames": [
+            "simulationOverview"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 332,
+          "column": 0,
+          "importedNames": [
+            "saveNativeSimulationRecord",
+            "recordWorldActorMemory",
+            "executeNpcAction",
+            "submitNpcAction",
+            "resolveNpcAction",
+            "processSimulationEvents"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/simulation.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 333,
+          "column": 0,
+          "importedNames": [
+            "executeNpcAction",
+            "submitNpcAction",
+            "resolveNpcAction",
+            "processSimulationEvents"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "prepareNpcDirector",
+            "commitNpcDirector"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "simulationContext"
+          ]
+        },
+        {
+          "path": "bot/src/index.js",
+          "symbols": [
+            "runNpcDirector"
+          ]
+        },
+        {
+          "path": "bot/src/publishing.js",
+          "symbols": [
+            "simulationOverview",
+            "acknowledgeSimulationHook"
+          ]
+        },
+        {
+          "path": "bot/src/simulation-commands.js",
+          "symbols": [
+            "applySimulationUpdates",
+            "configureSimulationEntity",
+            "simulationOverview",
+            "submitNpcAction",
+            "resolveNpcAction",
+            "shareInformation",
+            "processSimulationEvents"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "applySimulationUpdates"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "782b87e5e5611122de7315d3531d763a435731f2b4ec90f1498c2c51f34c5ca8",
+        "25da07182055c675923346a42bf85a3094272ae72aa05d5bd5b1f05014332e36",
+        "694bfb167492be83d7780cda1c328db2fb89491d6990931b97263171c864a967",
+        "f6a32658ed2160096389d64a74d094674b2d244a680d8b626b30570ab737bdef",
+        "cb8bec10a5aa21aa3dd4ab9fe9ded431a0a5056e9102cc258437b2e8a9ee949f",
+        "893fa4c71baa879155291d7c51ab16c025b0817b2d570a29ab418d008c45c5a8",
+        "17857f5f1f1eaff08dbb0d6f455deab9c0119e3f76b5bd441ed473064ae6f8ce"
+      ]
+    },
+    {
+      "path": "bot/src/story-continuity.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sessionSceneWorldSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "sessionPersonalContinuity"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./kernel/state-revision.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "stateRevision"
+          ],
+          "to": "bot/src/kernel/state-revision.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./kernel/json-key32.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "jsonKey32"
+          ],
+          "to": "bot/src/kernel/json-key32.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "sessionIntentLanguage"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/story-continuity.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 143,
+          "column": 0,
+          "importedNames": [
+            "sessionStoryContinuitySource"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/ai-intents.js",
+          "symbols": [
+            "suggestSetupPayoff"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "pacingAdvice",
+            "validatePacing"
+          ]
+        },
+        {
+          "path": "bot/src/story-commands.js",
+          "symbols": [
+            "setPacingCues",
+            "pacingAdvice",
+            "configureMystery",
+            "mysteryView",
+            "recordMysteryAttempt"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "7d269927e7454891df5a2bde8c8b4edb802f139ab99aeb083ecb2fb0396a02f3",
+        "4b1488afe40168ae0b0084e37d349c24b0b460927451230ce1abf0d9d19961db",
+        "c0573f81242a4d70449d5c837328f51ee9c874fb9814a39e911c0c5fe11196c5",
+        "21cc948d23a9a856e493259d6681222cfc6cc60f67fcd6a5d9a418039cf987e8"
+      ]
+    },
+    {
+      "path": "bot/src/window-coordinator.js",
+      "owner": "session",
+      "imports": [
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "node:crypto",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "createHash"
+          ],
+          "external": "node:crypto",
+          "package": "node:crypto",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeActionConsent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./scene-continuity.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "currentScene"
+          ],
+          "to": "bot/src/scene-continuity.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "conversationPrincipal"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "joinActionWindow",
+            "lockActionWindow",
+            "resolveActionWindow"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 11,
+          "column": 0,
+          "importedNames": [
+            "sessionNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 13,
+          "column": 0,
+          "importedNames": [
+            "sessionNativeRules"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 15,
+          "column": 0,
+          "importedNames": [
+            "sessionIntent"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 17,
+          "column": 0,
+          "importedNames": [
+            "sessionWorldEvents"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./action-continuation.js",
+          "line": 19,
+          "column": 0,
+          "importedNames": [
+            "drainActionContinuations",
+            "continuationInbox"
+          ],
+          "to": "bot/src/action-continuation.js",
+          "owner": "session"
+        },
+        {
+          "from": "bot/src/window-coordinator.js",
+          "kind": "static",
+          "specifier": "./frameworks/session/public.js",
+          "line": 242,
+          "column": 0,
+          "importedNames": [
+            "sessionPvpWindowSource"
+          ],
+          "to": "bot/src/frameworks/session/public.js",
+          "owner": "session"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "synchronizePvpWindow",
+            "windowOperation"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "2dd330798565b83401529f7086f6c780ed63e8737348de0f1aa22f63cd4377ab",
+        "331f95033f2f94d2d9688e124550c17c469b891dcad1856950fc5830a803bfc9"
+      ]
+    },
+    {
+      "path": "bot/src/world-authorship.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-authorship.js",
+          "kind": "static",
+          "specifier": "./world-sanctioned-sources.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "worldHookSeedForGm"
+          ],
+          "to": "bot/src/world-sanctioned-sources.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-authorship.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "createWorldAuthorshipRules",
+            "worldNarrativeAuthorship",
+            "worldKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-authorship.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "worldAuthoringContext"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-authorship.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 14,
+          "column": 0,
+          "importedNames": [
+            "worldIdentityOrigin"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/autonomous-world.js",
+          "symbols": [
+            "verifiedWorldAuthoringContext",
+            "worldIdentityOrigin",
+            "privateWorldIdentityForGm",
+            "assertIndependentWorldIdentity",
+            "assertWorldIdentityNames"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority-context.js",
+          "symbols": [
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority.js",
+          "symbols": [
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-relevance.js",
+          "symbols": [
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-salience.js",
+          "symbols": [
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/world-background-identities.js",
+          "symbols": [
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/world-identity-persistence.js",
+          "symbols": [
+            "verifiedWorldAuthoringContext",
+            "worldIdentityOrigin"
+          ]
+        },
+        {
+          "path": "bot/src/world-private-seeds.js",
+          "symbols": [
+            "createSeededWorldContext"
+          ]
+        },
+        {
+          "path": "bot/src/world-resolution.js",
+          "symbols": [
+            "worldIdentityOrigin",
+            "privateWorldIdentityForGm"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "422f2394ca7d6d73effeb97c3b55a7c7cee0eab016eb91323812ee6219af5b2a",
+        "712dccdd444f2b590821171aca3e5039f405b8fbc8c7cbcb7170bea125006e64",
+        "cf0a1b2d6d83eceea85226237ef6de86660cc50249c8121eb34cbe31500943e9",
+        "7ea84931a60fcba43a6cfdc098185400edbf0d59a6c31c4fc65be0aa9384225d",
+        "2e8a31d081f2c2021ea85c826fc0fd4524d7d4cb15e5ef4bffc954afa35ec642"
+      ]
+    },
+    {
+      "path": "bot/src/world-background-identities.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-background-identities.js",
+          "kind": "static",
+          "specifier": "./kernel/scene-fiction-failure.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "sceneFictionFailure"
+          ],
+          "to": "bot/src/kernel/scene-fiction-failure.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-background-identities.js",
+          "kind": "static",
+          "specifier": "./world-authorship.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "worldIdentityOrigin"
+          ],
+          "to": "bot/src/world-authorship.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-background-identities.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "createBackgroundIdentityRules",
+            "worldKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-background-identities.js",
+          "kind": "re-export",
+          "specifier": "./frameworks/world/public.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "BACKGROUND_WORLD_KINDS"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/autonomous-world.js",
+          "symbols": [
+            "validateBackgroundIdentity"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority-context.js",
+          "symbols": [
+            "backgroundIdentityContext"
+          ]
+        },
+        {
+          "path": "bot/src/narrative-authority.js",
+          "symbols": [
+            "BACKGROUND_WORLD_KINDS"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "5fcc5b7c1cdabb9e7502cc1438f14afdcebbeb6b4fa0476e91970308604963b8",
+        "e69b1f8c63dd20751407fd59c1e112f13f46632be1bcbf03ce43ec33985c74e9",
+        "9f382df80bbe91555c924fa84455a74b530896ba0ed8f6dbaabc12a63a681b29"
+      ]
+    },
+    {
+      "path": "bot/src/world-identity-persistence.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./world-authorship.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "verifiedWorldAuthoringContext",
+            "worldIdentityOrigin"
+          ],
+          "to": "bot/src/world-authorship.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "worldNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./kernel/json-hash.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "jsonHash"
+          ],
+          "to": "bot/src/kernel/json-hash.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./kernel/scene-fiction-failure.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "sceneFictionFailure"
+          ],
+          "to": "bot/src/kernel/scene-fiction-failure.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-identity-persistence.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 10,
+          "column": 0,
+          "importedNames": [
+            "worldKnowledgeSources",
+            "worldNarrativeAuthorship"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/narrative-salience.js",
+          "symbols": [
+            "maintainIdentityPersistence"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "5be236556bc597eaeb27270badfce93c838b1146fb774ce9c95b97ed3fe24713",
+        "40d076f5edb05c461b1b827a25c8e1875a01dc44669e84caa73943726ab87520"
+      ]
+    },
+    {
+      "path": "bot/src/world-private-seeds.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "worldNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./world-authorship.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "createSeededWorldContext"
+          ],
+          "to": "bot/src/world-authorship.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./world-sanctioned-sources.js",
+          "line": 5,
+          "column": 0,
+          "importedNames": [
+            "worldHookSeedForGm"
+          ],
+          "to": "bot/src/world-sanctioned-sources.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./autonomous-world.js",
+          "line": 6,
+          "column": 0,
+          "importedNames": [
+            "establishNarrativeEntity"
+          ],
+          "to": "bot/src/autonomous-world.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./kernel/json-hash.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "jsonHash"
+          ],
+          "to": "bot/src/kernel/json-hash.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./kernel/scene-fiction-failure.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "sceneFictionFailure"
+          ],
+          "to": "bot/src/kernel/scene-fiction-failure.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-private-seeds.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/private-world-seed-contract.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "privateWorldSeedsSchema",
+            "PRIVATE_WORLD_SEED_INSTRUCTIONS"
+          ],
+          "to": "bot/src/frameworks/world/private-world-seed-contract.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "createPrivateSeedOrigin",
+            "privateSeedPrompt",
+            "bindPrivateSeedTurn"
+          ]
+        },
+        {
+          "path": "bot/src/state.js",
+          "symbols": [
+            "applyPrivateSeedTurn"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "8bc825ced5a0588f2967fb3fe085796c869e34b0fbc011f7fb05bbe0f8303a50",
+        "9dc36db0fca4f1853fe7108296307ed11279338556ce21e4452da60a7fed8aa3",
+        "c6836025371d000cb13d96fc843d61b05b70a83572dfecab940dbdbe413b2d29"
+      ]
+    },
+    {
+      "path": "bot/src/world-resolution.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./kernel/json-hash.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "jsonHash"
+          ],
+          "to": "bot/src/kernel/json-hash.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./world-authorship.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "worldIdentityOrigin",
+            "privateWorldIdentityForGm"
+          ],
+          "to": "bot/src/world-authorship.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "worldSessionScene",
+            "worldKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 7,
+          "column": 0,
+          "importedNames": [
+            "worldActorControl"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 8,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-resolution.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 9,
+          "column": 0,
+          "importedNames": [
+            "worldNarrativeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "worldResolutionContext"
+          ]
+        },
+        {
+          "path": "bot/src/simulation.js",
+          "symbols": [
+            "worldResolutionContext",
+            "bindWorldResolutionCycle",
+            "finishWorldResolutionCycle"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "9076db7b1a1a3243907434aa3050aa0d2113c612cd46264b27c3c20a38bd7ff7",
+        "759eae7bcf028fb6bbf7d544661f953ec50a08045d695d51713d0180ff423eea"
+      ]
+    },
+    {
+      "path": "bot/src/world-sanctioned-sources.js",
+      "owner": "world",
+      "imports": [
+        {
+          "from": "bot/src/world-sanctioned-sources.js",
+          "kind": "static",
+          "specifier": "./kernel/json-hash.js",
+          "line": 2,
+          "column": 0,
+          "importedNames": [
+            "jsonHash"
+          ],
+          "to": "bot/src/kernel/json-hash.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-sanctioned-sources.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 3,
+          "column": 0,
+          "importedNames": [
+            "indexWorldEvent"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        },
+        {
+          "from": "bot/src/world-sanctioned-sources.js",
+          "kind": "static",
+          "specifier": "./frameworks/world/public.js",
+          "line": 4,
+          "column": 0,
+          "importedNames": [
+            "worldKnowledgeSources"
+          ],
+          "to": "bot/src/frameworks/world/public.js",
+          "owner": "world"
+        }
+      ],
+      "consumers": [
+        {
+          "path": "bot/src/commands.js",
+          "symbols": [
+            "importSanctionedGmHooks",
+            "sanctionedWorldMutation"
+          ]
+        },
+        {
+          "path": "bot/src/gm.js",
+          "symbols": [
+            "worldHookSeedForGm",
+            "worldRecordOriginForGm"
+          ]
+        },
+        {
+          "path": "bot/src/world-authorship.js",
+          "symbols": [
+            "worldHookSeedForGm"
+          ]
+        },
+        {
+          "path": "bot/src/world-private-seeds.js",
+          "symbols": [
+            "worldHookSeedForGm"
+          ]
+        }
+      ],
+      "transition_ids": [
+        "3f1898e5033f7d58281baa06ed0fa6787ddcafd5b3eff264bcd41f668ece0aa6",
+        "dd61e0b688acee4169d640943ac18c94b64c6f4799b719156963bd7433b45fc2",
+        "5c27a9a7375248a83e8fc7c5487cdb60115bb79c9434fd38f8c91c0d57d4c15c"
+      ]
+    }
+  ]
+}

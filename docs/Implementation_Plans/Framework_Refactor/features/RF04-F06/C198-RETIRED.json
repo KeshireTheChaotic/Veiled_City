@@ -1,0 +1,30 @@
+{
+  "feature": "RF04-C198",
+  "records": [
+    {
+      "id": "961afd3cbc14b15c849ca3aed14c6a4e5cbcc6a3077cfe890e07256c549743f6",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/negotiations.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "e802832d7fbc0c22a8ec3d63af7d180969605022ed116cfd9d0c17fd2c32774d",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/negotiations.js",
+      "kind": "static",
+      "specifier": "./negotiations.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

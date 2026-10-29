@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/session/public.js": "a697f118232903062b2e7cfe7544196be3db83d4fed032b01468626016908f23",
+  "bot/src/story-commands.js": "aabe6ed7fe2284ae80c84b882bbb1a2b7a6a0aa1da3c3777a3ed125cc0ed728f",
+  "bot/src/frameworks/session/negotiations.js": "d3c8dec2a71923bc249bd8f3a0da296b4a1deb9beae278e6401cb790992fb199",
+  "bot/tests/ai-gm-2026-10/rf04-f04-c98.test.mjs": "7395d25c7f999054645fe4f76dc297d5f1634e3df3a5e5612e38d5dcebd061c3"
+}

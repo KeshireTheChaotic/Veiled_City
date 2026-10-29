@@ -46,3 +46,5 @@ export {sceneSetupAvailability,prepareSceneSetup,confirmSceneSetup,applyAuthored
 export {sessionNativeVipAdmission} from './contracts/native-vip-admission.js';
 export {openingCohortNarrativeCandidate,inspectOpeningCohortSource} from './opening-cohort-state.js';
 export {openingEntryProjection,openingEntryNarrativeCandidate} from './opening-entry-source.js';
+
+export {negotiateAgreement} from './negotiations.js';
