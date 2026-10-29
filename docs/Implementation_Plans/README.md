@@ -1,26 +1,17 @@
 # Veiled City — AI GM Reconciliation and Codex Handoff
 
-**Static audit date:** 2026-10-21. **Audited `main` SHA:** `9e7bf0687357cf96fbe2ea09a04b3e9d2975f6a3`. **No runtime edits, CI, legacy tests or live services were executed.**
+**Initial reconciliation audit — COMPLETE.** The 2026-10-21 audit and its findings are historical; current work follows the actual checkout and active phase/feature scopes. Detailed snapshots remain in their evidence files and ledgers.
 
-**MANDATORY OWNER SPEC:** Read [OWNER_AI_GM_BEHAVIOR_SPEC.md](OWNER_AI_GM_BEHAVIOR_SPEC.md) in full before P00. The [unaltered source text](OWNER_AI_GM_BEHAVIOR_SOURCE.txt) is preserved alongside the clean Markdown. This full specification was supplied in chat, NOT committed to the GitHub repo. `content/ENGINE/AI_GM_CONSTITUTION.md` defines operational authority; it is complementary but not an interchangeable replacement for this owner behavior specification.
+Before AI-GM work, read the [owner behavior specification](OWNER_AI_GM_BEHAVIOR_SPEC.md) and the complementary `content/ENGINE/AI_GM_CONSTITUTION.md` operational authority.
 
 The goal is an imaginative, impartial autonomous GM running a living world, rather than a restrictive rules chatbot. Keep expressive, proactive narration and NPC/faction initiative. Players exclusively own PC decisions; native code owns mechanical resolution; audiences receive only entitled information.
-
-## Important verified findings
-
-- Current default branch is `main`. The documented `codex/audience-first-narrative-v9` GitHub ref returned 404, yet multiple active docs still use that branch and historical SHAs.
-- At audit-plan intake, `bot/src/native-feature-definitions.json` had **153 occurrences = 16 supported + 137 review_only + 0 needs_authoring**. P06 has enabled sixty-one additional exact source-qualified native occurrence handlers since audit intake, including P06-F04 through F65; HR14 v1 was separately hardened under P06-F49. Current inventory is **77 supported + 76 review_only + 0 needs_authoring**. Historical scope documents may retain their older snapshot counts.
-- `.github/workflows/offline-validation.yml` runs `npm run validate -- --changed`; `bot/scripts/validation-selection.mjs` explicitly reuses the inherited suite registry and falls back to full on shared code changes. This violates the newly requested test policy for this initiative.
-- Existing code already has a substantial native architecture: `gm.js`, `gm-unified-arbitration.js`, `autonomous-world.js`, `npc-cognition.js`, `narrative-salience.js`, `world-narrative-bridge.js`, scoped audience validation and native/outbox receipts. Build on these; do not recreate the whole subsystem.
-- `gm.js` can make a router call, unified GM call, writer call and correction/recovery calls. `config.js` defaults `GM_PROGRESS_ENABLED=true` and `GM_PROGRESS_AFTER_MS=20000`. These are concrete performance targets, **not proof of real latency**.
-- Old docs contain historical no-deferrals/phase-freeze/testing conventions; this clean plan overrides obsolete sequencing and legacy-test usage but never gameplay mechanics, PC consent, privacy or saved-state compatibility.
 
 ## Codex operating rules
 
 1. Start at actual checkout HEAD; preserve any dirty worktree and reconcile changed findings. Read this README, `CODEX_START_HERE.md`, `TEST_PROTOCOL.md`, `DECISION_GATES.md`, then only current phase and feature pairs.
 2. Each phase has its own `SCOPE.md` and `LEDGER.md`. Every feature has its own independent pair. For catalog occurrences worked on, create a further pair by exact feature key. Maintain real status, SHA, changed paths, new tests, execution results, costs, blockers, rollback and decisions in ledgers.
 3. **Only stop globally for critical blockers.** For an isolated unsupported feature, missing rule, failure or owner-decision hold: mark it locally and continue unrelated safe work. Do not conceal or invent a source.
-4. **Only test currently changed code, using wholly new tests. Never reuse, copy, import or execute legacy tests, fixtures, golden results or suites.** Default tests go in `bot/tests/ai-gm-2026-10/`. No broad `npm run validate` for this plan; a separately authorized release qualification is distinct.
+4. Test changed code with focused replacement coverage in `bot/tests/ai-gm-2026-10/`. Do not run or reuse legacy suites, fixtures, or golden results. After replacement coverage passes for migrated code, remove its obsolete legacy test suite. Record each test run and its actual outcome as complete; rerun only when the production code under test changes. No broad `npm run validate` for this plan; a separately authorized release qualification is distinct.
 5. **Never poll/watch tests.** Launch each fresh changed-code test batch once with a blocking execution tool call when possible. Otherwise detach it, do independent work, and retrieve final evidence only at a natural milestone. Do not repeatedly check session/process/log status or use short `wait` loops. Follow [TEST_EXECUTION_NO_POLL.md](TEST_EXECUTION_NO_POLL.md).
 6. Minimize Codex cost: single serial agent by default, zero subagents, only an independently useful worker when justified; no paid provider tests by default. Use safe immutable caching and observed call-count metrics, not invented savings.
 7. **Ask the owner before adding any new restriction to freeform narrative output, NPC/faction autonomy, world invention, or humanlike GM pacing.** Hold only that proposed restriction; continue other features. Existing mandatory PC rights, privacy, dice and source authority stay enforced without a new vote.

@@ -8,6 +8,12 @@
 3. A possible failure requires a plausible trigger and material impact grounded in a supported workflow, actor, scale, or deployment before disposition, but evidence alone does not expand the boundary.
 4. Separate unrelated changes and justify them independently.
 
+## Test and documentation hygiene
+* After a test suite has passed, mark it complete and do not rerun it unless the tested code changes.
+* Remove legacy test suites only after their covered code has been migrated and the replacement coverage has passed.
+* Replace verbose Markdown progress history with a short description marked complete when the work is done.
+* Load only the project context needed for the current task; do not carry the full project history into each task.
+
 ## Deliverable report per phase
 
 Summarize: phase ID, delivered features, modified files, tests with real outcomes, known issues, deferred items, and next exact phase. Commit using a phase-specific message when git is available.
