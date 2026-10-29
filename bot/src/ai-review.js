@@ -3,7 +3,8 @@ import { intentContext, delegationPolicy, stateRevision, reviewAiIntent, FEATURE
 import { reviewSeedDraft } from "./seed-drafts.js";
 import {operationsNpcReview} from "./frameworks/operations/public.js";
 const {reviewGoalTransition,manageStrategy}=operationsNpcReview;
-import { reviewConsequence } from "./city-consequences.js";
+import {operationsWorldConsequence} from './frameworks/operations/public.js';
+const {reviewConsequence}=operationsWorldConsequence;
 import { manageGroup } from "./city-groups.js";
 import { cityAudit } from "./city-calendar.js";
 import {operationsKnowledgeOrganizationReview} from './frameworks/operations/public.js';

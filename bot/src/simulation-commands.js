@@ -6,7 +6,7 @@ import { applySimulationUpdates, configureSimulationEntity, simulationOverview, 
 import { publishSimulationHooks } from "./publishing.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { proposeGoalTransition, reviewGoalTransition, runMotivationCycle } from "./frameworks/npc/public.js";
-import { subscribeConsequence, coordinateConsequences, reviewConsequence } from "./city-consequences.js";
+import { subscribeConsequence, coordinateConsequences, reviewConsequence } from './frameworks/world/public.js';
 import { transferSupply } from './frameworks/world/public.js';
 
 function objectInput(interaction,name="json"){

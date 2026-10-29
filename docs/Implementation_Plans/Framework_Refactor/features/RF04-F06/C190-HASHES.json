@@ -1,0 +1,17 @@
+{
+  "bot/src/ai-intents.js": "03e0194471ff812e8bec2c0f611808a363c29d3362366e66016054f6a52fb5d5",
+  "bot/src/ai-review.js": "f01c4ede4a138747a95c53498ae3d72eaaf5ffc7c9d1a3261824687507fc9641",
+  "bot/src/application/composition/operations-world-overview.js": "7cc91bff1baef4a3750ee568fbdb2f37981f81401170a2acec8bc0029f72e5f9",
+  "bot/src/framework-to-framework/intent--world/public.js": "ba6baed71a28c24f56ffef55a4dc153739744241b10da3e3de4e2db164161509",
+  "bot/src/framework-to-framework/operations--world/public.js": "db0db3b39a5db77e5704a092f5507bbeffc994cdd9d6468800551e05a916fe7d",
+  "bot/src/frameworks/intent/contracts/world-operations.js": "728baa56d31be8e053d895ad3d41986cf433c4aec8fc1a2f278f5cf9a3dcf1f6",
+  "bot/src/frameworks/operations/public.js": "58239d9dd3368b4ff48c24575937caf83536b301b4d01771e9e2d924408e997b",
+  "bot/src/frameworks/world/public.js": "bc4e5659ad23a36939841f01eceb87ce68962c7d2b0a61855a34c33ef1b6d803",
+  "bot/src/simulation-commands.js": "fbbdeed0a8e340040c81085133de07ae752080420338cf5f9d1b7c3a2864be5b",
+  "bot/src/simulation.js": "d1b6e84c50535f724d2005fc78dbfccecf82889e46badc92b58e4865d6470e88",
+  "bot/src/frameworks/world/consequence-source.js": "3110383b7a8831997f1c6250d06940c05907960c333bc58bf3babe17c9485b04",
+  "bot/src/frameworks/operations/contracts/world-consequence.js": "80001dfacb23cf30bc127efa7b2b1715f3a74bb4b7d3db1b9378b65818948252",
+  "bot/tests/ai-gm-2026-10/rf04-f01-c90.test.mjs": "81699a8ffe43bcb4ae3a48e40406f78e1e9ce469ff68f6a7a6d7c79352a34a44",
+  "bot/tests/ai-gm-2026-10/rf04-f01-c90-dispatch.test.mjs": "36dc0b71b7b98a8b601d5503cabf8343d63dfe985deb9d4a6e064aa73c74cd33",
+  "bot/tests/ai-gm-2026-10/rf04-f01-c90-transmit.test.mjs": "14b0b0d4630530e454791e678694e26d8c5e12006adcc3498928932178db834c"
+}

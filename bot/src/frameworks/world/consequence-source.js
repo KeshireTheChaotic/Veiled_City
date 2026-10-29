@@ -1,13 +1,15 @@
 /** Typed subscriptions to committed world sources; pending effects never spend, disclose, or fan out without review. */
-import { cityInteger } from './frameworks/world/public.js';
-import { requireCitySource } from "./city-core.js";
-import { changeCityService, transmitCityBelief } from "./frameworks/world/public.js";
-import {worldNpcEvidence,worldNpcGoalProposal} from "./frameworks/world/public.js";
-import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
+import {cityInteger} from './city-calendar.js';
+import {requireCitySource} from './city-source.js';
+import {changeCityService} from './infrastructure.js';
+import {transmitCityBelief} from './city-civic.js';
+import {worldNpcEvidence} from './contracts/npc-evidence.js';
+import {worldNpcGoalProposal} from './contracts/npc-goal-proposal.js';
+import {jsonKey32 as motivationKey} from "../../kernel/json-key32.js";
 const {actorSource}=worldNpcEvidence;
 const {proposeGoalTransition}=worldNpcGoalProposal;
-import { StateConflictError } from "./kernel/errors.js";
-import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './frameworks/world/public.js';
+import { StateConflictError } from "../../kernel/errors.js";
+import {nativeWorldCoordinatorReady,nativeWorldOperationAllows} from './execution-source.js';
 const handlers={
   goal:(db,guild,row,actor)=>proposeGoalTransition(db,guild,{...row.data.payload,key:row.record_key,source_event:row.source_event},actor),
   service:(db,guild,row,actor)=>{
@@ -38,6 +40,6 @@ export function subscribeConsequence(...args){return consequences().subscribeCon
 export function coordinateConsequences(...args){return consequences().coordinateConsequences(...args);}
 export function reviewConsequence(...args){return consequences().reviewConsequence(...args);}
 
-import {createWorldConsequences} from './frameworks/world/public.js';
+import {createWorldConsequences} from './consequences.js';
 let worldConsequences;
 function consequences(){return worldConsequences??=createWorldConsequences({handlers,motivationKey,nativeWorldCoordinatorReady:(...args)=>nativeWorldCoordinatorReady(...args),nativeWorldOperationAllows:(...args)=>nativeWorldOperationAllows(...args)});}

@@ -1,0 +1,17 @@
+# C190 — implementation and qualification
+
+Base `4139f2aad52bae153db5cd430a8d79d247c93c53`, branch `codex/clean-ai-gm-2026-10`. IN PROGRESS; not committed.
+
+Moved the original consequence handlers and lazy service into World `consequence-source.js`. Intent uses its existing World operations port for subscribe/review; Operations gains a review-only consumer bound through Operations–World. World simulation and Application simulation commands use World public. Existing NPC evidence and goal proposal ports remain the same source. No rules, schema, saved records, review ordering or transaction policy intentionally changed.
+
+Fresh local ignored test `bot/tests/ai-gm-2026-10/rf04-f01-c90.test.mjs` passed 4/4, exit0, duration81.5376ms in one invocation. It directly imports only the changed World service and uses a newly authored transactional fake. Covered rejection/terminal replay, retracted source, missing physical service path, unknown subscription handler. These passing cases are complete and must not be rerun unless their production code changes. Positive goal/transmission dispatch, actual pair binding and rollback/retry coverage remain outstanding; the slice is not fully qualified.
+
+Changed production syntax checks passed. Initial architecture check had zero active imports and five errors describing four obsolete records: the removed source location was both invalid and unused, plus three old caller edges were unused. Reviewed and archived all four original records in C190-RETIRED.json. Final RF04 ratchet passes:861modules,0unowned,3524imports,2cycles/largest79,1155accepted occurrences,0active groups/errors. No transition baseline/limit/deadline was expanded. Report `.reports/C190-final.json` is local evidence.
+
+Provider calls/tokens/cost0/0/$0; Codex usage UNMEASURED. No live service, production database or deployment activity. Unrelated pre-existing dirty documents preserved. RF04 incomplete; release unauthorized.
+
+Additional fresh local test `rf04-f01-c90-dispatch.test.mjs` passed3/3, exit0, duration152.2518ms, without rerunning the earlier four passing cases. It exercises successful original goal handler source/actor forwarding, completed replay, audit-failure rollback of the handler effect followed by successful retry, and actual Intent–World/Operations–World pair binding to World review. Direct imports are changed production modules only; the NPC goal producer is an explicit fake. This does not prove native NPC goal semantics. Transmission dispatch remains unqualified.
+
+Next exact work: add only the outstanding transmission case, record source/test hashes, update relocation crosswalk and phase ledger, then commit this scoped feature. Rollback restores the original root module and five callers, removes new service/consumer wiring, and restores the four archived transitions.
+
+Transmission qualification COMPLETE: fresh local rf04-f01-c90-transmit.test.mjs passes1/1, exit0, duration83.5496ms. Actual moved service dispatches the original World civic audience transmission, preserves causal source/content/subjective confidence and terminal replay produces no second write. Fake storage is not SQLite qualification; NPC/institution transmission branches remain untested. Eight unique cases passed across three distinct frozen batches; earlier passes were not rerun. C190 bounded migration COMPLETE; RF04 remains incomplete. Next exact slice: current-source review of the remaining city-core.js compatibility exports and callers.

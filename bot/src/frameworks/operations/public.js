@@ -7,3 +7,5 @@ export {createOperationsNpcReviewConsumer,operationsNpcReview} from './contracts
 export {operationsKnowledgeOrganizationReview} from './contracts/knowledge-organization-review.js';
 export {operationsWorldOverview} from './contracts/world-overview.js';
 export {buildGmOverview,formatGmOverview} from './overview.js';
+
+export {operationsWorldConsequence} from './contracts/world-consequence.js';

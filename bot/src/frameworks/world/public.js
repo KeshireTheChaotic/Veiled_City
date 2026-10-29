@@ -96,3 +96,5 @@ export {CIVIC_KINDS,updateCityCivic,reviewCivicChange,transmitCityBelief,attempt
 export {worldNativeEncounter} from './contracts/native-encounter.js';
 export {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates,inspectNativeEncounterCandidate} from './encounter-beats.js';
 export {establishWorldDescription,renderWorldObservation,registerWorldObservation} from './world-observation.js';
+
+export {subscribeConsequence,coordinateConsequences,reviewConsequence} from './consequence-source.js';
