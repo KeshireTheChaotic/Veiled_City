@@ -10,7 +10,8 @@ import { activeEvidence, objectiveEvidence,evidenceType } from "./epistemic.js";
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;
-import {renderContinuationNotice} from "./action-continuation.js";
+import {publicationContinuationOutputSource,publicationSessionContinuation} from "./frameworks/publication/public.js";
+function renderContinuationNotice(...args){return publicationSessionContinuation.renderContinuationNotice(...args);}
 import {renderNativeNotice} from "./native-notice.js";
 import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
 import {operationalMetrics,measureNative} from './operational-metrics.js';
@@ -922,3 +923,5 @@ publicationOpeningOutput.bind({prepareOpeningEntryOutput,prepareOpeningCohortOut
 
 import {publicationSessionRecapSource} from './frameworks/publication/public.js';
 publicationSessionRecapSource.bind({scopedSessionRecap});
+
+publicationContinuationOutputSource.bind({prepareContinuationOutput});

@@ -1,0 +1,13 @@
+{
+  "feature": "RF04-C204",
+  "sha256": {
+    "bot/src/action-continuation.js": "fd994cab051a6ef0923c9d71718d096c96229ba6abe4f9981602cf6ed6398202",
+    "bot/src/application/composition/publication-session.js": "70cffdb3b1c764df6952a4d36db30c4ab455e00e6be14776c1c86ff3d47c8cee",
+    "bot/src/framework-to-framework/publication--session/public.js": "33b0c026fed1d8e26090dfdb1b5b3311302d20ea4913a8334c43c02b82b04a16",
+    "bot/src/frameworks/publication/public.js": "920f749d46fcbfa0cd607132154991f1bf89c03689cc4d6e74416654e22d4c45",
+    "bot/src/frameworks/session/public.js": "b41874d820f8eb97f1d4607587f344b0d69dabffcaade1b79366a01c178cad10",
+    "bot/src/pvp-output.js": "276fa885009999f2024205f47a281c692f76a1386915f19b72fb49c80fe14690",
+    "bot/src/frameworks/session/contracts/publication-continuation.js": "c97124fecf9bccb82e8883a086a3e62f3071ddf3f6ab919bef387dcd57f33c9e",
+    "bot/src/frameworks/publication/contracts/session-continuation.js": "bd0dd151b126cd8ff1f77efcacb7c4ede90fd5597052d18f336022cd8b45173d"
+  }
+}

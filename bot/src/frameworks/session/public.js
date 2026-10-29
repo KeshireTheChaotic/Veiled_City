@@ -59,3 +59,5 @@ export {setPacingCues,manageNarrativeSetup,suggestSetupPayoff,pacingAdvice,valid
 export {locationMatches,reviewSceneEntry,configureEntryPolicy,mundaneEntryImpact,resolveMundaneEntry} from './scene-entry-native.js';
 
 export {entryTarget,prepareSceneEntry,routeSceneEntryMessage,entryReferenceContext} from './scene-entry.js';
+
+export {sessionPublicationContinuation,sessionContinuationNoticeSource} from './contracts/publication-continuation.js';

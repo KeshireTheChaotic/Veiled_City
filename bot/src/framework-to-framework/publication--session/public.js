@@ -12,3 +12,7 @@ export function connectPublicationSessionPrincipal(){return publicationSessionPr
 import {publicationSessionRecapSource} from '../../frameworks/publication/public.js';
 import {sessionPublicationRecap} from '../../frameworks/session/public.js';
 export function connectSessionPublicationRecap(){return sessionPublicationRecap.bind({scopedSessionRecap:publicationSessionRecapSource.scopedSessionRecap});}
+
+import {sessionPublicationContinuation,sessionContinuationNoticeSource} from '../../frameworks/session/public.js';
+import {publicationContinuationOutputSource,publicationOpeningQueue,publicationSessionContinuation} from '../../frameworks/publication/public.js';
+export function connectSessionPublicationContinuation(){sessionPublicationContinuation.bind({prepareContinuationOutput:publicationContinuationOutputSource.prepareContinuationOutput,queueTurnPublications:publicationOpeningQueue.queueTurnPublications});return publicationSessionContinuation.bind({renderContinuationNotice:sessionContinuationNoticeSource.renderContinuationNotice});}

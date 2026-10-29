@@ -15,8 +15,9 @@ function validatePvpResolutionReceipt(...args){return sessionNativeChecks.valida
 function pendingPvpFear(...args){return sessionNativeChecks.pendingPvpFear(...args);}
 function validatePvpDamageApplication(...args){return sessionNativeChecks.validatePvpDamageApplication(...args);}
 function validatePvpAttackRoll(...args){return sessionNativeChecks.validatePvpAttackRoll(...args);}
-import {prepareContinuationOutput} from "./pvp-output.js";
-import {queueTurnPublications} from "./publication-outbox.js";
+import {sessionPublicationContinuation,sessionContinuationNoticeSource} from "./frameworks/session/public.js";
+function prepareContinuationOutput(...args){return sessionPublicationContinuation.prepareContinuationOutput(...args);}
+function queueTurnPublications(...args){return sessionPublicationContinuation.queueTurnPublications(...args);}
 function typedRollProof(...args){return sessionNativeChecks.typedRollProof(...args);}
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 function acceptedInputHash(row){
@@ -237,3 +238,5 @@ import {sessionActionContinuation,sessionContinuationAuthorization} from './fram
 // Provide this module's original continuation drain and authorization reader to the fixed Session slots; no other authority is granted.
 sessionActionContinuation.bind({drainActionContinuations});
 sessionContinuationAuthorization.bind({continuationAuthorization});
+
+sessionContinuationNoticeSource.bind({renderContinuationNotice});
