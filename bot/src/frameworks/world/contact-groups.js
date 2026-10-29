@@ -1,11 +1,12 @@
 /** Reviewed community lifecycle over existing communities; membership grants no knowledge, consent, allegiance, debts or resources. */
-import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource } from './frameworks/world/public.js';
-import { updateCityCivic } from './frameworks/world/public.js';
-import {activeCityProxy,assertNpcAvailability} from './frameworks/world/public.js';
-import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
-import { UserInputError, StateConflictError } from "./kernel/errors.js";
-import {nativeWorldOperationAllows} from './frameworks/world/public.js';
+import { cityObject, cityKey, cityAudit } from './city-calendar.js';
+import {requireCitySource} from './city-source.js';
+import {updateCityCivic} from './city-civic.js';
+import {activeCityProxy} from './active-proxy.js';
+import {assertNpcAvailability} from './execution-source.js';
+import {jsonKey32 as motivationKey} from '../../kernel/json-key32.js';
+import { UserInputError, StateConflictError } from "../../kernel/errors.js";
+import {nativeWorldOperationAllows} from './execution-source.js';
 const playerCommunity=(db,guild,key)=>db.listCityRecords(guild,{kind:"community_membership",actor:`community:${key}`,status:"active",includeGM:true,limit:1}).length>0;
 function protectPlayerCommunity(db,guild,data){
   if(["join","dissolve"].includes(data.operation)&&playerCommunity(db,guild,data.group_key)

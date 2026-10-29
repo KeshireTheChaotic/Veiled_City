@@ -9,3 +9,7 @@ export function connectOperationsWorldConsequence(){return operationsWorldConseq
 import {operationsWorldAudit} from '../../frameworks/operations/public.js';
 import {cityAudit} from '../../frameworks/world/public.js';
 export function connectOperationsWorldAudit(){return operationsWorldAudit.bind({cityAudit});}
+
+import {operationsWorldGroups} from '../../frameworks/operations/public.js';
+import {manageGroup} from '../../frameworks/world/public.js';
+export function connectOperationsWorldGroups(){return operationsWorldGroups.bind({manageGroup});}

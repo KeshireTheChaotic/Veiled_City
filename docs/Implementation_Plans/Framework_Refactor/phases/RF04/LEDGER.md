@@ -1075,3 +1075,7 @@ World flag policy and immutable Narrative catalog now compose through Narrativeâ
 ## C192 calendar caller checkpoint
 
 Twenty-five callers adopted owner contracts/public World functions; db.js standalone eager calendar binding remains a local RF06 composition obligation. Six fresh cases passed; source syntax and RF04 ratchet pass871modules/zero active/errors. Twenty-four exact records retired, root/db records retained without extension. Feature C192 ledger/scope/hash artifacts record limits. Root retirement and RF04 remain incomplete; next exact work is standalone Persistence composition.
+
+## C193 contact-group isolation â€” COMPLETE
+
+Original service moved to World; four callers adopted World public/Intent/Operations capabilities. Six fresh cases pass, original behavior body comparison and changed syntax pass. Four exact records retired; RF04 gate872modules/zero active/errors. Feature C193 evidence records fake/native/SQLite limits. Next: city-depth source responsibility review. RF04 incomplete; release unauthorized.

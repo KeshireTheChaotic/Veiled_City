@@ -1,0 +1,14 @@
+{
+  "bot/src/ai-intents.js": "4c2fb1e96c28241f427b5caa7bb863eec4493d416be55a64a120ba65a60decfb",
+  "bot/src/ai-review.js": "012905295eb75e0d5bcae5b181302802af2d45f231b0b0ab43374573c78b6f20",
+  "bot/src/application/composition/operations-world-overview.js": "8fb555f3acd9496fd87604f80d150aa229ffbea68b6c1e829fedfdff10b5e23a",
+  "bot/src/framework-to-framework/intent--world/public.js": "6de36be9e4d7bc336beb2bcb4e44e3d4386d8d6189b17de01f3f0d2ad4946b20",
+  "bot/src/framework-to-framework/operations--world/public.js": "f5fec3fc79efb15039af078123c39102f00df50aa001e6eb98c29eeb3685673a",
+  "bot/src/frameworks/intent/contracts/world-operations.js": "0e4bde871968dcbc9d56e48b1b01598b72920f66b4379d69d05ba8acc1f4a23c",
+  "bot/src/frameworks/operations/public.js": "e594248eb088d6e586a146ada1b9762644eaa866e6927a3a751d401080250e81",
+  "bot/src/frameworks/world/public.js": "c6129f4bed80a72b20d5caf63d5667eb3e2ad37c41ba1a860c0e732407cc53c8",
+  "bot/src/simulation.js": "484ed9b51ce4564ecabf815a69f340764f07a98f4d16e48ca375813c74333c85",
+  "bot/src/story-commands.js": "4b6f37119892faf7afecf0bc9e41624655d5a06a716a40de3a23ace39de841b9",
+  "bot/src/frameworks/operations/contracts/world-groups.js": "95a49f46bfad9e778d6a525611a71521f725c38bc2bfa72120900357cdbb1458",
+  "bot/src/frameworks/world/contact-groups.js": "de416e9be14b50f38c400181e3f4ff12f00427b2e7cecff635a8b15b72f1412b"
+}

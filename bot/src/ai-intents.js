@@ -10,7 +10,7 @@ import { recordScenePresence, scenePresence, sceneView } from "./scene-continuit
 import {intentWorldConstraints} from './frameworks/intent/public.js';
 const {activeCityProxy}=intentWorldConstraints;
 const {subscribeConsequence,reviewConsequence}=intentWorldOperations;
-import { manageGroup } from "./city-groups.js";
+const {manageGroup}=intentWorldOperations;
 import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";

@@ -12,7 +12,7 @@ import { explainWhy } from "./frameworks/knowledge/public.js";
 import { configurePortrayal } from "./portrayal.js";
 import { authorWorldDraft, reviewWorldDraft } from "./world-authoring.js";
 import { recordScenePresence, sceneView } from "./scene-continuity.js";
-import { manageGroup } from "./city-groups.js";
+import { manageGroup } from './frameworks/world/public.js';
 import { manageStrategy } from "./frameworks/npc/public.js";
 import { proposeArcBeat } from "./personal-continuity.js";
 import { manageMemoryCluster } from "./frameworks/knowledge/public.js";

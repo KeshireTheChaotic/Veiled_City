@@ -34,7 +34,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/city-constraints.js","bot/src/frameworks/world/availability.js","world","RF04","WORLD_AVAILABILITY_EXTRACTED; C189_COMPATIBILITY_EXPORT_REMOVED; OTHER_WORLD_INTENT_SESSION_OBLIGATIONS_REMAIN","38","3"
 "bot/src/city-core.js","bot/src/frameworks/world/city-flags.js","world","RF04","C191_ROOT_RETIRED_FLAG_POLICY_AND_CATALOG_PAIR","0","0"
 "bot/src/city-depth.js","bot/src/frameworks/world/city-depth.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","5","1"
-"bot/src/city-groups.js","bot/src/frameworks/world/city-groups.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","2"
+"bot/src/city-groups.js","bot/src/frameworks/world/contact-groups.js","world","RF04","C193_ORIGINAL_LIFECYCLE_MOVED_CALLERS_ADOPTED","4","0"
 "bot/src/combat.js","bot/src/frameworks/daggerheart/combat.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","5","0"
 "bot/src/command-definitions.js","bot/src/frameworks/discord/command-definitions.js","discord","RF02","DECOMPOSE_BEFORE_MOVE","1","0"
 "bot/src/command-schema.js","bot/src/frameworks/discord/command-schema.js","discord","RF02","PILOT_MOVE_CANDIDATE","1","0"

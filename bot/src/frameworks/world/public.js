@@ -100,3 +100,5 @@ export {establishWorldDescription,renderWorldObservation,registerWorldObservatio
 export {subscribeConsequence,coordinateConsequences,reviewConsequence} from './consequence-source.js';
 
 export {createCityFlagService} from './city-flags.js';
+
+export {manageGroup,proposeContactGroup} from './contact-groups.js';

@@ -13,7 +13,7 @@ import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity
 import { applyNpcServiceOutcome } from "./frameworks/world/public.js";
 import { assertServiceAccess } from './frameworks/world/public.js';
 import { coordinateConsequences } from './frameworks/world/public.js';
-import { proposeContactGroup } from "./city-groups.js";
+import { proposeContactGroup } from './frameworks/world/public.js';
 import {worldIntentDispatch} from './frameworks/world/public.js';
 function delegateConsequence(...args){return worldIntentDispatch.delegateConsequence(...args);}function delegateWorldGoal(...args){return worldIntentDispatch.delegateWorldGoal(...args);}function maintainMemory(...args){return worldIntentDispatch.maintainMemory(...args);}function continueLongProjects(...args){return worldIntentDispatch.continueLongProjects(...args);}function dispatchAiIntents(...args){return worldIntentDispatch.dispatchAiIntents(...args);}
 import {worldStoryContinuity} from './frameworks/world/public.js';
