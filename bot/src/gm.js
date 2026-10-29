@@ -49,7 +49,7 @@ import {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionR
 import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-provider--knowledge/public.js';
 import { recoverOptionalTurnFields } from "./turn-recovery.js";
 import { projectAuthorityRecords } from "./frameworks/knowledge/public.js";
-import { operationalMetrics, measureStage, measureNative } from "./frameworks/operations/public.js";
+import { operationalMetrics, measureStage, measureNative, createLogger } from "./frameworks/operations/public.js";
 import { scopedSceneMemory } from "./scoped-memory.js";
 import {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/public.js';
 import {turnTraceFor} from './frameworks/operations/public.js';
@@ -877,8 +877,9 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
       return true;
     };
     const validateTurn=(result,inspectStaged=null)=>measureNative('validate',guildId,()=>validateCore(result,inspectStaged),this.metrics);
-    const authoringBudget={used:false};
     const author=async candidate=>{
+      // One writer call per model attempt: a corrected replacement must not inherit a budget spent on a rejected draft.
+      const authoringBudget={used:false};
       const fictionScope={mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id},
         fictionSource=messageId&&fictionScope.actorCharacterId?worldInputKey(messageId,fictionScope.actorCharacterId):null;
       const movement=(candidate.player_intents||[]).some(i=>i.type==='move'&&i.resolution==='auto'&&i.framing==='immediate')
@@ -948,6 +949,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         "Explicit private canon requests use canon_proposals; never narrate application recording or notification."
       ].filter(Boolean).join(" ");
       const retry={...req,input:`${req.input}\n\n${correction}`};
+      createLogger(this.config.logLevel||'info').warn(`GM turn correction after ${err.code||err.name}: ${String(err.message||err).slice(0,300)}`,err.diagnostic||'');
       this.metrics.record('validation_retry',{guildId});
       result=await author(await this.requestStructured(retry,{guildId,label:"GM turn state-review retry",signal:turnSignal,retry:true}));
       try{
@@ -985,6 +987,7 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
           "Preserve ordinary in-character conversational engagement; ask a natural follow-up when useful."
         ].join(" ");
         const recovery={...req,input:`${req.input}\n\n${safeRecovery}`};
+        createLogger(this.config.logLevel||'info').warn(`GM turn safe recovery after ${retryError.code||retryError.name}: ${String(retryError.message||retryError).slice(0,300)}`,retryError.diagnostic||'');
         this.metrics.record('validation_retry',{guildId});
         result=await author(await this.requestStructured(recovery,{guildId,label:"GM turn safe recovery",signal:turnSignal,retry:true}));
         validateTurn(result);

@@ -163,7 +163,8 @@ function review(db,guild,key,sourceRef,scope,reason){
 export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,budget,generate,viewProvider=null}){
   if(result.respond===false||result.act===false)return;
   for(const input of (result.gm_world_parts||[]).filter(p=>p?.version===8)){
-    const key=draftKey(input,scope,sourceRef),attempt=`scene-authoring-attempt:${hash([sourceRef,scope])}`;
+    // Keyed by request: a corrected replacement request may author once; the same request reuses its draft below.
+    const key=draftKey(input,scope,sourceRef),attempt=`scene-authoring-attempt:${hash([sourceRef,scope,input])}`;
     try{
       const ctx=viewProvider?viewProvider(input):context(db,guild,input,scope,sourceRef);request(input);
       ctx.packet.creative_brief=creativeBrief(ctx,result,input);ctx.packet.protected_scene=ctx.protectedScene;
