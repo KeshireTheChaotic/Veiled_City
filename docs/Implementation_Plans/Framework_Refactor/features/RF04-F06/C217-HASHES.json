@@ -1,0 +1,8 @@
+{
+  "feature": "RF04-C217",
+  "sha256": {
+    "bot/src/frameworks/world/seed-data.js": "be7234346ce9360bad856ba9aabfbefe7a0da47aeba74261490727041a00d79f",
+    "bot/src/frameworks/world/public.js": "cb933c3dbcd6ca0d55fc938bbcd7d2dfd0934c5590c976c9a6cd500261286151",
+    "bot/src/commands.js": "ea8546bede85b553fb2d86ca9b78bb66289725595c15215e77fa9ecf9288485d"
+  }
+}

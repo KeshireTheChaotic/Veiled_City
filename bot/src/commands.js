@@ -46,7 +46,7 @@ import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnost
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
 import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';
-import { seedData } from "./seed-data.js";
+import { seedData } from "./frameworks/world/public.js";
 import { handleSeedCommand } from "./seed-commands.js";
 import { KeyedSerialQueue } from "./kernel/serial-queue.js";
 import { prepareNpcDirector, commitNpcDirector } from "./frameworks/world/public.js";

@@ -2,11 +2,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import {worldNpcSeed} from './frameworks/world/public.js';
+import {worldNpcSeed} from './contracts/npc-seed.js';
 const {seedNpcCognition}=worldNpcSeed;
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { configureSimulationEntity } from './frameworks/world/public.js';
-import { backfillSeedData } from "./frameworks/world/public.js";
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
+import { configureSimulationEntity } from './actor-state.js';
+import { backfillSeedData } from "./seed-drafts.js";
 
 const TEXT_EXTENSIONS=new Set([".md",".txt",".json",".csv",".yaml",".yml",".html",".xml"]);
 const PRIVATE_LABELS=new Set(["gm","gm_private","private","player","character"]);

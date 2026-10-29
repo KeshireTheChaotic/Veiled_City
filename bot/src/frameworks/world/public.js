@@ -131,3 +131,5 @@ export {projectPhaseRevision,manageLongProject,reconcileLongProject} from './lon
 export {shareInformation,applySimulationUpdates,prepareNpcDirector,commitNpcDirector,runNpcDirector,simulationContext,acknowledgeSimulationHook} from './simulation.js';
 
 export {SEED_TEMPLATE_FEATURES,SEED_DRAFT_KINDS,addSeedDraft,editSeedDraft,reviewSeedDraft,backfillSeedData} from './seed-drafts.js';
+
+export {seedData} from './seed-data.js';

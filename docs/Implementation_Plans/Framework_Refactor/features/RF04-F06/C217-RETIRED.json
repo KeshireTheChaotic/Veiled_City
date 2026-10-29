@@ -1,0 +1,30 @@
+{
+  "feature": "RF04-C217",
+  "records": [
+    {
+      "id": "29f8c31f050957b2c691ad5891f955c180cba2facffa3012f5078f5528ecb0d1",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/seed-data.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "fa779e764c61ee19d12c5ca987d30089a1b2c336a8caf10b9390b5094e821229",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/seed-data.js",
+      "kind": "static",
+      "specifier": "./seed-data.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}
