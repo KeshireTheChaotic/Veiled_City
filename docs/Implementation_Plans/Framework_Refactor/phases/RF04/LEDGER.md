@@ -1079,3 +1079,7 @@ Twenty-five callers adopted owner contracts/public World functions; db.js standa
 ## C193 contact-group isolation — COMPLETE
 
 Original service moved to World; four callers adopted World public/Intent/Operations capabilities. Six fresh cases pass, original behavior body comparison and changed syntax pass. Four exact records retired; RF04 gate872modules/zero active/errors. Feature C193 evidence records fake/native/SQLite limits. Next: city-depth source responsibility review. RF04 incomplete; release unauthorized.
+
+## C194 World upkeep — COMPLETE
+
+Original upkeep/actor bodies extracted unchanged to World; shared feature guard, Application caller public route and root minor workflow retained. Two fresh cases qualified across initial/repair batches, with fixture failure and coverage limits recorded. Syntax5/5 and RF04 ratchet874modules/zero active/errors pass. No transition retired because root still owns minor workflow. Next: minor identity validation/catalog responsibility review. RF04 incomplete; release unauthorized.

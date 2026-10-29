@@ -1,0 +1,7 @@
+# C194 — COMPLETE bounded World upkeep extraction
+
+Base5a81263bea776f7665d7566bc59d56f78f50fa2a. Original actor/recordCityUpkeep bodies byte-identical after LF normalization. World owns upkeep.js and shared original feature-enabled guard; city-depth retains minor NPC workflow and compatibility reexport. Application city-commands calls World public upkeep. No transition removed: remaining root minor workflow/callers still justify its exact records.
+
+Fresh local test initial1/2pass exit1 at76.082ms; fake omitted native storage default active status, so settlement returned terminal branch. Fixture/status assertion repaired only; failed case1/1pass exit0 at74.7711ms. Two unique cases/three executions; no final-file whole pass claimed, no passing case rerun. Explicit accepted_by field rejection, obligation/schedule record creation without resource spending, replay, settlement audit rollback then forgiveness/cancellation retry exercised with transactional fake. Native owner authentication, SQLite, paid/disputed settlement and due-event resolved_by links unqualified.
+
+Five changed/new production syntax checks pass; RF04 ratchet874modules/0unowned/3562imports/2cycles/largest79/0active/errors. Local graph .reports/C194-final.json; hashes C194-HASHES.json. Source/schema/saved shapes and existing guard policy preserved; provider0calls/0tokens/$0; Codex UNMEASURED. Unrelated dirty documents untouched. RF04 incomplete, release unauthorized. Next exact slice: minor identity validator and catalog reads in city-depth, then planner/review workflow separation.

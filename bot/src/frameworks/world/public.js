@@ -102,3 +102,6 @@ export {subscribeConsequence,coordinateConsequences,reviewConsequence} from './c
 export {createCityFlagService} from './city-flags.js';
 
 export {manageGroup,proposeContactGroup} from './contact-groups.js';
+
+export {requireWorldFeature} from './feature-enabled.js';
+export {recordCityUpkeep} from './upkeep.js';

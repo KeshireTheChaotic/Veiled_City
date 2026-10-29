@@ -1,0 +1,8 @@
+{
+  "bot/src/city-commands.js": "d1a146db9c90cf98a1d0862518b1eb8fa61f17a357f8a2d08b0d924dd3edbf33",
+  "bot/src/city-depth.js": "204b1099e945ac82006a95455e9c34735ffb9b78561a871a9dacfbc1216a9742",
+  "bot/src/frameworks/world/public.js": "decb4884687ac1f33cda7b74b355deff9fa304b91ce47f7c908850de50135d6c",
+  "bot/src/frameworks/world/feature-enabled.js": "77dc47a0cd3aa8963b96a72486782856c715333bc491212ad9169ae5dab1cee1",
+  "bot/src/frameworks/world/upkeep.js": "b2a0219bea277cde9867edc72a80e019953244a52b9a63b07777c80452822ca6",
+  "bot/tests/ai-gm-2026-10/rf04-f01-c94.test.mjs": "c514480f9e13d0217cb98652ef3e0f0bd67689a0e1068f951fc6bd0d3e70849a"
+}
