@@ -48,3 +48,4 @@ export {initializePublicationKnowledgeNarrativeMemory} from './publication-knowl
 export {initializePublicationWorld} from './publication-world.js';
 
 export {initializeDiscordSessionPrincipal} from './discord-session.js';
+export {initializeSessionAssemblyState} from './assembly-state.js';

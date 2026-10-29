@@ -1,9 +1,11 @@
 /** Read-only assembly identity, native orientation and legacy-state inspection. */
 import {createHash} from 'node:crypto';
-import {currentScene,scenePresence,conversationPrincipal} from './frameworks/session/public.js';
-import {assemblyPartsFor} from './assembly-delivery.js';
-import {sessionAssemblyContextSource,sessionOpeningSource} from './frameworks/session/public.js';
+import {currentScene,scenePresence} from './scene-source.js';
+import {conversationPrincipal} from './conversation-principal.js';
+import {sessionAssemblyDeliveryParts} from './contracts/assembly-delivery-parts.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource} from './contracts/opening-sources.js';
 const {assemblyInputFingerprint}=sessionAssemblyContextSource,{assertSessionOpeningAttempt}=sessionOpeningSource;
+function assemblyPartsFor(...args){return sessionAssemblyDeliveryParts.assemblyPartsFor(...args);}
 export const assemblyHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const display=value=>JSON.stringify(value).replaceAll('@','@\u200b');
 export function assemblyPlanHash(plan){
@@ -84,6 +86,5 @@ export function assemblyOrientation(db,guild,sessionId,scope){
     :'\nYou may compare the observations you choose to share. Cooperation and party formation remain your choices.';
   return {text,state,revision:assemblyHash(state)};
 }
-import {sessionAssemblyStateSource} from './frameworks/session/public.js';
 // Provide this module's original assembly state functions to the fixed Session slot; no other authority is granted.
-sessionAssemblyStateSource.bind({assemblyDeliverySummary,assemblyPlanHash,assemblyHash,assemblySlots,legacyAssemblyState});
+sessionAssemblyStateSource.bind({assemblyDeliverySummary,assemblyPlanHash,assemblyHash,assemblySlots,legacyAssemblyState,assemblyOrientation});

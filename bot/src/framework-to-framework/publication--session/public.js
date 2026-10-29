@@ -1,8 +1,8 @@
-import {openingEntryEvidence,assemblyCoverageEvidence,openingCohortNarrativeCandidate,openingEntryProjection,openingEntryNarrativeCandidate,assertSessionOpeningPublication,assemblyHookSelection} from '../../frameworks/session/public.js';
+import {openingEntryEvidence,assemblyCoverageEvidence,openingCohortNarrativeCandidate,openingEntryProjection,openingEntryNarrativeCandidate,assertSessionOpeningPublication,assemblyHookSelection,assemblyOrientation} from '../../frameworks/session/public.js';
 import {publicationSessionEvidence} from '../../frameworks/publication/public.js';
 
 /** Bind Session's original evidence readers to Publication's fixed consumer. */
-export function connectPublicationSessionEvidence(){return publicationSessionEvidence.bind({openingEntryEvidence,assemblyCoverageEvidence,openingCohortNarrativeCandidate,openingEntryProjection,openingEntryNarrativeCandidate,assertSessionOpeningPublication,assemblyHookSelection});}
+export function connectPublicationSessionEvidence(){return publicationSessionEvidence.bind({openingEntryEvidence,assemblyCoverageEvidence,openingCohortNarrativeCandidate,openingEntryProjection,openingEntryNarrativeCandidate,assertSessionOpeningPublication,assemblyHookSelection,assemblyOrientation});}
 
 import {publicationSessionPrincipal} from '../../frameworks/publication/public.js';
 import {conversationPrincipal} from '../../frameworks/session/public.js';

@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { splitDiscordText } from "../src/discord/chunking.js";
 import { deliverInteractionText } from "../src/discord/delivery.js";
-import { deliverAssemblyParts } from "../src/assembly-delivery.js";
+import { deliverAssemblyParts } from "../src/application/workflows/assembly-delivery.js";
 
 const longFence=`Intro\n\`\`\`js\n${"const value = '😀';\n".repeat(180)}\`\`\`\nDone`;
 const chunks=splitDiscordText(longFence,1900);

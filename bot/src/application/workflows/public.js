@@ -1,5 +1,6 @@
 export * from './assembly-planning.js';
 export * from './assembly-publications.js';
+export {assemblyPartsFor,deliverAssemblyParts} from './assembly-delivery.js';
 export * from './opening-entry.js';
 export * from './opening-cohort-runner.js';
 export * from './session-opening-runner.js';

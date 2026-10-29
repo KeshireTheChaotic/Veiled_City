@@ -8,7 +8,8 @@ function conversationPrincipal(...args){return narrativeSessionPrincipal.convers
 import {factVisibleTo} from './disclosure-authority.js';
 import {objectiveEvidence} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';
-import {assemblyOrientation} from './assembly-state.js';
+import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
+function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
 import {narrativeSourceVisible} from './frameworks/narrative/public.js';
 export const sceneFictionHash=value=>jsonHash(value);
 const visible=(row,scope)=>row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,

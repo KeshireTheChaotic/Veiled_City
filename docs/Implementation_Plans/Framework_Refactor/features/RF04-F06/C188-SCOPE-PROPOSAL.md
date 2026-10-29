@@ -1,6 +1,6 @@
 # C188 proposal — retire the assembly state root
 
-Design only; no source change or qualification.
+Historical design proposal. The resolved implementation scope is C188-SCOPE.md; the Application delivery helper moves within its existing owner and supplies a fixed formatting callback. Qualification is recorded separately in C188-RUN.md when complete.
 
 `bot/src/assembly-state.js` belongs to Session. Its six exports cover hashes, assembly slots, legacy delivery status, delivery summaries and authenticated orientation. The existing Session source port binds five exports at module evaluation; the missing sixth is `assemblyOrientation`. Three direct consumers remain: Narrative's `narrative-authority-context.js` and `scene-fiction-context.js`, and Publication's `pvp-output.js`.
 

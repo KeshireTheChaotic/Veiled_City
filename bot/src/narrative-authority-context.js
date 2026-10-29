@@ -2,7 +2,8 @@
 import {currentScene,scenePresence,lastVerifiedCharacterPresence} from './scene-continuity.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {assemblyOrientation} from './assembly-state.js';
+import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
+function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
 import {factVisibleTo} from './disclosure-authority.js';
 import {objectiveEvidence,evidenceType} from './epistemic.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
@@ -16,7 +17,6 @@ import {directorBriefForAudience} from './narrative-director-source.js';
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function mentionsPublicIdentity(...args){return narrativeKnowledgeReaders.mentionsPublicIdentity(...args);}
 import {registerNarrativeContext} from './audience-native-v9.js';
-import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
 function assemblyWriterBrief(...args){return narrativeBridgeSessionSources.assemblyWriterBrief(...args);}
 import {worldIdentityOrigin} from './world-authorship.js';
 import {backgroundIdentityContext} from './world-background-identities.js';

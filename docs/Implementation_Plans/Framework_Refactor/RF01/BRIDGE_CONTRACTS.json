@@ -2631,7 +2631,7 @@
         {
           "from": "session",
           "to": "narrative",
-          "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error; narrativeSourceVisible(...) and validatePvpAgreement(...) -> original Narrative result/error through the Session-owned sessionNarrativeSources port bound at bootstrap by initializePvpAgreements (RF04-F05 C116)."
+          "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error; narrativeSourceVisible(...) and validatePvpAgreement(...) -> original Narrative result/error through the Session-owned sessionNarrativeSources port bound at bootstrap by initializePvpAgreements (RF04-F05 C116). C188 additionally passes the original Session assemblyOrientation reader through the existing narrativeBridgeSessionSources consumer slot and Narrative–Session adapter."
         },
         {
           "from": "narrative",
@@ -2663,7 +2663,7 @@
       "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
       "adoption_feature": "RF04-F04",
       "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
-      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative.",
+      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Narrative-owned narrativeBridgeSessionSources port; Session retains assembly-state rules.",
       "consumers": [
         "bot/src/application/composition/create-opening-services.js",
         "bot/src/application/composition/pvp-agreements.js"
@@ -2672,7 +2672,8 @@
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c88.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3403,7 +3404,7 @@
         {
           "from": "session",
           "to": "publication",
-          "contract": "Publication reads opening entry and assembly coverage evidence from the original Session readers through a fixed consumer; other dependencies remain migration obligations."
+          "contract": "Publication reads opening entry and assembly coverage evidence from the original Session readers through a fixed consumer; other dependencies remain migration obligations. C188 additionally passes the original Session assemblyOrientation reader through the existing publicationSessionEvidence consumer slot and Publication–Session adapter."
         }
       ],
       "source_evidence": [
@@ -3437,7 +3438,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f06-c55.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f06-c56.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c88.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3460,7 +3462,7 @@
         "occurrences": 18
       },
       "public_api": "bot/src/framework-to-framework/publication--session/public.js",
-      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations. C187 adds Publication conversation principal reads through publicationSessionPrincipal; Session remains authoritative."
+      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations. C187 adds Publication conversation principal reads through publicationSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Publication-owned publicationSessionEvidence port; Session retains assembly-state rules."
     },
     {
       "pair": "publication--world",
