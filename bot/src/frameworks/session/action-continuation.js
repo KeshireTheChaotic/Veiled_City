@@ -1,21 +1,21 @@
 /** Durable native-result continuation. No model call, replacement declaration, implicit consent or effect replay. */
 import {createHash} from "node:crypto";
-import {sessionIntent} from './frameworks/session/public.js';
+import {sessionIntent} from './contracts/intent.js';
 function buildActionPlan(...args){return sessionIntent.buildActionPlan(...args);}function transitionAction(...args){return sessionIntent.transitionAction(...args);}function signalActionContinuation(...args){return sessionIntent.signalActionContinuation(...args);}
-import {sessionNativeActionConsent} from './frameworks/session/public.js';
+import {sessionNativeActionConsent} from './contracts/native-action-consent.js';
 const consentAction=(...args)=>sessionNativeActionConsent.consentAction(...args);
 const completedActionSource=(...args)=>sessionNativeActionConsent.completedActionSource(...args);
 const historicalActionSource=(...args)=>sessionNativeActionConsent.historicalActionSource(...args);
-import {currentScene} from "./scene-continuity.js";
-import {sessionWorldAutonomy} from './frameworks/session/public.js';
+import {currentScene} from "./scene-source.js";
+import {sessionWorldAutonomy} from './contracts/world-autonomy.js';
 function applyAutonomousWorld(...args){return sessionWorldAutonomy.applyAutonomousWorld(...args);}
-import {sessionNativeChecks} from './frameworks/session/public.js';
+import {sessionNativeChecks} from './contracts/native-checks.js';
 function assertPcCanAct(...args){return sessionNativeChecks.assertPcCanAct(...args);}
 function validatePvpResolutionReceipt(...args){return sessionNativeChecks.validatePvpResolutionReceipt(...args);}
 function pendingPvpFear(...args){return sessionNativeChecks.pendingPvpFear(...args);}
 function validatePvpDamageApplication(...args){return sessionNativeChecks.validatePvpDamageApplication(...args);}
 function validatePvpAttackRoll(...args){return sessionNativeChecks.validatePvpAttackRoll(...args);}
-import {sessionPublicationContinuation,sessionContinuationNoticeSource} from "./frameworks/session/public.js";
+import {sessionPublicationContinuation,sessionContinuationNoticeSource} from "./contracts/publication-continuation.js";
 function prepareContinuationOutput(...args){return sessionPublicationContinuation.prepareContinuationOutput(...args);}
 function queueTurnPublications(...args){return sessionPublicationContinuation.queueTurnPublications(...args);}
 function typedRollProof(...args){return sessionNativeChecks.typedRollProof(...args);}
@@ -234,7 +234,7 @@ export function refreshActionContinuations(db,guild){
     results.push(...drainActionContinuations(db,guild,{sourceEvent:source}));
   return results;
 }
-import {sessionActionContinuation,sessionContinuationAuthorization} from './frameworks/session/public.js';
+import {sessionActionContinuation,sessionContinuationAuthorization} from './contracts/action-continuation.js';
 // Provide this module's original continuation drain and authorization reader to the fixed Session slots; no other authority is granted.
 sessionActionContinuation.bind({drainActionContinuations});
 sessionContinuationAuthorization.bind({continuationAuthorization});

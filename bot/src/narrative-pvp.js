@@ -8,7 +8,8 @@ const {indexWorldEvent}=narrativeWorldPrimitives;
 import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
 import { settlePvpWindow } from "./pvp-terminal.js";
-import {drainActionContinuations} from "./action-continuation.js";
+import {narrativeSessionContinuation} from "./frameworks/narrative/public.js";
+function drainActionContinuations(...args){return narrativeSessionContinuation.drainActionContinuations(...args);}
 import { closePartialFearGate } from "./pvp-fear-gate.js";
 import { stageDamagePvp } from "./pvp-profiles.js";
 import {assertPvpSafety,campaignPvpPolicy} from './pvp-campaign-policy.js';

@@ -16,7 +16,7 @@ import {sessionIntent} from './frameworks/session/public.js';
 function transitionAction(...args){return sessionIntent.transitionAction(...args);}
 import {sessionWorldEvents} from './frameworks/session/public.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
-import {drainActionContinuations,continuationInbox} from "./action-continuation.js";
+import {drainActionContinuations,continuationInbox} from "./frameworks/session/public.js";
 function actionReviewOperation(...args){return sessionNativeRules.actionReviewOperation(...args);}
 function clearNativeConditionFromOutcome(...args){return sessionNativeRules.clearNativeConditionFromOutcome(...args);}
 

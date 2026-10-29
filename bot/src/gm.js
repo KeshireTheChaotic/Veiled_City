@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 import {createHash} from 'node:crypto';
 import { AUTHORITY_POLICY } from "./frameworks/daggerheart/public.js";
 import { conversationPrincipal } from "./frameworks/session/public.js";
-import {continuationInbox} from "./action-continuation.js";
+import {continuationInbox} from "./frameworks/session/public.js";
 import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./frameworks/intent/public.js";
 import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";

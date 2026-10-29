@@ -46,3 +46,5 @@ export {narrativeSessionPrincipal} from './contracts/session-principal.js';
 export {EXPANSION_FEATURES} from './expansion-features.js';
 
 export {narrativeSessionLocationMatch} from './contracts/session-location-match.js';
+
+export {narrativeSessionContinuation} from './contracts/session-continuation.js';

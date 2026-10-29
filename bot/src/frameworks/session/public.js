@@ -61,3 +61,5 @@ export {locationMatches,reviewSceneEntry,configureEntryPolicy,mundaneEntryImpact
 export {entryTarget,prepareSceneEntry,routeSceneEntryMessage,entryReferenceContext} from './scene-entry.js';
 
 export {sessionPublicationContinuation,sessionContinuationNoticeSource} from './contracts/publication-continuation.js';
+
+export {continuationAuthorization,renderContinuationNotice,drainActionContinuations,continuationInbox,refreshActionContinuations} from './action-continuation.js';

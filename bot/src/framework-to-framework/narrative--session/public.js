@@ -28,3 +28,7 @@ export function connectNarrativeSessionPrincipal(){return narrativeSessionPrinci
 import {narrativeSessionLocationMatch} from '../../frameworks/narrative/public.js';
 import {locationMatches} from '../../frameworks/session/public.js';
 export function connectNarrativeSessionLocationMatch(){return narrativeSessionLocationMatch.bind({locationMatches});}
+
+import {narrativeSessionContinuation} from '../../frameworks/narrative/public.js';
+import {sessionActionContinuation} from '../../frameworks/session/public.js';
+export function connectNarrativeSessionContinuation(){return narrativeSessionContinuation.bind({drainActionContinuations:sessionActionContinuation.drainActionContinuations});}

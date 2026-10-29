@@ -5,7 +5,7 @@ import { validateDecisionAdvisory } from "./frameworks/intent/public.js";
 import { queueTurnPublications } from "./publication-outbox.js";
 import { resolveTypedNativeRolls } from "./typed-mechanics.js";
 import { reconcileConsequences } from "./consequence-reconciliation.js";
-import {refreshActionContinuations} from "./action-continuation.js";
+import {refreshActionContinuations} from "./frameworks/session/public.js";
 import {measureNative,operationalMetrics} from './operational-metrics.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {recordNarrativeHealth} from './narrative-completeness.js';

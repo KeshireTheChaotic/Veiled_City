@@ -1,0 +1,15 @@
+{
+  "feature": "RF04-C205",
+  "sha256": {
+    "bot/src/application/composition/pvp-agreements.js": "5456fb0b06b530cc2329e5eb5e9babb5cfc1be3677adffb4a346efa46c9ce004",
+    "bot/src/framework-to-framework/narrative--session/public.js": "13f928505bff94627fc27ccbf26e24982390f71f09a71265b35bb7d0856547b2",
+    "bot/src/frameworks/narrative/public.js": "954c2cdb8fc341504c1d089339fbeb95ecc686e0c9a9139f1a124ab0195e5686",
+    "bot/src/frameworks/session/public.js": "500d219e50710319cf920241d14e38be9be7ab74281efaa49a59d30f9b227154",
+    "bot/src/gm.js": "a0d66a105b33cfa9fa6348258ea3917f537d1dcedd296d05678420e1a7341cf1",
+    "bot/src/narrative-pvp.js": "feff6e89934c16d8f176de07e39432bd5d039f4a5ef552d4c9596563f9860fba",
+    "bot/src/turn-orchestration.js": "c164ef3055f524a8c6635af1f467f01ac28009c3afa88a7e022fb9563fc9b582",
+    "bot/src/window-coordinator.js": "a7a1870234525e807f8cffbb392180b05bc45fefcc133335605e72f88417d419",
+    "bot/src/frameworks/session/action-continuation.js": "372b7c4bad1ee117c7a06ce522b91f2f3bef86bcd6c875438ff7ac421e58b749",
+    "bot/src/frameworks/narrative/contracts/session-continuation.js": "2ace8b1253a6c654285336cf479321d6a7c09a1f4bb998be30305813f05dc4c1"
+  }
+}

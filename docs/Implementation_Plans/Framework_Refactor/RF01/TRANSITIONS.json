@@ -14,17 +14,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "9676c4373f5cde43a558d33992d590d0c5972431a7ce050634791bb683d94071",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/action-continuation.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "a0be711def43947f099c0960b86ce949d433352b0636c0dd7097073330ed8fc9",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/action-dependency.js",
@@ -4377,20 +4366,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "c238f236412baf054eb82cbba24a5b02ddade091e6037ceb3cdcca967d32d3d6",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "edbaa739ee730259b99d7e54eedac785d91708b6afd08d2a168a4cf739076e58",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -5671,20 +5646,6 @@
       "to": "bot/src/pvp-terminal.js",
       "kind": "static",
       "specifier": "./pvp-terminal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "776bec63f7ea523480f9b47780c65e68a2e60bbf2a064c44491a6dc213a525df",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-pvp.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -8985,20 +8946,6 @@
       "to": "bot/src/consequence-reconciliation.js",
       "kind": "static",
       "specifier": "./consequence-reconciliation.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "814a286ed32cbb94bad194a73fc8984579c12120192248fe7ba5ad8f9cf2a750",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/turn-orchestration.js",
-      "to": "bot/src/action-continuation.js",
-      "kind": "static",
-      "specifier": "./action-continuation.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
