@@ -1,7 +1,8 @@
 /** Delegated ordinary GM fiction; independent typed units, native receipts for effects, no arbitrary raw-output waiver. */
 import {buildNarrativeContext,narrativeVisible} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 import {establishNarrativeEntity} from './autonomous-world.js';
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;

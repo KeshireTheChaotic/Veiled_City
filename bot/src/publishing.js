@@ -17,7 +17,8 @@ import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 import {activeEvidence} from './epistemic.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {lifecycleProjection} from './lifecycle-output.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {publicationWorldEvents} from './frameworks/publication/public.js';
+const {indexWorldEvent}=publicationWorldEvents;
 const continuationDeliveryQueue=new KeyedSerialQueue();
 
 /** Only never-attempted owner notices auto-deliver. Failed/uncertain delivery stays in reviewed recovery. */

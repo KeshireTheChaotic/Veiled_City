@@ -5,7 +5,7 @@ import {applyAuthoredInitialPosition} from './frameworks/session/public.js';
 import {noteNarrativeInterest} from './narrative-salience.js';
 import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './narrative-director-source.js';
 import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './scene-continuity.js';
-import { indexWorldEvent } from "./city-calendar.js";
+import { indexWorldEvent } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { applySimulationUpdates } from "./simulation.js";
 import { validateNarrativeClaims, validateCanonAnnotations, validateCandidateClaims, assertNarrativeApplied } from "./narrative-integrity.js";

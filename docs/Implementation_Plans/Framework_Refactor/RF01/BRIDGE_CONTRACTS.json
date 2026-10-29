@@ -587,7 +587,7 @@
         "occurrences": 3
       },
       "public_api": "bot/src/framework-to-framework/content--world/public.js",
-      "scope": "Only requireCitySource is adopted; package event and seed draft dependencies remain unisolated."
+      "scope": "Only requireCitySource is adopted; package event and seed draft dependencies remain unisolated. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
     },
     {
       "pair": "daggerheart--discord",
@@ -1438,7 +1438,7 @@
         "discord",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "discord",
@@ -1456,11 +1456,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "validation": "Fixed original World event issuer preserves source/audience policy and saved-event replay.",
+      "lifecycle": "Existing Discord application initializer binds before runtime services.",
       "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "consumers": [
+        "bot/src/application/composition/discord-session.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f01-c92.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "discord",
@@ -1474,7 +1478,9 @@
         "pair": "discord--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 1
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/discord--world/public.js",
+      "scope": "Only the existing PvP menu checkpoint event issuer; no other World execution authority."
     },
     {
       "pair": "intent--knowledge",
@@ -1989,7 +1995,7 @@
         "occurrences": 29
       },
       "public_api": "bot/src/framework-to-framework/intent--world/public.js",
-      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open. C179 also routes Intent’s existing attemptCityInfluence call through the existing Intent-owned intentWorldOperations port, bound to the original World function by the existing Intent–World adapter. This is callable state-changing behavior: the original function may persist a transmission, receiver update, influence_action record, and audit in its existing transaction; the port adds no authority, policy, or saved effect. C189 binds connectIntentWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules."
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open. C179 also routes Intent’s existing attemptCityInfluence call through the existing Intent-owned intentWorldOperations port, bound to the original World function by the existing Intent–World adapter. This is callable state-changing behavior: the original function may persist a transmission, receiver update, influence_action record, and audit in its existing transaction; the port adds no authority, policy, or saved effect. C189 binds connectIntentWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
     },
     {
       "pair": "knowledge--narrative",
@@ -2803,7 +2809,7 @@
         "occurrences": 52
       },
       "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
-      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command."
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
     },
     {
       "pair": "npc--operations",
@@ -3267,7 +3273,7 @@
         "occurrences": 10
       },
       "public_api": "bot/src/framework-to-framework/operations--world/public.js",
-      "scope": "RF04-F05 C128: GM overview simulation read only. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules."
+      "scope": "RF04-F05 C128: GM overview simulation read only. C190 routes the original World consequence review through a fixed consumer; Intent additionally subscribes consequences. World retains handlers, lazy runtime and transaction rules. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
     },
     {
       "pair": "persistence--publication",
@@ -3583,7 +3589,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/publication--world/public.js",
-      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations. C189 binds connectPublicationWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open."
+      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations. C189 binds connectPublicationWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
     },
     {
       "pair": "session--world",

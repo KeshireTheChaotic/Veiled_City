@@ -6,3 +6,4 @@ export {combatantLine} from './combatant-text.js';
 export {splitDiscordText,chunkDiscordLines} from './chunking.js';
 
 export {discordSessionPrincipal} from './contracts/session-principal.js';
+export {discordWorldEvents} from './contracts/world-events.js';

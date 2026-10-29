@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { dualityRoll, parseDice } from "./frameworks/daggerheart/public.js";
 import { establishFact } from "./epistemic.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import { indexWorldEvent } from './frameworks/world/public.js';
 import { prepareRollRequest, pendingRollRequests, ownedRollRequest, formatRollRequest, publishRollAmendment } from "./roll-requests.js";
 import { contributeRoll, adjudicateRollSource, applyRollOutcome } from "./roll-collaboration.js";
 import {reviewTypedRollOutcome} from "./typed-roll-outcomes.js";

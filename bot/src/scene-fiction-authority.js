@@ -1,6 +1,7 @@
 /** Opt-in GM-owned LOCAL fiction. Provenance is verified; arbitrary English is not formally semantically certified. */
 import {buildSceneFictionContext,sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 import {hasPcReference} from './fresh-npc-authoring.js';
 import {materialParaphrases} from './narrative-integrity.js';
 import {operationalMetrics} from './operational-metrics.js';

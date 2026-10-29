@@ -176,6 +176,9 @@
     ],
     "content--world": [
       "bot/src/framework-to-framework/content--world/public.js"
+    ],
+    "discord--world": [
+      "bot/src/framework-to-framework/discord--world/public.js"
     ]
   },
   "externalCapabilityOwners": {

@@ -3,7 +3,8 @@ import { consentAction } from "./action-consent.js";
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from "./scene-continuity.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 import { TRAITS } from "./character-system.js";
 import { isPvpIntent, pvpTarget, pvpAttemptKey } from "./pvp-authority.js";
 import { settlePvpWindow } from "./pvp-terminal.js";

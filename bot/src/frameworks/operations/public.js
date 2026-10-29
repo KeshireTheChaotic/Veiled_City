@@ -9,3 +9,5 @@ export {operationsWorldOverview} from './contracts/world-overview.js';
 export {buildGmOverview,formatGmOverview} from './overview.js';
 
 export {operationsWorldConsequence} from './contracts/world-consequence.js';
+
+export {operationsWorldAudit} from './contracts/world-audit.js';

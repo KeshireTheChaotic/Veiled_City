@@ -4,7 +4,8 @@ export {authoredTurnEnvelope};
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from "./scene-continuity.js";
-import { indexWorldEvent } from "./city-calendar.js";
+import {intentWorldPrimitives} from './frameworks/intent/public.js';
+const {indexWorldEvent}=intentWorldPrimitives;
 
 function fail(message){throw Object.assign(new Error(message),{code:"AUTHORED_TURN_ENVELOPE"});}
 

@@ -2,7 +2,8 @@
 import {inspectArbitrationOrigin,buildSceneIntentBoard,currentScenePlayerInputs,arbitrationTurnOrigin} from './scene-intent-board.js';
 import {matchesArbitrationSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema} from './gm-arbitration-contract.js';
 import {gmRulingContext,adjudicateGmRuling,nativeGmSceneContext} from './gm-action-ruling.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {intentWorldPrimitives} from './frameworks/intent/public.js';
+const {indexWorldEvent}=intentWorldPrimitives;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.js';

@@ -1071,3 +1071,7 @@ Original lazy service/handlers moved to World; five callers use World public or 
 ## C191 city-core retirement — COMPLETE
 
 World flag policy and immutable Narrative catalog now compose through Narrative–World. Content source and Narrative portrayal use fixed World contracts; root city-core removed and six exact transitions retired. Four fresh cases passed across distinct batches; changed syntax and RF04 ratchet pass867modules/zero active/errors. Local ignored test availability limits clean-checkout qualification; no live release claim. Feature C191-LEDGER/HASHES retain evidence. Next: city-calendar compatibility responsibility review. RF04 incomplete.
+
+## C192 calendar caller checkpoint
+
+Twenty-five callers adopted owner contracts/public World functions; db.js standalone eager calendar binding remains a local RF06 composition obligation. Six fresh cases passed; source syntax and RF04 ratchet pass871modules/zero active/errors. Twenty-four exact records retired, root/db records retained without extension. Feature C192 ledger/scope/hash artifacts record limits. Root retirement and RF04 remain incomplete; next exact work is standalone Persistence composition.

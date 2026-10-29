@@ -31,7 +31,7 @@ import {activeCityProxy,assertNpcAvailability} from '../../frameworks/world/publ
 export function connectNarrativeWorldConstraints(){return narrativeWorldConstraints.bind({activeCityProxy,assertNpcAvailability});}
 
 import {narrativeWorldPrimitives} from '../../frameworks/narrative/public.js';
-import {cityObject,cityKey,cityAudit,requireCitySource} from '../../frameworks/world/public.js';
-export function connectNarrativeWorldPrimitives(){return narrativeWorldPrimitives.bind({cityObject,cityKey,cityAudit,requireCitySource});}
+import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '../../frameworks/world/public.js';
+export function connectNarrativeWorldPrimitives(){return narrativeWorldPrimitives.bind({cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent});}
 
 export {CITY_FEATURE_FLAGS,configureCityFlags} from './city-flags.js';

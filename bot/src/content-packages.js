@@ -1,8 +1,8 @@
 /** Validated inert content definitions reuse seed drafts/references. GM boundary owns rights/public review, never model data. */
 import { createHash } from "node:crypto";
-import { cityObject, cityKey, cityAudit, indexWorldEvent } from "./city-calendar.js";
+
 import {contentWorldSource} from './frameworks/content/public.js';
-const {requireCitySource}=contentWorldSource;
+const {requireCitySource,cityObject,cityKey,cityAudit,indexWorldEvent}=contentWorldSource;
 import { addSeedDraft, reviewSeedDraft } from "./seed-drafts.js";
 import {stateRevision} from './kernel/state-revision.js';
 const format="veiled-city-content-package-v1";

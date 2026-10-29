@@ -1,7 +1,8 @@
 /** Audience-isolated fresh NPC utterances. Authoring provenance is NOT proof of their truth or a PC effect. */
 import {createHash} from 'node:crypto';
 import {gmWorldScope} from './gm-world-scope.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {portrayalPacket} from './portrayal.js';

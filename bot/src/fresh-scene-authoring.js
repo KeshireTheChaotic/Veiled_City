@@ -1,7 +1,8 @@
 /** Audience-isolated nonmechanical scene framing. Authorship proves provenance, NOT semantic truth or PC/world effects. */
 import {createHash} from 'node:crypto';
 import {sceneAuthoringContext} from './scene-description.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 import {hasPcReference,quoteNpcWords} from './fresh-npc-authoring.js';
 import {materialParaphrases} from './narrative-integrity.js';
 export {freshSceneRequestSchema,freshSceneResponseSchema} from './gm-fiction-schema.js';

@@ -1,6 +1,6 @@
 /** Private seed draft management; callers must enforce GM authorization before invoking this handler. */
 import { AttachmentBuilder } from "discord.js";
-import { cityObject } from "./city-calendar.js";
+import { cityObject } from './frameworks/world/public.js';
 import { addSeedDraft, editSeedDraft, reviewSeedDraft } from "./seed-drafts.js";
 import { previewContentPackage, importContentPackage, reviewContentPackage, exportContentPackage } from "./content-packages.js";
 

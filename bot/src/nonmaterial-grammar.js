@@ -3,7 +3,8 @@ import {createHash} from 'node:crypto';
 import {currentScene} from './scene-continuity.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const questions=["What kind of work would you like to look for?",
   "What sort of work would you look for, and where would you start?",

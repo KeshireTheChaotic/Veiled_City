@@ -1,0 +1,61 @@
+{
+  "base": "a7793e3f",
+  "evidence": [
+    {
+      "path": "bot/src/autonomous-world.js",
+      "owner": "world",
+      "symbols": [
+        "indexWorldEvent",
+        "cityAudit",
+        "cityObject"
+      ],
+      "sha256": "1502145b9e18585b5bb0a27d8b965c30bb8024401d366aefeb7ce8276c3aac97"
+    },
+    {
+      "path": "bot/src/city-commands.js",
+      "owner": "application",
+      "symbols": [
+        "cityObject",
+        "calendarStatus",
+        "configureCalendar",
+        "indexWorldEvent",
+        "scheduleCityEvent",
+        "reviewCityEvent"
+      ],
+      "sha256": "99d74419632d17e53fefe09efb79645017295c03e08b82b93a427902594c33c9"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "owner": "application",
+      "symbols": [
+        "indexWorldEvent"
+      ],
+      "sha256": "43030bd61214ff0ef3493b11ad07ea134df79d695260853b8c0ea9d2811a9eb6"
+    },
+    {
+      "path": "bot/src/seed-commands.js",
+      "owner": "application",
+      "symbols": [
+        "cityObject"
+      ],
+      "sha256": "d9724b23a707030556b5f197b014ab10012e821d8a9c889f64d3724bfd7da48b"
+    },
+    {
+      "path": "bot/src/state.js",
+      "owner": "application",
+      "symbols": [
+        "indexWorldEvent"
+      ],
+      "sha256": "7a31f17960492f96eee73dcb4ca1791c6cbb7496eb06a0611731b21d1f8eb8ea"
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "owner": "application",
+      "symbols": [
+        "cityObject"
+      ],
+      "sha256": "7decca742467519b175f39356e574a615794fcd24c2e2ddba705187f9ac6096c"
+    }
+  ],
+  "change": "Only exact shim import specifiers changed; same original World public functions."
+}

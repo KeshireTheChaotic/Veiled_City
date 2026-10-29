@@ -1,7 +1,8 @@
 /** Native GM-owned nonbinding local prop text. Not a PC decision or a mechanical adapter. */
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {quoteNpcWords} from './fresh-npc-authoring.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent}=narrativeWorldPrimitives;
 const issuer='native:narrative-artifact';
 export const narrativeArtifactKey=(binding,u)=>`narrative-artifact:${hash([binding,u])}`;
 export const hasNarrativeChoices=text=>/\b(?:choose|pick|select) (?:one of|from the following|an option)|\b(?:reply|answer|respond) (?:with )?(?:yes or no|accept or decline)\b/i.test(text)

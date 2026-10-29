@@ -5,7 +5,8 @@ import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function scopedQueryPlan(...args){return narrativeKnowledgeReaders.scopedQueryPlan(...args);}function queryScopedFacts(...args){return narrativeKnowledgeReaders.queryScopedFacts(...args);}
-import { indexWorldEvent, cityAudit } from "./city-calendar.js";
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {indexWorldEvent, cityAudit}=narrativeWorldPrimitives;
 import { locationMatches } from "./scene-entry.js";
 import { interpretationSchema } from "./frameworks/narrative/interpretation-schema.js";
 import { CONTEXT_CONTRACT } from "./frameworks/narrative/interpretation-contract.js";

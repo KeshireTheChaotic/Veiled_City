@@ -5,7 +5,8 @@ import {ActionRowBuilder,ButtonBuilder,ButtonStyle,StringSelectMenuBuilder,Modal
 import {discordSessionPrincipal} from './frameworks/discord/public.js';
 function conversationPrincipal(...args){return discordSessionPrincipal.conversationPrincipal(...args);}
 import {currentScene} from './scene-continuity.js';
-import {indexWorldEvent} from './city-calendar.js';
+import {discordWorldEvents} from './frameworks/discord/public.js';
+const {indexWorldEvent}=discordWorldEvents;
 import {consentAction} from './action-consent.js';
 import {pvpTarget} from './pvp-authority.js';
 import {TRAITS} from './character-system.js';

@@ -5,3 +5,7 @@ export function connectOperationsWorldOverview(){return operationsWorldOverview.
 import {operationsWorldConsequence} from '../../frameworks/operations/public.js';
 import {reviewConsequence} from '../../frameworks/world/public.js';
 export function connectOperationsWorldConsequence(){return operationsWorldConsequence.bind({reviewConsequence});}
+
+import {operationsWorldAudit} from '../../frameworks/operations/public.js';
+import {cityAudit} from '../../frameworks/world/public.js';
+export function connectOperationsWorldAudit(){return operationsWorldAudit.bind({cityAudit});}

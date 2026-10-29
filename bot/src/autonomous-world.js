@@ -4,7 +4,7 @@ import {worldConversationPrincipal} from './frameworks/world/public.js';
 function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
 import {worldPersonalContinuity} from './frameworks/world/public.js';
 function personalCharacter(...args){return worldPersonalContinuity.personalCharacter(...args);}
-import { indexWorldEvent, cityAudit, cityObject } from "./city-calendar.js";
+import { indexWorldEvent, cityAudit, cityObject } from './frameworks/world/public.js';
 import {worldSessionScene} from './frameworks/world/public.js';
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function recordScenePresence(...args){return worldSessionScene.recordScenePresence(...args);}
 import {worldNativeMovementChecks} from './frameworks/world/public.js';

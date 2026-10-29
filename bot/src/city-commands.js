@@ -2,7 +2,7 @@ import {configureCityFlags} from './framework-to-framework/narrative--world/publ
 /** GM-only civic commands. No generic city-state endpoint is available to players. */
 import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
 import { PermissionError } from "./kernel/errors.js";
-import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from "./city-calendar.js";
+import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from './frameworks/world/public.js';
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
   establishCommitment, proposeCityOpportunity, runInstitutionDirector } from './frameworks/world/public.js';
 import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./frameworks/world/public.js";

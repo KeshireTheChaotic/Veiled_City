@@ -1,0 +1,7 @@
+# C192 calendar caller adoption — qualified checkpoint; retirement INCOMPLETE
+
+Basea7793e3f222488dbf703d9492c174206e9444092. Twenty-five former shim callers now use World public or exact consumer-owned Intent/Narrative/Content/Operations/Publication/Discord capabilities. db.js alone retains the root shim for its existing eager standalone facade binding. Root location and its exact db dependency remain unchanged and accountable; no deadline extension. Scope retains full retirement requirement.
+
+Fresh local tests: Narrative1/1 (152.0052ms), Content+Operations2/2 (141.4369ms), Publication1/1 (135.2889ms), Discord1/1 (559.7493ms), Intent1/1 (66.2189ms):6unique passing cases, separate affected-contract batches, all exit0; no passing reruns. Scope records mocks and limits; these are not complete runtime/SQLite/live proof. Changed-source syntax passes. Twenty-four exact obsolete caller records archived/retired after absence proof; final RF04 gate871modules/0unowned/3548imports/2cycles/largest79/0active/errors. Hashes C192-HASHES.json; local graph .reports/C192-final-callers.json. New tests remain ignored local; clean-checkout test availability remains unqualified.
+
+Schema/saved formats unchanged. Provider0calls/0tokens/$0; Codex UNMEASURED. Unrelated dirty work preserved. Next exact work: standalone Persistence calendar composition preserving db constructor and nested clock transaction; retain shim until implemented/qualified. RF04 and C192 retirement incomplete; release unauthorized.
