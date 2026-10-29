@@ -9,7 +9,7 @@ export {simulationCandidates} from './frameworks/world/public.js';
 import { randomUUID } from "node:crypto";
 import {ACTION_TYPES,MAJOR_IMPACTS} from './frameworks/world/action-catalog.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from "./city-core.js";
+import { submitInstitutionAction, runInstitutionDirector, proposeCityOpportunity } from './frameworks/world/public.js';
 import { applyNpcServiceOutcome } from "./frameworks/world/public.js";
 import { assertServiceAccess } from './frameworks/world/public.js';
 import { coordinateConsequences } from './frameworks/world/public.js';

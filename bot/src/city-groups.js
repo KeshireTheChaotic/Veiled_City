@@ -1,6 +1,6 @@
 /** Reviewed community lifecycle over existing communities; membership grants no knowledge, consent, allegiance, debts or resources. */
 import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource } from "./city-core.js";
+import { requireCitySource } from './frameworks/world/public.js';
 import { updateCityCivic } from './frameworks/world/public.js';
 import {activeCityProxy,assertNpcAvailability} from './frameworks/world/public.js';
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';

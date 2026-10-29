@@ -32,7 +32,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/city-commands.js","bot/src/application/workflows/city-commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","6"
 "bot/src/city-consequences.js","bot/src/frameworks/world/consequence-source.js","world","RF04","C190_LAZY_SERVICE_AND_HANDLERS_MOVED_CALLERS_ADOPTED","5","0"
 "bot/src/city-constraints.js","bot/src/frameworks/world/availability.js","world","RF04","WORLD_AVAILABILITY_EXTRACTED; C189_COMPATIBILITY_EXPORT_REMOVED; OTHER_WORLD_INTENT_SESSION_OBLIGATIONS_REMAIN","38","3"
-"bot/src/city-core.js","bot/src/frameworks/world/city-core-rules.js;bot/src/frameworks/world/city-source.js;bot/src/frameworks/world/commitments.js;bot/src/frameworks/world/city-context.js","world","RF04","WORLD_RULES_EXTRACTED_SOURCE_COMPOSITION_AND_KNOWLEDGE_FLAGS_REMAIN","30","2"
+"bot/src/city-core.js","bot/src/frameworks/world/city-flags.js","world","RF04","C191_ROOT_RETIRED_FLAG_POLICY_AND_CATALOG_PAIR","0","0"
 "bot/src/city-depth.js","bot/src/frameworks/world/city-depth.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","5","1"
 "bot/src/city-groups.js","bot/src/frameworks/world/city-groups.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","4","2"
 "bot/src/combat.js","bot/src/frameworks/daggerheart/combat.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","5","0"

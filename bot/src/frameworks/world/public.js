@@ -98,3 +98,5 @@ export {configureWorldEncounterCatalog,snapshotNativeEncounterCandidates,inspect
 export {establishWorldDescription,renderWorldObservation,registerWorldObservation} from './world-observation.js';
 
 export {subscribeConsequence,coordinateConsequences,reviewConsequence} from './consequence-source.js';
+
+export {createCityFlagService} from './city-flags.js';

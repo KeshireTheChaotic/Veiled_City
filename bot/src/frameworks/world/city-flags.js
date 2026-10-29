@@ -1,22 +1,14 @@
-/** Civic domain validation and institutional knowledge firewall. All descriptors are non-player simulation, never mechanical modifiers. */
-import {cityObject,cityAudit} from './frameworks/world/public.js';
-import { EXPANSION_FEATURES } from "./expansion-contracts.js";
-
-
-
-
-
-
-
-
-export const CITY_FEATURE_FLAGS=Object.freeze(["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
+import {cityObject,cityAudit} from './city-calendar.js';
+/** Preserve the original flag policy with an explicit catalog input. */
+export function createCityFlagService(EXPANSION_FEATURES){
+const CITY_FEATURE_FLAGS=Object.freeze(["institutions","opportunities","economy","minor_npcs","adaptive_context","conversations","pacing","negotiations","voice_direction","authoring",
     "autonomous_pvp_fear",
     "pvp_private_ui",
     "gm_discretion",
     "scoped_disclosure_recovery","scene_descriptions","post_projection_answers","playable_narration",
     "narrative_authority","narrative_memory","narrative_camera","narrative_encounters","narrative_salience","narrative_completeness",
     ...Object.keys(EXPANSION_FEATURES)]);
-export function configureCityFlags(db,guildId,input,actorId){
+function configureCityFlags(db,guildId,input,actorId){
   cityObject(input);
   if(Object.keys(input).some(key=>!CITY_FEATURE_FLAGS.includes(key)||typeof input[key]!=="boolean")) throw new Error("Unknown city feature flag.");
   return db.transaction(()=>{
@@ -32,12 +24,5 @@ export function configureCityFlags(db,guildId,input,actorId){
     cityAudit(db,guildId,"city_flags",guildId,before,after,actorId);return after;
   });
 }
-/** Deterministic bounded Institution Director: validated queued intent, no new per-actor LLM calls. */
-export {establishCommitment} from './frameworks/world/public.js';
-export function cityContext(...args){return worldCityContext(...args);}
-export function proposeCityOpportunity(...args){return worldProposeCityOpportunity(...args);}
-
-export {INSTITUTION_ACTIONS,requireCitySource,cityStrings,requireCityRecord} from './frameworks/world/public.js';
-import {cityContext as worldCityContext,proposeCityOpportunity as worldProposeCityOpportunity} from './frameworks/world/public.js';
-
-export {updateCityCore,assignDistrictLocation,addWorldLink,inspectInstitutionAction,submitInstitutionAction,reviewInstitutionAction,executeInstitutionAction,runInstitutionDirector,fileInstitutionReport} from './frameworks/world/public.js';
+return Object.freeze({CITY_FEATURE_FLAGS,configureCityFlags});
+}

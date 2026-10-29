@@ -16,6 +16,7 @@ export {initializePersistenceWorld} from './persistence-world.js';
 export {initializeKnowledgeNarrative} from './knowledge-narrative.js';
 export {initializeWorldActorControl} from './world-actor-control.js';
 export {initializeWorldExecution} from './world-execution.js';
+export {initializeContentWorld} from './content-world.js';
 export {initializeSessionSceneWorld} from './session-scene-world.js';
 export {initializeWorldOwnerConsent} from './world-owner-consent.js';
 export {initializeNativeSessionMovement} from './native-session-movement.js';

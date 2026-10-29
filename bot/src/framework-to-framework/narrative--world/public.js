@@ -29,3 +29,9 @@ import {narrativeWorldConstraints} from '../../frameworks/narrative/public.js';
 import {activeCityProxy,assertNpcAvailability} from '../../frameworks/world/public.js';
 /** Bind World's original proxy and availability rules to Narrative's fixed consumer. */
 export function connectNarrativeWorldConstraints(){return narrativeWorldConstraints.bind({activeCityProxy,assertNpcAvailability});}
+
+import {narrativeWorldPrimitives} from '../../frameworks/narrative/public.js';
+import {cityObject,cityKey,cityAudit,requireCitySource} from '../../frameworks/world/public.js';
+export function connectNarrativeWorldPrimitives(){return narrativeWorldPrimitives.bind({cityObject,cityKey,cityAudit,requireCitySource});}
+
+export {CITY_FEATURE_FLAGS,configureCityFlags} from './city-flags.js';

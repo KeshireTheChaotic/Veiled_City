@@ -1,0 +1,43 @@
+{
+  "base": "01967be677baea1c133f794d9df485ab419aa399",
+  "evidence": [
+    {
+      "path": "bot/src/city-depth.js",
+      "only_exact_import_repoint": true,
+      "sha256": "17d1c482ee6440481fc6c9dcacac52d466358f624a52b81751126326ec48ef02"
+    },
+    {
+      "path": "bot/src/city-groups.js",
+      "only_exact_import_repoint": true,
+      "sha256": "068af92818ac972745bdef378f987b094fbbdb681dbde9eac12b73afd5313183"
+    },
+    {
+      "path": "bot/src/long-projects.js",
+      "only_exact_import_repoint": true,
+      "sha256": "e51188a0b44150ef62f696ee654d6be68af9350268c5b2db3805247cb73531fe"
+    },
+    {
+      "path": "bot/src/seed-drafts.js",
+      "only_exact_import_repoint": true,
+      "sha256": "783a2570057cc7fd9ac7c826852858cb629432da1bd92dac715b86893bcde847"
+    },
+    {
+      "path": "bot/src/simulation.js",
+      "only_exact_import_repoint": true,
+      "sha256": "b01d2b5c20d0bdd1d1411a960ab7d5a7e7cab7582d7fc440085539b2960792e5"
+    },
+    {
+      "path": "bot/src/world-authoring.js",
+      "only_exact_import_repoint": true,
+      "sha256": "470ba2922590134d83f1413859de44c3debd9fc754d955e10861994414e5179d"
+    }
+  ],
+  "syntax": "6/6 passed",
+  "rf04": {
+    "pass": true,
+    "modules": 861,
+    "active": 0,
+    "transition_errors": 0
+  },
+  "behavioral_tests": "Not run: path-only same-owner import changes; original function implementations unchanged."
+}

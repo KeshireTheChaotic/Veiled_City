@@ -1067,3 +1067,7 @@ Removed the root `city-constraints.js` re-export after routing all 12 callers th
 ## C190 World consequence service — COMPLETE
 
 Original lazy service/handlers moved to World; five callers use World public or existing Intent/Operations pairs. Four exact transitions retired. Fresh cases8/8 across three batches qualify review holds, replay, goal forwarding, rollback/retry, audience transmission and actual pair bindings with bounded fakes. RF04 ratchet passes861modules/0unowned/0active/errors,2cycles/largest79. Schema/saved formats unchanged; no live services. Tests local ignored; feature ledger records limits. Next: city-core compatibility export source review. RF04 incomplete; release unauthorized.
+
+## C191 city-core retirement — COMPLETE
+
+World flag policy and immutable Narrative catalog now compose through Narrative–World. Content source and Narrative portrayal use fixed World contracts; root city-core removed and six exact transitions retired. Four fresh cases passed across distinct batches; changed syntax and RF04 ratchet pass867modules/zero active/errors. Local ignored test availability limits clean-checkout qualification; no live release claim. Feature C191-LEDGER/HASHES retain evidence. Next: city-calendar compatibility responsibility review. RF04 incomplete.

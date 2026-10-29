@@ -1,6 +1,6 @@
 /** Persistent diction guidance, separated from factual memory and public voice authorization. */
-import { cityObject, cityKey, cityAudit } from "./city-calendar.js";
-import { requireCitySource } from "./city-core.js";
+import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+const {cityObject,cityKey,cityAudit,requireCitySource}=narrativeWorldPrimitives;
 const fields=["address","formality","humor","verbal_habits","emotional_tone","pronunciation"];
 export function configurePortrayal(db,guildId,input,actorId){
   cityObject(input);requireCitySource(db,guildId,input.source_event);const key=cityKey(input.npc);

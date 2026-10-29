@@ -1,6 +1,6 @@
 /** Human-reviewed world drafts reuse existing typed materializers and canon anchors; no generic rules or second canon ledger. */
 import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource, updateCityCore } from "./city-core.js";
+import { requireCitySource, updateCityCore } from './frameworks/world/public.js';
 import { configureSimulationEntity } from './frameworks/world/public.js';
 import {worldStoryContinuity} from './frameworks/world/public.js';
 function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}

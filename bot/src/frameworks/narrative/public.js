@@ -39,5 +39,8 @@ export {narrativeOpeningCohort} from './contracts/opening-cohort.js';
 export {narrativeWorldEncounters} from './contracts/world-encounters.js';
 export {narrativeWorldSimulation} from './contracts/world-simulation.js';
 export {narrativeWorldConstraints} from './contracts/world-constraints.js';
+export {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 
 export {narrativeSessionPrincipal} from './contracts/session-principal.js';
+
+export {EXPANSION_FEATURES} from './expansion-features.js';

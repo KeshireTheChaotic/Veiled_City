@@ -545,7 +545,7 @@
         "content",
         "world"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "content",
@@ -563,11 +563,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
+      "validation": "Fixed original World source validator; no copied source or disclosure policy.",
+      "lifecycle": "Application initializes the fixed source validator before runtime services.",
       "adoption_feature": "RF04",
-      "consumers": [],
-      "tests": [],
+      "consumers": [
+        "bot/src/application/composition/content-world.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f01-c91.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "content",
@@ -581,7 +585,9 @@
         "pair": "content--world",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 3
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/content--world/public.js",
+      "scope": "Only requireCitySource is adopted; package event and seed draft dependencies remain unisolated."
     },
     {
       "pair": "daggerheart--discord",
@@ -2767,7 +2773,8 @@
       "lifecycle": "Inert fixed application initializer called by actual index before service construction. Narrative context factory supplied by original source composition; context-provider decomposition remains explicit residual debt.",
       "adoption_feature": "RF04-F06",
       "consumers": [
-        "bot/src/application/composition/narrative-world.js"
+        "bot/src/application/composition/narrative-world.js",
+        "bot/src/city-commands.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
@@ -2796,7 +2803,7 @@
         "occurrences": 52
       },
       "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
-      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open."
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command."
     },
     {
       "pair": "npc--operations",
