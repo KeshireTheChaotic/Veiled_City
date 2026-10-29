@@ -96,6 +96,7 @@ function saveToken(db,guild,token,data,status=token.status){
 }
 
 export async function handleRollMenuInteraction(db,interaction,{rng}={}){
+  const prompt=parsePrompt(interaction.customId);if(prompt)return handleRollPromptInteraction(db,interaction,prompt,{rng});
   const current=currentToken(db,interaction.guildId,interaction);if(!current)return false;
   let {id,token,row}=current;
   if(id.type==="s"&&id.action==="options"){
@@ -157,4 +158,33 @@ export async function handleRollMenuInteraction(db,interaction,{rng}={}){
   return false;
 }
 
-export function isRollMenuInteraction(interaction){return !!parse(interaction?.customId);}
+export function isRollMenuInteraction(interaction){return !!parse(interaction?.customId)||!!parsePrompt(interaction?.customId);}
+
+/* Public table roll prompt buttons (posted from the saved request by roll-requests.js): owner-only Roll and Options.
+ * Dice and outcomes stay with the native roll path; the prompt is presentation only. */
+const parsePrompt=id=>{
+  const [head,request,action]=String(id||'').split('|');
+  return head==='vcrp'&&request&&['roll','options'].includes(action)?{request,action}:null;
+};
+function promptResult(db,guild,row){
+  const r=row.data.result;if(!r)return `Status: ${row.status}.`;
+  const receipt=db.listCityRecords(guild,{kind:'action_outcome_receipt',includeGM:true,limit:500}).find(x=>x.data.request===row.record_key);
+  const verdict={success:'success',failure:'failure',needs_review:'GM review needed'}[receipt?.data.outcome];
+  return `🎲 ${row.data.character_name} rolled **${r.total}** with **${r.duality}**${verdict?` — **${verdict}**`:''}.`;
+}
+async function handleRollPromptInteraction(db,interaction,id,{rng}={}){
+  const row=db.getCityRecord(interaction.guildId,'roll_request',id.request);
+  if(!row)throw new StateConflictError('This roll request no longer exists; /vc-roll pending lists current requests.');
+  if(interaction.user.id!==row.data.owner_user_id){
+    await interaction.reply({content:`Only <@${row.data.owner_user_id}> can roll this.`,ephemeral:true,allowedMentions:{parse:[]}});return true;
+  }
+  if(id.action==='options'){await interaction.reply(openRollMenu(db,interaction.guildId,interaction.user.id,row.record_key));return true;}
+  if(row.status!=='pending')throw new StateConflictError(`This roll is ${row.status}, not pending; /vc-roll pending shows its current state.`);
+  const replay=`prompt-${createHash('sha256').update(row.record_key).digest('hex').slice(0,24)}-roll`;
+  const rolled=db.transaction(()=>contributeRoll(db,interaction.guildId,interaction.user.id,
+    {op:'roll',request:row.record_key,expected_revision:rollRevision(row),key:replay},{rng}));
+  const prompt=String(interaction.message?.content||'').split('\n').filter(line=>!line.startsWith('Only <@'));
+  await finishRollOperation(db,interaction,rolled,()=>interaction.update({content:[...prompt,promptResult(db,interaction.guildId,rolled)].join('\n'),
+    components:[],allowedMentions:{parse:[]}}));
+  return true;
+}

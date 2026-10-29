@@ -162,6 +162,20 @@ function allowedPrivateMessages(session,resultMessages,scope){
   return {deliver,blocked};
 }
 
+/** Roll request delivery: private breakdowns to the owner, public table prompts once to the play channel. */
+function rollRequestSender(guild){
+  return async(user,payload,sessionId,characterId,meta={})=>{
+    if(!meta.publicPrompt)return sendPlayerPrivate({db,guild,userId:user,content:payload,sessionId,characterId,...meta});
+    const row=meta.publicPrompt,key=`roll-prompt:${row.record_key}`;
+    if(db.getCityRecord(guild.id,"roll_prompt",key))return;
+    const channelId=db.getCampaign(guild.id)?.play_channel_id,channel=channelId&&await guild.channels.fetch(channelId).catch(()=>null);
+    if(!channel?.isTextBased?.())throw new Error("The play channel is unavailable for the roll prompt; /vc-roll pending still lists the request.");
+    const message=await channel.send(payload);
+    db.saveCityRecord(guild.id,{kind:"roll_prompt",key,status:"posted",source_event:row.source_event,visibility:"party",
+      data:{version:1,request:row.record_key,message_id:message.id,channel_id:channel.id,authority:"Presentation only; the native request owns dice and outcome."}});
+  };
+}
+
 async function notifyBlockedActions({guild,session,actorUserId=null,actorCharacterId=null,rows=[],context="GM turn"}){
   if(!rows.length) return;
   const descriptions=rows.map(describeBlockedAction);
@@ -394,7 +408,7 @@ async function processPrivateTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-roll-requests"},()=>
-    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char,meta)=>sendPlayerPrivate({db,guild:message.guild,userId:user,content:text,sessionId:sid,characterId:char,...meta})));
+    publishRollRequests(db,message.guild.id,mutation,rollRequestSender(message.guild)));
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"private-continuation-notices"},()=>
     publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);
@@ -509,7 +523,7 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,"publishing");
   const outputErrors=[];
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-roll-requests"},()=>
-    publishRollRequests(db,message.guild.id,mutation,(user,text,sid,char,meta)=>sendPlayerPrivate({db,guild:message.guild,userId:user,content:text,sessionId:sid,characterId:char,...meta})));
+    publishRollRequests(db,message.guild.id,mutation,rollRequestSender(message.guild)));
   await outputStep(outputErrors,{guild:message.guild,sessionId:session.id,context:"party-continuation-notices"},()=>
     publishContinuationNotices({db,guild:message.guild,userId:message.author.id}));
   const blockedState=blockedMutationRows(mutation);

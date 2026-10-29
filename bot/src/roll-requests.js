@@ -78,7 +78,23 @@ export function formatRollRequest(row,{user=null,db=null,guild=null}={}){
     ...(data.damage_result?[`Combined damage: ${data.damage_result.total} ${data.damage_result.type}; ${data.damage_result.marks} HP marked once.`]:[]),
     "Describe any clarification or intended contribution in your own words."].join("\n");
 }
+/** Public table roll unless the request warrants privacy (private result, or a non-party accepted declaration). */
+export function isPublicRollRequest(db,guild,row){
+  const accepted=row?.data.input?.accepted_intent&&db.getCityRecord(guild,'typed_intent',row.data.input.accepted_intent);
+  return row?.status==='pending'&&row.data.input?.private_result!==true&&accepted?.visibility==='party';
+}
 /** Retries reuse stored requests; failed private delivery is recoverable through the read-only pending command. */
+/** Public table prompt for a pending request, as plain Discord component JSON: owner-only Roll and Options buttons. */
+export function rollPromptPayload(row){
+  const b=row.data.breakdown,attempt=String(row.data.attempt||'').replace(/<@!?\d+>\s*/g,'').trim();
+  const button=(label,action,style)=>({type:2,style,label,custom_id:`vcrp|${row.record_key}|${action}`});
+  return {content:[`**🎲 Roll requested — ${row.data.character_name}** (<@${row.data.owner_user_id}>)`,
+    `> ${attempt.length>300?`${attempt.slice(0,297)}...`:attempt}`,
+    `${b.trait} ${row.data.kind} roll${b.subtotal===null?'':` (${signed(b.subtotal)})`}${b.difficulty===null?'':` against Difficulty ${b.difficulty}`}.`,
+    `Only <@${row.data.owner_user_id}> can roll. **Options** adds Experiences or a different trait first.`].join('\n'),
+    components:[{type:1,components:[button('Roll','roll',1),button('Options','options',2)]}],
+    allowedMentions:{users:[row.data.owner_user_id]}};
+}
 export async function publishRollRequests(db,guild,mutation,send){
   const failures=[];
   const campaignRequests=new Set((mutation.campaignPvpPreparations||[]).map(p=>p.request).filter(Boolean));
@@ -110,7 +126,10 @@ export async function publishRollRequests(db,guild,mutation,send){
   for(const key of keys){
     const row=db.getCityRecord(guild,"roll_request",key);
     if(!row||!["pending","needs_review","awaiting_selection","awaiting_partner","awaiting_damage","awaiting_damage_type"].includes(row.status)) continue;
-    try{await publishRollAmendment(db,guild,row,send);}catch(error){failures.push(error);}
+    // A public table roll gets one play-channel prompt instead of the private breakdown (still behind Options).
+    try{if(isPublicRollRequest(db,guild,row))await send(row.data.owner_user_id,rollPromptPayload(row),row.data.session_id,row.subject_key,{publicPrompt:row});
+      else await publishRollAmendment(db,guild,row,send);}
+    catch(error){failures.push(error);}
   }
   // Delivery is not game execution. One held/uncertain notice must not suppress independent native requests.
   if(failures.length)throw failures[0];
