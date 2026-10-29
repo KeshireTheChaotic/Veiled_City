@@ -43,3 +43,7 @@ import {assertNpcAvailability} from '../../frameworks/world/public.js';
 /** Pass World's original NPC availability check to Session unchanged. */
 export function connectSessionWorldNpcAvailability(){return sessionWorldNpcAvailability.bind({assertNpcAvailability});}
 export {openingWorldOpportunities} from './opening-opportunities.js';
+
+import {eligibleRoundUsers} from '../../frameworks/session/public.js';
+import {worldRoundEligibility} from '../../frameworks/world/public.js';
+export function connectWorldRoundEligibility(){return worldRoundEligibility.bind({eligibleRoundUsers});}

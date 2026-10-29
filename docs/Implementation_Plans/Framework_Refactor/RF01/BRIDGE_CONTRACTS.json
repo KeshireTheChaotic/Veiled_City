@@ -3665,7 +3665,7 @@
         "occurrences": 39
       },
       "public_api": "bot/src/framework-to-framework/session--world/public.js",
-      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted. C175 exposes the original Session openingWorldOpportunities provider to the application GM through the pair public API; its saved source_ref/signal_ref references and audience checks remain unchanged. Remaining orchestration and source contracts remain open."
+      "scope": " C09 adopts the original Session current conversational-principal reader for one World execution runtime. Other observed integrations remain open. C10 adopts descriptive Session scene World sources, retaining separate mixed NPC and native movement source dependencies. C20 actual native World execution scene callbacks adopted. C175 exposes the original Session openingWorldOpportunities provider to the application GM through the pair public API; its saved source_ref/signal_ref references and audience checks remain unchanged. Remaining orchestration and source contracts remain open. C218 supplies original Session eligibleRoundUsers through fixed World consumer; participation calculation grants no consent or action."
     },
     {
       "pair": "knowledge--operations",

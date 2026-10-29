@@ -1,0 +1,12 @@
+{
+  "feature": "RF04-C218",
+  "sha256": {
+    "bot/src/application/composition/world-execution.js": "381dcfb951bd5a61b4bb70fd367b423ce41d03cc31534cd54f71e64ae3c8dcc5",
+    "bot/src/director.js": "f358b705128d13a0d30fd879b4d323105dc3ef5cd2a3d4a9dbaf4beafa83e033",
+    "bot/src/framework-to-framework/session--world/public.js": "cd94197a180ffd7437abc354d79382791710cead31468d5d45ac0205b54989db",
+    "bot/src/frameworks/session/public.js": "1c8b38dca6f2ec91067a2eb23e1abe0bacf1d72a06b0c5b2f2038abb46917fc7",
+    "bot/src/frameworks/world/public.js": "e284bc816ea4319f8e018f76fb17aac38685cf50ab511f2917498d83864dab18",
+    "bot/src/frameworks/session/round-eligibility.js": "cda94b7c089ff1bfdbf520c003e558937bca7b5a6b6ba9468673ed5c86bc7c1e",
+    "bot/src/frameworks/world/contracts/round-eligibility.js": "867a0bfb8b9b6d2720e2660a80017c615b4ca204466f946dc9e05bee8c4215d6"
+  }
+}

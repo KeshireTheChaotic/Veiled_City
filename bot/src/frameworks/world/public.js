@@ -133,3 +133,5 @@ export {shareInformation,applySimulationUpdates,prepareNpcDirector,commitNpcDire
 export {SEED_TEMPLATE_FEATURES,SEED_DRAFT_KINDS,addSeedDraft,editSeedDraft,reviewSeedDraft,backfillSeedData} from './seed-drafts.js';
 
 export {seedData} from './seed-data.js';
+
+export {worldRoundEligibility} from './contracts/round-eligibility.js';
