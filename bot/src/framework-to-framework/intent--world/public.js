@@ -36,3 +36,7 @@ export function connectIntentWorldConstraints(){return intentWorldConstraints.bi
 import {intentWorldInputKey} from '../../frameworks/intent/public.js';
 import {worldInputKey} from '../../frameworks/world/public.js';
 export function connectIntentWorldInputKey(){return intentWorldInputKey.bind({worldInputKey});}
+
+import {intentWorldProjects} from '../../frameworks/intent/public.js';
+import {manageLongProject,projectPhaseRevision,reconcileLongProject} from '../../frameworks/world/public.js';
+export function connectIntentWorldProjects(){return intentWorldProjects.bind({manageLongProject,projectPhaseRevision,reconcileLongProject});}

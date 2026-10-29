@@ -59,7 +59,7 @@ import { personalCharacter, personalArc, discoverPersonal, personalInbox } from 
 import { consentOffers } from "./consent-native.js";
 import { sessionBrief, formatSessionBrief } from './frameworks/session/public.js';
 import { formatDiscovery,discoveryDeliveryProof } from "./discovery-delivery.js";
-import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
+import { manageLongProject, projectPhaseRevision } from "./frameworks/world/public.js";
 import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, acknowledgeNative, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";

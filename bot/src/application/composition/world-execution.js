@@ -1,7 +1,7 @@
-import {connectIntentWorldInputKey,connectWorldDelegation,connectIntentWorldNative,connectIntentWorldOperations,connectIntentWorldConstraints,connectWorldIntentDispatch,connectWorldIntentValidation} from '../../framework-to-framework/intent--world/public.js';
+import {connectIntentWorldProjects,connectIntentWorldInputKey,connectWorldDelegation,connectIntentWorldNative,connectIntentWorldOperations,connectIntentWorldConstraints,connectWorldIntentDispatch,connectWorldIntentValidation} from '../../framework-to-framework/intent--world/public.js';
 import {connectWorldSessionScene,connectWorldPrincipal,connectWorldSessionContinuation,connectWorldStoryContinuity} from '../../framework-to-framework/session--world/public.js';
 import {registerWorldObservation} from '../../frameworks/world/public.js';
-export function initializeWorldExecution(){connectIntentWorldInputKey();
+export function initializeWorldExecution(){connectIntentWorldProjects();connectIntentWorldInputKey();
  registerWorldObservation();
  connectIntentWorldNative();
  connectIntentWorldOperations();

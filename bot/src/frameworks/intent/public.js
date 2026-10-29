@@ -32,3 +32,5 @@ export {intentSessionStory} from './contracts/session-story.js';
 export {intentSessionEntry} from './contracts/session-entry.js';
 
 export {intentWorldInputKey} from './contracts/world-input-key.js';
+
+export {intentWorldProjects} from './contracts/world-projects.js';

@@ -13,7 +13,8 @@ const {subscribeConsequence,reviewConsequence}=intentWorldOperations;
 const {manageGroup}=intentWorldOperations;
 import { ContextPlanner } from "./context-planner.js";
 import { proposeArcBeat } from "./personal-continuity.js";
-import { manageLongProject, projectPhaseRevision, reconcileLongProject } from "./long-projects.js";
+import {intentWorldProjects} from "./frameworks/intent/public.js";
+const {manageLongProject,projectPhaseRevision,reconcileLongProject}=intentWorldProjects;
 import { applicationPrincipal } from "./kernel/application-authority.js";
 import {intentKnowledgeMaintenance,intentKnowledgeActions} from './frameworks/intent/public.js';
 function manageMemoryCluster(...args){return intentKnowledgeMaintenance.manageMemoryCluster(...args);}function memoryMaintenanceCandidate(...args){return intentKnowledgeMaintenance.memoryMaintenanceCandidate(...args);}

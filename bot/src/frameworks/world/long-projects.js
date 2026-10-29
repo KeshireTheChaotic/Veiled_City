@@ -1,10 +1,10 @@
 /** Phased continuity over existing adjudicated downtime results; consent and fictional time never grant new PC mechanics or spend resources. */
-import { cityObject, cityKey, cityInteger, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource } from './frameworks/world/public.js';
-import { PermissionError, UserInputError, StateConflictError } from "./kernel/errors.js";
-import { principalAllows, applicationPrincipal } from "./kernel/application-authority.js";
-import {stateRevision} from './kernel/state-revision.js';
-import {worldNpcEvidence} from "./frameworks/world/public.js";
+import { cityObject, cityKey, cityInteger, cityAudit } from './city-calendar.js';
+import { requireCitySource } from './city-source.js';
+import { PermissionError, UserInputError, StateConflictError } from "../../kernel/errors.js";
+import { principalAllows, applicationPrincipal } from "../../kernel/application-authority.js";
+import {stateRevision} from '../../kernel/state-revision.js';
+import {worldNpcEvidence} from "./contracts/npc-evidence.js";
 const {actorSource}=worldNpcEvidence;
 export const projectPhaseRevision=row=>stateRevision({key:row.record_key,index:row.data.index,phase:row.data.phases[row.data.index]?.key,
   duration:row.data.phases[row.data.index]?.duration_minutes,prerequisites:row.data.phases[row.data.index]?.prerequisites});
@@ -160,6 +160,6 @@ export function reconcileLongProject(db,guild,row){
       {principal:applicationPrincipal(guild,"project.pause","continuity_guard")});
   }
 }
-import {worldLongProjectSource} from './frameworks/world/public.js';
+import {worldLongProjectSource} from './contracts/root-sources.js';
 // Provide this module's original long project functions to the fixed World slot; no other authority is granted.
 worldLongProjectSource.bind({manageLongProject,projectPhaseRevision});

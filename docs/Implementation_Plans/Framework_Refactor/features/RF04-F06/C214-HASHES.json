@@ -1,0 +1,13 @@
+{
+  "feature": "RF04-C214",
+  "sha256": {
+    "bot/src/ai-intents.js": "bb41b3c8a75bab4875648f37ea14e11cb5288699cdc77345180c987e59afe230",
+    "bot/src/application/composition/world-execution.js": "ce949a763d47a4a4036175612ad345cfe54ad17270b9cdf62666d01cc42bb88f",
+    "bot/src/commands.js": "4e7a06ffe0a4a59c26b5b85e789713e7a73c8a4a2439f426ccb449b4d402b280",
+    "bot/src/framework-to-framework/intent--world/public.js": "f0229fec9e46fbbcbc58b17f0bcc6fab6018d0c7e7ba4ca9df8138cfa261190b",
+    "bot/src/frameworks/intent/public.js": "119419eb65f32ed684d0a9f3663ec19f6cf0a7ad6cae05e40a18633af855b6e3",
+    "bot/src/frameworks/world/public.js": "ddca0265e19f892a509e142defba1ddfd4617ad0634b3544aa10a71332b6ec3e",
+    "bot/src/frameworks/world/long-projects.js": "3ee4c3c03ccb053ea8b1d507735ff8761c6ddb88b8d51650ebdfc2f490a1e03a",
+    "bot/src/frameworks/intent/contracts/world-projects.js": "0b642a804bf068a8dbb4bae84e9c1051d3bf6772f1e01f193d6b040424f26396"
+  }
+}

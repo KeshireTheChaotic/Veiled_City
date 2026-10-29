@@ -125,3 +125,5 @@ export {validateBackgroundIdentity,backgroundIdentityContext} from './background
 export {AUTONOMOUS_WORLD_VERSION,worldAuthority,establishNarrativeEntity,configureWorldAuthority,retconAutonomousEntity,worldInputKey,revalidateWorldEntries,captureWorldInput,applyAutonomousWorld,autonomousWorldContext} from './autonomous-world.js';
 
 export {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn,applyPrivateSeedTurn} from './private-seeds.js';
+
+export {projectPhaseRevision,manageLongProject,reconcileLongProject} from './long-projects.js';
