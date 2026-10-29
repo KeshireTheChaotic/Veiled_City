@@ -166,11 +166,25 @@ const parsePrompt=id=>{
   const [head,request,action]=String(id||'').split('|');
   return head==='vcrp'&&request&&['roll','options'].includes(action)?{request,action}:null;
 };
-function promptResult(db,guild,row){
+const signedTerm=(label,value)=>value?` ${value>0?'+':'−'} ${label?`${label} `:''}${Math.abs(value)}`:'';
+/** Dice line (Hope and Fear dice shown separately), saved verdict, then the saved resource changes from this roll. */
+export function promptResult(db,guild,row){
   const r=row.data.result;if(!r)return `Status: ${row.status}.`;
   const receipt=db.listCityRecords(guild,{kind:'action_outcome_receipt',includeGM:true,limit:500}).find(x=>x.data.request===row.record_key);
   const verdict={success:'success',failure:'failure',needs_review:'GM review needed'}[receipt?.data.outcome];
-  return `🎲 ${row.data.character_name} rolled **${r.total}** with **${r.duality}**${verdict?` — **${verdict}**`:''}.`;
+  const extra=r.total-r.hope-r.fear-(r.modifier||0)-(r.experience||0);
+  const lines=[`🎲 Hope **${r.hope}** + Fear **${r.fear}**${signedTerm('',r.modifier||0)}${signedTerm('Experience',r.experience||0)}${signedTerm('advantage',extra)} = **${r.total}**`
+    +` — ${r.duality==='Critical'?'**Critical**':`with **${r.duality}**`}${verdict?`: **${verdict}**`:''}.`];
+  const operation=db.listCityRecords(guild,{kind:'roll_operation',includeGM:true,limit:500}).find(x=>x.data.request===row.record_key&&x.data.op==='roll');
+  for(const delta of operation?.data.resource_deltas||[]){
+    const name=db.getCharacter(delta.character)?.name||row.data.character_name,changes=[];
+    if(delta.hope.delta)changes.push(`Hope ${delta.hope.delta>0?'+':''}${delta.hope.delta} (${delta.hope.before} → ${delta.hope.after})`);
+    else if(['Hope','Critical'].includes(r.duality))changes.push(`Hope stays at ${delta.hope.after} (maximum)`);
+    if(delta.stress.delta)changes.push(`Stress ${delta.stress.delta>0?'+':''}${delta.stress.delta} (${delta.stress.before} → ${delta.stress.after})`);
+    if(changes.length)lines.push(`${name}: ${changes.join(', ')}.`);
+  }
+  if(r.duality==='Fear')lines.push(`The GM gains ${Math.max(1,operation?.data.resource_deltas?.length||1)} Fear (now ${db.getCampaign(guild)?.fear??'?'}/12).`);
+  return lines.join('\n');
 }
 async function handleRollPromptInteraction(db,interaction,id,{rng}={}){
   const row=db.getCityRecord(interaction.guildId,'roll_request',id.request);
