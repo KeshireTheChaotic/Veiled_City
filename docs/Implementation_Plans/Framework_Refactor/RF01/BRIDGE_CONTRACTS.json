@@ -2293,7 +2293,7 @@
         "occurrences": 7
       },
       "public_api": "bot/src/framework-to-framework/knowledge--publication/public.js",
-      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open."
+      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open. C220 supplies original handoutPlayerView through fixed Knowledge consumer; Publication retains exact projection/epistemic fallback."
     },
     {
       "pair": "knowledge--session",

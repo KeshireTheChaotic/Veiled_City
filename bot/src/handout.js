@@ -5,10 +5,8 @@ import { markdownToDocx } from "./character-export.js";
 function safe(v){return v==null?"":String(v);}
 function stem(v){return safe(v).normalize("NFKD").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_+|_+$/g,"")||"Handout";}
 function formats(format){return format==="all"?["json","markdown","docx"]:[format||"markdown"];}
-export function handoutPlayerView(h){return {id:h.id,title:h.title,kind:h.kind,authority:h.authority,visibility:h.visibility,content:h.content,
-  epistemic:h.metadata?.epistemic||{kind:"testimony",perspective:"legacy artifact; reliability is not truth",source_refs:[]},
-  interpretation_limits:"Presentation is not canon. PC feelings, agreement and obligations require independent authority.",
-  case_key:h.case_key||"",npc_key:h.npc_key||"",location_key:h.location_key||"",created_at:h.created_at};}
+import {handoutPlayerView} from './frameworks/publication/public.js';
+export {handoutPlayerView};
 
 export function handoutMarkdown(h){
   const facts=h.canonical_facts||[];

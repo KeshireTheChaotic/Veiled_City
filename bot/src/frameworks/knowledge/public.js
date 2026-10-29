@@ -50,3 +50,5 @@ export {knowledgeWorldCommunity} from './contracts/world-community.js';
 export {knowledgeHistoryReconciliationSource} from './contracts/history-reconciliation-source.js';
 
 export {knowledgeOrganizationSource,knowledgeEvidenceCustodySource} from './contracts/community-evidence-sources.js';
+
+export {knowledgePublicationHandout} from './contracts/publication-handout.js';

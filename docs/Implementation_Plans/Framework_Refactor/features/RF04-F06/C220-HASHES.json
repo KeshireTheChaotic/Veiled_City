@@ -1,0 +1,13 @@
+{
+  "feature": "RF04-C220",
+  "sha256": {
+    "bot/src/application/composition/publication-knowledge-narrative-memory.js": "10f9a36cdbbda3ed5109024f84bb1ac57d103843b7a9fab02345285a3c8feb5f",
+    "bot/src/framework-to-framework/knowledge--publication/public.js": "2085b14ef4d7990ac5a250452320948a8ae269054c1bf12a88033b75f89e0ffd",
+    "bot/src/frameworks/knowledge/public.js": "f776571a0a2abd02f437b6ea0abb699443df832380ae25d799d1000b0ff0d886",
+    "bot/src/frameworks/publication/public.js": "1ab66fb11a4ce8130e430be353ad18d167b112f3461d1c937c0f397edbd89cab",
+    "bot/src/handout.js": "f6282061a0e5ef6deb148894ed47f380aa7ac7b28dc29943c2963b613c4fe133",
+    "bot/src/personal-continuity.js": "d3aeddff3c7f79b6a1a4dcffa4f74a286e102c1b295805db88476105bdf24e67",
+    "bot/src/frameworks/publication/handout-player-view.js": "fab0f7543f56ca521dd389218f9a2f8f378f3e19e63381f21c4a4644e448418b",
+    "bot/src/frameworks/knowledge/contracts/publication-handout.js": "9bf93a0ded719980e5232e6186ed2b6bbc4337e3ac7f45d8801e22d6c938df37"
+  }
+}

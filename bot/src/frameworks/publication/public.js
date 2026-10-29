@@ -19,3 +19,5 @@ export {publicationWorldSimulation} from './contracts/world-simulation.js';
 export {describeBlockedAction,blockedMutationRows} from './blocked-actions.js';
 
 export {publicationWorldDirectorReview} from './contracts/world-director-review.js';
+
+export {handoutPlayerView} from './handout-player-view.js';

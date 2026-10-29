@@ -4,3 +4,6 @@ import {queueNarrativeMemory,acknowledgeNarrativeMemory} from '../../frameworks/
 export function connectPublicationKnowledgeNarrativeMemory(){
   return publicationKnowledgeNarrativeMemory.bind({queueNarrativeMemory,acknowledgeNarrativeMemory});
 }
+import {knowledgePublicationHandout} from '../../frameworks/knowledge/public.js';
+import {handoutPlayerView} from '../../frameworks/publication/public.js';
+export function connectKnowledgePublicationHandout(){return knowledgePublicationHandout.bind({handoutPlayerView});}
