@@ -96,7 +96,7 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false,act=null){
   if(act?.construction){
     const b=mintNarrativeAudience(ctx).proof,text=constructNativeClause(db,guild,act,b);
     if(hash(actToNativeUnit(act,b,{db,guild}))!==hash(u))throw fail('native_clause_binding');
-    return u.kind==='npc_speech'?`${db.getNpcProfile(guild,u.subject_key).display_name}: “${text}”`:text;
+    return u.kind==='npc_speech'?npcSpeechLine(db.getNpcProfile(guild,u.subject_key).display_name,text):text;
   }
   const names=protectedNarrativeNames(db,guild);
   const assertions=withoutVerifiedVocative(db,guild,u,ctx);
@@ -147,7 +147,14 @@ function validateUnit(db,guild,u,ctx,entities=[],historical=false,act=null){
   if(!historical&&u.kind!=='npc_speech'&&!artifact&&hasNarrativeChoices(u.text))throw fail('held_material');
   if(artifact)return artifact;
   return u.kind==='rumor'?`Rumor — ${u.text}`:u.kind==='npc_speech'
-    ?`${db.getNpcProfile(guild,u.subject_key)?.display_name||entities.find(e=>e.key===u.subject_key)?.name||'An NPC'}: “${u.text}”`:u.text;
+    ?npcSpeechLine(db.getNpcProfile(guild,u.subject_key)?.display_name||entities.find(e=>e.key===u.subject_key)?.name||'An NPC',u.text):u.text;
+}
+// Writers usually quote speech themselves and add action beats; only bare speech gets wrapped.
+const npcSpeechLine=(name,text)=>/["“”]/.test(text)?`${name}: ${text}`:`${name}: “${text}”`;
+/** Units established before 2026-10-28 stored quoted speech wrapped a second time; accept that form on re-render. */
+export function legacyNpcSpeechLine(rendered){
+  const at=rendered.indexOf(': ');
+  return at<0?rendered:`${rendered.slice(0,at)}: “${rendered.slice(at+2)}”`;
 }
 function review(db,guild,key,sourceRef,scope,reason){
   return db.saveCityRecord(guild,{kind:'narrative_unit_review',key,status:'needs_review',visibility:'gm',source_event:sourceRef,
@@ -256,7 +263,9 @@ export function renderNarrativeUnit(db,guild,key,scope){
   if(row?.status!=='accepted_established'||d?.issuer!==issuer||event?.status!=='active'||event.source_id!==issuer
     ||event.details.payload_hash!==hash(d)||key!==`narrative-unit:${hash([d.binding,d.unit])}`||hash(d.binding.scope)!==hash(scope))throw fail('unit_receipt');
   const ctx=context(db,guild,{version:8,kind:'narrative_request',operation:'describe_scene',source_refs:[]},scope,d.binding.source);
-  if(hash(ctx.binding)!==hash(d.binding)||validateUnit(db,guild,d.unit,ctx,[],true,d.act_v9)!==d.text)throw fail('unit_revalidation');
+  if(hash(ctx.binding)!==hash(d.binding))throw fail('unit_revalidation');
+  const rendered=validateUnit(db,guild,d.unit,ctx,[],true,d.act_v9);
+  if(rendered!==d.text&&!(d.unit.kind==='npc_speech'&&legacyNpcSpeechLine(rendered)===d.text))throw fail('unit_revalidation');
   if(d.audience_v9)revalidateNarrativeAudience(db,guild,d.audience_v9,scope);
   if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9,{db,guild}))!==hash(d.unit)))throw fail('v9_act_revalidation');
   return d.text;
