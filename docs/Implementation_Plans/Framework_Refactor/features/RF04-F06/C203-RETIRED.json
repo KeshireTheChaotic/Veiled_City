@@ -1,0 +1,58 @@
+{
+  "feature": "RF04-C203",
+  "records": [
+    {
+      "id": "35c35d98f3cb71989f31654a94b473e525c35109cd51966f264be73a6f1eaa76",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-entry.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "10032d4b5b80fd1f27887068250afc85d25b03d09b493e0b3f447919c8777606",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/authored-candidates.js",
+      "to": "bot/src/scene-entry.js",
+      "kind": "static",
+      "specifier": "./scene-entry.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "11678e48291b0714be8719bfade82cdf3ca1f8904cd05060f703211f3ea56aa4",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/scene-entry.js",
+      "kind": "static",
+      "specifier": "./scene-entry.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "39055da381aa32acf6a21bf971d91caf4392d9b9430004b795e4c4f3ba67df48",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-context.js",
+      "to": "bot/src/scene-entry.js",
+      "kind": "static",
+      "specifier": "./scene-entry.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

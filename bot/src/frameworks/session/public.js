@@ -57,3 +57,5 @@ export {captureDialogue,interpretDialogue} from './dialogue-continuity.js';
 export {setPacingCues,manageNarrativeSetup,suggestSetupPayoff,pacingAdvice,validatePacing,configureMystery,mysteryView,recordMysteryAttempt} from './story-continuity.js';
 
 export {locationMatches,reviewSceneEntry,configureEntryPolicy,mundaneEntryImpact,resolveMundaneEntry} from './scene-entry-native.js';
+
+export {entryTarget,prepareSceneEntry,routeSceneEntryMessage,entryReferenceContext} from './scene-entry.js';

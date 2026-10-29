@@ -1908,7 +1908,7 @@
         "occurrences": 30
       },
       "public_api": "bot/src/framework-to-framework/intent--session/public.js",
-      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open. C200 forwards only original Session captureDialogue/interpretDialogue to Intent; Session retains listener/source/privacy and subjective-memory rules. C201 forwards original suggestSetupPayoff through a separate fixed Intent story consumer; Session retains source, visibility, authored choice and replay rules. C202 supplies original mundaneEntryImpact/resolveMundaneEntry through a fixed Intent consumer; Session retains saved adjacency, source, owner, audience and movement checks."
+      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open. C200 forwards only original Session captureDialogue/interpretDialogue to Intent; Session retains listener/source/privacy and subjective-memory rules. C201 forwards original suggestSetupPayoff through a separate fixed Intent story consumer; Session retains source, visibility, authored choice and replay rules. C202 supplies original mundaneEntryImpact/resolveMundaneEntry through a fixed Intent consumer; Session retains saved adjacency, source, owner, audience and movement checks. C203 adds only original prepareSceneEntry to Intent entry consumer; Session retains authenticated declaration and arrival rules."
     },
     {
       "pair": "intent--world",
@@ -2697,7 +2697,7 @@
       "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
       "adoption_feature": "RF04-F04",
       "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
-      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Narrative-owned narrativeBridgeSessionSources port; Session retains assembly-state rules.",
+      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative. C188 adds assemblyOrientation reads through the existing Narrative-owned narrativeBridgeSessionSources port; Session retains assembly-state rules. C203 forwards only original locationMatches via Narrative fixed consumer; matching grants no entry authority.",
       "consumers": [
         "bot/src/application/composition/create-opening-services.js",
         "bot/src/application/composition/pvp-agreements.js"

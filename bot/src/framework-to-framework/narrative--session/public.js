@@ -24,3 +24,7 @@ import {narrativeSessionPrincipal} from '../../frameworks/narrative/public.js';
 import {conversationPrincipal} from '../../frameworks/session/public.js';
 /** Bind the original Session reader without evaluating player state. */
 export function connectNarrativeSessionPrincipal(){return narrativeSessionPrincipal.bind({conversationPrincipal});}
+
+import {narrativeSessionLocationMatch} from '../../frameworks/narrative/public.js';
+import {locationMatches} from '../../frameworks/session/public.js';
+export function connectNarrativeSessionLocationMatch(){return narrativeSessionLocationMatch.bind({locationMatches});}

@@ -1,0 +1,16 @@
+{
+  "feature": "RF04-C203",
+  "sha256": {
+    "bot/src/application/composition/pvp-agreements.js": "d3ab077eaa92fb8f789c60ba9f7c1dd71a6b7006811cba994f21e29ceae3d3b5",
+    "bot/src/authored-candidates.js": "1c2ee297b7fa63978b17af2fc85b8238c7c7b8929b591f358f099ff77d1fc2f1",
+    "bot/src/framework-to-framework/intent--session/public.js": "c297e792262ca83927eb225952e10c1c9c8339b7df27835f0b85026eba1e774d",
+    "bot/src/framework-to-framework/narrative--session/public.js": "9417f7b735ec94f6ae436056944fa9b0f21953c73797fc32e9c7a8e9142e9f2c",
+    "bot/src/frameworks/intent/contracts/session-entry.js": "b373e74bb66b7981d8f8140a633c56f8b0b00400c34de03d9ed3773d74692cad",
+    "bot/src/frameworks/narrative/public.js": "8ed440e153d19178717e4210dabc010599c126fd14ddd7282ea9c7f2ed54aa74",
+    "bot/src/frameworks/session/public.js": "ef1ceda3e9739698643b3c60ee644fe3ecfa025a339e07a60dbf635bb309ecb1",
+    "bot/src/gm.js": "bf55fa11c23aca855f17e349f374ebc1d3d1227126b47c1ac2a192c06551cae4",
+    "bot/src/narrative-context.js": "b73c3d36852644b77febefa20a32de64a43a17d55e1323a295ba157e1714b013",
+    "bot/src/frameworks/session/scene-entry.js": "84a43f81ffd9cedc16efc04682305a14e2c04d49ab4408bdae11de9d19f563f5",
+    "bot/src/frameworks/narrative/contracts/session-location-match.js": "1568adcb1ea7ad6002982b05bcd4ea47b0e97e710afab28f9a64ead5f53f288c"
+  }
+}

@@ -7,7 +7,8 @@ import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function scopedQueryPlan(...args){return narrativeKnowledgeReaders.scopedQueryPlan(...args);}function queryScopedFacts(...args){return narrativeKnowledgeReaders.queryScopedFacts(...args);}
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent, cityAudit}=narrativeWorldPrimitives;
-import { locationMatches } from "./scene-entry.js";
+import {narrativeSessionLocationMatch} from "./frameworks/narrative/public.js";
+function locationMatches(...args){return narrativeSessionLocationMatch.locationMatches(...args);}
 import { interpretationSchema } from "./frameworks/narrative/interpretation-schema.js";
 import { CONTEXT_CONTRACT } from "./frameworks/narrative/interpretation-contract.js";
 // Typed movement now comes from the main GM player_intents contract.

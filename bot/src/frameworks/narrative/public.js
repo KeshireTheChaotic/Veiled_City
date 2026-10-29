@@ -44,3 +44,5 @@ export {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 export {narrativeSessionPrincipal} from './contracts/session-principal.js';
 
 export {EXPANSION_FEATURES} from './expansion-features.js';
+
+export {narrativeSessionLocationMatch} from './contracts/session-location-match.js';

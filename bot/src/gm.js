@@ -41,7 +41,7 @@ import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema } from "./frameworks/world/public.js";
 import { autonomousWorldContext, worldAuthority } from "./autonomous-world.js";
 import { AUTONOMOUS_WORLD_PROMPT } from "./frameworks/world/public.js";
-import { entryReferenceContext } from "./scene-entry.js";
+import { entryReferenceContext } from "./frameworks/session/public.js";
 import { OnlineSrd } from "./frameworks/daggerheart/public.js";
 import { interpretationSchema, CONTEXT_CONTRACT } from "./frameworks/narrative/public.js";
 import { interpretationContext, validateInterpretation } from "./narrative-context.js";

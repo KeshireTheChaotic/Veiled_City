@@ -3,7 +3,8 @@ import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { contextSourceKey } from "./narrative-context.js";
 import { interpretAuthoredText, captureDeclaration } from "./player-language.js";
-import { prepareSceneEntry } from "./scene-entry.js";
+import {intentSessionEntry} from "./frameworks/intent/public.js";
+function prepareSceneEntry(...args){return intentSessionEntry.prepareSceneEntry(...args);}
 import {intentSessionDialogue} from './frameworks/intent/public.js';
 const {captureDialogue}=intentSessionDialogue;
 import {currentScene} from './scene-continuity.js';
