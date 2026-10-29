@@ -27,6 +27,8 @@ test('writer instructions require persisting newly described places players may 
   // Live 2026-10-29: the narrated bathhouse was never persisted, so moving there asked "Which specific target did you mean".
   assert.match(NARRATIVE_V9_INSTRUCTIONS, /must be added to fiction_delta as a location/);
   assert.match(NARRATIVE_V9_INSTRUCTIONS, /parent_location_key set to the current location/);
+  // establishment only runs for an entity that some act is placed at.
+  assert.match(NARRATIVE_V9_INSTRUCTIONS, /the act describing it must use that key as its location_key/);
 });
 
 test('model paragraph breaks become spaces while other text is kept exactly', () => {
