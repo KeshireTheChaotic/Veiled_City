@@ -16,3 +16,7 @@ import {intentSessionPrincipal} from '../../frameworks/intent/public.js';
 import {conversationPrincipal} from '../../frameworks/session/public.js';
 /** Bind the original Session reader without evaluating player state. */
 export function connectIntentSessionPrincipal(){return intentSessionPrincipal.bind({conversationPrincipal});}
+
+import {intentSessionDialogue} from '../../frameworks/intent/public.js';
+import {captureDialogue,interpretDialogue} from '../../frameworks/session/public.js';
+export function connectIntentSessionDialogue(){return intentSessionDialogue.bind({captureDialogue,interpretDialogue});}

@@ -18,7 +18,8 @@ import { applicationPrincipal } from "./kernel/application-authority.js";
 import {intentKnowledgeMaintenance,intentKnowledgeActions} from './frameworks/intent/public.js';
 function manageMemoryCluster(...args){return intentKnowledgeMaintenance.manageMemoryCluster(...args);}function memoryMaintenanceCandidate(...args){return intentKnowledgeMaintenance.memoryMaintenanceCandidate(...args);}
 import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
-import { interpretDialogue } from "./dialogue-continuity.js";
+import {intentSessionDialogue} from './frameworks/intent/public.js';
+const {interpretDialogue}=intentSessionDialogue;
 const {manageEvidence,inviteOrganization}=intentKnowledgeActions;
 import { suggestSetupPayoff } from "./story-continuity.js";
 function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}

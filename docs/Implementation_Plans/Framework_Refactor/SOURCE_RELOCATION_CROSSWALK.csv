@@ -53,7 +53,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/decision-advisory.js","bot/src/frameworks/intent/decision-advisory.js","intent","RF05","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","2","0"
 "bot/src/delegation-catalog.js","bot/src/frameworks/narrative/delegation-catalog.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/diagnostics/session5-reader.js","bot/src/frameworks/operations/session5-reader.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","0","1"
-"bot/src/dialogue-continuity.js","bot/src/frameworks/session/dialogue-continuity.js","session","RF04","DECOMPOSE_BEFORE_MOVE","3","11"
+"bot/src/dialogue-continuity.js","bot/src/frameworks/session/dialogue-continuity.js","session","RF04","C200_DIALOGUE_MOVED_INTENT_CONSUMER_ADOPTED","0","0"
 "bot/src/dice.js","bot/src/frameworks/daggerheart/dice.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","10","0"
 "bot/src/director.js","bot/src/frameworks/world/director-cadence.js","world","RF04","WORLD_CADENCE_EXTRACTED_SESSION_ROSTER_AND_REVIEW_REMAIN","5","0"
 "bot/src/disclosure-authority.js","bot/src/frameworks/knowledge/disclosure-authority.js","knowledge","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","13","0"

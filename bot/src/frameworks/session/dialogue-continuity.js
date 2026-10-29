@@ -1,23 +1,23 @@
 /** Authored speech and actor-owned interpretations extend native NPC memories, never canon or consent. */
-import {sessionPersonalContinuity} from './frameworks/session/public.js';
+import {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}
-import { sceneAccess, sceneView, scenePresence, currentScene } from "./scene-continuity.js";
-import {sessionWorldEvents} from './frameworks/session/public.js';
+import { sceneAccess, sceneView, scenePresence, currentScene } from './scene-source.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return sessionWorldEvents.indexWorldEvent(...args);}
-import {sessionSceneWorldSources} from './frameworks/session/public.js';
+import {sessionSceneWorldSources} from './contracts/scene-world-sources.js';
 function requireCitySource(...args){return sessionSceneWorldSources.requireCitySource(...args);}
-import {jsonKey32 as motivationKey} from './kernel/json-key32.js';
+import {jsonKey32 as motivationKey} from '../../kernel/json-key32.js';
 function activeCityProxy(...args){return sessionSceneWorldSources.activeCityProxy(...args);}
-import {sessionWorldNpcAvailability} from './frameworks/session/public.js';
+import {sessionWorldNpcAvailability} from './contracts/world-npc-availability.js';
 function assertNpcAvailability(...args){return sessionWorldNpcAvailability.assertNpcAvailability(...args);}
-import {conversationPrincipal} from './frameworks/session/public.js';
-import {sessionNarrativeSources} from './frameworks/session/public.js';
+import {conversationPrincipal} from './conversation-principal.js';
+import {sessionNarrativeSources} from './contracts/narrative-sources.js';
 function narrativeSourceVisible(...args){return sessionNarrativeSources.narrativeSourceVisible(...args);}
-import {sessionKnowledgeSources} from './frameworks/session/public.js';
+import {sessionKnowledgeSources} from './contracts/knowledge-sources.js';
 function factVisibleTo(...args){return sessionKnowledgeSources.factVisibleTo(...args);}
-import {sessionIntentLanguage} from './frameworks/session/public.js';
+import {sessionIntentLanguage} from './contracts/intent-language.js';
 function sourceSpanInsideQuote(...args){return sessionIntentLanguage.sourceSpanInsideQuote(...args);}
-import {sessionIntent} from './frameworks/session/public.js';
+import {sessionIntent} from './contracts/intent.js';
 function interpretAuthoredText(...args){return sessionIntent.interpretAuthoredText(...args);}
 function mentionsPublicIdentity(...args){return sessionKnowledgeSources.mentionsPublicIdentity(...args);}
 export function captureDialogue(db,guild,user,characterId,messageId,message,{privateScene=false,candidate=null,typedIntentKey=null}={}){

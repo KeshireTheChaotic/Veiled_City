@@ -1,0 +1,11 @@
+{
+  "bot/src/ai-intents.js": "6411e82c143931d691c69ed3b57bf710629d3760bdb5e27788a0d1e7afcee453",
+  "bot/src/application/composition/session-intent.js": "b2f28f3ffff63c8fe67e08ad0d57170da9e882c4a25fc6a44508a2bc822a6e31",
+  "bot/src/authored-candidates.js": "c7a8e0db4c56a52b65d42b764769fa021e147f0018f2e01df223b88a4fed51d7",
+  "bot/src/framework-to-framework/intent--session/public.js": "0fd3d8694964b74f7c7183fb78484fa624b3969542db809a85fe62535cb79aca",
+  "bot/src/frameworks/intent/public.js": "44fd3d97329de1a8d86b859e791dbd5a979c8e5bc4e0e4747ef1356a66e3b634",
+  "bot/src/frameworks/session/public.js": "d01de28290cb323028f39e63b5141f56788ed2fb3482be44511721a084c10f43",
+  "bot/src/typed-intents.js": "e0c7acfe2b72824c32f3c6642149791ab8e3251e4fe3ecef40df29ebe9cb992e",
+  "bot/src/frameworks/intent/contracts/session-dialogue.js": "f1644b0eb30d369f438eebe8280138cda5ff9b2c3aa0e7d3bfaa8fdb86c754e9",
+  "bot/src/frameworks/session/dialogue-continuity.js": "189f64481dca9c4de10a90d9ee481cef08f1a7d6b176f378e3b5784ffd3fe0a2"
+}

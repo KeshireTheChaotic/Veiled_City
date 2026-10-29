@@ -4,7 +4,8 @@ function conversationPrincipal(...args){return intentSessionPrincipal.conversati
 import { contextSourceKey } from "./narrative-context.js";
 import { interpretAuthoredText, captureDeclaration } from "./player-language.js";
 import { prepareSceneEntry } from "./scene-entry.js";
-import { captureDialogue } from "./dialogue-continuity.js";
+import {intentSessionDialogue} from './frameworks/intent/public.js';
+const {captureDialogue}=intentSessionDialogue;
 import {currentScene} from './scene-continuity.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
 import {isCharacterSourceSpan} from './source-communication.js';

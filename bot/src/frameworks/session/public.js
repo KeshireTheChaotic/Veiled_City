@@ -51,3 +51,5 @@ export {negotiateAgreement} from './negotiations.js';
 
 export {sessionPublicationRecap} from './contracts/publication-recap.js';
 export {sessionBrief,formatSessionBrief} from './session-briefs.js';
+
+export {captureDialogue,interpretDialogue} from './dialogue-continuity.js';

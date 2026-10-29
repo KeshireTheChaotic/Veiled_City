@@ -1908,7 +1908,7 @@
         "occurrences": 30
       },
       "public_api": "bot/src/framework-to-framework/intent--session/public.js",
-      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open."
+      "scope": "C97 adopts Intent action scheduling and authored-text interpretation for four Session legacy modules. Other observed integrations remain open. C200 forwards only original Session captureDialogue/interpretDialogue to Intent; Session retains listener/source/privacy and subjective-memory rules."
     },
     {
       "pair": "intent--world",

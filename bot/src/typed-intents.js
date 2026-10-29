@@ -7,7 +7,8 @@ import { worldInputKey } from './autonomous-world.js';
 import {stateRevision} from './kernel/state-revision.js';
 import {intentWorldOperations} from './frameworks/intent/public.js';
 function resolvePlaceReference(...args){return intentWorldOperations.resolvePlaceReference(...args);}
-import { captureDialogue } from './dialogue-continuity.js';
+import {intentSessionDialogue} from './frameworks/intent/public.js';
+const {captureDialogue}=intentSessionDialogue;
 import { intentKnowledgeMemory } from './frameworks/intent/public.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
 import {intentOwnerActionTerminal} from './frameworks/intent/public.js';
