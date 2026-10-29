@@ -1,0 +1,25 @@
+{
+  "feature": "RF04-C224",
+  "sha256": {
+    "bot/src/application/composition/knowledge-narrative.js": "299b8c2c555f4892afbbffe11980ebcfdbd64f2558b89ccae3ca0da8691c0a38",
+    "bot/src/application/composition/publication-knowledge-narrative-memory.js": "36187044acfb9c259efb06887492f5f29c2911c3895ec35f4bbcc111e961cfba",
+    "bot/src/commands.js": "37dd8daf64970f1d01bfa7ff89bd78659d4dea70bbd02f530a761803642e429a",
+    "bot/src/framework-to-framework/knowledge--narrative/public.js": "3b19658c3295ee6810698d220c8b27bca5e4bb91236a92561ac577bf11e50620",
+    "bot/src/framework-to-framework/knowledge--publication/public.js": "bd605ddf7eec61386181d626f8a76fc1826b3d249373f914104f18f01bbd1520",
+    "bot/src/frameworks/narrative/public.js": "46d521281b6ebdf2c19109abc3f6bcbcae2a2d86adf59262297a3c82d2c33388",
+    "bot/src/frameworks/publication/public.js": "0ba7df4828f8152ff67b0018e003a5ce3b0ce69bbdc897a55272288bbb9f1cd6",
+    "bot/src/gm.js": "491e32905af2abfca8208722ab91ebaa73dbb9ec2d62b2d7db8bb36cd9b05405",
+    "bot/src/lifecycle-output.js": "e1b0afa1d1ad9cd9dcb0517476a5e64ba7b33fde9856961f956b0ceb978b231a",
+    "bot/src/narrative-authority-context.js": "33cef09109dc0382b5413b9a5f742636e8bbb78593a97f6c8c47d7e63ddc372e",
+    "bot/src/narrative-authority.js": "f44f2c2dc63856bed8e9f0d0bf8a73c322426b22b8cb0bc774d93cd0834195ba",
+    "bot/src/narrative-clauses-v9.js": "7c676c690e1279135da8b0f975faf5be26213ebc140f230d7cf30574c5abdf65",
+    "bot/src/narrative-integrity.js": "355a319d405f92f968cab01ccd540d8ed17b006449467693a39bdeb6f8293dae",
+    "bot/src/publishing.js": "a0406d1e9aef93a390f14eec20ef9bc14c5925b1a25c14a495a3997eab84e938",
+    "bot/src/pvp-output.js": "b63517fd35b934e7382930b0c835d97b370cdd5790c21d6bc815bb5445175601",
+    "bot/src/scene-description.js": "f445a343d0655ff88bfc2716e4f07ca22589eca24e3bea95bf1a9c0e3fd3bc3f",
+    "bot/src/scene-fiction-context.js": "00c027dcf650510769b5c50d1272a6bf825171c064ba1686d754635c51d89e1a",
+    "bot/src/state.js": "ad6dda052f71be7a4cbf6f85816fd5682877db2d4a3ebf2468396be6bb7bfe06",
+    "bot/src/frameworks/narrative/contracts/knowledge-disclosure.js": "c07e26c07c1aab35df0dad1d3b3382a222623363a38966301312ba5ef5998791",
+    "bot/src/frameworks/publication/contracts/knowledge-disclosure.js": "5a6257b4839fbbe43305ed781f534ede3bbf20ffe1ebf28529b1807e708f298d"
+  }
+}

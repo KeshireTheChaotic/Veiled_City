@@ -1,3 +1,5 @@
+import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
+const {activeEvidence,objectiveEvidence,evidenceType}=publicationKnowledgeDisclosure;
 /** Receipt-rendered output authority, independent of triggering user. Raw candidates never certify their own contents. */
 import { createHash } from "node:crypto";
 import {publicationOpeningOutput} from './frameworks/publication/public.js';
@@ -7,7 +9,7 @@ import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
 import { observationQueries, ambientWorldQueries, renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription } from "./character-observation.js";
-import { activeEvidence, objectiveEvidence,evidenceType } from "./epistemic.js";
+
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;

@@ -2076,7 +2076,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/knowledge--narrative/public.js",
-      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C185 adds only Narrative retained/disclosed memory operations through its own consumer; other directions remain open. C222 supplies original personal continuity character reader through fixed Narrative consumer."
+      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C185 adds only Narrative retained/disclosed memory operations through its own consumer; other directions remain open. C222 supplies original personal continuity character reader through fixed Narrative consumer. C224 supplies observed disclosure/evidence readers through fixed consumer; original Knowledge predicates/ancestry unchanged; database/standalone diagnostic compatibility retained."
     },
     {
       "pair": "knowledge--npc",
@@ -2293,7 +2293,7 @@
         "occurrences": 7
       },
       "public_api": "bot/src/framework-to-framework/knowledge--publication/public.js",
-      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open. C220 supplies original handoutPlayerView through fixed Knowledge consumer; Publication retains exact projection/epistemic fallback. C222 supplies original discoverPersonal through fixed Publication consumer; Knowledge retains owner/proxy/source and audience rules."
+      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open. C220 supplies original handoutPlayerView through fixed Knowledge consumer; Publication retains exact projection/epistemic fallback. C222 supplies original discoverPersonal through fixed Publication consumer; Knowledge retains owner/proxy/source and audience rules. C224 supplies observed disclosure/evidence readers through fixed consumer; original Knowledge predicates/ancestry unchanged; database/standalone diagnostic compatibility retained."
     },
     {
       "pair": "knowledge--session",

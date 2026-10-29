@@ -60,3 +60,5 @@ export {narrativeWorldMaterialization} from './contracts/world-materialization.j
 export {narrativeKnowledgePersonal} from './contracts/knowledge-personal.js';
 
 export {narrativeSessionScene} from './contracts/session-scene.js';
+
+export {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';

@@ -25,3 +25,5 @@ export {handoutPlayerView} from './handout-player-view.js';
 export {publicationKnowledgeDiscovery} from './contracts/knowledge-personal.js';
 
 export {publicationSessionScene} from './contracts/session-scene.js';
+
+export {publicationKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';

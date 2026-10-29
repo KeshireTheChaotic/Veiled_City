@@ -27,3 +27,7 @@ export function connectNarrativeKnowledgeMemory(){return narrativeKnowledgeMemor
 import {narrativeKnowledgePersonal} from '../../frameworks/narrative/public.js';
 import {personalContinuityCharacter as personalCharacter} from '../../frameworks/knowledge/public.js';
 export function connectNarrativeKnowledgePersonal(){return narrativeKnowledgePersonal.bind({personalCharacter});}
+
+import {narrativeKnowledgeDisclosure} from '../../frameworks/narrative/public.js';
+import {activeEvidence as narrativeDisclosureActiveEvidence,disclosureFailureReason as narrativeDisclosureDisclosureFailureReason,evidenceType as narrativeDisclosureEvidenceType,factVisibleTo as narrativeDisclosureFactVisibleTo,objectiveEvidence as narrativeDisclosureObjectiveEvidence} from '../../frameworks/knowledge/public.js';
+export function connectNarrativeKnowledgeDisclosure(){return narrativeKnowledgeDisclosure.bind({activeEvidence:narrativeDisclosureActiveEvidence,disclosureFailureReason:narrativeDisclosureDisclosureFailureReason,evidenceType:narrativeDisclosureEvidenceType,factVisibleTo:narrativeDisclosureFactVisibleTo,objectiveEvidence:narrativeDisclosureObjectiveEvidence});}

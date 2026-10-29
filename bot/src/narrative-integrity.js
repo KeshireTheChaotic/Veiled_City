@@ -1,10 +1,12 @@
+import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+const {objectiveEvidence,activeEvidence,evidenceType,disclosureFailureReason}=narrativeKnowledgeDisclosure;
 /** Local, fail-closed material-claim checks. Claims propose no mutations and never supply dice. */
 import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {sceneAccess, scenePresence, npcEvidenceActive}=narrativeSessionScene;
-import { objectiveEvidence, activeEvidence, evidenceType } from "./epistemic.js";
+
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { candidateNarrative,canQuarantineDisclosure,unattributedChoiceText } from "./pvp-output.js";
-import {disclosureFailureReason} from './disclosure-authority.js';
+
 import {NARRATIVE_CONTRACT} from './frameworks/narrative/narrative-integrity-contract.js';
 import {materialClaimSchema,claimFields,claimProperties} from './frameworks/narrative/material-claim-schema.js';
 export {NARRATIVE_CONTRACT,materialClaimSchema};

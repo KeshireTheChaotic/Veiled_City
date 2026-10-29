@@ -1,3 +1,5 @@
+import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+const {factVisibleTo,objectiveEvidence,evidenceType}=narrativeKnowledgeDisclosure;
 /** Native creative-GM packet: camera != character position; no secrets, effects, or model-issued authority. */
 import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {currentScene,scenePresence,lastVerifiedCharacterPresence}=narrativeSessionScene;
@@ -5,8 +7,8 @@ import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
 function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
-import {factVisibleTo} from './disclosure-authority.js';
-import {objectiveEvidence,evidenceType} from './epistemic.js';
+
+
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';

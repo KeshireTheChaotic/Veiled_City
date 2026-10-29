@@ -1,3 +1,5 @@
+import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+const {objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Delegated ordinary GM fiction; independent typed units, native receipts for effects, no arbitrary raw-output waiver. */
 import {buildNarrativeContext,narrativeVisible} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
@@ -10,7 +12,7 @@ const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
 import {materialParaphrases} from './narrative-integrity.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
-import {objectiveEvidence} from './epistemic.js';
+
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';

@@ -1,3 +1,5 @@
+import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
+const {activeEvidence,factVisibleTo}=publicationKnowledgeDisclosure;
 /** Discord publication boundary. Authoritative state is committed before these non-authoritative output operations run. */
 import { AttachmentBuilder } from "discord.js";
 import {publicationOpeningDelivery} from './frameworks/publication/public.js';
@@ -15,8 +17,8 @@ import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredO
 import {turnTraceFor} from './turn-trace-context.js';
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
-import {activeEvidence} from './epistemic.js';
-import {factVisibleTo} from './disclosure-authority.js';
+
+
 import {lifecycleProjection} from './lifecycle-output.js';
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;

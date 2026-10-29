@@ -1,3 +1,5 @@
+import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+const {factVisibleTo,objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Audience-safe native viewpoint for GM-owned local fiction. No inferred placement, PC knowledge or effects. */
 import {jsonHash} from './kernel/json-hash.js';
 import {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
@@ -6,8 +8,8 @@ import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {currentScene,scenePresence,sceneAccess}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {factVisibleTo} from './disclosure-authority.js';
-import {objectiveEvidence} from './epistemic.js';
+
+
 import {protectedPvpScope} from './pvp-output.js';
 import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
 function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}

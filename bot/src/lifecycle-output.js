@@ -1,6 +1,8 @@
+import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
+const {activeEvidence}=publicationKnowledgeDisclosure;
 /** Closed native lifecycle projections. Model summaries are retained privately, never used as proof. */
 import {createHash} from 'node:crypto';
-import {activeEvidence} from './epistemic.js';
+
 export const lifecycleHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const fail=()=>{throw Object.assign(new Error('Current native lifecycle publication required.'),{code:'NARRATIVE_PVP'});};
 export function lifecycleProjection(db,guild,key,scope){

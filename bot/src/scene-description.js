@@ -1,11 +1,13 @@
+import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+const {factVisibleTo,activeEvidence,objectiveEvidence,evidenceType}=narrativeKnowledgeDisclosure;
 /** Read-only scene composition. Typed sensory grammar is not authority for PC effects or new durable facts. */
 import {createHash} from 'node:crypto';
 import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {currentScene,scenePresence}=narrativeSessionScene;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {factVisibleTo} from './disclosure-authority.js';
-import {activeEvidence,objectiveEvidence,evidenceType} from './epistemic.js';
+
+
 import {narrativeEnvironmentalText} from './frameworks/narrative/public.js';
 function environmentalText(...args){return narrativeEnvironmentalText.environmentalText(...args);}
 import {sceneAtmosphereSubjects as subjects,sceneAtmosphereVerbs as verbs,sceneAtmosphereEndings as endings} from './gm-fiction-schema.js';

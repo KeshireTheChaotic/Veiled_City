@@ -45,7 +45,7 @@ import { entryReferenceContext } from "./frameworks/session/public.js";
 import { OnlineSrd } from "./frameworks/daggerheart/public.js";
 import { interpretationSchema, CONTEXT_CONTRACT } from "./frameworks/narrative/public.js";
 import { interpretationContext, validateInterpretation } from "./narrative-context.js";
-import { epistemicSchema, evidenceType, activeEvidence } from "./epistemic.js";
+import { epistemicSchema, evidenceType, activeEvidence } from "./frameworks/knowledge/public.js";
 import {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionRosterContext} from './frameworks/ai-provider/public.js';
 import {referenceKnowledgeScopedTurnStorage} from './framework-to-framework/ai-provider--knowledge/public.js';
 import { recoverOptionalTurnFields } from "./turn-recovery.js";

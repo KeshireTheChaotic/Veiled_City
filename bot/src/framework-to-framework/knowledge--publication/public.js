@@ -11,3 +11,7 @@ export function connectKnowledgePublicationHandout(){return knowledgePublication
 import {publicationKnowledgeDiscovery} from '../../frameworks/publication/public.js';
 import {discoverPersonal} from '../../frameworks/knowledge/public.js';
 export function connectPublicationKnowledgePersonal(){return publicationKnowledgeDiscovery.bind({discoverPersonal});}
+
+import {publicationKnowledgeDisclosure} from '../../frameworks/publication/public.js';
+import {activeEvidence as publicationDisclosureActiveEvidence,evidenceType as publicationDisclosureEvidenceType,factVisibleTo as publicationDisclosureFactVisibleTo,objectiveEvidence as publicationDisclosureObjectiveEvidence} from '../../frameworks/knowledge/public.js';
+export function connectPublicationKnowledgeDisclosure(){return publicationKnowledgeDisclosure.bind({activeEvidence:publicationDisclosureActiveEvidence,evidenceType:publicationDisclosureEvidenceType,factVisibleTo:publicationDisclosureFactVisibleTo,objectiveEvidence:publicationDisclosureObjectiveEvidence});}

@@ -15,7 +15,7 @@ import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.j
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./frameworks/session/public.js";
 import { persistInterpretation } from "./narrative-context.js";
-import { typedEvidence } from "./epistemic.js";
+import { typedEvidence } from "./frameworks/knowledge/public.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
