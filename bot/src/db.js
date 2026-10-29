@@ -12,19 +12,25 @@ import path from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { DatabaseSync } from "node:sqlite";
 import {StateConflictError} from "./kernel/errors.js";
+import { updateRelationshipDimensions as originalUpdateRelationshipDimensions, relationshipPairKey as originalRelationshipPairKey, relationshipProjection as originalRelationshipProjection } from "./relationship-state.js";
 import { processCityDue as originalProcessCityDue } from "./city-calendar.js";
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { archiveScenePresence } from "./scene-continuity.js";
+import { relationshipEvidence } from "./presentation-evidence.js";
 import {readRelationship} from './frameworks/persistence/relationship-reader.js';
 import {persistenceRelationshipEvidence,persistenceSourceEvidence,persistenceRelationshipState,persistenceArchiveProjection,persistenceCityDue} from './frameworks/persistence/public.js';
 import { activeEvidence as originalActiveEvidence, evidenceType as originalEvidenceType } from "./epistemic.js";
 import { validateChannelRouting } from "./routing-diagnostics.js";
 import {assertCanonProposalProof} from './semantic-candidate-source.js';
+import {historicalArchiveProjection as originalHistoricalArchiveProjection} from './historical-archive.js';
 import {instrumentSqlReads} from './turn-trace-context.js';
 import {reservedCampaignFear,fearReservationFailure} from './fear-reservations.js';
 
-// Source evidence and city due remain bound here until their roots move; relationship, presentation and archive readers are composed at startup.
+// Preserve standalone legacy facade reads while this fixed consumer is migrated to application composition.
+persistenceRelationshipEvidence.bind({relationshipEvidence});
 persistenceSourceEvidence.bind({activeEvidence:originalActiveEvidence,evidenceType:originalEvidenceType});
+persistenceRelationshipState.bind({updateRelationshipDimensions:originalUpdateRelationshipDimensions,relationshipPairKey:originalRelationshipPairKey,relationshipProjection:originalRelationshipProjection});
+persistenceArchiveProjection.bind({historicalArchiveProjection:originalHistoricalArchiveProjection});
 persistenceCityDue.bind({processCityDue:originalProcessCityDue});
 const {activeEvidence,evidenceType}=persistenceSourceEvidence;
 const {updateRelationshipDimensions,relationshipPairKey,relationshipProjection}=persistenceRelationshipState;

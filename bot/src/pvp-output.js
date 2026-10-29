@@ -1,5 +1,6 @@
 /** Receipt-rendered output authority, independent of triggering user. Raw candidates never certify their own contents. */
 import { createHash } from "node:crypto";
+import {publicationOpeningOutput} from './frameworks/publication/public.js';
 import { currentScene } from "./scene-continuity.js";
 import { conversationPrincipal } from "./conversation-principal.js";
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
@@ -915,3 +916,5 @@ export function quarantineSessionRecap(db,guild,session,text){
       reason:"Unverified archive synthesis; session closure supplies no PC authorship or disclosure authority."}});
 }
 import {nativeGmNotice,nativeGmNotices} from './gm-arbitration-output.js';
+
+publicationOpeningOutput.bind({prepareOpeningEntryOutput,prepareOpeningCohortOutput,prepareAssemblyOutput});

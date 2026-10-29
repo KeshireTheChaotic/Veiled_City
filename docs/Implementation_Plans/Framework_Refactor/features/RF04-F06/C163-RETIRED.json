@@ -1,0 +1,91 @@
+{
+  "feature": "RF04-F06-C163",
+  "original_manifest_sha256": "A462495092482EF702F9B0656335D6A52C1D5D1DA4756DD5E8AA75712236BE80",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "e95ac45466deb58bd47cb65a8a54520c6ae0538a31f06f457995d5a44e02e768",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-entry.js",
+      "to": "bot/src/pvp-output.js",
+      "kind": "static",
+      "specifier": "./pvp-output.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "5e9f428a0ae0e1fa5d354f613e20894a16b9347fc49083ca4cb97fc63e9b33d6",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-entry.js",
+      "to": "bot/src/publication-outbox.js",
+      "kind": "static",
+      "specifier": "./publication-outbox.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "d8f9bb54ad8e47b736419efede908ced27017e7f3d52836e793e6cbe4d735648",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-entry.js",
+      "to": "bot/src/publishing.js",
+      "kind": "static",
+      "specifier": "./publishing.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "4b9d57413b68355e3990ae889e5caee1ddc2f1b501bfb06da04a7b0a31ab001f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/pvp-output.js",
+      "kind": "static",
+      "specifier": "./pvp-output.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "ed5a20d5c2e76afa822f295a40e0b868a813c388d546b042a49fc157d635cce2",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/publication-outbox.js",
+      "kind": "static",
+      "specifier": "./publication-outbox.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "66bdb933ac3ab8d37701fede742a75d37b3dbb15a8d353d7b049b8c572732a6c",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/opening-cohort-runner.js",
+      "to": "bot/src/publishing.js",
+      "kind": "static",
+      "specifier": "./publishing.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

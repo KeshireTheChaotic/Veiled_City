@@ -1,5 +1,6 @@
 /** Transactional narration outbox; Discord delivery is retryable and never reruns reasoning or mechanics. */
 import { createHash } from "node:crypto";
+import {publicationOpeningQueue} from './frameworks/publication/public.js';
 import { splitDiscordText } from "./discord/chunking.js";
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive,substantivePublication } from "./pvp-output.js";
@@ -168,3 +169,5 @@ export function reconcilePublication(db,guildId,id,{actor,gm=false,decision,reas
     return after;
   }));
 }
+
+publicationOpeningQueue.bind({queueTurnPublications});

@@ -3,9 +3,10 @@ import {sessionOpeningAttendanceSource} from './frameworks/session/public.js';
 function inspectOpeningEntryOpportunity(...args){return sessionOpeningAttendanceSource.inspectOpeningEntryOpportunity(...args);}
 import {sessionOpeningEntrySource} from './frameworks/session/public.js';
 function openingEntryProjection(...args){return sessionOpeningEntrySource.openingEntryProjection(...args);}function openingEntryNarrativeCandidate(...args){return sessionOpeningEntrySource.openingEntryNarrativeCandidate(...args);}
-import {prepareOpeningEntryOutput} from './pvp-output.js';
-import {queueTurnPublications} from './publication-outbox.js';
-import {deliverQueuedTurn} from './publishing.js';
+import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './frameworks/publication/public.js';
+const {prepareOpeningEntryOutput}=publicationOpeningOutput;
+const {queueTurnPublications}=publicationOpeningQueue;
+const {deliverQueuedTurn}=publicationOpeningDelivery;
 import {sessionOpeningSource} from './frameworks/session/public.js';
 function inspectSessionOpening(...args){return sessionOpeningSource.inspectSessionOpening(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';

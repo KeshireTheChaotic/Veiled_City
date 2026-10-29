@@ -1,0 +1,54 @@
+{
+  "feature": "RF04-F05-C161-REPAIR",
+  "base_sha": "8de8007a701897dc8687cab148fdddfb388b1ee8",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f05-c161-standalone-repair.test.mjs",
+  "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f05-c161-standalone-repair.test.mjs",
+  "syntax_command_from_bot": "node --check src/db.js; node --check src/relationship-state.js; node --check src/presentation-evidence.js; node --check src/historical-archive.js; node --check tests/ai-gm-2026-10/rf04-f05-c161-standalone-repair.test.mjs",
+  "attempts": [
+    {
+      "run_id": "c161-repair-attempt-1",
+      "started_utc": "2026-10-29T12:16:01.5825026Z",
+      "ended_utc": "2026-10-29T12:16:05.9573647Z",
+      "exit_code": 1,
+      "test_count": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "failure": "The new assertion expected milestone ally for trust score 4; existing Knowledge rules return trusted. Production source was unchanged.",
+      "test_sha256": "not captured before test-only repair",
+      "output_log": "Transient PowerShell temp log was read once after process exit and deleted; final TAP output is retained in the execution transcript."
+    },
+    {
+      "run_id": "c161-repair-attempt-2",
+      "started_utc": "2026-10-29T12:16:21.2177010Z",
+      "ended_utc": "2026-10-29T12:16:22.8874630Z",
+      "exit_code": 0,
+      "test_count": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "tap_duration_ms": 1374.8948,
+      "syntax_exit_code": 0,
+      "test_sha256": "B3B5A7AED523C9D6D64C8BB109F8D6EAD17954FF11C6C758859063F48559427E",
+      "output_log": "Transient PowerShell temp log was read once after process exit and deleted; final TAP output is retained in the execution transcript."
+    }
+  ],
+  "tested_fingerprint": {
+    "db_js_sha256": "960D5BE8314778BC299B6E45B5AB1D3A4B2690B8BF77FB2247DFD8BD0C5E3567",
+    "relationship_state_sha256": "AF773D9238C0056DA70FAC8E13017D3DF7543E505CBF457EEAE83A18D9700C50",
+    "presentation_evidence_sha256": "97DF4361F7DFC0A8CE871E55D41FBF9FC5C7A2438E8C17B41E39802A41AA935F",
+    "historical_archive_sha256": "4050D877C24616DF45FB04E9C0F3364F713A5F037ABBB1BB7C6811034FCCC29F",
+    "schema_sha256": "D3A69C4C55A876B087556AB7F291265A684C4287233B1651B1692BE34781E374",
+    "test_sha256": "B3B5A7AED523C9D6D64C8BB109F8D6EAD17954FF11C6C758859063F48559427E"
+  },
+  "environment": {
+    "database": "Disposable temp SQLite seeded from production schema with one saved relationship; reopened twice through standalone VeiledDB without application composition.",
+    "network": 0,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0
+  },
+  "qualification": "The repaired standalone-construction regression passed its scoped case. This is not full Persistence or release qualification."
+}

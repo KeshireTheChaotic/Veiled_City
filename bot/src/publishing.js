@@ -1,5 +1,6 @@
 /** Discord publication boundary. Authoritative state is committed before these non-authoritative output operations run. */
 import { AttachmentBuilder } from "discord.js";
+import {publicationOpeningDelivery} from './frameworks/publication/public.js';
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID,createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
@@ -445,3 +446,5 @@ async function deliverHandoutNow({db,guild,handout,format="markdown"}){
     return relay.ok?relay:{ok:false,via:"unavailable",ref:relay.ref};
   }
 }
+
+publicationOpeningDelivery.bind({deliverQueuedTurn});

@@ -1,0 +1,88 @@
+{
+  "feature": "RF04-F06-C163",
+  "base_sha": "8de8007a701897dc8687cab148fdddfb388b1ee8",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+  "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+  "syntax_command_from_bot": "node --check src/pvp-output.js; node --check src/publication-outbox.js; node --check src/publishing.js; node --check src/opening-entry.js; node --check src/opening-cohort-runner.js; node --check src/frameworks/publication/public.js; node --check src/frameworks/publication/contracts/opening-egress.js; node --check tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+  "attempts": [
+    {
+      "run_id": "c163-attempt-1",
+      "started_utc": "2026-10-29T12:18:34.7203961Z",
+      "ended_utc": "2026-10-29T12:18:35.6112727Z",
+      "exit_code": 1,
+      "test_count": 4,
+      "passed": 3,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "failure": "The test used assert.rejects for a fixed port's synchronous fail-closed throw; the port throws before returning a promise.",
+      "test_sha256": "not captured before test-only repair",
+      "output_log": "Transient PowerShell temp log was read once after process exit and deleted; TAP output is retained in the execution transcript."
+    },
+    {
+      "run_id": "c163-attempt-2",
+      "started_utc": "2026-10-29T12:18:49.7640840Z",
+      "ended_utc": "2026-10-29T12:18:58.1398880Z",
+      "exit_code": 0,
+      "test_count": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "tap_duration_ms": 7949.5577,
+      "syntax_exit_code": 0,
+      "test_sha256": "CDAB54A49A6E6B732EC4B9C8093C62756A08E81AF4D21FE4F1DA0876A0B7FC05",
+      "output_log": "Transient PowerShell temp log was read once after process exit and deleted; TAP output is retained in the execution transcript."
+    }
+  ],
+  "tested_fingerprint": {
+    "pvp_output_sha256": "AB9A3886BCCD9CA20DFE7C54AD43F24BCDFA56CCCD1AB611BA3DB2712443EF4B",
+    "publication_outbox_sha256": "0364F4FCA81EF17FC8DFB9A794B2D28B987C64182FE609ECFF8C6756768E1A26",
+    "publishing_sha256": "E2A1E362B2948FEA29D7F92DE30977706A0EFCFBD120C4FE4C03EB38BBC61E89",
+    "opening_entry_sha256": "04E4020C817EB8A1EAADE3FF31B3F856EDCEFF63A129D0141E25DC44D49AE800",
+    "opening_cohort_runner_sha256": "FBEBD632C49AC04829CF70D1A9C0BC99FEF3F8E455744D0DAB1B2EB1CF42D969",
+    "publication_public_sha256": "064EFBB532E5AD11123F04A536E641250C3093B18C1D769BAC075108B47D4630",
+    "opening_egress_contract_sha256": "C54B2B57B20552F42DC7A678759644C52196BBD33934EEAA8DDFBCF83FB030BF",
+    "test_sha256": "CDAB54A49A6E6B732EC4B9C8093C62756A08E81AF4D21FE4F1DA0876A0B7FC05"
+  },
+  "architecture_gates": {
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "pass": true,
+      "source_modules": 842,
+      "unowned": 0,
+      "active_violation_groups": 0,
+      "transition_errors": 0
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 842,
+      "unowned": 0,
+      "active_violation_groups": 65,
+      "transition_errors": 65,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "other_checks": {
+    "git_diff_check_exit_code": 0,
+    "transition_json_parse_exit_code": 0,
+    "git_diff_check_notes": "Git printed CRLF conversion warnings only."
+  },
+  "environment": {
+    "network": 0,
+    "production_database": 0,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "provider_usd": 0
+  },
+  "qualification": "C163 scoped fresh tests and RF04 ratchet pass. RF05 remains unqualified due 65 existing legacy module location groups/errors; release is not authorized."
+}
