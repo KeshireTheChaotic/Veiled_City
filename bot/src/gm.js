@@ -805,7 +805,8 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
     const reserveChars=6000+(instructions.includes(AUTHORITY_POLICY)?0:AUTHORITY_POLICY.length+1)
       +INTENT_PROMPT.length+GM_WORLD_NARRATIVE_PROMPT.length+8;
     const {input}=budgetTurnPrompt(referenceKnowledgeScopedTurnStorage(sections,{guildId,
-      scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars});
+      scope:{mode:scope,actorUserId,actorCharacterId:ctx.actor_assignment?.character_id}}),{instructions,query:messageText,reserveChars,
+      maxChars:this.config.turnPromptMaxChars||200000});
     let turnSchema=ctx.decision_advisory?{...gmSchema,properties:{...gmSchema.properties,decision_advisory:requiredDecisionAdvisorySchema}}:gmSchema;
     if(arbitrationOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,unified_arbitration:unifiedArbitrationSchema},required:[...turnSchema.required,'unified_arbitration']};
     if(privateSeedOrigin)turnSchema={...turnSchema,properties:{...turnSchema.properties,private_world_seeds:privateWorldSeedsSchema},required:[...turnSchema.required,'private_world_seeds']};

@@ -60,6 +60,8 @@ export function loadConfig(){
     reasoningEffort:process.env.OPENAI_REASONING_EFFORT||"low",
     openaiRequestTimeoutMs:numberEnv("OPENAI_REQUEST_TIMEOUT_MS",60000,{min:5000,max:600000,integer:true}),
     openaiMaxRetries:numberEnv("OPENAI_MAX_RETRIES",1,{min:0,max:5,integer:true}),
+    // Whole GM turn prompt (instructions + context) in characters; each enabled city feature adds mandatory context.
+    turnPromptMaxChars:numberEnv("TURN_PROMPT_MAX_CHARS",200000,{min:60000,max:800000,integer:true}),
     aiOperationDeadlineMs:numberEnv("AI_OPERATION_DEADLINE_MS",120000,{min:5000,max:900000,integer:true}),
     gmTurnDeadlineMs:numberEnv("GM_TURN_DEADLINE_MS",120000,{min:10000,max:900000,integer:true}),
     routerDeadlineMs:numberEnv("ROUTER_DEADLINE_MS",20000,{min:1000,max:120000,integer:true}),
