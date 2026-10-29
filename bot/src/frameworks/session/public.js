@@ -48,3 +48,6 @@ export {openingCohortNarrativeCandidate,inspectOpeningCohortSource} from './open
 export {openingEntryProjection,openingEntryNarrativeCandidate} from './opening-entry-source.js';
 
 export {negotiateAgreement} from './negotiations.js';
+
+export {sessionPublicationRecap} from './contracts/publication-recap.js';
+export {sessionBrief,formatSessionBrief} from './session-briefs.js';

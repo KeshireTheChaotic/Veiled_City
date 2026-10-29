@@ -9,3 +9,5 @@ export {publicationWorldEvents} from './contracts/world-events.js';
 export {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './contracts/opening-egress.js';
 
 export {publicationSessionPrincipal} from './contracts/session-principal.js';
+
+export {publicationSessionRecapSource} from './contracts/session-recap.js';

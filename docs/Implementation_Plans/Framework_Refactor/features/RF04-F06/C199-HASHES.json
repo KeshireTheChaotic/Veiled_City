@@ -1,0 +1,12 @@
+{
+  "bot/src/application/composition/publication-session.js": "7fdd2a6484a5b4c437a6774fa99d4bbae180ef5b27b99650d156637d00bec779",
+  "bot/src/commands.js": "fde255bf7f7e6967a2b946de8ec6505db26c245916dc8ba7b68513b8c427eaf0",
+  "bot/src/framework-to-framework/publication--session/public.js": "faa29e09e4b755a714ca59436c69ef87ce5aa0c20c20b9e63354523ce9c9fffe",
+  "bot/src/frameworks/publication/public.js": "77188584b53d4c9eefd66091dbf3b2c7e0695e946bfd8e00e25c7c9f889b165b",
+  "bot/src/frameworks/session/public.js": "ff89c9ed8f582e10f582a218b31f26ed6c4686ad224df4072f7d1d21fd3b202e",
+  "bot/src/pvp-output.js": "ad2fd951aa7dda8accf237c73a4293621cdd85cd7bb943a4edcd0e3fd1abf5bb",
+  "bot/src/story-commands.js": "ef7123d5b66b3e5355caaf3addd541dfe47adbb3792dd5419641a1698dd34106",
+  "bot/src/frameworks/publication/contracts/session-recap.js": "71484f837bba41cb05b8daad84fc308e7a17f441b3e2bac8e0643661f88568f5",
+  "bot/src/frameworks/session/contracts/publication-recap.js": "8700d571c89b0e593e63779f9064119bac17e301de4bbba167e0a5b4c9313f22",
+  "bot/src/frameworks/session/session-briefs.js": "184444d71a0e24237564836e8d359d8974a1fb128230438af1c52fe94c4d560e"
+}

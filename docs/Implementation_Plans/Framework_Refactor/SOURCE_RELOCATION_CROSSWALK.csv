@@ -315,7 +315,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/semantic-candidate-source.js","bot/src/frameworks/knowledge/semantic-candidate-source.js","knowledge","RF04","SEMANTIC_PROOF_EXTRACTED_SESSION_NATIVE_PORTS_PENDING","4","4"
 "bot/src/semantic-engagement.js","bot/src/frameworks/intent/semantic-engagement.js","intent","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","3"
 "bot/src/serial-queue.js","bot/src/kernel/serial-queue.js","kernel","RF02","PILOT_MOVE_CANDIDATE","6","0"
-"bot/src/session-briefs.js","bot/src/frameworks/session/session-briefs.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","4"
+"bot/src/session-briefs.js","bot/src/frameworks/session/session-briefs.js","session","RF04","C199_BRIEF_MOVED_CERTIFIED_PUBLICATION_RECAP_PORT","0","0"
 "bot/src/session-opening-attendance.js","bot/src/frameworks/session/session-opening-attendance.js","session","RF04","POLICY_EXTRACTED_NATIVE_WORLD_ISSUER_ADOPTED_OTHER_READERS_OPEN","4","1"
 "bot/src/session-opening-recovery.js","bot/src/application/workflows/session-opening-recovery.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","5"
 "bot/src/session-opening-runner.js","bot/src/application/workflows/session-opening-runner.js","application","RF06","DECOMPOSE_BEFORE_MOVE","4","4"

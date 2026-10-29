@@ -1,10 +1,11 @@
 /** Read-only reconstructed brief views. Public text never inherits GM planning, private thoughts or raw event details. */
-import {sessionPersonalContinuity} from './frameworks/session/public.js';
+import {sessionPersonalContinuity} from './contracts/personal-continuity.js';
 function personalCharacter(...args){return sessionPersonalContinuity.personalCharacter(...args);}function personalInbox(...args){return sessionPersonalContinuity.personalInbox(...args);}
-import {sessionKnowledgeSources} from './frameworks/session/public.js';
+import {sessionKnowledgeSources} from './contracts/knowledge-sources.js';
 function reconcileHistory(...args){return sessionKnowledgeSources.reconcileHistory(...args);}
 function evidenceType(...args){return sessionKnowledgeSources.evidenceType(...args);}function activeEvidence(...args){return sessionKnowledgeSources.activeEvidence(...args);}
-import { scopedSessionRecap } from "./pvp-output.js";
+import {sessionPublicationRecap} from './contracts/publication-recap.js';
+const {scopedSessionRecap}=sessionPublicationRecap;
 export function sessionBrief(db,guild,{mode="shared",user="",gm=false}={}){
   if(db.getCityCalendar(guild).flags.session_briefs!==true) throw new Error("Session briefs are opt-in.");
   if(!["shared","character","gm"].includes(mode)||mode==="gm"&&!gm) throw new Error("Authenticated GM preparation access required.");

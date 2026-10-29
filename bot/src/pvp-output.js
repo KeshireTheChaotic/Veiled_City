@@ -919,3 +919,6 @@ export function quarantineSessionRecap(db,guild,session,text){
 import {nativeGmNotice,nativeGmNotices} from './gm-arbitration-output.js';
 
 publicationOpeningOutput.bind({prepareOpeningEntryOutput,prepareOpeningCohortOutput,prepareAssemblyOutput});
+
+import {publicationSessionRecapSource} from './frameworks/publication/public.js';
+publicationSessionRecapSource.bind({scopedSessionRecap});

@@ -1099,3 +1099,7 @@ Original authoring service moved unchanged to World, Application caller public, 
 ## C198 Session negotiation — COMPLETE
 
 Original service moved unchanged to Session; Application public caller, two exact records retired. Fresh2/2pass with explicit contract fakes; syntax3/3/source comparison/RF04 gate875modules zero active/errors pass. Feature ledger records native/storage limits. Next: session briefs and recap dependency. RF04 incomplete; release unauthorized.
+
+## C199 Session brief projection — COMPLETE
+
+Original brief/formatter moved unchanged into Session; certified recap supplied through existing Publication–Session pair and actual source registration. Four exact records retired. Three fresh cases pass with explicit ownership/archive limits; changed syntax/source comparison/RF04 gate877modules zero active/errors pass. Next: dialogue continuity source/dependency review. RF04 incomplete; release unauthorized.

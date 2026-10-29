@@ -57,7 +57,7 @@ import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";
-import { sessionBrief, formatSessionBrief } from "./session-briefs.js";
+import { sessionBrief, formatSessionBrief } from './frameworks/session/public.js';
 import { formatDiscovery,discoveryDeliveryProof } from "./discovery-delivery.js";
 import { manageLongProject, projectPhaseRevision } from "./long-projects.js";
 import { stateRevision } from "./ai-intents.js";

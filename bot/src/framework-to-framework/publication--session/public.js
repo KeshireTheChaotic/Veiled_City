@@ -8,3 +8,7 @@ import {publicationSessionPrincipal} from '../../frameworks/publication/public.j
 import {conversationPrincipal} from '../../frameworks/session/public.js';
 /** Bind the original Session reader without evaluating player state. */
 export function connectPublicationSessionPrincipal(){return publicationSessionPrincipal.bind({conversationPrincipal});}
+
+import {publicationSessionRecapSource} from '../../frameworks/publication/public.js';
+import {sessionPublicationRecap} from '../../frameworks/session/public.js';
+export function connectSessionPublicationRecap(){return sessionPublicationRecap.bind({scopedSessionRecap:publicationSessionRecapSource.scopedSessionRecap});}
