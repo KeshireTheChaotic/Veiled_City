@@ -115,3 +115,5 @@ export {authorWorldDraft,reviewWorldDraft} from './reviewed-authoring.js';
 export {importSanctionedGmHooks,worldHookSeedForGm,sanctionedWorldMutation,worldRecordOriginForGm} from './sanctioned-sources.js';
 
 export {createSeededWorldContext,assertWorldIdentityNames,assertIndependentWorldIdentity,verifiedWorldAuthoringContext,privateWorldIdentityForGm} from './authorship-service.js';
+
+export {worldResolutionContext,bindWorldResolutionCycle,commitWorldResolutionPulse,readWorldResolutionPulse,finishWorldResolutionCycle} from './resolution.js';

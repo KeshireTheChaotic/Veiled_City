@@ -1,0 +1,30 @@
+{
+  "feature": "RF04-C209",
+  "records": [
+    {
+      "id": "9076db7b1a1a3243907434aa3050aa0d2113c612cd46264b27c3c20a38bd7ff7",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-resolution.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "759eae7bcf028fb6bbf7d544661f953ec50a08045d695d51713d0180ff423eea",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/world-resolution.js",
+      "kind": "static",
+      "specifier": "./world-resolution.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

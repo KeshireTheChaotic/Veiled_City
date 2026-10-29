@@ -13,7 +13,7 @@ import { presentationContext } from "./frameworks/knowledge/public.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './frameworks/world/public.js';
 import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
 import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';
-import {worldResolutionContext} from './world-resolution.js';
+import {worldResolutionContext} from './frameworks/world/public.js';
 import {openingWorldOpportunities} from './framework-to-framework/session--world/public.js';
 import {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn} from './world-private-seeds.js';
 import {privateWorldSeedsSchema} from './frameworks/world/public.js';

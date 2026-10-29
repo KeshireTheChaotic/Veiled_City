@@ -18,7 +18,7 @@ import {worldIntentDispatch} from './frameworks/world/public.js';
 function delegateConsequence(...args){return worldIntentDispatch.delegateConsequence(...args);}function delegateWorldGoal(...args){return worldIntentDispatch.delegateWorldGoal(...args);}function maintainMemory(...args){return worldIntentDispatch.maintainMemory(...args);}function continueLongProjects(...args){return worldIntentDispatch.continueLongProjects(...args);}function dispatchAiIntents(...args){return worldIntentDispatch.dispatchAiIntents(...args);}
 import {worldStoryContinuity} from './frameworks/world/public.js';
 function pacingAdvice(...args){return worldStoryContinuity.pacingAdvice(...args);}
-import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './world-resolution.js';
+import {worldResolutionContext,bindWorldResolutionCycle,finishWorldResolutionCycle} from './frameworks/world/public.js';
 import {inspectWorldSimulationReceipt} from './frameworks/world/public.js';
 import {nativeWorldStrategyAllowed} from './frameworks/world/public.js';
 

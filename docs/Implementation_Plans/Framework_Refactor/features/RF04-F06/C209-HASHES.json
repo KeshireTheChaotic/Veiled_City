@@ -1,0 +1,9 @@
+{
+  "feature": "RF04-C209",
+  "sha256": {
+    "bot/src/frameworks/world/resolution.js": "4195d8349edb1dc2e17f604fdcbdc2fee25e86552dbf0c52ef8aec44338d26e5",
+    "bot/src/frameworks/world/public.js": "2c3e974715b6f5368ee80e23a67da917364a9a93985130211d8a55df8a400d5e",
+    "bot/src/gm.js": "a68cad186306c26358d06425ed3a75650831b4d71e859ebb1ba7204e9a7d26a4",
+    "bot/src/simulation.js": "e5062198d11e5df6b112d5f5ebda676d5fae83cb76fc9985042fef1488aff5b1"
+  }
+}

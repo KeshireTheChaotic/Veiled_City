@@ -1,12 +1,14 @@
 /** Derived coarse-to-fine Director state. Snapshots confer no execution, knowledge or disclosure authority. */
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {worldIdentityOrigin,privateWorldIdentityForGm} from './frameworks/world/public.js';
-import {worldSessionScene,worldKnowledgeSources} from './frameworks/world/public.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {worldIdentityOrigin} from './identity-origin.js';
+import {privateWorldIdentityForGm} from './authorship-service.js';
+import {worldSessionScene} from './contracts/session-scene.js';
+import {worldKnowledgeSources} from './contracts/knowledge-records.js';
 const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords(...args);
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}
-import {worldActorControl} from './frameworks/world/public.js';
-import {indexWorldEvent} from './frameworks/world/public.js';
-import {worldNarrativeSources} from './frameworks/world/public.js';
+import {worldActorControl} from './execution-source.js';
+import {indexWorldEvent} from './city-calendar.js';
+import {worldNarrativeSources} from './contracts/narrative-sources.js';
 function narrativeImportance(...args){return worldNarrativeSources.narrativeImportance(...args);}function nativeSalienceAvailable(...args){return worldNarrativeSources.nativeSalienceAvailable(...args);}
 
 const issuer='native:world-resolution';
