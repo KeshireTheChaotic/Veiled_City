@@ -572,8 +572,15 @@ export function autoCompleteOrdinaryMovements(db,guild,result,scope={}){
     const resolved=pc&&resolvePlaceReference(db,guild,pc.id,intent.target_name||intent.target_key,
       {mode:scope.mode,user:scope.actorUserId});
     const key=resolved?.status==='resolved_existing'?resolved.location.entity_key:'';
-    if(!key||intent.target_key&&intent.target_key!==key)throw error('A declared automatic move requires an established audience-visible native destination.',
+    if(intent.target_key&&key&&intent.target_key!==key)throw error('A declared automatic move requires an established audience-visible native destination.',
       {source_span:intent.source_span,target:intent.target_name});
+    if(!key){
+      // New places are minted only by native narrative authorship after validation, so a not-yet-established
+      // destination cannot be arrived at this turn. Hold the move (no arrival) and let the scene introduce the way there.
+      intent.resolution='blocked';
+      intent.reason=`"${intent.target_name||intent.target_key||'That destination'}" is not an established place yet; the character sets out, but arrival waits until the place is introduced.`;
+      continue;
+    }
     // Preserve the schema's existing zone field. Native access checks still decide if arrival is allowed.
     auto.push({kind:'move',entity_ref:key,source_span:intent.source_span,
       zone:intent.destination==='exterior'?'exterior':intent.destination==='interior'?'interior':'scene'});
