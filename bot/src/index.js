@@ -224,7 +224,7 @@ async function runPendingDirectorPass(guild,session,{engagement=null,interaction
   await outputStep(outputErrors,{guild,sessionId:session.id,context:`world-director-${pending.layer}-narration`},async()=>{
     const turnId=queueDirectorPublications(db,{guild,session,result,scope:{mode:"party",actorUserId:null,actorCharacterId:null},
       key:`${session.id}:${pending.layer}:${pending.queued_at||pending.round_number||pending.scene_label}`});
-    return deliverQueuedTurn({db,guild,turnId});
+    return turnId?deliverQueuedTurn({db,guild,turnId}):null;
   });
   const pms=allowedPrivateMessages(session,result.private_messages||[],{mode:"party"});
   if(pms.blocked.length){
@@ -274,7 +274,7 @@ async function runPrivateSceneDirector({guild,session,actorUserId,actorCharacter
   await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-narration"},async()=>{
     const turnId=queueDirectorPublications(db,{guild,session,result,scope,
       key:`private:${session.id}:${actorUserId}:${sceneReview.label}:${db.getSimulationClock(guild.id).minute}`});
-    return deliverQueuedTurn({db,guild,turnId});
+    return turnId?deliverQueuedTurn({db,guild,turnId}):null;
   });
   const pms=allowedPrivateMessages(session,result.private_messages||[],scope);
   if(pms.blocked.length) await outputStep(outputErrors,{guild,sessionId:session.id,context:"private-scene-director-message-blocked"},()=>notifyBlockedActions({guild,session,actorUserId,actorCharacterId,rows:pms.blocked.map(()=>({type:"private_message",error:"Private scene director attempted to message another player."})),context:"private scene director message scope"}));

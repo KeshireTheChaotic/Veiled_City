@@ -69,6 +69,8 @@ export function queueTurnPublications(db,{guild,session,result,scope,turnId,chan
 /** Direct director adapters use the same persisted, revalidated publication path as ordinary turns. */
 export function queueDirectorPublications(db,{guild,session,result,scope,key}){
   if(!key)throw new Error("Stable native director cycle/interaction key required.");
+  // A pass that chose not to act was never prepared for publication and has nothing to deliver.
+  if(result.act===false&&!String(result.narration||result.public_narration||"").trim()&&!(result.private_messages||[]).length)return null;
   return db.transaction(()=>{
     assertPvpOutput(db,guild.id,result,scope);
     if(!result.narration&&result.public_narration)result.narration=result.public_narration;
