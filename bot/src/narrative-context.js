@@ -1,6 +1,7 @@
 /** Scoped fictional interpretation. Meaning and referents never authorize movement, consent, knowledge or canon. */
 import { createHash } from "node:crypto";
-import { personalCharacter } from "./personal-continuity.js";
+import {narrativeKnowledgePersonal} from './frameworks/narrative/public.js';
+function personalCharacter(...args){return narrativeKnowledgePersonal.personalCharacter(...args);}
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';

@@ -1,5 +1,5 @@
 /** Read-only natural-language discovery runs before ordinary message persistence or director work. No model calls or campaign writes. */
-import { discoverPersonal } from "./personal-continuity.js";
+import { discoverPersonal } from "./frameworks/knowledge/public.js";
 export function discoveryQuestion(message){
   const text=String(message||"").replace(/<@!?\d+>/g,"").trim();
   if(/^(?:ooc\b|\(\(|\/\/)|\b(?:if I|hypothetically|for example)\b/i.test(text))return null;

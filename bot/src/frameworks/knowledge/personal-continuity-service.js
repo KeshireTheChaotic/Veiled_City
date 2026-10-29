@@ -1,15 +1,17 @@
 /** Original fixed World/Session/Publication and own Knowledge composition for personal continuity. */
-import {knowledgeWorldMemory,knowledgeWorldEvents} from './frameworks/knowledge/public.js';
+import {knowledgeWorldMemory} from './contracts/world-memory.js';
+import {knowledgeWorldEvents} from './contracts/world-events.js';
 function cityObject(...args){return knowledgeWorldMemory.cityObject(...args);}function cityKey(...args){return knowledgeWorldMemory.cityKey(...args);}function cityInteger(...args){return knowledgeWorldMemory.cityInteger(...args);}function cityAudit(...args){return knowledgeWorldMemory.cityAudit(...args);}function indexWorldEvent(...args){return knowledgeWorldEvents.indexWorldEvent(...args);}
 function requireCitySource(...args){return knowledgeWorldMemory.requireCitySource(...args);}
-import {knowledgePublicationHandout} from './frameworks/knowledge/public.js';
+import {knowledgePublicationHandout} from './contracts/publication-handout.js';
 function handoutPlayerView(...args){return knowledgePublicationHandout.handoutPlayerView(...args);}
-import {organizationInbox,evidenceView} from './frameworks/knowledge/public.js';
-import {evidenceType,activeEvidence} from './epistemic.js';
-import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
+import {organizationInbox} from './owned-community-service.js';
+import {evidenceView} from './evidence-custody-service.js';
+import {evidenceType,activeEvidence} from './evidence-source.js';
+import {knowledgeSessionScene} from './contracts/session-scene.js';
 function conversationPrincipal(...args){return knowledgeSessionScene.conversationPrincipal(...args);}
-import {ownerSemanticSource,assertSemanticCandidateProof} from './frameworks/knowledge/public.js';
-import {createPersonalContinuity} from './frameworks/knowledge/public.js';
+import {ownerSemanticSource,assertSemanticCandidateProof} from './semantic-candidate-service.js';
+import {createPersonalContinuity} from './personal-continuity.js';
 let personalRules;
 function personal(){return personalRules??=createPersonalContinuity({cityObject:(...args)=>cityObject(...args),cityKey:(...args)=>cityKey(...args),cityInteger:(...args)=>cityInteger(...args),cityAudit:(...args)=>cityAudit(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),requireCitySource:(...args)=>requireCitySource(...args),handoutPlayerView:(...args)=>handoutPlayerView(...args),organizationInbox:(...args)=>organizationInbox(...args),evidenceView:(...args)=>evidenceView(...args),evidenceType:(...args)=>evidenceType(...args),activeEvidence:(...args)=>activeEvidence(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),ownerSemanticSource:(...args)=>ownerSemanticSource(...args),assertSemanticCandidateProof:(...args)=>assertSemanticCandidateProof(...args)});}
 export function personalCharacter(...args){return personal().personalCharacter(...args);}
@@ -18,6 +20,6 @@ export function proposeArcBeat(...args){return personal().proposeArcBeat(...args
 export function captureArcCandidate(...args){return personal().captureArcCandidate(...args);}
 export function personalInbox(...args){return personal().personalInbox(...args);}
 export function discoverPersonal(...args){return personal().discoverPersonal(...args);}
-import {knowledgePersonalContinuity} from './frameworks/knowledge/public.js';
+import {knowledgePersonalContinuity} from './contracts/personal-continuity-source.js';
 // Provide this module's original readers to the fixed Knowledge slot; no other authority is granted.
 knowledgePersonalContinuity.bind({personalArc,personalInbox});

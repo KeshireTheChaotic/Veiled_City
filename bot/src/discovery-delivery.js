@@ -1,5 +1,6 @@
 /** Native scoped discovery formatting and delivery revalidation. */
-import { discoverPersonal } from "./personal-continuity.js";
+import {publicationKnowledgeDiscovery} from './frameworks/publication/public.js';
+function discoverPersonal(...args){return publicationKnowledgeDiscovery.discoverPersonal(...args);}
 import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import {sendPlayerPrivate} from './publishing.js';

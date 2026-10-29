@@ -1,0 +1,27 @@
+{
+  "feature": "RF04-C222",
+  "sha256": {
+    "bot/src/ai-intents.js": "66d28a72b76e5f6c7c3b87fbf9b895b764d226104d96d6922ffe7eac2e5b0e3a",
+    "bot/src/application/composition/intent-knowledge.js": "e61fc9d4e678ad1a9d7030d5974fc0840a998a1f54d709b6bdf2e435130aaaa2",
+    "bot/src/application/composition/knowledge-narrative.js": "7977b654ac7f153d49462a05b4552a5332f1d896519ee1b23091316f3b9e23b6",
+    "bot/src/application/composition/publication-knowledge-narrative-memory.js": "999c12057eb5afa3e82dbf33cdd72f9f93952f8f2dd5abc704fc0557e6e77be5",
+    "bot/src/commands.js": "f253225365fb11cf7766d1ad8be79a7aa8f6a0ddb9200e663f7a4cb82af1af3e",
+    "bot/src/continuity-routing.js": "2ef649d5bb40ddceffa718cdf34b64bd87421e38649864062ffa40ba1782adb0",
+    "bot/src/discovery-delivery.js": "d3bf07072ab6b9499ad30a24b44da97b69dd1881a7a54545a49829eb9061133d",
+    "bot/src/framework-to-framework/intent--knowledge/public.js": "a0e41edd0d8eb50198b83ed2a75ca483842ea9147251f68dba5f2281c219cbad",
+    "bot/src/framework-to-framework/knowledge--narrative/public.js": "8ab623d7d4a2f64406932e7c88182fdbccdc5189d4149e581de1e11d08edb232",
+    "bot/src/framework-to-framework/knowledge--publication/public.js": "813876f6738d07f5aa18d5f5c03ea684b4137a87a43c191569e057828fb6acb9",
+    "bot/src/frameworks/intent/public.js": "4fd91d736b17c7a4ffbfadcbc7314e8a74749bac5a2508384815e3c4188d1bcf",
+    "bot/src/frameworks/knowledge/public.js": "56781d2e453adc370b7d5ae5011bb9c85dbceef7e85563fc7089932c4729faf6",
+    "bot/src/frameworks/narrative/public.js": "b5d51f5ace41ba9ce0f5c37a54a51b999ad869174e1c02b401115d1f3308a9f2",
+    "bot/src/frameworks/publication/public.js": "6dc1124fcff42562900e58560c0a7867b154ff5429914d6832c4c4c0ed659d2e",
+    "bot/src/narrative-context.js": "55505472d823fbb7a127b8b8fb9d4d2e8c0d88410efcb5de56c9eefa84259c6d",
+    "bot/src/player-language.js": "adea359d71574ebe4f95a723dad69a5f71e07fe851170a6af8fd9e64d49675fa",
+    "bot/src/state.js": "e67f7878003e8f5b603428ebf774686bdd432e4a478bf3c46d169bfc80d3d66b",
+    "bot/src/story-commands.js": "56946e0ba89787a17e26f57c11a714c40799364bf2de1b89c9137f36285f728a",
+    "bot/src/frameworks/knowledge/personal-continuity-service.js": "46c9b4ab8a02c9ae441be1a1f67abf73b935a91a1cb56e685ed0fa705cbaa3ce",
+    "bot/src/frameworks/intent/contracts/knowledge-personal.js": "eb35c2ef2995ff764dff094c27e847768691966bf8de14e35c75bf762df1947e",
+    "bot/src/frameworks/narrative/contracts/knowledge-personal.js": "e31941ac2162731f3185834647b34d67e27256c6266148b3c8d2cff921a2a0d4",
+    "bot/src/frameworks/publication/contracts/knowledge-personal.js": "6d26a3f8915635ae22c0bf9861e9f20ab6c353b63208ef91661c241a39fc2cb1"
+  }
+}

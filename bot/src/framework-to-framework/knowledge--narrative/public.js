@@ -23,3 +23,7 @@ export function connectNarrativeKnowledgeReaders(){return narrativeKnowledgeRead
 import {narrativeKnowledgeMemory} from '../../frameworks/narrative/public.js';
 /** Bind only Knowledge's accepted-retention and disclosed-memory selection operations. */
 export function connectNarrativeKnowledgeMemory(){return narrativeKnowledgeMemory.bind({retainEstablishedNarrative,selectDisclosedNarrativeMemory});}
+
+import {narrativeKnowledgePersonal} from '../../frameworks/narrative/public.js';
+import {personalContinuityCharacter as personalCharacter} from '../../frameworks/knowledge/public.js';
+export function connectNarrativeKnowledgePersonal(){return narrativeKnowledgePersonal.bind({personalCharacter});}

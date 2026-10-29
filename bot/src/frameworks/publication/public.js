@@ -21,3 +21,5 @@ export {describeBlockedAction,blockedMutationRows} from './blocked-actions.js';
 export {publicationWorldDirectorReview} from './contracts/world-director-review.js';
 
 export {handoutPlayerView} from './handout-player-view.js';
+
+export {publicationKnowledgeDiscovery} from './contracts/knowledge-personal.js';

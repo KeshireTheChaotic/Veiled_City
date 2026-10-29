@@ -21,3 +21,7 @@ export function connectIntentKnowledgeMemory(){return intentKnowledgeMemory.bind
 import {intentKnowledgeSemanticProof} from '../../frameworks/intent/public.js';
 import {assertSemanticCandidateProof} from '../../frameworks/knowledge/public.js';
 export function connectIntentKnowledgeSemanticProof(){return intentKnowledgeSemanticProof.bind({assertSemanticCandidateProof});}
+
+import {intentKnowledgePersonal} from '../../frameworks/intent/public.js';
+import {personalContinuityCharacter as personalCharacter,proposeArcBeat} from '../../frameworks/knowledge/public.js';
+export function connectIntentKnowledgePersonal(){return intentKnowledgePersonal.bind({personalCharacter,proposeArcBeat});}

@@ -1,5 +1,6 @@
 /** Authenticated authored declarations are attempts/utterances, not completed facts or inferred PC consent. */
-import { personalCharacter } from "./personal-continuity.js";
+import {intentKnowledgePersonal} from './frameworks/intent/public.js';
+function personalCharacter(...args){return intentKnowledgePersonal.personalCharacter(...args);}
 import {intentWorldPrimitives} from './frameworks/intent/public.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 import {jsonKey32 as motivationKey} from './kernel/json-key32.js';

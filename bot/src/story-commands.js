@@ -14,7 +14,7 @@ import { authorWorldDraft, reviewWorldDraft } from './frameworks/world/public.js
 import { recordScenePresence, sceneView } from "./scene-continuity.js";
 import { manageGroup } from './frameworks/world/public.js';
 import { manageStrategy } from "./frameworks/npc/public.js";
-import { proposeArcBeat } from "./personal-continuity.js";
+import { proposeArcBeat } from "./frameworks/knowledge/public.js";
 import { manageMemoryCluster } from "./frameworks/knowledge/public.js";
 import { expansionStatus } from "./expansion-contracts.js";
 import { delegationOperation, stateRevision, projectPrivateEffect } from "./ai-intents.js";

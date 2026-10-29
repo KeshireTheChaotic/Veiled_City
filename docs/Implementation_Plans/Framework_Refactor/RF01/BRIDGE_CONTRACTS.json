@@ -1572,7 +1572,7 @@
         "occurrences": 13
       },
       "public_api": "bot/src/framework-to-framework/intent--knowledge/public.js",
-      "scope": "Existing Knowledge authored-turn binding remains qualified. C180/C181 add only Intent calls to Knowledge manageEvidence and inviteOrganization through the fixed intentKnowledgeActions port; these two effectful additions remain awaiting fresh C180/C181 boundary coverage. C182-C184 adds only the scoped-memory reference resolver port; the reverse observed direction remains open. C221 supplies only original assertSemanticCandidateProof through fixed Intent consumer; Knowledge retains exact native proposal authority checks."
+      "scope": "Existing Knowledge authored-turn binding remains qualified. C180/C181 add only Intent calls to Knowledge manageEvidence and inviteOrganization through the fixed intentKnowledgeActions port; these two effectful additions remain awaiting fresh C180/C181 boundary coverage. C182-C184 adds only the scoped-memory reference resolver port; the reverse observed direction remains open. C221 supplies only original assertSemanticCandidateProof through fixed Intent consumer; Knowledge retains exact native proposal authority checks. C222 supplies original personal continuity character/proposal functions through fixed Intent consumer."
     },
     {
       "pair": "intent--narrative",
@@ -2076,7 +2076,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/knowledge--narrative/public.js",
-      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C185 adds only Narrative retained/disclosed memory operations through its own consumer; other directions remain open."
+      "scope": "Existing-identity retrieval visibility only. Other Knowledge/Narrative lifecycle/memory/context directions remain open. C24 Narrative visibility source consumes original Knowledge and NPC proof; root scene context uses same closure, undefined historical alias corrected. C185 adds only Narrative retained/disclosed memory operations through its own consumer; other directions remain open. C222 supplies original personal continuity character reader through fixed Narrative consumer."
     },
     {
       "pair": "knowledge--npc",
@@ -2293,7 +2293,7 @@
         "occurrences": 7
       },
       "public_api": "bot/src/framework-to-framework/knowledge--publication/public.js",
-      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open. C220 supplies original handoutPlayerView through fixed Knowledge consumer; Publication retains exact projection/epistemic fallback."
+      "scope": "Only Publication outbox queue/ack of accepted Knowledge narrative-memory work; all other observed Knowledge/Publication dependencies remain open. C220 supplies original handoutPlayerView through fixed Knowledge consumer; Publication retains exact projection/epistemic fallback. C222 supplies original discoverPersonal through fixed Publication consumer; Knowledge retains owner/proxy/source and audience rules."
     },
     {
       "pair": "knowledge--session",

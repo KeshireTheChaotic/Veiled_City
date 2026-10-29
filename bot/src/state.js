@@ -30,7 +30,7 @@ import {prepareCampaignPvpAttack} from './pvp-attacks.js';
 import {reserveCampaignAttackNotices} from './native-publications.js';
 import { applyGeneratedPcEffect } from "./pc-effects.js";
 import { relationshipProvenance, artifactProvenance, inferredSource } from "./frameworks/knowledge/public.js";
-import {captureArcCandidate} from './personal-continuity.js';
+import {captureArcCandidate} from './frameworks/knowledge/public.js';
 import {ownerSemanticSource,semanticCandidateHash} from './frameworks/knowledge/public.js';
 import {applyOrdinaryEffects} from './ordinary-effects.js';
 import {isCharacterSourceSpan} from './source-communication.js';
