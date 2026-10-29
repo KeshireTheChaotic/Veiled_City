@@ -107,3 +107,5 @@ export {requireWorldFeature} from './feature-enabled.js';
 export {recordCityUpkeep} from './upkeep.js';
 
 export {validateMinorIdentity,reservedMinorNpcNames} from './minor-identity.js';
+
+export {draftMinorNpc,reviewMinorNpc} from './minor-npc-service.js';

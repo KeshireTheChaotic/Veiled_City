@@ -7,7 +7,7 @@ import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, schedul
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
   establishCommitment, proposeCityOpportunity, runInstitutionDirector } from './frameworks/world/public.js';
 import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./frameworks/world/public.js";
-import { draftMinorNpc, reviewMinorNpc } from "./city-depth.js";
+import { draftMinorNpc, reviewMinorNpc } from './frameworks/world/public.js';
 import { reviewOrganization } from "./frameworks/knowledge/public.js";
 
 export async function handleCityCommand(interaction,{db,gm}){

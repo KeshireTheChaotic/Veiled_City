@@ -1,0 +1,7 @@
+# C196 — COMPLETE bounded minor NPC service isolation
+
+Base4f39f813ccc7332c04424f7f10886bb4218e1831. Original draft/review bodies moved byte-identically after LF normalization to World minor-npc-service.js. Application keeps supplying original planner/content capabilities; actual World identity implementation binds existing native source slot on module load. Root city-depth removed; two exact root/caller records archived/retired without baseline expansion. Earlier upkeep and identity extracts remain shared, not copied.
+
+Fresh local ignored tests5/5 across two batches (3/3 at66.8627ms;2/2 at131.5987ms), exit0; no passing reruns. Prior draft avoids planner; post-await source retraction blocks persistence; concurrent draft wins; promotion audit rollback restores draft/profile/presence, retry/replay works; discard materializes nothing. Explicit planner/content/transaction fakes; no SQLite, live generation, full native source authentication or semantic narration qualification. Four changed/new production syntax pass; original body comparison pass; final RF04 gate875modules/0unowned/3566imports/2cycles/largest79/0active/errors. Local graph .reports/C196-final.json; hashes C196-HASHES.json.
+
+Schema/saved formats unchanged; provider0calls/0tokens/$0; Codex UNMEASURED. Unrelated dirty work preserved. RF04 incomplete; release unauthorized. Next exact slice: World world-authoring.js responsibility/caller review and native authoring scope preservation.

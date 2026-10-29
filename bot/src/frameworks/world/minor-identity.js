@@ -20,3 +20,6 @@ export function validateMinorIdentity(db,content,guildId,key,data){
     throw new Error("Named NPC identity already exists; generation cannot replace canon.");
 }
 export {reservedNames as reservedMinorNpcNames};
+
+import {worldCityDepthSource} from './contracts/root-sources.js';
+worldCityDepthSource.bind({validateMinorIdentity});

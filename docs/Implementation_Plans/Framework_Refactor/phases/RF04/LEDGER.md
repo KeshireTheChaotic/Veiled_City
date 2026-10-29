@@ -1087,3 +1087,7 @@ Original upkeep/actor bodies extracted unchanged to World; shared feature guard,
 ## C195 minor identity — COMPLETE
 
 Original catalog/validator bodies moved unchanged into World; root and World callers share same implementation, original source binding retained. Fresh3/3pass,syntax5/5 and RF04 ratchet875modules/zero active/errors pass. No root transition removed because minor planner/review remains. Feature ledger records read-only fixture limits. Next: minor NPC drafting/review integration. RF04 incomplete; release unauthorized.
+
+## C196 minor NPC service — COMPLETE
+
+Original draft/review service moved unchanged into World; root city-depth retired and existing identity provider now registered by World itself. Five fresh cases pass across distinct batches; syntax4/4 and RF04 gate875modules/zero active/errors pass. Two exact records retired; feature evidence records mocked storage/provider limits. Next: world-authoring responsibility/caller review. RF04 incomplete; release unauthorized.

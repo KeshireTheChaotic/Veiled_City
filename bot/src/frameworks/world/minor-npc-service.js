@@ -1,14 +1,9 @@
-/** Opt-in depth: established upkeep obligations without auto-spending; demand-driven minor NPC drafts without unearned knowledge. */
-import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource } from './frameworks/world/public.js';
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
-import {minorNpcSchema} from './frameworks/world/minor-npc-schema.js';
-export {minorNpcSchema};
-
-import {requireWorldFeature as flag} from './frameworks/world/public.js';
-export {recordCityUpkeep} from './frameworks/world/public.js';
-import {validateMinorIdentity,reservedMinorNpcNames as reservedNames} from './frameworks/world/public.js';
-export {validateMinorIdentity} from './frameworks/world/public.js';
+/** Original minor NPC draft/review policy; planner and content are supplied capabilities. */
+import {cityObject,cityKey,cityAudit} from './city-calendar.js';
+import {requireCitySource} from './city-source.js';
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
+import {requireWorldFeature as flag} from './feature-enabled.js';
+import {validateMinorIdentity,reservedMinorNpcNames as reservedNames} from './minor-identity.js';
 /** Generate one relevant extra. Nothing becomes a persistent NPC until an explicit promotion. */
 export async function draftMinorNpc({db,gm,content,guildId,input,actorId}){
   cityObject(input);flag(db,guildId,"minor_npcs");const key=cityKey(input.key);
@@ -50,6 +45,3 @@ export function reviewMinorNpc({db,content,guildId,input,actorId}){
     cityAudit(db,guildId,"minor_npc_review",before.record_key,before,after,actorId);return after;
   });
 }
-import {worldCityDepthSource} from './frameworks/world/public.js';
-// Provide this module's original minor identity validator to the fixed World slot; no other authority is granted.
-worldCityDepthSource.bind({validateMinorIdentity});
