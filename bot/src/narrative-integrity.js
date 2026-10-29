@@ -5,7 +5,7 @@ import { assertPvpOutput } from "./pvp-authorship.js";
 import { candidateNarrative,canQuarantineDisclosure,unattributedChoiceText } from "./pvp-output.js";
 import {disclosureFailureReason} from './disclosure-authority.js';
 import {NARRATIVE_CONTRACT} from './frameworks/narrative/narrative-integrity-contract.js';
-import {materialClaimSchema} from './frameworks/narrative/material-claim-schema.js';
+import {materialClaimSchema,claimFields,claimProperties} from './frameworks/narrative/material-claim-schema.js';
 export {NARRATIVE_CONTRACT,materialClaimSchema};
 function deny(category,claim,source="",reasonCode=null){
   const error=new Error(`Narrative integrity rejected ${category}; revise to an explicitly uncommitted intent/uncertainty or use established authorized state.`);
