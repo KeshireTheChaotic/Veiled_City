@@ -372,6 +372,17 @@ export function parseStructuredJsonText(text,{label="structured response"}={}){
   }
 }
 
+/** Final-attempt instructions for contract failures that ended live turns on 2026-10-28 (optional NPC proposals,
+ * unruled outcomes, advisory shape); null leaves other errors to the existing recovery rules. */
+export function contractRecoveryInstructions(error){
+  return {
+    GM_ARBITRATION:["Omit unified_arbitration npc_intents (and their decisions) unless the NPC acts on an objective_ref and source_refs listed for that NPC in scoped context and targets only existing characters, NPCs or locations.",
+      "Keep decisions for the player's own accepted intents unchanged."],
+    CONSEQUENCE_RECONCILIATION:["Every immediate interact, search or move needs native state: roll_required with native_adjudication when stakes are uncertain, a gm_ruling with disposition narrative_no_roll for a no-roll outcome, or blocked/needs_clarification with a reason."],
+    DECISION_ADVISORY:["decision_advisory must match the enabled contract: mode roll only with check action/reaction plus nonempty uncertainty and consequence; every other mode uses check '' and narrate uses empty uncertainty."]
+  }[error?.code]||null;
+}
+
 export class GMService{
   constructor({db,content,config,ai=null,srd=null,metrics=operationalMetrics}){
     this.db=db; this.content=content; this.config=config;
@@ -961,11 +972,17 @@ STRUCTURED OUTPUT RETRY: The previous response was malformed or incomplete. Retu
         validateDecisionAdvisory(this.db,guildId,result);
         return result;
       }catch(retryError){
-        if(!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT","POST_TURN_REVIEW","PLAYER_INTENT"].includes(retryError.code)
+        const contractRecovery=contractRecoveryInstructions(retryError);
+        if(!contractRecovery&&!["AUTONOMOUS_WORLD","NARRATIVE_CONTEXT","POST_TURN_REVIEW","PLAYER_INTENT"].includes(retryError.code)
           &&!(retryError.code==="NARRATIVE_INTEGRITY"&&retryError.diagnostic?.category==="canon"))throw retryError;
         // Repeated optional context/world/review defects must not make the conversational turn disappear.
         // Regenerate under the same turn deadline with a defect-specific fail-closed contract.
-        const safeRecovery=retryError.code==="NARRATIVE_INTEGRITY"&&retryError.diagnostic?.category==="canon"?[
+        const safeRecovery=contractRecovery?[
+          `CONTRACT RECOVERY: ${String(retryError.message||retryError).slice(0,500)} Diagnostic: ${JSON.stringify(retryError.diagnostic||{}).slice(0,400)}.`,
+          "Return a complete replacement turn that keeps the player's actions, narration intent and every independently valid part.",
+          ...contractRecovery,
+          "Never invent dice, PC consent, access or outcomes to satisfy a validator."
+        ].join(" "):retryError.code==="NARRATIVE_INTEGRITY"&&retryError.diagnostic?.category==="canon"?[
           `CANON CLAIM RECOVERY: ${String(retryError.message||retryError).slice(0,500)}. A staged event:<index> is not an established canon key.`,
           "Return a complete replacement turn with the original source-backed player_intents; preserve independently valid mundane location/NPC creation, scene_actions and responsive narration.",
           "Remove invalid action=canon annotations and canon events for ordinary storefronts, signs, streets and background NPCs. Only established exact ledger keys and matching values qualify as committed canon.",
