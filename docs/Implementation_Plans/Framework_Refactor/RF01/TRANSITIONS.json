@@ -91,17 +91,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "57c6e53aebef3e50e6c531a18403543f8d9ff9eb5b4d6872ec10f99b2b4ed362",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/assembly-readiness.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "523c3a685261c52bce4b0dc71b1a4b773001fbf8ed32e9a4183238a4bfaf736f",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/assembly-state.js",
@@ -2318,17 +2307,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "241656707ebf1d55740dddd7437ee28474587d249cc6de96661ab1f8d260836e",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/session-opening-attendance.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "ba61f0b77ec82677a78063972586ee30bfa12e26a0b2cd050356be5dc1f62dca",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/session-opening.js",
@@ -3643,20 +3621,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "00f30243a5aea5f94236f27af728028537df58e502ade94b3a450d3d3e804afb",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/session-opening-attendance.js",
-      "kind": "static",
-      "specifier": "./session-opening-attendance.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "e5287346b89cee15e273fb1de342d981aac14e221383c56a0f168d521b1fa410",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/commands.js",
@@ -3929,20 +3893,6 @@
       "to": "bot/src/lifecycle-output.js",
       "kind": "static",
       "specifier": "./lifecycle-output.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "0de71e70d0c729c9aa6ac1df2ffe12e96d0de9323c8b85c07cca0aca83b375e7",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/assembly-readiness.js",
-      "kind": "static",
-      "specifier": "./assembly-readiness.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

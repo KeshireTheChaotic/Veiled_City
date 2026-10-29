@@ -25,7 +25,10 @@ import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";
 import {normalizeNarrativeMarkdown,narrativeRelativePath} from './frameworks/character/public.js';
 import {createNarrativeExportPackage} from './character-narrative.js';
-import { buildSessionRosterReport, chunkRosterReport } from "./frameworks/session/public.js";
+import {
+  buildSessionRosterReport, chunkRosterReport, assemblyReadiness,
+  registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity
+} from "./frameworks/session/public.js";
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent,assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan,
@@ -52,7 +55,6 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
-import { registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity } from "./session-opening-attendance.js";
 import {scheduleSessionOpening} from './session-opening.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
@@ -76,7 +78,6 @@ import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
 import {lifecycleHash} from './lifecycle-output.js';
-import {assemblyReadiness} from './assembly-readiness.js';
 import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
 import {turnLatency} from './turn-latency.js';
 import { pendingPvpFear } from "./pvp-fear-gate.js";

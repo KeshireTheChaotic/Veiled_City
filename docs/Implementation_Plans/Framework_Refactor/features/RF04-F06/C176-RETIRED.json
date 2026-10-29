@@ -1,0 +1,32 @@
+{
+  "feature": "RF04-F04-C176",
+  "original_manifest_sha256": "06E9301691F80CB764B7B04458306B42FCB7DE7DDBC8D3B130C6D654B6079FC8",
+  "baseline_sha256": "c06895366ededa396d77132fea8d91ace036c0f369bcf880ab1a898a1a1370d3",
+  "retired": [
+    {
+      "id": "241656707ebf1d55740dddd7437ee28474587d249cc6de96661ab1f8d260836e",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/session-opening-attendance.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "00f30243a5aea5f94236f27af728028537df58e502ade94b3a450d3d3e804afb",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/session-opening-attendance.js",
+      "kind": "static",
+      "specifier": "./session-opening-attendance.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

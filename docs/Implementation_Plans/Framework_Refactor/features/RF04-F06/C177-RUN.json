@@ -1,0 +1,37 @@
+{
+  "phase": "RF04-F04-C177",
+  "status": "qualified_changed_code_tests_and_RF04; RF05 ratchet remains failing",
+  "checkout": "8bd7667708cfa7eb38a9a21eec8fa30b9801075a",
+  "runAtLocal": "2026-10-29 America/Chicago; final batch completed before 07:49:54 -05",
+  "sharedBatch": {
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f04-c176.test.mjs tests/ai-gm-2026-10/rf04-f04-c177.test.mjs",
+    "cwd": "bot/",
+    "finalExitCode": 0,
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 294.3119,
+    "note": "Final fully reviewed batch; both new tests ran together against the frozen C176/C177 files."
+  },
+  "diagnosticAttemptsNotQualification": [
+    {"attempt": 1, "command": "same combined command", "exitCode": 1, "result": "C177 child script contained an invalid regex literal."},
+    {"attempt": 2, "command": "same combined command", "exitCode": 1, "result": "C177 template interpolation corrupted regex escapes."},
+    {"attempt": 3, "command": "same combined command", "exitCode": 1, "result": "C177 retained a malformed regex assertion."},
+    {"attempt": 4, "command": "targeted C176 case only", "exitCode": 0, "result": "C177 was not run. This attempt is diagnostic because the C176 draft directly imported unchanged contract modules."}
+  ],
+  "syntax": {"command": "node --check for each of the four changed production JS files and both new test files", "exitCode": 0, "files": 6, "passed": 6},
+  "architecture": {
+    "RF04": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04", "exitCode": 0, "pass": true, "sourceModules": 843, "unowned": 0, "importOccurrences": 3461, "internalImportOccurrences": 3277, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1229, "acceptedLegacyOccurrences": 1229, "activeViolationGroups": 0, "transitionErrors": 0},
+    "RF05": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05", "exitCode": 1, "pass": false, "sourceModules": 843, "unowned": 0, "importOccurrences": 3461, "internalImportOccurrences": 3277, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1229, "acceptedLegacyOccurrences": 1172, "activeViolationGroups": 57, "transitionErrors": 57, "firstErrorExamples": ["LEGACY_MODULE_LOCATION bot/src/action-continuation.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-context.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-state.js owner=session", "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js owner=world", "LEGACY_MODULE_LOCATION bot/src/character-observation.js owner=character"]}
+  },
+  "hashes": {
+    "test": "4202480C76F514F28E2946032858BA40397E774F8BDFCAE1ECF9CB1B057A54CB",
+    "readiness": "E72D393199878023587144C9D85C08532042ACC36F2CB9AF46FB77A489C51307",
+    "public": "02440FFB15588608D85B7D7B42E948BB61A210CE2BC60AB67F0DE76202BF822F",
+    "commands": "F810BD96FA08E97043E50343704231AD4B3F098D0ABC43415D68D52FDAC595BA",
+    "transitions": "5115CB46C388535F80AEEEE71171C762DD505C2ECD4219553AA0B2EA9FB87065",
+    "retiredRecords": "F4EEBFD96D13F565F4C5C6263B81D6460B81477BF0963F5ADCECC8B14FE3901A"
+  }
+}

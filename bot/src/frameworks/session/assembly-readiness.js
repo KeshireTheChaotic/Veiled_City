@@ -1,7 +1,8 @@
 /** GM status projection only; attendance and delivered opportunities never establish fictional arrival. */
-import {assemblyDeliverySummary} from './assembly-state.js';
-import {assemblyPlanFreshness} from './assembly-context.js';
-import {inspectSessionOpening} from './session-opening.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource} from './contracts/opening-sources.js';
+const {assemblyDeliverySummary}=sessionAssemblyStateSource;
+const {assemblyPlanFreshness}=sessionAssemblyContextSource;
+const {inspectSessionOpening}=sessionOpeningSource;
 export function assemblyReadiness(db,session){
   const plan=db.getAssemblyPlan(session.id)||{},states=Object.values(plan.delivery_state||{});
   const slots=assemblyDeliverySummary(db,session.guild_id,session),native=slots.some(s=>s.job);
