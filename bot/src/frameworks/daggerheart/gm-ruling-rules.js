@@ -1,6 +1,7 @@
 /** Native source-qualified ordinary GM ruling and pending owner-visible request proof. */
 import {createHash} from 'node:crypto';
 import {resolveRuleReferences} from './rule-reference-catalog.js';
+import {StateConflictError} from '../../kernel/errors.js';
 export function createGmRulingRules({capabilities}){
 const {adjudicateAcceptedIntent,selectRuleBasis,consentAction,historicalActionSource,conversationPrincipal,currentScene,scenePresence,isPvpIntent,assertPcCanAct,nativeDeviceUseIssue,validateGmRulingProposal}=capabilities||{};
 if([adjudicateAcceptedIntent,selectRuleBasis,consentAction,historicalActionSource,conversationPrincipal,currentScene,scenePresence,isPvpIntent,assertPcCanAct,nativeDeviceUseIssue,validateGmRulingProposal].some(fn=>typeof fn!=='function'))throw new TypeError('Native GM ruling capabilities required');
@@ -85,7 +86,7 @@ function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
     const contextValid=evidence.length>0&&evidence.every(event=>event===nativeContext||eligibleContext(event,p.scene,p.pc.data.location,scope));
     const contextHash=contextValid?hash(evidence):null;
     if(prior&&prior.data.context_hash&&(prior.data.context_hash!==contextHash||prior.data.location!==p.pc.data.location))
-      throw new Error("Ruling context/evidence changed; stale authority cannot be replayed.");
+      throw new StateConflictError("Ruling context/evidence changed; stale authority cannot be replayed.");
     let review=null;
     if(db.getCityCalendar(guild).flags.gm_discretion!==true)review="GM_DISCRETION_DISABLED";
     else if(db.getCityRecord(guild,"gm_authority","campaign")?.data.gm_authority_mode==="manual")review="MANUAL_GM_AUTHORITY";
