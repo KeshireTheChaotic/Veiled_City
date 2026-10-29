@@ -52,3 +52,5 @@ export {knowledgeHistoryReconciliationSource} from './contracts/history-reconcil
 export {knowledgeOrganizationSource,knowledgeEvidenceCustodySource} from './contracts/community-evidence-sources.js';
 
 export {knowledgePublicationHandout} from './contracts/publication-handout.js';
+
+export {semanticCandidateOperations,semanticCandidateHash,ownerSemanticSource,assertSemanticCandidateProof,assertCanonProposalProof} from './semantic-candidate-service.js';

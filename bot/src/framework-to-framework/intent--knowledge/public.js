@@ -17,3 +17,7 @@ export function connectIntentKnowledgeActions(){return intentKnowledgeActions.bi
 
 /** Bind only Knowledge's audience-scoped memory reference resolver. */
 export function connectIntentKnowledgeMemory(){return intentKnowledgeMemory.bind({resolveScopedMemoryReference});}
+
+import {intentKnowledgeSemanticProof} from '../../frameworks/intent/public.js';
+import {assertSemanticCandidateProof} from '../../frameworks/knowledge/public.js';
+export function connectIntentKnowledgeSemanticProof(){return intentKnowledgeSemanticProof.bind({assertSemanticCandidateProof});}

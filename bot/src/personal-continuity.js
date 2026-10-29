@@ -8,7 +8,7 @@ import {organizationInbox,evidenceView} from './frameworks/knowledge/public.js';
 import {evidenceType,activeEvidence} from './epistemic.js';
 import {knowledgeSessionScene} from './frameworks/knowledge/public.js';
 function conversationPrincipal(...args){return knowledgeSessionScene.conversationPrincipal(...args);}
-import {ownerSemanticSource,assertSemanticCandidateProof} from './semantic-candidate-source.js';
+import {ownerSemanticSource,assertSemanticCandidateProof} from './frameworks/knowledge/public.js';
 import {createPersonalContinuity} from './frameworks/knowledge/public.js';
 let personalRules;
 function personal(){return personalRules??=createPersonalContinuity({cityObject:(...args)=>cityObject(...args),cityKey:(...args)=>cityKey(...args),cityInteger:(...args)=>cityInteger(...args),cityAudit:(...args)=>cityAudit(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),requireCitySource:(...args)=>requireCitySource(...args),handoutPlayerView:(...args)=>handoutPlayerView(...args),organizationInbox:(...args)=>organizationInbox(...args),evidenceView:(...args)=>evidenceView(...args),evidenceType:(...args)=>evidenceType(...args),activeEvidence:(...args)=>activeEvidence(...args),conversationPrincipal:(...args)=>conversationPrincipal(...args),ownerSemanticSource:(...args)=>ownerSemanticSource(...args),assertSemanticCandidateProof:(...args)=>assertSemanticCandidateProof(...args)});}

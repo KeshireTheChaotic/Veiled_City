@@ -30,7 +30,8 @@ import { reviewRollDeclaration } from "./roll-declaration-review.js";
 import {intentSessionEntry} from "./frameworks/intent/public.js";
 function mundaneEntryImpact(...args){return intentSessionEntry.mundaneEntryImpact(...args);}
 function resolveMundaneEntry(...args){return intentSessionEntry.resolveMundaneEntry(...args);}
-import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
+import {intentKnowledgeSemanticProof} from './frameworks/intent/public.js';
+function assertSemanticCandidateProof(...args){return intentKnowledgeSemanticProof.assertSemanticCandidateProof(...args);}
 import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}

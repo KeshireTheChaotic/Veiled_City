@@ -1572,7 +1572,7 @@
         "occurrences": 13
       },
       "public_api": "bot/src/framework-to-framework/intent--knowledge/public.js",
-      "scope": "Existing Knowledge authored-turn binding remains qualified. C180/C181 add only Intent calls to Knowledge manageEvidence and inviteOrganization through the fixed intentKnowledgeActions port; these two effectful additions remain awaiting fresh C180/C181 boundary coverage. C182-C184 adds only the scoped-memory reference resolver port; the reverse observed direction remains open."
+      "scope": "Existing Knowledge authored-turn binding remains qualified. C180/C181 add only Intent calls to Knowledge manageEvidence and inviteOrganization through the fixed intentKnowledgeActions port; these two effectful additions remain awaiting fresh C180/C181 boundary coverage. C182-C184 adds only the scoped-memory reference resolver port; the reverse observed direction remains open. C221 supplies only original assertSemanticCandidateProof through fixed Intent consumer; Knowledge retains exact native proposal authority checks."
     },
     {
       "pair": "intent--narrative",

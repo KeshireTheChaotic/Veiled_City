@@ -34,3 +34,5 @@ export {intentSessionEntry} from './contracts/session-entry.js';
 export {intentWorldInputKey} from './contracts/world-input-key.js';
 
 export {intentWorldProjects} from './contracts/world-projects.js';
+
+export {intentKnowledgeSemanticProof} from './contracts/knowledge-semantic-proof.js';

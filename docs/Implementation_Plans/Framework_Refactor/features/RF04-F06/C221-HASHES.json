@@ -1,0 +1,15 @@
+{
+  "feature": "RF04-C221",
+  "sha256": {
+    "bot/src/ai-intents.js": "c8e446f481c07d4ddb01a40e1da61f88785123cc9248e7f3847061d055f505bb",
+    "bot/src/application/composition/intent-knowledge.js": "eee13b3d270eabae56320cfd6dfd2a880b3aca65800fb810fa82582330dcd2d7",
+    "bot/src/framework-to-framework/intent--knowledge/public.js": "59c12ffa5e1e9e9aca3a67593786f824f587632fec8b126ec1d01bae3e01f2a3",
+    "bot/src/frameworks/intent/public.js": "8c1013b39d57d66373d7a327d36dd94e0ef227ad2f3b1e0b7be800ab99ec582d",
+    "bot/src/frameworks/knowledge/public.js": "c0c7b76ffba70946d1f235edad8b7ac8ef8a1037c1dff989464669dc898e1709",
+    "bot/src/personal-continuity.js": "7b639cb091e60e8894baf2d0c1f476da0c556f939e9a9f84ba5b749b937377a2",
+    "bot/src/semantic-candidate-source.js": "cfc8be45ac95a1853be26b9ad03bca9fca081d2581e1449c678fc66bfaf2ef82",
+    "bot/src/state.js": "379173a3a1f77c1cd5900685799cbf44f7641937bd7df2b6ce16c9b19c06cdbd",
+    "bot/src/frameworks/knowledge/semantic-candidate-service.js": "7437bd28497a73aa88a1608c3bddae7197bd7043f31f6c49a368f65df94892e3",
+    "bot/src/frameworks/intent/contracts/knowledge-semantic-proof.js": "5a3b8abe027480fd38358e599968ab56690239a03a2360876de75aaab2a4424c"
+  }
+}
