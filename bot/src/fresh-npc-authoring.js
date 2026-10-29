@@ -2,7 +2,8 @@
 import {createHash} from 'node:crypto';
 import {gmWorldScope} from './gm-world-scope.js';
 import {indexWorldEvent} from './city-calendar.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {portrayalPacket} from './portrayal.js';
 import {freshNpcFocuses as focuses} from './gm-fiction-schema.js';
 export {freshNpcRequestSchema,freshNpcResponseSchema} from './gm-fiction-schema.js';

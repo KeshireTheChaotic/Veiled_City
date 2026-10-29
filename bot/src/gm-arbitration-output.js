@@ -5,7 +5,8 @@ import {formatRollRequest} from './roll-requests.js';
 import {incomingRollProjection,authorizeIncomingOffer,inspectVolley} from './pc-incoming.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {intentSessionPrincipal} from './frameworks/intent/public.js';
+function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {EncounterLibrary} from './encounter.js';
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';

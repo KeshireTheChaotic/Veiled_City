@@ -38,3 +38,5 @@ export {narrativeKnowledgeReaders} from './contracts/knowledge-readers.js';
 export {narrativeOpeningCohort} from './contracts/opening-cohort.js';
 export {narrativeWorldEncounters} from './contracts/world-encounters.js';
 export {narrativeWorldSimulation} from './contracts/world-simulation.js';
+
+export {narrativeSessionPrincipal} from './contracts/session-principal.js';

@@ -2,7 +2,8 @@
 import { createHash } from "node:crypto";
 import {publicationOpeningOutput} from './frameworks/publication/public.js';
 import { currentScene } from "./scene-continuity.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {publicationSessionPrincipal} from './frameworks/publication/public.js';
+function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
 import { observationQueries, ambientWorldQueries, renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription } from "./character-observation.js";
 import { activeEvidence, objectiveEvidence,evidenceType } from "./epistemic.js";

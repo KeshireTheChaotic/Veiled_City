@@ -1,4 +1,4 @@
-import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations,initializeNpcStrategy,initializeNpcEvidenceProjection,initializeNpcCognition,initializeNpcConversations,initializeWorldCandidateContext,initializeWorldNpcOpportunity,initializeNativeNpcEvidence,initializeOperationsNpcReview,initializeNativeEnvironmentAudience,initializeNativeWorldEvidence,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals,initializeKnowledgeSession,initializeCharacterSession,initializePersonalContinuity,initializeSessionIntent,initializeOperationsWorldOverview,initializeWorldNativeEncounter,initializePersistenceKnowledge,initializePersistenceWorld,initializeNarrativePersistence,initializePublicationSession,initializeIntentKnowledge,initializePublicationWorld,initializeKnowledgeOperations,initializePublicationKnowledgeNarrativeMemory} from './application/composition/public.js';
+import {initializeDiscordSessionPrincipal,initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations,initializeNpcStrategy,initializeNpcEvidenceProjection,initializeNpcCognition,initializeNpcConversations,initializeWorldCandidateContext,initializeWorldNpcOpportunity,initializeNativeNpcEvidence,initializeOperationsNpcReview,initializeNativeEnvironmentAudience,initializeNativeWorldEvidence,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals,initializeKnowledgeSession,initializeCharacterSession,initializePersonalContinuity,initializeSessionIntent,initializeOperationsWorldOverview,initializeWorldNativeEncounter,initializePersistenceKnowledge,initializePersistenceWorld,initializeNarrativePersistence,initializePublicationSession,initializeIntentKnowledge,initializePublicationWorld,initializeKnowledgeOperations,initializePublicationKnowledgeNarrativeMemory} from './application/composition/public.js';
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
@@ -11,7 +11,7 @@ import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
 import { captureContextSource } from "./narrative-context.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import { conversationPrincipal } from "./frameworks/session/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput,worldInputKey } from "./autonomous-world.js";
@@ -41,6 +41,7 @@ import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {runSessionOpening} from './application/workflows/public.js';
 
+initializeDiscordSessionPrincipal();
 initializeWorldActorControl();
 initializeWorldExecution();
 initializeWorldOwnerConsent();

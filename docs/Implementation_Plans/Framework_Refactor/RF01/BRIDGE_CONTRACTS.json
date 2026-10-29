@@ -1386,43 +1386,45 @@
         "discord",
         "session"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "discord",
           "to": "session",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Discord-owned discordSessionPrincipal calls Session conversationPrincipal through the new discord--session pair and connectDiscordSessionPrincipal."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/pvp-menu.js",
-          "to": "bot/src/conversation-principal.js",
-          "line": 5,
+          "from": "bot/src/application/composition/discord-session.js",
+          "to": "bot/src/framework-to-framework/discord--session/public.js",
+          "type": "import",
+          "line": 1
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--session/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 2,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--session/public.js",
+          "to": "bot/src/frameworks/session/public.js",
+          "line": 3,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
-      "observed_directions": [
-        {
-          "from": "discord",
-          "to": "session",
-          "import_occurrences": 2,
-          "injected_calls": 0
-        }
+      "validation": "Fixed consumer-owned function port fails closed before composition and rejects provider replacement; Session retains principal rules. Adapter contains no business rules.",
+      "lifecycle": "Application composition calls initializeDiscordSessionPrincipal before runtime services; binding performs no database read or state write.",
+      "adoption_feature": "C187",
+      "consumers": [
+        "bot/src/application/composition/discord-session.js"
       ],
-      "evidence_reference": {
-        "file": "docs/Implementation_Plans/Framework_Refactor/DEPENDENCY_GRAPH.json",
-        "pair": "discord--session",
-        "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
-        "occurrences": 2
-      }
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
+      ],
+      "public_api": "bot/src/framework-to-framework/discord--session/public.js",
+      "scope": "One fixed Discord-owned conversation principal consumer slot; Session retains conversation identity and hashing rules."
     },
     {
       "pair": "discord--world",
@@ -1834,7 +1836,7 @@
         {
           "from": "intent",
           "to": "session",
-          "contract": "Fixed Session-owned sessionIntent port: exact original Intent buildActionPlan, transitionAction, signalActionContinuation and the original player-language interpretAuthoredText/captureDeclaration via Intent's intentPlayerLanguage slot; arguments/results/errors unchanged; immutable bootstrap identity."
+          "contract": "Fixed Session-owned sessionIntent port: exact original Intent buildActionPlan, transitionAction, signalActionContinuation and the original player-language interpretAuthoredText/captureDeclaration via Intent's intentPlayerLanguage slot; arguments/results/errors unchanged; immutable bootstrap identity. C187 additionally binds the original Session conversationPrincipal through Intent intentSessionPrincipal and connectIntentSessionPrincipal."
         },
         {
           "from": "session",
@@ -1848,6 +1850,18 @@
           "to": "bot/src/framework-to-framework/intent--session/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--session/public.js",
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 15,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--session/public.js",
+          "to": "bot/src/frameworks/session/public.js",
+          "line": 16,
+          "type": "import"
         }
       ],
       "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
@@ -1858,7 +1872,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf04-f05-c97.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c52.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c52.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2617,6 +2632,11 @@
           "from": "session",
           "to": "narrative",
           "contract": "authorAssemblyScene(guildId, sessionId, scope, options) -> original result/error; narrativeSourceVisible(...) and validatePvpAgreement(...) -> original Narrative result/error through the Session-owned sessionNarrativeSources port bound at bootstrap by initializePvpAgreements (RF04-F05 C116)."
+        },
+        {
+          "from": "narrative",
+          "to": "session",
+          "contract": "Narrative-owned narrativeSessionPrincipal calls Session conversationPrincipal through the existing Narrative–Session pair and connectNarrativeSessionPrincipal."
         }
       ],
       "source_evidence": [
@@ -2625,13 +2645,25 @@
           "to": "bot/src/scene-fiction-context.js",
           "line": 10,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/narrative--session/public.js",
+          "to": "bot/src/frameworks/narrative/public.js",
+          "line": 23,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/narrative--session/public.js",
+          "to": "bot/src/frameworks/session/public.js",
+          "line": 24,
+          "type": "import"
         }
       ],
       "validation": "Validate injected callable presence only; preserve source/audience/principal/revision/assertCurrent/receipt fields, Promise/result/error identity; no authority expansion or retries. Native runner keeps policy and acknowledgement ownership.",
       "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
       "adoption_feature": "RF04-F04",
       "public_api": "bot/src/framework-to-framework/narrative--session/public.js",
-      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status.",
+      "scope": "C186 adds Narrative's assemblyWriterBrief call through the existing Narrative-owned narrativeBridgeSessionSources port and Narrative–Session adapter; the existing Session writer brief remains authoritative. Other Narrative–Session operations retain their current contract and adoption status. C187 adds Narrative conversation principal reads through narrativeSessionPrincipal; Session remains authoritative.",
       "consumers": [
         "bot/src/application/composition/create-opening-services.js",
         "bot/src/application/composition/pvp-agreements.js"
@@ -2639,7 +2671,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3365,7 +3398,7 @@
         {
           "from": "publication",
           "to": "session",
-          "contract": "Remaining observed dependency only; exact port remains with accountable migration."
+          "contract": "Publication-owned publicationSessionPrincipal calls Session conversationPrincipal through the existing Publication–Session pair and connectPublicationSessionPrincipal; other dependencies remain migration obligations."
         },
         {
           "from": "session",
@@ -3379,6 +3412,18 @@
           "to": "bot/src/framework-to-framework/publication--session/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/publication--session/public.js",
+          "to": "bot/src/frameworks/publication/public.js",
+          "line": 7,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/publication--session/public.js",
+          "to": "bot/src/frameworks/session/public.js",
+          "line": 8,
+          "type": "import"
         }
       ],
       "validation": "Consumer-owned port fails closed before composition and forbids replacement; the providing framework keeps every rule. Adapter contains no business rules.",
@@ -3391,7 +3436,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f06-c51.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f06-c55.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f06-c56.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3414,7 +3460,7 @@
         "occurrences": 18
       },
       "public_api": "bot/src/framework-to-framework/publication--session/public.js",
-      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations."
+      "scope": "Opening entry and assembly coverage evidence readers, plus C186's assemblyHookSelection call through the existing Publication-owned publicationSessionEvidence port and Publication–Session adapter; Session retains hook selection rules. All other Publication/Session dependencies remain migration obligations. C187 adds Publication conversation principal reads through publicationSessionPrincipal; Session remains authoritative."
     },
     {
       "pair": "publication--world",

@@ -1,6 +1,7 @@
 /** Native scoped discovery formatting and delivery revalidation. */
 import { discoverPersonal } from "./personal-continuity.js";
-import {conversationPrincipal} from './conversation-principal.js';
+import {publicationSessionPrincipal} from './frameworks/publication/public.js';
+function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import {sendPlayerPrivate} from './publishing.js';
 export function formatDiscovery(db,guild,user,packet){
   if(packet.unknown) return "There was no matching knowledge retrieved within your current role's authorized sources and search limits. Unknown is not disproven. No new discovery or world action occurred.";

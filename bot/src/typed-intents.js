@@ -1,6 +1,7 @@
 /** Model-semantic, authenticated owner intents; no action-verb whitelist and no model-granted consequences. */
 import { createHash } from 'node:crypto';
-import { conversationPrincipal } from './conversation-principal.js';
+import {intentSessionPrincipal} from './frameworks/intent/public.js';
+function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from './scene-continuity.js';
 import { worldInputKey } from './autonomous-world.js';
 import {stateRevision} from './kernel/state-revision.js';

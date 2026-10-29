@@ -1,7 +1,8 @@
 /** Read compatibility for complete native nonmaterial renderings, not a classifier for arbitrary prose. */
 import {createHash} from 'node:crypto';
 import {currentScene} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {indexWorldEvent} from './city-calendar.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const questions=["What kind of work would you like to look for?",

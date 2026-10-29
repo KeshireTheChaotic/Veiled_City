@@ -3,7 +3,8 @@ import {jsonHash} from './kernel/json-hash.js';
 import {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
 export {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
 import {currentScene,scenePresence,sceneAccess} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {factVisibleTo} from './disclosure-authority.js';
 import {objectiveEvidence} from './epistemic.js';
 import {protectedPvpScope} from './pvp-output.js';

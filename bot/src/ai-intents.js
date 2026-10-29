@@ -26,7 +26,8 @@ import { reviewRollDeclaration } from "./roll-declaration-review.js";
 import { mundaneEntryImpact, resolveMundaneEntry } from "./scene-entry-native.js";
 import {assertSemanticCandidateProof} from './semantic-candidate-source.js';
 import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
-import { conversationPrincipal } from "./conversation-principal.js";
+import {intentSessionPrincipal} from './frameworks/intent/public.js';
+function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import {delegationCatalog} from './delegation-catalog.js';
 import {activateDelegatedEncounter,inspectNativeEncounterActivation} from './native-encounter-activation.js';
 import {intentWorldOperations} from './frameworks/intent/public.js';

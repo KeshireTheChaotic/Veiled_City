@@ -1,6 +1,7 @@
 /** Native source/target task sidecar. Coverage is never consent, canon or effect authority. */
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {renderObservation} from './character-observation.js';
 
 export function narrativeTasks(db,guild,result,scope,sourceRef){

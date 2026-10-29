@@ -19,3 +19,8 @@ import {narrativeOpeningCohort} from '../../frameworks/narrative/public.js';
 import {inspectOpeningCohortSource,openingEntryProjection} from '../../frameworks/session/public.js';
 /** Pass Session's original opening cohort source inspection to Narrative's fixed consumer. */
 export function connectNarrativeOpeningCohort(){return narrativeOpeningCohort.bind({inspectOpeningCohortSource,openingEntryProjection});}
+
+import {narrativeSessionPrincipal} from '../../frameworks/narrative/public.js';
+import {conversationPrincipal} from '../../frameworks/session/public.js';
+/** Bind the original Session reader without evaluating player state. */
+export function connectNarrativeSessionPrincipal(){return narrativeSessionPrincipal.bind({conversationPrincipal});}

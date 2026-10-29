@@ -1,5 +1,6 @@
 /** Source-backed semantic candidates from the existing GM call. Native consequences remain separate. */
-import { conversationPrincipal } from "./conversation-principal.js";
+import {intentSessionPrincipal} from './frameworks/intent/public.js';
+function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { contextSourceKey } from "./narrative-context.js";
 import { interpretAuthoredText, captureDeclaration } from "./player-language.js";
 import { prepareSceneEntry } from "./scene-entry.js";

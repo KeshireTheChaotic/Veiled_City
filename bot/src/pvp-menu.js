@@ -2,7 +2,8 @@
  * human declarations own intent; native receipts own outcomes. No UI flag grants GM authority. */
 import {createHash,randomUUID} from 'node:crypto';
 import {ActionRowBuilder,ButtonBuilder,ButtonStyle,StringSelectMenuBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,AttachmentBuilder} from 'discord.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {discordSessionPrincipal} from './frameworks/discord/public.js';
+function conversationPrincipal(...args){return discordSessionPrincipal.conversationPrincipal(...args);}
 import {currentScene} from './scene-continuity.js';
 import {indexWorldEvent} from './city-calendar.js';
 import {consentAction} from './action-consent.js';

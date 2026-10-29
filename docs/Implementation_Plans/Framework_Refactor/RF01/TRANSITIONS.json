@@ -355,17 +355,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "0fc04e071159e0c0b93cd44aa24be93d7e8b8c106fdcad8d332e25806fe817d0",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/conversation-principal.js",
-      "owner": "session",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F04",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "42357b73f51411121795be68b34a959e7dcf2483987db68d6d0f95c099183a20",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/db.js",
@@ -2768,20 +2757,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ff0b2e2556843f894c7aaa46773fcc89e9cf40395508b52df0b47085148e58a7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ai-intents.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "22d0a0a461d123b5e9f0c001f9aa1383ef6ceffe91115f045d3b6a3e03868a7c",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/ai-intents.js",
@@ -2894,20 +2869,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "4ca0c0bcf8012e22d8c63af6aea18c384e8618f28d0edf330e634f9eb6e53165",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/authored-candidates.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "1243c0a5a5f83c2778bcf7fad5dbcb509ea0305f9d58fe43618406bb4c128b11",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/authored-candidates.js",
@@ -2956,20 +2917,6 @@
       "to": "bot/src/scene-continuity.js",
       "kind": "static",
       "specifier": "./scene-continuity.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "eb2b4f0837335f2c5ec4242d326e44ad2dbfc7a6222a64314260a87fc7b81b4f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/authored-turn-envelope.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
@@ -4291,20 +4238,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "a4a6d87030b1d9fc24d0274c7f5534799270c4388644416b59221a5416db164c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/discovery-delivery.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "8b392d357555e4b124cb4889e6dfbf6f97132aede0deaa385b85aa329d18c449",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/evaluation-harness.js",
@@ -4325,20 +4258,6 @@
       "to": "bot/src/city-calendar.js",
       "kind": "static",
       "specifier": "./city-calendar.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "2cedf70acf5197230ae4891a39dc86766d26c39ecaf0618a1eba435ed139ec42",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/fresh-npc-authoring.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -4451,20 +4370,6 @@
       "to": "bot/src/typed-roll-proof.js",
       "kind": "static",
       "specifier": "./typed-roll-proof.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "efbca00bfa10b7f45b5b83194fb07149fe1698e30f1add895ae50097c7f5d42f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-arbitration-output.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
@@ -4983,20 +4888,6 @@
       "to": "bot/src/scene-continuity.js",
       "kind": "static",
       "specifier": "./scene-continuity.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a09eb4fd9e092da16f47498c2d9f279cd7aef716893c03a2fe5d73deedd46313",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-world-scope.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -5592,20 +5483,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "57ff2a4b6aa2bb20554bc5b74df0d97fa432e9a8be6229f152d3d1c7c3dd063e",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "2b3f9b6774fbd1d310608bf5b4a79264528871ccfec8b6a8c47eb91a93d1ffd8",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/index.js",
@@ -6012,20 +5889,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "2d17b4542a60e0bd5ff0ce50323c56932bede39eb8c5c4a0e444c28419d0ced1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "bc56398d49942e72ef22c9c491dfaad48f1618543214c2119bd210b1d45f3b5b",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-authority-context.js",
@@ -6278,20 +6141,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ddf794227673bf0418aed19bfc2dba009402f34bdf1cb6e36c83efb30b9a544d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-context.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "f4e29053864f5315d746bd8b136650bf0c886930a29a59f61df1a0368c2891f1",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-context.js",
@@ -6474,20 +6323,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "37c3a78ea178f997425f16773fc4336812674f4f1f70481d307a87ada85ec4b4",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-pvp.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "e949afd9f4132bcb61fbd84dce091c63d0802194ffbed89e2a207de9f13bd1c1",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-pvp.js",
@@ -6642,20 +6477,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "ea6385bd51b6455c547ad8b087ca74cb55e8946ec40ae3a37232437bdbeb9ad5",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "19fb7e3c7f96622203769e21a0ca8e23266ab0b55073ee52393c8503d332e398",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-salience.js",
@@ -6774,20 +6595,6 @@
       "to": "bot/src/city-constraints.js",
       "kind": "static",
       "specifier": "./city-constraints.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "4a0974f0b01db39a2f9e75c9d32f961724b69425b6771cd5323dd60a083d03b2",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-tasks.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -7398,20 +7205,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "bfb47872f2b2553f741c0938bbbf735efbf3ea109fbe90bbbfcffccca12412cc",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-outcome-output.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "31d158c23ea218573a0b6cb05d2bda90f94e15fd792fb89a8cdd15c5e3864001",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-outcome-output.js",
@@ -7748,20 +7541,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "945b96424a5356ed938306319f901661b2b0168fab696b1b555f93b6d385103f",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/nonmaterial-grammar.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "1591acfd63854066e2633def192d133a6d7325105ec0c45b452552f73d25267f",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/nonmaterial-grammar.js",
@@ -7813,20 +7592,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "cc7da07870e8df6f5455dc7aab5046ec1995cb8acb6c5ff29090d00337528cfc",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pc-death.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -8321,20 +8086,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "3a5b4961a95a3cf17e89ddec8b70ef4efbc82c185a1e067290482b3b94377c16",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-menu.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "discord",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "349f696eb33cd05707299e9e1c7b9c7fbc26aac9ba90d97049782ba1c0d54dc8",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-menu.js",
@@ -8579,20 +8330,6 @@
       "to": "bot/src/scene-continuity.js",
       "kind": "static",
       "specifier": "./scene-continuity.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "156d464499e98db5fee20e1a24e803868b8e089a8f0ed47cb194aaa045ff50d1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-output.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "publication",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",
@@ -9189,20 +8926,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "676762c0cb264ea8e781bc4af193cd958560df2f2ace7aac87b9f625721691f9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-description.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "ce0151244377d89210f4757cbfee125f1f65f130641ba0c363793330532d792a",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/scene-description.js",
@@ -9265,20 +8988,6 @@
       "to": "bot/src/scene-continuity.js",
       "kind": "static",
       "specifier": "./scene-continuity.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "c125a1f8f6dac4096888fb190ecd410c62de011ebafa541819fdae3fb13aa9a0",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-fiction-context.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -9604,20 +9313,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "9219bbf7d18f9e7c54a012a7c33bb2cf914ee986949e27d692628f9fd1816e78",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/semantic-engagement.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
@@ -10553,20 +10248,6 @@
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "a6e4631050198c5c5d27181b80fdad57b464dcffa15451fd888508d8a28c36c9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/typed-intents.js",
-      "to": "bot/src/conversation-principal.js",
-      "kind": "static",
-      "specifier": "./conversation-principal.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."

@@ -11,3 +11,8 @@ import {overlapsOwnerActionTerminal} from '../../frameworks/session/public.js';
 import {intentOwnerActionTerminal} from '../../frameworks/intent/public.js';
 /** Bind Session's original owner action terminal reader to Intent's fixed consumer. */
 export function connectIntentOwnerActionTerminal(){return intentOwnerActionTerminal.bind({overlapsOwnerActionTerminal});}
+
+import {intentSessionPrincipal} from '../../frameworks/intent/public.js';
+import {conversationPrincipal} from '../../frameworks/session/public.js';
+/** Bind the original Session reader without evaluating player state. */
+export function connectIntentSessionPrincipal(){return intentSessionPrincipal.bind({conversationPrincipal});}

@@ -170,6 +170,9 @@
     ],
     "knowledge--publication": [
       "bot/src/framework-to-framework/knowledge--publication/public.js"
+    ],
+    "discord--session": [
+      "bot/src/framework-to-framework/discord--session/public.js"
     ]
   },
   "externalCapabilityOwners": {

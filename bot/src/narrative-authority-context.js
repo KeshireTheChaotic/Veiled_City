@@ -1,6 +1,7 @@
 /** Native creative-GM packet: camera != character position; no secrets, effects, or model-issued authority. */
 import {currentScene,scenePresence,lastVerifiedCharacterPresence} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {assemblyOrientation} from './assembly-state.js';
 import {factVisibleTo} from './disclosure-authority.js';
 import {objectiveEvidence,evidenceType} from './epistemic.js';

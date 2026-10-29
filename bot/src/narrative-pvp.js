@@ -1,6 +1,7 @@
 import {reservePvpNotices} from "./native-publications.js";
 import { consentAction } from "./action-consent.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 import { TRAITS } from "./character-system.js";

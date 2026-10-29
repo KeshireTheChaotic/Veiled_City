@@ -46,3 +46,5 @@ export {initializeIntentKnowledge} from './intent-knowledge.js';
 export {initializeKnowledgeOperations} from './knowledge-operations.js';
 export {initializePublicationKnowledgeNarrativeMemory} from './publication-knowledge-narrative-memory.js';
 export {initializePublicationWorld} from './publication-world.js';
+
+export {initializeDiscordSessionPrincipal} from './discord-session.js';

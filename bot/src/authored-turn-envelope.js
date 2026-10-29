@@ -1,7 +1,8 @@
 /** Immutable authenticated player source plus additive native-consumption annotations. */
 import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,authoredAnnotationKey as annotationKey} from './frameworks/intent/public.js';
 export {authoredTurnEnvelope};
-import { conversationPrincipal } from "./conversation-principal.js";
+import {intentSessionPrincipal} from './frameworks/intent/public.js';
+function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { currentScene } from "./scene-continuity.js";
 import { indexWorldEvent } from "./city-calendar.js";
 

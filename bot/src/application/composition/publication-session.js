@@ -1,3 +1,4 @@
+import {connectPublicationSessionPrincipal} from '../../framework-to-framework/publication--session/public.js';
 import {connectPublicationSessionEvidence} from '../../framework-to-framework/publication--session/public.js';
 
-export function initializePublicationSession(){return connectPublicationSessionEvidence();}
+export function initializePublicationSession(){connectPublicationSessionPrincipal();return connectPublicationSessionEvidence();}

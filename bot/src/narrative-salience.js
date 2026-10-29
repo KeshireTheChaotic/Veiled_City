@@ -3,7 +3,8 @@ export {nativeSalienceAvailable,narrativeContextEligible};
 /** Retrieval only: deterministic source-bound interest, fictional-time decay and reversible prompt retirement. */
 import {createHash} from 'node:crypto';
 import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {currentScene} from './scene-continuity.js';
 import {activeCityProxy} from './city-constraints.js';
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';

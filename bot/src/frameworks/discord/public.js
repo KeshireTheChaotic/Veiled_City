@@ -4,3 +4,5 @@ export {buildCommands} from './command-definitions.js';
 export {commandCharacterCount,validateCommandSchema,assertValidCommandSchema} from './command-schema.js';
 export {combatantLine} from './combatant-text.js';
 export {splitDiscordText,chunkDiscordLines} from './chunking.js';
+
+export {discordSessionPrincipal} from './contracts/session-principal.js';

@@ -1,6 +1,7 @@
+import {connectNarrativeSessionPrincipal} from '../../framework-to-framework/narrative--session/public.js';
 import {connectPvpAgreements,connectNarrativeBridgeNativeSources} from '../../framework-to-framework/daggerheart--narrative/public.js';
 import {connectSessionNarrativeSources,connectNarrativeBridgeSessionSources,connectNarrativeOpeningCohort} from '../../framework-to-framework/narrative--session/public.js';
 import {pvpAgreementConsumer} from '../../frameworks/narrative/public.js';
 let composed=null;
 /** Bind one fixed runtime component before services, and Narrative's original source visibility and PvP agreement validation into Session, and Session's opening readers and native proofs into the Narrative-World bridge; no DB/client/model or game mutation. */
-export function initializePvpAgreements(){connectNarrativeBridgeSessionSources();connectNarrativeBridgeNativeSources();connectNarrativeOpeningCohort();connectSessionNarrativeSources();return composed??=connectPvpAgreements({consumer:pvpAgreementConsumer,capabilities:pvpAgreementConsumer.sourceCapabilities()});}
+export function initializePvpAgreements(){connectNarrativeSessionPrincipal();connectNarrativeBridgeSessionSources();connectNarrativeBridgeNativeSources();connectNarrativeOpeningCohort();connectSessionNarrativeSources();return composed??=connectPvpAgreements({consumer:pvpAgreementConsumer,capabilities:pvpAgreementConsumer.sourceCapabilities()});}

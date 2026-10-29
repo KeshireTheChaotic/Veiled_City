@@ -1,7 +1,8 @@
 /** Scoped fictional interpretation. Meaning and referents never authorize movement, consent, knowledge or canon. */
 import { createHash } from "node:crypto";
 import { personalCharacter } from "./personal-continuity.js";
-import { conversationPrincipal } from "./conversation-principal.js";
+import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function scopedQueryPlan(...args){return narrativeKnowledgeReaders.scopedQueryPlan(...args);}function queryScopedFacts(...args){return narrativeKnowledgeReaders.queryScopedFacts(...args);}
 import { indexWorldEvent, cityAudit } from "./city-calendar.js";

@@ -1,7 +1,8 @@
 /** Source/receipt-only narration projections. No effect adapter, RNG, consent or payment is invoked here. */
 import {createHash} from 'node:crypto';
 import {currentScene,scenePresence} from './scene-continuity.js';
-import {conversationPrincipal} from './conversation-principal.js';
+import {publicationSessionPrincipal} from './frameworks/publication/public.js';
+function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import {hasPcReference} from './fresh-npc-authoring.js';
 import {validatedPcEffectProjection} from './pc-effects.js';
 import {visibleIncomingInjury} from './pc-incoming.js';
