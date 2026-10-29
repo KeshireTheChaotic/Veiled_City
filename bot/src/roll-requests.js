@@ -116,6 +116,12 @@ export async function publishRollRequests(db,guild,mutation,send){
     if(key)try{await publishPreRollFearNotice(db,guild,key,publication=>send(publication.target_user_id,publication.payload,
       decision.data.origin.session,publication.target_character_id,{publication}));}catch(error){failures.push(error);}
   }
+  // Unified-arbitration rolls reach a private owner through the turn output; a public one also needs its table prompt.
+  for(const decision of mutation.unifiedArbitration||[]){
+    const key=decision.status==='pending_pc_roll'?decision.data?.native?.roll_request_ref:null,row=key&&db.getCityRecord(guild,'roll_request',key);
+    if(row&&isPublicRollRequest(db,guild,row))try{await send(row.data.owner_user_id,rollPromptPayload(row),row.data.session_id,row.subject_key,{publicPrompt:row});}
+    catch(error){failures.push(error);}
+  }
   const keys=new Set((mutation.nativeAdjudications||[]).map(row=>row?.roll_request_ref).filter(Boolean));
   for(const ruling of mutation.gmRulings||[])if(ruling.data?.adjudication?.roll_request_ref)
     keys.add(ruling.data.adjudication.roll_request_ref);

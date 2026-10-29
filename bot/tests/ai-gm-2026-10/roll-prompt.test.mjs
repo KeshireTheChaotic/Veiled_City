@@ -47,6 +47,20 @@ test('a public request is sent once as a table prompt instead of a private break
   } finally { f.close(); }
 });
 
+test('a unified-arbitration roll gets the table prompt when public and stays with the turn output when private', async () => {
+  // Mirrors the live 2026-10-28 persuasion: a pending_pc_roll decision, never collected for the prompt before.
+  for (const [options, expected] of [[{}, 1], [{privateResult: true}, 0]]) {
+    const f = createP07NativeFixture();
+    try {
+      const row = seed(f, options), sent = [];
+      await publishRollRequests(f.db, f.guild, {unifiedArbitration: [{status: 'pending_pc_roll', data: {native: {roll_request_ref: row.record_key}}}]},
+        async (user, payload, sessionId, characterId, meta) => { sent.push(meta); });
+      assert.equal(sent.length, expected, JSON.stringify(options));
+      if (expected) assert.equal(sent[0].publicPrompt.record_key, row.record_key);
+    } finally { f.close(); }
+  }
+});
+
 test('only the owner can press the prompt; others get a private notice and nothing rolls', async () => {
   const f = createP07NativeFixture();
   try {

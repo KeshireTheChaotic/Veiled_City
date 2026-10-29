@@ -99,6 +99,12 @@ export function nativeGmNotices(db,guild,sourceRef,scope){
     const board=db.getCityRecord(guild,'scene_intent_board',row.data.board),entry=board?.data.entries.find(e=>e.intent_ref===row.data.entry),n=row.data.native,
       characters=n?.operation==='owner_collaboration'?n.choices.map(i=>i.character):n?.operation==='commit_adversary_volley'?n.inputs.map(i=>i.character):[entry?.actor.type==='character'?entry.actor.key:n?.character||n?.input?.character];
     if(!['pending_owner_choice','pending_pc_roll','pending_pc_reaction','gm_action_ready'].includes(row.status))continue;
+    // A public table roll is announced by its play-channel prompt instead of a private notice.
+    if(row.status==='pending_pc_roll'){
+      const request=db.getCityRecord(guild,'roll_request',n?.roll_request_ref),
+        accepted=request?.data.input?.accepted_intent&&db.getCityRecord(guild,'typed_intent',request.data.input.accepted_intent);
+      if(request?.status==='pending'&&request.data.input?.private_result!==true&&accepted?.visibility==='party')continue;
+    }
     for(const character of characters){
     const pc=character&&db.getCharacter(character);
     if(!pc||scope.mode==='private'&&pc.id!==scope.actorCharacterId)continue;
