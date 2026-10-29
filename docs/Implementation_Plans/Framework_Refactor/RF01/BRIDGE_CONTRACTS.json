@@ -2809,7 +2809,7 @@
         "occurrences": 52
       },
       "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
-      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule."
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C208 supplies only existing read-only worldIdentityOrigin to four Narrative consumers; World retains shared seeded authorship composition and authority checks."
     },
     {
       "pair": "npc--operations",

@@ -1,6 +1,6 @@
 /** Derived coarse-to-fine Director state. Snapshots confer no execution, knowledge or disclosure authority. */
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {worldIdentityOrigin,privateWorldIdentityForGm} from './world-authorship.js';
+import {worldIdentityOrigin,privateWorldIdentityForGm} from './frameworks/world/public.js';
 import {worldSessionScene,worldKnowledgeSources} from './frameworks/world/public.js';
 const listNarrativeRecords=(...args)=>worldKnowledgeSources.listNarrativeRecords(...args);
 function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}

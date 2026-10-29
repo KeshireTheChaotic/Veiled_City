@@ -20,7 +20,8 @@ import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from 
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
 import {constructNativeClause} from './narrative-clauses-v9.js';
-import {worldIdentityOrigin} from './world-authorship.js';
+import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 import {BACKGROUND_WORLD_KINDS} from './world-background-identities.js';
 import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/narrative-authority-contract.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';

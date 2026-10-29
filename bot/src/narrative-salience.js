@@ -11,7 +11,8 @@ const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 const listNarrativeRecords=(...args)=>narrativeKnowledgeReaders.listNarrativeRecords(...args),NARRATIVE_RECORD_LIMIT=()=>narrativeKnowledgeReaders.narrativeRecordLimit();
 import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
-import {worldIdentityOrigin} from './world-authorship.js';
+import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {characterSourceRanges} from './source-communication.js';
 import {maintainIdentityPersistence} from './world-identity-persistence.js';

@@ -1,0 +1,72 @@
+{
+  "feature": "RF04-C208",
+  "records": [
+    {
+      "id": "422f2394ca7d6d73effeb97c3b55a7c7cee0eab016eb91323812ee6219af5b2a",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-authorship.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "712dccdd444f2b590821171aca3e5039f405b8fbc8c7cbcb7170bea125006e64",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-authority-context.js",
+      "to": "bot/src/world-authorship.js",
+      "kind": "static",
+      "specifier": "./world-authorship.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "cf0a1b2d6d83eceea85226237ef6de86660cc50249c8121eb34cbe31500943e9",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-authority.js",
+      "to": "bot/src/world-authorship.js",
+      "kind": "static",
+      "specifier": "./world-authorship.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "7ea84931a60fcba43a6cfdc098185400edbf0d59a6c31c4fc65be0aa9384225d",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-relevance.js",
+      "to": "bot/src/world-authorship.js",
+      "kind": "static",
+      "specifier": "./world-authorship.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "2e8a31d081f2c2021ea85c826fc0fd4524d7d4cb15e5ef4bffc954afa35ec642",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/narrative-salience.js",
+      "to": "bot/src/world-authorship.js",
+      "kind": "static",
+      "specifier": "./world-authorship.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

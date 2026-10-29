@@ -1,5 +1,6 @@
 /** Bounded read-only text relevance. Never identity, knowledge, intent or effect authority. */
-import {worldIdentityOrigin} from './world-authorship.js';
+import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 export function narrativeQueryRelevance(text,query){
   const words=value=>String(value||'').toLocaleLowerCase().match(/[\p{L}\p{N}-]{3,}/gu)||[];
   const wanted=[...new Set(words(String(query||'').slice(0,4000)))].slice(0,32);

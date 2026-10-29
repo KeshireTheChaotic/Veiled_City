@@ -1,0 +1,20 @@
+{
+  "feature": "RF04-C208",
+  "sha256": {
+    "bot/src/application/composition/narrative-world.js": "b3f2509ad7bca1cc4e3233a7cd8ef25b70768a25052fd17a1d4e284ebd80acb0",
+    "bot/src/autonomous-world.js": "ea9147bd06fee29c8775e95474a886e9e7920f765462784b394ac19862bbde79",
+    "bot/src/framework-to-framework/narrative--world/public.js": "d409bdda03e566419a869316e05f26aab2e19b39a0e5b2ae32f23f5c16d42ec0",
+    "bot/src/frameworks/narrative/public.js": "c9dbadb4d736281f28e6f4b6c72df43677a3ab79df3b5409c67aa8d4c25cf5f4",
+    "bot/src/frameworks/world/public.js": "864bb586ff0dd00f2099c49d12a7c02c5ca675b4a9f8505fd60e8f999424040f",
+    "bot/src/narrative-authority-context.js": "754dfce01769f1279592aff7f6ed73067556da2f078f3a09a03342d9cf09d56e",
+    "bot/src/narrative-authority.js": "73f07ba6926978c2662455c865d85e2ec29feb495319c56b6bf8629fc19ff39c",
+    "bot/src/narrative-relevance.js": "50f818a61d098907ac4ca9efbba77a7a97718369255525b9ca6ef8bbee9f78d0",
+    "bot/src/narrative-salience.js": "3bc0ca29886ae7357b7a88c53dd440497b4140ace6c60955f2900eaff63fae71",
+    "bot/src/world-background-identities.js": "3da6d2d67c5f06d2fdbf396ee7c93eb0b7e62cda13824c381c9543f69fef5f10",
+    "bot/src/world-identity-persistence.js": "f933b324703829da8132aeb6d21650ea1a2eab312f5f34a05d332ff988525d09",
+    "bot/src/world-private-seeds.js": "abd6f2fad07f2557bd1e77548cf675adb54209fad218441203507577b522aa5a",
+    "bot/src/world-resolution.js": "a0f69d474e0388a8a8438ab051ffcfa3d60ff37ad7193341186f7245da1a698b",
+    "bot/src/frameworks/world/authorship-service.js": "44f396af65af42525aa80718f5c735ca3545950ffc7fbf4bd1e655fdd9a67ce7",
+    "bot/src/frameworks/narrative/contracts/world-identity-origin.js": "0ec2a3845f6c0b4a5478718228212ddf54639036e80e45f8fd04b276d6f2b7d8"
+  }
+}

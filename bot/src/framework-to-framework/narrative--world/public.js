@@ -35,3 +35,7 @@ import {cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent} from '..
 export function connectNarrativeWorldPrimitives(){return narrativeWorldPrimitives.bind({cityObject,cityKey,cityAudit,requireCitySource,indexWorldEvent});}
 
 export {CITY_FEATURE_FLAGS,configureCityFlags} from './city-flags.js';
+
+import {narrativeWorldIdentityOrigin} from '../../frameworks/narrative/public.js';
+import {worldIdentityOrigin} from '../../frameworks/world/public.js';
+export function connectNarrativeWorldIdentityOrigin(){return narrativeWorldIdentityOrigin.bind({worldIdentityOrigin});}

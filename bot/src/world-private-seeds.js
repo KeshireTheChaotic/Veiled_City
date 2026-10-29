@@ -1,7 +1,7 @@
 /** Bounded GM-private seed proposals in the existing GM request. Native capabilities, not model fields, own execution. */
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
-import {createSeededWorldContext} from './world-authorship.js';
+import {createSeededWorldContext} from './frameworks/world/public.js';
 import {worldHookSeedForGm} from './frameworks/world/public.js';
 import {establishNarrativeEntity} from './autonomous-world.js';
 import {jsonHash as hash} from './kernel/json-hash.js';

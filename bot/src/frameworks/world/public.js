@@ -113,3 +113,5 @@ export {draftMinorNpc,reviewMinorNpc} from './minor-npc-service.js';
 export {authorWorldDraft,reviewWorldDraft} from './reviewed-authoring.js';
 
 export {importSanctionedGmHooks,worldHookSeedForGm,sanctionedWorldMutation,worldRecordOriginForGm} from './sanctioned-sources.js';
+
+export {createSeededWorldContext,assertWorldIdentityNames,assertIndependentWorldIdentity,verifiedWorldAuthoringContext,privateWorldIdentityForGm} from './authorship-service.js';
