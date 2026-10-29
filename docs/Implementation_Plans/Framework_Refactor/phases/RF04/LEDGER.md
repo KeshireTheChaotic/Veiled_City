@@ -1091,3 +1091,7 @@ Original catalog/validator bodies moved unchanged into World; root and World cal
 ## C196 minor NPC service — COMPLETE
 
 Original draft/review service moved unchanged into World; root city-depth retired and existing identity provider now registered by World itself. Five fresh cases pass across distinct batches; syntax4/4 and RF04 gate875modules/zero active/errors pass. Two exact records retired; feature evidence records mocked storage/provider limits. Next: world-authoring responsibility/caller review. RF04 incomplete; release unauthorized.
+
+## C197 reviewed authoring — COMPLETE
+
+Original authoring service moved unchanged to World, Application caller public, root retired. Three fresh cases, syntax3/3, original body comparison and RF04 ratchet875modules/zero active/errors pass. Two exact records retired. Feature ledger retains mocked-storage/materializer limits. Next: current RF04 remaining-location reconciliation and next dependency-ready slice. RF04 incomplete; release unauthorized.

@@ -1,11 +1,12 @@
 /** Human-reviewed world drafts reuse existing typed materializers and canon anchors; no generic rules or second canon ledger. */
-import { cityObject, cityKey, cityAudit } from './frameworks/world/public.js';
-import { requireCitySource, updateCityCore } from './frameworks/world/public.js';
-import { configureSimulationEntity } from './frameworks/world/public.js';
-import {worldStoryContinuity} from './frameworks/world/public.js';
+import {cityObject,cityKey,cityAudit} from './city-calendar.js';
+import {requireCitySource} from './city-source.js';
+import {updateCityCore} from './civic-service-source.js';
+import {configureSimulationEntity} from './actor-state.js';
+import {worldStoryContinuity} from './contracts/story-continuity.js';
 function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}
-import { validateMinorIdentity } from './frameworks/world/public.js';
-import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
+import {validateMinorIdentity} from './minor-identity.js';
+import {normalizeEntityKey as normalizeNpcKey} from '../../kernel/entity-key.js';
 const kinds=["faction","location","institution","npc","mystery","relationship"];
 function materialize(db,content,guildId,input,actorId){
   const {kind,key,data,source_event}=input;cityObject(data);

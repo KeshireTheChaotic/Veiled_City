@@ -2340,17 +2340,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "9673149a77912188f3aa575c070d5921fde14897bb50612238008b45029bde50",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/world-authoring.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "422f2394ca7d6d73effeb97c3b55a7c7cee0eab016eb91323812ee6219af5b2a",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/world-authorship.js",
@@ -9118,20 +9107,6 @@
       "to": "bot/src/portrayal.js",
       "kind": "static",
       "specifier": "./portrayal.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "8f862cf44b44ec2fe0a5f08568ffd04799f7e26ed1e890a93a2a3b4fd4701937",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/world-authoring.js",
-      "kind": "static",
-      "specifier": "./world-authoring.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

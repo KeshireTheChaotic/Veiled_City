@@ -109,3 +109,5 @@ export {recordCityUpkeep} from './upkeep.js';
 export {validateMinorIdentity,reservedMinorNpcNames} from './minor-identity.js';
 
 export {draftMinorNpc,reviewMinorNpc} from './minor-npc-service.js';
+
+export {authorWorldDraft,reviewWorldDraft} from './reviewed-authoring.js';
