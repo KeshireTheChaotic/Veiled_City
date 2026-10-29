@@ -35,7 +35,7 @@ import {ownerSemanticSource,semanticCandidateHash} from './semantic-candidate-so
 import {applyOrdinaryEffects} from './ordinary-effects.js';
 import {isCharacterSourceSpan} from './source-communication.js';
 import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
-import {applyPrivateSeedTurn} from './world-private-seeds.js';
+import {applyPrivateSeedTurn} from './frameworks/world/public.js';
 import {assertMutationSuccess} from './application/workflows/state-mutation-results.js';
 
 export function summarizeRoster(rows){

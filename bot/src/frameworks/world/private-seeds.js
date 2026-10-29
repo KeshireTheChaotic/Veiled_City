@@ -1,12 +1,12 @@
 /** Bounded GM-private seed proposals in the existing GM request. Native capabilities, not model fields, own execution. */
-import {worldNarrativeSources} from './frameworks/world/public.js';
+import {worldNarrativeSources} from './contracts/narrative-sources.js';
 function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
-import {createSeededWorldContext} from './frameworks/world/public.js';
-import {worldHookSeedForGm} from './frameworks/world/public.js';
-import {establishNarrativeEntity} from './frameworks/world/public.js';
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
-import {privateWorldSeedsSchema,PRIVATE_WORLD_SEED_INSTRUCTIONS} from './frameworks/world/private-world-seed-contract.js';
+import {createSeededWorldContext} from './authorship-service.js';
+import {worldHookSeedForGm} from './sanctioned-sources.js';
+import {establishNarrativeEntity} from './autonomous-world.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {sceneFictionFailure as fail} from '../../kernel/scene-fiction-failure.js';
+import {privateWorldSeedsSchema,PRIVATE_WORLD_SEED_INSTRUCTIONS} from './private-world-seed-contract.js';
 export {privateWorldSeedsSchema,PRIVATE_WORLD_SEED_INSTRUCTIONS};
 const origins=new WeakMap(),turns=new WeakMap();
 /** The existing GM service mints this before requesting proposals. No JSON capability survives serialization. */

@@ -1,0 +1,44 @@
+{
+  "feature": "RF04-C213",
+  "records": [
+    {
+      "id": "8bc825ced5a0588f2967fb3fe085796c869e34b0fbc011f7fb05bbe0f8303a50",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/world-private-seeds.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "9dc36db0fca4f1853fe7108296307ed11279338556ce21e4452da60a7fed8aa3",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/world-private-seeds.js",
+      "kind": "static",
+      "specifier": "./world-private-seeds.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "c6836025371d000cb13d96fc843d61b05b70a83572dfecab940dbdbe413b2d29",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/world-private-seeds.js",
+      "kind": "static",
+      "specifier": "./world-private-seeds.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

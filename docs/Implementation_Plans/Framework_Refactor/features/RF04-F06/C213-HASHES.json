@@ -1,0 +1,9 @@
+{
+  "feature": "RF04-C213",
+  "sha256": {
+    "bot/src/frameworks/world/private-seeds.js": "41924284879fa55280a381495e27c4208601259e052f142fab53ed2bf49b0352",
+    "bot/src/frameworks/world/public.js": "32da6ec8d6c06d93697c4ba7caea3b18045c620cb7d7557130600d85900bd860",
+    "bot/src/gm.js": "a7b675db014553281ec6ef39b682c13ac1fd8716c7fd198fb97d22de88f2ea71",
+    "bot/src/state.js": "2148d333b886123dd9b2e7ab1e6a30f7cbda505c77f42f977824d25c8dc0bd1e"
+  }
+}

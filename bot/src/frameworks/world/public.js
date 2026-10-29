@@ -123,3 +123,5 @@ export {verifiedIdentityPersistence,promoteWorldIdentity,maintainIdentityPersist
 export {validateBackgroundIdentity,backgroundIdentityContext} from './background-identity-service.js';
 
 export {AUTONOMOUS_WORLD_VERSION,worldAuthority,establishNarrativeEntity,configureWorldAuthority,retconAutonomousEntity,worldInputKey,revalidateWorldEntries,captureWorldInput,applyAutonomousWorld,autonomousWorldContext} from './autonomous-world.js';
+
+export {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn,applyPrivateSeedTurn} from './private-seeds.js';

@@ -15,7 +15,7 @@ import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
 import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';
 import {worldResolutionContext} from './frameworks/world/public.js';
 import {openingWorldOpportunities} from './framework-to-framework/session--world/public.js';
-import {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn} from './world-private-seeds.js';
+import {createPrivateSeedOrigin,privateSeedPrompt,bindPrivateSeedTurn} from './frameworks/world/public.js';
 import {privateWorldSeedsSchema} from './frameworks/world/public.js';
 import { summarizeRoster, previewAuthoritativeMutation } from "./state.js";
 import { reconcilePreviewConsequences } from "./turn-orchestration.js";
