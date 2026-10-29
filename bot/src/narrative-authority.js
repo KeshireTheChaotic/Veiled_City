@@ -183,7 +183,19 @@ export async function authorNarrativeRequests({db,guild,result,scope,sourceRef,b
       budget.used=true;db.saveCityRecord(guild,{kind:'scene_authoring_attempt',key:attempt,status:'authoring',visibility:'gm',source_event:sourceRef,
         data:{version:3,draft:key,packet_hash:hash(ctx.packet)}});
       const generated=await generate(ctx.packet);
-      const v9=generated?.version===9?compileWriterV9(generated,audience,(u,entities,act)=>validateUnit(db,guild,u,ctx,entities,false,act),{db,guild}):null;
+      const compile=answer=>compileWriterV9(answer,audience,(u,entities,act)=>validateUnit(db,guild,u,ctx,entities,false,act),{db,guild});
+      let v9=generated?.version===9?compile(generated):null;
+      if(v9?.compiled.some(act=>act.status==='held')){
+        const held=v9.compiled.filter(act=>act.status==='held');
+        // One bounded repair belongs to this authoring attempt. Keep the usable original if repair fails.
+        try{
+          const repaired=compile(await generate({...ctx.packet,repair:{previous:generated,
+            held:held.map(({id,reason})=>({id,reason})),instruction:'Return a complete coherent replacement. Preserve usable dialogue and scenery. Rewrite held acts to satisfy their diagnostics; omit player names and leave player choices open. Keep every act at an available location.'}}));
+          if(repaired.answer.narrative_units.length>=v9.answer.narrative_units.length)v9=repaired;
+        }catch(error){
+          if(!['SCENE_FICTION','NARRATIVE_PVP'].includes(error.code))throw error;
+        }
+      }
       const answer=v9?v9.answer:generated;shape(answer);
       const data={version:v9?9:1,issuer,input,binding:ctx.binding,answer,audience_v9:audience.proof,
         ...(v9?{acts_v9:v9.acts,compiled_v9:v9.compiled}:{}),creative_brief:ctx.packet.creative_brief,packet_hash:hash(ctx.packet),semantic_verification:false};
