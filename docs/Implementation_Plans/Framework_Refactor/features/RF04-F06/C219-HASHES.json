@@ -1,0 +1,19 @@
+{
+  "feature": "RF04-C219",
+  "sha256": {
+    "bot/src/application/composition/publication-world.js": "49b01ba16b41cd629de74aa022c3726394ba54723235a16ef5bcf0e382c70040",
+    "bot/src/application/workflows/public.js": "2d40a57cea28ef1d798d31b9a809724821d834f1aeec46904d2ba72309d8c2f2",
+    "bot/src/commands.js": "33850da69ab9828bcf219a99b1e0b768b31c81902e6dee8108448ba8c8d14d10",
+    "bot/src/framework-to-framework/publication--world/public.js": "3ab65ee5ed096f73ebbecc23e00a1da1ddb0073116b08720ae87f7f9a871f8a9",
+    "bot/src/frameworks/publication/public.js": "57887a847729e8ac92e67267cc20982bf7dc45dfefe0774ca95c1232df26a393",
+    "bot/src/frameworks/session/round-eligibility.js": "f5b68f1170619598e72f2de666578783b077cb41b5cf67e72d20bdebf3f12f45",
+    "bot/src/frameworks/world/public.js": "870236d98855cc7ecb7109be4e14a45882d52d297f22913236f315f4c2a5beef",
+    "bot/src/index.js": "3378923b717548f4eaad4c3df99303060b6a32b6827c879f31a4331d06f00072",
+    "bot/src/pvp-output.js": "67542e0c50c4df9b71196db316a822c4615059303a900ce0d6fe23fcfaa57048",
+    "bot/src/turn-recovery.js": "f6c87e41d4e22ac0bffd4cdc6aa728cd2e68138ddc0fc1e28cdea29d1dcf0bdd",
+    "bot/src/frameworks/world/director-service.js": "62952a79798335781b130f54f1a9fe7604135a10565260be73a640b1ab522f51",
+    "bot/src/frameworks/publication/blocked-actions.js": "30ac81ad66da6c3553508807d4238d6b07cafa80d0d4352682dbfc9ddb8c577f",
+    "bot/src/application/workflows/director-result.js": "f63b18f3431c4525a2244959d0cdf0dac768c3fc26360e294d249f309c68fe35",
+    "bot/src/frameworks/publication/contracts/world-director-review.js": "e4231f831ba66991363070963555edfde473bfea2a391d8a3c30ff9d4811834b"
+  }
+}

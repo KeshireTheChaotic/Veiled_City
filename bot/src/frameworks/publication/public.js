@@ -15,3 +15,7 @@ export {publicationSessionRecapSource} from './contracts/session-recap.js';
 export {publicationContinuationOutputSource,publicationSessionContinuation} from './contracts/session-continuation.js';
 
 export {publicationWorldSimulation} from './contracts/world-simulation.js';
+
+export {describeBlockedAction,blockedMutationRows} from './blocked-actions.js';
+
+export {publicationWorldDirectorReview} from './contracts/world-director-review.js';

@@ -11,4 +11,3 @@ export function eligibleRoundUsers(db,sessionId){
   for(const p of db.listNpcProxies(sessionId,{statuses:["active"]})||[]) if(activeUsers.has(String(p.discord_user_id))) users.add(String(p.discord_user_id));
   return [...users];
 }
-

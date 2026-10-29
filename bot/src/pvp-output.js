@@ -20,7 +20,8 @@ import {splitDiscordText} from './discord/chunking.js';
 import {findFreshNpcPart,renderFreshNpcPart,hasPcReference} from './fresh-npc-authoring.js';
 import {nativeHookProjection} from './native-hook-output.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
-import {validatePostTurnStateReview} from './director.js';
+import {publicationWorldDirectorReview} from './frameworks/publication/public.js';
+function validatePostTurnStateReview(...args){return publicationWorldDirectorReview.validatePostTurnStateReview(...args);}
 import {projectSceneDescription,defaultSceneDescription} from './scene-description.js';
 import {turnTraceFor} from './turn-trace-context.js';
 import {findFreshScenePart,renderFreshScenePart} from './fresh-scene-authoring.js';

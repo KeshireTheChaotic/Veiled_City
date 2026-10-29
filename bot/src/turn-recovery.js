@@ -1,5 +1,5 @@
 /** Field-level recovery keeps safe conversation while consequential invariants remain atomic. */
-import { POST_TURN_REVIEW_CATEGORIES } from "./director.js";
+import { POST_TURN_REVIEW_CATEGORIES } from "./frameworks/world/public.js";
 import {restoreGmWorldCandidates} from "./pvp-output.js";
 
 const outputs={facts_clues:r=>(r.events||[]).some(e=>["fact","clue"].includes(e.type)),resources:r=>(r.events||[]).some(e=>e.type==="resource_delta"),

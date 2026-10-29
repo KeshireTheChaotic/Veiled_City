@@ -3594,7 +3594,7 @@
         "occurrences": 6
       },
       "public_api": "bot/src/framework-to-framework/publication--world/public.js",
-      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations. C189 binds connectPublicationWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C215 supplies original simulationOverview and acknowledgeSimulationHook through fixed Publication consumer; World retains simulation/native receipt and hook rules."
+      "scope": "World simulation receipt read for native outcome publication only; other Publication/World dependencies remain migration obligations. C189 binds connectPublicationWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C215 supplies original simulationOverview and acknowledgeSimulationHook through fixed Publication consumer; World retains simulation/native receipt and hook rules. C219 supplies original validatePostTurnStateReview to Publication through fixed consumer; World retains category validation."
     },
     {
       "pair": "session--world",

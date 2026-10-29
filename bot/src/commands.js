@@ -18,7 +18,7 @@ import {connectCharacterAdvancement} from './framework-to-framework/character--d
 import { buildCombatants, hpMarksForDamage } from "./frameworks/daggerheart/public.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { manageEvidence, evidenceView, organizationRequest, organizationInbox } from "./frameworks/knowledge/public.js";
-import { normalizeDirectorConfidence } from "./director.js";
+import { normalizeDirectorConfidence } from "./application/workflows/public.js";
 import { createPlayerExportFiles, createGmExportFiles } from "./character-export.js";
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { createConceptContextPackage } from "./concept-context.js";

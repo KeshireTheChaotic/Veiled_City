@@ -16,3 +16,7 @@ export function connectPublicationWorldEvents(){return publicationWorldEvents.bi
 import {publicationWorldSimulation} from '../../frameworks/publication/public.js';
 import {simulationOverview,acknowledgeSimulationHook} from '../../frameworks/world/public.js';
 export function connectPublicationWorldSimulation(){return publicationWorldSimulation.bind({simulationOverview,acknowledgeSimulationHook});}
+
+import {publicationWorldDirectorReview} from '../../frameworks/publication/public.js';
+import {validatePostTurnStateReview} from '../../frameworks/world/public.js';
+export function connectPublicationWorldDirectorReview(){return publicationWorldDirectorReview.bind({validatePostTurnStateReview});}

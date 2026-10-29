@@ -300,17 +300,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "efb7c3576218283bf10e546262059ae36b87ea6cde9fb544a758ab9c837a1f63",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/director.js",
-      "owner": "world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "c64664f7ec1d0d29b47bff20e4727c9fd30d4f846ee2bc1a58773f14a2891cba",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/disclosure-authority.js",
@@ -2542,20 +2531,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "8d0e54c530bfcb8c0915d523981aa8f7ec336f2106b91504e039c0d7a35a6315",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/director.js",
-      "kind": "static",
-      "specifier": "./director.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "5da8617dfe570e241e150061cda0237bc5d1deef083cd524747905c53642915f",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/commands.js",
@@ -4660,20 +4635,6 @@
       "to": "bot/src/publication-outbox.js",
       "kind": "static",
       "specifier": "./publication-outbox.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "bb50bf20b8ce68cfc8b5e948c1af0dc63f889bbbe715057a3c6a2dc4b1851a8c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/director.js",
-      "kind": "static",
-      "specifier": "./director.js",
       "owner": "bootstrap",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F05",
@@ -7117,20 +7078,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "d045302411fe9ab619bba4d97ad3ff53b4978797a04f8825cc3ae2506b30e264",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-output.js",
-      "to": "bot/src/director.js",
-      "kind": "static",
-      "specifier": "./director.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "61a0d2aa5c39f471896b6df72163185caa3f1c7f2c71d82dc5800381765d9bbd",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/pvp-output.js",
@@ -8492,20 +8439,6 @@
       "to": "bot/src/operational-metrics.js",
       "kind": "static",
       "specifier": "./operational-metrics.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "56d75ea2c23ed42ffaf9150c0cad15a51a27bef6a47c51d5fc1fbf9b635a7369",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/turn-recovery.js",
-      "to": "bot/src/director.js",
-      "kind": "static",
-      "specifier": "./director.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",

@@ -135,3 +135,5 @@ export {SEED_TEMPLATE_FEATURES,SEED_DRAFT_KINDS,addSeedDraft,editSeedDraft,revie
 export {seedData} from './seed-data.js';
 
 export {worldRoundEligibility} from './contracts/round-eligibility.js';
+
+export {queueDirectorAfterPartyTurn} from './director-service.js';

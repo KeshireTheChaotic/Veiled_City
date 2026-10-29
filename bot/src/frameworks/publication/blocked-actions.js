@@ -1,12 +1,4 @@
-/** Autonomous world-director cadence and blocked-action reporting helpers. Real-world elapsed time never advances campaign state. */
-export {validatePostTurnStateReview} from './frameworks/world/public.js';
-
-import {worldRoundEligibility} from './frameworks/world/public.js';
-export function eligibleRoundUsers(...args){return worldRoundEligibility.eligibleRoundUsers(...args);}
-
-/** Existing runtime source composition; Session eligibility remains separately owned. */
-export function queueDirectorAfterPartyTurn(...args){return cadence().queueDirectorAfterPartyTurn(...args);}
-
+/** Original blocked native effect reporting; no state or disclosure grant. */
 export function describeBlockedAction(row){
   const raw=String(row?.error||row?.reason||"This state action is not permitted in the current scope.");
   if(row?.type==="simulation") return {
@@ -47,19 +39,3 @@ export function blockedMutationRows(mutation){
     ...(mutation?.simulation||[]).filter(x=>x?.blocked)
   ];
 }
-
-/** Confidence alone is not a human review gate; native conflicts have their own evidence-backed review. */
-export function lowConfidenceReviewItems(result,threshold=55){
-  return [];
-}
-
-/** Confidence is advisory. Real native mechanics, scope and canon validators still gate every effect. */
-export function normalizeDirectorConfidence(result,threshold=55){
-  // Same object: native turn bindings (arbitration origin, narrative source) are keyed by the director result itself.
-  result.review_required=false;return result;
-}
-
-import {createDirectorCadence,POST_TURN_REVIEW_CATEGORIES} from './frameworks/world/public.js';
-export {POST_TURN_REVIEW_CATEGORIES};
-let worldCadence;
-function cadence(){return worldCadence??=createDirectorCadence({eligibleRoundUsers,now:()=>new Date().toISOString()});}
