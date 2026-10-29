@@ -73,7 +73,10 @@ function adjudicateGmRuling(db,guild,acceptedKey,proposal,scope,recovery={}){
     if(accepted.status==="resolved"&&!prior)throw new Error("Historical completion cannot authorize a new ruling interpretation.");
     if(prior&&prior.data.proposal_hash!==proposalHash)throw new Error("Ruling terms changed; explicit revision/review is required.");
     const nativeContext=nativeGmSceneContext(db,guild,scope);
-    const evidence=proposal.context_refs.map(ref=>ref===nativeContext?.ref?nativeContext:db.getWorldEvent(guild,ref));
+    // Invented labels that name no saved event (live: "presence:npc-nessa-vale") are ignored and, if nothing real is
+    // cited, the native scene context grounds the current-scene attempt. A real but ineligible event still fails.
+    const cited=proposal.context_refs.map(ref=>ref===nativeContext?.ref?nativeContext:db.getWorldEvent(guild,ref)).filter(Boolean);
+    const evidence=cited.length?cited:nativeContext?[nativeContext]:[];
     const contextValid=evidence.length>0&&evidence.every(event=>event===nativeContext||eligibleContext(event,p.scene,p.pc.data.location,scope));
     const contextHash=contextValid?hash(evidence):null;
     if(prior&&prior.data.context_hash&&(prior.data.context_hash!==contextHash||prior.data.location!==p.pc.data.location))

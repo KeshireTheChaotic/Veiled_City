@@ -46,3 +46,13 @@ test('a mundane capability that repeats an SRD rule already in raw_refs still cr
  const g=fixture(t);Object.assign(g.proposal,{capability:{kind:'mundane',ref:'feature:shadow-stepper'},raw_refs:['srd:action-rolls']});
  assert.equal(g.adjudicate().data.review_reason,'CAPABILITY_ADAPTER_REQUIRED','a real feature reference still needs its adapter');
 });
+
+test('invented context labels are ignored while real cited evidence still grounds the ruling',t=>{
+ // Mirrors the live 2026-10-28 ruling held as CONTEXT_UNVERIFIED for refs like 'presence:npc-nessa-vale'.
+ const f=fixture(t);f.proposal.context_refs=['fact-c19','presence:npc-c19'];
+ assert.equal(f.adjudicate().status,'roll_pending');
+ const g=fixture(t);g.proposal.context_refs=['presence:npc-c19'];
+ assert.equal(g.adjudicate().status,'roll_pending','with only invented labels the native scene context grounds the attempt');
+ const h=fixture(t);h.proposal.context_refs=[h.action.source_event,'presence:npc-c19'];
+ assert.equal(h.adjudicate().data.review_reason,'CONTEXT_UNVERIFIED','a real but ineligible event (the player declaration) still fails');
+});
