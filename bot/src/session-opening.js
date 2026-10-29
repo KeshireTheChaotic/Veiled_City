@@ -14,4 +14,4 @@ export function bindSessionOpeningTurn(...args){return opening.bindSessionOpenin
 export function assertSessionOpeningPublication(...args){return opening.assertSessionOpeningPublication(...args);}
 import {sessionOpeningSource} from './frameworks/session/public.js';
 // Provide this module's original session opening functions to the fixed Session slot; no other authority is granted.
-sessionOpeningSource.bind({inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAttempt,assertSessionOpeningFence,rebaseSessionOpening,bindSessionOpeningTurn});
+sessionOpeningSource.bind({inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAttempt,assertSessionOpeningFence,rebaseSessionOpening,bindSessionOpeningTurn,rebindSessionOpeningRefresh});

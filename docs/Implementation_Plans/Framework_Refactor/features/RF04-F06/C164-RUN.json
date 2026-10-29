@@ -1,0 +1,104 @@
+{
+  "feature": "RF04-F06-C164",
+  "base_sha": "18d930232d9bc5a033d9f0a4beff2af4860016ef",
+  "test_path": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+  "command_from_bot": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+  "attempts": [
+    {
+      "run_id": "c164-attempt-1-original-coverage",
+      "exit_code": 0,
+      "test_count": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "tap_duration_ms": 1700.4281,
+      "test_sha256": "27E3CB0284BFA1E5BD373CD24064F43051CA9343BBFB26E6303A605C17338A29",
+      "timestamp_capture": "UTC start/end were not captured contemporaneously."
+    },
+    {
+      "run_id": "c164-attempt-2-expanded-coverage",
+      "exit_code": 1,
+      "test_count": 4,
+      "passed": 3,
+      "failed": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "failure": "The new default-delivery case expected no events for an uncertain legacy slot, but the supported path correctly called assertCurrent twice before stopping at the slot guard.",
+      "test_sha256": "Not captured before the expectation-only correction.",
+      "timestamp_capture": "UTC start/end were not captured contemporaneously."
+    },
+    {
+      "run_id": "c164-attempt-3-corrected-expanded-whole-file",
+      "exit_code": 0,
+      "test_count": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "tap_duration_ms": 2029.7234,
+      "test_sha256": "3204BDCFCD595402F11E9E94EE6826E389AA057DFD062C0224B6401FDD8ED70B",
+      "timestamp_capture": "UTC start/end were not captured contemporaneously.",
+      "note": "The full file reran after the test-only expectation correction; the three earlier passing cases were rerun along with the corrected default-delivery case."
+    }
+  ],
+  "syntax_checks": {
+    "command_from_bot": "node --check on each of the six frozen C164 production modules and the new C164 test",
+    "exit_codes": {
+      "src/assembly-planning.js": 0,
+      "src/assembly-publications.js": 0,
+      "src/assembly-context.js": 0,
+      "src/assembly-state.js": 0,
+      "src/session-opening.js": 0,
+      "src/frameworks/session/contracts/opening-sources.js": 0,
+      "tests/ai-gm-2026-10/rf04-f06-c164.test.mjs": 0
+    }
+  },
+  "tested_fingerprint": {
+    "assembly_planning_sha256": "F63DBEC181B1B1313BCE14E7E1E7BAD405BF95B4517CF426627D7DF234631CC9",
+    "assembly_publications_sha256": "F8853E24F06FD0EB77DFE809C38DEABEC8C31A6F3F7EF207B2BC5688CB6F1F69",
+    "assembly_context_sha256": "B30FD8E74F49E7216A6504AAF7130DDF1282F54C721032C44A0273A2F56A8475",
+    "assembly_state_sha256": "B829808780B43046522D3B5830389C74211E890E9C309164FC3F5E961ECF9263",
+    "session_opening_sha256": "CA3282EDCEE8504A18CE9F2D8F2AC34694F94543E022D2FE2175C17F17E04AC3",
+    "opening_sources_contract_sha256": "DFBE2241D9D45E25C41D2D468696C383D786349DDA764197978C2F621C7C03CB",
+    "test_sha256": "3204BDCFCD595402F11E9E94EE6826E389AA057DFD062C0224B6401FDD8ED70B",
+    "scope_sha256": "6A4D018164938637D76591290F73F91857B66D9B20D1A61F6CC1DAAC2CCBDEBD",
+    "retired_transitions_sha256": "39DCF3C5853072D228359559C89AAF220792663EA2F5FF7F3ACF5C971996C622",
+    "active_transitions_sha256": "4F4588F4C32E900F2456A39101A1F4483866F420B6A03BED2E7027B65AFC854E"
+  },
+  "architecture_gates": {
+    "RF04": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF04",
+      "exit_code": 0,
+      "pass": true,
+      "source_modules": 842,
+      "unowned": 0,
+      "active_violation_groups": 0,
+      "transition_errors": 0
+    },
+    "RF05": {
+      "command": "node bot/tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "exit_code": 1,
+      "pass": false,
+      "source_modules": 842,
+      "unowned": 0,
+      "active_violation_groups": 65,
+      "transition_errors": 65,
+      "first_errors": [
+        "LEGACY_MODULE_LOCATION bot/src/action-continuation.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-context.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-readiness.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/assembly-state.js -> (owner session)",
+        "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js -> (owner world)"
+      ]
+    }
+  },
+  "other_checks": {
+    "git_diff_check_exit_code": 0,
+    "git_diff_check_notes": "CRLF conversion warnings only.",
+    "network": 0,
+    "production_database": 0,
+    "live_provider_calls": 0
+  },
+  "qualification": "C164 fresh tests and RF04 ratchet pass. RF05 remains incomplete due 65 active legacy module-location groups/errors. The focused tests use bounded feature-local fakes for receipt and provider flows; they do not establish live Discord delivery, full product runtime, or release qualification."
+}

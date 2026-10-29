@@ -1,5 +1,9 @@
 # Veiled City framework isolation
 
+> Latest qualified checkpoint (2026-10-29): `18d93023`, C161 standalone database compatibility repair and C163 opening publication ports. The fresh SQLite regression passes 1/1 and C163 tests pass 4/4. RF04 ratchet passes at 842 modules with zero unowned modules, active violations or transition errors; RF05 still fails on 65 groups/errors. These are scoped working-tree results, not RF04 completion. See the [RF04 ledger](phases/RF04/LEDGER.md), [database repair](features/RF04-F05/C161-REPAIR-LEDGER.md), and [C163 results](features/RF04-F06/C163-RUN.json). Tests/logs remain local and ignored; clean-checkout/runtime/release qualification is absent. Next slice: C164 assembly consumer repointing without relocating its saved-delivery reader. No baseline expansion or deadline renewal.
+
+The following checkpoints are historical. Their counts and holds must be checked against the current phase ledger before resuming work.
+
 > Current checkpoint (2026-10-27, through C73): RF04 and RF05 are implemented in part and remain open. The current-code [audit](AUDIT-20261026/BEFORE.json), [reopened local holds](AUDIT-20261026/LOCAL_HOLDS.md), [adjusted execution plan](AUDIT-20261026/PLAN.md), and [current source crosswalk](AUDIT-20261026/CURRENT_SOURCE_CROSSWALK.csv) supersede the historical checkpoint summaries below. At the audit baseline: 599 source modules, zero unowned, 2,391 exact transitions, a 181-module cycle, RF03/RF04 ratchets pass with accepted debt, RF05 fails on 950 expired RF04 records. No baseline expansion or deadline renewal. RELEASE NOT AUTHORIZED.
 
 RF00 is an offline inventory and migration design, anchored to `f43d002693cb4ee38038b5dbb2c1049de95b3ffd` on `codex/clean-ai-gm-2026-10`. It does not relocate or modify application implementation. The owner handoff is preserved at [its supplied path](../phases/RF00/Veiled_City_RF00_Framework_Isolation_Sol_6_1_Medium_Handoff.md).

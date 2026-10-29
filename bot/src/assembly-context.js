@@ -13,4 +13,4 @@ export const assemblyHookProjection=(...args)=>context.assemblyHookProjection(..
 export const assemblyWriterBrief=(...args)=>context.assemblyWriterBrief(...args);
 import {sessionAssemblyContextSource} from './frameworks/session/public.js';
 // Provide this module's original assembly context functions to the fixed Session slot; no other authority is granted.
-sessionAssemblyContextSource.bind({assemblyInputFingerprint,certifyAssemblyPlan,assemblyPlanFreshness,assemblyHookSources});
+sessionAssemblyContextSource.bind({assemblyInputFingerprint,certifyAssemblyPlan,assemblyPlanFreshness,assemblyHookSources,assemblyHookSelection});

@@ -1,9 +1,10 @@
 /** GM-reviewed replacement of stale/fallback plans. Delivery acknowledgements are never reset. */
 import {randomUUID} from 'node:crypto';
-import {assemblyInputFingerprint,assemblyPlanFreshness,certifyAssemblyPlan,hookHash,assemblySourceError,assemblyHookSelection} from './assembly-context.js';
-import {assemblyPlanHash} from './assembly-state.js';
-import {indexWorldEvent} from './city-calendar.js';
-import {inspectSessionOpening,rebindSessionOpeningRefresh} from './session-opening.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource,hookHash,assemblySourceError} from './frameworks/session/public.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
+const {assemblyInputFingerprint,assemblyPlanFreshness,certifyAssemblyPlan,assemblyHookSelection}=sessionAssemblyContextSource;
+const {assemblyPlanHash}=sessionAssemblyStateSource;
+const {inspectSessionOpening,rebindSessionOpeningRefresh}=sessionOpeningSource;
 function deliveries(db,guild,session){
   const rows=db.assemblyDeliveryRecords(guild,session.id);
   if(rows.length>=1001)throw assemblySourceError('Assembly delivery inventory exceeds bounded review; retain history for scoped review.');

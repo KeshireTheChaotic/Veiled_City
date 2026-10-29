@@ -1,13 +1,15 @@
 /** Native assembly projection uses the shared transactional outbox; raw plan prose stays GM-private. */
 import {randomUUID} from 'node:crypto';
-import {assemblyHash,assemblyPlanHash,assemblySlots,legacyAssemblyState,assemblyDeliverySummary} from './assembly-state.js';
-import {prepareAssemblyOutput} from './pvp-output.js';
-import {queueTurnPublications} from './publication-outbox.js';
-import {deliverQueuedTurn} from './publishing.js';
+import {sessionAssemblyStateSource} from './frameworks/session/public.js';
+import {publicationOpeningOutput,publicationOpeningQueue,publicationOpeningDelivery} from './frameworks/publication/public.js';
+import {indexWorldEvent} from './frameworks/world/public.js';
+import {measureNative,measureStage,operationalMetrics} from './frameworks/operations/public.js';
 import {PermissionError,StateConflictError} from "./kernel/errors.js";
-import {indexWorldEvent} from './city-calendar.js';
 import {assemblyRefreshRequired,retainedAssemblyDelivery} from './assembly-planning.js';
-import {measureNative,measureStage,operationalMetrics} from './operational-metrics.js';
+const {assemblyHash,assemblyPlanHash,assemblySlots,legacyAssemblyState,assemblyDeliverySummary}=sessionAssemblyStateSource;
+const {prepareAssemblyOutput}=publicationOpeningOutput;
+const {queueTurnPublications}=publicationOpeningQueue;
+const {deliverQueuedTurn}=publicationOpeningDelivery;
 function metadataSource(db,guild,session,key){
   return indexWorldEvent(db,guild,{key:`assembly-meta:${assemblyHash(key)}`,kind:'assembly_delivery_metadata',
     title:'Assembly transport bookkeeping, not fictional authority',source_id:'native:assembly',visibility:'gm',session_id:session.id,

@@ -86,4 +86,4 @@ export function assemblyOrientation(db,guild,sessionId,scope){
 }
 import {sessionAssemblyStateSource} from './frameworks/session/public.js';
 // Provide this module's original assembly state functions to the fixed Session slot; no other authority is granted.
-sessionAssemblyStateSource.bind({assemblyDeliverySummary,assemblyPlanHash});
+sessionAssemblyStateSource.bind({assemblyDeliverySummary,assemblyPlanHash,assemblyHash,assemblySlots,legacyAssemblyState});
