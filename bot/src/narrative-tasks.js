@@ -20,7 +20,8 @@ export function narrativeTasks(db,guild,result,scope,sourceRef){
     const start=text.indexOf(i.source_span,cursors.get(i.source_span)||0),end=start+i.source_span.length;
     if(start<0)continue;cursors.set(i.source_span,end);
     const matches=acceptedRows.filter(row=>row.data.type===i.type&&row.data.start===start&&row.data.end===end
-      &&row.data.source_span===i.source_span&&(row.data.target_key||'')===(i.target_key||''));
+      &&row.data.source_span===i.source_span&&((row.data.target_key||'')===(i.target_key||'')
+        ||i.type==='observe'&&!i.target_key&&row.data.target_key===db.getCharacter(scope.actorCharacterId)?.data.location));
     const accepted=matches.length===1?matches[0]:null;
     // Dice own a pending roll's outcome: the writer may set up the attempt but never answer or resolve it.
     // Only an auto move has a native arrival; any other move leaves the character where they are.
@@ -31,7 +32,7 @@ export function narrativeTasks(db,guild,result,scope,sourceRef){
       :['describe_scene','current_situation'].includes(i.operation)?'scene':null;
     if(!kind)continue;
     const binding={source:sourceRef,source_hash:hash(source.details),actor:scope.actorCharacterId,principal:principal.revision,
-      session:source.session_id,scene:source.scene,scope:{...scope},start,end,target:i.target_key||null,target_phrase:i.target_name||'',operation:i.operation,type:i.type};
+      session:source.session_id,scene:source.scene,scope:{...scope},start,end,target:accepted?.data.target_key||i.target_key||null,target_phrase:i.target_name||'',operation:i.operation,type:i.type};
     tasks.push({id:`narrative-task:${hash(binding)}`,kind,binding,accepted_intent:accepted?.record_key||null});
   }
   return tasks;

@@ -507,6 +507,10 @@ export function persistPlayerIntents(db,guild,intents,scope={},provenance={}){
         resolvedTargetKey=pc.data.location;nativeGrounded=true;
       }else targetCandidates=reference.candidates||[];
     }
+    if(!resolvedTargetKey&&!intent.target_name&&intent.type==='observe'&&pc.data.location
+      &&db.getSimulationEntity(guild,'location',pc.data.location)){
+      resolvedTargetKey=pc.data.location;nativeGrounded=true;
+    }
     const pending=resolvedTargetKey&&db.listCityRecords(guild,{kind:'semantic_intent_proposal',includeGM:true,limit:100})
       .find(candidate=>candidate.status==='awaiting_referent'&&candidate.data.owner_user_id===principal.user
         &&candidate.data.actor_character_id===principal.character_id&&candidate.data.session_id===session.id

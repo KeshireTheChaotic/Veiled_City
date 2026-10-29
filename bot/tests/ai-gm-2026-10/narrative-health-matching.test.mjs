@@ -6,6 +6,17 @@ import {declare,intent} from './play-flow-helpers.mjs';
 import {narrativeTasks,taskDispositions} from '../../src/narrative-tasks.js';
 import {buildNarrativeContext} from '../../src/narrative-authority-context.js';
 
+test('looking around without a named target resolves to the current scene',()=>{
+ const f=createP07NativeFixture();try{
+  const message='I look around.',look=intent(message,{type:'observe',operation:'appearance',target_key:'',target_name:'',utterance:'',resolution:'auto'});
+  const {scope,sourceRef}=declare(f,'look-around',message,[look]);
+  const tasks=narrativeTasks(f.db,f.guild,{player_intents:[look]},scope,sourceRef);
+  assert.equal(tasks.length,1);
+  assert.ok(tasks[0].accepted_intent);
+  assert.equal(tasks[0].binding.target,'p07-station');
+ }finally{f.close();}
+});
+
 test('health counts a unique NPC reply even when the writer selected another valid task id',()=>{
   const f=createP07NativeFixture();
   try{
