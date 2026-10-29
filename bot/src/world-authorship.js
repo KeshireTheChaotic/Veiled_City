@@ -1,5 +1,5 @@
 /** Original World provenance provider: one shared seeded-context identity map across all exports. */
-import {worldHookSeedForGm} from './world-sanctioned-sources.js';
+import {worldHookSeedForGm} from './frameworks/world/public.js';
 import {createWorldAuthorshipRules,worldNarrativeAuthorship,worldKnowledgeSources} from './frameworks/world/public.js';
 import {worldAuthoringContext} from './frameworks/world/public.js';
 const {factVisibleTo,listNarrativeRecords}=worldKnowledgeSources;

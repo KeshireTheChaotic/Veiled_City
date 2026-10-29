@@ -1,0 +1,11 @@
+{
+  "feature": "RF04-C207",
+  "sha256": {
+    "bot/src/frameworks/world/sanctioned-sources.js": "b6cb798d8d96136c263c4fdb414908fb4d43f87e8e315c570cc198c28581503d",
+    "bot/src/frameworks/world/public.js": "2dffa856bc57df8d2546fab926cb5d7747507105668d49dd11a19efbd43cf144",
+    "bot/src/commands.js": "a786f2455a0c2fd6ef7ab9c68e98d0710084a5b4e021bccb26bae58492f15596",
+    "bot/src/gm.js": "8b3dd66efed0df53837f7ae4bcbfe03be1dad79745495e6759c4713cea16e0ff",
+    "bot/src/world-private-seeds.js": "04edd19c7b472e4038e7d65cc58e7e4b655048ada5d5d3276d81c7e7d301803e",
+    "bot/src/world-authorship.js": "a00fa5042682f95f54d43bd943bc03db2d29277aad2170039293ea61eb1808a4"
+  }
+}

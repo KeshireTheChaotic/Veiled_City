@@ -2,7 +2,7 @@
 import {worldNarrativeSources} from './frameworks/world/public.js';
 function buildNarrativeContext(...args){return worldNarrativeSources.buildNarrativeContext(...args);}
 import {createSeededWorldContext} from './world-authorship.js';
-import {worldHookSeedForGm} from './world-sanctioned-sources.js';
+import {worldHookSeedForGm} from './frameworks/world/public.js';
 import {establishNarrativeEntity} from './autonomous-world.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';

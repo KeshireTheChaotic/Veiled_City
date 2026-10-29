@@ -34,7 +34,7 @@ import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyN
   runSessionOpening,sessionOpeningStatus,continueSessionOpening,prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery,
   prepareSessionOpeningPrecommitReview,recoverSessionOpeningPrecommit,deliverOpeningEntry,runOpeningCohort,openingCohortStatus} from './application/workflows/public.js';
 import {normalizeGmHookImport} from './frameworks/narrative/public.js';
-import {importSanctionedGmHooks,sanctionedWorldMutation} from './world-sanctioned-sources.js';
+import {importSanctionedGmHooks,sanctionedWorldMutation} from './frameworks/world/public.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './frameworks/session/public.js';
 import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './frameworks/session/public.js';
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";

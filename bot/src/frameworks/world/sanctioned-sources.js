@@ -1,7 +1,7 @@
 /** Server-only GM import provenance. A private seed is neither world establishment nor publication authority. */
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {indexWorldEvent} from './frameworks/world/public.js';
-import {worldKnowledgeSources} from './frameworks/world/public.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {indexWorldEvent} from './city-calendar.js';
+import {worldKnowledgeSources} from './contracts/knowledge-records.js';
 function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}
 const issuer='native:world-sanctioned-source';
 function terms(db,guild,hook){
