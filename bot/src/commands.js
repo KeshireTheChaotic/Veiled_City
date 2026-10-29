@@ -2,7 +2,8 @@ import {nativeCombatantLine as combatantLine} from './framework-to-framework/dag
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
 import {
   PermissionFlagsBits,
-  AttachmentBuilder
+  AttachmentBuilder,
+  MessageFlags
 } from "discord.js";
 import { dualityRoll, parseDice } from "./frameworks/daggerheart/public.js";
 import { establishFact } from "./epistemic.js";
@@ -438,7 +439,25 @@ async function recoverDowntimeOutput(db,guild,job){
  *
  * @returns {Promise<boolean>} True when the interaction was handled.
  */
+/** discord.js deprecates the `ephemeral` reply option; translate it once to MessageFlags.Ephemeral for every reply path. */
+export function translateEphemeralReplies(interaction){
+  for(const method of ['reply','deferReply','followUp']){
+    const original=interaction?.[method];
+    if(typeof original!=='function'||original.ephemeralTranslated)continue;
+    const translated=function(payload){
+      if(payload&&typeof payload==='object'&&'ephemeral' in payload){
+        const {ephemeral,...rest}=payload;
+        payload=ephemeral?{...rest,flags:(Number(rest.flags)||0)|MessageFlags.Ephemeral}:rest;
+      }
+      return original.call(this,payload);
+    };
+    translated.ephemeralTranslated=true;interaction[method]=translated;
+  }
+  return interaction;
+}
+
 export async function handleCommand(interaction,{db,gm,voice=null}){
+  translateEphemeralReplies(interaction);
   const assembly=interaction.guildId&&interaction.isChatInputCommand()&&interaction.options.getSubcommand()==='assemble'
     &&(interaction.commandName==='vc-session'||interaction.commandName==='vc'&&interaction.options.getSubcommandGroup()==='session');
   if(!assembly||currentTurnTrace())return handleCommandBody(interaction,{db,gm,voice});

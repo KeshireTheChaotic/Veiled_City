@@ -566,7 +566,7 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,outputErrors.length?"needs_recovery":"delivered",outputErrors.length?{terminalCode:"PUBLICATION_FAILED",errorRef:outputErrors[0].ref}:{});
 }
 
-client.once("ready",()=>{
+client.once("clientReady",()=>{
   db.markAllInterruptedPublicationsUncertain();
   for(const guild of client.guilds.cache.values()){
     try{resumeAutonomousPvpFear(db,guild.id,{limit:12});}
