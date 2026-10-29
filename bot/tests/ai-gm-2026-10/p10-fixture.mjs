@@ -4,8 +4,8 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {VeiledDB} from '../../src/db.js';
 import {GMService} from '../../src/gm.js';
-import {scheduleSessionOpening} from '../../src/session-opening.js';
-import {prepareOpeningEntryOpportunity} from '../../src/session-opening-attendance.js';
+import {scheduleSessionOpening} from '../../src/frameworks/session/public.js';
+import {prepareOpeningEntryOpportunity} from '../../src/frameworks/session/public.js';
 import {assemblyHookSources} from '../../src/assembly-context.js';
 import './compose-startup.mjs';
 export function barrier(){let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve};}

@@ -17,7 +17,7 @@ import '../../src/authored-turn-envelope.js';
 import '../../src/turn-attempts.js';
 import '../../src/pvp-fear-moves.js';
 import '../../src/tracked-turn.js';
-import '../../src/session-opening-runner.js';
+import '../../src/application/workflows/session-opening-runner.js';
 import {initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations,initializeNpcStrategy,initializeNpcEvidenceProjection,initializeNpcCognition,initializeNpcConversations,initializeWorldCandidateContext,initializeWorldNpcOpportunity,initializeNativeNpcEvidence,initializeOperationsNpcReview,initializeNativeEnvironmentAudience,initializeNativeWorldEvidence,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals,initializeKnowledgeSession,initializeCharacterSession,initializePersonalContinuity,initializeSessionIntent,initializeOperationsWorldOverview,initializeWorldNativeEncounter,initializePersistenceKnowledge,initializePersistenceWorld,initializeNarrativePersistence,initializePublicationSession,initializeIntentKnowledge,initializePublicationWorld} from '../../src/application/composition/public.js';
 
 initializeWorldActorControl();

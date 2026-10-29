@@ -89,7 +89,7 @@ function locationIdentityMatches(row,name){
   const expected=normalize(name),values=[row?.entity_key,row?.state?.name,row?.state?.title,row?.state?.display_name];
   return !!expected&&values.filter(Boolean).some(value=>normalize(value)===expected);
 }
-function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_WORLD"});}
+function fail(message){throw Object.assign(new Error(message),{code:"AUTONOMOUS_WORLD",diagnostic:{category:message}});}
 function closed(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>closed(s,value));
   if(schema.enum)return schema.enum.includes(value);

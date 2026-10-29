@@ -7,6 +7,7 @@ import {applyAuthoritativeMutation} from '../../src/state.js';
 import {nativeDirectorNarrativeSource} from '../../src/narrative-director-source.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS} from '../../src/frameworks/narrative/writer-contract-v9.js';
 import {actToNativeUnit} from '../../src/narrative-writer-v9.js';
+import {PLAYER_INTENT_PROMPT} from '../../src/typed-intents.js';
 
 test('writer schema constrains act ids to the narrative unit id rule', () => {
   const id = narrativeResponseV9Schema.properties.acts.items.anyOf[0].properties.id;
@@ -29,6 +30,18 @@ test('writer instructions require persisting newly described places players may 
   assert.match(NARRATIVE_V9_INSTRUCTIONS, /parent_location_key set to the current location/);
   // establishment only runs for an entity that some act is placed at.
   assert.match(NARRATIVE_V9_INSTRUCTIONS, /the act describing it must use that key as its location_key/);
+});
+
+test('writer can produce an actionable lead through the native lead unit kind', () => {
+  assert.ok(narrativeResponseV9Schema.properties.acts.items.anyOf[0].properties.kind.enum.includes('lead'));
+  const unit = actToNativeUnit({id:'archive-lead',task_id:'investigate',kind:'lead',speaker_key:'',location_key:'station',
+    text:'A brass token stamped with the east-road bathhouse mark lies beneath the counter.',source_refs:[]}, {scope:{mode:'party'}});
+  assert.equal(unit.kind,'lead');
+  assert.equal(unit.epistemic,'observation');
+});
+
+test('ordinary established travel is not blocked only because it takes time', () => {
+  assert.match(PLAYER_INTENT_PROMPT, /distance, crossing town, transit time or elapsed time alone are not obstacles/);
 });
 
 test('model paragraph breaks become spaces while other text is kept exactly', () => {

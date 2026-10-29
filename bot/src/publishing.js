@@ -282,6 +282,13 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false,be
       subjectCharacterId:row.visibility==="character"?row.target_character_id:null,content:row.payload});
     return {messageId:message.id,channelId:ch.id};
   },{forceUncertain,beforeSend});
+  const publicationIds=new Set(db.listTurnPublications(guild.id,turnId).map(row=>row.id));
+  const leads=db.listCityRecords(guild.id,{kind:'narrative_delivery',includeGM:true,limit:500})
+    .filter(job=>job.status==='acknowledged_to_audience'&&job.data.lead_thread&&job.data.publications.some(id=>publicationIds.has(id)))
+    .map(job=>db.getThread(guild.id,job.data.lead_thread)).filter(Boolean)
+    .map(row=>({type:'thread',row,publish:['party','public'].includes(row.visibility)}));
+  if(leads.length)try{await publishEventResults({db,guild,results:leads});}
+    catch(error){console.error('Narrative lead case-board publication failed',error);}
   const pending=db.listTurnPublications(guild.id,turnId).filter(row=>row.status!=="delivered");
   db.updateTurnAttempt(turnId,{stage:pending.length?"needs_recovery":"delivered",
     terminalCode:pending.length?"PUBLICATION_PENDING":null,errorRef:pending[0]?.last_failure||null});

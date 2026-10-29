@@ -32,11 +32,17 @@ export function coordinateNarrative(db,guild,result,{scope,sourceRef,movement=fa
 export function creativeBrief(ctx,result,input){
   const selected=briefs.get(result)||{tasks:[taskFor(input.operation)||'scene'],speakers:[]};
   const sourceTasks=narrativeTasks(ctx.db,ctx.binding.guild,result,ctx.scope,ctx.sourceRef),pendingRoll=sourceTasks.some(t=>t.kind==='pending_roll');
+  const requestedPlaces=sourceTasks.filter(t=>t.kind==='held_move'&&!t.binding.target&&t.binding.target_phrase)
+    .map(t=>({task_id:t.id,phrase:t.binding.target_phrase})).slice(0,4);
   return {version:1,tasks:selected.tasks,priority:pendingRoll?'set_up_pending_roll':selected.tasks.includes('conversation')?'answer_or_react_as_npc':'ground_the_situation',
-    source_tasks:sourceTasks,
+    source_tasks:sourceTasks,requested_places:requestedPlaces,
     speakers:ctx.packet.npcs.filter(n=>!n.human_controlled&&selected.speakers.includes(n.key)).map(n=>n.key),
     viewpoint:ctx.binding.viewpoint,source_refs:[ctx.sourceRef,...input.source_refs],
     response_obligation:'Address every requested task coherently in ONE response; preserve uncertainty and leave player decisions open.',
     constraints:['No new native outcomes.','No PC or proxy agency.','No hidden or cross-audience knowledge.',
-      ...(pendingRoll?['A pending_roll task awaits the player\'s dice: show the attempt beginning and how the scene or NPC reacts to the attempt itself, never its success, failure, agreement, refusal or result.']:[])]};
+      ...(pendingRoll?['A pending_roll task awaits the player\'s dice: show the attempt beginning and how the scene or NPC reacts to the attempt itself, never its success, failure, agreement, refusal or result.']:[]),
+      ...(sourceTasks.some(t=>t.kind==='held_move')?[requestedPlaces.length
+        ?'A held_move task did not move the character: they are still at the current location. Never narrate their departure, journey or arrival; only the scene-description act establishing an explicitly requested adjacent place may use its new location key.'
+        :'A held_move task did not move the character: they are still at the current location. Never narrate their departure, journey or arrival elsewhere; place every act at the current location.']:[]),
+      ...(requestedPlaces.length?['A requested destination is not established. Establish a matching requested place in fiction_delta as an adjacent location whose parent is the current location, and place only its scene-description act at that location. This persists a target for a later move; it does not move the character now.']:[])]};
 }

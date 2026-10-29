@@ -35,7 +35,12 @@ function establishNativeNarrativeEntity(db,guild,input,context,{content=null}={}
       fail('Native identity replay is immutable; an altered definition cannot reuse its original authorship receipt.');
     return existing;
   }
-  assertIndependentWorldIdentity(input,source);
+  const drafts=db.listCityRecords(guild,{kind:'narrative_draft',includeGM:true,limit:100}).filter(row=>row.status==='drafted_private'
+    &&row.source_event===binding.source&&row.data?.issuer==='native:narrative-authority'&&hash(row.data.binding)===hash(binding)),
+    brief=drafts.length===1?drafts[0].data.creative_brief:null,requestedPhrases=(brief?.requested_places||[])
+    .filter(place=>brief.source_tasks?.some(task=>task.id===place.task_id&&task.kind==='held_move'&&!task.binding.target
+      &&task.binding.target_phrase===place.phrase)).map(place=>place.phrase);
+  assertIndependentWorldIdentity(input,source,{requestedPhrases});
   assertWorldIdentityNames(db,guild,input);
   if(background)validateBackgroundIdentity(db,guild,input,content);
   const check=input.kind==='npc'?preflightNpcIdentity:preflightPlaceIdentity;
