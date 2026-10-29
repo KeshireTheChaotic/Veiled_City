@@ -11,7 +11,7 @@ import {worldNativeMovementChecks} from './frameworks/world/public.js';
 function nativeMovementConditionIssue(...args){return worldNativeMovementChecks.nativeMovementConditionIssue(...args);}
 import {activeCityProxy} from './frameworks/world/public.js';
 import { configureSimulationEntity } from './frameworks/world/public.js';
-import { validateMinorIdentity } from "./city-depth.js";
+import { validateMinorIdentity } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import {stateRevision} from './kernel/state-revision.js';
 import { resolvePlaceReference, preflightPlaceIdentity, preflightNpcIdentity } from "./frameworks/world/public.js";

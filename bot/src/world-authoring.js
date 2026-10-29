@@ -4,7 +4,7 @@ import { requireCitySource, updateCityCore } from './frameworks/world/public.js'
 import { configureSimulationEntity } from './frameworks/world/public.js';
 import {worldStoryContinuity} from './frameworks/world/public.js';
 function configureMystery(...args){return worldStoryContinuity.configureMystery(...args);}
-import { validateMinorIdentity } from "./city-depth.js";
+import { validateMinorIdentity } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 const kinds=["faction","location","institution","npc","mystery","relationship"];
 function materialize(db,content,guildId,input,actorId){

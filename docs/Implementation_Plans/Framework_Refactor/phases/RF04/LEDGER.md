@@ -1083,3 +1083,7 @@ Original service moved to World; four callers adopted World public/Intent/Operat
 ## C194 World upkeep — COMPLETE
 
 Original upkeep/actor bodies extracted unchanged to World; shared feature guard, Application caller public route and root minor workflow retained. Two fresh cases qualified across initial/repair batches, with fixture failure and coverage limits recorded. Syntax5/5 and RF04 ratchet874modules/zero active/errors pass. No transition retired because root still owns minor workflow. Next: minor identity validation/catalog responsibility review. RF04 incomplete; release unauthorized.
+
+## C195 minor identity — COMPLETE
+
+Original catalog/validator bodies moved unchanged into World; root and World callers share same implementation, original source binding retained. Fresh3/3pass,syntax5/5 and RF04 ratchet875modules/zero active/errors pass. No root transition removed because minor planner/review remains. Feature ledger records read-only fixture limits. Next: minor NPC drafting/review integration. RF04 incomplete; release unauthorized.

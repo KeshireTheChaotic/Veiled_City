@@ -1,0 +1,8 @@
+{
+  "bot/src/autonomous-world.js": "f55250f20985643731a40d5fc8086099c7c9b03e4c72931eaf9fc853836a46e5",
+  "bot/src/city-depth.js": "f80b3dfb803f0c69f33ca1794cd879f4a718ec31b8c66f15827529aea51aa277",
+  "bot/src/frameworks/world/public.js": "f9bc75cebe5594fc8db69803b8b090711009d9800539f3e72e9c5293061ab478",
+  "bot/src/world-authoring.js": "a47e4e4b733ca5580acb07d0f0151dbaef0f77dfd190a9b0e0ca828a548bab55",
+  "bot/src/frameworks/world/minor-identity.js": "ac65a589a18cc08e51961033c0f0b7fe62b4c7ff2183abfb42a1bedf1742b1b0",
+  "bot/tests/ai-gm-2026-10/rf04-f01-c95.test.mjs": "6adf7713cca274e9bce8f9b1f59233381711be91ae49ee82b489e2986ce4b9b9"
+}

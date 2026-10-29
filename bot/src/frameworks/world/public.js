@@ -105,3 +105,5 @@ export {manageGroup,proposeContactGroup} from './contact-groups.js';
 
 export {requireWorldFeature} from './feature-enabled.js';
 export {recordCityUpkeep} from './upkeep.js';
+
+export {validateMinorIdentity,reservedMinorNpcNames} from './minor-identity.js';
