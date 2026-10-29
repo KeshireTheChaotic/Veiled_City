@@ -1925,7 +1925,7 @@
         "occurrences": 29
       },
       "public_api": "bot/src/framework-to-framework/intent--world/public.js",
-      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open."
+      "scope": "NPC Director proposal schema only. Other Intent/World integrations remain explicit migration work. C09 adopts the exact Intent delegation-policy reader for one World execution runtime. Other observed integrations remain open. C31 original dispatcher consumes exact native World primitives/inspectors/institution submission and execution through fixed Intent-owned capabilities. No native rule/receipt or approval copied; broader dispatcher decomposition remains open. C179 also routes Intent’s existing attemptCityInfluence call through the existing Intent-owned intentWorldOperations port, bound to the original World function by the existing Intent–World adapter. This is callable state-changing behavior: the original function may persist a transmission, receiver update, influence_action record, and audit in its existing transaction; the port adds no authority, policy, or saved effect."
     },
     {
       "pair": "knowledge--narrative",

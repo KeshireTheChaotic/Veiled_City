@@ -1,0 +1,54 @@
+{
+  "phase": "RF04-F04-C178",
+  "status": "focused changed-code test passed; RF04 passed; RF05 ratchet remains failing",
+  "checkout": "4a9482f606d985c7e7ba76d92328bcea4516ea7a",
+  "runDate": "2026-10-29",
+  "sharedBatch": {
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f04-c178.test.mjs tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+    "cwd": "bot/",
+    "exitCode": 1,
+    "tests": 2,
+    "passed": 1,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 285.0318,
+    "persistentLogPath": null,
+    "outputEvidence": "Blocking exec terminal output; no persistent local log was written.",
+    "case": "C178 Session opening service test passed. C179 child script failed to parse because the test assertion message contained an unescaped apostrophe; no C179 assertion ran."
+  },
+  "targetedRepair": {
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap --test-name-pattern='World civic retirement preserves canonical functions' tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+    "cwd": "bot/",
+    "exitCode": 0,
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 579.8316,
+    "persistentLogPath": null,
+    "outputEvidence": "Blocking exec terminal output; no persistent local log was written.",
+    "note": "C179-only repair run; the already-passing C178 test was not rerun."
+  },
+  "syntax": {
+    "embeddedChildScripts": {"command": "Extract each child script and run node --check --input-type=module -", "passed": 2, "exitCode": 0},
+    "changedJavaScript": {"command": "node --check on all changed production JS plus both new tests", "files": 15, "passed": 15, "exitCode": 0}
+  },
+  "architecture": {
+    "RF04": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04", "exitCode": 0, "pass": true, "sourceModules": 842, "unowned": 0, "importOccurrences": 3458, "internalImportOccurrences": 3274, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1223, "acceptedLegacyOccurrences": 1223, "activeViolationGroups": 0, "transitionErrors": 0},
+    "RF05": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05", "exitCode": 1, "pass": false, "sourceModules": 842, "unowned": 0, "importOccurrences": 3458, "internalImportOccurrences": 3274, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1223, "acceptedLegacyOccurrences": 1168, "activeViolationGroups": 55, "transitionErrors": 55, "firstErrorExamples": ["LEGACY_MODULE_LOCATION bot/src/action-continuation.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-context.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-state.js owner=session", "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js owner=world", "LEGACY_MODULE_LOCATION bot/src/character-observation.js owner=character"]}
+  },
+  "hashes": {
+    "test": "F392CF5890CE2350671249CA70AE3E5813E5DCA44C8708D73C8B7A8ED43AA2B1",
+    "service": "61605ACD19B96B417BFB9169CAB52EB32A8B16D99157BA1BA16175C6B92A88BD",
+    "sessionFactoryDependency": "BD51DA108D8FE4CE33A056EBE1DE2F58A2225B3656C1A1E8E730E7664CBB67F0",
+    "sessionPublic": "0A62E97C65E8B22ECC19D47CBB8462080444AE7BD7C5503E8B9B5B748460CB32",
+    "publicationEvidencePort": "A8DEDCB66DEF13846B039FAC3144CA72E017E7D86BD521FC8CC502A1DBDD0BED",
+    "publicationSessionAdapter": "AEFAD05296273B736859F2EA54B24B01A2C6B0D2C9231F4E1B74498239F12AEE",
+    "pvpOutput": "807FFFA3C38D33D4C8F52484F7DF13AE4FE1DB1826A1A7DDF9501DDABD189AAD",
+    "commands": "42EEB87B18D2FA64BA571803889652035DD9ECCF40B7864451A0C8BEDF3E4EF7",
+    "transitions": "F79F8E728FCF039868D44F62BF01B8DB41A12E85030627A7E8FA0769C517B459",
+    "retiredRecords": "D4A0C9F432F589637A41006A2E4813500D3859252F507D3C85C4D02C338D634C"
+  }
+}

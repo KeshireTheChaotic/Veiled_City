@@ -1,0 +1,54 @@
+{
+  "phase": "RF04-F01-C179",
+  "status": "focused changed-code test passed; RF04 passed; RF05 ratchet remains failing",
+  "checkout": "4a9482f606d985c7e7ba76d92328bcea4516ea7a",
+  "runDate": "2026-10-29",
+  "sharedBatch": {
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap tests/ai-gm-2026-10/rf04-f04-c178.test.mjs tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+    "cwd": "bot/",
+    "exitCode": 1,
+    "tests": 2,
+    "passed": 1,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 285.0318,
+    "persistentLogPath": null,
+    "outputEvidence": "Blocking exec terminal output; no persistent local log was written.",
+    "case": "C179 child script failed to parse because an assertion message contained an unescaped apostrophe; no C179 assertion ran."
+  },
+  "targetedRepair": {
+    "command": "node --import ./scripts/offline-guard.mjs --test --test-concurrency=1 --test-reporter=tap --test-name-pattern='World civic retirement preserves canonical functions' tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+    "cwd": "bot/",
+    "exitCode": 0,
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 579.8316,
+    "persistentLogPath": null,
+    "outputEvidence": "Blocking exec terminal output; no persistent local log was written.",
+    "note": "C179-only test after fixing the test script quote; no passing case was rerun."
+  },
+  "syntax": {"embeddedChildScripts": {"command": "Extract each child script and run node --check --input-type=module -", "passed": 2, "exitCode": 0}, "changedJavaScript": {"command": "node --check on all changed production JS plus both new tests", "files": 15, "passed": 15, "exitCode": 0}},
+  "architecture": {
+    "RF04": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF04", "exitCode": 0, "pass": true, "sourceModules": 842, "unowned": 0, "importOccurrences": 3458, "internalImportOccurrences": 3274, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1223, "acceptedLegacyOccurrences": 1223, "activeViolationGroups": 0, "transitionErrors": 0},
+    "RF05": {"command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05", "exitCode": 1, "pass": false, "sourceModules": 842, "unowned": 0, "importOccurrences": 3458, "internalImportOccurrences": 3274, "cycleComponents": 2, "largestCycle": 79, "rawViolationOccurrences": 1223, "acceptedLegacyOccurrences": 1168, "activeViolationGroups": 55, "transitionErrors": 55, "firstErrorExamples": ["LEGACY_MODULE_LOCATION bot/src/action-continuation.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-context.js owner=session", "LEGACY_MODULE_LOCATION bot/src/assembly-state.js owner=session", "LEGACY_MODULE_LOCATION bot/src/autonomous-world.js owner=world", "LEGACY_MODULE_LOCATION bot/src/character-observation.js owner=character"]}
+  },
+  "qualificationLimits": ["The Intent path test proves the pre-composition port guard, original-call error identity, one invocation, and guild forwarding; it does not prove a successful influence mutation or full actor/payload/return forwarding.", "The GM command test proves one community update reaches World public behavior and writes one audit mutation using an in-memory fake; it is not production database or Discord deployment qualification.", "The civic array's canonical module identity, public export route, source binding statement, and retired root path are checked; no inherited test fixture or suite was used."],
+  "hashes": {
+    "test": "54AD2932B296BE4AA844AD483DAA20B77061C9879DA902B6AA9DB1551447F819",
+    "worldCivic": "58978B94887AF235701C2FAADA650F4FE033606FDB1417330C7A9A1AB84E0D41",
+    "intentOperationsPort": "26F2AAEF19254E9D2A132EEC7CFB226125B583997FEDA759DD704B07200FB878",
+    "intentWorldAdapter": "B66A21DD299E21C557FF34A1375C9B9C2DD887D212EABE654F611482103CA1FD",
+    "aiIntents": "EDC85BDE196DD0BB4B979D26A1AA818EBFFE3A8780EEF9AEEE18C73100A1881B",
+    "cityConsequences": "FF15C8A693B0E6EEF7EA48D17B491CAF34E1FB49A5790145498267EAF70A7EA3",
+    "cityCommands": "031B58DD128BCEE1C408DD0628196CBD5838642B90BC8930EF23875D9A94927E",
+    "simulation": "0FA98B0D1AF52858675F5C96E25DFF3A6E8EC84217294D29EADF5AFDC2437C1C",
+    "removedRootPrechange": "7557FAF272194591577249FA34E110EA8FCB955510EAC3F44AC3C9BFA46624C3",
+    "transitions": "F79F8E728FCF039868D44F62BF01B8DB41A12E85030627A7E8FA0769C517B459",
+    "bridgeRegistry": "547C6FCD09E78E6A02FCF644301152297937F21EDEA954263A832E6F09F3E69C",
+    "retiredRecords": "75349AF5828AEF2ED9DA10846933509D08210EE7A30F12B576346D05AF37ED53"
+  }
+}

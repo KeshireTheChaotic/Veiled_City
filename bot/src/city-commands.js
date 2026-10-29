@@ -4,7 +4,7 @@ import { PermissionError } from "./kernel/errors.js";
 import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from "./city-calendar.js";
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
   establishCommitment, configureCityFlags, proposeCityOpportunity, runInstitutionDirector } from "./city-core.js";
-import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./city-civic.js";
+import { CIVIC_KINDS, updateCityCivic, connectCity, changeCityService, reviewCivicChange, transmitCityBelief, historyContext } from "./frameworks/world/public.js";
 import { recordCityUpkeep, draftMinorNpc, reviewMinorNpc } from "./city-depth.js";
 import { reviewOrganization } from "./owned-community.js";
 

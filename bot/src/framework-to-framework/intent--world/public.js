@@ -24,6 +24,6 @@ import {worldIntentValidation} from '../../frameworks/world/public.js';
 export function connectWorldIntentValidation(){return worldIntentValidation.bind({validateIntent});}
 
 import {intentWorldOperations} from '../../frameworks/intent/public.js';
-import {prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference} from '../../frameworks/world/public.js';
-/** Bind World's original native operation grants, receipts and place lookup to Intent's fixed consumer. */
-export function connectIntentWorldOperations(){return intentWorldOperations.bind({prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference});}
+import {prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference,attemptCityInfluence} from '../../frameworks/world/public.js';
+/** Bind World's original operations, receipts, place lookup and callable city influence to Intent's fixed consumer. */
+export function connectIntentWorldOperations(){return intentWorldOperations.bind({prepareNativeWorldOperation,nativeWorldOperationAllows,nativeWorldOperationOrigin,inspectNativeWorldOperationReceipt,nativeWorldOperationCatalog,nativeWorldStrategyScope,resolvePlaceReference,attemptCityInfluence});}

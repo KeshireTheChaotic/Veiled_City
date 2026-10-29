@@ -1,7 +1,7 @@
 /** Typed subscriptions to committed world sources; pending effects never spend, disclose, or fan out without review. */
 import { cityInteger } from './frameworks/world/public.js';
 import { requireCitySource } from "./city-core.js";
-import { changeCityService, transmitCityBelief } from "./city-civic.js";
+import { changeCityService, transmitCityBelief } from "./frameworks/world/public.js";
 import {worldNpcEvidence,worldNpcGoalProposal} from "./frameworks/world/public.js";
 import {jsonKey32 as motivationKey} from "./kernel/json-key32.js";
 const {actorSource}=worldNpcEvidence;

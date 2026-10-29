@@ -1,6 +1,7 @@
 /** Session source composition; native World event issuance is fixed at application bootstrap. */
-import {createSessionOpening,sessionWorldEvents} from './frameworks/session/public.js';
-import {sessionAssemblyContextSource,sessionAssemblyStateSource} from './frameworks/session/public.js';
+import {createSessionOpening} from './session-opening.js';
+import {sessionWorldEvents} from './contracts/world-events.js';
+import {sessionAssemblyContextSource,sessionAssemblyStateSource,sessionOpeningSource} from './contracts/opening-sources.js';
 const {assemblyInputFingerprint}=sessionAssemblyContextSource,{assemblyPlanHash}=sessionAssemblyStateSource;
 const opening=createSessionOpening({assemblyInputFingerprint:(...args)=>assemblyInputFingerprint(...args),assemblyPlanHash:(...args)=>assemblyPlanHash(...args),indexWorldEvent:(...args)=>sessionWorldEvents.indexWorldEvent(...args)});
 export function rebaseSessionOpening(...args){return opening.rebaseSessionOpening(...args);}
@@ -12,6 +13,5 @@ export function assertSessionOpeningAttempt(...args){return opening.assertSessio
 export function rebindSessionOpeningRefresh(...args){return opening.rebindSessionOpeningRefresh(...args);}
 export function bindSessionOpeningTurn(...args){return opening.bindSessionOpeningTurn(...args);}
 export function assertSessionOpeningPublication(...args){return opening.assertSessionOpeningPublication(...args);}
-import {sessionOpeningSource} from './frameworks/session/public.js';
 // Provide this module's original session opening functions to the fixed Session slot; no other authority is granted.
 sessionOpeningSource.bind({inspectSessionOpening,beginSessionOpeningAttempt,assertSessionOpeningAttempt,assertSessionOpeningFence,rebaseSessionOpening,bindSessionOpeningTurn,rebindSessionOpeningRefresh});

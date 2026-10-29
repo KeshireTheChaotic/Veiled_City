@@ -1,6 +1,6 @@
 # RF04-F04 C178 — Move Session opening composition into Session
 
-**Status:** read-only scope proposal; no production or transition-manifest edits and no tests run.  
+**Status:** implemented; see `C178-SCOPE.md` for frozen source hashes, exact transition archive, rollback, and qualification status.
 **Reviewed HEAD:** `8bd7667708cfa7eb38a9a21eec8fa30b9801075a`, with concurrent C165–C167/C175 working-tree changes and C176/C177 proposals present.  
 **Authorization:** cite `phases/RF04/RF06-PREREQUISITE-AUTHORIZATION.md` for only the two exact RF06 caller repoints below; that authorization does not approve broader RF06 work.
 

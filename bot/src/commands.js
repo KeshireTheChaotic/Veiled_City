@@ -27,7 +27,7 @@ import {normalizeNarrativeMarkdown,narrativeRelativePath} from './frameworks/cha
 import {createNarrativeExportPackage} from './character-narrative.js';
 import {
   buildSessionRosterReport, chunkRosterReport, assemblyReadiness,
-  registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity
+  registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity, scheduleSessionOpening
 } from "./frameworks/session/public.js";
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
@@ -55,7 +55,6 @@ import { publishSimulationHooks } from "./publishing.js";
 import { handleSimulationCommand } from "./simulation-commands.js";
 import { handleCityCommand } from "./city-commands.js";
 import { handleStoryCommand } from "./story-commands.js";
-import {scheduleSessionOpening} from './session-opening.js';
 import { recordCharacterArrival,scenePresence } from "./scene-continuity.js";
 import { personalCharacter, personalArc, discoverPersonal, personalInbox } from "./personal-continuity.js";
 import { consentOffers } from "./consent-native.js";

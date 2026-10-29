@@ -4,6 +4,7 @@ import { requireCitySource, requireCityRecord, cityStrings, requireWorldLocation
 import { INSTITUTION_ACTIONS } from './city-core-rules.js';
 import { activeCityProxy } from './active-proxy.js';
 import {worldNpcEvidence} from './contracts/npc-evidence.js';
+import {worldCityCivicSource} from './contracts/root-sources.js';
 const {actorSource}=worldNpcEvidence;
 import { validateServiceAccess } from './civic-service-source.js';
 
@@ -226,6 +227,8 @@ export function attemptCityInfluence(db,guild,input,actor){
     cityAudit(db,guild,"influence_response",key,null,after,actor);return after;
   });
 }
+
+worldCityCivicSource.bind({updateCityCivic});
 export {historyContext} from './history-context.js';
 /** Successful NPC repairs/sabotage affect only explicitly linked small service networks; major changes remain GM-reviewed. */
 
