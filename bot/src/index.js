@@ -1,3 +1,4 @@
+import {initializeOperationsDiscord} from './application/composition/public.js';
 import {initializePublicationDiscord} from './application/composition/public.js';
 import {initializeIntentNarrative,initializeNarrativeOperations,initializeDiscordNarrative,initializePublicationNarrative,initializeContentWorld,initializeSessionAssemblyState,initializeDiscordSessionPrincipal,initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations,initializeNpcStrategy,initializeNpcEvidenceProjection,initializeNpcCognition,initializeNpcConversations,initializeWorldCandidateContext,initializeWorldNpcOpportunity,initializeNativeNpcEvidence,initializeOperationsNpcReview,initializeNativeEnvironmentAudience,initializeNativeWorldEvidence,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals,initializeKnowledgeSession,initializeCharacterSession,initializePersonalContinuity,initializeSessionIntent,initializeOperationsWorldOverview,initializeWorldNativeEncounter,initializePersistenceKnowledge,initializePersistenceWorld,initializeNarrativePersistence,initializePublicationSession,initializeIntentKnowledge,initializePublicationWorld,initializeKnowledgeOperations,initializePublicationKnowledgeNarrativeMemory} from './application/composition/public.js';
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
@@ -28,7 +29,7 @@ import {queueDirectorAfterPartyTurn} from "./frameworks/world/public.js";
 import {blockedMutationRows,describeBlockedAction} from "./frameworks/publication/public.js";
 import {lowConfidenceReviewItems,normalizeDirectorConfidence} from "./application/workflows/public.js";
 import { splitDiscordText } from "./discord/chunking.js";
-import { assertPlayerPrivateChannel } from "./discord/privacy.js";
+import { assertPlayerPrivateChannel } from './frameworks/discord/public.js';
 import { createLogger } from "./frameworks/operations/public.js";
 import { runNpcDirector } from "./frameworks/world/public.js";
 import { publishSimulationHooks } from "./publishing.js";
@@ -95,6 +96,7 @@ initializeNarrativePersistence();
 initializePublicationSession();
 initializePublicationWorld();
 initializePublicationDiscord();
+initializeOperationsDiscord();
 const config=loadConfig();
 const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});

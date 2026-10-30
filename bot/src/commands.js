@@ -44,7 +44,7 @@ import { PermissionError, NotFoundError, StateConflictError, UserInputError } fr
 import {isExpectedError} from './frameworks/operations/public.js';
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
 import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
-import { runCampaignDiagnostics, formatDiagnostics } from "./operations/diagnostics.js";
+import { runCampaignDiagnostics, formatDiagnostics } from './frameworks/operations/public.js';
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
 import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';

@@ -1276,36 +1276,37 @@
         "discord",
         "operations"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
-        {
-          "from": "discord",
-          "to": "operations",
-          "import_occurrences": 4,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
         {
           "from": "operations",
           "to": "discord",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Read-only original diagnostic channel fetch and privacy validators, preserving Promise/error and current effective permission behavior."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/discord/interaction-lifecycle.js",
-          "to": "bot/src/operational-metrics.js",
+          "from": "bot/src/framework-to-framework/discord--operations/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--operations/public.js",
+          "to": "bot/src/frameworks/operations/public.js",
           "line": 2,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fixed Operations-owned consumer requires all three original functions, fails uncomposed, rejects replacement; only fetch/validate capabilities, no sends or permission changes. Original diagnostic issue text and read-only data access preserved.",
+      "lifecycle": "Explicit index startup binding before DB/client construction; fresh RF startup helper mirrors it. Original root privacy and diagnostics files retired after zero active source/supported CLI callers and fresh final-path coverage.",
+      "adoption_feature": "RF06-F03",
+      "consumers": [
+        "bot/src/application/composition/operations-discord.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf06-f03-c07.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "discord",
@@ -1325,7 +1326,9 @@
         "pair": "discord--operations",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 5
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/discord--operations/public.js",
+      "scope": "R07 diagnostic privacy adoption only; remaining Discord interaction telemetry is separately accountable."
     },
     {
       "pair": "discord--persistence",

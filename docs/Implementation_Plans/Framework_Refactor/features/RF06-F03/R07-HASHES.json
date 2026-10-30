@@ -1,0 +1,15 @@
+{
+  "bot/src/commands.js": "c8b20226c1a345cb48c9a498136ac772ca914982d3751f49a74cda0558d1297d",
+  "bot/src/index.js": "936c9b9039ab733baaa25df80b4a7707a7ae43130259ac256c45c917d0d45a19",
+  "bot/src/frameworks/operations/diagnostics.js": "0f14a9559b1db01ad6239e31327772db90c52f412b82fca710e6c87bcc06997b",
+  "bot/src/frameworks/operations/contracts/discord-diagnostics.js": "0ecb0786314765d75b4bc8484054c5e7178b2e5af1cb9a241ef3ab518c806013",
+  "bot/src/frameworks/operations/public.js": "30af0cf3e1c25b5986213e9ae3f1ed9a911549010dff1717acba2c2b58dbb3fc",
+  "bot/src/frameworks/discord/diagnostic-channel.js": "0e875fe79cbdb04d2c0bad44ddfd14ab41019ed8648713fa51269772a37fbf67",
+  "bot/src/frameworks/discord/public.js": "cdf753beae95d3fa95bfeb3c01b08790189f66a3e697a326ae72efdb12d62dce",
+  "bot/src/framework-to-framework/discord--operations/public.js": "a3d88efec1832ffab808d41bec71b82a8a923e7fbfc2ebf036b99f5399d78f30",
+  "bot/src/application/composition/operations-discord.js": "7675b2265ba8dbb769595fc2e98b1cc9c15f7720b8481c0b9a49fe045a6fef35",
+  "bot/src/application/composition/public.js": "26796515fd7de592f06d91b6ec0a77e81bad33db36d02f172561bf5de2ad9f0a",
+  "bot/tests/ai-gm-2026-10/compose-startup.mjs": "07d3bcfc939c6e7c61f98c32443862b4453550c6468931730cf4b7de55bd6622",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c07.test.mjs": "7cd247d7c6aafc3e770a0479120650b6334f5f6114ee3c456204092247296b9c",
+  "bot/tests/ai-gm-2026-10/rf06-f03-r03.test.mjs": "b031100faaf222a93f6637b596502e0fe6fe44043e517b37d924b46fa46ff913"
+}

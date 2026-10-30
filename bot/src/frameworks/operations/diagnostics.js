@@ -7,9 +7,10 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "../discord/privacy.js";
-import { validateChannelRouting } from "../routing-diagnostics.js";
-import { operationalMetrics } from "../operational-metrics.js";
+import {operationsDiscordDiagnostics} from './contracts/discord-diagnostics.js';
+const {fetchDiagnosticChannel,assertGmOnlyChannel,assertPlayerPrivateChannel}=operationsDiscordDiagnostics;
+import { validateChannelRouting } from "./routing-validation.js";
+import { operationalMetrics } from "./operational-metrics.js";
 
 export async function runCampaignDiagnostics({db,guild}){
   const data=db.doctorData(guild.id);
@@ -59,7 +60,7 @@ export async function runCampaignDiagnostics({db,guild}){
   ]){
     if(!id){ issues.push(`${label} channel is not configured.`); continue; }
     try{
-      const channel=await guild.channels.fetch(id);
+      const channel=await fetchDiagnosticChannel(guild,id);
       if(!channel?.isTextBased()) issues.push(`${label} channel is missing/not text-based.`);
       else if(privacy==="gm"){
         assertGmOnlyChannel({guild,channel,gmRoleId:campaign?.gm_role_id||null});
@@ -70,7 +71,7 @@ export async function runCampaignDiagnostics({db,guild}){
 
   for(const player of db.listPlayers(guild.id).filter(p=>p.private_channel_id)){
     try{
-      const channel=await guild.channels.fetch(player.private_channel_id);
+      const channel=await fetchDiagnosticChannel(guild,player.private_channel_id);
       assertPlayerPrivateChannel({guild,channel,userId:player.discord_user_id,gmRoleId:campaign?.gm_role_id||null});
     }catch(err){ issues.push(`Private channel for ${player.display_name}: ${err.message||err}`); }
   }

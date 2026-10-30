@@ -1,9 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
 import {assertGmOnlyChannel,assertPlayerPrivateChannel} from '../../src/frameworks/discord/privacy.js';
 import {assertGmOnlyChannel as publicGm,assertPlayerPrivateChannel as publicPrivate} from '../../src/frameworks/discord/public.js';
-import {assertGmOnlyChannel as legacyGm,assertPlayerPrivateChannel as legacyPrivate} from '../../src/discord/privacy.js';
 const VIEW=1024n,SEND=2048n,ADMIN=8n,MANAGE=32n;
 const permissions=(...bits)=>({has:flag=>bits.includes(flag)});
 function fixture(){
@@ -17,11 +15,10 @@ function fixture(){
 }
 const rejected=code=>error=>error.name==='PermissionError'&&error.code===code&&error.expected===true;
 
-test('framework/public/compatibility validators share original function identity and moved body',()=>{
-  assert.equal(publicGm,assertGmOnlyChannel);assert.equal(legacyGm,publicGm);
-  assert.equal(publicPrivate,assertPlayerPrivateChannel);assert.equal(legacyPrivate,publicPrivate);
-  const source=readFileSync(new URL('../../src/discord/privacy.js',import.meta.url),'utf8');
-  assert.doesNotMatch(source,/function\s+\w+\s*\(|permissionsFor/);
+test('framework/public validators share original function identity after root facade retirement',()=>{
+  assert.equal(publicGm,assertGmOnlyChannel);
+  assert.equal(publicPrivate,assertPlayerPrivateChannel);
+
 });
 test('private owner/GM/bot channel succeeds without changing permission records',()=>{
   const f=fixture(),before=[...f.grants];

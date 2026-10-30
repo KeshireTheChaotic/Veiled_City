@@ -1,0 +1,15 @@
+✔ framework/public validators share original function identity after root facade retirement (0.4664ms)
+✔ private owner/GM/bot channel succeeds without changing permission records (0.6364ms)
+✔ public or ordinary-role visibility is rejected (0.3394ms)
+✔ other or unresolved account overwrite rejected; owner and bot overwrite accepted (0.2197ms)
+✔ privileged roles and member-specific administrator/manage-guild grants remain allowed (0.132ms)
+✔ configured GM, bot send access and owner visibility errors remain distinct (0.1748ms)
+✔ non-text channel rejected and permission lookup errors propagate unchanged (0.1286ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 414.0796

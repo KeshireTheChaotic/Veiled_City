@@ -75,3 +75,5 @@ Test-path validation is separate from actual execution evidence. Pairs import on
 
 
 Completed R03/R04 Discord channel boundary: original privacy validators and channel lookup now live in Discord. Publication consumes a fixed three-function port, composed through discord--publication before DB/client construction. Source/payload/recovery authority remains in Publication. Exact direction, source lines, consumer and fresh R04 test are registered in RF01/BRIDGE_CONTRACTS.json; historical dependency graph counts above are not current measurements.
+
+R07 adopts discord--operations for original read-only diagnostic channel fetch and privacy validation. Exact public APIs, startup consumer, lifecycle and fresh test metadata are in RF01/BRIDGE_CONTRACTS.json. Both former root helper paths are retired after zero active caller evidence; remaining Discord/Operations telemetry remains separate.

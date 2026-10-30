@@ -13,3 +13,5 @@ Preserve the owner AI GM specification, player control, native mechanics, privat
 ## RF02 current implementation
 
 RF02: logger.js and opening-diagnostics.js moved unchanged and are consumed via public.js. error-policy.js owns application legacy-message classification separated from kernel error classes. Shared metrics/AsyncLocalStorage/latency and mixed diagnostics remain explicit local holds; no duplicate singleton exists.
+
+RF06-F03 R07: read-only campaign diagnostics now lives in diagnostics.js with own routing/metrics imports and a fixed Discord diagnostic consumer. discord--operations binds the original channel fetch/privacy functions at application startup; the diagnostic report does not mutate permissions, send messages or open a database.

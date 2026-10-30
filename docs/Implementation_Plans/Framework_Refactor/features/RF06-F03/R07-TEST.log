@@ -1,0 +1,13 @@
+✔ Operations diagnostic consumer fails uncomposed then binds only the exact original Discord functions (0.7863ms)
+✔ diagnostic channel fetch forwards same Promise and synchronous error without normalization (0.1691ms)
+✔ read-only report checks configured GM/private channels using original validators and same record identities (1.6336ms)
+✔ unsafe GM visibility and failed private fetch remain exact report issues without mutation or sends (0.6847ms)
+✔ original report text and stable startup use final APIs after zero-caller facade retirement (1.2892ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 452.9389

@@ -13,3 +13,5 @@ Preserve the owner AI GM specification, player control, native mechanics, privat
 ## RF02 current implementation
 
 RF02: delivery.js exposes createInteractionTextDelivery with an explicit same-framework splitter capability. commands.js binds the existing splitter once; original reply/edit/follow-up semantics remain. Chunking, privacy and shared acknowledgement/observer lifecycle remain original implementations pending publication/operations ports; no permanent facade or duplicate state was introduced.
+
+R07 completes privacy adoption: index uses Discord public; Operations diagnostics consumes original read-only fetch/privacy capabilities through discord--operations. The old root privacy and diagnostics files have zero active source/supported CLI callers and are removed after fresh replacement tests. Remaining interaction telemetry is outside this completed slice.

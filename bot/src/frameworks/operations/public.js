@@ -22,3 +22,6 @@ export {Session5Reader} from './session5-reader.js';
 export {operationsKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 
 export {operationsPersistenceSnapshot} from './contracts/persistence-snapshot.js';
+
+export {runCampaignDiagnostics,formatDiagnostics} from './diagnostics.js';
+export {operationsDiscordDiagnostics} from './contracts/discord-diagnostics.js';

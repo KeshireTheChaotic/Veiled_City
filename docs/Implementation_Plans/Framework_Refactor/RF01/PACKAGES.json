@@ -206,6 +206,9 @@
     ],
     "intent--narrative": [
       "bot/src/framework-to-framework/intent--narrative/public.js"
+    ],
+    "discord--operations": [
+      "bot/src/framework-to-framework/discord--operations/public.js"
     ]
   },
   "externalCapabilityOwners": {

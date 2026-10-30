@@ -267,17 +267,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "a6fff46a14ae2fa443aa6a0e4a313f501fe916105cee0ddabd03b7228899836d",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/discord/privacy.js",
-      "owner": "discord",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "4bc60c5dd94654ccae93f698e14408a8ca07fba181334803912b92a739006dbd",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/discovery-delivery.js",
@@ -1102,17 +1091,6 @@
       "owner": "operations",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "fbd38efb15b33f68f05fa379e095733cda21e82994e0a54b620b5f8bd35212d3",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/operations/diagnostics.js",
-      "owner": "operations",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
       "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
@@ -2029,20 +2007,6 @@
       "to": "bot/src/idempotency.js",
       "kind": "static",
       "specifier": "./idempotency.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "4390084f45a33c4455ba64e614a29f09a7edcd259f187187002c5675d1799c48",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/operations/diagnostics.js",
-      "kind": "static",
-      "specifier": "./operations/diagnostics.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
@@ -3590,20 +3554,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "a9c339ee02f95cd31bf7cc9d24483951891cc310917f16e4613606ecb2e8ccd2",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/discord/privacy.js",
-      "kind": "static",
-      "specifier": "./discord/privacy.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "6c48a2d1c1056cfb516122b9e5b2f712c04ac96cd2f4e6258aa11f7e1acc00a7",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/index.js",
@@ -4510,20 +4460,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "6f7ea6c4593ffc6fe450103a61dc86869b8481ace5da1e18315b1ee946542483",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/operations/diagnostics.js",
-      "to": "bot/src/discord/privacy.js",
-      "kind": "static",
-      "specifier": "../discord/privacy.js",
-      "owner": "operations",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
