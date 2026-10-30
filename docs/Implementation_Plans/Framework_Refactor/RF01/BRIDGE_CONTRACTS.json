@@ -1377,12 +1377,17 @@
         "discord",
         "publication"
       ],
-      "status": "CONTRACT_ONLY_UNWIRED",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "publication",
           "to": "discord",
           "contract": "send committed outbox row -> original acknowledgement/error"
+        },
+        {
+          "from": "publication",
+          "to": "discord",
+          "contract": "Original text channel lookup and GM/private permission validators through fixed consumer; no source/audience/payload mutation or send retry."
         }
       ],
       "source_evidence": [
@@ -1391,18 +1396,32 @@
           "to": "bot/src/discord/chunking.js",
           "line": 3,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 10,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/publication/public.js",
+          "line": 11,
+          "type": "import"
         }
       ],
-      "validation": "Validate injected callable presence only; preserve source/audience/principal/revision/assertCurrent/receipt fields, Promise/result/error identity; no authority expansion or retries. Native runner keeps policy and acknowledgement ownership.",
-      "lifecycle": "Contract + fresh tests + explicit composition; native adoption and old-edge removal pending.",
+      "validation": "R04 adopts the exact original textChannel/assertGmOnlyChannel/assertPlayerPrivateChannel through one fixed Publication consumer; missing composition/replacement denied. Source/payload and recovery authority remain in Publication. Existing committed-row transport preserves receipt/errors without retries.",
+      "lifecycle": "R04 channel capability binding is invoked by index before DB/client construction and mirrored in fresh RF test composition. General outbox transport contract adoption remains separately accountable.",
       "adoption_feature": "RF06-F03",
       "public_api": "bot/src/framework-to-framework/discord--publication/public.js",
       "consumers": [
-        "bot/src/application/composition/create-opening-services.js"
+        "bot/src/application/composition/create-opening-services.js",
+        "bot/src/application/composition/publication-discord.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f03-c04.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1423,7 +1442,8 @@
         "pair": "discord--publication",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 6
-      }
+      },
+      "scope": "Qualified channel lookup/privacy consumer only; not complete publication/outbox isolation or live Discord permission qualification."
     },
     {
       "pair": "discord--session",

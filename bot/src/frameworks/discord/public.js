@@ -19,3 +19,5 @@ export {registerCommands} from './command-registration.js';
 export {resolveCommandRoute} from './command-route.js';
 
 export {assertGmOnlyChannel,assertPlayerPrivateChannel} from './privacy.js';
+
+export {textChannel} from './text-channel.js';

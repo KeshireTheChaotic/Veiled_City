@@ -49,3 +49,5 @@ export {protectedPvpScope} from './protected-scope.js';
 export {publicationOutcomeProjectionSource} from './contracts/outcome-projection-source.js';
 
 export {publicationNarrativeArtifact} from './contracts/narrative-artifact.js';
+
+export {publicationDiscordChannels} from './contracts/discord-channels.js';

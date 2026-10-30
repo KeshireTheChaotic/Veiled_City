@@ -1,0 +1,15 @@
+✔ fixed Publication channel port fails before composition and rejects replacement after original binding (0.7188ms)
+✔ original lookup preserves missing, nontext and failed fetch unavailability (0.183ms)
+✔ private delivery keeps exact receipts, message audience and pre-send validation after composition (0.9797ms)
+✔ unsafe channel before send permits existing private DM fallback without channel exposure (0.2109ms)
+✔ ambiguous send remains uncertain and never falls through to DM (0.1605ms)
+✔ permission change after first chunk stops remaining chunks without fallback (0.1429ms)
+✔ source guard runs before lookup and production startup composes before database/client construction (0.7091ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 737.7182

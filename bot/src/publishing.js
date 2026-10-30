@@ -6,7 +6,8 @@ import {publicationOpeningDelivery} from './frameworks/publication/public.js';
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID,createHash } from "node:crypto";
 import { splitDiscordText } from "./discord/chunking.js";
-import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
+import {publicationDiscordChannels} from './frameworks/publication/public.js';
+const {textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel}=publicationDiscordChannels;
 import {publicationWorldSimulation} from "./frameworks/publication/public.js";
 const {simulationOverview,acknowledgeSimulationHook}=publicationWorldSimulation;
 import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.js";
@@ -67,13 +68,6 @@ export async function publishSimulationHooks({db,guild,sessionId=null}){
 
 const chunks = splitDiscordText;
 
-async function textChannel(guild,id){
-  if(!id) return null;
-  try{
-    const ch=await guild.channels.fetch(id);
-    return ch?.isTextBased()?ch:null;
-  }catch{return null;}
-}
 
 async function upsertBotMessage({db,guild,channelId,surface,key,content,beforeWrite}){
   const ch=await textChannel(guild,channelId);

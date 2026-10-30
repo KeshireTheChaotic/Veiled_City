@@ -61,3 +61,6 @@ initializePersistenceWorld();
 initializeNarrativePersistence();
 initializePublicationSession();
 initializePublicationWorld();
+
+import {initializePublicationDiscord} from '../../src/application/composition/publication-discord.js';
+initializePublicationDiscord();

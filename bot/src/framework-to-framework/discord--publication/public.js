@@ -6,3 +6,8 @@ export function connectPublicationTransport(transport){
   const discord=createDiscordPublicationCapability(transport);
   return createPublicationTransportPort(row=>discord.sendCommittedPublication(row));
 }
+
+import {textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel} from '../../frameworks/discord/public.js';
+import {publicationDiscordChannels} from '../../frameworks/publication/public.js';
+/** Bind original Discord channel capabilities; never choose an audience or retry a send. */
+export function connectPublicationDiscordChannels(){return publicationDiscordChannels.bind({textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel});}

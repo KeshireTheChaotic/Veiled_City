@@ -60,7 +60,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/discord/chunking.js","bot/src/frameworks/discord/chunking.js","discord","RF02","PILOT_MOVE_CANDIDATE","9","0"
 "bot/src/discord/delivery.js","bot/src/frameworks/discord/delivery.js","discord","RF02","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/discord/interaction-lifecycle.js","bot/src/frameworks/discord/interaction-lifecycle.js","discord","RF02","EXTRACT_PORTS_BEFORE_MOVE","3","1"
-"bot/src/discord/privacy.js","bot/src/frameworks/discord/privacy.js","discord","RF02","EXTRACT_PORTS_BEFORE_MOVE","4","1"
+"bot/src/discord/privacy.js","bot/src/frameworks/discord/privacy.js","discord","RF06","IMPLEMENTATION_MOVED_ROOT_COMPAT_R03_R04","4","1"
 "bot/src/discovery-delivery.js","bot/src/frameworks/publication/discovery-delivery.js","publication","RF06","EXTRACT_PORTS_BEFORE_MOVE","2","2"
 "bot/src/encounter.js","bot/src/frameworks/daggerheart/encounter.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F02+RF04-F04+RF05-F05","17","5"
 "bot/src/engagement-shadow.js","bot/src/frameworks/intent/engagement-shadow.js","intent","RF05","PILOT_MOVE_CANDIDATE","1","0"
