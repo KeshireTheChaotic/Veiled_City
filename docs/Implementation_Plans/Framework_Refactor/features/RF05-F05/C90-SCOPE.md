@@ -1,0 +1,7 @@
+# RF05-F05 C90 — Source-bound semantic proposal validation
+
+Base0f8b2684 (current unrelated AF01 preserved). Move exact version-2 closed proposal fields/identity/replay comparator/validator into Intent with original generic error/hash helpers. Root imports original helper identities and reexports validateProposal; persistence/acceptance/native execution bodies remain exact. No wording/field/bounds/framing/source/owner/outcome-authority change. Fresh owner/offset/replay/attributed-outcome tests, source proofs, syntax and architecture; no Agent B shared registries or Native files.
+
+**Verification complete.** Fresh3/3 passed249.2198ms, exit0; syntax3/3. Original validator/field contract/identity/replay comparator and generic helpers exact except exports; entire remaining typed-intent source exact after import/reexport. Same root function, UTF-16 repeated-occurrence offsets, unchanged source/principal diagnostics, attribution-only outcome claims, non-immediate proposal representation and replay interpretation checks verified. No persistence/Native execution test claim. No registry edits. Shared current1024modules/4104imports/727accepted/zero unowned or active/1cycle60; one pending RF06 R26 commands transition, no C90 diagnostic. Next actual proposal persistence/acceptance and current referent ownership, RF05-F05.
+
+Final shared R26 metadata resolved: RF05 gate passes 1024modules/4104imports/727accepted/zero unowned,active,transition errors/1cycle60.

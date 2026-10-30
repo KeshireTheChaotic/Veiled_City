@@ -56,3 +56,5 @@ export {assertSceneActionSource} from './scene-action-source.js';
 export {captureAuthoredTurnEnvelope,recordNativeConsumedSpans,overlapsConsumedSpan} from './authored-turn-envelope.js';
 
 export {createPlayerIntentContract} from './player-intent-contract.js';
+
+export {proposalFields,proposalIdentity,sameProposal,validateProposal} from './semantic-proposal.js';

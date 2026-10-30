@@ -1,0 +1,31 @@
+{
+  "base": "0f8b2684",
+  "all_moved_bodies_and_helpers_verbatim_except_exports": true,
+  "remaining_root_exact_except_import_and_reexport": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c90.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 249.2198
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/semantic-proposal.js",
+      "sha256": "ca0278dd7565f35806b6d3d7ba5f528067dd028012e34cae642c568318024b65"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "8580f9806ddfb33753a6204c8e7c4fdae41848466ecec0569c76fdaa8ebf4f2b"
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "64b207f3a2249ac9a4665413a0c0246ad56ddbe11241334f0f1558b324089e35"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c90.test.mjs",
+      "sha256": "8bb75db160efb4a4fe1ffa7d880c5c138a8f37050e44ceb72c56ce9fe74aceca"
+    }
+  ]
+}
