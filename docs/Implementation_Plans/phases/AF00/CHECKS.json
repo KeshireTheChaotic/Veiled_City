@@ -1,0 +1,26 @@
+{
+  "phase": "AF00",
+  "head": "d107c4ba2b444e267848d7c4321e81125c87fb47",
+  "command": "node docs/Implementation_Plans/phases/AF00/audit.mjs",
+  "exit_code": 0,
+  "completed": [
+    "153 distinct amendment dispositions match catalog statuses",
+    "153 exact printed-rule and actor-template hashes match",
+    "All feature-linked house-rule source hashes match",
+    "Explicit authored-rule hashes match",
+    "78 supported / 75 review-only; 49 context / 29 other handlers",
+    "All 78 supported handlers have non-registry production references",
+    "Six disposition counts match amendment",
+    "Captured source files and HEAD stable during collection"
+  ],
+  "totals": {
+    "GENERALIZE_EXISTING": 20,
+    "RETIRE_CONTEXT": 49,
+    "RETAIN_PROOF_GATE": 9,
+    "ADD_SHARED_OPS": 42,
+    "GM_JUDGMENT_NATIVE_COSTS": 5,
+    "ADD_DOMAIN_PROOF": 28
+  },
+  "production_tests": "Not run: no production module modified or imported.",
+  "runtime_parity": "Not tested; mandatory before AF01/AF03 deletion."
+}

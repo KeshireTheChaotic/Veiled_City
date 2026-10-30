@@ -1,0 +1,1318 @@
+{
+  "phase": "AF00",
+  "agent": "C",
+  "captured_utc": "2026-10-30T18:36:21.115Z",
+  "head": "d107c4ba2b444e267848d7c4321e81125c87fb47",
+  "branch": "codex/clean-ai-gm-2026-10",
+  "node": "v24.19.0",
+  "amendment_sha256": "ecb3426e3b56c29e767365b3e24b70a038875e05f5a1bed8a9d7b01d2b90db28",
+  "initial_worktree_status": " M AGENTS.md\n D bot/src/authored-turn-envelope.js\n M bot/src/commands.js\n M bot/src/framework-to-framework/daggerheart--intent/public.js\n M bot/src/frameworks/intent/public.js\n M bot/src/frameworks/persistence/database.js\n M bot/src/index.js\n M bot/src/typed-intents.js\n M bot/src/typed-mechanics.js\n M bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c35.test.mjs\n?? bot/src/frameworks/intent/authored-turn-envelope.js\n?? bot/src/frameworks/persistence/administrative-read-repository.js\n?? docs/Implementation_Plans/Framework_Refactor/features/RF05-F05/C88-SCOPE.md\n?? docs/Implementation_Plans/Framework_Refactor/features/RF06-F02/R24-SCOPE.md\n?? docs/Implementation_Plans/Framework_Refactor/features/RF06-F02/R24-STRUCTURE.json\n?? docs/Implementation_Plans/phases/AF00/AUDIT.md\n?? docs/Implementation_Plans/phases/AF00/BASELINE.json\n?? docs/Implementation_Plans/phases/AF00/CHECKS.json\n?? docs/Implementation_Plans/phases/AF00/DEPENDENCIES.json\n?? docs/Implementation_Plans/phases/AF00/LEDGER.md\n?? docs/Implementation_Plans/phases/AF00/MIGRATION_LEDGER.json\n?? docs/Implementation_Plans/phases/AF00/Veiled_City_Autonomous_Feature_Refactor_Amendment.md\n?? docs/Implementation_Plans/phases/AF00/audit.mjs\n",
+  "final_worktree_status": " M AGENTS.md\n D bot/src/authored-turn-envelope.js\n M bot/src/commands.js\n M bot/src/framework-to-framework/daggerheart--intent/public.js\n M bot/src/frameworks/intent/public.js\n M bot/src/frameworks/persistence/database.js\n M bot/src/index.js\n M bot/src/typed-intents.js\n M bot/src/typed-mechanics.js\n M bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c34.test.mjs\n M bot/tests/ai-gm-2026-10/rf04-f05-c35.test.mjs\n?? bot/src/frameworks/intent/authored-turn-envelope.js\n?? bot/src/frameworks/persistence/administrative-read-repository.js\n?? docs/Implementation_Plans/Framework_Refactor/features/RF05-F05/C88-SCOPE.md\n?? docs/Implementation_Plans/Framework_Refactor/features/RF06-F02/R24-SCOPE.md\n?? docs/Implementation_Plans/Framework_Refactor/features/RF06-F02/R24-STRUCTURE.json\n?? docs/Implementation_Plans/phases/AF00/AUDIT.md\n?? docs/Implementation_Plans/phases/AF00/BASELINE.json\n?? docs/Implementation_Plans/phases/AF00/CHECKS.json\n?? docs/Implementation_Plans/phases/AF00/DEPENDENCIES.json\n?? docs/Implementation_Plans/phases/AF00/LEDGER.md\n?? docs/Implementation_Plans/phases/AF00/MIGRATION_LEDGER.json\n?? docs/Implementation_Plans/phases/AF00/Veiled_City_Autonomous_Feature_Refactor_Amendment.md\n?? docs/Implementation_Plans/phases/AF00/audit.mjs\n",
+  "catalog_version": 1,
+  "rules_edition": "Daggerheart SRD 2.0 2026-08-25 + exact Veiled City content",
+  "errata_authority": "owner:ua7-ua11-conflict-resolution:v1",
+  "errata_versions": [
+    {
+      "id": "HR14",
+      "version": 1,
+      "status": "supported",
+      "hash": "3049254e83d5d1e055d1af6d65889b9209eaf72ceccab7ae7fbab654c4ca9929"
+    },
+    {
+      "id": "HR13",
+      "version": 1,
+      "status": "review_only",
+      "hash": "77188557fc64f4b513b3bf35414c9472110bcb56e175571da24bf44244216546"
+    },
+    {
+      "id": "HR01",
+      "version": 1,
+      "status": "supported",
+      "hash": "834f4c47d2d054ed45216846248968b94024d54b2bf4c17be9ebcb5ab2fbbbfd"
+    },
+    {
+      "id": "HR03",
+      "version": 1,
+      "status": "review_only",
+      "hash": "6ca6b3bf21fc91cf876589d7f62de87165c7d278c80dd76b80df8731eb369af7"
+    },
+    {
+      "id": "HR04",
+      "version": 1,
+      "status": "review_only",
+      "hash": "807efc1bdeb4bf9606ece8e0866ffd6f4cdae3ee6f68f297f157095e87bd5daa"
+    },
+    {
+      "id": "HR05",
+      "version": 1,
+      "status": "review_only",
+      "hash": "c99d7336d2a86aea617a38d890418a1d309efdd0ac22d0198768e337b61414d1"
+    },
+    {
+      "id": "HR06",
+      "version": 1,
+      "status": "review_only",
+      "hash": "4e826f33b7c4325428a98afb3884c8d593c95f34cbaca3e5fad6788c721ce4c6"
+    },
+    {
+      "id": "HR07",
+      "version": 1,
+      "status": "review_only",
+      "hash": "b7514cbd630a25bfddbf2efce3c02b1bbd12cde93108ab7bbe614940972aee65"
+    },
+    {
+      "id": "HR08",
+      "version": 1,
+      "status": "review_only",
+      "hash": "a082af1c12273c64fcf65ac662070359b65401a095fad7364c27ddc301e8ad0e"
+    },
+    {
+      "id": "HR09",
+      "version": 1,
+      "status": "review_only",
+      "hash": "e09adb275c156e4ebadbe697519ad2d2173acca0a09d355a800c1f62069399d0"
+    },
+    {
+      "id": "HR10",
+      "version": 1,
+      "status": "review_only",
+      "hash": "b5b3c0032bbb432a37746766a463fbe8f455bb492234a388e9a817fbcb95df49"
+    },
+    {
+      "id": "HR11",
+      "version": 1,
+      "status": "review_only",
+      "hash": "7f9a309d6511d6a8ce2cbd21df1fc46389cc0bcda8f4e5d0a1a4cd01903e2be1"
+    },
+    {
+      "id": "HR03",
+      "version": 2,
+      "status": "supported",
+      "hash": "e1902b14b630d48c72eb54e332f7a6461b9796fdacc81cda397aeaba0ec173cf"
+    }
+  ],
+  "head_source_pins": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+      "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "3a112f3af280cba37b3f4f134cc7dbfe2d75f8f8eb07198fe785244d5aca66ad"
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/adversaries.json",
+      "sha256": "7aeaa8677402b633451986e498daab224eb348e99b988b495c27b97b64d076db"
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/environments.json",
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898"
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7"
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/ENVIRONMENT_COMPENDIUM.md",
+      "sha256": "82b7b1c95d0ef79a63a42c5b6bb70bfb189fb5e7aad4414408c362299b19be2a"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/SIGNAL.md",
+      "sha256": "dc2d0192c22d20471d6a0b52e4f537411b9ce825b80658584fa575bb0cf7b64e"
+    }
+  ],
+  "worktree_source_pins": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+      "sha256": "58baf77cc9cb2b5f38e1714422c64131f2f533b4bf09254b8f8729ccd64d1e16",
+      "bytes": 129267
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "6f679f50272861ccc01f5b189d0fc5d9947e5df350df372cb52f97df93a28964",
+      "bytes": 8633
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/adversaries.json",
+      "sha256": "846386ded200f84e487f69c1b82adf4387dcb41526cb60e8ee777e48727fca9c",
+      "bytes": 43816
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/environments.json",
+      "sha256": "0b5f5004caf4d761c33ce851a020e081a2b6fb980526a38fcc51c7eaec413898",
+      "bytes": 14056
+    },
+    {
+      "path": "content/GM_PRIVATE/ADVERSARIES/ADVERSARY_COMPENDIUM.md",
+      "sha256": "707ed16d8dd1ba8f259c48b61afd4d99b045696384e9c656cd336ea07f5e05d7",
+      "bytes": 35944
+    },
+    {
+      "path": "content/GM_PRIVATE/ENVIRONMENTS/ENVIRONMENT_COMPENDIUM.md",
+      "sha256": "82b7b1c95d0ef79a63a42c5b6bb70bfb189fb5e7aad4414408c362299b19be2a",
+      "bytes": 12647
+    },
+    {
+      "path": "content/CARDS/DOMAINS/SIGNAL.md",
+      "sha256": "dc2d0192c22d20471d6a0b52e4f537411b9ce825b80658584fa575bb0cf7b64e",
+      "bytes": 6872
+    },
+    {
+      "path": "bot/src/action-consent.js",
+      "sha256": "49f73d7a5301d195ba84f6b7324ab7df4351fde0781bb1e90afd19bc73b07e95",
+      "bytes": 2293
+    },
+    {
+      "path": "bot/src/action-dependency.js",
+      "sha256": "62497550a20bd674d8e85d57d0f7351009eca7acecea49f06f63a7fb2a297b48",
+      "bytes": 221
+    },
+    {
+      "path": "bot/src/ai-intents.js",
+      "sha256": "517e4c62228f4e562bf579de14788640e8899cc3a99b7e213cd0f467963f0020",
+      "bytes": 51230
+    },
+    {
+      "path": "bot/src/ai-review.js",
+      "sha256": "5b65cd8173493e2ae3d4f07d0ee63b43afbff5043ad902ed76c7deaac80a3a3e",
+      "bytes": 5828
+    },
+    {
+      "path": "bot/src/application/composition/character-creation.js",
+      "sha256": "a8a2178bd9daf2075336cdf9d7224e4457a2f24961717b23e57a379eadfe8662",
+      "bytes": 450
+    },
+    {
+      "path": "bot/src/application/composition/discord-session.js",
+      "sha256": "343228cf0273d952082e7678ad81a3d67471ddbcfd03b44510c47ccf8c32ce86",
+      "bytes": 585
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "c7d2780f10109602164087a8db5bdbd207d03f765fbac9588a0fde4f035fa3f3",
+      "bytes": 890
+    },
+    {
+      "path": "bot/src/application/composition/intent-knowledge.js",
+      "sha256": "e61fc9d4e678ad1a9d7030d5974fc0840a998a1f54d709b6bdf2e435130aaaa2",
+      "bytes": 646
+    },
+    {
+      "path": "bot/src/application/composition/intent-narrative.js",
+      "sha256": "061e90ca07e64821c3545833d347d6d88e8a4af7d24b02646fb28eaa28cf49cb",
+      "bytes": 331
+    },
+    {
+      "path": "bot/src/application/composition/knowledge-session.js",
+      "sha256": "619984f30787aa3f46b12a635dd351c2ecc20d8a7eb96c312b5af330b7cf0b5e",
+      "bytes": 588
+    },
+    {
+      "path": "bot/src/application/composition/native-environment-audience.js",
+      "sha256": "a6b76ad4bb736d7a4f0fb4598878108a930393990f94be923a45ce3804de0fd8",
+      "bytes": 489
+    },
+    {
+      "path": "bot/src/application/composition/native-npc-evidence.js",
+      "sha256": "80dac9a02ac0ef4eaa8c417f637fe8629ebb2350469226c1bd7ceee2da047da2",
+      "bytes": 180
+    },
+    {
+      "path": "bot/src/application/composition/native-outcomes.js",
+      "sha256": "2153d3b7ee9476fbb4e5503d8c7200c9f6d81b2f23b780b239341efc5b639ddd",
+      "bytes": 527
+    },
+    {
+      "path": "bot/src/application/composition/native-principals.js",
+      "sha256": "ea444c4bcfbff646caf10a05c1b48f0392217f54305643be9b8ceb5e82f0105c",
+      "bytes": 453
+    },
+    {
+      "path": "bot/src/application/composition/native-scenes.js",
+      "sha256": "c2b1e2e42f4b8094cfabaee23fb9ace6cf5c9d7d99048e7a4fe1dbfc03fbab65",
+      "bytes": 929
+    },
+    {
+      "path": "bot/src/application/composition/native-session-movement.js",
+      "sha256": "1e8ef413740a4668102705a4751ce5a5c76b56c5799f9d7e23fc8f0512a11613",
+      "bytes": 196
+    },
+    {
+      "path": "bot/src/application/composition/native-world-events.js",
+      "sha256": "123bc2aec5135cfb9df114cea856bc6d498b62d4952adee6be306ee406b4ce3d",
+      "bytes": 779
+    },
+    {
+      "path": "bot/src/application/composition/native-world-evidence.js",
+      "sha256": "988b179564b2ff6a5889b7149c0f375a3342a2d0dbde3bcae3aeddcc05087806",
+      "bytes": 353
+    },
+    {
+      "path": "bot/src/application/composition/npc-strategy.js",
+      "sha256": "711d38d06213f64f2f1c9f60de1acf5df0c70b6fe78e7816951b26c4a66cd671",
+      "bytes": 386
+    },
+    {
+      "path": "bot/src/application/composition/personal-continuity.js",
+      "sha256": "f8731715616beeacded69e002a965ead3326f35adc34311d94bdf87aaedbff3b",
+      "bytes": 820
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "0e225648c5917fa4e18d4d972250a3112e9f0ae741b1035eba1d16f55ddd24bf",
+      "bytes": 3906
+    },
+    {
+      "path": "bot/src/application/composition/pvp-agreements.js",
+      "sha256": "a197f4a29c18a993a71c5a4b10c81add4a13b7b8a8c6eff6fff88cd7b3883a24",
+      "bytes": 1467
+    },
+    {
+      "path": "bot/src/application/composition/session-intent.js",
+      "sha256": "f59bb2521137028e4b0997c1732596c7c132fca925c7c81e15eb0ee6859abb19",
+      "bytes": 810
+    },
+    {
+      "path": "bot/src/application/composition/standalone-persistence.js",
+      "sha256": "6c4647f3b09f790b2dbee1bf7c9cd1f454329fedec4802e62a16b4d356947d4c",
+      "bytes": 1467
+    },
+    {
+      "path": "bot/src/application/composition/world-actor-control.js",
+      "sha256": "f2079bb35af2474d6aa4a14dfc4386bdc832a93ef95abc27de22e8a656c89946",
+      "bytes": 182
+    },
+    {
+      "path": "bot/src/application/composition/world-execution.js",
+      "sha256": "381dcfb951bd5a61b4bb70fd367b423ce41d03cc31534cd54f71e64ae3c8dcc5",
+      "bytes": 1050
+    },
+    {
+      "path": "bot/src/application/composition/world-native-encounter.js",
+      "sha256": "a13b70d906a37b5b595b7ab434d558d3128de77e2b879c8f9d3d5ecadbb80fbf",
+      "bytes": 191
+    },
+    {
+      "path": "bot/src/application/composition/world-owner-consent.js",
+      "sha256": "2643cd9ccd015cfd1ee7ba9319d61b100d7ea82e6f7f48db1c041ff5d445071e",
+      "bytes": 182
+    },
+    {
+      "path": "bot/src/application/workflows/gm-event-dispatch.js",
+      "sha256": "4ce9f106ae4b00ef2ccb41449e2a3342674972bdebeb70a0d4672ede9456e35d",
+      "bytes": 1921
+    },
+    {
+      "path": "bot/src/authored-candidates.js",
+      "sha256": "92f7c7593f80b058e7a9e10ff0a2f7a0cb73bc3522793eb031fb8d0d95bd6f00",
+      "bytes": 7341
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "1d9c0ca6a0d50fe4973c215ead007ade66241c2af2bed7e70f9b2efff3860b6b",
+      "bytes": 199719
+    },
+    {
+      "path": "bot/src/concept-context.js",
+      "sha256": "fb98905cde1b76bd26383f61df7d0193791c73a28f9416af8b318d54bad7846a",
+      "bytes": 16064
+    },
+    {
+      "path": "bot/src/consent-native.js",
+      "sha256": "58471ba5539afdd3e7614a79ce91c639823164b857fde42e1cb8bbe332528242",
+      "bytes": 2109
+    },
+    {
+      "path": "bot/src/consequence-reconciliation.js",
+      "sha256": "b0acc9e8843f51ba84645f02e70787ff8378b27d43a8359146322ff44e5853ce",
+      "bytes": 890
+    },
+    {
+      "path": "bot/src/continuity-routing.js",
+      "sha256": "2ef649d5bb40ddceffa718cdf34b64bd87421e38649864062ffa40ba1782adb0",
+      "bytes": 3667
+    },
+    {
+      "path": "bot/src/db.js",
+      "sha256": "a9f496457aae6e2f434efcd35ac0817b4ce90dbcbe14fec9f996d9c20e80c669",
+      "bytes": 305
+    },
+    {
+      "path": "bot/src/discovery-delivery.js",
+      "sha256": "d3bf07072ab6b9499ad30a24b44da97b69dd1881a7a54545a49829eb9061133d",
+      "bytes": 3308
+    },
+    {
+      "path": "bot/src/evaluation-harness.js",
+      "sha256": "f20bca430e6d93725040cb5397034ffc6a39a6806f0c6a796a79eee852fbcb4c",
+      "bytes": 1154
+    },
+    {
+      "path": "bot/src/fear-reservations.js",
+      "sha256": "5479946f249e36b923d64ddf1293d7e41c6841dae21b1537615842bc2d335255",
+      "bytes": 1098
+    },
+    {
+      "path": "bot/src/framework-to-framework/ai-provider--knowledge/prompt-storage.js",
+      "sha256": "8e56cac464992e914ed201784295e8e5d82583a706cb388222dbe6cc308ef107",
+      "bytes": 400
+    },
+    {
+      "path": "bot/src/framework-to-framework/ai-provider--knowledge/public.js",
+      "sha256": "50515d8df0f3a223dfee71ee4b298ec1c2ecb4f784b2db08b48b82a4c0e43fea",
+      "bytes": 73
+    },
+    {
+      "path": "bot/src/framework-to-framework/character--daggerheart/public.js",
+      "sha256": "7febb8403e41bd9c76ae89c1a569b2d442d87e65d2067f9a0a8712412c1a3d58",
+      "bytes": 1133
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--discord/public.js",
+      "sha256": "e4f3a0e3ef0335e8323d86d0e651f2ae8b7dcd8213f8e4ec174b3a1effc1c081",
+      "bytes": 710
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "8390aa4eea51792a938fa2e916adae899ba42bcf264945eaeba1341f836e826b",
+      "bytes": 2017
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--knowledge/public.js",
+      "sha256": "f88ac3d4a678be1c8b575290bca2412d31b3cbaab44f7697c2933ea94d4deef3",
+      "bytes": 1353
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+      "sha256": "fec81179c6f48cd2c767daa88c8b18d8a880adb488096c73b7c1d36a1a14a37a",
+      "bytes": 3374
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--npc/public.js",
+      "sha256": "f1d04eefa7140de540e38bebf2d3774a12bbd4bb8add48e7ed22ab86465f3eff",
+      "bytes": 363
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--persistence/public.js",
+      "sha256": "c616d618b92a7558fb11a9df908c6eedf0f411a585ac22e0f51c08c3a92b147b",
+      "bytes": 443
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--publication/public.js",
+      "sha256": "463f02f24ef00f7173758d150337400ff19c5fd5d0bab14b29e4b3297ee8f554",
+      "bytes": 743
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--session/public.js",
+      "sha256": "b340180d4cdfa1bf540ba96df45501716a0a46d6f02e36b9921f4b7faf056c01",
+      "bytes": 5556
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--world/public.js",
+      "sha256": "ead77438ed941c6ef31c845c9d61bb9fd48b87c5a61c854ec7b1932287c10a22",
+      "bytes": 5289
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--knowledge/public.js",
+      "sha256": "a0e41edd0d8eb50198b83ed2a75ca483842ea9147251f68dba5f2281c219cbad",
+      "bytes": 2060
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/public.js",
+      "sha256": "930d856b2ca23f13af43b64b5d9cd024d47fd8a2a322696e64eff196d914cd40",
+      "bytes": 1201
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--npc/public.js",
+      "sha256": "015d989507c23627c92f883c33a4214d3dcb17157f6ece94a1af1fa26cc21d51",
+      "bytes": 838
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--session/public.js",
+      "sha256": "857341d6b1f9683e7425301258c438088198966f7f3ec4bae00c4b990b6c95d1",
+      "bytes": 2978
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--world/public.js",
+      "sha256": "f0229fec9e46fbbcbc58b17f0bcc6fab6018d0c7e7ba4ca9df8138cfa261190b",
+      "bytes": 4038
+    },
+    {
+      "path": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "sha256": "36f798fd0d08c5e1dd851d0b60a4e8ed43d0e423c1ed9b7e53bcd19db217fbbf",
+      "bytes": 1091
+    },
+    {
+      "path": "bot/src/frameworks/ai-provider/public.js",
+      "sha256": "9c333580aac65c9ac4c5300b1eabb72d8e5b54909fd20d6eaa66786a4a0440ea",
+      "bytes": 324
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js",
+      "sha256": "d586837a8f510df87ee7f40e7352ffe1c2bebffb42a0d0e3e651d9caad358d3c",
+      "bytes": 2888
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-binding-rules.js",
+      "sha256": "a2713f337b91d6dc2d3ef069a356e89236ca5759c54d3a9681a7f6b6973f6f52",
+      "bytes": 6469
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "sha256": "13b38e65729574c3da66a1bc5b1479a68a0453d80e2b0c692f43c620d5e9fcc2",
+      "bytes": 40880
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-damage-defense-rules.js",
+      "sha256": "1d1a6880192e4c203e2c9d3bb0eaff497f8b32c64c1ba93ae909de761d68660a",
+      "bytes": 8222
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-hit-rules.js",
+      "sha256": "adc8ea8a90d4b7a0783a9cf5c8a810f5164edc89a766de8b02ddea1711c2b708",
+      "bytes": 9888
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/condition-recovery-rules.js",
+      "sha256": "fcddbcf20bd1d0726dc1727cebb09a34e453cfb87d5b9749a5c166c9d1279627",
+      "bytes": 7523
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/defensive-feature-rules.js",
+      "sha256": "963065706fb1c52cf565daad0651f6ce633a88c67bfc26083ba56fa33b809db4",
+      "bytes": 22063
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-access-rules.js",
+      "sha256": "723ececb092be7fd83e539a873d2c005a4aeeaf45f4df92aea24b3916ab76351",
+      "bytes": 8969
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-acoustic-rules.js",
+      "sha256": "628584cdd4c123acb97494c9de4cc769fb8d95fecc0b2a25b41e84dab6cc5293",
+      "bytes": 11466
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+      "sha256": "f68be663e873aa6a433112ab21923e4872e359edeec475a2e99b56309821be15",
+      "bytes": 7375
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capabilities.js",
+      "sha256": "67e92ff51553fcb3c57407bac05194963198d1ccc76dd56e66e011c881d02b06",
+      "bytes": 8756
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-capability-catalog.js",
+      "sha256": "37f21517d9d39c586ee69cd1b1cbf8f08099a7d383c0e1118b9db5d0cdc28770",
+      "bytes": 12405
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-context.js",
+      "sha256": "2500b2b230ec94d4078436d2c9728ed0486e699e397ca19bf65c5c32439a546d",
+      "bytes": 1576
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+      "sha256": "b9b04763c421a81f6ec65ff2909ee8850d2b005cba63eee1c108fa595351c865",
+      "bytes": 32766
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-dispatch-rules.js",
+      "sha256": "13a2c993816bbcdcce761c01ba93119e2630ce90d6b005a0fba026b8151bc0b9",
+      "bytes": 3297
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+      "sha256": "a6346115aa07a7b4fe269026bd0e926b21f164e40456e39ad8b901b0923dac19",
+      "bytes": 10235
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-imaging-rules.js",
+      "sha256": "43473da5146e456e4e77b7af3a18c044740eed2399fcda14cbe323569f91eb71",
+      "bytes": 9222
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-odds-contract.js",
+      "sha256": "70457b0f0406e8338b6ce91e62de5d89ca5b6e45486024ee2bda9666ddbb86ff",
+      "bytes": 2304
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+      "sha256": "4241171ee05a2f648533d9fd8a4d4eec6a55f7f8b862d6b38fafebe193cef861",
+      "bytes": 44690
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-scene-rules.js",
+      "sha256": "acfe38304a0271808c2e30ead9da3bcbecd94d75a983b026d096c9303a2e426b",
+      "bytes": 16858
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-trace-rules.js",
+      "sha256": "3fd39b25bd15fd76c9981476e587dbee9fc780406b03fd488f7f6d8c786f14d0",
+      "bytes": 23767
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+      "sha256": "82d6ebf71e75d3a2dc0230cafbe71213e732e0c5b384f7a4a84a315646a845d9",
+      "bytes": 14288
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-catalog.js",
+      "sha256": "2a13ed8116d18c67d661c6e0b05af39f081ccf3a126d855c7a2b78ac3542a401",
+      "bytes": 14008
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-choice-policy.js",
+      "sha256": "bd8be1dba64db3d76e665b54ac9b5b4423f467d9cbd50cf9850af960bf761f43",
+      "bytes": 577
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-effect-rules.js",
+      "sha256": "bc37fba29f8725a812ead6ed4d9f991b75d64eb04a8a283aca104f967fdbc05d",
+      "bytes": 10536
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-reaction-stakes.js",
+      "sha256": "b43a6061572a7c9b5f5d7804821c9a3c71b532dca126425932628d6856247da9",
+      "bytes": 826
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-trigger-eligibility.js",
+      "sha256": "4b8f8f6defc088fda0e763d6a97b4c883faf56e43129d1aca52482c0536debd8",
+      "bytes": 588
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-window-rules.js",
+      "sha256": "c9a3bba765bda6e36e87075abf3a13fe0b7e335be7a6a93417d5de5b45609d4b",
+      "bytes": 22695
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "d17a17f5027c3ba975297b94e2a6bb4d3df40342e49eed7f26424e4c156db74e",
+      "bytes": 43117
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-outcomes.js",
+      "sha256": "ca8d83e75cd2f63f5816a07dd4c29ead48618fa66e6656f5de7b492e8735935e",
+      "bytes": 888
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-rules.js",
+      "sha256": "366c717d6204d2f64e687e89385b3e25cd564450ccc0597af5cf822c62d416f0",
+      "bytes": 2737
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "874752d63ec86062e57805d5d48919803408dea2e3d8f6085c1578d0f9444404",
+      "bytes": 3588
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/incoming-attack-rules.js",
+      "sha256": "1318fb77bbe7d0954af606e7a1be26b24c5483effa73d85800d01de98d89b009",
+      "bytes": 55804
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-condition-rules.js",
+      "sha256": "a891697e318d7e4260e3d9406032f9b075eebf5ea438a0951c7c3d9cebd90dea",
+      "bytes": 703
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-access.js",
+      "sha256": "71075500cfc0f2fc11385955476b6e7f87489c4f8724899cdc53d7b21fde4259",
+      "bytes": 2748
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-auction.js",
+      "sha256": "47d5f818fa29b9b10431c1d2e14331b8b9a1356b90aa3bac7327ac9cc50c4fcc",
+      "bytes": 1065
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-capabilities.js",
+      "sha256": "bb074c8e0aa5f8a304dade936531de00921fe7c3c443e68e5770407f54fd9b70",
+      "bytes": 401
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+      "sha256": "e6234185afda93b6ed0e1c865873146c414f94b41ab4ac6d3983a2a18d98ed40",
+      "bytes": 1095
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+      "sha256": "20bcf792a79d6e5145da644b850c1fda0c5646b6a1d6a2eb09dc709d543d7779",
+      "bytes": 1113
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+      "sha256": "f935db4f28cd6c6e5c89db4684abc89c95f50801f39c3ab970a600469ed92141",
+      "bytes": 1137
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+      "sha256": "d44e694e2bf9fb0466655bb968f4202adef0597c27d8865f5d403870c93bfe23",
+      "bytes": 1125
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+      "sha256": "47f12e81055924ae0cd45ccebc7cae33953a77ba2b03436a0de857c3fde08d69",
+      "bytes": 1131
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+      "sha256": "f2cc692f138f826a2fe2f845084e5c4d9fb0c239ddfc8aa2811de400a2150bfb",
+      "bytes": 1143
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+      "sha256": "d38119bd79cfc7c4bb78d0a6e477620eb379a5cdb91f7ebe5847be337b5e3012",
+      "bytes": 1083
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-instance.js",
+      "sha256": "da001557326855eb81428040253a9bfb7f3af601efc5ac0dce0eac04c0ac3742",
+      "bytes": 8532
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+      "sha256": "2ae5174053d7cf0197cd308ee20671fa36cac1debdc6bc2fa0aa79d7a720a66f",
+      "bytes": 1107
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+      "sha256": "d4763634da0da392bd56cad3a96aeaf3c42306a12b2b3c0debd2e7af1b976c32",
+      "bytes": 1119
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+      "sha256": "4e95c1da7340c09e638306f47bf004db243336324d80a4e9f10e658b316200a7",
+      "bytes": 1113
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+      "sha256": "178e51c4967609eac94bc693284187245c584a58d15e9a284f8686654693cbc3",
+      "bytes": 1077
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+      "sha256": "241df328cc33dcb999ecce226fd4df6a28698e82209770cada6b1e4b4af66ccd",
+      "bytes": 1089
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+      "sha256": "274cf55fcaebf82cdd0c9ac099dca42830c15cd46bb34100b4b94c37ce0fed2b",
+      "bytes": 1119
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+      "sha256": "f401d599d4bf7faab2cef402121f43daee7fe2a65e0a0be9f3ecf08d2a8c514a",
+      "bytes": 1083
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+      "sha256": "40979e8cc10322721e73562b20c68ad4c1db0d9639e7e8423f44e7cff97252fd",
+      "bytes": 1089
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+      "sha256": "4a0ff118ccec312faf895cdb4eccc7f13632d6ef4c41081a43f084544cfe6dac",
+      "bytes": 1077
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-scene.js",
+      "sha256": "2781a0864b8b950f7614bd4512252d7580631c9db310abef74d4061bd92ca451",
+      "bytes": 9896
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+      "sha256": "8377fe77a9626675bc3880e475d6fece6c82c860916b2ef2f9cfc449e5610e27",
+      "bytes": 1095
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+      "sha256": "8a00e91fb4523d2ecf7769ebe4f3d9d096a0c2392d76383358b1c4fc16f56fb4",
+      "bytes": 1077
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+      "sha256": "5dc36e08bb57c6fd938f01cc893dcd9b3d6892a55409667b1ea90266acf6ca19",
+      "bytes": 1113
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+      "sha256": "32525488b17f82653eda3d59ccbdbebc9a315535f87b24941b40d6c64564dae1",
+      "bytes": 1095
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+      "sha256": "6244ccb0fe1bdc60c374111a513a0515d7113ac6a4267b828c1059a8f078c4d1",
+      "bytes": 1101
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-catalog.js",
+      "sha256": "8a0a18c58a2b47491d64578ced517bc729da3e550e275cca82c4dd910a0bcbe9",
+      "bytes": 1682
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/ordinary-effect-rules.js",
+      "sha256": "a0a696fa3225014f8df923c7f5d5e94f48fb81a0c6e903d0003ce5948643762b",
+      "bytes": 14728
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/professional-entry-rules.js",
+      "sha256": "a08284995b43c432aa49a1d14d19510a98d340843294f7cb7f807f4931ec22ac",
+      "bytes": 13895
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ed3794b8d034ab19ac1c4fcb9335485089c11928ef506559b81ee472b75781fd",
+      "bytes": 14747
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/roll-modifier-rules.js",
+      "sha256": "4a750b7ec87c9d697459a5c33d694fdb30d531bd57d08c69bd7fc98e202f9b29",
+      "bytes": 6957
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/standard-damage-passives.js",
+      "sha256": "00ae964aa24ae4bd1af3209c1998ff7a35dcabb9d7f9c287a14c7e595b2fb0d4",
+      "bytes": 2438
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/stress-passive-rules.js",
+      "sha256": "4b8413132a86f9b5bcf9deaa26619fa0832d116d8fab207df11855f54c7c8095",
+      "bytes": 18437
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "sha256": "e748639b4a561ba10f4de4304bc169744caafa69070f151e4c6c7488b70b4366",
+      "bytes": 24622
+    },
+    {
+      "path": "bot/src/frameworks/intent/gm-arbitration-contract.js",
+      "sha256": "3504904f06e5d8094a67905cfe870e22f4500b7e9e150b607119b810ebf8e0c2",
+      "bytes": 9322
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "44737fc6afbd9b0a537d2ca5fd99ea357cce2cec9f890366f2136a4aca4d9cc6",
+      "bytes": 3748
+    },
+    {
+      "path": "bot/src/gameplay-intake.js",
+      "sha256": "a3f983aba2a3e7fca6ad20b8f72bd0533925cf08cf35b1b52153893934a85a7c",
+      "bytes": 2668
+    },
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "fb49d66a74391460ffab0a33adf2d065c9afacc1eecdc5945dcd5c805f871847",
+      "bytes": 3551
+    },
+    {
+      "path": "bot/src/gm-action-review.js",
+      "sha256": "5eb0478de3d93ced83ae2cbe5e130d60c5de31c8f8bee8919c9bf594b24bbac8",
+      "bytes": 2324
+    },
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "sha256": "c6e5c21822695019bdc41e90102c7b95f410ba9cc1488ec925c77b28070d17f8",
+      "bytes": 3680
+    },
+    {
+      "path": "bot/src/gm-arbitration-contract.js",
+      "sha256": "ad0784276b998f88988d54346448509828dbffc118df732c9fbadc33b72e6d29",
+      "bytes": 65
+    },
+    {
+      "path": "bot/src/gm-arbitration-output.js",
+      "sha256": "e8cb41e74c610dc23d511b989351b45255d55ba5f2d6a055edf7df9fb814e0ab",
+      "bytes": 11611
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "sha256": "1a4a7dd9c3490992c6ae01cab18a686e89e83b10934f52bc073e2e005c6b7d9d",
+      "bytes": 1039
+    },
+    {
+      "path": "bot/src/gm-native-rolls.js",
+      "sha256": "eddbc468de6beee10d3e3eb9de8ffcf531b9a1a5c4b0deaec55ac07784ebd2ea",
+      "bytes": 4956
+    },
+    {
+      "path": "bot/src/gm-ruling-schema.js",
+      "sha256": "24e88a1717c03ce1f0106d52b3ec99d6d6c032c54169b0df9187ca7a08c968b1",
+      "bytes": 273
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "37d56df04f8675b558967210177b6ba03a5772631ce654a39276c04ee4a72cca",
+      "bytes": 12877
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "ea3508040dd69b69c179a94e01e4c181b0aaa1e585bcfe83a64c0750800debf2",
+      "bytes": 143524
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "77004257cf02886ccd42f3d49e2a2490e728a46007b08cdc19ec2d857168f85b",
+      "bytes": 58071
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "sha256": "fe754042f4f4f581f5c5be8f6cc456bcde4bfc6ced71d1eccb0f16ae2583f44f",
+      "bytes": 1553
+    },
+    {
+      "path": "bot/src/movement-language.js",
+      "sha256": "07db69036c8c5c59acc7b5496a4782c6a66bb58bffcda1fcef97f5fde0786c00",
+      "bytes": 3323
+    },
+    {
+      "path": "bot/src/narrative-integrity.js",
+      "sha256": "6f216a24ccd65a905e043dd83c447d8a6e7c8ce868cb948af9b3a5329c259936",
+      "bytes": 22348
+    },
+    {
+      "path": "bot/src/narrative-pvp.js",
+      "sha256": "df12f311c90360b849c78b57bf0825350cc8cd4a68237844709b99cac8ce9a51",
+      "bytes": 2924
+    },
+    {
+      "path": "bot/src/native-actor-control.js",
+      "sha256": "0b2b4f5acc25491c129457ec38efe01b9ac94817206c5c08294d87e92217c77d",
+      "bytes": 146
+    },
+    {
+      "path": "bot/src/native-adversary-context.js",
+      "sha256": "2ad6db019ac5f65db72389736e061b1db731ce4f58286f0a93910e4f2700441f",
+      "bytes": 1476
+    },
+    {
+      "path": "bot/src/native-condition-recovery.js",
+      "sha256": "21c89c40066a2b5b53076ca314ade1cf51336e5daecbbeef97a707f947b60fa7",
+      "bytes": 1459
+    },
+    {
+      "path": "bot/src/native-defense-aura.js",
+      "sha256": "37d71db060b897d79219940df52e6a2a5c721d64ab74732906640979ed223658",
+      "bytes": 2995
+    },
+    {
+      "path": "bot/src/native-encounter-relations.js",
+      "sha256": "0532daee76927c9ff082924149b852d2afdc76337988f9f5078ba1c8584a5c8b",
+      "bytes": 1933
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "sha256": "50a04362d5cf9f7fbb2fdbc1b13310e0ba88723ae2776b2543f1f01fc5e4fd9a",
+      "bytes": 412
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "sha256": "f3e131fea7299dda46d10becf853cb043dd5fbdc96849c29b0ec3b64d8e7992d",
+      "bytes": 2282
+    },
+    {
+      "path": "bot/src/native-environment-capabilities.js",
+      "sha256": "ce735e6aa4c99e874e7492a2ee90154576cb4c8c3c7d3d61025e38e7414ff066",
+      "bytes": 147
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "c2a8ad22b98d7fbf83b91eddd66c2ee5a956e398aeb854ebdf58bc7d8c636049",
+      "bytes": 3466
+    },
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "sha256": "f26e8ac31b228a7b2da589aa1351155803d0cd53f43d0dc556c79e7cbca4e2f5",
+      "bytes": 1822
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "sha256": "37643e5af48d287d4e737c9b8bb8e9bb1c8c556e16a551fa543be466e90c308b",
+      "bytes": 3630
+    },
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "sha256": "bee529ec621ca77e8d293d56f3caf17528ab5b28b9d725b7ae9b3b57ed672cdd",
+      "bytes": 2704
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "sha256": "d763a6059d4c59ffc736a3e92098d9690a8a2de2719e4f0984925a842a4d665a",
+      "bytes": 2655
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "sha256": "04ee1bd6ec8e6369834f6ca503df0a48c22e2394635273e745bf552d045b7811",
+      "bytes": 1754
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "sha256": "75d56e0576add68130efc86ed4a6ed649ae132d72ed5655404638feb463d8a2a",
+      "bytes": 1367
+    },
+    {
+      "path": "bot/src/native-environment-recording.js",
+      "sha256": "1a857ca5e21a1d2ad6cecbcaa56cb2eaafae9de874e64628981b2801ba3a2946",
+      "bytes": 1988
+    },
+    {
+      "path": "bot/src/native-environment-recovery.js",
+      "sha256": "4a1cf7a4f1ff04b450494dedf88371791ae44e54d42ed9196785515248275eac",
+      "bytes": 1905
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "02927ae731140f4496226e87d86abafa94612e9bba4b4efed94d1530f669fb12",
+      "bytes": 3687
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "090ebb15249e474dc977291caf055bed4fd0b5c60e6c1133b78f9a6c1205071d",
+      "bytes": 3766
+    },
+    {
+      "path": "bot/src/native-equipped-attacks.js",
+      "sha256": "c9c141de96ef3bd35f8c3fa860f94b8ed92428b18c8c2bb744ea9a2ceba1f970",
+      "bytes": 2087
+    },
+    {
+      "path": "bot/src/native-evidence-analysis.js",
+      "sha256": "c4358985d802a360e140836f24458c6eeb109eeac631dc3d9e9e2fd3522dbdf5",
+      "bytes": 1002
+    },
+    {
+      "path": "bot/src/native-experience-eligibility.js",
+      "sha256": "84fd45b9084100134e518f78a5de56c033350a00e05747233077f91c888f048b",
+      "bytes": 1448
+    },
+    {
+      "path": "bot/src/native-feature-catalog.js",
+      "sha256": "28ec5c95609d78a18da6261859514b682603fe7441adbb3da3f1fee42a77c577",
+      "bytes": 138
+    },
+    {
+      "path": "bot/src/native-feature-damage.js",
+      "sha256": "3be399a5db801c0e5e1da31e3ae4c11159d89936e5dfafd269e5f97c5adfccbf",
+      "bytes": 1597
+    },
+    {
+      "path": "bot/src/native-feature-effects.js",
+      "sha256": "423447b13bbf9913774bcff0b381136e4ef2372dab9ecd3afeb736813f4bbf4c",
+      "bytes": 2047
+    },
+    {
+      "path": "bot/src/native-feature-hit.js",
+      "sha256": "b1f041f4587650eef32c509cf97d1952dd248ff92657c337666dde53d76a8628",
+      "bytes": 1686
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "sha256": "e726f99c1b2efbdbad22f961169e3aae1369467cbb4288629db93883bc1e4687",
+      "bytes": 1347
+    },
+    {
+      "path": "bot/src/native-feature-windows.js",
+      "sha256": "7d98300cf9172b37a068bd324240009f3daa12c64355f97a65eff1d4301ccffc",
+      "bytes": 3931
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "5f6ddc1dd8e68397016bf5e8e8a9ac431e55201429c4fa093d3abcec93a2a2f2",
+      "bytes": 6175
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "sha256": "328f91b204a5b2c0e9cde0ef6f1610f4d62181b5518639d246d950366a11dfb7",
+      "bytes": 978
+    },
+    {
+      "path": "bot/src/native-notice.js",
+      "sha256": "05d4ed899415efe3b01e1091acb987fdf9fa8bd278edca0e06606c92c97a210e",
+      "bytes": 3410
+    },
+    {
+      "path": "bot/src/native-outcome-output.js",
+      "sha256": "47a6ba1a49fb1c0eac86b1286dd7a5ef23c1579ec1c57cea04aecb2f9c4ca0bf",
+      "bytes": 7716
+    },
+    {
+      "path": "bot/src/native-professional-entry.js",
+      "sha256": "7d0cfff4f61892ba174080ecc1bec1cfa8ceefb911eea243bdfdcecac100bd69",
+      "bytes": 1500
+    },
+    {
+      "path": "bot/src/native-publications.js",
+      "sha256": "6b9e5f49073a1f5b3427d13b1d72ee3a0b4f32d6449887a15a4deb0bba1531d1",
+      "bytes": 14656
+    },
+    {
+      "path": "bot/src/native-roll-modifiers.js",
+      "sha256": "f29e08fda93998063f26a0f6bd83e467ededeb53d02553c0244d503cc96b0c94",
+      "bytes": 1914
+    },
+    {
+      "path": "bot/src/native-roll-participation.js",
+      "sha256": "bfdcc0cd08e09658453d90847844977e540dee4299eb70e73c11839cab2f998e",
+      "bytes": 1796
+    },
+    {
+      "path": "bot/src/native-stress-passives.js",
+      "sha256": "23bf0a9e870c9699da8f89d64d0bddc7868e04f406989f4d037ddf24e9584f4d",
+      "bytes": 2096
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "sha256": "b5522a9775c1de79311a16dc04c755ef743239f6e853f4a9720052e78f1026e1",
+      "bytes": 2146
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "c1aecc4993b1f3b8d1742d779a8b5a02ff94b778eb039b0bb6f125c3566ff4c4",
+      "bytes": 3591
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "c3e7f4029fa6affcf1074fa25d409095bd99a8afc18c90b6816887c0bfc7b1a7",
+      "bytes": 3183
+    },
+    {
+      "path": "bot/src/owner-consent.js",
+      "sha256": "c0c8aad84dadf67075595fdf6891dc9029ecc2d714186d0a194a0de7ef630287",
+      "bytes": 210
+    },
+    {
+      "path": "bot/src/pc-death.js",
+      "sha256": "ca42fc343518b770ee168ca0986f9b03b666b44fe9509c9c30bb472a53e8ab4d",
+      "bytes": 2861
+    },
+    {
+      "path": "bot/src/pc-effects.js",
+      "sha256": "cdf2e339b7c43933c6f413be11c359c234ae17eec2d74371fc9ed9363de1e305",
+      "bytes": 2874
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "sha256": "fc50b4db3af5f5cdbb4c0fb020890bd8e4f3cdb60f4816dda32805e1f74f6842",
+      "bytes": 6785
+    },
+    {
+      "path": "bot/src/pc-native-eligibility.js",
+      "sha256": "baece5c9edcc4d132c3089a8f5de6c6558c8785e2904ae36b7ef8e39b1d4b350",
+      "bytes": 643
+    },
+    {
+      "path": "bot/src/player-language.js",
+      "sha256": "d8c77da55e513095e99b9d6a5e0d1cd217da6d991f00556ac99d5a7db3e3cae2",
+      "bytes": 7290
+    },
+    {
+      "path": "bot/src/pre-roll-fear-notice.js",
+      "sha256": "9b4856e4c3f9aff5e4312d6bb444895a045c156524af96ca2250c1d7132af62d",
+      "bytes": 3311
+    },
+    {
+      "path": "bot/src/pre-roll-fear-recovery.js",
+      "sha256": "1c467d9ad84c7d39d6f1701da79c82adc902156b76981ff4c5b045cc41e80b07",
+      "bytes": 1176
+    },
+    {
+      "path": "bot/src/pre-roll-fear.js",
+      "sha256": "8a5bfb0b8522c6c042e716deb83ce542e4dac42cdb5313b6f767437e8afd9388",
+      "bytes": 3409
+    },
+    {
+      "path": "bot/src/publication-outbox.js",
+      "sha256": "7ffd15973d2c5a086ce7586ed9ba66adcfe74f07bb1546d240b825735f9106aa",
+      "bytes": 11037
+    },
+    {
+      "path": "bot/src/publishing.js",
+      "sha256": "dcc77caa16fc2be7eb2dd59c3604323cce55e4abf180760b6380bddbbe7eb20b",
+      "bytes": 26696
+    },
+    {
+      "path": "bot/src/pvp-attacks.js",
+      "sha256": "cad8c47b3b73ac3ff9bb9365e754cc4d1f98debbb01064447d5419e9abce460f",
+      "bytes": 4971
+    },
+    {
+      "path": "bot/src/pvp-authority.js",
+      "sha256": "f385abd5727c0e4e4ad25ac0306c0914feb236c035f18dd0f9978908d1a3d7e0",
+      "bytes": 333
+    },
+    {
+      "path": "bot/src/pvp-authorship.js",
+      "sha256": "6d26e3c313953342db315bc8bb3447fe0cde88fb1ae59b2515bbc8dc146cdf77",
+      "bytes": 1517
+    },
+    {
+      "path": "bot/src/pvp-brawl.js",
+      "sha256": "855acba2129d429788c199514e6131ece4e7fe2e8a64fe4e7fedef12d4a5f3b2",
+      "bytes": 3341
+    },
+    {
+      "path": "bot/src/pvp-campaign-execution.js",
+      "sha256": "9cb6dd543e40ba47f87464f90f062803f7f7bd73bb8249f88716ea2320011e0f",
+      "bytes": 1838
+    },
+    {
+      "path": "bot/src/pvp-campaign-policy.js",
+      "sha256": "cfe05afec065e74b215bc94ce341272129e4963492f5792e83873090e2f2c497",
+      "bytes": 1183
+    },
+    {
+      "path": "bot/src/pvp-damage.js",
+      "sha256": "5fdf2a1cd9e87143986f2d10322994756106ce17222591fb9354dd34099952cf",
+      "bytes": 3879
+    },
+    {
+      "path": "bot/src/pvp-fear-gate.js",
+      "sha256": "810883f75359c74d347e8db0f4f63cabbdab32ec3c03265b9384793ac12372d2",
+      "bytes": 1545
+    },
+    {
+      "path": "bot/src/pvp-menu.js",
+      "sha256": "fb39031fdd20d0ac97419233ec9f5cd77fb708ffd5410538278cc4f3e763c9ba",
+      "bytes": 36390
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "c3fe864df2f1167a8685a023d9663641805244dd3b92f42e8c58532466b9cc67",
+      "bytes": 68310
+    },
+    {
+      "path": "bot/src/pvp-profiles.js",
+      "sha256": "6ce1b4d9d632f013009506f3cf648d21bf4b9a0000f2c734f10fcd8cfdbdbde2",
+      "bytes": 2712
+    },
+    {
+      "path": "bot/src/pvp-reactions.js",
+      "sha256": "46599158b5f592bbcd4a4ead4254e4ef3ca448f955903242bd231bb1eb7edaaa",
+      "bytes": 1541
+    },
+    {
+      "path": "bot/src/pvp-rounds.js",
+      "sha256": "60f269bf752a7227b3197851776416b370e29e38840beeb6942275888ca7d69c",
+      "bytes": 3087
+    },
+    {
+      "path": "bot/src/pvp-safety-commands.js",
+      "sha256": "85b071057559528b9042f0524d281ca51533086d19d9d6b63a689183daddb3e6",
+      "bytes": 3453
+    },
+    {
+      "path": "bot/src/pvp-terminal.js",
+      "sha256": "d5f3731cc8c20575b3cbeb9fcdb7e7e916df7edf400439e645525e3be567e4c1",
+      "bytes": 856
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "4c591b8ebb3f326b11c8d8f97f667abb01559eb96f007196c04de7f7d791bccc",
+      "bytes": 5575
+    },
+    {
+      "path": "bot/src/roll-declaration-review.js",
+      "sha256": "8ea6723b52a36021b364aaa8d1df5b5d7e8398a785a43775a3a05662ccd286ab",
+      "bytes": 1009
+    },
+    {
+      "path": "bot/src/roll-menu.js",
+      "sha256": "aabb8c6f0189e63a5c7ec76a1189ac0306dc79bf148e4632d8398f78cdd66db5",
+      "bytes": 18396
+    },
+    {
+      "path": "bot/src/roll-operation-publications.js",
+      "sha256": "413e5883a2bb4c6860a96e6822714a60d94d302bb78bcac3e2c06498d919a662",
+      "bytes": 1076
+    },
+    {
+      "path": "bot/src/roll-options.js",
+      "sha256": "c96ad19c7d33443aee24b93f23d423853db30800223abcd637a5e079f849863d",
+      "bytes": 1008
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "ace26d193d8e9bb18d4fd66cfbb05fc98e1d4e3e94cee440e6d98b79714d55b1",
+      "bytes": 15709
+    },
+    {
+      "path": "bot/src/roll-sharing.js",
+      "sha256": "73f8854e54aa4ee4815a5acafdbf878138aa53a90463fb1c77910edef962f91e",
+      "bytes": 1587
+    },
+    {
+      "path": "bot/src/routing-diagnostics.js",
+      "sha256": "ad8797b314c00dec3cd13f60e6abfa9d525b8d1f50a28378a56230251513022b",
+      "bytes": 436
+    },
+    {
+      "path": "bot/src/rules-arbitration.js",
+      "sha256": "4d5452c4ffef7cabb9fe1fbdd63f63014d3835ccd65e224b6870c8b83cb64e1e",
+      "bytes": 2849
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "798446b64ed06a14988a50cc11ce5797f48dfda6b65b185b1af8ce894bdfe180",
+      "bytes": 15283
+    },
+    {
+      "path": "bot/src/semantic-engagement.js",
+      "sha256": "4162cfc808c0f14d442801e773a1ca8fbdb9ab3817f217a1d962ff90f5061823",
+      "bytes": 2770
+    },
+    {
+      "path": "bot/src/simulation-commands.js",
+      "sha256": "266fa375906d89a3ae52b734c449491638318b0b216786d24582de36286cd180",
+      "bytes": 5337
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "8b3524fd058824dd1f7b84d2d5c10e80728d3d3b5fa505cdf6b031a15e3618e0",
+      "bytes": 22551
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "sha256": "90d6fdaf42d09047d8444a79e314cfcfe07019d0f582be649113b48cacf63850",
+      "bytes": 7082
+    },
+    {
+      "path": "bot/src/turn-orchestration.js",
+      "sha256": "d6d6170b9d08e752977524053e03d79a8f9f42166e59b61c0c8dee6d403cb77c",
+      "bytes": 7620
+    },
+    {
+      "path": "bot/src/turn-recovery.js",
+      "sha256": "f6c87e41d4e22ac0bffd4cdc6aa728cd2e68138ddc0fc1e28cdea29d1dcf0bdd",
+      "bytes": 2256
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "2d613f89be562c696a4a6306ec5da3fde28b015501ce876e038dfa37b8dd3085",
+      "bytes": 52516
+    },
+    {
+      "path": "bot/src/typed-mechanics.js",
+      "sha256": "8760680fef497684d59a04783d0d16386ea2c9f0aedb7059b2a151eeb14f1eac",
+      "bytes": 1268
+    },
+    {
+      "path": "bot/src/typed-roll-outcomes.js",
+      "sha256": "1232ad1f805292d43e2d9b0351b117bd036a4f49979c2a706059cd435acf6404",
+      "bytes": 1557
+    },
+    {
+      "path": "bot/src/typed-roll-proof.js",
+      "sha256": "b67328904dd848d758851b606a149b89e6cb420dbdf1403a7ded8571347435a2",
+      "bytes": 1962
+    },
+    {
+      "path": "bot/src/voice.js",
+      "sha256": "0517cddad8c6c14bbc81d8dcf2365ac7cff448ff819653a6095ea7ef5d296b50",
+      "bytes": 15136
+    }
+  ],
+  "source_snapshot_stable": true,
+  "boundary": "Static offline audit only. Concurrent agents may change files after capture; compare pins before deletion. No runtime, provider, Discord, database or release validation."
+}
