@@ -23,3 +23,7 @@ export function connectNarrativeBridgeNativeSources(){return narrativeBridgeNati
 import {nativeNarrativePvpOwner} from '../../frameworks/daggerheart/public.js';
 import {pvpAgreementConsumer} from '../../frameworks/narrative/public.js';
 export function connectNativeNarrativePvpOwner(){return nativeNarrativePvpOwner.bind({pvpOwnerContext:pvpAgreementConsumer.pvpOwnerContext});}
+
+import {nativeNarrativeContext} from '../../frameworks/daggerheart/public.js';
+import {narrativeAuthorityContextSource} from '../../frameworks/narrative/public.js';
+export function connectNativeNarrativeContext(){return nativeNarrativeContext.bind({buildNarrativeContext:narrativeAuthorityContextSource.buildNarrativeContext});}

@@ -1,6 +1,7 @@
 /** Bounded combined-request environment profile producer. Unsupported features never become Director capabilities. */
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
-import {buildNarrativeContext} from './narrative-authority-context.js';
+import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
+const {buildNarrativeContext}=nativeNarrativeContext;
 import {establishNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {compileNativeActors,executableNativeFeatures} from './native-feature-catalog.js';
 import {jsonHash as hash} from './kernel/json-hash.js';

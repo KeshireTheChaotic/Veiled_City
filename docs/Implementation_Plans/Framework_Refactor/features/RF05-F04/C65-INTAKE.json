@@ -1,0 +1,10 @@
+{
+  "base": "423b44a4",
+  "callers": [
+    "bot/src/gm-action-capability.js",
+    "bot/src/native-environment-trace.js",
+    "bot/src/native-environment-arrivals.js",
+    "bot/src/native-environment-proposals.js",
+    "bot/src/native-environment-door-chain.js"
+  ]
+}

@@ -1,5 +1,6 @@
 import {inspectArbitrationOrigin,createArbitrationOrigin} from './scene-intent-board.js';
-import {buildNarrativeContext} from './narrative-authority-context.js';
+import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
+const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance,nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';

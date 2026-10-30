@@ -1,7 +1,8 @@
 import {nativeNpcEvidence} from './frameworks/daggerheart/public.js';
 const {actorReferenceVisible}=nativeNpcEvidence;
 /** Durable native AI-GM capability inspection. No model role, approval flag or simulation score grants execution. */
-import {buildNarrativeContext} from './narrative-authority-context.js';
+import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
+const {buildNarrativeContext}=nativeNarrativeContext;
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
