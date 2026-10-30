@@ -52,3 +52,7 @@ export function connectWorldNativeEncounter(){return worldNativeEncounter.bind({
 import {nativeWorldInput} from '../../frameworks/daggerheart/public.js';
 import {captureWorldInput} from '../../frameworks/world/public.js';
 export function connectNativeWorldInput(){return nativeWorldInput.bind({captureWorldInput});}
+
+import {nativeWorldFearThreat} from '../../frameworks/daggerheart/public.js';
+import {createFearNpcThreatProducer} from '../../frameworks/world/public.js';
+export function connectNativeWorldFearThreat(){return nativeWorldFearThreat.bind({createFearNpcThreatProducer});}

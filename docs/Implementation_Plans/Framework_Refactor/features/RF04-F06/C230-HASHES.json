@@ -1,0 +1,12 @@
+{
+  "feature": "RF04-C230",
+  "sha256": {
+    "bot/src/application/composition/native-world-events.js": "123bc2aec5135cfb9df114cea856bc6d498b62d4952adee6be306ee406b4ce3d",
+    "bot/src/framework-to-framework/daggerheart--world/public.js": "ead77438ed941c6ef31c845c9d61bb9fd48b87c5a61c854ec7b1932287c10a22",
+    "bot/src/frameworks/daggerheart/public.js": "34ebdd7552c172cb86a22b8506c61657716d7e516bb036bbf402246c1faa39d6",
+    "bot/src/frameworks/world/public.js": "545c30890ae884b5dfa74e57d0666b7dcee0411ae41ce266b7ae6b1b3cc49f89",
+    "bot/src/pvp-fear-moves.js": "cdf2adb41a52e121322072f7c5bfc61568a6331ce917ee120a09888e2b9350c9",
+    "bot/src/frameworks/daggerheart/contracts/world-fear-threat.js": "dc7de9bdc4f1ce6489de0fec91799688a7d894019cc84f0cc9bbe708b45639ac",
+    "bot/src/frameworks/world/fear-npc-threat.js": "6a1c1512a1d3b71b797e95de9ff557f1f5d9d54300cbd58aa007cab0b6532cd4"
+  }
+}

@@ -160,3 +160,5 @@ export {nativeWorldInput} from './contracts/world-input.js';
 export {encounterProposalContext,proposeWorldEncounter,manageWorldEncounter,recordWorldEncounterOutcome,recordObservedAttack,worldCombatantDrafts,bindWorldCombatants,validateWorldEncounterActivation,defaultObjective} from './encounter-service.js';
 export {activateDelegatedEncounter,inspectNativeEncounterActivation} from './encounter-activation-service.js';
 export {nativeEnvironmentBinding,inspectNativeEnvironmentBinding} from './environment-context.js';
+
+export {nativeWorldFearThreat} from './contracts/world-fear-threat.js';

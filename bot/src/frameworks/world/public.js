@@ -137,3 +137,5 @@ export {seedData} from './seed-data.js';
 export {worldRoundEligibility} from './contracts/round-eligibility.js';
 
 export {queueDirectorAfterPartyTurn} from './director-service.js';
+
+export {createFearNpcThreatProducer} from './fear-npc-threat.js';

@@ -1169,7 +1169,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c92.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c95.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c29.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c29.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c30.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1192,7 +1193,7 @@
         "occurrences": 158
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--world/public.js",
-      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open. C11 native owner-consent read for appointments adopted; upstream response workflow remains its own native source obligation. C50 native access and witness exact fact proof adopts native-owned interface. Full environment rule sources remain accountable. Test local per owner. C212 forwards original captureWorldInput through fixed native consumer; World retains owner/source checks."
+      "scope": "Adopted scene-effect service only; other observed native/world edges and source producer isolation remain separately accountable. C08 also adopts native actor classification and original current World proxy query; remaining source/strategy/delegation directions stay open. C11 native owner-consent read for appointments adopted; upstream response workflow remains its own native source obligation. C50 native access and witness exact fact proof adopts native-owned interface. Full environment rule sources remain accountable. Test local per owner. C212 forwards original captureWorldInput through fixed native consumer; World retains owner/source checks. C230 Native Fear delegates original World NPC threat proposal/establishment to a World-owned factory via fixed consumer; Native live content/hash/failure callbacks retained; no World authoring code moves into mechanics."
     },
     {
       "pair": "discord--narrative",
