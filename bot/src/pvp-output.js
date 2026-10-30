@@ -1,3 +1,5 @@
+import {assertProtectedModelEvents} from './frameworks/publication/public.js';
+export {assertProtectedModelEvents};
 const {measureNative}=publicationOperations;
 import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
 const {activeEvidence,objectiveEvidence,evidenceType}=publicationKnowledgeDisclosure;
@@ -100,19 +102,7 @@ export function restoreGmWorldCandidates(original,recovered){
 import {fail,records,protectedAgreements} from './frameworks/publication/output-records.js';
 import {protectedPvpScope} from './frameworks/publication/public.js';
 export {protectedPvpScope};
-/** A safe prose projection does not authorize a parallel free-text fact/reference mutation. */
-export function assertProtectedModelEvents(db,guild,events,scope){
-  if(!protectedPvpScope(db,guild,scope).length)return;
-  for(const event of events||[]){
-    if(!["fact","clue","canon","npc_update","location_update","thread"].includes(event.type))continue;
-    const refs=event.epistemic?.source_refs||[];
-    const existing=refs.map(ref=>db.getFact(guild,ref)).find(row=>row&&!row.archived&&row.content===event.value
-      &&activeEvidence(db,guild,row.id)&&objectiveEvidence(db,guild,row)
-      &&(["party","public"].includes(row.visibility)||scope.mode==="private"&&row.subject_character_id===scope.actorCharacterId));
-    // Free text is not a native receipt. Existing exact facts may be recalled; new unsupported state fails/rolls back.
-    if(!existing)fail();
-  }
-}
+
 function surfaces(result){
   return ["narration","public_narration","player_summary"].map(k=>[k,String(result[k]||"")])
     .concat((result.private_messages||[]).map(m=>[`private:${m.discord_user_id}`,String(m.content||"")]));

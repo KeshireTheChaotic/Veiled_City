@@ -1,6 +1,5 @@
-import {appendNativeResourceGmEvent} from './frameworks/daggerheart/public.js';
-import {appendWorldGmEvent} from './frameworks/world/public.js';
-import {appendKnowledgeGmEvent,gmEventVisibility} from './frameworks/knowledge/public.js';
+import {applyGMEvents} from './application/workflows/gm-event-dispatch.js';
+export {applyGMEvents};
 import {applyCanonProposalDrafts} from './frameworks/knowledge/public.js';
 export {applyCanonProposalDrafts};
 import {applyRelationshipDrafts} from './frameworks/knowledge/public.js';
@@ -20,7 +19,7 @@ import { indexWorldEvent } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { applySimulationUpdates } from "./frameworks/world/public.js";
 import { validateNarrativeClaims, validateCanonAnnotations, validateCandidateClaims, assertNarrativeApplied } from "./narrative-integrity.js";
-import { prepareAuthorizedTurnOutput, candidateNarrative, assertProtectedModelEvents } from "./pvp-output.js";
+import { prepareAuthorizedTurnOutput, candidateNarrative } from "./pvp-output.js";
 import { recordCharacterPerceptions } from "./frameworks/character/public.js";
 import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.js";
 import { dispatchAiIntents } from "./ai-intents.js";
@@ -66,7 +65,6 @@ export function playerSafeCharacter(c){
 
 
 
-function fail(message){ throw new Error(message); }
 
 /** An NPC's unsupported disclosure becomes testimony-weighted evidence from that NPC, never objective truth,
  * plus the NPC's own knowledge of it so a later repeat passes the disclosure check. Failure records nothing. */
@@ -84,51 +82,7 @@ export function recordNpcTestimony(db,guildId,sessionId,claim,diagnostic,scope,s
   }catch{return null;}
 }
 
-/** Apply structured GM events while enforcing private-scene scope boundaries. */
-export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party",actorUserId:null,actorCharacterId:null},provenance={}){
-  assertProtectedModelEvents(db,guildId,events,scope);
-  const results=[];
-  for(const e of events||[]){
-    try{
-      if(!e?.type) fail("GM event is missing type.");
-      const vis=gmEventVisibility(e,scope);
-      switch(e.type){
-        case "fact":
-        case "clue":
-        case "thread":
-        case "canon":{
-          appendKnowledgeGmEvent(db,guildId,sessionId,e,scope,provenance,vis,results);
-          break;
-        }
-        case "clock_delta":
-        case "veil_exposure_delta":{
-          appendWorldGmEvent(db,guildId,e,scope,results);
-          break;
-        }
-        case "resource_delta":{
-          appendNativeResourceGmEvent(db,guildId,sessionId,e,scope,provenance,results);
-          break;
-        }
-        case "npc_update":
-        case "location_update":{
-          appendKnowledgeGmEvent(db,guildId,sessionId,e,scope,provenance,vis,results);
-          break;
-        }
-        case "relationship":
-        case "log_only":{
-          db.audit(guildId,sessionId,"ai","gm",e.type,e);
-          results.push({type:e.type,ok:true});
-          break;
-        }
-        default:
-          fail(`Unsupported GM event type: ${e.type}.`);
-      }
-    }catch(err){
-      results.push({type:e?.type||"unknown",ok:false,error:String(err.message||err),event:e});
-    }
-  }
-  return results;
-}
+
 
 
 /**

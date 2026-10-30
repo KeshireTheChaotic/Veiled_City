@@ -1,0 +1,42 @@
+{
+  "base": "8f840939",
+  "application_event_body_verbatim": true,
+  "publication_preflight_body_verbatim": true,
+  "remaining_state_and_pvp_output_identical_except_known_import_export_helper_and_function_removal": true,
+  "syntax_pass": 5,
+  "test": {
+    "run_id": "RF05-F05-C86",
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c86.test.mjs",
+    "exit_code": 0,
+    "pass": 3,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 1526.2499
+  },
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "5ed8644d0458a3835abbabed1fdd491daf077be378de49257ea70b55ff79896d"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "c3fe864df2f1167a8685a023d9663641805244dd3b92f42e8c58532466b9cc67"
+    },
+    {
+      "path": "bot/src/application/workflows/gm-event-dispatch.js",
+      "sha256": "4ce9f106ae4b00ef2ccb41449e2a3342674972bdebeb70a0d4672ede9456e35d"
+    },
+    {
+      "path": "bot/src/frameworks/publication/gm-event-preflight.js",
+      "sha256": "958c4417ec221a1e39420bc695b45a1ea817abcec0d5c4708c2d15d1a66480f7"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "efa7eb6dbf34f84fbd385e3fe3eb7220dfb5dab6f84254715ba186d6d5714a08"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c86.test.mjs",
+      "sha256": "24600b6606d835233ccb9c9b1d3f32f57bff7754a3de5fac107849dd88701136"
+    }
+  ]
+}
