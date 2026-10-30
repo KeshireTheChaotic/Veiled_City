@@ -20,7 +20,7 @@ import {creativeBrief} from './narrative-delegation.js';
 import {withoutVerifiedVocative} from './frameworks/narrative/public.js';
 import {narrativeNpcEvidence} from './frameworks/narrative/public.js';
 const {actorReferenceVisible}=narrativeNpcEvidence;
-import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
+import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './frameworks/narrative/public.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './frameworks/narrative/public.js';
 import {compileWriterV9,actToNativeUnit} from './frameworks/narrative/public.js';
 import {constructNativeClause} from './frameworks/narrative/public.js';

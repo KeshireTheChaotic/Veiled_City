@@ -109,3 +109,5 @@ export {nativeClauseSchema,constructNativeClause} from './narrative-clauses-v9.j
 export {actToNativeUnit,compileWriterV9} from './narrative-writer-v9.js';
 
 export {narrativePublicationOutcomeProjection} from './contracts/publication-outcome-projection.js';
+
+export {narrativeArtifactKey,hasNarrativeChoices,projectNarrativeArtifact} from './narrative-artifacts.js';

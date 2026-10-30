@@ -41,7 +41,8 @@ const {establishSceneFiction,renderSceneFiction,holdSceneFiction}=publicationNar
 import {establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
 import {narrativeTasks} from './narrative-tasks.js';
 import {validateNarrativeCompleteness} from './narrative-completeness.js';
-import {projectNarrativeArtifact} from './narrative-artifacts.js';
+import {publicationNarrativeArtifact} from './frameworks/publication/public.js';
+const {projectNarrativeArtifact}=publicationNarrativeArtifact;
 function openingEntryNarrativeCandidate(...args){return publicationSessionEvidence.openingEntryNarrativeCandidate(...args);}function openingEntryProjection(...args){return publicationSessionEvidence.openingEntryProjection(...args);}function assertSessionOpeningPublication(...args){return publicationSessionEvidence.assertSessionOpeningPublication(...args);}
 import {publicationSessionEvidence} from './frameworks/publication/public.js';
 function openingEntryEvidence(...args){return publicationSessionEvidence.openingEntryEvidence(...args);}

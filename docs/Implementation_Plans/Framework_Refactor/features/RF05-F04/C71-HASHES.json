@@ -1,0 +1,44 @@
+{
+  "base": "4317bd61",
+  "concurrent_rf06_commit": "4f1d459e",
+  "artifact_and_two_callers_bodies_identical_except_imports_forwarder": true,
+  "syntax_pass": 8,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-artifacts.js",
+      "sha256": "69171d5400947da70003aa228c7a26e5627595c02b68f172ffb246de50f2ebde"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "13c7211ee50aa5401794a910418cc0fa79569c756d59ccaa58ebc09b5b74f6a9"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "bb85d3c006ea33372bf71c666d8ecbe99b71429cafb337995e3da58b0169468b"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "c996874eb49785c3d7335d840cc26b676b0015ca4526fc0732b67bbe42285caa"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "0160d93b670adc4abc7f7a203fef45031c52134905f6551015c52587e376aed1"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-artifact.js",
+      "sha256": "3c0f70859d1581d8be08673126e56e7c0eab6452388ac72dc7be1384e491400c"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "739dd39997637b677c101aeac5ccdbaa1f281d12399f698d70c8cf58169e44d2"
+    },
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "687404b59f5fc327b7ab3e1ac15cbb7f6a2ab71471e378b768d48d542cfa6267"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c71.test.mjs",
+      "sha256": "deb6d873713ce274c063e7c8c968c1030561b58e221885baefdd330b20bf1fed"
+    }
+  ]
+}

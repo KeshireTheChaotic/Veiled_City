@@ -30,3 +30,7 @@ export function connectNarrativePublicationProtectedScope(){return narrativePubl
 import {publicationOutcomeProjectionSource} from '../../frameworks/publication/public.js';
 import {narrativePublicationOutcomeProjection} from '../../frameworks/narrative/public.js';
 export function connectNarrativePublicationOutcomeProjection(){return narrativePublicationOutcomeProjection.bind({nativeOutcomeProjection:publicationOutcomeProjectionSource.nativeOutcomeProjection});}
+
+import {projectNarrativeArtifact} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeArtifact} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeArtifact(){return publicationNarrativeArtifact.bind({projectNarrativeArtifact});}
