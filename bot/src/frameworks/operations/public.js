@@ -29,3 +29,5 @@ export {operationsDiscordDiagnostics} from './contracts/discord-diagnostics.js';
 export {TurnLatency,turnLatency} from './turn-latency.js';
 export {failureTrace} from './failure-trace.js';
 export {publicationTelemetrySource} from './publication-telemetry.js';
+
+export {operationalReport} from './health.js';

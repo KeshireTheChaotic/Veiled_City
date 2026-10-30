@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/operations/health.js": "b9f3762573cfeda2547201b474c425f29297cb1d3ee63663175bdff09bf7ff88",
+  "bot/src/frameworks/operations/public.js": "2c90a537afae6d768a8fed99a995b4662882b082fd237a593f9783116de68f90",
+  "bot/src/commands.js": "4cb5a4d0a649e217f30bcb0c2cb65404f0e1db8014c9867cb13af8aa2545ac8a",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c22.test.mjs": "462ed69fe9206e9c87b4993e14519f932fcf737bfe95ebcb38a9f0e8a14f1abe"
+}

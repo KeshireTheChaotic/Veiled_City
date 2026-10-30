@@ -1,0 +1,14 @@
+✔ original authorization gate rejects before reading native operational data (0.7722ms)
+✔ report retains closed counts/statuses/ages and no raw record keys or payload text (1.2792ms)
+✔ exact native reference lookup retains guild-scoped hashed matching and minimal missing result (0.5808ms)
+✔ existing in-memory incident reference is returned without native recovery execution (0.2701ms)
+✔ uncertainty and age guidance remain truthful and read-only (0.236ms)
+✔ native group cap marker preserves exact boundary without truncating returned rows (0.294ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.087

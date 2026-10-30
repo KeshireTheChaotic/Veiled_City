@@ -49,7 +49,7 @@ import { PermissionError, NotFoundError, StateConflictError, UserInputError } fr
 import {isExpectedError} from './frameworks/operations/public.js';
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from './frameworks/discord/public.js';
 import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
-import {operationalReport} from './operations/health.js';
+import {operationalReport} from './frameworks/operations/public.js';
 import {operationalMetrics} from './operational-metrics.js';
 import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';
 import { seedData } from "./frameworks/world/public.js";

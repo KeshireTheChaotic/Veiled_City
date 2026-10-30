@@ -1030,17 +1030,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "40246a7f059d32ea30aac219b0e335fa6962e233c1b236b2b52acdfc5f71ac7c",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/operations/health.js",
-      "owner": "operations",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "7315d68b8b98aae1ce12e70498d2654490012f9a979a99571f76bc1f89a51f5e",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/ordinary-effect-proof.js",
@@ -1927,20 +1916,6 @@
       "to": "bot/src/discord/chunking.js",
       "kind": "static",
       "specifier": "./discord/chunking.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "46dbfa8459db6efd002e478936a9375fa5743da74355b78a6a7b0bb5ae61fd63",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/operations/health.js",
-      "kind": "static",
-      "specifier": "./operations/health.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

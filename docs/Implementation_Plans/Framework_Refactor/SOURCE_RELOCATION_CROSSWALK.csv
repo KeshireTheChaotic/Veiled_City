@@ -242,7 +242,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/opening-world-bridge.js","bot/src/framework-to-framework/session--world/opening-world-bridge.js","session--world","RF04","EXTRACT_PORTS_BEFORE_MOVE","2","2"
 "bot/src/operational-metrics.js","bot/src/frameworks/operations/operational-metrics.js","operations","RF02","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","19","0"
 "bot/src/operations/diagnostics.js","bot/src/frameworks/operations/diagnostics.js","operations","RF02","MOVED_ROOT_RETIRED_R07","1","1"
-"bot/src/operations/health.js","bot/src/frameworks/operations/health.js","operations","RF02","PILOT_MOVE_CANDIDATE","1","0"
+"bot/src/operations/health.js","bot/src/frameworks/operations/health.js","operations","RF06","MOVED_ROOT_RETIRED_R22","1","0"
 "bot/src/operations/overview.js","bot/src/frameworks/operations/overview.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/ordinary-effect-proof.js","bot/src/frameworks/daggerheart/ordinary-effect-proof.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F03+RF04-F04+RF05-F05","12","4"
 "bot/src/ordinary-effect-schema.js","bot/src/frameworks/daggerheart/ordinary-effect-schema.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","3","0"

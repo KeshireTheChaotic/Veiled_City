@@ -1,6 +1,6 @@
 /** GM-only, content-free operational reports. Reads native status without invoking validators, recovery or models. */
-import {operationalMetrics} from '../operational-metrics.js';
-import {turnLatency} from '../turn-latency.js';
+import {operationalMetrics} from './operational-metrics.js';
+import {turnLatency} from './turn-latency.js';
 const statuses=new Set(['active','proposed','selected','superseded','awaiting_pair','awaiting_move','move_selected',
   'executing','resolved','needs_review','needs_scope_review','pending','blocked','needs_adjudication','ready',
   'awaiting_defense','awaiting_armor','awaiting_damage','awaiting_owner','awaiting_death','accepted','declined','revoked',
