@@ -1,0 +1,91 @@
+{
+  "base": "df2d6d89",
+  "body_comparison": "Moved context and 12 callers identical excluding imports, relative failure reexport and Intent forwarding declaration",
+  "syntax_pass": 20,
+  "files": [
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "41f3d80dbc7a1465ad6bdd5dd4df11d4b32c2dd8d07ab8fc729c31561f458e82"
+    },
+    {
+      "path": "bot/src/audience-native-v9.js",
+      "sha256": "821a8d2d2f3e7a27ec11a537a65b3ec6fe626e9e00b7d34b2869740b0e53ae7f"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "c8161bdb74f31a43444b55f01b61418febce76964d7db43e20b899417b5da3eb"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "048ff03af9c1b002dc26f5dd3449a7ff250ec7fdeba646b0deb5c8b776124aa6"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "262995eae48a2d1607ecc9a2e1bc3747e3461961f95a80d8033a5c4a45f3b9b4"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "0c89535b12e23229a78b2d9b786495bfe02676577efeb9d8dc972c406dab36e7"
+    },
+    {
+      "path": "bot/src/narrative-artifacts.js",
+      "sha256": "5e16f20184c62c400e9ea0e3b6e0b4eb18fb7efef2898e2f3199238682974b06"
+    },
+    {
+      "path": "bot/src/narrative-authority-context.js",
+      "sha256": "a84863eabb95a47f4708e1a6cccab39e131adc2db1f8368e638ef877a40926ba"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "549691ddcb0911d09f224a68f9ec8e811e927b0e108d4bf6a82c63ef54c3157c"
+    },
+    {
+      "path": "bot/src/narrative-clauses-v9.js",
+      "sha256": "f7dfb3a3cd98fc16ca9aff8128a2b38262014af650f78349ce38e3c3317c43ce"
+    },
+    {
+      "path": "bot/src/narrative-director-source.js",
+      "sha256": "52c3265f3d3730bc3de2d9196a0e51859f9533b971c71385819b1835bd9e2bf7"
+    },
+    {
+      "path": "bot/src/narrative-salience.js",
+      "sha256": "1d4876eb271a7d285bc0c80b85559e137ef89a9a491fca0174b475d89c3c6532"
+    },
+    {
+      "path": "bot/src/narrative-speakers.js",
+      "sha256": "457f4640c30c56a5db299753dab08c2b758d80eb8e718491dbf89e87c38fb59a"
+    },
+    {
+      "path": "bot/src/narrative-tasks.js",
+      "sha256": "4a6ed06c2ea290f449ca5f9664a387622fbe9c84fa46f80330aed0ef5e7fc027"
+    },
+    {
+      "path": "bot/src/narrative-writer-v9.js",
+      "sha256": "ac4b4f66e158b0415ca0369df6492178dd326fc1d9f3f0d486b9ea55221b0102"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "798446b64ed06a14988a50cc11ce5797f48dfda6b65b185b1af8ce894bdfe180"
+    },
+    {
+      "path": "bot/src/application/composition/intent-narrative.js",
+      "sha256": "cbcd82b09b1ff8453ff9a52abe7c3c5af315452a42ea5c14125c4d9c096b1faf"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/public.js",
+      "sha256": "2ce905f571afc2be56f0be41bfa0813d9eae3910afb6cd883baceb4c900a2ee0"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/narrative-context.js",
+      "sha256": "887e445447fe8091715363ce93c62480152c1fae03aaf0eb27aef8990b8acc49"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/scene-fiction-context.js",
+      "sha256": "1ac528f71e510e2b23da2835c46db3e43c3202cc60d5e71ab0553f742d2d0323"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c63.test.mjs",
+      "sha256": "fad0a4e78283fea09cf7583e952181dcd3ae369ef7ab1ed8295957f0271b0875"
+    }
+  ]
+}

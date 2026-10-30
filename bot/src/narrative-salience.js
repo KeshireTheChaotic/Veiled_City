@@ -2,7 +2,7 @@ import {nativeSalienceAvailable,names,mentions,narrativeContextEligible,narrativ
 export {nativeSalienceAvailable,narrativeContextEligible};
 /** Retrieval only: deterministic source-bound interest, fictional-time decay and reversible prompt retirement. */
 import {createHash} from 'node:crypto';
-import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
+import {narrativeSourceVisible,sceneFictionHash as proofHash} from './frameworks/narrative/public.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 import {narrativeSessionScene} from './frameworks/narrative/public.js';

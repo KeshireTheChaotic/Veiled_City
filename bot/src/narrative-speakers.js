@@ -4,7 +4,7 @@ import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {scenePresence,npcEvidenceActive}=narrativeSessionScene;
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy}=narrativeWorldConstraints;
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {narrativeSourceVisible} from './frameworks/narrative/public.js';
 import {narrativeNpcVisibility} from './frameworks/narrative/public.js';
 const {actorEvidenceVisible}=narrativeNpcVisibility;
 const entitled=(db,guild,npc,row,scope)=>actorEvidenceVisible(db,guild,npc,row,scope)

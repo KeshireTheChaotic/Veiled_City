@@ -9,7 +9,7 @@ import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
 function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
 
 
-import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
+import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './frameworks/narrative/public.js';
 import {protectedPvpScope} from './pvp-output.js';
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy}=narrativeWorldConstraints;

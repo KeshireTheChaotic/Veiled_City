@@ -1,0 +1,19 @@
+{
+  "base": "df2d6d89",
+  "remainingContextCallers": [
+    "bot/src/audience-native-v9.js",
+    "bot/src/gm.js",
+    "bot/src/narrative-artifacts.js",
+    "bot/src/narrative-authority-context.js",
+    "bot/src/narrative-authority.js",
+    "bot/src/narrative-clauses-v9.js",
+    "bot/src/narrative-director-source.js",
+    "bot/src/narrative-salience.js",
+    "bot/src/narrative-speakers.js",
+    "bot/src/narrative-tasks.js",
+    "bot/src/narrative-writer-v9.js",
+    "bot/src/scene-intent-board.js"
+  ],
+  "provider": "bot/src/narrative-authority-context.js",
+  "moved": "bot/src/frameworks/narrative/scene-fiction-context.js"
+}

@@ -92,3 +92,5 @@ export {narrativeOperationsMetrics} from './contracts/operations-metrics.js';
 export {SCENE_FICTION_INSTRUCTIONS,holdSceneFiction,authorSceneFictionRequests,establishSceneFiction,renderSceneFiction} from './scene-fiction-authority.js';
 
 export {narrativePublicationProtectedScope} from './contracts/publication-protected-scope.js';
+
+export {buildSceneFictionContext,sceneFictionHash,sceneFictionFailure} from './scene-fiction-context.js';

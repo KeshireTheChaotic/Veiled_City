@@ -62,7 +62,7 @@ import {worldInputKey} from './frameworks/world/public.js';
 import {shadowEngagement} from './engagement-shadow.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './frameworks/narrative/public.js';
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './frameworks/narrative/public.js';
-import {sceneFictionFailure,buildSceneFictionContext} from './scene-fiction-context.js';
+import {sceneFictionFailure,buildSceneFictionContext} from './frameworks/narrative/public.js';
 import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {openingCohortNarrativeCandidate} from './frameworks/session/public.js';
 import {assemblyInputs,hookHash,certifyAssemblyPlan} from './frameworks/session/public.js';

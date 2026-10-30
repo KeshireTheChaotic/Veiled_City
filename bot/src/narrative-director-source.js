@@ -4,7 +4,7 @@ import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {currentScene}=narrativeSessionScene;
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
+import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './frameworks/narrative/public.js';
 import {narrativeWorldBridge} from './frameworks/narrative/public.js';
 function worldNarrativeBridgePacket(...args){return narrativeWorldBridge.worldNarrativeBridgePacket(...args);}
 function worldDirectorBridgeBeats(...args){return narrativeWorldBridge.worldDirectorBridgeBeats(...args);}

@@ -203,6 +203,9 @@
     ],
     "narrative--operations": [
       "bot/src/framework-to-framework/narrative--operations/public.js"
+    ],
+    "intent--narrative": [
+      "bot/src/framework-to-framework/intent--narrative/public.js"
     ]
   },
   "externalCapabilityOwners": {

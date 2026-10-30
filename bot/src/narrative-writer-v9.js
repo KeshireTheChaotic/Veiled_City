@@ -1,6 +1,6 @@
 /** Current isolated writer contract. Audience, ownership and effects are NOT model fields. */
 import {NARRATIVE_ACT_KINDS,compileNarrativeActs} from './narrative-acts-v9.js';
-import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {sceneFictionHash as hash,sceneFictionFailure as fail} from './frameworks/narrative/public.js';
 import {nativeClauseSchema,constructNativeClause} from './narrative-clauses-v9.js';
 import {NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS,narrativeResponseV9Schema} from './frameworks/narrative/writer-contract-v9.js';
 export {NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS,narrativeResponseV9Schema};

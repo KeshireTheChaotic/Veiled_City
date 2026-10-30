@@ -1,8 +1,9 @@
 import {intentNativeEncounter} from './frameworks/intent/public.js';
 const {nativeEnvironmentBinding}=intentNativeEncounter;
 /** Immutable scoped scene inputs. Accepted PC sources and native GM NPC proposals never impersonate each other. */
-import {buildNarrativeContext} from './narrative-authority-context.js';
-import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
+import {intentNarrativeContext} from './frameworks/intent/public.js';
+const {buildNarrativeContext,narrativeSourceVisible}=intentNarrativeContext;
+import {jsonHash as hash} from './kernel/json-hash.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {intentWorldConstraints} from './frameworks/intent/public.js';
 const {activeCityProxy,assertNpcAvailability}=intentWorldConstraints;

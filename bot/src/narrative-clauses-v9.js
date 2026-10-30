@@ -1,11 +1,11 @@
 import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
 const {factVisibleTo}=narrativeKnowledgeDisclosure;
 /** Native non-effect clause construction. Closed primitives, never model prose or semantic safety labels. */
-import {sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {sceneFictionFailure as fail} from './frameworks/narrative/public.js';
 import {npcAddresses} from './narrative-speakers.js';
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {narrativeSourceVisible} from './frameworks/narrative/public.js';
 
 import {nativeClauseSchema} from './frameworks/narrative/native-clause-schema-v9.js';
 export {nativeClauseSchema};

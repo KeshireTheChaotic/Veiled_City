@@ -2,7 +2,7 @@ import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
 const {objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Delegated ordinary GM fiction; independent typed units, native receipts for effects, no arbitrary raw-output waiver. */
 import {buildNarrativeContext,narrativeVisible} from './narrative-authority-context.js';
-import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
+import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './frameworks/narrative/public.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeWorldMaterialization} from './frameworks/narrative/public.js';

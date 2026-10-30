@@ -1,20 +1,20 @@
-import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 const {factVisibleTo,objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Audience-safe native viewpoint for GM-owned local fiction. No inferred placement, PC knowledge or effects. */
-import {jsonHash} from './kernel/json-hash.js';
-import {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
-export {sceneFictionFailure} from './kernel/scene-fiction-failure.js';
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {jsonHash} from '../../kernel/json-hash.js';
+import {sceneFictionFailure} from '../../kernel/scene-fiction-failure.js';
+export {sceneFictionFailure} from '../../kernel/scene-fiction-failure.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {currentScene,scenePresence,sceneAccess}=narrativeSessionScene;
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 
 
-import {narrativePublicationProtectedScope} from './frameworks/narrative/public.js';
+import {narrativePublicationProtectedScope} from './contracts/publication-protected-scope.js';
 const {protectedPvpScope}=narrativePublicationProtectedScope;
-import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
+import {narrativeBridgeSessionSources} from './contracts/bridge-sources.js';
 function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
-import {narrativeSourceVisible} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible} from './visibility-source.js';
 export const sceneFictionHash=value=>jsonHash(value);
 const visible=(row,scope)=>row&&factVisibleTo({...row,subject_character_id:row.subject_character_id||row.subject_key,
   subject_user_id:row.subject_user_id||row.subject_key},scope);
@@ -77,6 +77,6 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
   return {packet,state,source,scope:{...scope},sourceRef};
 }
 
-import {narrativeSceneFictionContextSource} from './frameworks/narrative/public.js';
+import {narrativeSceneFictionContextSource} from './contracts/scene-fiction-context.js';
 // Supply original context and hash; no context or audience store is reconstructed.
 narrativeSceneFictionContextSource.bind({buildSceneFictionContext,sceneFictionHash});
