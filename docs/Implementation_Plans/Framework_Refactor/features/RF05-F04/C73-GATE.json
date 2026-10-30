@@ -1,0 +1,69 @@
+{
+  "summary": {
+    "sourceModules": 975,
+    "unowned": 0,
+    "importOccurrences": 3987,
+    "internalImportOccurrences": 3802,
+    "cycleComponents": 1,
+    "largestCycle": 62,
+    "rawViolationOccurrences": 763,
+    "acceptedLegacyOccurrences": 762,
+    "activeViolationGroups": 1,
+    "transitionErrors": 8,
+    "pass": false
+  },
+  "activeViolations": [
+    {
+      "code": "PROPOSED_BRIDGE_HAS_IMPLEMENTATION",
+      "from": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "owner": "tooling",
+      "detail": "discord--operations: proposal cannot claim implementation/consumers/tests",
+      "id": "2fcca8891cf295a3408e94ea8eef06c30986e24345389925cd6a40e6b834aec9",
+      "occurrences": 1,
+      "reason": "UNACCEPTED"
+    }
+  ],
+  "transitionErrors": [
+    {
+      "code": "INVALID_TRANSITION",
+      "from": "bot/src/discord/privacy.js",
+      "id": "a6fff46a14ae2fa443aa6a0e4a313f501fe916105cee0ddabd03b7228899836d"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/discord/privacy.js",
+      "id": "a6fff46a14ae2fa443aa6a0e4a313f501fe916105cee0ddabd03b7228899836d"
+    },
+    {
+      "code": "INVALID_TRANSITION",
+      "from": "bot/src/operations/diagnostics.js",
+      "id": "fbd38efb15b33f68f05fa379e095733cda21e82994e0a54b620b5f8bd35212d3"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/operations/diagnostics.js",
+      "id": "fbd38efb15b33f68f05fa379e095733cda21e82994e0a54b620b5f8bd35212d3"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/commands.js",
+      "id": "4390084f45a33c4455ba64e614a29f09a7edcd259f187187002c5675d1799c48"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/index.js",
+      "id": "a9c339ee02f95cd31bf7cc9d24483951891cc310917f16e4613606ecb2e8ccd2"
+    },
+    {
+      "code": "INVALID_TRANSITION",
+      "from": "bot/src/operations/diagnostics.js",
+      "id": "6f7ea6c4593ffc6fe450103a61dc86869b8481ace5da1e18315b1ee946542483"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/operations/diagnostics.js",
+      "id": "6f7ea6c4593ffc6fe450103a61dc86869b8481ace5da1e18315b1ee946542483"
+    }
+  ],
+  "disposition": "Pending separately owned RF06 R07 bridge metadata and privacy/diagnostics transitions; no C73 source boundary violations or obsolete transition records remain."
+}

@@ -38,3 +38,7 @@ export function connectPublicationNarrativeArtifact(){return publicationNarrativ
 import {narrativeTasks} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeTasks} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeTasks(){return publicationNarrativeTasks.bind({narrativeTasks});}
+
+import {validateNarrativeCompleteness,recordNarrativeHealth} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeHealth} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeHealth(){return publicationNarrativeHealth.bind({validateNarrativeCompleteness,recordNarrativeHealth});}

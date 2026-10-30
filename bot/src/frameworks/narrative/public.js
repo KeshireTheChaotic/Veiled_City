@@ -116,3 +116,5 @@ export {narrativeIntentEngagement} from './contracts/intent-engagement.js';
 
 export {narrativeTasks,taskDispositions} from './narrative-tasks.js';
 export {coordinateNarrative,creativeBrief} from './narrative-delegation.js';
+
+export {validateNarrativeCompleteness,recordNarrativeHealth} from './narrative-completeness.js';

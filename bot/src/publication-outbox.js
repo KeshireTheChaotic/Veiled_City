@@ -9,7 +9,8 @@ import {operationalMetrics} from './operational-metrics.js';
 import {turnLatency} from './turn-latency.js';
 import {currentTurnTrace,turnTraceFor} from './turn-trace-context.js';
 import {publicationKnowledgeNarrativeMemory} from './frameworks/publication/public.js';
-import {recordNarrativeHealth} from './narrative-completeness.js';
+import {publicationNarrativeHealth} from './frameworks/publication/public.js';
+const {recordNarrativeHealth}=publicationNarrativeHealth;
 import {nativeDirectorNarrativeSource} from './narrative-director-source.js';
 const deliveryQueues=new WeakMap();
 function serialized(db,key,job){
