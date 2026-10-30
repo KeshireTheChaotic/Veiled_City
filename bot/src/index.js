@@ -35,7 +35,7 @@ import { createLogger } from "./frameworks/operations/public.js";
 import { runNpcDirector } from "./frameworks/world/public.js";
 import { publishSimulationHooks } from "./publishing.js";
 import { serializeSpanLedger } from "./frameworks/intent/public.js";
-import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./authored-turn-envelope.js";
+import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./frameworks/intent/public.js";
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage,measureNative } from "./operational-metrics.js";

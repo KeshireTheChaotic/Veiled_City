@@ -1,0 +1,55 @@
+{
+  "base": "d107c4ba",
+  "moved_body_and_callers_exact_except_known_imports_native_source_argument_and_pair_default": true,
+  "syntax_pass": 7,
+  "test_runs": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c88.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 886.8391
+    },
+    {
+      "command": "node --test --test-name-pattern \"C88 Native bridge\" bot/tests/ai-gm-2026-10/rf05-f05-c88.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 403.7436
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "1d9c0ca6a0d50fe4973c215ead007ade66241c2af2bed7e70f9b2efff3860b6b"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "77004257cf02886ccd42f3d49e2a2490e728a46007b08cdc19ec2d857168f85b"
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "2d613f89be562c696a4a6306ec5da3fde28b015501ce876e038dfa37b8dd3085"
+    },
+    {
+      "path": "bot/src/typed-mechanics.js",
+      "sha256": "8760680fef497684d59a04783d0d16386ea2c9f0aedb7059b2a151eeb14f1eac"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "8390aa4eea51792a938fa2e916adae899ba42bcf264945eaeba1341f836e826b"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "44737fc6afbd9b0a537d2ca5fd99ea357cce2cec9f890366f2136a4aca4d9cc6"
+    },
+    {
+      "path": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "sha256": "24a0c219897f49afa231bec6cf52d8df605cbaf7a6ea1aee5489f7f30a94a9fb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c88.test.mjs",
+      "sha256": "a38a11c00760c1447611e717952dcb348a96ae83214e125abd7f2e9292bb4359"
+    }
+  ]
+}

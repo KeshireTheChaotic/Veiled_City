@@ -1,12 +1,12 @@
-export {sourceSpanInsideQuote} from './frameworks/intent/public.js';
+export {sourceSpanInsideQuote} from './source-quote-boundaries.js';
 /** Immutable authenticated player source plus additive native-consumption annotations. */
-import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,authoredAnnotationKey as annotationKey} from './frameworks/intent/public.js';
+import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,authoredAnnotationKey as annotationKey} from './authored-turn-reader.js';
 export {authoredTurnEnvelope};
-import {intentSessionPrincipal} from './frameworks/intent/public.js';
+import {intentSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import {intentSessionScene} from './frameworks/intent/public.js';
+import {intentSessionScene} from './contracts/session-scene.js';
 const {currentScene}=intentSessionScene;
-import {intentWorldPrimitives} from './frameworks/intent/public.js';
+import {intentWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 
 function fail(message){throw Object.assign(new Error(message),{code:"AUTHORED_TURN_ENVELOPE"});}

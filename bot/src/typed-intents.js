@@ -20,7 +20,7 @@ import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
   overlapsConsumedSpan
-} from './authored-turn-envelope.js';
+} from './frameworks/intent/public.js';
 
 const text = length => ({type:'string',maxLength:length});
 const obj = properties => ({type:'object',additionalProperties:false,properties,required:Object.keys(properties)});

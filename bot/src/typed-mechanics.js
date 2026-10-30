@@ -2,7 +2,6 @@
 import { rollRevision } from './roll-requests.js';
 import { contributeRoll } from './roll-collaboration.js';
 import { isPvpIntent } from './pvp-authority.js';
-import {authoredTurnEnvelope} from './authored-turn-envelope.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {exactTypedRollSelection,exactTypedPvpSelection} from './mechanical-native-v9.js';
 import {rollPvpAttack,validatePvpAttackRoll} from './pvp-attacks.js';
@@ -12,6 +11,6 @@ import {reserveCampaignAttackNotices} from './native-publications.js';
 
 export function resolveTypedNativeRolls(db,guild,scope,intents=[],messageId='',{connectTypedRolls}={}){
   if(typeof connectTypedRolls!=='function')throw new TypeError('Application-supplied typed-roll integration required.');
-  const native=connectTypedRolls({source:{authoredTurnEnvelope},mechanics:{rollRevision,contributeRoll,isPvpIntent,consentAction,historicalActionSource,exactTypedRollSelection,exactTypedPvpSelection,rollPvpAttack,validatePvpAttackRoll,rollPvpDamage,validatePvpDamageRoll},reserveCampaignAttackNotices});
+  const native=connectTypedRolls({mechanics:{rollRevision,contributeRoll,isPvpIntent,consentAction,historicalActionSource,exactTypedRollSelection,exactTypedPvpSelection,rollPvpAttack,validatePvpAttackRoll,rollPvpDamage,validatePvpDamageRoll},reserveCampaignAttackNotices});
   return native.resolveTypedNativeRolls(db,guild,scope,intents,messageId);
 }
