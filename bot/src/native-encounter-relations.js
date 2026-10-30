@@ -16,3 +16,6 @@ export function nativeAlliancePlan(...args){return rules().nativeAlliancePlan(..
 export function commitNativeNpcAlliance(...args){return rules().commitNativeNpcAlliance(...args);}
 export function inspectNativeNpcAllianceReceipt(...args){return rules().inspectNativeNpcAllianceReceipt(...args);}
 export function nativeNpcAlliance(...args){return rules().nativeNpcAlliance(...args);}
+
+import {nativeEncounterActorSource} from './frameworks/daggerheart/public.js';
+nativeEncounterActorSource.bind({nativeEncounterActor});

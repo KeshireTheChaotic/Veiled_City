@@ -15,7 +15,8 @@ import {createAdvantageOpportunitySource} from './frameworks/daggerheart/advanta
 import {createFeatureOpportunityRules} from './frameworks/daggerheart/feature-opportunity-rules.js';
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';
-import {nativeEncounterActor} from './native-encounter-relations.js';
+import {nativeEncounterActorSource} from './frameworks/daggerheart/public.js';
+const {nativeEncounterActor}=nativeEncounterActorSource;
 import {nativeActorControl} from './native-actor-control.js';
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";

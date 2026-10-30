@@ -1,0 +1,46 @@
+{
+  "base": "f6b5f41e",
+  "original_roll_request_body_exact_except_own_source_import": true,
+  "original_encounter_provider_exact_except_registration": true,
+  "syntax_pass": 4,
+  "test_runs": [
+    {
+      "command": "node --test tests/ai-gm-2026-10/rf05-f05-c95.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 1925.9669,
+      "limitation": "Refusal equality initially also allowed a missing World proxy fixture binding; identified by review."
+    },
+    {
+      "command": "node --test --test-name-pattern \"C95 actual SQLite\" tests/ai-gm-2026-10/rf05-f05-c95.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 1089.921,
+      "reason": "Real World proxy connector and exact intended native refusal asserted; other passing tests not rerun."
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "24df51510ad1e76c380197def01ad8f02e86e037f9910262da016252590ca015"
+    },
+    {
+      "path": "bot/src/native-encounter-relations.js",
+      "sha256": "debbf7dc4fc057d22c6c5b89aef2dcd0f2d93c67793e66f6866f4da533535c25"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "62bd31a2e1ff0e30fe3b7e0befcdc3e93d24456428f49519925706dd54831df2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/encounter-actor-source.js",
+      "sha256": "2a22d885b8f3fcf5db13ed6993d65ee7f72f44371b4298c7f66b0d4d9085ebc2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c95.test.mjs",
+      "sha256": "12e3496744585dcdfb0a4947335abe871cc9cc7b18d7d023c031b218980eb416"
+    }
+  ]
+}
