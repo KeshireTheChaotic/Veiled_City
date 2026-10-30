@@ -1,6 +1,6 @@
 import {appendNativeResourceGmEvent} from './frameworks/daggerheart/public.js';
 import {appendWorldGmEvent} from './frameworks/world/public.js';
-import {appendKnowledgeGmEvent} from './frameworks/knowledge/public.js';
+import {appendKnowledgeGmEvent,gmEventVisibility} from './frameworks/knowledge/public.js';
 import {applyCanonProposalDrafts} from './frameworks/knowledge/public.js';
 export {applyCanonProposalDrafts};
 import {applyRelationshipDrafts} from './frameworks/knowledge/public.js';
@@ -65,25 +65,8 @@ export function playerSafeCharacter(c){
 }
 
 
-function privateVisibility(event,scope){
-  if(scope?.mode!=="private") return {
-    visibility:event.visibility||"party",
-    targetUserId:event.target_user_id||null,
-    targetCharacterId:event.target_character_id||null
-  };
-  // Private player scenes may create private knowledge only for the acting player/character.
-  if(["fact","clue","thread","npc_update","location_update","canon"].includes(event.type)){
-    const characterId=scope.actorCharacterId||null;
-    return characterId
-      ?{visibility:"character",targetUserId:null,targetCharacterId:characterId}
-      :{visibility:"player",targetUserId:scope.actorUserId,targetCharacterId:null};
-  }
-  return {visibility:"gm",targetUserId:null,targetCharacterId:null};
-}
 
 function fail(message){ throw new Error(message); }
-function block(results,e,message){ results.push({type:e?.type||"unknown",ok:false,blocked:true,error:message,event:e}); return true; }
-function cleanKey(value){ return String(value||"").trim(); }
 
 /** An NPC's unsupported disclosure becomes testimony-weighted evidence from that NPC, never objective truth,
  * plus the NPC's own knowledge of it so a later repeat passes the disclosure check. Failure records nothing. */
@@ -108,7 +91,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
   for(const e of events||[]){
     try{
       if(!e?.type) fail("GM event is missing type.");
-      const vis=privateVisibility(e,scope);
+      const vis=gmEventVisibility(e,scope);
       switch(e.type){
         case "fact":
         case "clue":
@@ -128,17 +111,7 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
         }
         case "npc_update":
         case "location_update":{
-          if(!cleanKey(e.key)||!String(e.value||"").trim()) fail(`${e.type} requires key and value.`);
-          const kind=e.type==="npc_update"?"npc":"location";
-          const rawKey=e.key.trim().toLowerCase();
-          const owner=scope.actorCharacterId||scope.actorUserId;
-          const entityKey=scope.mode==="private"?`private:${owner}:${rawKey}`:rawKey;
-          const before=db.getReference(guildId,kind,entityKey)||null;
-          const row=db.upsertReference(guildId,{
-            kind,key:entityKey,name:e.key.trim(),summary:e.value.trim(),
-            visibility:vis.visibility,subjectUserId:vis.targetUserId,subjectCharacterId:vis.targetCharacterId
-          });
-          results.push({type:e.type,ok:true,kind,key:row.entity_key,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
+          appendKnowledgeGmEvent(db,guildId,sessionId,e,scope,provenance,vis,results);
           break;
         }
         case "relationship":

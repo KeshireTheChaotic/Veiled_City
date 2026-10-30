@@ -6,7 +6,7 @@ import {initializeIntentNarrative,initializeNarrativeOperations,initializeDiscor
 import "dotenv/config";
 import path from "node:path";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
-import { loadConfig } from "./config.js";
+import { loadConfig } from "./bootstrap/config.js";
 import { VeiledDB } from "./db.js";
 import { ContentIndex } from "./frameworks/content/public.js";
 import { GMService } from "./gm.js";

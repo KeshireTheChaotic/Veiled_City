@@ -64,3 +64,5 @@ export {applyRelationshipDrafts} from './relationship-drafts.js';
 export {applyCanonProposalDrafts} from './canon-proposal-drafts.js';
 
 export {appendKnowledgeGmEvent} from './gm-event-persistence.js';
+
+export {gmEventVisibility} from './gm-event-persistence.js';

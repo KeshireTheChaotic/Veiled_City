@@ -1,0 +1,27 @@
+[
+  {
+    "id": "340eb49bfb5f31720121ea0abb88571603af083d1677188438a6f18aa3c6c8c0",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/config.js",
+    "owner": "bootstrap",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF06-F05",
+    "expires_after": "RF06",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "64eef3cdc9255e826f75f2c1c58e0ec443de38f38946776eed882ba5aa02229b",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/config.js",
+    "to": "bot/src/operational-metrics.js",
+    "kind": "static",
+    "specifier": "./operational-metrics.js",
+    "owner": "bootstrap",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF06-F05",
+    "expires_after": "RF06",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

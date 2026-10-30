@@ -1,0 +1,16 @@
+✔ stable executable/package paths use final config location without importing runtime (1.05ms)
+✔ original defaults and cwd-based storage/content paths remain exact without opening either (0.9624ms)
+✔ explicit paths, configured model fallbacks and normalized enums preserve original mapping (0.7219ms)
+✔ original missing-credential messages remain unchanged with no real credentials loaded (1.6447ms)
+✔ ChatGPT local auth keeps original key optionality and enabled voice still requires API key (1.3379ms)
+✔ zero values and numeric boundaries retain exact original handling (0.7234ms)
+✔ invalid numeric and enum configuration retains original validation errors (2.37ms)
+✔ original voice ID and model-pricing validation are preserved without generation or billing calls (1.6923ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.4984

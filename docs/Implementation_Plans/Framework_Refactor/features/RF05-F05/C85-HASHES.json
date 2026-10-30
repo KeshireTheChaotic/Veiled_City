@@ -1,0 +1,54 @@
+{
+  "base": "2c43e1e4",
+  "reference_switch_arm_and_scope_mapper_verbatim": true,
+  "existing_knowledge_arms_unchanged": true,
+  "remaining_state_identical_except_known_import_mapper_helpers_and_dispatch": true,
+  "syntax_pass": 3,
+  "test_runs": [
+    {
+      "run_id": "RF05-F05-C85-initial",
+      "command": "node --test tests/ai-gm-2026-10/rf05-f05-c85.test.mjs",
+      "exit_code": 1,
+      "pass": 3,
+      "fail": 1,
+      "duration_ms": 1633.5531,
+      "reason": "Protected-scope fixture omitted required source_event."
+    },
+    {
+      "run_id": "RF05-F05-C85-protected-repair1",
+      "command": "node --test --test-name-pattern \"C85 original protected-PvP\" tests/ai-gm-2026-10/rf05-f05-c85.test.mjs",
+      "exit_code": 1,
+      "pass": 0,
+      "fail": 1,
+      "duration_ms": 1169.3043,
+      "reason": "Protected-scope fixture source did not exist; production foreign key correctly rejected it."
+    },
+    {
+      "run_id": "RF05-F05-C85-protected-repair2",
+      "command": "node --test --test-name-pattern \"C85 original protected-PvP\" tests/ai-gm-2026-10/rf05-f05-c85.test.mjs",
+      "exit_code": 0,
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1150.8512,
+      "reason": "Actual indexed World source supplied; unchanged passing cases not rerun."
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "7df22627ba9f70ea7d29852e881b539d0c7503559986758e1310d4d19ddb7488"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/gm-event-persistence.js",
+      "sha256": "c2b4279af778745993cb49f4902827ff077ff84712750661311bd6fa8aced47f"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "ec2ac821adac6d3e350b65aede95e3ff989f50b1ab56e49efa6cf3360d990ccc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c85.test.mjs",
+      "sha256": "d20d8557ad9696d64db12d848ef9dfcfdfecf166c1175f6ad421a15301c31e6a"
+    }
+  ]
+}

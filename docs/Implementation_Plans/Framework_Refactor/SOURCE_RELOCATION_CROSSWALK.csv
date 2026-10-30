@@ -40,7 +40,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/command-schema.js","bot/src/frameworks/discord/command-schema.js","discord","RF02","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/commands.js","bot/src/application/workflows/commands.js","application","RF06","DECOMPOSE_BEFORE_MOVE","2","83"
 "bot/src/concept-context.js","bot/src/frameworks/narrative/concept-context.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","1","2"
-"bot/src/config.js","bot/src/bootstrap/config.js","bootstrap","RF06","DECOMPOSE_BEFORE_MOVE","1","1"
+"bot/src/config.js","bot/src/bootstrap/config.js","bootstrap","RF06","MOVED_BOOTSTRAP_PUBLIC_HELPERS_R21","1","1"
 "bot/src/consent-native.js","bot/src/frameworks/daggerheart/consent-native.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F02+RF04-F03+RF05-F02+RF05-F05","1","8"
 "bot/src/consequence-reconciliation.js","bot/src/frameworks/daggerheart/consequence-reconciliation.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05","1","0"
 "bot/src/content-packages.js","bot/src/frameworks/content/content-packages.js","content","RF02","EXTRACT_PORTS_BEFORE_MOVE","1","4"

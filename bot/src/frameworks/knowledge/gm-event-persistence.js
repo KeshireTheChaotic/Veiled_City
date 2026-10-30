@@ -56,5 +56,37 @@ export function appendKnowledgeGmEvent(db,guildId,sessionId,e,scope,provenance,v
           results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null,expectedConflict:r.status==="conflict",before,after:r.status==="conflict"?r.conflict:db.currentCanon(guildId,e.key)});
           break;
         }
+        case "npc_update":
+        case "location_update":{
+          if(!cleanKey(e.key)||!String(e.value||"").trim()) fail(`${e.type} requires key and value.`);
+          const kind=e.type==="npc_update"?"npc":"location";
+          const rawKey=e.key.trim().toLowerCase();
+          const owner=scope.actorCharacterId||scope.actorUserId;
+          const entityKey=scope.mode==="private"?`private:${owner}:${rawKey}`:rawKey;
+          const before=db.getReference(guildId,kind,entityKey)||null;
+          const row=db.upsertReference(guildId,{
+            kind,key:entityKey,name:e.key.trim(),summary:e.value.trim(),
+            visibility:vis.visibility,subjectUserId:vis.targetUserId,subjectCharacterId:vis.targetCharacterId
+          });
+          results.push({type:e.type,ok:true,kind,key:row.entity_key,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
+          break;
+        }
       }
 }
+
+export function gmEventVisibility(event,scope){
+  if(scope?.mode!=="private") return {
+    visibility:event.visibility||"party",
+    targetUserId:event.target_user_id||null,
+    targetCharacterId:event.target_character_id||null
+  };
+  // Private player scenes may create private knowledge only for the acting player/character.
+  if(["fact","clue","thread","npc_update","location_update","canon"].includes(event.type)){
+    const characterId=scope.actorCharacterId||null;
+    return characterId
+      ?{visibility:"character",targetUserId:null,targetCharacterId:characterId}
+      :{visibility:"player",targetUserId:scope.actorUserId,targetCharacterId:null};
+  }
+  return {visibility:"gm",targetUserId:null,targetCharacterId:null};
+}
+

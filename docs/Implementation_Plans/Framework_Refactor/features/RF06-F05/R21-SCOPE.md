@@ -1,0 +1,5 @@
+# RF06-F05 R21 — Original runtime configuration in bootstrap
+
+Preparation while Agent A owns TRANSITIONS for C84; do not edit index/config until explicit release. Actual config.js has only environment parsing/default/type construction, with existing Content root and Operations pricing pure helpers. Clear its earlier DECOMPOSE_BEFORE_MOVE obligation by using both public APIs; no domain implementation exists here requiring extraction. Move whole original loader to bootstrap/config.js, change only two import paths and sole index caller, then remove old root on zero active source/supported CLI callers.
+
+Preserve every environment key/default/error, credentials/auth/voice validation, model fallback, numeric/enum handling, cwd-based Content/DATABASE_PATH resolution, npm entrypoints and dotenv ordering. No config call should create DB/client/provider. Fresh synthetic environment tests import loader only (never index), temporarily restore relevant environment/cwd and never print full config/credentials. Whole source equality after imports plus syntax/import gate; exact root/private-helper transitions only. No .env or production data/service access.

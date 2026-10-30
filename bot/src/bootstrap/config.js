@@ -1,7 +1,7 @@
 /** Runtime configuration loader with fail-fast type/range validation. */
 import path from "node:path";
-import {resolveContentRoot} from './frameworks/content/public.js';
-import {parseModelPricing} from './operational-metrics.js';
+import {resolveContentRoot} from '../frameworks/content/public.js';
+import {parseModelPricing} from '../frameworks/operations/public.js';
 
 const BUILTIN_VOICES=new Set(["alloy","ash","ballad","coral","echo","fable","nova","onyx","sage","shimmer","verse","marin","cedar"]);
 
