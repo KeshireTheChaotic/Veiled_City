@@ -54,3 +54,5 @@ export {characterSourceRanges,isCharacterSourceSpan} from './source-communicatio
 export {assertSceneActionSource} from './scene-action-source.js';
 
 export {captureAuthoredTurnEnvelope,recordNativeConsumedSpans,overlapsConsumedSpan} from './authored-turn-envelope.js';
+
+export {createPlayerIntentContract} from './player-intent-contract.js';

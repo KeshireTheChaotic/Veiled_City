@@ -1,0 +1,31 @@
+{
+  "base": "11f0d015",
+  "schema_prompt_helpers_verbatim_except_factory_local_exports": true,
+  "remaining_typed_intents_unchanged_except_original_contract_construction": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c89.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 236.4107
+  },
+  "files": [
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "5930e71d7dc6e993bfeac92934d09dfa5badb0d44cf04bce71ad5ee193dddc57"
+    },
+    {
+      "path": "bot/src/frameworks/intent/player-intent-contract.js",
+      "sha256": "39a55b4d4a095df2981038037bb908dee2142560daaaa753068eb2f0838d045e"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "bd8fa91a46a6e13457375a4c2cd2c2fa77dd35852546042d9ac0e7246a5ee9cb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c89.test.mjs",
+      "sha256": "3b098526b21b78a55b376a4e1b42d366d7e9dba358864bfb5feda757283449e3"
+    }
+  ]
+}
