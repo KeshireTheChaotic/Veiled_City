@@ -1,5 +1,5 @@
 /** Bounded read-only text relevance. Never identity, knowledge, intent or effect authority. */
-import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+import {narrativeWorldIdentityOrigin} from './contracts/world-identity-origin.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 export function narrativeQueryRelevance(text,query){
   const words=value=>String(value||'').toLocaleLowerCase().match(/[\p{L}\p{N}-]{3,}/gu)||[];
@@ -15,6 +15,6 @@ export function narrativeIdentityRelevance(db,guild,entity,scope,query){
   if(!d||!worldIdentityOrigin(db,guild,row,scope))return 0;
   return narrativeQueryRelevance([d.key,d.name,...(Array.isArray(d.aliases)?d.aliases:[])].join(' '),query);
 }
-import {narrativeRelevanceSource} from './frameworks/narrative/public.js';
+import {narrativeRelevanceSource} from './contracts/root-sources.js';
 // Provide this module's original relevance functions to the fixed Narrative slot; no other authority is granted.
 narrativeRelevanceSource.bind({narrativeQueryRelevance,narrativeIdentityRelevance});

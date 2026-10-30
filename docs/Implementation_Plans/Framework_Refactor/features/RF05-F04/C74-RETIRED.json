@@ -1,0 +1,13 @@
+[
+  {
+    "id": "2a36dff6245e97ba2d5b1146a972d4b110ab46d214d02129033fdc9903b682b5",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-relevance.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  }
+]

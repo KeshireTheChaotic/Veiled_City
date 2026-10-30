@@ -1,0 +1,23 @@
+{
+  "base": "f56250b1",
+  "moved_and_caller_bodies_identical_except_imports": true,
+  "syntax_pass": 3,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-relevance.js",
+      "sha256": "33b581c25988c93dab90a48933dcb08b5f4f5893005a1a0af5610a7b30714249"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "ad9f9c85b0d40a1a5e138498de421c379d79ab92123ab4096f66be40689f4f57"
+    },
+    {
+      "path": "bot/src/narrative-salience.js",
+      "sha256": "9bd3d7b75aff40174d706f89387d55ecc3aaed04ed9a50eea2ac228ff6c65540"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c74.test.mjs",
+      "sha256": "9009dee3f11f1fa075b6e4f49cd6035657d752acda15ee87c203ce7f8282b053"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "sourceModules": 976,
+    "unowned": 0,
+    "importOccurrences": 3990,
+    "internalImportOccurrences": 3805,
+    "cycleComponents": 1,
+    "largestCycle": 62,
+    "rawViolationOccurrences": 762,
+    "acceptedLegacyOccurrences": 761,
+    "activeViolationGroups": 1,
+    "transitionErrors": 0,
+    "pass": false
+  },
+  "activeViolations": [
+    {
+      "from": "bot/src/publishing.js",
+      "kind": "static",
+      "specifier": "./frameworks/publication/public.js",
+      "line": 1,
+      "column": 0,
+      "importedNames": [
+        "upsertBotMessage"
+      ],
+      "to": "bot/src/frameworks/publication/public.js",
+      "owner": "publication",
+      "code": "MISSING_NAMED_EXPORT",
+      "detail": "upsertBotMessage",
+      "id": "4f655ba7f12a868e5fcd1eca580dc704684b5a9d82076cab2444b473b83992c0",
+      "occurrences": 1,
+      "reason": "UNACCEPTED"
+    }
+  ],
+  "transitionErrors": [],
+  "disposition": "C74 obsolete location retired; concurrent RF06 R08 publishing caller/export preparation may remain incomplete in this shared snapshot."
+}
