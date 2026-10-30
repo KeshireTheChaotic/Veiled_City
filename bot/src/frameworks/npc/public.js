@@ -25,3 +25,5 @@ export {retrieveNpcCognition,dossierDecisionProfile,seedNpcCognition} from './co
 export {createNpcWorldConversationsConsumer,npcWorldConversations} from './contracts/world-conversations.js';
 export {createNpcKnowledgePlannerConsumer,npcKnowledgePlanner} from './contracts/knowledge-planner.js';
 export {resolveNpcConversation} from './conversation-source.js';
+
+export {applyNpcCognitionDrafts} from './cognition-drafts.js';

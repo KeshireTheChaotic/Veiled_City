@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "sourceModules": 995,
+    "unowned": 0,
+    "importOccurrences": 4046,
+    "internalImportOccurrences": 3861,
+    "cycleComponents": 1,
+    "largestCycle": 60,
+    "rawViolationOccurrences": 744,
+    "acceptedLegacyOccurrences": 743,
+    "activeViolationGroups": 1,
+    "transitionErrors": 5,
+    "pass": false
+  },
+  "activeViolations": [
+    {
+      "code": "PROPOSED_BRIDGE_HAS_IMPLEMENTATION",
+      "from": "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json",
+      "owner": "tooling",
+      "detail": "operations--publication: proposal cannot claim implementation/consumers/tests",
+      "id": "2e4f1e3ef25132ff9c4629e67bff1f08b41f3bcadff60cde9cb726fd2f3159f2",
+      "occurrences": 1,
+      "reason": "UNACCEPTED"
+    }
+  ],
+  "transitionErrors": [
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/publication-outbox.js",
+      "id": "c4caa6a641d0fe7ff3cfd5f3e72be0b67f4ac6868eb1540bf6aa8749650ac2b5"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/publication-outbox.js",
+      "id": "8262ab7b4cf9d05f5946b067d4e94a7bf024e3594044f9eaaecf95686ad2d4de"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/publishing.js",
+      "id": "de3d7490519b30a221a726c8970e014721d4fd9e10964254c5c5160fb33057fc"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/publishing.js",
+      "id": "de118f06fa16d87c25e793015a4f5f19b49b35b035787fb934b1270d311ed7ef"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/pvp-output.js",
+      "id": "b51856b87828870c8f04e052159e1ecfd7ae056d143e5dea28af1acd14e35e72"
+    }
+  ],
+  "disposition": "No C78 domain boundary violations; remaining proposed Operations–Publication bridge metadata and five obsolete Publication telemetry edges belong to concurrent RF06 R13. No C78 transition record removed."
+}
