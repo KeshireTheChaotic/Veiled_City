@@ -634,17 +634,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "38abdcc22bca915268f6530d5c3c1f6d4c539c8ab56f23db829f07045503ad97",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/message-span-ledger.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "776dd180485471324d144fc0572b8aa54db765b4fca4da923331686e81bbce76",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/movement-language.js",
@@ -4029,20 +4018,6 @@
       "to": "bot/src/discord/privacy.js",
       "kind": "static",
       "specifier": "./discord/privacy.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "85ae8cfecf55b95fbec0900efa4e9d4cdcb9ea0162912f9f475aaa7c7865eb33",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/message-span-ledger.js",
-      "kind": "static",
-      "specifier": "./message-span-ledger.js",
       "owner": "bootstrap",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F05",

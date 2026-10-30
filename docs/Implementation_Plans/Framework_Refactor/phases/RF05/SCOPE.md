@@ -4,7 +4,7 @@
 
 Apply the roadmap's RF05 responsibilities: isolate AI-provider transport/feedback, interpret intent through owned interfaces, separate narrative authoring, and decompose GM/state/turn use cases into thin application workflows. Preserve native Daggerheart outcomes and receipts, audience authorization, creative behavior, player control, and existing saved formats.
 
-RF04's phase exit remains incomplete. Its independently qualified slices and local holds are documented in `../RF04/LEDGER.md` and `../RF04/F07-ACCEPTANCE-MATRIX.md`. RF05 may proceed only on work supported by existing ownership assignments and exact transition records; this does not clear RF04, waive its holds, or establish full isolation. Stop only if an actual critical privacy, player-authority, state-integrity, or receipt defect is found. Otherwise hold the affected slice and continue independent work.
+RF04 scoped exit is complete at checkpoint037f0ef9; see ../RF04/EXIT.md and C243-EXIT-EVIDENCE.json. Existing independently completed RF05 slices remain intact. Resume from actual source/transition inventory: at C51 gate933modules,904accepted legacy occurrences,zero active/transition errors and one76-module cycle. This is a passing phase intake ratchet, not strict whole-application isolation. Preserve original phase responsibilities and remove each exact remaining obligation without baseline expansion or deadline changes. Stop the affected action only for demonstrated critical privacy, player-authority, state-integrity or receipt defects; otherwise continue authorized work.
 
 ## Ordered features
 

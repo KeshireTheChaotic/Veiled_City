@@ -1,0 +1,21 @@
+{
+  "original_body_match": "exact after CRLF normalization",
+  "files": [
+    {
+      "path": "bot/src/index.js",
+      "sha256": "0ada73ab40dbefbd583153b7b0a143a787a30f04340aa6ae4c82fb5e13f7a012"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "61a9d68c4ba9b056afc3b32ed6bb391661bc9eca46dd6aeb09996f6170bf1cc2"
+    },
+    {
+      "path": "bot/src/frameworks/intent/message-span-ledger.js",
+      "sha256": "f92a183b85c9bcace5456dda1c72d6fd304e61bd8039cbc6aef5ee3cee7dbacd"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c51.test.mjs",
+      "sha256": "36ecd88bf5ab56720fd908236242db9296ba645a377ec6ce2e944458e72975cf"
+    }
+  ]
+}
