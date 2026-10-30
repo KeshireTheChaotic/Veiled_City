@@ -17,3 +17,7 @@ import {intentArbitrationOrigin,intentNativeEnvironment} from '../../frameworks/
 /** Native environment scenes read Intent's original arbitration origin; Intent reads native environment instances. */
 export function connectNativeArbitrationOrigin(){return nativeArbitrationOrigin.bind({inspectArbitrationOrigin:intentArbitrationOrigin.inspectArbitrationOrigin});}
 export function connectIntentNativeEnvironment(){return intentNativeEnvironment.bind({nativeEnvironmentInstanceForScope});}
+
+import {intentNativeEncounter} from '../../frameworks/intent/public.js';
+import {encounterProposalContext,proposeWorldEncounter,activateDelegatedEncounter,inspectNativeEncounterActivation,nativeEnvironmentBinding,EncounterLibrary} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativeEncounter(){return intentNativeEncounter.bind({encounterProposalContext,proposeWorldEncounter,activateDelegatedEncounter,inspectNativeEncounterActivation,nativeEnvironmentBinding,EncounterLibrary});}

@@ -1,7 +1,7 @@
 /** Thin native execution bridge: player invitations never roll until their real owner submits. */
 import {inspectNativeGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {prepareArbitratedIncomingAttack,prepareArbitratedVolley,inspectVolley} from './pc-incoming.js';
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {nativePersonalContinuity} from './frameworks/daggerheart/public.js';
 function personalCharacter(...args){return nativePersonalContinuity.personalCharacter(...args);}
 import {nativePrincipals} from './frameworks/daggerheart/public.js';

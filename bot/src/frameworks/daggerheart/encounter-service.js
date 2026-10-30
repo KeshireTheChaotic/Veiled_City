@@ -1,22 +1,22 @@
-import {nativeNpcEvidence} from './frameworks/daggerheart/public.js';
+import {nativeNpcEvidence} from './contracts/npc-evidence.js';
 const {actorSource}=nativeNpcEvidence;
-import {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './frameworks/daggerheart/public.js';
-export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './frameworks/daggerheart/public.js';
+import {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './encounter-budget.js';
+export {BATTLE_POINT_COSTS,HEAVY_ROLES,DIFFICULTY_ADJUSTMENTS,tierForLevel,baseBattlePoints,battlePointCost,derivedAdjustments,recomputeBudget} from './encounter-budget.js';
 /** Encounter budget, composition, and adversary-library helpers. */
 import { randomInt } from "node:crypto";
-export {EncounterLibrary} from './frameworks/daggerheart/public.js';
-export {livePcRoster,partyTier,autoBuildComposition} from './frameworks/daggerheart/public.js';
-import {encounterActors} from './frameworks/daggerheart/public.js';
+export {EncounterLibrary} from './encounter-library.js';
+export {livePcRoster,partyTier,autoBuildComposition} from './encounter-composition-source.js';
+import {encounterActors} from './encounter-actors-source.js';
 export {encounterActors};
-import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+import {nativeWorldEvents} from './contracts/world-events.js';
 function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {nativeWorldSource} from './frameworks/daggerheart/public.js';
+import {nativeWorldSource} from './contracts/world-source.js';
 function requireCitySource(...args){return nativeWorldSource.requireCitySource(...args);}
-import {nativeScenes} from './frameworks/daggerheart/public.js';
+import {nativeScenes} from './contracts/scenes.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}
-import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
+import {nativeWorldProxy} from './contracts/world-proxy.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
-import {inspectNativeEncounterActivation} from './native-encounter-activation.js';
+import {inspectNativeEncounterActivation} from './encounter-activation-service.js';
 
 /** Explicit GM template bindings, sourced proposals and review use the existing encounter resolver. */
 export function encounterProposalContext(db,guild){
@@ -114,6 +114,10 @@ export function defaultObjective(style="balanced"){
   return pick(sets[style]||sets.balanced);
 }
 
-import {createEncounterGroundingRules} from './frameworks/daggerheart/public.js';
+import {createEncounterGroundingRules} from './encounter-grounding-rules.js';
 let nativeGrounding;
 function groundingRules(){return nativeGrounding??=createEncounterGroundingRules({requireCitySource,currentScene,scenePresence,actorSource,cityObject,cityKey,cityAudit,inspectNativeEncounterActivation,proposeWorldEncounter});}
+
+import {nativeEncounterManagement} from './contracts/encounter-management.js';
+// Same original management function, available before public native activation calls.
+nativeEncounterManagement.bind({manageWorldEncounter});

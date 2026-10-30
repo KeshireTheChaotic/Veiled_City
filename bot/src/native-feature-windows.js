@@ -8,7 +8,7 @@ import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-inc
 import {typedRollProof} from './typed-roll-proof.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {inspectNativeGmDecision,nativeReactionTarget} from './gm-action-capability.js';
 import {historicalActionSource} from './action-consent.js';

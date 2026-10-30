@@ -1,3 +1,5 @@
+import {intentNativeEncounter} from './frameworks/intent/public.js';
+const {nativeEnvironmentBinding}=intentNativeEncounter;
 /** Immutable scoped scene inputs. Accepted PC sources and native GM NPC proposals never impersonate each other. */
 import {buildNarrativeContext} from './narrative-authority-context.js';
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
@@ -13,11 +15,11 @@ import {intentWorldPrimitives} from './frameworks/intent/public.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
 import {executableNativeFeatures,compileNativeActors} from './native-feature-catalog.js';
-import {EncounterLibrary} from './encounter.js';
+
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {preRollFearCandidates} from './pre-roll-fear.js';
-import {nativeEnvironmentBinding} from './native-environment-context.js';
+
 import {intentNativeEnvironment} from './frameworks/intent/public.js';
 function nativeEnvironmentInstanceForScope(...args){return intentNativeEnvironment.nativeEnvironmentInstanceForScope(...args);}
 import {nativeAdversaryFeatureContext} from './native-adversary-context.js';
@@ -47,7 +49,7 @@ export function inspectArbitrationOrigin(db,guild,origin){
 export function arbitrationPromptBoard(db,guild,origin){
   const o=inspectArbitrationOrigin(db,guild,origin);
   const encounter=db.getCurrentEncounter(o.binding.session),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
-    combatants=encounter?db.listCombatants(encounter.id):[],library=new EncounterLibrary('../content'),features=executableNativeFeatures('adversary');
+    combatants=encounter?db.listCombatants(encounter.id):[],library=new intentNativeEncounter.EncounterLibrary('../content'),features=executableNativeFeatures('adversary');
   let environment=null,localEnvironment=null;
   try{localEnvironment=nativeEnvironmentInstanceForScope(db,guild,o.scope,o.binding.location);}
   catch(error){if(!['GM_ARBITRATION','SCENE_FICTION'].includes(error.code))throw error;}

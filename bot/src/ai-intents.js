@@ -1,3 +1,5 @@
+import {intentNativeEncounter} from './frameworks/intent/public.js';
+const {encounterProposalContext,proposeWorldEncounter,activateDelegatedEncounter,inspectNativeEncounterActivation}=intentNativeEncounter;
 import {intentNpcPolicy} from './frameworks/intent/public.js';
 const {actorSource,proposeGoalTransition,reviewGoalTransition,manageStrategy}=intentNpcPolicy;
 import {intentWorldPrimitives,intentWorldActions} from './frameworks/intent/public.js';
@@ -20,7 +22,7 @@ const {manageLongProject,projectPhaseRevision,reconcileLongProject}=intentWorldP
 import { applicationPrincipal } from "./kernel/application-authority.js";
 import {intentKnowledgeMaintenance,intentKnowledgeActions} from './frameworks/intent/public.js';
 function manageMemoryCluster(...args){return intentKnowledgeMaintenance.manageMemoryCluster(...args);}function memoryMaintenanceCandidate(...args){return intentKnowledgeMaintenance.memoryMaintenanceCandidate(...args);}
-import { encounterProposalContext, proposeWorldEncounter } from "./encounter.js";
+
 import {intentSessionDialogue} from './frameworks/intent/public.js';
 const {interpretDialogue}=intentSessionDialogue;
 const {manageEvidence,inviteOrganization}=intentKnowledgeActions;
@@ -38,7 +40,7 @@ import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import {delegationCatalog} from './delegation-catalog.js';
-import {activateDelegatedEncounter,inspectNativeEncounterActivation} from './native-encounter-activation.js';
+
 import {intentWorldOperations} from './frameworks/intent/public.js';
 function prepareNativeWorldOperation(...args){return intentWorldOperations.prepareNativeWorldOperation(...args);}function nativeWorldOperationAllows(...args){return intentWorldOperations.nativeWorldOperationAllows(...args);}function nativeWorldOperationOrigin(...args){return intentWorldOperations.nativeWorldOperationOrigin(...args);}function inspectNativeWorldOperationReceipt(...args){return intentWorldOperations.inspectNativeWorldOperationReceipt(...args);}function nativeWorldOperationCatalog(...args){return intentWorldOperations.nativeWorldOperationCatalog(...args);}function nativeWorldStrategyScope(...args){return intentWorldOperations.nativeWorldStrategyScope(...args);}function attemptCityInfluence(...args){return intentWorldOperations.attemptCityInfluence(...args);}
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");

@@ -5,7 +5,7 @@ import {nativeScenes} from './frameworks/daggerheart/public.js';
 function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

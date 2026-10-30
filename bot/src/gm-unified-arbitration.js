@@ -1,3 +1,4 @@
+import {intentNativeEncounter} from './frameworks/intent/public.js';
 /** Intent prompt and transitional native-provider composition. All adjudication/receipt/effect policy is implemented in Daggerheart. */
 import {inspectArbitrationOrigin,buildSceneIntentBoard,currentScenePlayerInputs,arbitrationTurnOrigin} from './scene-intent-board.js';
 import {matchesArbitrationSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema} from './gm-arbitration-contract.js';
@@ -8,7 +9,7 @@ import {consentAction,historicalActionSource} from './action-consent.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.js';
 import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js';
-import {EncounterLibrary} from './encounter.js';
+
 import {featureDisposition} from './native-feature-catalog.js';
 import {requireNativeAdversaryFeature} from './native-adversary-context.js';
 import {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
@@ -74,7 +75,7 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
 
 function nativeService(connectUnifiedArbitration){
   if(typeof connectUnifiedArbitration!=='function')throw new TypeError('Application-supplied unified mechanics integration required.');
-  return connectUnifiedArbitration({source:{inspectArbitrationOrigin,buildSceneIntentBoard,currentScenePlayerInputs,arbitrationTurnOrigin,matchesArbitrationSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema},mechanics:{gmRulingContext,adjudicateGmRuling,nativeGmSceneContext,indexWorldEvent,consentAction,historicalActionSource,isPvpIntent,nativeGmOpportunity,nativeReactionTarget,inspectIncomingCandidate,inspectVolleyCandidate,EncounterLibrary,featureDisposition,requireNativeAdversaryFeature,applyNativeEnvironmentProfileProposals,executeEnvironmentProposal,authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows,nativeAlliancePlan,nativeFeatureReviewContract,isGroupFeature,planGroupFeature,prepareNativeUnarmedAttack,reservePreRollFear,bindPreRollFearBoard,cancelPreRollFear,reservePreRollFearNotice,prepareOrdinaryRollModifier,prepareNativeRollParticipation,prepareNativeEquippedAttack,prepareCampaignPvpFromBoard,registerEnvironmentTraceRisk,reserveCampaignAttackNotices,PROFESSIONAL_ENTRY,establishPreparedPositions,qualifyProfessionalEntry}});
+  return connectUnifiedArbitration({source:{inspectArbitrationOrigin,buildSceneIntentBoard,currentScenePlayerInputs,arbitrationTurnOrigin,matchesArbitrationSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema},mechanics:{gmRulingContext,adjudicateGmRuling,nativeGmSceneContext,indexWorldEvent,consentAction,historicalActionSource,isPvpIntent,nativeGmOpportunity,nativeReactionTarget,inspectIncomingCandidate,inspectVolleyCandidate,EncounterLibrary:intentNativeEncounter.EncounterLibrary,featureDisposition,requireNativeAdversaryFeature,applyNativeEnvironmentProfileProposals,executeEnvironmentProposal,authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows,nativeAlliancePlan,nativeFeatureReviewContract,isGroupFeature,planGroupFeature,prepareNativeUnarmedAttack,reservePreRollFear,bindPreRollFearBoard,cancelPreRollFear,reservePreRollFearNotice,prepareOrdinaryRollModifier,prepareNativeRollParticipation,prepareNativeEquippedAttack,prepareCampaignPvpFromBoard,registerEnvironmentTraceRisk,reserveCampaignAttackNotices,PROFESSIONAL_ENTRY,establishPreparedPositions,qualifyProfessionalEntry}});
 }
 export function applyUnifiedArbitration(db,guild,result,playerRows,options={}){
   return nativeService(options.connectUnifiedArbitration).applyUnifiedArbitration(db,guild,result,playerRows,options);

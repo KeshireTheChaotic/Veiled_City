@@ -4,7 +4,7 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}functi
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {nativeActorTaxonomy} from './native-feature-catalog.js';
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

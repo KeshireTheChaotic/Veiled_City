@@ -15,7 +15,7 @@ function personalCharacter(...args){return nativePersonalContinuity.personalChar
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';

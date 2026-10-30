@@ -1,0 +1,28 @@
+{
+  "feature": "RF04-C229",
+  "sha256": {
+    "bot/src/ai-intents.js": "517e4c62228f4e562bf579de14788640e8899cc3a99b7e213cd0f467963f0020",
+    "bot/src/application/composition/environment-scene.js": "c7d2780f10109602164087a8db5bdbd207d03f765fbac9588a0fde4f035fa3f3",
+    "bot/src/commands.js": "88bc8caa90879e5a5cacf38c1a0344105bc47623cfe72e677eafe682c8a331fc",
+    "bot/src/framework-to-framework/daggerheart--intent/public.js": "9cf6e2ecd6acb36207f0419ee761d8cb84953d976622bdd21e052cd617e5636a",
+    "bot/src/frameworks/daggerheart/public.js": "668b215a8e5a6f8510a8692e5313eef08a64d9f7708e6551d37a31b7512bbf9d",
+    "bot/src/frameworks/intent/public.js": "4162a5694e0a2739d951e969939e65e8f6e7daacb701dfb497cf2253aa1c97e0",
+    "bot/src/gm-arbitration-output.js": "e8cb41e74c610dc23d511b989351b45255d55ba5f2d6a055edf7df9fb814e0ab",
+    "bot/src/gm-native-rolls.js": "eddbc468de6beee10d3e3eb9de8ffcf531b9a1a5c4b0deaec55ac07784ebd2ea",
+    "bot/src/gm-unified-arbitration.js": "37d56df04f8675b558967210177b6ba03a5772631ce654a39276c04ee4a72cca",
+    "bot/src/native-defense-aura.js": "37d71db060b897d79219940df52e6a2a5c721d64ab74732906640979ed223658",
+    "bot/src/native-encounter-relations.js": "0532daee76927c9ff082924149b852d2afdc76337988f9f5078ba1c8584a5c8b",
+    "bot/src/native-feature-damage.js": "3be399a5db801c0e5e1da31e3ae4c11159d89936e5dfafd269e5f97c5adfccbf",
+    "bot/src/native-feature-windows.js": "7d98300cf9172b37a068bd324240009f3daa12c64355f97a65eff1d4301ccffc",
+    "bot/src/native-group-features.js": "aeaba7d8d252a8b651db48c98d48b3ff6ca98c37487c38a0c89ec58ff965f4a6",
+    "bot/src/pvp-fear-moves.js": "d2afe7269343a09b65eaeac6eabcaa21d186adf606ff34b707767e674ad891e4",
+    "bot/src/roll-collaboration.js": "4c591b8ebb3f326b11c8d8f97f667abb01559eb96f007196c04de7f7d791bccc",
+    "bot/src/scene-intent-board.js": "bc04c5ce31bd156fc77d5ef14b97c187aefecdd5e0b61d8a24e823b49bffdf91",
+    "bot/src/turn-orchestration.js": "d0443a325282e5ac325fb097795585d9e575d00836826d1cb684bfc367e160f9",
+    "bot/src/frameworks/daggerheart/contracts/encounter-management.js": "ea193232708937ae90a9f73e461ed7148672ca6899580dbb0cce0975a81f39b2",
+    "bot/src/frameworks/daggerheart/encounter-activation-service.js": "080370ba6fa1f6d2f5466d767781baa54471c262be1788f82addb33cdb728ed3",
+    "bot/src/frameworks/daggerheart/encounter-service.js": "5fb1d3d3050d7ad513f08593dce96d41cf83746b98e49e76b5b13323865c8b80",
+    "bot/src/frameworks/daggerheart/environment-context.js": "2500b2b230ec94d4078436d2c9728ed0486e699e397ca19bf65c5c32439a546d",
+    "bot/src/frameworks/intent/contracts/native-encounter.js": "628c2866f2f6c6633daf96113023dc81193349c59587434b2640dbf712896d49"
+  }
+}

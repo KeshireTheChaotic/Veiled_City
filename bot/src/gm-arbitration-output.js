@@ -1,3 +1,4 @@
+import {intentNativeEncounter} from './frameworks/intent/public.js';
 /** Owner-entitled native notices only. GM proposal prose and motives are never publication sources. */
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {inspectGmReactionInvitation} from './gm-native-rolls.js';
@@ -8,7 +9,7 @@ import {jsonHash as hash} from './kernel/json-hash.js';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {EncounterLibrary} from './encounter.js';
+
 import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
 import {inspectFearReservation} from './fear-reservations.js';
@@ -27,7 +28,7 @@ function traceNotice(db,guild,offer,pc){
     +'\nA credible suppression requires your separate native success/no-roll action receipt; no reaction dice or automatic success is invented.'};
 }
 
-export function nativeGmNotice(db,guild,key,scope,{library=new EncounterLibrary('../content')}={}){
+export function nativeGmNotice(db,guild,key,scope,{library=new intentNativeEncounter.EncounterLibrary('../content')}={}){
   const stored=db.getCityRecord(guild,'gm_arbitration_decision',key),shared=stored?.data.native?.operation==='commit_adversary_volley'
     &&db.getCityRecord(guild,'npc_volley_attack',`npc-volley:${hash(key)}`),
     checked=shared?inspectVolley(db,guild,shared.record_key):null,

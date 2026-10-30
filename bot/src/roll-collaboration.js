@@ -9,7 +9,7 @@ import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}function cityKey(...args){return nativeWorldEvents.cityKey(...args);}function cityObject(...args){return nativeWorldEvents.cityObject(...args);}function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import { rollRevision, rollBreakdown, rollTraitBreakdown, reserveRollAmendment } from "./roll-requests.js";
 import {reserveRollPartyDisclosure,validateRollSharePreview,sourceConfirmedRollAttempt} from "./roll-sharing.js";
-import { recordObservedAttack } from "./encounter.js";
+import { recordObservedAttack } from "./frameworks/daggerheart/public.js";
 import { finalizeTypedRollAction } from "./typed-roll-outcomes.js";
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";

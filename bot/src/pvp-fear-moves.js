@@ -12,7 +12,7 @@ import {nativeWorldActions} from './frameworks/daggerheart/public.js';
 function configureSimulationEntity(...args){return nativeWorldActions.configureSimulationEntity(...args);}function submitNpcAction(...args){return nativeWorldActions.submitNpcAction(...args);}
 import {nativeWorldProxy,nativeNpcAvailability} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}function assertNpcAvailability(...args){return nativeNpcAvailability.assertNpcAvailability(...args);}
-import { validateWorldEncounterActivation, EncounterLibrary } from "./encounter.js";
+import { validateWorldEncounterActivation, EncounterLibrary } from "./frameworks/daggerheart/public.js";
 import { validatePvpAttackRoll } from "./pvp-attacks.js";
 import {settlePvpDamageAction} from "./pvp-damage.js";
 import {assertBrawlFearOrder,orderedBrawlFear} from "./pvp-brawl.js";

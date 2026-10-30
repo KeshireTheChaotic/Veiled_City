@@ -682,7 +682,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c29.test.mjs"
       ],
       "observed_directions": [
         {
@@ -704,7 +705,8 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 114
       },
-      "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js"
+      "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle."
     },
     {
       "pair": "daggerheart--knowledge",

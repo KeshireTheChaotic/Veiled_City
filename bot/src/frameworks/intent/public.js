@@ -40,3 +40,5 @@ export {intentKnowledgeSemanticProof} from './contracts/knowledge-semantic-proof
 export {intentKnowledgePersonal} from './contracts/knowledge-personal.js';
 
 export {intentSessionScene} from './contracts/session-scene.js';
+
+export {intentNativeEncounter} from './contracts/native-encounter.js';

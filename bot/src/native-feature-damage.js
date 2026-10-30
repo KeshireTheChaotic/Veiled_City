@@ -1,6 +1,6 @@
 /** Automatic, pinned adversary defense before existing native NPC damage finalization. No dice or PC effects. */
 import {compileNativeFeatures} from './native-feature-catalog.js';
-import {EncounterLibrary} from './encounter.js';
+import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';

@@ -300,17 +300,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "de113d87e556b9e057e4634c7b74b74e4acbd49dbd7836bbfc13a8a75fb07eba",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/encounter.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F01",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "a77da1a1fe0d5d16442c091e59e91a8a7979e9cfc7154c77d0042bce839d06a1",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/engagement-shadow.js",
@@ -920,17 +909,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "23b8dc85bf7d52ede2a536b68f225517bd815e17ef21fb6302a8ab135acbf50a",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-encounter-activation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "861e73856fd6c5d06cdbe5de404f1973ddbaf4a1035841af42041348b0ed8edb",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-encounter-relations.js",
@@ -971,17 +949,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F07",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
-      "id": "c8ca3d7a926bf5c437edd6687ae5cc711ef66686bc994d2fffc38584f6e9a3be",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-environment-context.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
@@ -2093,20 +2060,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "6c296c0d47a3dd1a8c9455698465817b29b6f6b3b8cf313a4c252dd2c88cb7f7",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ai-intents.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "2ef0fc66bb3535b0c1d0a55ae5ebeb9c631ca1030fed399a466c608e73cef9bb",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/ai-intents.js",
@@ -2155,20 +2108,6 @@
       "to": "bot/src/delegation-catalog.js",
       "kind": "static",
       "specifier": "./delegation-catalog.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "41acc344bfb153709a315367bcd72a5b5b756dc232b6c17c54ec6ea791c8895d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ai-intents.js",
-      "to": "bot/src/native-encounter-activation.js",
-      "kind": "static",
-      "specifier": "./native-encounter-activation.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
@@ -2281,20 +2220,6 @@
       "specifier": "./publishing.js",
       "owner": "application",
       "max_occurrences": 3,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "76e636c2a267925d6323101cd6cc36a1b654f8acd7c0e63693de4a6d1a87b997",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "application",
-      "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",
       "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
@@ -3141,20 +3066,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "55e02dad8e80e17c2aac141b9625167a6367610d3eeeb2b0e56acf9304e07e68",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-arbitration-output.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "33c3cbb8d09305a2041b63fd62b77f13067e064b07ef07a6ae3b60d4bc5d5e31",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-arbitration-output.js",
@@ -3329,20 +3240,6 @@
       "to": "bot/src/pc-incoming.js",
       "kind": "static",
       "specifier": "./pc-incoming.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "1c76383952ccd7ff8694eb98a57529cb16d4faf11cf2012ed3d9c02973a67b01",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-unified-arbitration.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
@@ -6667,20 +6564,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "4859c9cdadfe07fc0ceeb48f5deacc0d68e4064d9adc1ecc61b9214a300699e0",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-intent-board.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "90427e9d062f59dc344df887dd9a1f28dedaa6a2725423d38165a07b9a5533ee",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/scene-intent-board.js",
@@ -6715,20 +6598,6 @@
       "to": "bot/src/pre-roll-fear.js",
       "kind": "static",
       "specifier": "./pre-roll-fear.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "9acb31803b3f23a39970fdd73209a4a38c2222831d2f36cb78dd21d1d98a98f1",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/scene-intent-board.js",
-      "to": "bot/src/native-environment-context.js",
-      "kind": "static",
-      "specifier": "./native-environment-context.js",
       "owner": "intent",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
@@ -7294,20 +7163,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "b633c19611ff96b23f45ecb3615ba0a640fd1a02394e93aa60a46a6fb8665159",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/turn-orchestration.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "cf29924802366b826606b204c542873c2c49fa5c5a8281dc91bd49f3667a8ed0",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/turn-orchestration.js",
@@ -7526,20 +7381,6 @@
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "9ab52f0894abf11e43b5bfead9b384360606acb6f16db1e695b12813650b4ec7",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/encounter.js",
-      "to": "bot/src/native-encounter-activation.js",
-      "kind": "static",
-      "specifier": "./native-encounter-activation.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
@@ -8615,20 +8456,6 @@
       "to": "bot/src/native-encounter-relations.js",
       "kind": "static",
       "specifier": "./native-encounter-relations.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "78d5527fbe757e23578fe2fb6aa031d2e5b0edeec986ea947a5f4050293be634",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-encounter-activation.js",
-      "to": "bot/src/encounter.js",
-      "kind": "static",
-      "specifier": "./encounter.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
