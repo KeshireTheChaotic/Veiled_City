@@ -64,3 +64,5 @@ export {narrativeSessionScene} from './contracts/session-scene.js';
 export {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 
 export {narrativeCharacterObservation} from './contracts/character-observation.js';
+
+export {narrativeUnitRenderSource} from './contracts/root-sources.js';

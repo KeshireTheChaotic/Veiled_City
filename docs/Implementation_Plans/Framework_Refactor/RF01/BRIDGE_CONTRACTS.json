@@ -2819,7 +2819,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f06-c50.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f06-c60.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f06-c62.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f06-c62.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2842,7 +2843,7 @@
         "occurrences": 52
       },
       "public_api": "bot/src/framework-to-framework/narrative--world/public.js",
-      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C208 supplies only existing read-only worldIdentityOrigin to four Narrative consumers; World retains shared seeded authorship composition and authority checks. C210 forwards only original maintainIdentityPersistence to Narrative salience through a fixed consumer; World retains live audience, threshold, receipt and review rules. C211 supplies original backgroundIdentityContext and same frozen background category catalog through fixed read-only Narrative consumer; World retains scan/collision/provenance rules. C212 forwards original establishNarrativeEntity through fixed Narrative consumer; World retains all authoring and entity rules."
+      "scope": "Only World authorship audience/source proof forwarding. Does not complete Narrative context composition, Knowledge/seed integration, World Director, writer/publication or other pair directions. C189 binds connectNarrativeWorldConstraints through the same pair for the original World constraint functions; all other dependencies remain open. C191 composes the original immutable Narrative expansion catalog with the World flag policy once at module load for the Application civic command. C192 routes the original World calendar/event or audit capabilities through this existing owner consumer; World retains every source, visibility, clock and transaction rule. C208 supplies only existing read-only worldIdentityOrigin to four Narrative consumers; World retains shared seeded authorship composition and authority checks. C210 forwards only original maintainIdentityPersistence to Narrative salience through a fixed consumer; World retains live audience, threshold, receipt and review rules. C211 supplies original backgroundIdentityContext and same frozen background category catalog through fixed read-only Narrative consumer; World retains scan/collision/provenance rules. C212 forwards original establishNarrativeEntity through fixed Narrative consumer; World retains all authoring and entity rules. C233 bridge obtains only original renderNarrativeUnit through Narrative-owned fixed source; original context/grant/receipt/audience validation unchanged; private root import removed."
     },
     {
       "pair": "npc--operations",

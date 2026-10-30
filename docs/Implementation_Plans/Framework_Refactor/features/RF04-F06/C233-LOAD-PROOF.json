@@ -1,0 +1,11 @@
+{
+  "feature": "RF04-C233",
+  "source_report": ".reports/C233-current.json",
+  "excluded": "bot/src/world-narrative-bridge.js",
+  "provider_route": [
+    "bot/src/index.js",
+    "bot/src/gm.js",
+    "bot/src/narrative-authority.js"
+  ],
+  "qualification": "Static ESM provider load path; no index/provider/Discord execution."
+}

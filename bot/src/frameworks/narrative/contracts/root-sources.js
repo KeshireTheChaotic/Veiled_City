@@ -4,3 +4,5 @@ export const narrativeSalienceSource=createFunctionPort(['canonicalInterestEvide
 export const narrativeAuthorityContextSource=createFunctionPort(['narrativeVisible','buildNarrativeContext'],{code:'NARRATIVE_AUTHORITY_CONTEXT_SOURCE_COMPOSITION',label:'Narrative authority context source'});
 export const narrativePortrayalSource=createFunctionPort(['configurePortrayal'],{code:'NARRATIVE_PORTRAYAL_SOURCE_COMPOSITION',label:'Narrative portrayal source'});
 export const narrativeRelevanceSource=createFunctionPort(['narrativeQueryRelevance','narrativeIdentityRelevance'],{code:'NARRATIVE_RELEVANCE_SOURCE_COMPOSITION',label:'Narrative relevance source'});
+
+export const narrativeUnitRenderSource=createFunctionPort(['renderNarrativeUnit'],{code:'NARRATIVE_UNIT_RENDER_SOURCE_COMPOSITION',label:'Narrative unit render source'});

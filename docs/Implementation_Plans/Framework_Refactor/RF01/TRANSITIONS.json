@@ -7235,20 +7235,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "b749993b40541b19325f318321ac624cc099c497597c6cfa09f3019b353a29ed",
-      "code": "PAIR_IMPORTS_PRIVATE_API",
-      "from": "bot/src/world-narrative-bridge.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "749a1bdb3ec09e058ff31877bb81280d3cb2477a5e19ae926fe3fd6807c171ac",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/action-consent.js",
@@ -8047,20 +8033,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "45e38d4ceaac93222fe6ec97625530d7d840be34f2fc927e15688dcd686257fb",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-director-source.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "88d8b04c26ed7f6a445079d858a5b46705acbc4e9ad69a7b991d9df9393edf61",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/narrative-integrity.js",
@@ -8207,20 +8179,6 @@
       "to": "bot/src/action-consent.js",
       "kind": "static",
       "specifier": "./action-consent.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "f91efd973479c5b06dbcc5b4eaffc064491276a07580ffa0dff40bae8ffa5118",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -12103,20 +12061,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "bda71a2e0997cb11d1df420f438ebd5cfa66280edaf49dcf0f910d86030aac8a",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/world-narrative-bridge.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     }

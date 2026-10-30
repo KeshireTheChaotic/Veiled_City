@@ -1,0 +1,9 @@
+{
+  "feature": "RF04-C233",
+  "sha256": {
+    "bot/src/frameworks/narrative/contracts/root-sources.js": "f0abbe7f4285a6b87ca9cf62b9834642f9cd7c6d7945864af15210faa34e312b",
+    "bot/src/frameworks/narrative/public.js": "6eddb134293db01789ad1729739136fd9d927f8a1df26d400ab507a06c92c579",
+    "bot/src/narrative-authority.js": "4941ae75cf41ce9c635e0de7f172ac8ef9da839b86bbab89f1b0672614e179de",
+    "bot/src/world-narrative-bridge.js": "75d5ce7e88cd49deb952070d9e14fad815f17923526f7957feb9ce153661a291"
+  }
+}

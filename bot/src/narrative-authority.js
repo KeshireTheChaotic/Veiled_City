@@ -316,3 +316,7 @@ export function renderNarrativeUnit(db,guild,key,scope){
   if(d.act_v9&&(!d.audience_v9.task_ids.includes(d.act_v9.task_id)||hash(actToNativeUnit(d.act_v9,d.audience_v9,{db,guild}))!==hash(d.unit)))throw fail('v9_act_revalidation');
   return d.text;
 }
+
+import {narrativeUnitRenderSource} from './frameworks/narrative/public.js';
+// Original renderer retains its native context, grant store and receipt validation.
+narrativeUnitRenderSource.bind({renderNarrativeUnit});
