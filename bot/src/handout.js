@@ -21,5 +21,3 @@ export function handoutFiles(h,format="markdown"){
   }
   return out;
 }
-
-
