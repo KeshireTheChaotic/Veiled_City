@@ -72,7 +72,7 @@ import {authorNarrativeRequests,narrativeResponseSchema} from './narrative-autho
 import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/public.js';
 import {openingEntryNarrativeCandidate} from './frameworks/session/public.js';
 import {nativeOutcomeSchema,narrativeRequestSchema} from './frameworks/narrative/public.js';
-import {coordinateNarrative} from './narrative-delegation.js';
+import {coordinateNarrative} from './frameworks/narrative/public.js';
 import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './frameworks/narrative/public.js';
 import {configureWorldEncounterCatalog} from './frameworks/world/public.js';
 import {buildNarrativeContext} from './frameworks/narrative/public.js';

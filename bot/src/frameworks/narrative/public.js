@@ -111,3 +111,8 @@ export {actToNativeUnit,compileWriterV9} from './narrative-writer-v9.js';
 export {narrativePublicationOutcomeProjection} from './contracts/publication-outcome-projection.js';
 
 export {narrativeArtifactKey,hasNarrativeChoices,projectNarrativeArtifact} from './narrative-artifacts.js';
+
+export {narrativeIntentEngagement} from './contracts/intent-engagement.js';
+
+export {narrativeTasks,taskDispositions} from './narrative-tasks.js';
+export {coordinateNarrative,creativeBrief} from './narrative-delegation.js';

@@ -51,3 +51,5 @@ export {publicationOutcomeProjectionSource} from './contracts/outcome-projection
 export {publicationNarrativeArtifact} from './contracts/narrative-artifact.js';
 
 export {publicationDiscordChannels} from './contracts/discord-channels.js';
+
+export {publicationNarrativeTasks} from './contracts/narrative-tasks.js';

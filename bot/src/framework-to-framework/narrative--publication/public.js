@@ -34,3 +34,7 @@ export function connectNarrativePublicationOutcomeProjection(){return narrativeP
 import {projectNarrativeArtifact} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeArtifact} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeArtifact(){return publicationNarrativeArtifact.bind({projectNarrativeArtifact});}
+
+import {narrativeTasks} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeTasks} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeTasks(){return publicationNarrativeTasks.bind({narrativeTasks});}

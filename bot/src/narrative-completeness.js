@@ -1,7 +1,7 @@
 /** Post-projection response health. Native verified parts, not model self-certification; no effects or provider retries. */
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {operationalMetrics} from './operational-metrics.js';
-import {taskDispositions} from './narrative-tasks.js';
+import {taskDispositions} from './frameworks/narrative/public.js';
 export function validateNarrativeCompleteness(db,guild,result,parts,requests=[],{sourceRef=null,scope=null}={}){
   const actual=parts.filter(p=>p.kind==='pvp_output_part'&&p.status==='verified'&&db.getCityRecord(guild,'pvp_output_part',p.record_key)?.data.content_hash===p.data.content_hash);
   const creativeRequested=requests.some(r=>r.version===8);

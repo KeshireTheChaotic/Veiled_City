@@ -1,0 +1,68 @@
+{
+  "base": "7dd9e571",
+  "concurrent_rf06_commit": "9492e39b",
+  "two_moved_and_four_caller_bodies_identical_excluding_imports_forwarders": true,
+  "syntax_pass": 14,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "sha256": "299a8e8c4987081c9435bd094bb25692d3e983279f8c82433156b8c92ec0a724"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/narrative-delegation.js",
+      "sha256": "e324f15007f729237f1875505b10a36929ddef66ae7d242c9f1682050134b0b5"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/intent-engagement.js",
+      "sha256": "8e42d0a0b46db17b8082a1a8537157a758bc0d2bcc9385ba858292816f8128e3"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-tasks.js",
+      "sha256": "42ee005854997299c70c085d7aaa087e3b59f5c2a544ed23a8ab744e0d50bf77"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "b82baa8a7b55ee7114e575ed1dabff67108dcb6906d6562229c15a3c13b37df3"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "f8def30390fb527cb21a8577c56333af595d78c54f8d19fb51715acd379cf6b3"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/public.js",
+      "sha256": "43a745078e39f2d1fdc44f2d5bde813c3b696053d5b3984c937eeee34433cb45"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "1328895bef6528c6165de9231f93577cf3f93f5115ebde825f8df04aa52dad7f"
+    },
+    {
+      "path": "bot/src/application/composition/intent-narrative.js",
+      "sha256": "37064994653fd21fcf53fd82529e8d1f589066eb6709e0df7e8a9614eff85be6"
+    },
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "e05a5bc3ec31a406c2dae2c91e01e564afe0e795eac1e0faae018737d9889056"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "5d0b1865b8034d09dba7431405c24323f753ec9535668114f16555c08c5b5034"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "522e2193f16e6cc6ae9c2a003ec53f3f0b01f07d6c5b758458ceae1871bd1729"
+    },
+    {
+      "path": "bot/src/narrative-completeness.js",
+      "sha256": "298c878f0d87c7cae4391a05583226e5e2309489c5a0ba792e74a0288f3507bd"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "2de78e8ea2c8422ff270fd1aa22279f573627fd82796996597c1eba2110e3ba6"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c72.test.mjs",
+      "sha256": "0f8a851b5ec978a2ef46e6c5514a0bcd52be6cd1b61b4e028f24aa88487b0769"
+    }
+  ]
+}

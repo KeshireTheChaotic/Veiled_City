@@ -1,5 +1,6 @@
 /** Deterministic task routing, never PC intent acceptance or native effect authority. */
-import {explicitSilence,semanticResponseObligation} from './gameplay-intake.js';
+import {narrativeIntentEngagement} from './contracts/intent-engagement.js';
+const {explicitSilence,semanticResponseObligation}=narrativeIntentEngagement;
 import {narrativeTasks} from './narrative-tasks.js';
 const briefs=new WeakMap();
 const taskFor=op=>({describe_scene:'scene',current_situation:'scene',conversation:'conversation',combat:'combat',continuation:'continuation'}[op]);
