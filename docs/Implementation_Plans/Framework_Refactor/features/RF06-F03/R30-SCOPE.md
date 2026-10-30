@@ -1,0 +1,5 @@
+# RF06-F03 R30 — Original private relay delivery
+
+Move only postPrivateRelay intact into Publication through already-qualified Discord channel/privacy/text ports. Root/Public share function; existing root standalone composition unchanged. Preserve UUID/audit actor/session/context, best-effort audit failure, unavailable/unsafe_channel result, effective GM privacy gate before callbacks/sends, original bounded header, original splitter, beforeSend before header/every body part, ordered sends and original callback/transport error propagation without retry. No new fallback/DM/receipt/native/store/policy/schema change.
+
+Request Publication public source slot extension from Agent A; no registry/index/commands/public port additions. Fresh synthetic Discord/audit with actual validator/splitter checks exact identity/results/text/parts/order, audit failure, missing/unsafe channel, first/later callback failure and partial uncertain send. Whole function and rest of root AST match. One frozen feature-local suite, no prior passed unrelated rerun. No live Discord/network/provider/production state.

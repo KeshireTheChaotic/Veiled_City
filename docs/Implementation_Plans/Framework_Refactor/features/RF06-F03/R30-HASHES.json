@@ -1,0 +1,6 @@
+{
+  "bot/src/publishing.js": "1dd8ac33c537865dde817514026e3602e5c6b528f4bf7ec19c81825a347978cc",
+  "bot/src/frameworks/publication/public.js": "85f5bdf40875a427b8df115dbede6dfa6eba37bb55af960281686888833ab651",
+  "bot/src/frameworks/publication/private-relay-delivery.js": "2325256b03d66ddaf0d2f99a5438dfa8651a47f554e3a746753f0bcb14f31f5c",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c30.test.mjs": "1a9c2441178e4435dfa1e5b34a5d2d3826661ab558bf467b479312dd4629f7f9"
+}

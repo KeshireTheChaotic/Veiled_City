@@ -1,0 +1,7 @@
+{
+  "parent": "22947c776021d09b0e4069241c5425730c3a11b6",
+  "whole_original_function_equal": true,
+  "entire_remaining_publishing_module_equal_except_public_import_and_reexport": true,
+  "existing_deliverHandout_local_binding_preserved": true,
+  "existing_standalone_port_bindings_unchanged": true
+}

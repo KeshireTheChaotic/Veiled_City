@@ -1,0 +1,15 @@
+✔ root/public identity and exact original successful private relay header, package and audit correlate (1.5526ms)
+✔ unavailable lookup and actual unsafe GM permissions return original reasons without callbacks or send (0.353ms)
+✔ original best-effort audit failure still permits guarded relay and preserves default nullable session (0.1833ms)
+✔ original header/context bounds and splitter run callback before every ordered awaited send (0.2886ms)
+✔ first pre-send callback failure propagates exact error without send (0.4905ms)
+✔ later callback revocation after header stops remaining body without replacement or retry (0.2836ms)
+✔ partial uncertain transport and campaign read failure preserve original errors and no alternate delivery (0.3641ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 803.7843
