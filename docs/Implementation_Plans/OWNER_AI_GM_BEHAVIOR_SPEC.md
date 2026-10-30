@@ -106,4 +106,4 @@ For live Discord play, Veilkeeper should:
   **The objective is not to tell players a story. It is to create a world in which their choices produce stories worth telling.**
 
 
-This is the intended behavioral specification, not a claim that all of it is already implemented in `codex/audience-first-narrative-v9`.
+This is the intended behavioral specification, not a claim that all of it is already implemented
