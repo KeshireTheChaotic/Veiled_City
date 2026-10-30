@@ -1,0 +1,5 @@
+# RF06-F03 R15 — Closed lifecycle publication reader ownership
+
+Frozen after c2e5cc16. Agent B reserves Publication public/commands/publishing/pvp-output and lifecycle-output; Agent A Knowledge/state work excluded. Move original closed lifecycle hash/projection reader into Publication with only own Knowledge-consumer import path changed. Migrate its three source callers to Publication public; remove root only after zero active source/supported CLI callers. Keep the exact stored version1 reader, hash encoding, mutation provenance, snapshot, native lifecycle/source/audience and private owner checks. No producer, SQLite, receipt/native effects or game rule changes.
+
+Fresh source-shaped minimal lifecycle fixtures and a controlled existing Knowledge evidence port test caller/receipt/current-snapshot/owner checks; lower evidence service is mocked, not claimed requalified. Cover aftermath, party/private downtime project, world cycle, job-source revalidation and raw model prose exclusion. Original full source equality after import relocation plus syntax/import gate. No live services/DB/provider; source path relocation does not remove saved-format compatibility.

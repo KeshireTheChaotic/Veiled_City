@@ -98,7 +98,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/idempotency.js","bot/src/framework-to-framework/discord--persistence/idempotency.js","discord--persistence","RF06","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/index.js","bot/src/index.js","bootstrap","RF06","DECOMPOSE_BEFORE_MOVE","0","35"
 "bot/src/legacy-authority.js","bot/src/frameworks/knowledge/legacy-authority.js","knowledge","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","0","0"
-"bot/src/lifecycle-output.js","bot/src/frameworks/publication/lifecycle-output.js","publication","RF06","EXTRACT_PORTS_BEFORE_MOVE","3","1"
+"bot/src/lifecycle-output.js","bot/src/frameworks/publication/lifecycle-output.js","publication","RF06","MOVED_ROOT_RETIRED_R15","3","1"
 "bot/src/location-language.js","bot/src/frameworks/world/location-language.js","world","RF04","ISOLATED_IMPLEMENTATION_MOVED_WORLD_CONSUMER_ADOPTED_NATIVE_INTENT_READER_REMOVAL_RF04-F05","4","1"
 "bot/src/logger.js","bot/src/frameworks/operations/logger.js","operations","RF02","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/long-projects.js","bot/src/frameworks/world/long-projects.js","world","RF04","DECOMPOSE_BEFORE_MOVE","4","4"

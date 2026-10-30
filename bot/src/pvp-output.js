@@ -60,7 +60,7 @@ function assemblyCoverageEvidence(...args){return publicationSessionEvidence.ass
 function openingCohortNarrativeCandidate(...args){return publicationSessionEvidence.openingCohortNarrativeCandidate(...args);}
 function assemblyHookSelection(...args){return publicationSessionEvidence.assemblyHookSelection(...args);}
 function assemblyOrientation(...args){return publicationSessionEvidence.assemblyOrientation(...args);}
-import {lifecycleProjection,lifecycleHash} from './lifecycle-output.js';
+import {lifecycleProjection,lifecycleHash} from './frameworks/publication/public.js';
 import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");

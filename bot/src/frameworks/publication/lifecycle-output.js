@@ -1,4 +1,4 @@
-import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
+import {publicationKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 const {activeEvidence}=publicationKnowledgeDisclosure;
 /** Closed native lifecycle projections. Model summaries are retained privately, never used as proof. */
 import {createHash} from 'node:crypto';

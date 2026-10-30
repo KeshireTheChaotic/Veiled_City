@@ -1,0 +1,8 @@
+{
+  "bot/src/frameworks/publication/lifecycle-output.js": "14355bd9f372bd0cab65d281907c926b0bb349fe4ea49a91160447c2a71c73fd",
+  "bot/src/frameworks/publication/public.js": "b13a0be01c3c18377bdac22936b8bcf7c65ac39474931f45332cbb1efb9a7ba7",
+  "bot/src/commands.js": "5927514a477907698dbacbfddab3e88658f24da18e455e353cb5c6708fadcbaf",
+  "bot/src/publishing.js": "dcc77caa16fc2be7eb2dd59c3604323cce55e4abf180760b6380bddbbe7eb20b",
+  "bot/src/pvp-output.js": "4dbefba03776b6b47ad9c5cf2ecb8178dce4c6c7d42c07a7d8dae370ce5fd691",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c15.test.mjs": "54815698a1ed12c6788a5802d96d8edfe295d913caa11c779abe8ab826b4f096"
+}

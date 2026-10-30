@@ -27,7 +27,7 @@ import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 
 
-import {lifecycleProjection} from './lifecycle-output.js';
+import {lifecycleProjection} from './frameworks/publication/public.js';
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;
 const continuationDeliveryQueue=new KeyedSerialQueue();

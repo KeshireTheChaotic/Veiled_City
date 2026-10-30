@@ -67,3 +67,5 @@ export {publicationNarrativeUnits} from './contracts/narrative-units.js';
 export {publicationOperations} from './contracts/operations.js';
 
 export {publicationDiscordText} from './contracts/discord-channels.js';
+
+export {lifecycleHash,lifecycleProjection} from './lifecycle-output.js';

@@ -1,0 +1,14 @@
+✔ saved version1 aftermath renders only exact native summary without exposing model prose or mutating readers (1.3094ms)
+✔ wrong stored version/scope/receipt/source/evidence/snapshot is refused at each projection (0.5533ms)
+✔ private downtime project requires exact current character owner and projects native progress only (0.1817ms)
+✔ party downtime project preserves audience and exact current snapshot requirements (0.1593ms)
+✔ world cycle and authored job source are revalidated and do not reveal unverified prose (0.1588ms)
+✔ unrecognized lifecycle kind cannot render as a generic world result (0.1097ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.4718

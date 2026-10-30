@@ -535,17 +535,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "9410c4f9171949f115f5b4121345a16c79d07fb222921137a228fc573ad40fb6",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/lifecycle-output.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "74fd5a010d2265d27e0ad5b15072068702028d5d60d6df0b4c28fe82f1d504c2",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/mechanical-native-v9.js",
@@ -2142,20 +2131,6 @@
       "to": "bot/src/pvp-output.js",
       "kind": "static",
       "specifier": "./pvp-output.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "11eea7e26186784e7304f57e2076183028285113e5ff998e278473444fb46d8c",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/lifecycle-output.js",
-      "kind": "static",
-      "specifier": "./lifecycle-output.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F04",

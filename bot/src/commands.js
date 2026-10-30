@@ -78,7 +78,7 @@ import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./framew
 import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./frameworks/daggerheart/public.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
-import {lifecycleHash} from './lifecycle-output.js';
+import {lifecycleHash} from './frameworks/publication/public.js';
 import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
 import {turnLatency} from './turn-latency.js';
 import { pendingPvpFear } from "./pvp-fear-gate.js";
