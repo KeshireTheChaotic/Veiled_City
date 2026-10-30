@@ -2,7 +2,7 @@
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import { contextSourceKey } from "./narrative-context.js";
-import { interpretAuthoredText, captureDeclaration } from "./player-language.js";
+import { interpretAuthoredText, captureDeclaration } from "./frameworks/intent/public.js";
 import {intentSessionEntry} from "./frameworks/intent/public.js";
 function prepareSceneEntry(...args){return intentSessionEntry.prepareSceneEntry(...args);}
 import {intentSessionDialogue} from './frameworks/intent/public.js';

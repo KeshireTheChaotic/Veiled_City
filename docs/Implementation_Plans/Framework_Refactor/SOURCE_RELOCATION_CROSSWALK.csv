@@ -256,7 +256,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/pc-incoming.js","bot/src/frameworks/daggerheart/pc-incoming.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05","15","5"
 "bot/src/pc-native-eligibility.js","bot/src/frameworks/daggerheart/pc-native-eligibility.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05","15","0"
 "bot/src/personal-continuity.js","bot/src/frameworks/knowledge/personal-continuity.js","knowledge","RF04","DECOMPOSE_BEFORE_MOVE","31","7"
-"bot/src/player-language.js","bot/src/frameworks/intent/player-language.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","4","4"
+"bot/src/player-language.js","bot/src/frameworks/intent/player-language.js","intent","RF05","IMPLEMENTATION_MOVED_COMPATIBILITY_READER_REMAINS","4","4"
 "bot/src/portrayal.js","bot/src/frameworks/narrative/portrayal.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","6","2"
 "bot/src/pre-roll-fear-notice.js","bot/src/frameworks/daggerheart/pre-roll-fear-notice.js","daggerheart","RF06","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05+RF06-F03","3","2"
 "bot/src/pre-roll-fear-recovery.js","bot/src/frameworks/daggerheart/pre-roll-fear-recovery.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","2","0"

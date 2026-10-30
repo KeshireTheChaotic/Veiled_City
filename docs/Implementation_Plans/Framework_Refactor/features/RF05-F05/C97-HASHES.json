@@ -1,0 +1,41 @@
+{
+  "base": "13991bc4",
+  "original_module_and_candidate_caller_exact_except_imports": true,
+  "syntax_pass": 4,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c97.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 109.4041
+  },
+  "files": [
+    {
+      "path": "bot/src/player-language.js",
+      "sha256": "36131c47f353e933271d7fe8530ffb0ec7d07db4103cc1414ad0a767df816f19"
+    },
+    {
+      "path": "bot/src/frameworks/intent/player-language.js",
+      "sha256": "61d732d136c1a73de02c128816c0d059c01227fd9f24d404a9fe862095332a63"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "a19a10e0662b9724328403b16fcafd100dc8d3b1b22f754b459c98f1197ead92"
+    },
+    {
+      "path": "bot/src/authored-candidates.js",
+      "sha256": "146a4ba5bd938958a0a54f4860e6b73ebede9383163fab4cd98a413741fef8a3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c97.test.mjs",
+      "sha256": "4a3b3813e5ed7ba34b5e84dc9884c4edc426f38e8078a0b99b2bf57d8fbbc27d"
+    }
+  ],
+  "additional_test": {
+    "command": "node --test --test-name-pattern \"C97 actual private\" tests/ai-gm-2026-10/rf05-f05-c97.test.mjs",
+    "pass": 1,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 576.0955
+  }
+}
