@@ -3766,6 +3766,11 @@
           "from": "publication",
           "to": "narrative",
           "contract": "Forward four original complete-formatter compatibility functions, unchanged; no new interpretation, audience, execution or publication grant."
+        },
+        {
+          "from": "narrative",
+          "to": "publication",
+          "contract": "C61 only original protectedPvpScope read query; no new consent rule, protection record, claim or publication grant."
         }
       ],
       "source_evidence": [
@@ -3794,7 +3799,8 @@
         "bot/tests/ai-gm-2026-10/rf05-f04-c54.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c56.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c58.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f04-c59.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c59.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c61.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3817,7 +3823,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/narrative--publication/public.js",
-      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition. C53 forwards only original establishGmWorldPart/renderGmWorldPart through fixed Publication consumer; Narrative retains exact scope/source/composition/replay rules. Remaining pair dependencies stay open. C54 supplies only original projectSceneDescription/defaultSceneDescription; native owner/source/visibility/presence/evidence rules remain in Narrative. C56 forwards original findFreshScenePart/renderFreshScenePart/hasPcReference through fixed Publication consumer, never the generator. Original source/budget/provenance/tripwire rules unchanged. C58 forwards only original findFreshNpcPart/renderFreshNpcPart through separate fixed Publication NPC reader; generator and full source/knowledge/audience/current-context rules remain Narrative-owned. C59 forwards original establishSceneFiction/renderSceneFiction/holdSceneFiction through fixed own Publication consumer; no generator."
+      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition. C53 forwards only original establishGmWorldPart/renderGmWorldPart through fixed Publication consumer; Narrative retains exact scope/source/composition/replay rules. Remaining pair dependencies stay open. C54 supplies only original projectSceneDescription/defaultSceneDescription; native owner/source/visibility/presence/evidence rules remain in Narrative. C56 forwards original findFreshScenePart/renderFreshScenePart/hasPcReference through fixed Publication consumer, never the generator. Original source/budget/provenance/tripwire rules unchanged. C58 forwards only original findFreshNpcPart/renderFreshNpcPart through separate fixed Publication NPC reader; generator and full source/knowledge/audience/current-context rules remain Narrative-owned. C59 forwards original establishSceneFiction/renderSceneFiction/holdSceneFiction through fixed own Publication consumer; no generator. C61 binds only original protectedPvpScope to Narrative context and relocates original shared bounded output record reader within Publication; old root export remains same function for other callers."
     }
   ]
 }

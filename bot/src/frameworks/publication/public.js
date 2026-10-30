@@ -43,3 +43,5 @@ export {publicationNarrativeAuthoring} from './contracts/narrative-authoring.js'
 export {publicationNarrativeNpc} from './contracts/narrative-npc.js';
 
 export {publicationNarrativeSceneFiction} from './contracts/narrative-scene-fiction.js';
+
+export {protectedPvpScope} from './protected-scope.js';

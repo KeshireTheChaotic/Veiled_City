@@ -86,27 +86,9 @@ export function restoreGmWorldCandidates(original,recovered){
   if(Array.isArray(proposals))recovered.gm_world_parts=structuredClone(proposals);
   return recovered;
 }
-function fail(){throw Object.assign(new Error("PvP output needs current independently verified clauses and audience proof."),{code:"NARRATIVE_PVP"});}
-function records(db,guild,kind){
-  const out=[];
-  for(let offset=0;offset<10000;offset+=100){
-    const page=db.listCityRecords(guild,{kind,includeGM:true,limit:100,offset});out.push(...page);
-    if(page.length<100)return out;
-  }
-  fail(); // No silent truncation of a security boundary.
-}
-function protectedAgreements(db,guild){return [...records(db,guild,"pvp_proposal"),...records(db,guild,"pvp_encounter_contract")];}
-/** Actual scene and recipient/control scope, not membership of the player who happened to post. */
-export function protectedPvpScope(db,guild,scope={mode:"party"}){
-  const session=db.getActiveSession(guild);if(!session)return [];
-  const scene=currentScene(db,guild),roster=db.roster(session.id);
-  let character=scope.actorCharacterId;
-  if(scope.recipientUserId)character=db.activeAssignment(session.id,scope.recipientUserId)?.character_id;
-  return protectedAgreements(db,guild).filter(p=>p.data.session_id===session.id&&p.data.scene===scene.key
-    &&(scope.mode!=="private"?p.data.participants.some(w=>roster.some(r=>r.character_id===w.character))
-      :!character||p.data.participants.some(w=>w.character===character)
-        ||db.getCharacter(character)?.data.location===p.data.location_key));
-}
+import {fail,records,protectedAgreements} from './frameworks/publication/output-records.js';
+import {protectedPvpScope} from './frameworks/publication/public.js';
+export {protectedPvpScope};
 /** A safe prose projection does not authorize a parallel free-text fact/reference mutation. */
 export function assertProtectedModelEvents(db,guild,events,scope){
   if(!protectedPvpScope(db,guild,scope).length)return;

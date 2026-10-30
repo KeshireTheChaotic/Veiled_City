@@ -10,7 +10,8 @@ import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 
 
-import {protectedPvpScope} from './pvp-output.js';
+import {narrativePublicationProtectedScope} from './frameworks/narrative/public.js';
+const {protectedPvpScope}=narrativePublicationProtectedScope;
 import {narrativeBridgeSessionSources} from './frameworks/narrative/public.js';
 function assemblyOrientation(...args){return narrativeBridgeSessionSources.assemblyOrientation(...args);}
 import {narrativeSourceVisible} from './frameworks/narrative/public.js';

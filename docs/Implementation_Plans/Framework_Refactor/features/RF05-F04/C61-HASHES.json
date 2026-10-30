@@ -1,0 +1,49 @@
+{
+  "original_regions_and_bodies_unchanged": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "17860f39af5f7c998beb34ac6dcb1b407bd7de6fdf432fd20ae26a33a62c9295"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "d5d43abc13ac1651c830ab49803c1831971edf3d1e738cf3f457f7bd03202f3d"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "a83989b976fb1123d2fb6d2abcb4007422ff39ba649619cf6107c693a452548e"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "cc84f7598953fb6a286e26c94d25739e43eb76301a49e18876c3edb910ac2521"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "bda292e1148935862f7c618fe562f993b4a8a70667e701387021f6022fde674b"
+    },
+    {
+      "path": "bot/src/scene-fiction-context.js",
+      "sha256": "a9c65883c8144b6826c288f8337a97123083bb673ff95d5f943951a7d722231c"
+    },
+    {
+      "path": "bot/src/frameworks/publication/output-records.js",
+      "sha256": "79bec4512aa64f8132008f374be43354ad5bc0ed2d0175092b656d286f6e648f"
+    },
+    {
+      "path": "bot/src/frameworks/publication/protected-scope.js",
+      "sha256": "c73ff808c437587dbface09da76a903446615946da8ed0db986760ff6fe6b502"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/publication-protected-scope.js",
+      "sha256": "9c26be78370e460b9ef37746d616eb121a99e58063d60d0b38f879f1b66cadab"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c61.test.mjs",
+      "sha256": "7e6b4c58f6713b5b9e6fe871662d7ba23011796cb67991449466b5c03351c1a2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f06-c60.test.mjs",
+      "sha256": "a876e4b8c495e6c557949ac00921148c85d675aa8a8041d3e8a282cf5ae84f0d"
+    }
+  ]
+}

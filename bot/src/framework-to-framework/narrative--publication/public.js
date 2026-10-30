@@ -22,3 +22,7 @@ export function connectPublicationNarrativeNpc(){return publicationNarrativeNpc.
 import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeSceneFiction} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeSceneFiction(){return publicationNarrativeSceneFiction.bind({establishSceneFiction,renderSceneFiction,holdSceneFiction});}
+
+import {protectedPvpScope} from '../../frameworks/publication/public.js';
+import {narrativePublicationProtectedScope} from '../../frameworks/narrative/public.js';
+export function connectNarrativePublicationProtectedScope(){return narrativePublicationProtectedScope.bind({protectedPvpScope});}
