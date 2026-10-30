@@ -1,0 +1,42 @@
+{
+  "base": "816983c7",
+  "original_module_and_all_three_caller_bodies_exact_except_imports": true,
+  "syntax_pass": 5,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c96.test.mjs tests/ai-gm-2026-10/rf05-f05-c87.test.mjs",
+    "pass": 8,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 1511.6683
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/gameplay-intake.js",
+      "sha256": "ed212494fa00d2c9c0560db5770f27bb11cc93c6babd451572ce47dccbf3d178"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "acbd3ef2110be214a87d6d2f909b189c856e6cd4c0d16896909cf1eb61089122"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "d382a41bfcd54f1f31359bd59ab565e337f1898c2741e6d6ec3192095c1d3280"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "e476b0e0c060acf1eb4c165f8e281ab9b2d7df7bd9ed2f94534741256b6f865b"
+    },
+    {
+      "path": "bot/src/authored-candidates.js",
+      "sha256": "ce5780828119c10291b01d0d8c46a2ae9b6a8dbffd657c850342fddea2b801f3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c96.test.mjs",
+      "sha256": "41ec9a965f5e5ca46bc509fe6cd57d280e2ec229b798141389a80d8204a9ebea"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c87.test.mjs",
+      "sha256": "6e24c04707e13daba0a1b2b6b0dbd0becef731089c751dc5ec44fc6efd88c19a"
+    }
+  ]
+}

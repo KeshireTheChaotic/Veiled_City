@@ -19,7 +19,7 @@ import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput,worldInputKey } from "./frameworks/world/public.js";
 import {currentSemanticEngagement} from './semantic-engagement.js';
-import {routeGameplayIntake,routerFailureEngagement} from "./gameplay-intake.js";
+import {routeGameplayIntake,routerFailureEngagement} from "./frameworks/intent/public.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn, sendPlayerPrivate } from "./publishing.js";
 import { VoiceNarrator } from "./voice.js";

@@ -64,3 +64,5 @@ export {proposeIntents,acceptIntentForAdjudication,resolvePendingReferent,curren
 export {createPlayerIntentValidation} from './player-intent-validation.js';
 
 export {createTypedIntentPersistence} from './typed-intent-persistence.js';
+
+export {explicitSilence,routeGameplayIntake,routerFailureEngagement,semanticResponseObligation} from './gameplay-intake.js';

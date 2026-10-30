@@ -37,7 +37,7 @@ import { pacingAdvice, validatePacing } from "./frameworks/session/public.js";
 import { portrayalPacket } from "./frameworks/narrative/public.js";
 import { intentArraySchema, INTENT_PROMPT, decisionAdvisorySchema, requiredDecisionAdvisorySchema, decisionPromptContext, decisionContext, validateDecisionAdvisory, unifiedArbitrationSchema } from "./frameworks/intent/public.js";
 import { intentContext } from "./ai-intents.js";
-import {explicitSilence,semanticResponseObligation} from "./gameplay-intake.js";
+import {explicitSilence,semanticResponseObligation} from "./frameworks/intent/public.js";
 import { worldAdditionsSchema, sceneActionsSchema, worldConflictsSchema } from "./frameworks/world/public.js";
 import { autonomousWorldContext, worldAuthority } from "./frameworks/world/public.js";
 import { AUTONOMOUS_WORLD_PROMPT } from "./frameworks/world/public.js";

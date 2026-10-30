@@ -10,7 +10,7 @@ const {captureDialogue}=intentSessionDialogue;
 import {intentSessionScene} from './frameworks/intent/public.js';
 const {currentScene}=intentSessionScene;
 import {sourceSpanInsideQuote,isCharacterSourceSpan} from './frameworks/intent/public.js';
-import {explicitSilence} from './gameplay-intake.js';
+import {explicitSilence} from './frameworks/intent/public.js';
 import {authoredCandidatesSchema,currentAuthoredCandidatesSchema,AUTHORED_CANDIDATES_PROMPT} from './frameworks/intent/authored-candidate-schema.js';
 export {authoredCandidatesSchema,currentAuthoredCandidatesSchema,AUTHORED_CANDIDATES_PROMPT};
 export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={}){

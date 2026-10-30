@@ -1,5 +1,5 @@
 /** Non-authorizing full-message intake; semantic proposals, never English verbs, decide engagement. */
-import {characterSourceRanges} from './frameworks/intent/public.js';
+import {characterSourceRanges} from './source-communication.js';
 export function explicitSilence(value){
   const text=String(value||'');
   return !characterSourceRanges(text).some(({start,end})=>text.slice(start,end).trim());
@@ -33,6 +33,6 @@ export function semanticResponseObligation(value,intents,{authenticated=false,en
     reason:needed?'source_grounded_semantic_engagement':noResponse?'classified_non_world_communication':'no_current_semantic_engagement',
     authority:'Response obligation only; never a listener, action, roll, consent or effect receipt.'};
 }
-import {intentGameplayIntakeSource} from './frameworks/intent/public.js';
+import {intentGameplayIntakeSource} from './contracts/turn-language-sources.js';
 // Provide this module's original silence and response-obligation readings to the fixed Intent slot; no other authority is granted.
 intentGameplayIntakeSource.bind({explicitSilence,semanticResponseObligation});

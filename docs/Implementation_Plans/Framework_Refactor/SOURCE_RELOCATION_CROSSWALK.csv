@@ -75,7 +75,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/fear-reservations.js","bot/src/frameworks/daggerheart/fear-reservations.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","7","1"
 "bot/src/fresh-npc-authoring.js","bot/src/frameworks/narrative/fresh-npc-authoring.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","8","2"
 "bot/src/fresh-scene-authoring.js","bot/src/frameworks/narrative/fresh-scene-authoring.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","1"
-"bot/src/gameplay-intake.js","bot/src/frameworks/intent/gameplay-intake.js","intent","RF05","PILOT_MOVE_CANDIDATE","5","0"
+"bot/src/gameplay-intake.js","bot/src/frameworks/intent/gameplay-intake.js","intent","RF05","MOVED_COMPLETE","5","0"
 "bot/src/generation-feedback.js","bot/src/frameworks/ai-provider/generation-feedback.js","ai-provider","RF05","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/gm-action-capability.js","bot/src/frameworks/daggerheart/gm-action-capability.js","daggerheart","RF03","DECOMPOSE_BEFORE_MOVE","17","8"
 "bot/src/gm-action-review.js","bot/src/frameworks/daggerheart/gm-action-review.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F03+RF04-F04+RF05-F05","2","6"
