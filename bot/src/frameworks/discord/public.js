@@ -38,3 +38,5 @@ export {handleVoiceCommand} from './voice-commands.js';
 
 export {assertPlayerSettingsStore} from './contracts/player-settings.js';
 export {handlePlayerSettingsCommand} from './player-settings-commands.js';
+
+export {replyWithDiagnosticLines} from './diagnostic-reply.js';

@@ -1,0 +1,14 @@
+✔ single private diagnostic response retains public identity and original payload (1.0759ms)
+✔ long reports use original ordered chunks and private sequential followups (0.2936ms)
+✔ response failure propagates original error and stops later chunks without retry (0.3751ms)
+✔ named pair calls unchanged Operations read-only service then original private delivery (1.3187ms)
+✔ lower diagnostic service failure never sends partial report (0.2032ms)
+✔ existing shared GM guard and backup option read remain before awaited doctor call inside receipt scope (1.0173ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 450.4187

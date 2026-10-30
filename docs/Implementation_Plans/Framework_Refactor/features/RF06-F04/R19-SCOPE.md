@@ -1,0 +1,5 @@
+# RF06-F04 R19 — GM diagnostics command boundary
+
+Frozen after R18. Agent B owns commands/Discord public and existing discord--operations pair; request bridge metadata window only. Original shared admin GM guard and pre-doctor backup_id read remain in root exactly. Move only original doctor read/format/Discord-send coordination into named pair; Discord owns line chunk/reply/follow-up transport, Operations keeps unchanged diagnostic reader/formatter. No storage, permission policy or diagnostic implementation moved.
+
+Pair consumes exactly Operations and Discord public APIs. Root awaits named handler within same receipt/error finally. Preserve reply/follow-up timing/order, ephemeral payloads, error identity and unknown command fallthrough. Fresh transport mocks and real unchanged Operations reader with fresh minimal db/guild read fakes; no writes/provider/network. Static/source proof original guard and incidental read retained. Register actual commands consumer; no new startup or transaction contract.

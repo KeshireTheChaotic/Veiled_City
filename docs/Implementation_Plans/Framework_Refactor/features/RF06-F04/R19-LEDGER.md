@@ -1,0 +1,9 @@
+# RF06-F04 R19 — Complete named GM diagnostics command adapter
+
+GM doctor coordination now lives in existing Discord–Operations pair: unchanged Operations diagnostic reader/formatter supplies Discord-owned private ordered line delivery. Root retains original shared admin GM guard, incidental backup_id option read, error handler and awaited receipt-finally lifecycle. No diagnostic implementation, SQL, permission or report text change; no new startup.
+
+Changed runtime commands.js, Discord public/new diagnostic-reply.js, existing pair public. Bridge registry records actual commands consumer and reverse direction. New c19 test/R19 scope/ledger/log/hashes only. Parent9678219a plus concurrent Agent A C82; branchcodex/clean-ai-gm-2026-10. Exact Agent B pair/registry source ownership; State/Knowledge preserved. No transition removed or exception added.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f04-c19.test.mjs: exit0,6passed,0failed/skipped/cancelled,450.4187ms. New cases cover one/multiple private chunks in original order, failure identity/no retry, unchanged Operations reader with fresh minimal db/guild read fakes, lower error/no partial output and source proof GM guard/backup option/await remain before receipt cleanup. Doctor's cwd file checks retain existing semantics; this is not whole-runtime doctor health or real Discord verification. Syntax5/5 and scoped whitespace passed; R19-HASHES and .reports/RF06-R19-final.json.
+
+No DB opens/writes, provider/network, native mechanics, saved readers, audience policy or PC agency changes. Caller remains responsible for authentication as before; only trusted existing command dispatch exposes the adapter. Rollback only R19. Next exact feature RF06-F04 R20 independent GM administrative read surfaces through original Persistence methods, after confirming each method is read-only. Phase/release incomplete and unauthorized.

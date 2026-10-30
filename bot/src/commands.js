@@ -1,3 +1,4 @@
+import {handleDoctorCommand} from './framework-to-framework/discord--operations/public.js';
 import {handlePlayerSettingsCommand} from './frameworks/discord/public.js';
 import {handleVoiceCommand} from './frameworks/discord/public.js';
 import {connectDiscordCommandReceipts,connectDiscordPlayerSettings} from './framework-to-framework/discord--persistence/public.js';
@@ -47,7 +48,6 @@ import { PermissionError, NotFoundError, StateConflictError, UserInputError } fr
 import {isExpectedError} from './frameworks/operations/public.js';
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from './frameworks/discord/public.js';
 import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
-import { runCampaignDiagnostics, formatDiagnostics } from './frameworks/operations/public.js';
 import {operationalReport} from './operations/health.js';
 import {operationalMetrics} from './operational-metrics.js';
 import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';
@@ -2156,9 +2156,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
       }
       if(sub==="doctor"){
-        const report=await runCampaignDiagnostics({db,guild:interaction.guild});
-        const chunks=chunkTextLines(formatDiagnostics(report));
-        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+        return await handleDoctorCommand(interaction,db);
       }
     }
 
