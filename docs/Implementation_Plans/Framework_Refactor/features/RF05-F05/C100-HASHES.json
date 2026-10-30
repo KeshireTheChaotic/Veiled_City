@@ -1,0 +1,26 @@
+{
+  "base": "d4da5820",
+  "ledger_region_and_remaining_state_exact_except_helper_call_import": true,
+  "syntax_pass": 2,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c100.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 255.697
+  },
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "61c4a73606e4b1b42723b48a58b04e89fe348a81937cf370b93d4cea6c24781a"
+    },
+    {
+      "path": "bot/src/application/workflows/record-state-mutations.js",
+      "sha256": "869fb832c763c77df7e8528bbe21fe313583691df1d2ab4626bb1e44e6442299"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c100.test.mjs",
+      "sha256": "e622c4ff5a1a5ba860b953cc890c0c9d7d684c3f00cd4258e36a7faf0a46c6e2"
+    }
+  ]
+}
