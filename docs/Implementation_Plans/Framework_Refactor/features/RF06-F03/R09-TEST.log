@@ -1,0 +1,13 @@
+✔ historical and public receipt exports retain single implementation identity (0.4548ms)
+✔ proven non-send creates original Error with original certainty and message (0.1246ms)
+✔ exact valid acknowledgement returns original receipt and permits dynamic destination only when unpinned (0.1029ms)
+✔ missing/blank/failed/mismatched receipts remain uncertain without mutating original rows (0.6417ms)
+✔ summary preserves durable field names/uncertainty/defaults without exposing payload or audience secrets (0.1557ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 748.4362

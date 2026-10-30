@@ -1,3 +1,5 @@
+import {notSent,validatePublicationAcknowledgement,outboxSummary} from './frameworks/publication/public.js';
+export {notSent,validatePublicationAcknowledgement,outboxSummary} from './frameworks/publication/public.js';
 /** Transactional narration outbox; Discord delivery is retryable and never reruns reasoning or mechanics. */
 import { createHash } from "node:crypto";
 import {publicationOpeningQueue} from './frameworks/publication/public.js';
@@ -17,17 +19,10 @@ function serialized(db,key,job){
   if(!deliveryQueues.has(db))deliveryQueues.set(db,new KeyedSerialQueue());
   return deliveryQueues.get(db).enqueue(key,job);
 }
-export function notSent(message){return Object.assign(new Error(message),{deliveryCertainty:"not_sent"});}
+
 
 /** An acknowledgement must identify the destination that was actually queued. */
-export function validatePublicationAcknowledgement(row,receipt){
-  if(!receipt||receipt.ok===false||typeof receipt.messageId!=='string'||!receipt.messageId.trim()
-    ||typeof receipt.channelId!=='string'||!receipt.channelId.trim()
-    ||row.channel_id&&receipt.channelId!==row.channel_id)
-    throw Object.assign(new Error('Delivery needs an exact acknowledged Discord message/channel receipt.'),
-      {deliveryCertainty:'uncertain'});
-  return receipt;
-}
+
 
 const digest=value=>createHash("sha256").update(String(value)).digest("hex");
 
@@ -85,11 +80,7 @@ export function queueDirectorPublications(db,{guild,session,result,scope,key}){
   });
 }
 
-export function outboxSummary(row){
-  return {id:row.id,turn_id:row.turn_id,surface:row.surface,ordinal:row.ordinal,visibility:row.visibility,
-    status:row.status,attempts:row.attempt_count,discord_message_id:row.discord_message_id||null,
-    uncertain:row.status==="uncertain",last_failure:row.last_failure||""};
-}
+
 
 /** Only demonstrably unsent rows retry. A later chunk cannot overtake an uncertain predecessor. */
 export function deliverTurnOutbox(db,guildId,turnId,transport,{forceUncertain=false,beforeSend=null}={}){

@@ -1,0 +1,6 @@
+{
+  "bot/src/publication-outbox.js": "bcaae8d07ca3c10f6e9804d08c25e738c0305a464b02a4e9a3b7942091403c56",
+  "bot/src/frameworks/publication/public.js": "1009c580bd90f8f18db4ef201ca799f736b19c9f346d24c44595f054df538e6c",
+  "bot/src/frameworks/publication/delivery-receipts.js": "23dba13b8ec426eca2101742d09ee772324e3a39f2795269a0f437679934d362",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c09.test.mjs": "888e2ce9b71336178fdef146d22e63efdc32d4f43071917f45540bdd5dfd9646"
+}
