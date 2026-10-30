@@ -89,4 +89,3 @@ export function gmEventVisibility(event,scope){
   }
   return {visibility:"gm",targetUserId:null,targetCharacterId:null};
 }
-

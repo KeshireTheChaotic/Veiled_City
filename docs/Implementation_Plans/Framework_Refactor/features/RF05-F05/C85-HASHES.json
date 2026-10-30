@@ -40,7 +40,7 @@
     },
     {
       "path": "bot/src/frameworks/knowledge/gm-event-persistence.js",
-      "sha256": "c2b4279af778745993cb49f4902827ff077ff84712750661311bd6fa8aced47f"
+      "sha256": "4db882cf3c1ccef7ec0f2000bef131cc7b7426067d9d6100e7e1147fa71ad2a7"
     },
     {
       "path": "bot/src/frameworks/knowledge/public.js",
@@ -50,5 +50,6 @@
       "path": "bot/tests/ai-gm-2026-10/rf05-f05-c85.test.mjs",
       "sha256": "d20d8557ad9696d64db12d848ef9dfcfdfecf166c1175f6ad421a15301c31e6a"
     }
-  ]
+  ],
+  "final_whitespace_normalization": "One redundant blank EOF line removed after git diff --cached --check; no semantic change."
 }
