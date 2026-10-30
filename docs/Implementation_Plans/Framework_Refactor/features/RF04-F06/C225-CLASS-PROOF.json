@@ -1,0 +1,8 @@
+{
+  "feature": "RF04-C225",
+  "class_lines": 2615,
+  "class_sha256": "bd549db3c0d3a44f88e5fcbf4aa3a09097a00a787723fe566596e686394230b7",
+  "class_body_identical": true,
+  "routing_body_identical": true,
+  "unchanged_schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

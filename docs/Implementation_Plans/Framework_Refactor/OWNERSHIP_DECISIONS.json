@@ -45,9 +45,9 @@
       "files": "ai-gm-test-selection.js ai-review.js diagnostics/session5-reader.js evaluation-harness.js failure-trace.js logger.js opening-diagnostics.js operational-metrics.js operations/diagnostics.js operations/health.js operations/overview.js routing-diagnostics.js turn-latency.js turn-trace-context.js typed-intent-qualification.js tracked-turn.js errors.js"
     },
     {
-      "owner": "persistence",
+      "owner": "application",
       "phase": "RF06",
-      "rationale": "SQLite connection/repository facade; current domain calls are explicit decomposition obligations, not permission to relocate them into persistence.",
+      "rationale": "C225 RF06 prerequisite: historical db.js now only eagerly composes original domain providers and reexports the Persistence-owned SQLite class; constructor and saved formats remain unchanged.",
       "files": "db.js"
     },
     {

@@ -1,0 +1,17 @@
+{
+  "feature": "RF04-C225",
+  "sha256": {
+    "bot/src/db.js": "a9f496457aae6e2f434efcd35ac0817b4ce90dbcbe14fec9f996d9c20e80c669",
+    "bot/src/framework-to-framework/knowledge--persistence/public.js": "888058caa2cd8d27750f686483a5763e564a75b78ffb8f8511c30bde7626d7ae",
+    "bot/src/frameworks/operations/public.js": "c38d0b6497f37128f80cabe40db58e6146d9c9d7b548c0f0a0b2ef7d0d8cfdae",
+    "bot/src/frameworks/persistence/public.js": "a01f714016c15c4efd684cef6f50815041f6a4a9e7ad68c1a61a029e08a0b4d7",
+    "bot/src/routing-diagnostics.js": "ad8797b314c00dec3cd13f60e6abfa9d525b8d1f50a28378a56230251513022b",
+    "bot/src/application/composition/standalone-persistence.js": "5f22456ff1f89bf069c9651bc09f8457f0248007cf1dc62b0151daf522b3eb4c",
+    "bot/src/framework-to-framework/daggerheart--persistence/public.js": "c616d618b92a7558fb11a9df908c6eedf0f411a585ac22e0f51c08c3a92b147b",
+    "bot/src/framework-to-framework/operations--persistence/public.js": "3294f7ff182ba03b092552f6fb9c378efd675d0d18c67e93ac42895576cdc769",
+    "bot/src/framework-to-framework/persistence--session/public.js": "7cfac4ae98f1ea786435343b5f4de4c1170fe0a53a806acbf205cb381aeb44cc",
+    "bot/src/frameworks/operations/routing-validation.js": "a7c281d46ed671c83b078ceb6779966649a8ebe84c1b67e9172f1bfa6a283ff8",
+    "bot/src/frameworks/persistence/contracts/database-domain-sources.js": "c32c891cdc06d90ab2691de84492552bc9eb1b0c442ad9c67a7bc59f5485428e",
+    "bot/src/frameworks/persistence/database.js": "9b6ce93df2e7aae1ae2947e1fcffe9d260a6291961f64ed101d35c651a313582"
+  }
+}

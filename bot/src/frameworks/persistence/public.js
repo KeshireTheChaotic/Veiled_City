@@ -5,3 +5,6 @@ export {persistenceRelationshipState} from './contracts/relationship-state.js';
 export {persistenceArchiveProjection} from './contracts/archive-projection.js';
 export {persistenceCityDue} from './contracts/city-due.js';
 export {persistenceGmHookImport} from './contracts/gm-hook-import.js';
+
+export {VeiledDB} from './database.js';
+export {persistenceSessionArchive,persistenceKnowledgeProposal,persistenceOperations,persistenceNativeFear} from './contracts/database-domain-sources.js';

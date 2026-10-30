@@ -15,3 +15,5 @@ export {operationsWorldAudit} from './contracts/world-audit.js';
 export {operationsWorldGroups} from './contracts/world-groups.js';
 
 export {operationsWorldSeedDrafts} from './contracts/world-seed-drafts.js';
+
+export {validateChannelRouting} from './routing-validation.js';

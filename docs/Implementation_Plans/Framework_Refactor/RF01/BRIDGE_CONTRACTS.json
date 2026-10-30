@@ -923,36 +923,31 @@
         "daggerheart",
         "persistence"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "persistence",
           "to": "daggerheart",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
-        {
-          "from": "daggerheart",
-          "to": "persistence",
-          "import_occurrences": 0,
-          "injected_calls": 1955,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/db.js",
-          "to": "bot/src/fear-reservations.js",
-          "line": 24,
+          "from": "bot/src/application/composition/standalone-persistence.js",
+          "to": "bot/src/framework-to-framework/daggerheart--persistence/public.js",
+          "line": 5,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF03",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fresh standalone SQLite/transaction and actual bound helper tests; same original source functions, no live services.",
+      "lifecycle": "Historical db.js eagerly invokes Application composition before standalone construction; repeat binding uses same original functions.",
+      "adoption_feature": "RF06-F02",
+      "consumers": [
+        "bot/src/application/composition/standalone-persistence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f04-c25.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "persistence",
@@ -972,7 +967,9 @@
         "pair": "daggerheart--persistence",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 1956
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/daggerheart--persistence/public.js",
+      "scope": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
     },
     {
       "pair": "daggerheart--publication",
@@ -2177,19 +2174,27 @@
           "to": "bot/src/framework-to-framework/knowledge--persistence/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/standalone-persistence.js",
+          "to": "bot/src/framework-to-framework/knowledge--persistence/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
       "validation": "Consumers fail closed before binding, forward original Knowledge functions and forbid replacement; standalone facade and pair bind the same originals.",
       "lifecycle": "The standalone facade binds original readers on module load before database construction or migration; application composition rebinds the same originals.",
       "adoption_feature": "RF06-F02",
       "consumers": [
-        "bot/src/application/composition/persistence-knowledge.js"
+        "bot/src/application/composition/persistence-knowledge.js",
+        "bot/src/application/composition/standalone-persistence.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f02-c45.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f02-c46.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f02-c47.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f02-c47.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c25.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2212,7 +2217,7 @@
         "occurrences": 266
       },
       "public_api": "bot/src/framework-to-framework/knowledge--persistence/public.js",
-      "scope": "Relationship classification, source evidence, relationship keys, dimension updates, projections and historical archive projection only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations."
+      "scope": "Relationship classification, source evidence, relationship keys, dimension updates, projections and historical archive projection only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged."
     },
     {
       "pair": "knowledge--publication",
@@ -3072,36 +3077,31 @@
         "operations",
         "persistence"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "persistence",
           "to": "operations",
-          "import_occurrences": 3,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
-        {
-          "from": "operations",
-          "to": "persistence",
-          "import_occurrences": 0,
-          "injected_calls": 31,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/db.js",
-          "to": "bot/src/errors.js",
-          "line": 14,
+          "from": "bot/src/application/composition/standalone-persistence.js",
+          "to": "bot/src/framework-to-framework/operations--persistence/public.js",
+          "line": 4,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fresh standalone SQLite/transaction and actual bound helper tests; same original source functions, no live services.",
+      "lifecycle": "Historical db.js eagerly invokes Application composition before standalone construction; repeat binding uses same original functions.",
+      "adoption_feature": "RF06-F02",
+      "consumers": [
+        "bot/src/application/composition/standalone-persistence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f04-c25.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "persistence",
@@ -3121,7 +3121,9 @@
         "pair": "operations--persistence",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 34
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/operations--persistence/public.js",
+      "scope": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
     },
     {
       "pair": "operations--publication",
@@ -3325,36 +3327,31 @@
         "persistence",
         "session"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "persistence",
           "to": "session",
-          "import_occurrences": 1,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
-        },
-        {
-          "from": "session",
-          "to": "persistence",
-          "import_occurrences": 0,
-          "injected_calls": 482,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/db.js",
-          "to": "bot/src/scene-continuity.js",
-          "line": 17,
+          "from": "bot/src/application/composition/standalone-persistence.js",
+          "to": "bot/src/framework-to-framework/persistence--session/public.js",
+          "line": 3,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fresh standalone SQLite/transaction and actual bound helper tests; same original source functions, no live services.",
+      "lifecycle": "Historical db.js eagerly invokes Application composition before standalone construction; repeat binding uses same original functions.",
+      "adoption_feature": "RF06-F02",
+      "consumers": [
+        "bot/src/application/composition/standalone-persistence.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf04-f04-c25.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "persistence",
@@ -3374,7 +3371,9 @@
         "pair": "persistence--session",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 483
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/persistence--session/public.js",
+      "scope": "C225 exact RF06 prerequisite: only original standalone database domain helpers through fixed Persistence consumer; no new domain effects or repository access."
     },
     {
       "pair": "persistence--world",
@@ -3411,16 +3410,24 @@
           "to": "bot/src/framework-to-framework/persistence--world/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/standalone-persistence.js",
+          "to": "bot/src/framework-to-framework/persistence--world/public.js",
+          "line": 2,
+          "type": "import"
         }
       ],
       "validation": "The fixed Persistence consumer fails closed before binding, forwards the original World public function unchanged, and forbids replacement; standalone facade and application pair bind the same original.",
       "lifecycle": "The standalone facade binds the original root re-export on module load; application composition binds the same original World public function before database construction.",
       "adoption_feature": "RF06-F02",
       "consumers": [
-        "bot/src/application/composition/persistence-world.js"
+        "bot/src/application/composition/persistence-world.js",
+        "bot/src/application/composition/standalone-persistence.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf06-f02-c48.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f02-c48.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c25.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3443,7 +3450,7 @@
         "occurrences": 881
       },
       "public_api": "bot/src/framework-to-framework/persistence--world/public.js",
-      "scope": "Scheduled city deadline processing only; all other Persistence/World dependencies and legacy facade imports remain migration obligations."
+      "scope": "Scheduled city deadline processing only; all other Persistence/World dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged."
     },
     {
       "pair": "publication--session",

@@ -179,6 +179,15 @@
     ],
     "discord--world": [
       "bot/src/framework-to-framework/discord--world/public.js"
+    ],
+    "persistence--session": [
+      "bot/src/framework-to-framework/persistence--session/public.js"
+    ],
+    "operations--persistence": [
+      "bot/src/framework-to-framework/operations--persistence/public.js"
+    ],
+    "daggerheart--persistence": [
+      "bot/src/framework-to-framework/daggerheart--persistence/public.js"
     ]
   },
   "externalCapabilityOwners": {
@@ -205,7 +214,8 @@
   },
   "stableEntrypoints": [
     "bot/src/index.js",
-    "bot/src/register-commands.js"
+    "bot/src/register-commands.js",
+    "bot/src/db.js"
   ],
   "legacyOwnership": "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json"
 }
