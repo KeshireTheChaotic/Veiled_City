@@ -1,0 +1,30 @@
+{
+  "base": "06e9e146",
+  "original_origin_bodies_freeze_and_remaining_board_exact_except_factory_local_exports_and_construction": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c102.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 116.4109
+  },
+  "files": [
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "43145818174f8b8db5cd6352d815ab98494c139cdabf8aa3bb755779d7b7c995"
+    },
+    {
+      "path": "bot/src/frameworks/intent/arbitration-origin.js",
+      "sha256": "12cb848920045c4d94b4f8cd882794db8a8b46dac11cd033a91634003e9e9414"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "30ec4ba505c632661ea15875c9b10fffcfbc6988d11eb25f2f462f632ccadecf"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c102.test.mjs",
+      "sha256": "eda5f4c8dca9f672fc781dc1e1133485e5bcdb18e369de0c3d53a44cfdc8ecf4"
+    }
+  ]
+}
