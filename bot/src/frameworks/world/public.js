@@ -139,3 +139,5 @@ export {worldRoundEligibility} from './contracts/round-eligibility.js';
 export {queueDirectorAfterPartyTurn} from './director-service.js';
 
 export {createFearNpcThreatProducer} from './fear-npc-threat.js';
+
+export {appendWorldGmEvent} from './gm-event-persistence.js';
