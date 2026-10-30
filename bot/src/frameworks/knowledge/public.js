@@ -56,3 +56,5 @@ export {knowledgePublicationHandout} from './contracts/publication-handout.js';
 export {semanticCandidateOperations,semanticCandidateHash,ownerSemanticSource,assertSemanticCandidateProof,assertCanonProposalProof} from './semantic-candidate-service.js';
 
 export {personalCharacter as personalContinuityCharacter,personalArc,proposeArcBeat,captureArcCandidate,personalInbox,discoverPersonal} from './personal-continuity-service.js';
+
+export {applyHandoutDrafts} from './handout-drafts.js';

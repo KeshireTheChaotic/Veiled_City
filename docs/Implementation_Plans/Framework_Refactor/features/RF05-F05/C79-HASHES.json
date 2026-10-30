@@ -1,0 +1,23 @@
+{
+  "base": "aec72709",
+  "extracted_body_and_remaining_state_identical_except_import_reexport_unused_provenance_import": true,
+  "syntax_pass": 3,
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "86ceda8985a6ba2d58e3a10e19cc56a43f772b2c423d55297a60a689a3641b90"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/handout-drafts.js",
+      "sha256": "b1fbdfb5091873c0f052de69df2d301143ed95b7fc63295edaac063acd54456e"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "7e738e65da74921f199c5c70ad20d89c74255d744beae18ff899e19cf7dfeb57"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c79.test.mjs",
+      "sha256": "70efac7c3c11e42acdc48737d53cbd75828588cb49451344a4818755c888c9ca"
+    }
+  ]
+}
