@@ -1,11 +1,11 @@
 /** Audience-isolated fresh NPC utterances. Authoring provenance is NOT proof of their truth or a PC effect. */
 import {createHash} from 'node:crypto';
-import {gmWorldScope} from './frameworks/narrative/public.js';
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {gmWorldScope} from './gm-world-scope.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {portrayalPacket} from './frameworks/narrative/public.js';
+import {portrayalPacket} from './portrayal.js';
 import {freshNpcFocuses as focuses} from './gm-fiction-schema.js';
 export {freshNpcRequestSchema,freshNpcResponseSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -24,7 +24,7 @@ function shape(input){
     ||new Set(input.source_refs).size!==input.source_refs.length
     ||input.source_refs.some(ref=>typeof ref!=='string'||!ref||ref.length>200))fail();
 }
-import {hasPcReference} from './frameworks/narrative/public.js';
+import {hasPcReference} from './pc-reference.js';
 export {hasPcReference};
 function visible(source,scope){return ['party','public'].includes(source.visibility)
   ||scope.mode==='private'&&source.visibility==='character'&&source.subject_key===scope.actorCharacterId;}
@@ -61,7 +61,7 @@ function validateWords(db,guild,words){
   if(typeof words!=='string'||!words.trim()||words.length>1400||/[\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/u.test(words)
     ||hasPcReference(db,guild,words))fail('NPC_AUTHORING_WORDS');
 }
-import {quoteNpcWords} from './frameworks/narrative/public.js';
+import {quoteNpcWords} from './quotation.js';
 export {quoteNpcWords};
 export function renderFreshNpcPart(db,guild,id,scope){
   const row=db.getCityRecord(guild,'npc_fresh_authoring',id),d=row?.data,s=row&&db.getWorldEvent(guild,row.source_event);

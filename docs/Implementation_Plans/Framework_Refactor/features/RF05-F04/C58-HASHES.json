@@ -1,0 +1,41 @@
+{
+  "original_nonimport_bodies_unchanged": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "c739ecff80ed301becb969d79793a8f7e5e9c88b1f376b6da52562af36114aa1"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "ed6b8019397a64f45e0286160af67455778ed99648aab2051afccd20d055869e"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "dc5a7c5ad8001e6cb497a355e34629a13a305f4c992513212d26de02e00849f9"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "d23cef0bffaf8323bfdeb97923f1bd43f7928f8ba6de07546a66bc4177ca3ee7"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "aba777a649949a7ec30b45fd1ec7c1786a07f4ea37bc8d7d2372674966b55ea0"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "37b46f24c7d67bb1750aac390cb3dd7e1b9b5adca01f79520dc1d417c1e34d13"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/fresh-npc-authoring.js",
+      "sha256": "a3c9c92747c105e85be6cb5981bd65f22f45980d8c7cb437ad087ff7560206d4"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-npc.js",
+      "sha256": "07e8f01dfd727f1c61d482b1451094f948632647f8de09fbf9f12cba66cdb47c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c58.test.mjs",
+      "sha256": "3221e0dc1997439b00fd4f8b9937e117819ee5ba9e77e64fed106ad99f5911b8"
+    }
+  ]
+}

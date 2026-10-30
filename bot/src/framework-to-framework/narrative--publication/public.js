@@ -14,3 +14,7 @@ export function connectPublicationNarrativeScene(){return publicationNarrativeSc
 import {findFreshScenePart,renderFreshScenePart,hasPcReference} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeAuthoring} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeAuthoring(){return publicationNarrativeAuthoring.bind({findFreshScenePart,renderFreshScenePart,hasPcReference});}
+
+import {findFreshNpcPart,renderFreshNpcPart} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeNpc} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeNpc(){return publicationNarrativeNpc.bind({findFreshNpcPart,renderFreshNpcPart});}

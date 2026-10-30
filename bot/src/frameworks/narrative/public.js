@@ -83,3 +83,5 @@ export {hasPcReference} from './pc-reference.js';
 export {FRESH_SCENE_INSTRUCTIONS,renderFreshScenePart,findFreshScenePart,hasFreshSceneResponse,authorFreshSceneRequests} from './fresh-scene-authoring.js';
 
 export {configurePortrayal,portrayalPacket} from './portrayal.js';
+
+export {FRESH_NPC_INSTRUCTIONS,renderFreshNpcPart,findFreshNpcPart,hasFreshNpcResponse,authorFreshNpcRequests} from './fresh-npc-authoring.js';

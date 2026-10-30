@@ -57,7 +57,7 @@ import {turnTraceFor} from './frameworks/operations/public.js';
 import {gmRulingContext,GM_RULING_PROMPT} from "./gm-action-ruling.js";
 import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './frameworks/daggerheart/public.js';
 import {ordinaryEffectContext} from './ordinary-effects.js';
-import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './fresh-npc-authoring.js';
+import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './frameworks/narrative/public.js';
 import {worldInputKey} from './frameworks/world/public.js';
 import {shadowEngagement} from './engagement-shadow.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './frameworks/narrative/public.js';
