@@ -1,0 +1,31 @@
+{
+  "base": "b5fd7c01",
+  "four_function_region_and_helpers_verbatim": true,
+  "remaining_root_exact_except_known_import_reexports": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c91.test.mjs",
+    "pass": 4,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 1124.3554
+  },
+  "files": [
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "34c061c2c2464afb6911b2c1983ae9e76f73265c7a3145021ce93e3e7e9730c7"
+    },
+    {
+      "path": "bot/src/frameworks/intent/semantic-intake.js",
+      "sha256": "1e377336401b7c7d69c61e2c271926b524e2c6e76445f50a2b8e290d11ea18d2"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "c7bcbd3fdb388b0ce8733a044d15e6bda9861cb950573acb1377960519c78baf"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c91.test.mjs",
+      "sha256": "e26834b5230bb8f3ad792ae36bd1f5120060672e697f6dc0ec98c5fd72da3f1d"
+    }
+  ]
+}

@@ -58,3 +58,5 @@ export {captureAuthoredTurnEnvelope,recordNativeConsumedSpans,overlapsConsumedSp
 export {createPlayerIntentContract} from './player-intent-contract.js';
 
 export {proposalFields,proposalIdentity,sameProposal,validateProposal} from './semantic-proposal.js';
+
+export {proposeIntents,acceptIntentForAdjudication,resolvePendingReferent,currentAcceptedIntent} from './semantic-intake.js';
