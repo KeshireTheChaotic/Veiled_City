@@ -23,3 +23,9 @@ Final run `AF02-C-token-opportunities-3`: eight changed-file syntax checks — *
 ## Remaining scope / next exact phase
 
 Continue **AF02**: finish source-qualified trigger/token/choice operation integration, current/saved receipt and replay verification, movement/scene and multi-owner workflow coverage. Then **AF03**, migrate the 20 existing occurrences with real receipt parity while preserving the nine exceptional proof gates. The arithmetic foundation and SQLite test alone do not qualify that migration, all-feature execution, runtime AI behavior, provider/Discord delivery or release. No old handlers/readers were removed.
+
+## Shared owner-response operations — verified
+
+The existing group reaction planner now selects Stress/Hope/condition consequences from immutable source-owned descriptors. Flashbang and Command the Blood retain their exact native owner-choice gates; silence remains pending. Their execution, recipient, consent, mutation and historical receipt providers remain in place. No generic route gains permission to execute these proof-sensitive features.
+
+Run `AF02-C-owner-reactions-1`: three changed-file syntax checks passed. `node --test tests/ai-gm-2026-10/af02-owner-reaction-operations.test.mjs` — **4 passed, 0 failed, 0 skipped, exit 0**. Independent branches, required owner choices, Critical behavior, immutable option lists and exact source proposal restrictions passed. See OWNER-REACTIONS-EVIDENCE.json. Full multiplayer delivery/restart scenario qualification remains AF07 work.

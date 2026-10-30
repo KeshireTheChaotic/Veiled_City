@@ -4,6 +4,14 @@ import {nativeArbitrationFailure} from './native-failure.js';
 export const LANES='adversary:traffic-saint:all-lanes-stop';
 export const FLASH='adversary:aster-vale-contractor:flashbang';
 export const REGENT='adversary:pale-regent:command-the-blood';
+// Source-owned outcome descriptors. Callers must still prove each owner's actual roll and choice.
+export const groupFeatureEffects=Object.freeze({
+  [LANES]:Object.freeze({choice_on:null,failure:Object.freeze({stress:0,hope:0,condition:true}),success:Object.freeze({stress:0,hope:0,condition:false})}),
+  [FLASH]:Object.freeze({choice_on:'success',failure:Object.freeze({stress:1,hope:0,condition:true}),success:Object.freeze({stress:0,hope:0,condition:false}),
+    choices:Object.freeze({vulnerable:Object.freeze({stress:0,hope:0,condition:true}),stress:Object.freeze({stress:1,hope:0,condition:false})})}),
+  [REGENT]:Object.freeze({choice_on:'failure',failure:Object.freeze({stress:0,hope:0,condition:false}),success:Object.freeze({stress:0,hope:0,condition:false}),
+    choices:Object.freeze({hope:Object.freeze({stress:0,hope:2,condition:false}),stress:Object.freeze({stress:2,hope:0,condition:false}),command:Object.freeze({stress:0,hope:0,condition:false})})})
+});
 export const groupFeaturePolicies=Object.freeze({
   [LANES]:Object.freeze({trait:'Instinct',difficulty:14,range:'Far',all:true,condition:'Movement limited',expiry:'next_spotlight'}),
   [FLASH]:Object.freeze({trait:'Instinct',difficulty:12,range:'Close',all:false,condition:'Vulnerable',expiry:'until_cleared'}),
@@ -21,8 +29,8 @@ export function validateGroupFeatureProposal(entry,p,feature){
     ||!p.rule_basis_refs.includes('srd:reaction-rolls'))throw nativeArbitrationFailure('group_feature_fixed_rules');
   return policy;
 }
-export const groupNeedsChoice=(feature,success,critical=false)=>!critical&&(feature===FLASH&&success||feature===REGENT&&!success);
-export const groupReactionOptions=feature=>feature===REGENT?['hope','stress','command']:feature===FLASH?['vulnerable','stress']:[];
+export const groupNeedsChoice=(feature,success,critical=false)=>!critical&&groupFeatureEffects[feature]?.choice_on===(success?'success':'failure');
+export const groupReactionOptions=feature=>Object.keys(groupFeatureEffects[feature]?.choices||{});
 export function groupFeatureStakes(key){
   if(key===LANES)return 'On failure you cannot move beyond Very Close until after the Saint next takes the spotlight. On success no restriction applies. No roll or failed response is assumed.';
   if(key===FLASH)return 'On failure become Vulnerable and mark 1 Stress. On ordinary success YOU choose Vulnerable or 1 Stress. A native Critical ignores both effects, without Hope/Fear or Stress recovery. Silence/withdrawal is not a failed reaction.';

@@ -1,0 +1,25 @@
+{
+  "phase": "AF02",
+  "run_id": "AF02-C-owner-reactions-1",
+  "baseline": "53b8aed86fb892cfe07e22641db40c8fb4c469ae",
+  "command": "node --test tests/ai-gm-2026-10/af02-owner-reaction-operations.test.mjs",
+  "exit_code": 0,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-rules.js",
+      "sha256": "76ddfd19545db10fb1600f282200b1149ad96e174a4bd4752684ad433d1c472a"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-outcomes.js",
+      "sha256": "b53a9147e5f601b433a410eb3a81a733afaa538cdf6a7ee26a4a44a02b783c87"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-owner-reaction-operations.test.mjs",
+      "sha256": "fe69ffe266fc008006bf3f6f6c38488cf7eaba7b5eaaa53ed7cb07fc683127d0"
+    }
+  ]
+}
