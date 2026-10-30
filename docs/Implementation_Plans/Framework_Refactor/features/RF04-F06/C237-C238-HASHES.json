@@ -1,0 +1,78 @@
+[
+  {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f07-c37.test.mjs",
+    "sha256": "16172847a90435486a4b3c1965afd82ed1e6c8f90fe37886d2411b7b80ff3f2e"
+  },
+  {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f07-c38.test.mjs",
+    "sha256": "e1bd19af3116b181893db4276c70bf2280b9a85442118286c6bf1b840bafc89d"
+  },
+  {
+    "path": "bot/src/db.js",
+    "sha256": "a9f496457aae6e2f434efcd35ac0817b4ce90dbcbe14fec9f996d9c20e80c669"
+  },
+  {
+    "path": "bot/src/frameworks/persistence/database.js",
+    "sha256": "9b6ce93df2e7aae1ae2947e1fcffe9d260a6291961f64ed101d35c651a313582"
+  },
+  {
+    "path": "bot/sql/schema.sql",
+    "sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+  },
+  {
+    "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+    "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+  },
+  {
+    "path": "bot/src/frameworks/world/simulation-receipts.js",
+    "sha256": "c8746186a68b2edd50ef47339e100b0d2114766d08e801c862e38d2a7e04ec61"
+  },
+  {
+    "path": "bot/src/frameworks/world/city-calendar.js",
+    "sha256": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e"
+  },
+  {
+    "path": "bot/src/frameworks/world/director-cadence.js",
+    "sha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4"
+  },
+  {
+    "path": "bot/src/frameworks/world/director-service.js",
+    "sha256": "62952a79798335781b130f54f1a9fe7604135a10565260be73a640b1ab522f51"
+  },
+  {
+    "path": "bot/src/frameworks/npc/evidence-projection.js",
+    "sha256": "491e202b3d9a2d48eb4d745e962e7d19111d0daae4bbea3c98938642f1125727"
+  },
+  {
+    "path": "bot/src/frameworks/npc/cognition.js",
+    "sha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841"
+  },
+  {
+    "path": "bot/src/frameworks/npc/cognition-source.js",
+    "sha256": "31298c29c8eec8f4faedc8e3a1897de75abfedcf0b9e318e6260a6a230d99f7c"
+  },
+  {
+    "path": "bot/src/frameworks/session/scene-continuity.js",
+    "sha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038"
+  },
+  {
+    "path": "bot/src/frameworks/session/scene-source.js",
+    "sha256": "8c9d9eca75203908d990d160b30624e2c04fd181b5300bfb89bb680564d0c04c"
+  },
+  {
+    "path": "bot/src/frameworks/session/round-eligibility.js",
+    "sha256": "f5b68f1170619598e72f2de666578783b077cb41b5cf67e72d20bdebf3f12f45"
+  },
+  {
+    "path": "bot/src/frameworks/knowledge/epistemic.js",
+    "sha256": "d608d6795a62938ef716795799fc404e72cc3bf7ee3e4af05aa335f3a361aa41"
+  },
+  {
+    "path": "bot/src/frameworks/knowledge/evidence-source.js",
+    "sha256": "a5567bea8e0f9f9b16038a6b021bf0afeabe6da5fa41df09fd85da68bf933f0b"
+  },
+  {
+    "path": "bot/src/frameworks/knowledge/disclosure-authority.js",
+    "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8"
+  }
+]
