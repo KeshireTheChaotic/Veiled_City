@@ -17,3 +17,7 @@ Agent B reserves commands.js, publishing.js, Discord public and RF06-specific ar
 Only fresh affected-code tests under bot/tests/ai-gm-2026-10; one frozen batch, no watch/polling, no inherited/broad validation. Use synthetic transport/permissions and disposable SQLite only when relevant. Run changed JS/MJS syntax and boundary checks; record actual failures, repairs and exact limits. Passing slice checks do not imply full architecture or live release qualification.
 
 Completed and current exact features are in LEDGER.md. Correlated storage/native commit migration is locally held until its specific contract qualifies; continue independent work. No schema/data migration, creative restriction, provider spend, production access, deployment/restart, CI, push or merge authorized.
+
+## Shared Git index coordination
+
+Source ownership does not reserve the repository's shared Git index. Before staging, obtain an explicit exclusive INDEX/commit window from the other active agent. Require an empty cache, stage only exact slice paths, and assert the complete cached path set with --no-renames before checking/committing. Never commit another checkpoint's staged files. Release the window immediately afterward; source preparation/tests may continue independently. The R21/C85 overlap is documented in both feature ledgers and preserved history, not reset/rebased.
