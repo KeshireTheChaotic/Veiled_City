@@ -1,3 +1,4 @@
+import {requireFeatureOperation} from './feature-operation-descriptors.js';
 /** Exact source-qualified native adversary passive; no model modifier, new PC action or dice. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
@@ -35,9 +36,10 @@ function savedDamage(db,guild,request,data){
 
 /** Called only inside finishDamage after actual damage dice were saved and before any NPC HP mutation. */
 function nativeAdversaryDamageDefense(db,guild,request,data,target,{total,type,marks}){
-  if(marks!==3)return null;
   const feature=compileNativeFeatures().find(f=>f.actor_name===target.base_name&&f.native_handler===HANDLER);
   if(!feature)return null;
+  const operation=requireFeatureOperation(feature,'damage_marks');
+  if(marks!==operation.from)return null;
   const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(data.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
     actor=binding?.data.combatants.find(b=>b.id===target.id)?.actor,presence=actor&&scenePresence(db,guild,'npc',actor),entity=actor&&db.getSimulationEntity(guild,'npc',actor),
     template=library().findAdversary(target.base_name),source=db.getWorldEvent(guild,binding?.source_event);
@@ -53,14 +55,14 @@ function nativeAdversaryDamageDefense(db,guild,request,data,target,{total,type,m
   const key=`adversary-defense:${hash([request.record_key,proof.damage.map(d=>d.roll),feature.feature_key])}`,
     material={version:1,phase:'before_damage_applied',feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,
       actor,combatant:target.id,scene:scene.key,session:scene.session_id,request:request.record_key,input_source:request.source_event,
-      proof,total,type,marks_before:3,marks_after:2,hp_before:target.hp_current,hp_after:Math.max(0,target.hp_current-2),charge};
+      proof,total,type,marks_before:operation.from,marks_after:operation.to,hp_before:target.hp_current,hp_after:Math.max(0,target.hp_current-operation.to),charge};
   const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_adversary_defense',source_id:'native:feature-gate',
     title:'Native automatic pre-damage defense',session_id:scene.session_id,scene:scene.key,location_key:presence.location_key,
     visibility:'gm',details:{input_source:request.source_event,payload_hash:hash(material)}},'native:feature-gate');
   const receipt=db.saveCityRecord(guild,{kind:'adversary_defense_receipt',key,status:'resolved',source_event:event.event_key,visibility:'gm',data:material});
   db.saveCityRecord(guild,{kind:'adversary_defense_charge',key:charge,status:'consumed',source_event:event.event_key,visibility:'gm',
     data:{scene:scene.key,actor,feature:feature.feature_key,receipt:key}});
-  return {marks:2,ref:receipt.record_key};
+  return {marks:operation.to,ref:receipt.record_key};
 }
 
 /** Read-only saved receipt; cannot reapply damage, restore the charge, spend or roll. */

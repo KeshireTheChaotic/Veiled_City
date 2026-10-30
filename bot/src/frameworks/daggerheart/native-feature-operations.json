@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "authority": "native_source_pinned_operations",
+  "entries": [
+    {
+      "feature": "adversary:pale-court-thrall:pack-pressure",
+      "source_hash": "86d4ebc68823a9e524f983b028c1f0d8ba8451aace676f52aa0b0b0e12c3f1bb",
+      "template_hash": "b84f4192e2c4632ac103115bac62461c08251eb6f61610ece4329e9421c29906",
+      "native_handler": "pack_pressure",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "capped_count",
+          "per": 1,
+          "cap": 2
+        }
+      }
+    },
+    {
+      "feature": "adversary:choir-relay:local-mesh",
+      "source_hash": "799bc4b81f6ca9e01895c022b0f94855cee43133f4507953b897c5e9df4c30ad",
+      "template_hash": "8d96b1f9606e8910602b63021d03b23d7e564daf015b062db86ffa66d4e7e364",
+      "native_handler": "local_mesh_allied_zone",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "capped_count",
+          "per": 1,
+          "cap": 1
+        }
+      }
+    },
+    {
+      "feature": "adversary:ritual-enforcement-team:stack-formation",
+      "source_hash": "6d3ca52834faf8b8a5fafff45761371c317464d64a21379fa53cc91c3fbbc3eb",
+      "template_hash": "4ff707aa710c7a898736ed4a302cd5113d8f48a9f248480e47c6cd3733f68157",
+      "native_handler": "stack_formation_remaining_hp",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "threshold",
+          "threshold": 4,
+          "above": 1,
+          "below": 0
+        }
+      }
+    },
+    {
+      "feature": "adversary:veil-anchor-sentinel:plausible-denial",
+      "source_hash": "f3a847cfcce32ad46aafbbafbab15b510a10d66cd678e250b8094cf932a8ed7d",
+      "template_hash": "8a9352c6cabf6c9cdf2dbdb5e3c2c84f66a66cf22c8ce95a8bde600f806a729a",
+      "native_handler": "veil_exposure_difficulty",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "bands",
+          "bands": [
+            {
+              "min": 0,
+              "max": 2,
+              "value": 1
+            },
+            {
+              "min": 3,
+              "max": 6,
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "feature": "adversary:veil-engine-custodian:consensus-pressure",
+      "source_hash": "c902244aecc2401f8dabd3bcd3094e0ef8833e2611df641f3405a1ed0f1f54ad",
+      "template_hash": "d1b823311b7081bbfbeab45ec3fa87ac1809f61f0b7351a3e1a4e745a85874e1",
+      "native_handler": "veil_exposure_difficulty",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "bands",
+          "bands": [
+            {
+              "min": 0,
+              "max": 2,
+              "value": 2
+            },
+            {
+              "min": 3,
+              "max": 4,
+              "value": 0
+            },
+            {
+              "min": 5,
+              "max": 6,
+              "value": -1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "feature": "adversary:pale-court-executioner:sentence-carried-out",
+      "source_hash": "6796316d38bc902bc924f0e527a8a3266e0ddfee9711eb1e42cdecaa8ed5b280",
+      "template_hash": "ec35d5f7a7f19a5c41df6a53b3e54511dc2b2e84a856051d6bce00e1e1a6c7c7",
+      "native_handler": "sentence_native_vulnerable_damage",
+      "operation": {
+        "kind": "modifier",
+        "operator": {
+          "kind": "conditional",
+          "value": 2,
+          "otherwise": 0
+        }
+      }
+    },
+    {
+      "feature": "adversary:pale-court-knight:blood-rush",
+      "source_hash": "c02071b8b756f9f0569418c8c9eb474b21543645b35affed939ace7b617b3e2e",
+      "template_hash": "9a8b967e26660e29f8070f8490d7a9515f63b294b875b181ff716a8b95fda305",
+      "native_handler": "blood_rush_hold_position",
+      "operation": {
+        "kind": "resource_recovery",
+        "resource": "npc_stress",
+        "amount": 1
+      }
+    },
+    {
+      "feature": "adversary:memory-leech:taste-the-fear",
+      "source_hash": "61b1838c74c603cc8ebc7984bcf876ca5a22b42d6cd4d2805cc6dac47c7070c9",
+      "template_hash": "a906b9fd4344bc9506b68079108ad467733de538e46547897f221dbc01ff4b1e",
+      "native_handler": "first_pc_stress_clear",
+      "operation": {
+        "kind": "resource_recovery",
+        "resource": "npc_stress",
+        "amount": 1
+      }
+    },
+    {
+      "feature": "adversary:green-root-host:horde-3d8-8",
+      "source_hash": "d2c6817c978cf3f66a467e9687b894c574e55cb98c372cee0a0fb48cbeadc64b",
+      "template_hash": "f0253cf92dc720c4be3b8b977a137ceec03ffaf1036076dbc446843cef10185d",
+      "native_handler": "horde_marked_half_damage",
+      "operation": {
+        "kind": "damage_expression",
+        "marked_half_expression": "3d8+8"
+      }
+    },
+    {
+      "feature": "adversary:aster-vale-catastrophe-analyst:contingency-stack",
+      "source_hash": "fe45f62e8bd140360918699c19eb399131447511af0f26e46cfc426fd3cca67b",
+      "template_hash": "7058e2c3115d9b2e0efad7aa9964532b2c16f9fd268e89210e6398384ea2d906",
+      "native_handler": "first_severe_to_major",
+      "operation": {
+        "kind": "damage_marks",
+        "from": 3,
+        "to": 2
+      }
+    },
+    {
+      "feature": "environment:after-hours-emergency-department:code-blue",
+      "source_hash": "f5f3c602c1551f866f9d87b3c1a11566d78647253b4c550343ff5e076a3601df",
+      "template_hash": "7a77c7ebfb53458509d6322389d8430d0e4b5204ea70311c1c3ffaeb010aef85",
+      "native_handler": "environment_code_blue",
+      "operation": {
+        "kind": "scene_event",
+        "effect_kind": "medical_emergency",
+        "fear": 0
+      }
+    },
+    {
+      "feature": "environment:district-blackout:emergency-cascade",
+      "source_hash": "5852a6554a0575c3ffc5896ee974f9ac986bd9f3d8ca777db6113efb5a39ddb0",
+      "template_hash": "24bcd46f4a3a205a6bc8f48768c751d453d8de8beb0e6839ee68081e54cd980c",
+      "native_handler": "environment_emergency_cascade",
+      "operation": {
+        "kind": "scene_event",
+        "effect_kind": "service_emergency",
+        "fear": 0
+      }
+    },
+    {
+      "feature": "environment:veil-anchor-chamber:maintenance-memory",
+      "source_hash": "f1ce5a01730dadad7e0370b4f4137ff9ea78d065daaa000961de11c383843008",
+      "template_hash": "3469856645bba4e30770d3f0d1ae847352ede48103ae6bc0ff904f2961d98093",
+      "native_handler": "environment_maintenance_memory",
+      "operation": {
+        "kind": "scene_event",
+        "effect_kind": "historical_memory",
+        "fear": 0
+      }
+    },
+    {
+      "feature": "environment:veil-anchor-chamber:automatic-correction",
+      "source_hash": "de25d5db634e19170dcdbd7ab93c978aa3e045f80e8bd24ea9aa25fdf1552f9e",
+      "template_hash": "3469856645bba4e30770d3f0d1ae847352ede48103ae6bc0ff904f2961d98093",
+      "native_handler": "environment_mundane_correction",
+      "operation": {
+        "kind": "scene_event",
+        "effect_kind": "mundane_detail",
+        "fear": 1
+      }
+    },
+    {
+      "feature": "environment:occult-crime-scene:sirens-outside",
+      "source_hash": "ae2c09f77180cc6162cdebf2daf70c87e116ee298e210a51b7f8b752aa2403c5",
+      "template_hash": "1071538ee24df905ae15f67823f9478a619871b4dd30ab23d3b7d317535b602f",
+      "native_handler": "sirens_outside",
+      "operation": {
+        "kind": "ordinary_arrival",
+        "fear": 1,
+        "categories": [
+          "authority",
+          "media",
+          "property_management",
+          "emergency_response"
+        ]
+      }
+    },
+    {
+      "feature": "environment:apartment-veil-breach:door-chain",
+      "source_hash": "d9f7bf042274ef8deb9f8741eb7e7f6e3b2598616aa2ada49a8f3c125e241f26",
+      "template_hash": "7907b02aa1aabb205de4b7ee6a37ac09ff6c6f2f047daf555190b45734d99653",
+      "native_handler": "environment_door_chain",
+      "operation": {
+        "kind": "ordinary_arrival",
+        "fear": 0,
+        "categories": [
+          "resident"
+        ]
+      }
+    },
+    {
+      "feature": "environment:apartment-veil-breach:upload-in-progress",
+      "source_hash": "d233c76e5b98987154cd821b871b0222594be042919cb8cc7377b0285a96c0a2",
+      "template_hash": "7907b02aa1aabb205de4b7ee6a37ac09ff6c6f2f047daf555190b45734d99653",
+      "native_handler": "upload_countdown",
+      "operation": {
+        "kind": "countdown",
+        "fear": 1,
+        "max": 4
+      }
+    },
+    {
+      "feature": "environment:haunted-nightclub:too-loud-to-think",
+      "source_hash": "26f2c8d3d895827ae2ef88e1f476ed2494188a41326af8f5912fd3e1fc143d01",
+      "template_hash": "06e5c361501b24e80c323111bd5c600814016b17f8421e83442c54eba4fb5a84",
+      "native_handler": "nightclub_auditory_disadvantage",
+      "operation": {
+        "kind": "roll_modifier",
+        "roll_kind": "action",
+        "modifier": "disadvantage",
+        "amount": 1
+      }
+    },
+    {
+      "feature": "environment:storm-drain-shrine:local-memory",
+      "source_hash": "5e4555647c8039b304f680fdf6f9adee8aaf15d89361ff6e30e7f15a9f852d04",
+      "template_hash": "f3b4ece93c32b4b29adaf83ffb16653c7acb0b27af5c9b3e6d70b5c0e2b15953",
+      "native_handler": "shrine_local_memory_advantage",
+      "operation": {
+        "kind": "roll_modifier",
+        "roll_kind": "action",
+        "modifier": "advantage",
+        "amount": 1
+      }
+    },
+    {
+      "feature": "environment:haunted-nightclub:vip-threshold",
+      "source_hash": "064acca6552228889f67cae0f9a6c3ee8320f2cf15d59c03d4dd0d0d71f3c891",
+      "template_hash": "06e5c361501b24e80c323111bd5c600814016b17f8421e83442c54eba4fb5a84",
+      "native_handler": "nightclub_vip_threshold",
+      "operation": {
+        "kind": "admission",
+        "methods": [
+          "invitation",
+          "status",
+          "leverage",
+          "deception"
+        ]
+      }
+    }
+  ]
+}

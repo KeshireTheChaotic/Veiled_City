@@ -1,3 +1,4 @@
+import {featureOperationDescriptor,requireFeatureOperation} from './feature-operation-descriptors.js';
 /** Native source-defined environmental feature qualification and immutable receipts. World identity creation stays behind its existing producer capability. */
 export function createEnvironmentDoorChainRules({capabilities}){
 const {inspectArbitrationOrigin,buildNarrativeContext,inspectNativeEnvironmentInstance,featureDisposition,environmentProposalContract,nativeGmOpportunity,establishNarrativeEntity,worldAuthority,worldIdentityOrigin,currentScene,scenePresence,indexWorldEvent,hash,narrativeSourceVisible,assertEnvironmentAudience,fail}=capabilities||{};
@@ -8,7 +9,7 @@ function featureFor(profile){
   const d=featureDisposition(FEATURE),f=d.feature;
   if(d.status!=='supported'||f.native_handler!=='environment_door_chain'||f.template_hash!==profile.data.template_hash
     ||environmentProposalContract(f)?.handler!=='environment_door_chain')throw fail('environment_door_chain_feature_not_qualified');
-  return f;
+  requireFeatureOperation(f,'ordinary_arrival');return f;
 }
 function validateDoorChainProposal(feature,profile,input){
   const n=input?.npc;
@@ -21,7 +22,7 @@ function validateDoorChainProposal(feature,profile,input){
     ||!n||Object.keys(n).sort().join()!=='aliases,key,kind,location_key,name,parent_location_key,role,summary'
     ||n.kind!=='npc'||typeof n.key!=='string'||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(n.key)||n.key.length>100
     ||typeof n.name!=='string'||!n.name.trim()||n.name.length>160||!Array.isArray(n.aliases)||n.aliases.length>6
-    ||n.aliases.some(a=>typeof a!=='string'||!a.trim()||a.length>80)||n.role!=='resident'
+    ||n.aliases.some(a=>typeof a!=='string'||!a.trim()||a.length>80)||!featureOperationDescriptor(FEATURE).operation.categories.includes(n.role)
     ||n.location_key!==profile.data.location||n.parent_location_key!==''
     ||typeof n.summary!=='string'||!n.summary.trim()||n.summary.length>600)
     throw fail('environment_door_chain_closed_current_resident');

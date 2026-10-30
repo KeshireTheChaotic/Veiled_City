@@ -1,21 +1,17 @@
 /** Native source-defined scene effect, printed cost and immutable receipt policies. Narrative context aggregation stays in its existing provider. */
-import {featureCostPlan} from "./feature-costs.js";
+import {featureCostPlan,commitFeatureResources} from "./feature-costs.js";
+import {requireFeatureOperation} from './feature-operation-descriptors.js';
 export function createEnvironmentSceneRules({capabilities}){
 const {inspectArbitrationOrigin,inspectNativeEnvironmentInstance,featureDisposition,nativeGmOpportunity,reservedCampaignFear,recordScenePresence,currentScene,scenePresence,hash,narrativeSourceVisible,indexWorldEvent,assertEnvironmentAudience,nativeEstablishedFact,fail}=capabilities||{};
 if([inspectArbitrationOrigin,inspectNativeEnvironmentInstance,featureDisposition,nativeGmOpportunity,reservedCampaignFear,recordScenePresence,currentScene,scenePresence,hash,narrativeSourceVisible,indexWorldEvent,assertEnvironmentAudience,nativeEstablishedFact,fail].some(fn=>typeof fn!=='function'))throw new TypeError('Native scene effect capabilities required');
 const issuer='native:environment-scene';
-const rules=Object.freeze({
-  'environment:after-hours-emergency-department:code-blue':{handler:'environment_code_blue',kind:'medical_emergency',fear:0},
-  'environment:district-blackout:emergency-cascade':{handler:'environment_emergency_cascade',kind:'service_emergency',fear:0},
-  'environment:veil-anchor-chamber:maintenance-memory':{handler:'environment_maintenance_memory',kind:'historical_memory',fear:0},
-  'environment:veil-anchor-chamber:automatic-correction':{handler:'environment_mundane_correction',kind:'mundane_detail',fear:1}
-});
 const emergencies=Object.freeze(['hospital','traffic','fire','elevator','refrigeration','public_safety']);
 const keyFor=(origin,environment,feature)=>`environment-scene:${hash([origin.source,origin.scope,environment,feature])}`;
 function ruleFor(key){
-  const rule=rules[key],d=featureDisposition(key);
-  if(!rule||d.status!=='supported'||d.feature.native_handler!==rule.handler)throw fail('environment_scene_feature_not_qualified');
-  return {rule,feature:d.feature};
+  const d=featureDisposition(key);
+  if(d.status!=='supported')throw fail('environment_scene_feature_not_qualified');
+  const operation=requireFeatureOperation(d.feature,'scene_event');
+  return {rule:{handler:d.feature.native_handler,kind:operation.effect_kind,fear:operation.fear},feature:d.feature};
 }
 function shape(p){
   if(!p||Object.keys(p).sort().join()!=='detail,environment,feature_ref,version'||p.version!==1
@@ -92,7 +88,7 @@ function applyEnvironmentSceneAction(db,guild,origin,board,input){
     let presence=null;
     if(['medical_emergency','service_emergency'].includes(effect.kind))presence=recordScenePresence(db,guild,{entity_type:'hazard',entity_key:`environment-${hash(key)}`,
       location_key:o.binding.location,zone:'scene',state:'actually_present',visibility,subject_key:subject,source_event:declaration.event_key},issuer);
-    if(cost.fear)db.changeFear(guild,-cost.fear);
+    commitFeatureResources(db,guild,null,cost);
     const data={...terms,declaration:declaration.event_key,declaration_hash:hash(declaration),presence:presence?.record_key||null,
       presence_snapshot:presence||null,authority:'GM-owned scene change only; no PC decision, damage, resources, knowledge, custody or forced relocation.'},
       mutation=db.recordMutation(guild,{sessionId:o.binding.session,actorType:'ai_gm',actorId:issuer,sourceLayer:'native_environment',

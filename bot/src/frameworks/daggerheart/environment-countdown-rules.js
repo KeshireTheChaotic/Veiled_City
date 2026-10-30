@@ -1,3 +1,5 @@
+import {requireFeatureOperation} from './feature-operation-descriptors.js';
+import {commitFeatureResources} from './feature-costs.js';
 /** Native fictional upload countdown, one Fear cost and immutable causal action ancestry. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
@@ -125,15 +127,15 @@ function startEnvironmentUploadCountdown(db,guild,origin,board,input){
     }
     const actual=recording(db,guild,input.handout,o.scope,o.binding.location),opportunity=nativeGmOpportunity(db,guild,board);
     if(profile.data.location!==o.binding.location||opportunity.pre_roll_fear)throw fail('environment_upload_exact_local_spotlight_required');
-    const before=db.getCampaign(guild).fear,cost=featureCostPlan(feature,{timing:'spotlight_action',additionalSpotlight:false,experience:false,
+    const operation=requireFeatureOperation(feature,'countdown'),before=db.getCampaign(guild).fear,cost=featureCostPlan(feature,{timing:'spotlight_action',additionalSpotlight:false,experience:false,
       fear:before-reservedCampaignFear(db,guild),stress:0,stressMax:0});
-    if(cost.fear!==1||cost.npc_stress!==0||db.getClock(guild,key))throw fail('environment_upload_exact_cost_and_unused_clock_required');
+    if(cost.fear!==operation.fear||cost.npc_stress!==0||db.getClock(guild,key))throw fail('environment_upload_exact_cost_and_unused_clock_required');
     const data={version:1,issuer:ISSUER,origin:structuredClone(o.binding),origin_hash:hash(source(db,guild,o.binding.source)),scope:structuredClone(o.scope),
       environment:profile.record_key,environment_hash:hash(profile),feature:FEATURE,feature_hash:hash(feature),proposal:structuredClone(input),proposal_hash:hash(input),
       recording:actual.handout,recording_source:actual.source.event_key,recording_source_hash:hash(actual.source),destination:actual.destination,
-      opportunity,cost,fear:{before,after:before-1,spent:1},clock:key,value:0,max:4,state:'pending',previous:null,
+      opportunity,cost,fear:{before,after:before-1,spent:1},clock:key,value:0,max:operation.max,state:'pending',previous:null,
       authority:'Fictional upload progress only. No observation, knowledge, custody, publication, PC action or injury is authorized.'};
-    db.changeFear(guild,-1);db.changeClock(guild,key,0,{label:'Upload in Progress',visibility:'gm',max:4});
+    commitFeatureResources(db,guild,null,cost);db.changeClock(guild,key,0,{label:'Upload in Progress',visibility:'gm',max:operation.max});
     const root=write(db,guild,KIND,key,data,o.binding.source);setHead(db,guild,root,root);return root;
   });
 }

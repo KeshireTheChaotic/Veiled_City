@@ -1,6 +1,7 @@
 /** Existing source-pinned damage passives; this module cannot create attacks or native outcomes. */
 import {adversaryHpState} from './combat.js';
 import {diceSpec} from './dice.js';
+import {planFeatureModifier,requireFeatureOperation} from './feature-operation-descriptors.js';
 
 export function createNativeStandardDamage({compileNativeFeatures,hash,nativeHouseErratum,fail}){
   if(typeof compileNativeFeatures!=='function'||typeof hash!=='function'||typeof nativeHouseErratum!=='function'||typeof fail!=='function')
@@ -16,7 +17,7 @@ export function createNativeStandardDamage({compileNativeFeatures,hash,nativeHou
     const features=compileNativeFeatures(),sentence=features.find(f=>f.native_handler==='sentence_native_vulnerable_damage'&&f.template_hash===hash(template));
     if(sentence){
       if(!actor||!target||!Array.isArray(conditions)||conditions.some(c=>c.condition!=='Vulnerable'))throw fail('sentence_native_target_condition');
-      const bonus=conditions.length?2:0;
+      const bonus=planFeatureModifier(sentence,{eligible:conditions.length>0});
       return {version:2,feature:sentence.feature_key,feature_hash:hash(sentence),template_hash:sentence.template_hash,source_hash:sentence.source_hash,
         combatant:combatant.id,actor,target,conditions:structuredClone(conditions),bonus,original_damage:damage,expression:nativeDamageBonusExpression(damage,bonus)};
     }
@@ -26,7 +27,7 @@ export function createNativeStandardDamage({compileNativeFeatures,hash,nativeHou
     if(erratum?.status!=='supported')return null;
     if(combatant.hp_max!==template.hp||erratum?.interpretation.Horde_threshold!=='marked_hp_at_least_ceiling_half_max')
       throw fail('horde_native_hp_and_erratum');
-    const expression=hp.marked_half_or_more?'3d8+8':damage;
+    const operation=requireFeatureOperation(feature,'damage_expression'),expression=hp.marked_half_or_more?operation.marked_half_expression:damage;
     return {feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,erratum:'HR11',erratum_version:1,
       erratum_hash:hash(erratum),combatant:combatant.id,hp,original_damage:damage,expression};
   }

@@ -1,5 +1,6 @@
 /** Native Memory Leech first verified PC Stress consequence and immutable ancestry. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {planFeatureRecovery} from './feature-operation-descriptors.js';
 export function createStressPassiveRules({capabilities}){
 const {compileNativeFeatures,nativeEncounterActor,currentScene,scenePresence,indexWorldEvent,validateGroupReactionEffect,validateFeatureReactionEffect,inspectManyDeathsEffect,validatedPcEffectProjection,nativeActorControl,assertNonPvpCombatant}=capabilities||{};
 if([compileNativeFeatures,nativeEncounterActor,currentScene,scenePresence,indexWorldEvent,validateGroupReactionEffect,validateFeatureReactionEffect,inspectManyDeathsEffect,validatedPcEffectProjection,nativeActorControl,assertNonPvpCombatant].some(fn=>typeof fn!=='function'))throw new TypeError('Native Stress passive capabilities required');
@@ -161,7 +162,7 @@ function commitForLeech(db,guild,leech,scene,cause,leechReady){
       if(!Number.isSafeInteger(before.stress_current)||before.stress_current<0||!Number.isSafeInteger(before.stress_max)
         ||before.stress_max!==actor.template.stress||before.stress_current>before.stress_max)
         throw Object.assign(new Error('native_stress_passive_invalid_npc_resources'),{code:'GM_ARBITRATION'});
-      const cleared=initiallyPresent&&before.stress_current>0?1:0,
+      const cleared=Math.max(0,-planFeatureRecovery(descriptorRow,{current:before.stress_current,max:before.stress_max},{eligible:initiallyPresent}).delta),
         after={...before,stress_current:before.stress_current-cleared},mutation=db.recordMutation(guild,{sessionId:scene.session_id,actorType:'ai_gm',actorId:'native:stress-passive',
           sourceLayer:'native_feature',mutationType:'memory_leech_taste_the_fear',entityKey:leech.actor,visibility:'gm',before,after,
           rationale:'Source-pinned first-PC-Stress passive only; no PC facts or agency transferred.',payload:{cause:first.record_key,actor:leech.actor,scene:scene.key}}),

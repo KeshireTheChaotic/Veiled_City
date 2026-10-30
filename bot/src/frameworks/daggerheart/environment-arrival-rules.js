@@ -1,14 +1,15 @@
 /** Native source-defined environmental feature qualification and immutable receipts. World identity creation stays behind its existing producer capability. */
-import {featureCostPlan} from './feature-costs.js';
+import {featureCostPlan,commitFeatureResources} from './feature-costs.js';
+import {featureOperationDescriptor,requireFeatureOperation} from './feature-operation-descriptors.js';
 export function createEnvironmentArrivalRules({capabilities}){
 const {inspectArbitrationOrigin,buildNarrativeContext,inspectNativeEnvironmentInstance,featureDisposition,nativeGmOpportunity,reservedCampaignFear,establishNarrativeEntity,worldIdentityOrigin,indexWorldEvent,hash,fail,assertEnvironmentAudience}=capabilities||{};
 if([inspectArbitrationOrigin,buildNarrativeContext,inspectNativeEnvironmentInstance,featureDisposition,nativeGmOpportunity,reservedCampaignFear,establishNarrativeEntity,worldIdentityOrigin,indexWorldEvent,hash,fail,assertEnvironmentAudience].some(fn=>typeof fn!=='function'))throw new TypeError('Native environment identity feature capabilities required');
 const FEATURE='environment:occult-crime-scene:sirens-outside',issuer='native:environment-arrival';
-const categories=Object.freeze(['authority','media','property_management','emergency_response']);
+const operation=featureOperationDescriptor(FEATURE).operation,categories=operation.categories;
 function rule(){
   const disposition=featureDisposition(FEATURE);
   if(disposition.status!=='supported'||disposition.feature.native_handler!=='sirens_outside')throw fail('environment_arrival_feature_not_qualified');
-  return disposition.feature;
+  requireFeatureOperation(disposition.feature,'ordinary_arrival');return disposition.feature;
 }
 function applyEnvironmentArrival(db,guild,origin,board,input,{content}={}){
   const o=inspectArbitrationOrigin(db,guild,origin),feature=rule();
@@ -29,11 +30,11 @@ function applyEnvironmentArrival(db,guild,origin,board,input,{content}={}){
   return db.transaction(()=>{
     const before=db.getCampaign(guild).fear,available=before-reservedCampaignFear(db,guild),
       cost=featureCostPlan(feature,{timing:'spotlight_action',additionalSpotlight:false,experience:false,fear:available,stress:0,stressMax:0});
-    if(cost.fear!==1||cost.npc_stress!==0)throw fail('environment_arrival_exact_printed_fear');
+    if(cost.fear!==operation.fear||cost.npc_stress!==0)throw fail('environment_arrival_exact_printed_fear');
     const existing=db.getCityRecord(guild,'autonomous_entity',`npc:${npc.key}`);
     if(existing||db.getNpcProfile(guild,npc.key))throw fail('environment_arrival_requires_new_identity_no_relocation_shortcut');
     const frame=buildNarrativeContext(db,guild,o.scope,o.binding.source),identity=establishNarrativeEntity(db,guild,npc,frame,{content});
-    db.changeFear(guild,-1);
+    commitFeatureResources(db,guild,null,cost);
     const data={version:1,issuer,feature:FEATURE,feature_hash:hash(feature),environment:profile.record_key,environment_hash:hash(profile),
       origin:o.binding,scope:o.scope,proposal:structuredClone(input),proposal_hash:hash(input),opportunity,
       identity:identity.record_key,identity_source:identity.source_event,identity_definition_hash:hash(npc),

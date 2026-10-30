@@ -1,20 +1,21 @@
+import {featureOperationDescriptor,requireFeatureOperation} from './feature-operation-descriptors.js';
 /** Existing native source-backed admission policy; admission never supplies PC movement or other permissions. */
 export function createEnvironmentAccessRules({capabilities}){
 const {inspectNativeEnvironmentInstance,featureDisposition,ordinaryActionProof,ordinaryPrerequisite,captureCountdownActionAncestry,inspectCountdownActionAncestry,nativeEstablishedFact,conversationPrincipal,currentScene,stateRevision,hash,indexWorldEvent,fail}=capabilities||{};
 if([inspectNativeEnvironmentInstance,featureDisposition,ordinaryActionProof,ordinaryPrerequisite,captureCountdownActionAncestry,inspectCountdownActionAncestry,nativeEstablishedFact,conversationPrincipal,currentScene,stateRevision,hash,indexWorldEvent,fail].some(fn=>typeof fn!=='function'))throw new TypeError('Native admission capabilities required');
 const FEATURE='environment:haunted-nightclub:vip-threshold',issuer='native:environment-access';
-const kind='native_environment_admission';
+const kind='native_environment_admission',methods=featureOperationDescriptor(FEATURE).operation.methods;
 function rule(profile){
   const d=featureDisposition(FEATURE);
   if(d.status!=='supported'||d.feature.native_handler!=='nightclub_vip_threshold'||d.feature.template_hash!==profile.data.template_hash)
     throw fail('environment_access_feature_not_qualified');
-  return d.feature;
+  requireFeatureOperation(d.feature,'admission');return d.feature;
 }
 function credential(db,guild,id,scope,character,destination,method){
   const established=nativeEstablishedFact(db,guild,id,scope),f=established.fact;
   let provenance;try{provenance=JSON.parse(f?.provenance_json||'{}');}catch{throw fail('environment_access_invalid_credential');}
   const grant=provenance.access_grant;
-  if(!['invitation','status','leverage'].includes(method)||!grant||Object.keys(grant).sort().join()!=='character,destination,method'
+  if((!methods.includes(method)||method==='deception')||!grant||Object.keys(grant).sort().join()!=='character,destination,method'
     ||grant.character!==character||grant.destination!==destination||grant.method!==method)
     throw fail('environment_access_exact_established_credential_required');
   return established;
@@ -28,7 +29,7 @@ function layout(db,guild,profile,destination){
 /** Explicit owner proposal; AI selection cannot mint a credential or a successful deception. */
 function establishEnvironmentAdmission(db,guild,input,scope){
   if(!input||Object.keys(input).sort().join()!=='accepted_intent,credential,destination,environment,method,prerequisite'
-    ||Object.values(input).some(v=>typeof v!=='string'||v.length>200)||!['invitation','status','leverage','deception'].includes(input.method))
+    ||Object.values(input).some(v=>typeof v!=='string'||v.length>200)||!methods.includes(input.method))
     throw fail('environment_access_closed_admission');
   return db.transaction(()=>{
     const profile=inspectNativeEnvironmentInstance(db,guild,input.environment,scope),feature=rule(profile),

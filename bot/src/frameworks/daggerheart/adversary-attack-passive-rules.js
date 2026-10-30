@@ -2,6 +2,7 @@
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
 import {createNativeStandardDamage} from './standard-damage-passives.js';
+import {planFeatureModifier} from './feature-operation-descriptors.js';
 export function createAdversaryAttackPassiveRules({capabilities}){
 const {compileNativeFeatures,scenePresence,sceneAccess,nativeHouseErratum,activeCityProxy}=capabilities||{};
 if([compileNativeFeatures,scenePresence,sceneAccess,nativeHouseErratum,activeCityProxy].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native passive capabilities required.');
@@ -27,7 +28,7 @@ function nativeAttackPassives(db,guild,{npc,combatant,character,encounter,bindin
   }
   allies.sort((a,b)=>a.actor.localeCompare(b.actor));
   return [{feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,source_hash:feature.source_hash,
-    actor:npc,target:character,modifier:Math.min(2,allies.length),allies}];
+    actor:npc,target:character,modifier:planFeatureModifier(feature,{count:allies.length}),allies}];
 }
 
 return Object.freeze({nativeDamageBonusExpression,nativeStandardDamage,nativeAttackPassives});

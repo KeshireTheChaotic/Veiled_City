@@ -1,10 +1,10 @@
 /** Existing source-defined passive opportunity rules; this contract grants no roll or outcome. */
+import {featureOperationDescriptor,requireFeatureOperation} from './feature-operation-descriptors.js';
 export const ENVIRONMENT_NOISE_FEATURE='environment:haunted-nightclub:too-loud-to-think';
 export const ENVIRONMENT_MEMORY_FEATURE='environment:storm-drain-shrine:local-memory';
-export const ENVIRONMENT_ODDS_FEATURE_RULES=Object.freeze({
-  [ENVIRONMENT_NOISE_FEATURE]:Object.freeze({handler:'nightclub_auditory_disadvantage',kind:'disadvantage'}),
-  [ENVIRONMENT_MEMORY_FEATURE]:Object.freeze({handler:'shrine_local_memory_advantage',kind:'advantage'})
-});
+export const ENVIRONMENT_ODDS_FEATURE_RULES=Object.freeze(Object.fromEntries([ENVIRONMENT_NOISE_FEATURE,ENVIRONMENT_MEMORY_FEATURE].map(key=>{
+  const spec=featureOperationDescriptor(key);return [key,Object.freeze({handler:spec.native_handler,kind:spec.operation.modifier})];
+})));
 
 export function createEnvironmentOddsContract({hash,fail}){
   if(typeof hash!=='function'||typeof fail!=='function')throw new TypeError('Environment odds require current source hashing and native failure capabilities.');
@@ -21,7 +21,7 @@ export function createEnvironmentOddsContract({hash,fail}){
       ||proposal?.experience_ref||!proposal?.reason?.trim()||!proposal?.rule_basis_refs?.includes('srd:action-rolls'))
       throw fail('environment_noise_exact_contextual_action_required');
     return {version:1,feature:feature.feature_key,feature_hash:hash(feature),environment:profile.record_key,environment_hash:hash(profile),
-      action:action.record_key,applicability_ruling:proposal.reason,kind,amount:1};
+      action:action.record_key,applicability_ruling:proposal.reason,kind,amount:requireFeatureOperation(feature,'roll_modifier').amount};
   }
   return Object.freeze({validateEnvironmentOddsProposal});
 }

@@ -4,6 +4,7 @@ import {nativeArbitrationFailure as fail} from './native-failure.js';
 import {featureCostPlan,commitFeatureResources} from './feature-costs.js';
 import {nativeFeatureTriggerEligible} from './feature-trigger-eligibility.js';
 import {featureChoiceProposalIssue} from './feature-choice-policy.js';
+import {planFeatureRecovery} from './feature-operation-descriptors.js';
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
 export const MAX_FEATURE_DEPTH=3;
 export function createFeatureWindowRules({catalog,sources,mechanics}){
@@ -206,7 +207,8 @@ function commitFeatureChoice(db,guild,decisionKey,{library=new EncounterLibrary(
     // This bounded handler recovers one native NPC Stress and elects the current position.
     // It grants no PC effect, forced movement, ordinary spotlight, GM die or metacurrency.
     if(n.cost.fear!==0||n.cost.npc_stress!==0||n.position_choice!=='retain_current_position')throw fail('feature_handler_cost_or_position');
-    const after=db.updateCombatant(before.id,{stress_current:before.stress_current-1});
+    const recovery=planFeatureRecovery(feature,{current:before.stress_current,max:before.stress_max}),
+      after=db.updateCombatant(before.id,{stress_current:recovery.after});
     const mutation=db.recordMutation(guild,{sessionId:row.data.origin.session,actorType:'ai_gm',actorId:'native:unified-gm',sourceLayer:'gm_feature',
       mutationType:'blood_rush_recovery',entityKey:before.id,visibility:'gm',before,after,rationale:'Exact source-triggered native adversary reaction.',payload:{decision:decisionKey,window:n.window}});
     const data={version:1,decision:decisionKey,window:n.window,feature:n.feature,feature_hash:n.feature_hash,actor:entry.actor.key,

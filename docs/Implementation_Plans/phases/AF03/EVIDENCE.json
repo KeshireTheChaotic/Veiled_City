@@ -1,0 +1,114 @@
+{
+  "phase": "AF03",
+  "status": "bounded_ports_verified_wider_qualification_pending",
+  "baseline": "53b8aed86fb892cfe07e22641db40c8fb4c469ae",
+  "runs": [
+    {
+      "command": "node --test tests/ai-gm-2026-10/af03-shared-effects.test.mjs",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af03-source-workflows.test.mjs",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af03-receipt-transitions.test.mjs",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af03-proof-gates.test.mjs",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-operation-descriptors.js",
+      "sha256": "9d4bd1531e453ca3040a91b35aa062ccf5cf308f0383e1c681f6f428c0543fd5"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-operations.json",
+      "sha256": "61e03e1fa019b6a2184dab9621538f93ff4d4c5046e77e29e3346894b1c62335"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-attack-passive-rules.js",
+      "sha256": "988e795f66a425ee2ed149804485030d99cbe74f3ae3b86bc6aa8ac2cc4a22bb"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/standard-damage-passives.js",
+      "sha256": "99b328c8a48460adc4ffeb4098fd69e2f7b1fa54a1c10be565308496efa5c83f"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/defensive-feature-rules.js",
+      "sha256": "75e02b89219694cb5247714aeb3431262834087c23fd0dc8c9725a1c39f438e5"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-window-rules.js",
+      "sha256": "9b88dea11b325e989ecfc2accd6ec3041f6d8e29671cd1c3438f9a2052afd6ab"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/stress-passive-rules.js",
+      "sha256": "a06a7a51719d584167407800cc3cfbfe78d7a0e9a9b54212d4852ac697b08185"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-damage-defense-rules.js",
+      "sha256": "1df4b0fb026e7d9a98cabeceda7917aa488b02e6bfeeae83119e68a7ce506ba6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-scene-rules.js",
+      "sha256": "7147158505397667cc902ffb3645fb8e453013daad5787bc428bbda7f5cedbda"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+      "sha256": "d8a1e9aa51ed646f23c8d25d7d2efccfae4b1ea9062d8076b5a49658b65269c7"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+      "sha256": "38fe70a0411e3137305ac827dd4a78284f5c9ce5de1214fccb4fd93f9e2ef006"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-access-rules.js",
+      "sha256": "4dd7507dea2854acaf953a39aa71a2871b4c16023bb4caca4a11863b815d090f"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+      "sha256": "ec383bac38e0efbe0edb3e07c500034b97e028d0bcd44ccbcac6198376b93937"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-odds-contract.js",
+      "sha256": "e7bd61e6d2e11661fc04522283f93ce071710e87cd142c3bea9977139f15f93e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af03-shared-effects.test.mjs",
+      "sha256": "3b314ddcc2cecf89db30ee7ac5dab6d8f47b8bf6eeca044ab5ed7d14d8c0bb2f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af03-source-workflows.test.mjs",
+      "sha256": "d2f6b85a0960f33ef2fb5f0d9bd88826bf65c38db5ef70d6a7f7d60091d20644"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af03-receipt-transitions.test.mjs",
+      "sha256": "c250f72c6854ce9f3aad9c2802196ee5cf6da8906644eb7d557d38893fc1cf3e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af03-proof-gates.test.mjs",
+      "sha256": "d64c97e704ace36c1dbd3ea2986298769d99e51d8287b8847ce2c6aaef9de2a0"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af03-store.mjs",
+      "sha256": "d4b4bd95910fc0f3e232f4545b1a42df1977426e45d277583d8054697f7285d7"
+    }
+  ]
+}

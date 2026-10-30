@@ -1,3 +1,4 @@
+import {planFeatureModifier} from './feature-operation-descriptors.js';
 /** Complete native native-defense-aura policy; source and repository capabilities are explicitly injected. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
@@ -26,7 +27,7 @@ function nativeFormationDefense(db,guild,target,input){
   const detail={version:1,feature:FORMATION,feature_hash:hash(feature),template_hash:feature.template_hash,
     actor,target:target.id,scene:recipient.scene,session:recipient.session,encounter:target.encounter_id,target_snapshot:hash(recipient),scope_snapshot:formationScope(recipient),
     actor_source:recipient.presence.source_event,binding_source:binding.source_event,
-    hp_remaining:target.hp_current,hp_max:target.hp_max,base_difficulty:target.difficulty,bonus:target.hp_current>=4?1:0,
+    hp_remaining:target.hp_current,hp_max:target.hp_max,base_difficulty:target.difficulty,bonus:planFeatureModifier(feature,{value:target.hp_current}),
     declaration:input.source_event,attack_source:input.attack_source,character:input.character_id},ref=`defense-passive:${hash(detail)}`;
   return {detail,proof:{ref,fingerprint:hash(detail)}};
 }
@@ -43,8 +44,7 @@ function nativeVeilExposureDefense(db,guild,target,input){
   const pc=db.getCharacter(input.character_id),exposure=db.getCampaign(guild)?.veil_exposure;
   if(pc?.guild_id!==guild||pc.data.location!==recipient.presence.location_key||target.difficulty!==recipient.template.difficulty
     ||!Number.isSafeInteger(exposure)||exposure<0||exposure>6)throw fail('veil_passive_native_state');
-  const bonus=feature.feature_key==='adversary:veil-anchor-sentinel:plausible-denial'
-    ?exposure<=2?1:0:exposure<=2?2:exposure>=5?-1:0;
+  const bonus=planFeatureModifier(feature,{value:exposure});
   const detail={version:2,feature:feature.feature_key,feature_hash:hash(feature),template_hash:feature.template_hash,
     actor,target:target.id,scene:recipient.scene,session:recipient.session,encounter:target.encounter_id,
     target_snapshot:hash(recipient),scope_snapshot:formationScope(recipient),actor_source:recipient.presence.source_event,binding_source:binding.source_event,
@@ -188,7 +188,7 @@ function nativeDefenseAura(db,guild,target,input){
   if(erratum?.interpretation.maximum_aura_bonus!==1||erratum.interpretation.self!==false)throw fail('local_mesh_native_erratum');
   const detail={version:1,feature:FEATURE,feature_hash:hash(feature),erratum:'HR03',erratum_version:2,erratum_hash:hash(erratum),
     scene:recipient.scene,session:recipient.session,encounter:target.encounter_id,actor,target:target.id,target_template:hash(recipient.template),
-    target_snapshot:hash(recipient),base_difficulty:target.difficulty,bonus:1,contributors,
+    target_snapshot:hash(recipient),base_difficulty:target.difficulty,bonus:planFeatureModifier(feature,{count:contributors.length}),contributors,
     declaration:input.source_event,attack_source:input.attack_source,character:input.character_id},ref=`defense-aura:${hash(detail)}`;
   return {detail,proof:{ref,fingerprint:hash(detail)}};
 }
