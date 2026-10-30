@@ -1,0 +1,31 @@
+{
+  "base": "d6da112b",
+  "original_validator_recovery_helpers_verbatim_except_factory_local_exports": true,
+  "remaining_root_exact_after_helper_and_factory_substitution": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c92.test.mjs",
+    "pass": 4,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 242.6531
+  },
+  "files": [
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "4e90958be5402e9fc6e15c78e1a95d4206358fbfb1d3ced48f42ed02b91c5065"
+    },
+    {
+      "path": "bot/src/frameworks/intent/player-intent-validation.js",
+      "sha256": "a8757222e58a8cf78e521f6126fb8f1c35bcace8d618e59e3881425acd6f88ac"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "b2c0989fec8790f4fd0580ab0e1a23b3eeaa7f8102d43c2886fc5b4d4d4d0e7d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c92.test.mjs",
+      "sha256": "b40ecf05f7e4c9c84f02518cd74921d2f647e25baf8cfd6ec76be5e862c0cc86"
+    }
+  ]
+}
