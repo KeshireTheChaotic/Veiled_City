@@ -1,0 +1,32 @@
+{
+  "base": "81103c83",
+  "graph": "RF05-C54-final",
+  "retired": [
+    {
+      "path": "bot/src/narrative-opportunity-policy.js",
+      "source": "/** Compatibility exports for the original Narrative ranking policy. */\r\nexport {rankWorldNarrativeOpportunities,WORLD_NARRATIVE_OPPORTUNITY_ORDER} from './frameworks/narrative/public.js';\r\n",
+      "sha256": "753cf3a6478cc6af59d1a66e2172637f8243ee142ef7a8381026046304f68de3",
+      "callers": []
+    },
+    {
+      "path": "bot/src/narrative-opportunity-guidance.js",
+      "source": "/** Compatibility reader for existing tests and internal imports. */\nexport {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';\n",
+      "sha256": "497e41203c60f83a700d256719e7b7638c0e53771c93e5845b151a292fe02d11",
+      "callers": []
+    }
+  ],
+  "retained": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+      "sha256": "751887c9e810c5f691fea93d853f5564081fa967dc8e7ac6f518b93afb23508b"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/narrative-opportunity-guidance.js",
+      "sha256": "d5806ae7b37b39e20f5e727d199ebb068fb600425ada60156e7189e68c962eb7"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "827cd13103571e5ebda4017009654452b8166eb05615bdecc7cac0918250af15"
+    }
+  ]
+}

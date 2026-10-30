@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1887dafd7dc5c08aa05252ec6e558c14344f2605f22f6de2a42a13aa6e061303",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-opportunity-guidance.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "e0ddd7ac9423a2d200458d53174576f52f948f583e1ff99fccea62e2b04f86a2",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-opportunity-policy.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  }
+]
