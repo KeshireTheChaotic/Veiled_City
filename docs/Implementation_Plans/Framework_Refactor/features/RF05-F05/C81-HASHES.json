@@ -1,0 +1,23 @@
+{
+  "base": "8b15e6aa",
+  "extracted_body_and_remaining_state_identical_except_import_reexport_unused_semantic_import": true,
+  "syntax_pass": 3,
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "ffa8431324754634d02bbfdcece41f9ea4f2f33578d8cfbbddc30c4e22def074"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "sha256": "b20f9f815edc8dcc50336eaf4f45687b4c036038d7413d4849fd1306395d6823"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "6b816a3ba17d81167c9ad56df1e6be8dc0458acdb87da48894a2e9684e0deea5"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c81.test.mjs",
+      "sha256": "b3263daa395ab0e1c1b19ebfc420a2668145042183c883a77d4e0507741214c2"
+    }
+  ]
+}

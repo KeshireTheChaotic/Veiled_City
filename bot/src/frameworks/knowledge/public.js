@@ -60,3 +60,5 @@ export {personalCharacter as personalContinuityCharacter,personalArc,proposeArcB
 export {applyHandoutDrafts} from './handout-drafts.js';
 
 export {applyRelationshipDrafts} from './relationship-drafts.js';
+
+export {applyCanonProposalDrafts} from './canon-proposal-drafts.js';
