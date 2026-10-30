@@ -215,7 +215,8 @@
   "stableEntrypoints": [
     "bot/src/index.js",
     "bot/src/register-commands.js",
-    "bot/src/db.js"
+    "bot/src/db.js",
+    "bot/src/diagnostics/session5-reader.js"
   ],
   "legacyOwnership": "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json"
 }

@@ -17,3 +17,8 @@ export {operationsWorldGroups} from './contracts/world-groups.js';
 export {operationsWorldSeedDrafts} from './contracts/world-seed-drafts.js';
 
 export {validateChannelRouting} from './routing-validation.js';
+
+export {Session5Reader} from './session5-reader.js';
+export {operationsKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
+
+export {operationsPersistenceSnapshot} from './contracts/persistence-snapshot.js';

@@ -1,0 +1,7 @@
+{
+  "feature": "RF04-C227",
+  "retired": "bot/src/disclosure-authority.js",
+  "current_runtime_source_callers": [],
+  "stable_diagnostic": "bot/src/diagnostics/session5-reader.js",
+  "stable_database": "bot/src/db.js"
+}

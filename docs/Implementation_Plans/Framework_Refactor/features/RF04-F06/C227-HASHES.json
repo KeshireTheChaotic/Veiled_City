@@ -1,0 +1,15 @@
+{
+  "feature": "RF04-C227",
+  "sha256": {
+    "bot/src/diagnostics/session5-reader.js": "df3210c51abe6baee1eb57008577a4b9b703f2bd3df013d89fdeab3f1dc89752",
+    "bot/src/framework-to-framework/knowledge--operations/public.js": "1a61992de7e1923d0c4d47e5c396a6ecad5383799f1713d5d70e895c7f1d6b5c",
+    "bot/src/framework-to-framework/operations--persistence/public.js": "f11676a8d460609338274eafacf26ae647f73e255c0deab0025596cb06ffffab",
+    "bot/src/frameworks/operations/public.js": "7eb4c81523f7d86bc8df9001470721235dbdbb138a57f4d336aadbb21a0889e7",
+    "bot/src/frameworks/persistence/public.js": "59be6e326fe06d8105ffcbc5dc305baa9f85cd26e0220667e4e8644ae666082e",
+    "bot/src/application/composition/standalone-diagnostics.js": "0ccca7fa0f3021c05a6e0929353a14ee5f27513fd7d428a0a3294145082f93da",
+    "bot/src/frameworks/operations/contracts/knowledge-disclosure.js": "d7adea5f330590346fbb3067c2ca8f35cc60f56b6d13688028b9574c58205567",
+    "bot/src/frameworks/operations/contracts/persistence-snapshot.js": "77f0854d44cf4cee0309ddaa8153c44a086c180493273f25740e8ed41a985e19",
+    "bot/src/frameworks/operations/session5-reader.js": "ce784f2abe6f45004b7e28a03a42350f2a09b7a35cbf6ed4a304c576bd32e20d",
+    "bot/src/frameworks/persistence/diagnostic-snapshot.js": "5fa181a060aa86cdd87daef50ffdba39ebbbe5c365694018828c28dda49dc7b6"
+  }
+}

@@ -8,3 +8,5 @@ export {persistenceGmHookImport} from './contracts/gm-hook-import.js';
 
 export {VeiledDB} from './database.js';
 export {persistenceSessionArchive,persistenceKnowledgeProposal,persistenceOperations,persistenceNativeFear} from './contracts/database-domain-sources.js';
+
+export {openDiagnosticSnapshot} from './diagnostic-snapshot.js';

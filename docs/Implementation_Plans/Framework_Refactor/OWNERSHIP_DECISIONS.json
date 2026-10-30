@@ -42,7 +42,7 @@
       "owner": "operations",
       "phase": "RF02",
       "rationale": "Diagnostics, observability and offline qualification support; reporting must retain private-data redaction.",
-      "files": "ai-gm-test-selection.js ai-review.js diagnostics/session5-reader.js evaluation-harness.js failure-trace.js logger.js opening-diagnostics.js operational-metrics.js operations/diagnostics.js operations/health.js operations/overview.js routing-diagnostics.js turn-latency.js turn-trace-context.js typed-intent-qualification.js tracked-turn.js errors.js"
+      "files": "ai-gm-test-selection.js ai-review.js evaluation-harness.js failure-trace.js logger.js opening-diagnostics.js operational-metrics.js operations/diagnostics.js operations/health.js operations/overview.js routing-diagnostics.js turn-latency.js turn-trace-context.js typed-intent-qualification.js tracked-turn.js errors.js"
     },
     {
       "owner": "application",
@@ -121,6 +121,12 @@
       "phase": "RF06",
       "rationale": "Discord interaction receipt capture and replay combines transport identity with SQLite operation/mutation receipts; injected dependencies are integration code even without imports.",
       "files": "idempotency.js"
+    },
+    {
+      "owner": "application",
+      "phase": "RF06",
+      "rationale": "C227 exact prerequisite: historical standalone diagnostic entrypoint only composes original Knowledge predicates and reexports Operations-owned read-only implementation.",
+      "files": "diagnostics/session5-reader.js"
     }
   ],
   "overrides": {
