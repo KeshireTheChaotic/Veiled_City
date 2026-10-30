@@ -1,11 +1,10 @@
 /** Exact current native adversary source/template/control binding; never execution or disclosure authority. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
-import {createNativeAdversaryContextProjectors} from './adversary-contexts.js';
+import {projectFeatureRuleContexts} from './feature-context-projection.js';
 export function createAdversaryBindingRules({capabilities}){
 const {nativeEncounterActor,nativeActorControl,inspectArbitrationOrigin,executableNativeFeatures,featureDisposition,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate}=capabilities||{};
 if([nativeEncounterActor,nativeActorControl,inspectArbitrationOrigin,executableNativeFeatures,featureDisposition,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native adversary binding capabilities required.');
-const {projectNativeAdversaryBreakTheHoldContext,projectNativeAdversaryProfessionalEntryContext,projectNativeAdversaryMarkTheVariableContext,projectNativeAdversaryReadoutContext,projectNativeAdversaryRideTheCurrentContext,projectNativeAdversaryPeripheralContext,projectNativeAdversaryStealTheFocusContext,projectNativeAdversarySympatheticRelayContext,projectNativeAdversarySnatchALinkContext,projectNativeAdversaryFlowAroundItContext,projectNativeAdversaryDragDownContext,projectNativeAdversaryBlankSpotContext,projectNativeAdversaryRouteAroundContext,projectNativeAdversaryTermsFirstContext,projectNativeAdversaryPinToTheDealContext,projectNativeAdversaryISawThatContext,projectNativeAdversarySelfFulfillingEventContext,projectNativeAdversaryAlwaysAPriceContext,projectNativeAdversaryBadFutureContext,projectNativeAdversaryExitClauseContext,projectNativeAdversaryPredatoryGraceContext,projectNativeAdversaryReputationAttackContext,projectNativeAdversaryCallSecurityContext,projectNativeAdversaryUrbanCoverContext,projectNativeAdversaryRootSnareContext,projectNativeAdversaryLoopholeContext,projectNativeAdversaryConflictingDutyContext}=createNativeAdversaryContextProjectors({featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});
 
 
 /** A template/display name does not bind a person to an adversary or make its features available. */
@@ -22,20 +21,7 @@ function nativeAdversaryFeatureContext(db,guild,origin,actor,{library}={}){
       location:bound.presence.location_key,template_hash:templateHash,actor_snapshot:hash(bound),control_revision:control.revision,
       source:o.binding.source,source_hash:o.binding.source_hash,scope:structuredClone(o.scope),authored_feature_rules:authoredFeatureRules,
       features:features.map(f=>({key:f.feature_key,hash:hash(f)}))};
-  return Object.freeze({...terms,feature_rule_contexts:[...projectNativeAdversaryBreakTheHoldContext(terms),
-      ...projectNativeAdversaryProfessionalEntryContext(terms),...projectNativeAdversaryMarkTheVariableContext(terms),
-      ...projectNativeAdversaryReadoutContext(terms),...projectNativeAdversaryRideTheCurrentContext(terms),
-      ...projectNativeAdversaryPeripheralContext(terms),...projectNativeAdversaryStealTheFocusContext(terms),
-      ...projectNativeAdversarySympatheticRelayContext(terms),...projectNativeAdversarySnatchALinkContext(terms),
-      ...projectNativeAdversaryFlowAroundItContext(terms),...projectNativeAdversaryDragDownContext(terms),
-      ...projectNativeAdversaryBlankSpotContext(terms),...projectNativeAdversaryRouteAroundContext(terms),
-      ...projectNativeAdversaryTermsFirstContext(terms),...projectNativeAdversaryPinToTheDealContext(terms),
-      ...projectNativeAdversaryISawThatContext(terms),...projectNativeAdversarySelfFulfillingEventContext(terms),
-      ...projectNativeAdversaryAlwaysAPriceContext(terms),...projectNativeAdversaryBadFutureContext(terms),
-      ...projectNativeAdversaryExitClauseContext(terms),...projectNativeAdversaryPredatoryGraceContext(terms),
-      ...projectNativeAdversaryReputationAttackContext(terms),...projectNativeAdversaryCallSecurityContext(terms),
-      ...projectNativeAdversaryUrbanCoverContext(terms),...projectNativeAdversaryRootSnareContext(terms),
-      ...projectNativeAdversaryLoopholeContext(terms),...projectNativeAdversaryConflictingDutyContext(terms)],
+  return Object.freeze({...terms,feature_rule_contexts:projectFeatureRuleContexts(terms,authoredFeatureRules),
     revision:hash(terms),execution_authorized:false,publication_authorized:false});
 }
 

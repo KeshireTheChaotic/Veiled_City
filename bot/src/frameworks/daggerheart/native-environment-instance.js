@@ -1,6 +1,6 @@
 /** Scene-bound GM environment provenance outside combat. No feature, effect, disclosure or NPC grant. */
 import {nativeWorldAuthoring,nativeNarrativeAudience} from './contracts/environment-sources.js';
-import {compileNativeActors,executableNativeFeatures} from './native-feature-catalog.js';
+import {compileNativeActors,executableNativeFeatures,nativeFeatureRuleContextsForTemplateHash} from './native-feature-catalog.js';
 import {nativeScenes} from './contracts/scenes.js';
 import {nativeWorldEvents} from './contracts/world-events.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
@@ -89,6 +89,7 @@ export function inspectNativeEnvironmentInstance(db,guild,key,scope,{historical=
 export function nativeEnvironmentInstanceCapabilities(db,guild,key,scope){
   const row=inspectNativeEnvironmentInstance(db,guild,key,scope);
   return {instance:row.record_key,revision:hash(row),environment:row.data.environment,execution_authorized:false,
+    template_hash:row.data.template_hash,authored_feature_rules:nativeFeatureRuleContextsForTemplateHash('environment',row.data.template_hash),
     features:executableNativeFeatures('environment').filter(f=>f.template_hash===row.data.template_hash)
       .map(f=>({key:f.feature_key,hash:hash(f),proposal_contract:environmentProposalContract(f)}))};
 }

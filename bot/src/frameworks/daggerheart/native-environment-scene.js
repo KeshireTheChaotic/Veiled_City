@@ -1,5 +1,6 @@
 /** Native environment scene composition: Daggerheart rules wired to original sources through fixed ports. */
-import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {inspectNativeEnvironmentInstance,nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
+import {projectFeatureRuleContexts} from './feature-context-projection.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeArbitrationOrigin,nativeGmOpportunityPeer,reservedCampaignFearPeer,doorChainSituationPeer,imagingSituationPeer} from './contracts/environment-sources.js';
 import {nativeScenes} from './contracts/scenes.js';
@@ -10,28 +11,6 @@ import {assertEnvironmentAudience} from './environment-audience-source.js';
 import {createEnvironmentSceneRules} from './environment-scene-rules.js';
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {arbitrationFailure as fail} from '../../kernel/arbitration-failure.js';
-import {nativeEnvironmentAuctionSituation} from './native-environment-auction.js';
-import {nativeEnvironmentChainOfTitleSituation} from './native-environment-chain-of-title.js';
-import {nativeEnvironmentConsensusEngineSituation} from './native-environment-consensus-engine.js';
-import {nativeEnvironmentContainmentShuttersSituation} from './native-environment-containment-shutters.js';
-import {nativeEnvironmentContaminatedSceneSituation} from './native-environment-contaminated-scene.js';
-import {nativeEnvironmentEveryoneIsWatchingSituation} from './native-environment-everyone-is-watching.js';
-import {nativeEnvironmentExpressThroughMemorySituation} from './native-environment-express-through-memory.js';
-import {nativeEnvironmentGuestRightSituation} from './native-environment-guest-right.js';
-import {nativeEnvironmentLastTrainRulesSituation} from './native-environment-last-train-rules.js';
-import {nativeEnvironmentMarketNeutralitySituation} from './native-environment-market-neutrality.js';
-import {nativeEnvironmentMetaphorPhysicsSituation} from './native-environment-metaphor-physics.js';
-import {nativeEnvironmentModelRoomSituation} from './native-environment-model-room.js';
-import {nativeEnvironmentNoConsensusSituation} from './native-environment-no-consensus.js';
-import {nativeEnvironmentNoOrdinarySignalSituation} from './native-environment-no-ordinary-signal.js';
-import {nativeEnvironmentPriceOfferSituation} from './native-environment-price-offer.js';
-import {nativeEnvironmentPrivateRoomSituation} from './native-environment-private-room.js';
-import {nativeEnvironmentProcedureSituation} from './native-environment-procedure.js';
-import {nativeEnvironmentSealedDocketSituation} from './native-environment-sealed-docket.js';
-import {nativeEnvironmentThinWallsSituation} from './native-environment-thin-walls.js';
-import {nativeEnvironmentThirdRailSpiritSituation} from './native-environment-third-rail-spirit.js';
-import {nativeEnvironmentThreeVectorsSituation} from './native-environment-three-vectors.js';
-import {nativeEnvironmentWrongOfferingSituation} from './native-environment-wrong-offering.js';
 function inspectArbitrationOrigin(...args){return nativeArbitrationOrigin.inspectArbitrationOrigin(...args);}
 function nativeGmOpportunity(...args){return nativeGmOpportunityPeer.nativeGmOpportunity(...args);}
 function reservedCampaignFear(...args){return reservedCampaignFearPeer.reservedCampaignFear(...args);}
@@ -67,28 +46,10 @@ export function nativeEnvironmentSituation(db,guild,scope,location){
   }
   if(result.length<6)result.push(...nativeEnvironmentDoorChainSituation(db,guild,scope,location).slice(0,6-result.length));
   if(result.length<6)result.push(...nativeEnvironmentImagingSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentProcedureSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentThinWallsSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentChainOfTitleSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentNoConsensusSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentMetaphorPhysicsSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentNoOrdinarySignalSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentConsensusEngineSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentGuestRightSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentPrivateRoomSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentPriceOfferSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentAuctionSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentModelRoomSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentContainmentShuttersSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentSealedDocketSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentThreeVectorsSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentMarketNeutralitySituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentContaminatedSceneSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentEveryoneIsWatchingSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentWrongOfferingSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentLastTrainRulesSituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentExpressThroughMemorySituation(db,guild,scope,location).slice(0,6-result.length));
-  if(result.length<6)result.push(...nativeEnvironmentThirdRailSpiritSituation(db,guild,scope,location).slice(0,6-result.length));
+  if(result.length<6){
+    const profile=nativeEnvironmentInstanceForScope(db,guild,scope,location);
+    result.push(...projectFeatureRuleContexts(profile,profile?.authored_feature_rules,{environment:true}).slice(0,6-result.length));
+  }
   return result;
 }
 

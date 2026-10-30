@@ -109,13 +109,29 @@ function nativeFeatureRuleContextsForTemplate(kind,template,{adversaries=readAdv
       const inspected=inspectNativeFeatureOccurrence(feature.feature_key,{adversaries,environments});
       if(inspected.status!=='verified_source')return [];
       const printed_rule=actor.features[feature.index];
+      const rules=authoredRules.entries.filter(rule=>rule.sources.some(source=>source.kind==='feature'&&source.key===feature.feature_key));
+      // A changed linked ruling holds only this occurrence, not independent source rules.
+      if(rules.some(rule=>rule.sources.some(source=>source.kind==='feature'&&source.key===feature.feature_key
+        &&(source.source_hash!==feature.source_hash||source.template_hash!==feature.template_hash))))return [];
       return [{version:1,feature:feature.feature_key,source_ref:feature.source_ref,source_hash:feature.source_hash,
         template_hash:feature.template_hash,feature_hash:hash(feature),index:feature.index,printed_rule,
         catalog_status:feature.status,native_handler:feature.native_handler,visibility:'gm',
+        trigger_kind:feature.trigger_kind,target_policy:feature.target_policy,roll_protocol:feature.roll_protocol,costs:feature.costs,
+        house_rules:rules.map(rule=>({id:rule.id,version:rule.version,hash:hash(rule),status:rule.status,
+          interpretation:structuredClone(rule.interpretation),limitations:structuredClone(rule.limitations||[])})),
+        precedence:'Exact printed rule plus the native operation\'s explicit versioned owner ruling. Historical versions remain pinned; the highest version is not automatic execution authority.',
         authority:'GM-private source rule context only; native trigger, costs, owner choices, effects and publication require their own validators.',
-        execution_authorized:false}];
+        execution_authorized:false,publication_authorized:false}];
     });
   return freeze(rows);
+}
+
+/** Native profile hashes select current templates; this read grants no actor or audience authority. */
+function nativeFeatureRuleContextsForTemplateHash(kind,templateHash){
+  if(!['adversary','environment'].includes(kind)||typeof templateHash!=='string')return freeze([]);
+  const actors=kind==='adversary'?readAdversaries():readEnvironments(),matches=actors.filter(actor=>hash(actor)===templateHash);
+  if(matches.length!==1)return freeze([]);
+  return nativeFeatureRuleContextsForTemplate(kind,matches[0],kind==='adversary'?{adversaries:actors}:{environments:actors});
 }
 
 /** Owner taxonomy is additive: existing closed feature descriptors and their saved hashes do not change. */
@@ -155,5 +171,5 @@ function nativeSignalFeatureTarget(featureKey,template){
   return freeze({feature_key:featureKey,feature_hash:hash(feature),target:actor});
 }
 
-  return Object.freeze({inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,executableNativeFeatures,compileNativeFeatureRuleContexts,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate,compileNativeActors,nativeActorTaxonomy,nativeSignalFeatureTarget});
+  return Object.freeze({inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,executableNativeFeatures,compileNativeFeatureRuleContexts,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate,nativeFeatureRuleContextsForTemplateHash,compileNativeActors,nativeActorTaxonomy,nativeSignalFeatureTarget});
 }

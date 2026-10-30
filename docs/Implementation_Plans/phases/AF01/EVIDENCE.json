@@ -1,0 +1,42 @@
+{
+  "phase": "AF01",
+  "run_id": "AF01-C-context-1",
+  "baseline": "0f8b26845ea01fdb918c392f80c272b20c341cd4",
+  "command": "node --test tests/ai-gm-2026-10/af01-context.test.mjs",
+  "exit_code": 0,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "syntax_files": 7,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-catalog.js",
+      "sha256": "fb48b3d2680bff8afdaeb1c8725ee52358eca187908ab0646633537dd63a68b4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-context-projection.js",
+      "sha256": "701c28504ccb1108f36d70e67717b815e3bfce840db126502fbcae620aac26a6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-binding-rules.js",
+      "sha256": "deca221e5ad621b87df66aade20ce5fcad33f35632dc060972051d867780981e"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-catalog.js",
+      "sha256": "1c25fe0e8a55c14e8b37bb0a1a5b438cc6990ba8ccec4a6441451b35cf637646"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-instance.js",
+      "sha256": "07b0c11bc6855ae184ef1e6b3a86d1df8d6c9f9997dcf900dae836e74a52a0d8"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-scene.js",
+      "sha256": "186bccdc803353381494b0eb5c3b38c0008571c87e36cbac93a509ac5c0f7d86"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af01-context.test.mjs",
+      "sha256": "d5534510240b6430bdf45e828f4226e2ee3b44febde72fcc3ec8b674eee7e5bc"
+    }
+  ]
+}

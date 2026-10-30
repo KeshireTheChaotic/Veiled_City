@@ -10,6 +10,7 @@ export function executableNativeFeatures(...args){return catalog.executableNativ
 export function compileNativeFeatureRuleContexts(...args){return catalog.compileNativeFeatureRuleContexts(...args);}
 export function nativeFeatureRuleContext(...args){return catalog.nativeFeatureRuleContext(...args);}
 export function nativeFeatureRuleContextsForTemplate(...args){return catalog.nativeFeatureRuleContextsForTemplate(...args);}
+export function nativeFeatureRuleContextsForTemplateHash(...args){return catalog.nativeFeatureRuleContextsForTemplateHash(...args);}
 export function compileNativeActors(...args){return catalog.compileNativeActors(...args);}
 export function nativeActorTaxonomy(...args){return catalog.nativeActorTaxonomy(...args);}
 export function nativeSignalFeatureTarget(...args){return catalog.nativeSignalFeatureTarget(...args);}
