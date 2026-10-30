@@ -1,0 +1,20 @@
+✔ classification keeps root/public identity, exact keys and existing read-only/unknown policy (0.6138ms)
+✔ completed duplicate replays stored result privately without capture or writes (0.7111ms)
+✔ deferred duplicate uses editReply and incomplete/missing/read-only receipts do not replay (0.2303ms)
+✔ capture commits receipt/mutation before failed response and fresh redelivery reuses it (0.5336ms)
+✔ capture records once across reply/edit and restoration returns original transport behavior (0.1577ms)
+✔ warning/read-only responses do not create completed mutation receipts (0.1355ms)
+✔ transaction callback failure prevents transport and leaves synthetic store unchanged (0.1503ms)
+✔ qualified per-connection view forwards original receiver/callback/value/error without exposing SQL handle (1.3982ms)
+✔ actual SQLite receipt and ledger survive failed response and reopen; duplicate replays without another ledger row (167.5734ms)
+✔ actual SQLite ledger insert failure rolls back earlier receipt and prevents response (162.0542ms)
+✔ same-connection nested savepoint and asynchronous callback rejection retain rollback behavior (155.6371ms)
+✔ original guild plus interaction receipt identity remains separate on the same connection (161.1087ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1099.0079

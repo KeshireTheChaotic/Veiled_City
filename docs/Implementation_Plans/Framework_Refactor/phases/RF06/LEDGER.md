@@ -13,6 +13,11 @@
 | RF06-F04 R05 | Original character/encounter record views in Discord | 34793277 | 5/5 passed, original bodies equal |
 | RF06-F04 R06 | Original ephemeral reply transport compatibility | d88bb55e | 6/6 passed, original body equal |
 | RF06-F03 R07 | Operations diagnostic privacy adapter; unused root readers retired | this R07 checkpoint | 5/5 new + 7/7 affected passed, syntax13/13 |
+| RF06-F03 R08 | Original reference message edit/create delivery | 0d3f7d2f | 7/7 passed, original body equal |
+| RF06-F03 R09 | Exact acknowledgment/certainty/status helpers | 695987a9 | 5/5 passed, original bodies equal |
+| RF06-F03 R10 | Original handout text views | 76a7be92 + fdceb53c whitespace fix | 6/6 passed, original bodies equal |
+| RF06-F04 R11 | Original read-only command classification | 6b7fd0a0 | 7/7 passed |
+| RF06-F04 R12 | Exact command receipt storage view, same connection | this R12 checkpoint | 5/5 new real SQLite/interface + 7/7 affected passed |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | this documentation checkpoint | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -23,7 +28,7 @@ Root db.js is a standalone compatibility facade. frameworks/persistence/database
 
 ## Architecture and coordination
 
-After R07: RF05 ratchet exit 0, 975 modules, zero unowned/active/transition errors, 762 accepted legacy occurrences, one cycle of 62. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. Nine exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R12: shared RF05 check has 988 modules, zero unowned/active source violations, 748 accepted legacy occurrences, one cycle of 60. It exits 1 only for five pending concurrent Agent A C77 transition diagnostics. The prior R10 whole-worktree ratchet passed; these are scoped source results, not phase completion. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. Ten exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -31,4 +36,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F03 R08 reference-message delivery extraction, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F03 R13 publication telemetry/read-only contract boundary, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

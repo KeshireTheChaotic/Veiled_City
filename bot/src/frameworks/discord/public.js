@@ -29,3 +29,7 @@ export {translateEphemeralReplies} from './reply-options.js';
 export {fetchDiagnosticChannel} from './diagnostic-channel.js';
 
 export {commandKey,isMutatingCommand} from './command-mutations.js';
+
+export {assertCommandReceiptStore} from './contracts/command-receipts.js';
+
+export {replayReceiptIfPresent,installReceiptCapture} from './idempotency.js';

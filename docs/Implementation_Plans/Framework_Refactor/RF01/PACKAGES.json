@@ -209,6 +209,9 @@
     ],
     "discord--operations": [
       "bot/src/framework-to-framework/discord--operations/public.js"
+    ],
+    "discord--persistence": [
+      "bot/src/framework-to-framework/discord--persistence/public.js"
     ]
   },
   "externalCapabilityOwners": {

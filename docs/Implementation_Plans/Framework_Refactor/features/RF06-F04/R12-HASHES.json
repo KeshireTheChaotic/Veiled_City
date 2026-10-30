@@ -1,0 +1,13 @@
+{
+  "bot/src/commands.js": "0a42062fc8e177d4fa36973be21178c382cdb092fde6c5b808d27bdaf41d2fb0",
+  "bot/src/idempotency.js": "6a1c5dbaafad2901a482d511a9ff8f9ab2d77c506d480c965c0b21292f005a24",
+  "bot/src/frameworks/discord/idempotency.js": "a964cda6ab35a39aa31ccdef2c3ff6c494f6f9a2366ae95ba00506690248e5ba",
+  "bot/src/frameworks/discord/contracts/command-receipts.js": "c12acf50f02b3c0055cc76bcd425cef997ee277660badd48af5ccf1d307544e2",
+  "bot/src/frameworks/discord/public.js": "8729ae5925cbafa7ece9ff341aab74cd08052562348c4112f927ec8bd54ab14e",
+  "bot/src/frameworks/persistence/command-receipts.js": "f48df31255de6016e3aaa5a1e588e9eec2f855690c693d33f57a83dcc653ed3c",
+  "bot/src/frameworks/persistence/public.js": "ebaab05f327ad3af321ddaa83a93bd76193d7972c8ba7145a96e17bdfbb318c7",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "076f4d1721bbda41bc6a057f7b797b10984c01b1df50419ad7cfe1793fe5700c",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c12.test.mjs": "5785a0ade745d7ad7f1bbfc73db94e34430386230d3813c9e0b4ad760e3c3be8",
+  "bot/src/frameworks/persistence/database.js": "9b6ce93df2e7aae1ae2947e1fcffe9d260a6291961f64ed101d35c651a313582",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

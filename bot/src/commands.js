@@ -1,3 +1,4 @@
+import {connectDiscordCommandReceipts} from './framework-to-framework/discord--persistence/public.js';
 import {translateEphemeralReplies} from './frameworks/discord/public.js';
 import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
@@ -42,7 +43,7 @@ import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './fram
 import { assertGmOnlyChannel, assertPlayerPrivateChannel } from './frameworks/discord/public.js';
 import { PermissionError, NotFoundError, StateConflictError, UserInputError } from './kernel/errors.js';
 import {isExpectedError} from './frameworks/operations/public.js';
-import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";
+import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from './frameworks/discord/public.js';
 import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
 import { runCampaignDiagnostics, formatDiagnostics } from './frameworks/operations/public.js';
 import {operationalReport} from './operations/health.js';
@@ -549,10 +550,11 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap","caseboard"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);
-  if(await replayReceiptIfPresent({db,interaction,group,sub})){
+  const receiptDb=connectDiscordCommandReceipts(db);
+  if(await replayReceiptIfPresent({db:receiptDb,interaction,group,sub})){
     operationalMetrics.record('native_replay',{guildId:interaction.guildId});return true;
   }
-  const restoreReceiptCapture=installReceiptCapture({db,interaction,group,sub});
+  const restoreReceiptCapture=installReceiptCapture({db:receiptDb,interaction,group,sub});
   try{
     if(group==='roll'&&sub==='pvp-menu'){
       await interaction.reply(openPvpMenu(db,interaction.guildId,interaction.user.id,interaction.options.getString('reference')));
