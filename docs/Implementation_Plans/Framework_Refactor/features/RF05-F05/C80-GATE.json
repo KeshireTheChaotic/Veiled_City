@@ -30,5 +30,5 @@
       "id": "11eea7e26186784e7304f57e2076183028285113e5ff998e278473444fb46d8c"
     }
   ],
-  "disposition": "No C80 source violations/obsolete records; three pending lifecycle-output transitions belong to concurrent RF06 R15."
+  "disposition": "No C80 source violations/obsolete records; three pending lifecycle-output transition diagnostics covering two unique records belong to concurrent RF06 R15."
 }
