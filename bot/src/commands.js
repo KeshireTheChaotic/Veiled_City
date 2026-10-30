@@ -38,7 +38,7 @@ import {normalizeGmHookImport} from './frameworks/narrative/public.js';
 import {importSanctionedGmHooks,sanctionedWorldMutation} from './frameworks/world/public.js';
 import {certifyAssemblyPlan,assemblyPlanFreshness} from './frameworks/session/public.js';
 import {prepareSceneSetup,confirmSceneSetup,sceneSetupAvailability} from './frameworks/session/public.js';
-import { assertGmOnlyChannel, assertPlayerPrivateChannel } from "./discord/privacy.js";
+import { assertGmOnlyChannel, assertPlayerPrivateChannel } from './frameworks/discord/public.js';
 import { PermissionError, NotFoundError, StateConflictError, UserInputError } from './kernel/errors.js';
 import {isExpectedError} from './frameworks/operations/public.js';
 import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from "./idempotency.js";

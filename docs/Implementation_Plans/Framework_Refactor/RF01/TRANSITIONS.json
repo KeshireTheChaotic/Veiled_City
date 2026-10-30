@@ -2067,20 +2067,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "177d3f70b62ee8845948a741f7832da937824ee63ca06379be9ea7f31d3b6266",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/discord/privacy.js",
-      "kind": "static",
-      "specifier": "./discord/privacy.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "2aba0f090931c1df87f943d0eb8ed1e12e20b1742c68e4ce03de656e784b2552",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/commands.js",

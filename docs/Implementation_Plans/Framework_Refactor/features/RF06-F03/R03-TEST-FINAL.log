@@ -1,0 +1,15 @@
+✔ framework/public/compatibility validators share original function identity and moved body (0.7862ms)
+✔ private owner/GM/bot channel succeeds without changing permission records (0.644ms)
+✔ public or ordinary-role visibility is rejected (0.3326ms)
+✔ other or unresolved account overwrite rejected; owner and bot overwrite accepted (0.2242ms)
+✔ privileged roles and member-specific administrator/manage-guild grants remain allowed (0.1323ms)
+✔ configured GM, bot send access and owner visibility errors remain distinct (0.1837ms)
+✔ non-text channel rejected and permission lookup errors propagate unchanged (0.1313ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 409.4308

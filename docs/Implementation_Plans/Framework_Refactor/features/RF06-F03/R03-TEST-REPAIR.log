@@ -1,0 +1,37 @@
+✖ framework/public/compatibility validators share original function identity and moved body (1.155ms)
+✔ private owner/GM/bot channel succeeds without changing permission records (0.6802ms)
+✔ public or ordinary-role visibility is rejected (0.3857ms)
+✔ other or unresolved account overwrite rejected; owner and bot overwrite accepted (0.2419ms)
+✔ privileged roles and member-specific administrator/manage-guild grants remain allowed (0.1526ms)
+✔ configured GM, bot send access and owner visibility errors remain distinct (0.1935ms)
+✔ non-text channel rejected and permission lookup errors propagate unchanged (0.1512ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 416.2917
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f03-r03.test.mjs:20:1
+✖ framework/public/compatibility validators share original function identity and moved body (1.155ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /function |permissionsFor/. Input:
+  
+  '/** Compatibility validators; original function identity retained for unmigrated callers. */\n' +
+    "export {assertGmOnlyChannel,assertPlayerPrivateChannel} from '../frameworks/discord/public.js';\n"
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r03.test.mjs:24:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "/** Compatibility validators; original function identity retained for unmigrated callers. */\nexport {assertGmOnlyChannel,assertPlayerPrivateChannel} from '../frameworks/discord/public.js';\n",
+    expected: /function |permissionsFor/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
