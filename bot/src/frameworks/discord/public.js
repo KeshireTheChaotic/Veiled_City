@@ -33,3 +33,5 @@ export {commandKey,isMutatingCommand} from './command-mutations.js';
 export {assertCommandReceiptStore} from './contracts/command-receipts.js';
 
 export {replayReceiptIfPresent,installReceiptCapture} from './idempotency.js';
+
+export {handleVoiceCommand} from './voice-commands.js';

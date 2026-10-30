@@ -1,0 +1,5 @@
+# RF06-F04 R17 — Original voice command family
+
+Frozen after R16. Agent B owns commands.js/Discord public. Extract original voice group into Discord voice-commands.js; inject same original voice instance and deferred GM-permission callback. No database or cross-framework policy inside the handler. Preserve status/repeat availability, join/current-channel checks, exact GM callback call timing, control/configure/narrate authorization, speech call parameters, runtime-only settings, response/error strings and pluralization. All reply/provenance/receipt/error wrappers remain outside in commands.js.
+
+Caller awaits handler before returning so receipt-capture finally cannot run early. Unrecognized subcommands return false to preserve original outer fallthrough rather than swallowing it. Fresh fully mocked voice/interactions cover branch behavior, callback multiplicity/order, awaited joining, controls, nullable settings, narration outcomes and caller order. AST structural equality permits only replacing two isGM(db,interaction) calls with isGm() and adding final false fallback. No provider/voice/network/DB/runtime connection.

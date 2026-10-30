@@ -1,0 +1,6 @@
+{
+  "original_voice_statements": 10,
+  "permission_callback_substitutions": 2,
+  "all_other_statement_structure_equal": true,
+  "unknown_subcommand_fallback": false
+}

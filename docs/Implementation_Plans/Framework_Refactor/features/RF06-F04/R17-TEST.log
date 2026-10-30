@@ -1,0 +1,15 @@
+✔ single public handler and original missing-subsystem error before any permission callback (0.9455ms)
+✔ status and cached repeat retain non-GM availability, exact arguments and private response (0.6601ms)
+✔ join requires current voice channel then defers before current permission and original async join (0.2146ms)
+✔ GM-only controls reject without voice work and authorized controls call once before reply (0.3201ms)
+✔ configure preserves nullable/empty setting semantics and option/set/status/reply order (0.2051ms)
+✔ one-off narration uses original force/party/NPC arguments and failure messages without real speech request (0.2278ms)
+✔ unknown subcommand falls through and caller awaits handler inside original receipt-capture try/finally (0.6108ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 417.929
