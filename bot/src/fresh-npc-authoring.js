@@ -1,6 +1,6 @@
 /** Audience-isolated fresh NPC utterances. Authoring provenance is NOT proof of their truth or a PC effect. */
 import {createHash} from 'node:crypto';
-import {gmWorldScope} from './gm-world-scope.js';
+import {gmWorldScope} from './frameworks/narrative/public.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
@@ -64,16 +64,8 @@ function validateWords(db,guild,words){
   if(typeof words!=='string'||!words.trim()||words.length>1400||/[\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/u.test(words)
     ||hasPcReference(db,guild,words))fail('NPC_AUTHORING_WORDS');
 }
-/** Escape formatting and wrap quoted lines so Discord chunking cannot turn continuation text into objective prose. */
-export function quoteNpcWords(words){
-  const escaped=words.replace(/[\u0000-\u0008\u000b-\u001f\u007f\u202a-\u202e\u2066-\u2069]/gu,
-    char=>`[U+${char.codePointAt(0).toString(16)}]`).replace(/[\\`*_\[\]<>#~|]/g,'\\$&'),lines=[];
-  for(const paragraph of escaped.split(/\r?\n/u)){
-    let line='';for(const char of paragraph){line+=char;if(line.length>=160){lines.push(`> ${line}`);line='';}}
-    if(line||!paragraph)lines.push(`> ${line}`);
-  }
-  return lines.join('\n');
-}
+import {quoteNpcWords} from './frameworks/narrative/public.js';
+export {quoteNpcWords};
 export function renderFreshNpcPart(db,guild,id,scope){
   const row=db.getCityRecord(guild,'npc_fresh_authoring',id),d=row?.data,s=row&&db.getWorldEvent(guild,row.source_event);
   if(!d||row.status!=='authored'||d.version!==1||d.issuer!==issuer||s?.status!=='active'

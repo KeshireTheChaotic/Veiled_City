@@ -1,6 +1,6 @@
 /** Native GM-owned nonbinding local prop text. Not a PC decision or a mechanical adapter. */
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
-import {quoteNpcWords} from './fresh-npc-authoring.js';
+import {quoteNpcWords} from './frameworks/narrative/public.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 const issuer='native:narrative-artifact';

@@ -3769,7 +3769,8 @@
         "bot/src/application/composition/publication-narrative.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf05-f04-c52.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c52.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c53.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3792,7 +3793,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/narrative--publication/public.js",
-      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition."
+      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition. C53 forwards only original establishGmWorldPart/renderGmWorldPart through fixed Publication consumer; Narrative retains exact scope/source/composition/replay rules. Remaining pair dependencies stay open."
     }
   ]
 }

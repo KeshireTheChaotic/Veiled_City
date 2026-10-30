@@ -70,3 +70,8 @@ export {narrativeUnitRenderSource} from './contracts/root-sources.js';
 export {narrativeWorldBridge} from './contracts/world-bridge.js';
 
 export {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash} from './nonmaterial-grammar.js';
+
+export {quoteNpcWords} from './quotation.js';
+export {gmOwnedScope,gmWorldScope} from './gm-world-scope.js';
+export {validateCompositionShape,compositionEvidence,projectComposition} from './gm-fiction-composition.js';
+export {establishGmWorldPart,renderGmWorldPart} from './gm-world-narrative.js';

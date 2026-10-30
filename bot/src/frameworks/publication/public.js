@@ -33,3 +33,5 @@ export {publicationCharacterObservation} from './contracts/character-observation
 export {publicationNativeFear} from './contracts/native-fear.js';
 
 export {publicationNarrativeGrammar} from './contracts/narrative-grammar.js';
+
+export {publicationNarrativeWorld} from './contracts/narrative-world.js';

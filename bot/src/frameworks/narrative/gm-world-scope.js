@@ -1,10 +1,10 @@
 /** Shared read-only GM-owned fiction scope. Native occupancy, current control and audience confer no PC effect authority. */
 import {createHash} from 'node:crypto';
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {currentScene,scenePresence,sceneAccess}=narrativeSessionScene;
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+import {narrativeWorldConstraints} from './contracts/world-constraints.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Current native GM-owned fiction scope required.'),{code:'GM_WORLD_NARRATIVE',expected:true});}

@@ -1,0 +1,76 @@
+{
+  "proofs": [
+    {
+      "name": "gm-world-scope.js",
+      "nonimport_body_unchanged": true
+    },
+    {
+      "name": "gm-fiction-composition.js",
+      "nonimport_body_unchanged": true
+    },
+    {
+      "name": "gm-world-narrative.js",
+      "nonimport_body_unchanged": true
+    }
+  ],
+  "quotation_region_unchanged": true,
+  "consumer_bodies_unchanged": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "d9a26b5b7f5bbdf7fc420e62ac62ca43990bbec13bd0e7b81dd6bb1722afa017"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "87b5dea2fb566824f9294a82a13acd7918e95bdb8f05249f54546ba84ab0912a"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "15bb57340a3a49e99e080201b5c4887b25806c4a1392218748a5120f67b30011"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "64f5ffa37b602beb06fbc00d399e3ebec0b9f19bebe0d5d63549a8f18868ac0f"
+    },
+    {
+      "path": "bot/src/fresh-npc-authoring.js",
+      "sha256": "7e9653feecc4e633628cff3c10bf9e6fe5730e1cac129cca87b6f695760a04f0"
+    },
+    {
+      "path": "bot/src/fresh-scene-authoring.js",
+      "sha256": "8fe48464949fdb417d2b917ef9c4cfb1374780745f0053a5db649d439e4dfa3e"
+    },
+    {
+      "path": "bot/src/narrative-artifacts.js",
+      "sha256": "7eb3f71ed7faf3b364895dba1bd079773c9d412bad22fc2b963c6558415b30e1"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "13bf12984d09346e3406091227cb465a2062fcc5016e6c3eb4c7f205bb853ed3"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/gm-world-scope.js",
+      "sha256": "52d3a223806e6508170ee61d012b038844dd7874ba7903b57ffacb559a92c500"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/gm-fiction-composition.js",
+      "sha256": "4f9849febf6dc9c57591774f3e79c8165ac1e471d3c06cf78cb2c21ab9800822"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/gm-world-narrative.js",
+      "sha256": "6604ada7c985317985c5c4758305c1d8a85c19fd92b5353a8d62760c9bb2cad3"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/quotation.js",
+      "sha256": "8e41282f0f5e57c6b912fe2848b1a17e2c99fa82e49ccbec889732ad0482975d"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-world.js",
+      "sha256": "2e696d39e82934f311db19d15be1daeaad42ef3a6f66b9b5c2ddf486641a3650"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c53.test.mjs",
+      "sha256": "b0cd4f23e9f0ade21df9fcdc31baf77ced6723909574ba2bc6e94b9b0cc4bf32"
+    }
+  ]
+}

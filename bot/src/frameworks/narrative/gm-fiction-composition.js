@@ -1,6 +1,6 @@
 /** Bounded native composition: actor-owned NPC acts and exact audience-visible source quotations, never PC outcomes. */
 import {createHash} from 'node:crypto';
-import {quoteNpcWords} from './fresh-npc-authoring.js';
+import {quoteNpcWords} from './quotation.js';
 import {compositionTones as tones} from './gm-fiction-schema.js';
 export {npcCompositionSchema} from './gm-fiction-schema.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');

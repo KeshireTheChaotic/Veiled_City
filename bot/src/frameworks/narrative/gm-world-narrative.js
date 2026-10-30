@@ -2,10 +2,10 @@
 import {createHash} from "node:crypto";
 import {gmOwnedScope} from './gm-world-scope.js';
 export {gmWorldScope} from './gm-world-scope.js';
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {validateCompositionShape,compositionEvidence,projectComposition} from "./gm-fiction-composition.js";
-import {dialogue,atmosphere,tones,gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './frameworks/narrative/gm-world-contract.js';
+import {dialogue,atmosphere,tones,gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT} from './gm-world-contract.js';
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 export {gmWorldPartsSchema,GM_WORLD_NARRATIVE_PROMPT};

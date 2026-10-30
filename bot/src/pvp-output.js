@@ -18,7 +18,8 @@ const {indexWorldEvent}=publicationWorldEvents;
 import {publicationContinuationOutputSource,publicationSessionContinuation} from "./frameworks/publication/public.js";
 function renderContinuationNotice(...args){return publicationSessionContinuation.renderContinuationNotice(...args);}
 import {renderNativeNotice} from "./native-notice.js";
-import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
+import {publicationNarrativeWorld} from './frameworks/publication/public.js';
+const {establishGmWorldPart,renderGmWorldPart}=publicationNarrativeWorld;
 import {operationalMetrics,measureNative} from './operational-metrics.js';
 import {publicationNarrativeGrammar} from './frameworks/publication/public.js';
 const {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash}=publicationNarrativeGrammar;
