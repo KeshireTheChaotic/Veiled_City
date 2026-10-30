@@ -5,7 +5,7 @@ import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {portrayalPacket} from './portrayal.js';
+import {portrayalPacket} from './frameworks/narrative/public.js';
 import {freshNpcFocuses as focuses} from './gm-fiction-schema.js';
 export {freshNpcRequestSchema,freshNpcResponseSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');

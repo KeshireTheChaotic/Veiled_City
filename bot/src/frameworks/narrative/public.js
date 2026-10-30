@@ -81,3 +81,5 @@ export {sceneDescriptionRequest,defaultSceneDescription,projectSceneDescription,
 export {materialParaphrases} from './material-paraphrases.js';
 export {hasPcReference} from './pc-reference.js';
 export {FRESH_SCENE_INSTRUCTIONS,renderFreshScenePart,findFreshScenePart,hasFreshSceneResponse,authorFreshSceneRequests} from './fresh-scene-authoring.js';
+
+export {configurePortrayal,portrayalPacket} from './portrayal.js';

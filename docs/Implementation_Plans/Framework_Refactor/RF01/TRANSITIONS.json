@@ -1338,17 +1338,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "f263a7e2863a4711536e895bdce31f47f9651f9629c5fe9624cec440e2adb01e",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/portrayal.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "c46eceeb5f91924ff45e225066dfb9910c19bb27385f163633dbac79c090973e",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/pre-roll-fear-notice.js",
@@ -3426,20 +3415,6 @@
       "to": "bot/src/narrative-integrity.js",
       "kind": "static",
       "specifier": "./narrative-integrity.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "fdb0f28d8cf60ba8fc829ae05f1bf54c009fc7b4f704a2b3fbcc41ef3949c1d5",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/portrayal.js",
-      "kind": "static",
-      "specifier": "./portrayal.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F04",
@@ -6622,20 +6597,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "771e01b74a9bea79be32fb70dc698d3c1ea9b936c9dfdeeb7b6a240d6c61cb63",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/portrayal.js",
-      "kind": "static",
-      "specifier": "./portrayal.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b91efae551c7c8b80de96c9cf2c1c73316cef251d4c2e883297780d6fce5a017",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/story-commands.js",
@@ -6912,20 +6873,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "9a318d97c6c4799bc75639a4321ff0b8bbc82bbc3f32df78b204a647a50816ef",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/voice.js",
-      "to": "bot/src/portrayal.js",
-      "kind": "static",
-      "specifier": "./portrayal.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

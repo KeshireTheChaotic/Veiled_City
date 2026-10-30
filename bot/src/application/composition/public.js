@@ -52,3 +52,5 @@ export {initializeDiscordSessionPrincipal} from './discord-session.js';
 export {initializeSessionAssemblyState} from './assembly-state.js';
 
 export {initializePublicationNarrative} from './publication-narrative.js';
+
+export {initializeDiscordNarrative} from './discord-narrative.js';

@@ -9,7 +9,7 @@ import { setPacingCues, pacingAdvice, configureMystery, mysteryView, recordMyste
 import { negotiateAgreement } from './frameworks/session/public.js';
 import { previewOutcomes } from './frameworks/daggerheart/public.js';
 import { explainWhy } from "./frameworks/knowledge/public.js";
-import { configurePortrayal } from "./portrayal.js";
+import { configurePortrayal } from "./frameworks/narrative/public.js";
 import { authorWorldDraft, reviewWorldDraft } from './frameworks/world/public.js';
 import { recordScenePresence, sceneView } from "./frameworks/session/public.js";
 import { manageGroup } from './frameworks/world/public.js';

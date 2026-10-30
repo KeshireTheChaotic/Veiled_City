@@ -1,0 +1,62 @@
+{
+  "original_bodies_unchanged": true,
+  "static_initializer_before_GM": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "174a45166302784da17a897c1784162ca3329461c820334a77f9cddb89fe24b6"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "f39d8e7b7f05c2a08729868bf8d5ca3e407e42218bc38ab5cc2db9571e7d7895"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "cbf4a5e13642d60ab975bf39c10066551830a3780e32deb5d3835fa7061e469c"
+    },
+    {
+      "path": "bot/src/fresh-npc-authoring.js",
+      "sha256": "83ed23ad4b7348d5c34feebcff17d4aa60fac12349620219de2cf94111086003"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "ec474a91d014475884609f59e24252d1d255a46c93a88317128d2dcedf8167ef"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "047897d80aaf3810b6e296da6a7c861c92db405095d3785d0dc65d51f6ccf0b7"
+    },
+    {
+      "path": "bot/src/narrative-speakers.js",
+      "sha256": "f66b85da58e8340bbe83629425cea5ee416aaa80d01d2feb580488a46b6c3dd6"
+    },
+    {
+      "path": "bot/src/story-commands.js",
+      "sha256": "90d6fdaf42d09047d8444a79e314cfcfe07019d0f582be649113b48cacf63850"
+    },
+    {
+      "path": "bot/src/voice.js",
+      "sha256": "0517cddad8c6c14bbc81d8dcf2365ac7cff448ff819653a6095ea7ef5d296b50"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/portrayal.js",
+      "sha256": "bf86373ca2940d630039fc6f888c835f71c817087571690628764844228fd402"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/narrative-portrayal.js",
+      "sha256": "ac1a06eb2b2a0c3d30347663a77184a5e1ab761e5e37bd6c061f1aaff9b7ee24"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--narrative/public.js",
+      "sha256": "694707dc74c9f12d35c30aa85b220fe97958f75ce2c66ef31232c81815b11005"
+    },
+    {
+      "path": "bot/src/application/composition/discord-narrative.js",
+      "sha256": "a419171f3fd03e39d3670b752021974e806dc29f34fc3def8b140bd473653c86"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c57.test.mjs",
+      "sha256": "3015c371bb46901788aae72444f426639899ae17e6fc842e5c23419403603958"
+    }
+  ]
+}

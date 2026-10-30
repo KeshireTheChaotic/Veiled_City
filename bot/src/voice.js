@@ -3,7 +3,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { portrayalPacket } from "./portrayal.js";
+import {discordNarrativePortrayal} from './frameworks/discord/public.js';
+const {portrayalPacket}=discordNarrativePortrayal;
 import { deliveredPartyOutput } from "./pvp-output.js";
 import {operationalMetrics} from './operational-metrics.js';
 import {

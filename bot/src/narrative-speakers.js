@@ -1,5 +1,5 @@
 /** Audience-filtered actor-relative portrayal. Public fiction never receives unrestricted GM dossiers. */
-import {portrayalPacket} from './portrayal.js';
+import {portrayalPacket} from './frameworks/narrative/public.js';
 import {narrativeSessionScene} from './frameworks/narrative/public.js';
 const {scenePresence,npcEvidenceActive}=narrativeSessionScene;
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';

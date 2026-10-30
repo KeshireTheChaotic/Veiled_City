@@ -1,5 +1,5 @@
 /** Persistent diction guidance, separated from factual memory and public voice authorization. */
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {cityObject,cityKey,cityAudit,requireCitySource}=narrativeWorldPrimitives;
 const fields=["address","formality","humor","verbal_habits","emotional_tone","pronunciation"];
 export function configurePortrayal(db,guildId,input,actorId){
@@ -20,6 +20,6 @@ export function portrayalPacket(db,guildId,npc,{publicVoice=false}={}){
   return {npc,display_name:profile.display_name,...(!publicVoice?{portrayal:profile.portrayal}:{}),direction,
     authority:"Diction/emotional presentation only; never facts, consent, thoughts or new mechanics."};
 }
-import {narrativePortrayalSource} from './frameworks/narrative/public.js';
+import {narrativePortrayalSource} from './contracts/root-sources.js';
 // Provide this module's original portrayal configuration to the fixed Narrative slot; no other authority is granted.
 narrativePortrayalSource.bind({configurePortrayal});
