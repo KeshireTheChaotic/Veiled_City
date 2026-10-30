@@ -1,3 +1,4 @@
+import {gmFactLine,playerFactLine} from './frameworks/discord/public.js';
 import {handleGmNpcStateCommand} from './frameworks/discord/public.js';
 import {connectDiscordGmNpcReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleGmFactListCommand} from './frameworks/discord/public.js';
@@ -323,18 +324,9 @@ async function deletePublishedNotInSnapshot({db,guild,snapshot}){
 function factList(text){return String(text||"").split(/\n|;/).map(x=>x.trim()).filter(Boolean);}
 function chunkTextLines(lines,maxChars=1900){ return chunkDiscordLines(lines,maxChars); }
 
-function factScopeLabel(row){
-  if(row.visibility==="gm") return "GM";
-  if(row.visibility==="player") return row.subject_user_id?`PLAYER <@${row.subject_user_id}>`:"PLAYER";
-  if(row.visibility==="character") return row.subject_character_id?`CHARACTER ${row.subject_character_id.slice(0,8)}`:"CHARACTER";
-  return String(row.visibility||"party").toUpperCase();
-}
-function gmFactLine(row){return `• **[${factScopeLabel(row)}] [${String(row.category||"fact").toUpperCase()}]** \`${row.fact_key}\` — ${row.content} _(${row.source||"unknown"}, ${row.confidence??100}% confidence)_`;}
-function playerFactLine(row){
-  if(row.visibility==="gm") throw new Error("GM-only fact reached a player-safe fact formatter.");
-  const scope=["player","character"].includes(row.visibility)?"PRIVATE":String(row.visibility||"party").toUpperCase();
-  return `• **[${scope}]** ${row.content}`;
-}
+
+
+
 function activeCharacterForUser(db,guildId,userId){
   const s=db.getActiveSession(guildId); if(s){const a=db.activeAssignment(s.id,userId); if(a) return db.getCharacter(a.character_id);}
   return db.listCharacters(guildId,userId,{includeClosed:false})[0]||null;

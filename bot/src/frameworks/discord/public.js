@@ -54,3 +54,5 @@ export {assertCampaignConfigurationStore} from './contracts/campaign-configurati
 export {handleGmFactListCommand,assertGmFactReadStore} from './gm-fact-list.js';
 
 export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
+
+export {gmFactLine,playerFactLine} from './fact-text.js';

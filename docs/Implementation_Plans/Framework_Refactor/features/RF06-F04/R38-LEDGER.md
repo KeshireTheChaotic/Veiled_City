@@ -1,0 +1,9 @@
+# RF06-F04 R38 — Complete original fact display text
+
+Original factScopeLabel/gmFactLine/playerFactLine moved together to Discord fact-text.js; only GM/player formatters public. Root imports them for unchanged original display/adapter callsites. Whole three functions and remaining root AST equal except exact public import. Every scope label/user/character ref/casing/default/provenance/zero-confidence/Markdown and player GM-only refusal preserved. No data filtering/entitlement/policy/SQL/schema/native or transaction change.
+
+Exclusive commands/Discord public source extension granted by Agent A. INDEX held by A for C100 during tests, explicit return required for exact checkpoint. Runtime3files, fresh c38, feature scope/ledger/hash/structure/log and phase ledger only; no registry/index/class/new capability. Preserve concurrent state/GM/owner changes.
+
+Frozen node --test bot/tests/ai-gm-2026-10/rf06-f04-c38.test.mjs exit0,7/7passed,zero failure/skip/cancel,572.4073ms. Exact original GM/private/player labels/defaults/provenance, explicit0confidence, masked private subject labels, unchanged content/Markdown/invalid inputs, GM-only player refusal/no mutation and root public adoption. Syntax4/4 and original AST proofs passed. No repair/rerun. Pure formatting needs no DB/provider/transport execution; prior unrelated tests not rerun.
+
+Shared RF05 ratchet exit0: 1054modules/4224imports,0unowned/0active/0errors,711accepted,cycle60. Includes Agent A C100 source progress, not full phase qualification. No R38 transition retired/exception expanded. Native handout/outbox correlated storage still held until specific prerequisite. Full RF06/release incomplete; no live/provider/production DB/deployment/push/merge. Next exact RF06-F04 R39 original party-status display with qualified original readers. Rollback only R38 paths.

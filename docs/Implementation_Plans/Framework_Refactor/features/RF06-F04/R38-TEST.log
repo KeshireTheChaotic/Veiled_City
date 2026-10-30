@@ -1,0 +1,15 @@
+✔ original GM text retains private player/character scope identifiers and exact provenance (0.5809ms)
+✔ all original GM scope defaults/casing and missing subject fallbacks retained (0.1601ms)
+✔ explicit zero confidence and original falsy category/source behavior preserved (0.1463ms)
+✔ player display masks owner identifiers in private labels and retains original content (0.1392ms)
+✔ GM-only row still refused by player formatter with original error and no mutation (0.7357ms)
+✔ original Markdown/undefined content and invalid-row errors remain unchanged (1.283ms)
+✔ root imports same public formatters while keeping query/audience/GM guard callsites (1.2901ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 572.4073

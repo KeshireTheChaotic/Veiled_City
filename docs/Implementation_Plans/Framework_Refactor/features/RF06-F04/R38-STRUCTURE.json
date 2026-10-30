@@ -1,0 +1,10 @@
+{
+  "parent": "e5ee650cc97434bae316db6716ca793c82934cb4",
+  "original_functions": [
+    "factScopeLabel",
+    "gmFactLine",
+    "playerFactLine"
+  ],
+  "whole_original_functions_equal": true,
+  "remaining_root_equal_except_one_public_import": true
+}
