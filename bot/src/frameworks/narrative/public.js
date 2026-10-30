@@ -120,3 +120,5 @@ export {coordinateNarrative,creativeBrief} from './narrative-delegation.js';
 export {validateNarrativeCompleteness,recordNarrativeHealth} from './narrative-completeness.js';
 
 export {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
+
+export {narrativeIntentCommunication} from './contracts/intent-communication.js';

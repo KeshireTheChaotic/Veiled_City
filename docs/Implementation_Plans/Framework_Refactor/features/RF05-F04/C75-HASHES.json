@@ -1,0 +1,43 @@
+{
+  "base": "47d28c97",
+  "original_parser_and_salience_bodies_identical_except_imports_registration_forwarder": true,
+  "syntax_pass": 8,
+  "files": [
+    {
+      "path": "bot/src/source-communication.js",
+      "sha256": "d8d190567c6c3899807e06bbf6ebf3a462a31747a14ada7120f68cf70e17f9d7"
+    },
+    {
+      "path": "bot/src/narrative-salience.js",
+      "sha256": "11dff197749bb11793f0f8ee931c14d6cb22719ae97aab591c0b2885311e9d93"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "b6c9584a9af580b0899242b68bf5c57f32e39615517642e90f0e952684edd023"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "f907e8d5e7612d839f0b2dafa5acc64b3f292c854a98d3e679cd8d2f45d7c750"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/communication-source.js",
+      "sha256": "527101733b7724e3da99290cbc246615689370296190ee951e6d3c4da855f9ae"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/intent-communication.js",
+      "sha256": "4131f3c121ab0eb4e2f7c46724ec13b003f626a2e71dbfd1623fd2e11961367d"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/public.js",
+      "sha256": "930d856b2ca23f13af43b64b5d9cd024d47fd8a2a322696e64eff196d914cd40"
+    },
+    {
+      "path": "bot/src/application/composition/intent-narrative.js",
+      "sha256": "061e90ca07e64821c3545833d347d6d88e8a4af7d24b02646fb28eaa28cf49cb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs",
+      "sha256": "1be76501c41fa57438175f7a367dd51392c24bb44712048b5862d11e3aed5e75"
+    }
+  ]
+}

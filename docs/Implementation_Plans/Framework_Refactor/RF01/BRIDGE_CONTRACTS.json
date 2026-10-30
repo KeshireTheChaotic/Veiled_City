@@ -1672,7 +1672,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf05-f04-c63.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f04-c72.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c72.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1695,7 +1696,7 @@
         "occurrences": 10
       },
       "public_api": "bot/src/framework-to-framework/intent--narrative/public.js",
-      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects."
+      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects. C75 original Intent characterSourceRanges read by Narrative salience through own fixed consumer and original source proxy, formatting/quote rules and non-authorizing semantics unchanged."
     },
     {
       "pair": "intent--npc",

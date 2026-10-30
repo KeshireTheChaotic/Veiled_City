@@ -6,3 +6,7 @@ export function connectIntentNarrativeContext(){return intentNarrativeContext.bi
 import {intentGameplayIntakeSource} from '../../frameworks/intent/public.js';
 import {narrativeIntentEngagement} from '../../frameworks/narrative/public.js';
 export function connectNarrativeIntentEngagement(){return narrativeIntentEngagement.bind({explicitSilence:intentGameplayIntakeSource.explicitSilence,semanticResponseObligation:intentGameplayIntakeSource.semanticResponseObligation});}
+
+import {intentCommunicationSource} from '../../frameworks/intent/public.js';
+import {narrativeIntentCommunication} from '../../frameworks/narrative/public.js';
+export function connectNarrativeIntentCommunication(){return narrativeIntentCommunication.bind({characterSourceRanges:intentCommunicationSource.characterSourceRanges});}

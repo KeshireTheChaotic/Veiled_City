@@ -46,3 +46,5 @@ export {intentNativeEncounter} from './contracts/native-encounter.js';
 export {messageSpans,routeMessageSpans,serializeSpanLedger} from './message-span-ledger.js';
 
 export {intentNarrativeContext} from './contracts/narrative-context.js';
+
+export {intentCommunicationSource} from './contracts/communication-source.js';

@@ -33,3 +33,6 @@ export function isCharacterSourceSpan(text,start,end){
   return Number.isSafeInteger(start)&&Number.isSafeInteger(end)&&start>=0&&end>start
     &&characterSourceRanges(text).some(range=>start>=range.start&&end<=range.end);
 }
+
+import {intentCommunicationSource} from './frameworks/intent/public.js';
+intentCommunicationSource.bind({characterSourceRanges});

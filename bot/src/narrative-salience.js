@@ -15,7 +15,8 @@ import {narrativeQueryRelevance,narrativeIdentityRelevance} from './frameworks/n
 import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 import {consentAction,historicalActionSource} from './action-consent.js';
-import {characterSourceRanges} from './source-communication.js';
+import {narrativeIntentCommunication} from './frameworks/narrative/public.js';
+const {characterSourceRanges}=narrativeIntentCommunication;
 import {narrativeWorldIdentityPersistence} from './frameworks/narrative/public.js';
 function maintainIdentityPersistence(...args){return narrativeWorldIdentityPersistence.maintainIdentityPersistence(...args);}
 import {narrativeWorldBridge} from './frameworks/narrative/public.js';
