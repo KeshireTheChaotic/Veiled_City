@@ -1,0 +1,28 @@
+{
+  "kind": "static-only",
+  "paths": [
+    [
+      "bot/src/index.js",
+      "bot/src/application/composition/public.js",
+      "bot/src/application/composition/narrative-world.js"
+    ],
+    [
+      "bot/src/index.js",
+      "bot/src/gm.js",
+      "bot/src/framework-to-framework/narrative--world/public.js"
+    ],
+    [
+      "bot/src/index.js",
+      "bot/src/gm.js",
+      "bot/src/narrative-authority.js"
+    ],
+    [
+      "bot/src/index.js",
+      "bot/src/gm.js",
+      "bot/src/framework-to-framework/narrative--world/public.js",
+      "bot/src/framework-to-framework/narrative--world/signals.js",
+      "bot/src/framework-to-framework/narrative--world/source-context.js"
+    ]
+  ],
+  "initializer_before_GM_construction": true
+}

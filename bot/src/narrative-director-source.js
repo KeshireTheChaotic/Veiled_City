@@ -5,7 +5,10 @@ const {currentScene}=narrativeSessionScene;
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 import {narrativeSourceVisible,sceneFictionHash as hash,sceneFictionFailure} from './scene-fiction-context.js';
-import {worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot} from './world-narrative-bridge.js';
+import {narrativeWorldBridge} from './frameworks/narrative/public.js';
+function worldNarrativeBridgePacket(...args){return narrativeWorldBridge.worldNarrativeBridgePacket(...args);}
+function worldDirectorBridgeBeats(...args){return narrativeWorldBridge.worldDirectorBridgeBeats(...args);}
+function nativeFearClockConsequenceSnapshot(...args){return narrativeWorldBridge.nativeFearClockConsequenceSnapshot(...args);}
 import {applicationPrincipal} from './kernel/application-authority.js';
 import {narrativeWorldSimulation} from './frameworks/narrative/public.js';
 function prepareWorldSimulationObservation(...args){return narrativeWorldSimulation.prepareWorldSimulationObservation(...args);}

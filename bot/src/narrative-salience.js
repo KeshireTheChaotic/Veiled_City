@@ -18,7 +18,8 @@ import {consentAction,historicalActionSource} from './action-consent.js';
 import {characterSourceRanges} from './source-communication.js';
 import {narrativeWorldIdentityPersistence} from './frameworks/narrative/public.js';
 function maintainIdentityPersistence(...args){return narrativeWorldIdentityPersistence.maintainIdentityPersistence(...args);}
-import {canonicalNarrativeCause} from './world-narrative-bridge.js';
+import {narrativeWorldBridge} from './frameworks/narrative/public.js';
+function canonicalNarrativeCause(...args){return narrativeWorldBridge.canonicalNarrativeCause(...args);}
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;
 const records=listNarrativeRecords;

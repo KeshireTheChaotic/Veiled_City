@@ -2010,17 +2010,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "4bc95a553bacc6e98c2d56bf7253c21cab5e76e3330084883deb2e18454697b4",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/world-narrative-bridge.js",
-      "owner": "narrative--world",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF04-F05",
-      "expires_after": "RF04",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "43f1c628d1697e38891250c6294c3d3452a16a0ad5d0875b6a8be3a8f9eaa98b",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/scripts/export-campaign.mjs",
@@ -3516,20 +3505,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "42ea04a2073e15e2d10126be8d09b42f101f7fdddab1103eef6e45e0c5806fe3",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "8bf6658a6e5687f7276bd49291012ed91d4fdd96f87f2c4d936c3d52b24d98f7",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -4272,20 +4247,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "37365ec9679c5639a02f67d49a8e42a60c4cfdf595a3cc2c3c91df100438dce9",
-      "code": "FRAMEWORK_IMPORTS_PAIR",
-      "from": "bot/src/narrative-director-source.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "f1028576c3c8c8d30b03d3e191b5ce50e4c82eced1c52cea7b4a0b2a91ec5a40",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-integrity.js",
@@ -4460,20 +4421,6 @@
       "to": "bot/src/source-communication.js",
       "kind": "static",
       "specifier": "./source-communication.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "6d3eb8ddb41c895e656daf9a3e30b166336b2dac13fce870d26f6d8ab8eb336f",
-      "code": "FRAMEWORK_IMPORTS_PAIR",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/world-narrative-bridge.js",
-      "kind": "static",
-      "specifier": "./world-narrative-bridge.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

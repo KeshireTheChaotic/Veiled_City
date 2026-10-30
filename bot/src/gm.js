@@ -11,7 +11,7 @@ import { tierWorldAdditions } from "./frameworks/knowledge/public.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT, scopedSceneMemory } from "./frameworks/knowledge/public.js";
 import { presentationContext } from "./frameworks/knowledge/public.js";
 import {worldHookSeedForGm,worldRecordOriginForGm} from './frameworks/world/public.js';
-import {worldNarrativeBridgePacket} from './world-narrative-bridge.js';
+import {worldNarrativeBridgePacket} from './framework-to-framework/narrative--world/public.js';
 import {WORLD_DIRECTOR_OPPORTUNITY_GUIDANCE} from './frameworks/narrative/public.js';
 import {worldResolutionContext} from './frameworks/world/public.js';
 import {openingWorldOpportunities} from './framework-to-framework/session--world/public.js';

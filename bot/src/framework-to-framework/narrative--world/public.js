@@ -52,3 +52,17 @@ export function connectNarrativeWorldBackground(){return narrativeWorldBackgroun
 import {narrativeWorldMaterialization} from '../../frameworks/narrative/public.js';
 import {establishNarrativeEntity} from '../../frameworks/world/public.js';
 export function connectNarrativeWorldMaterialization(){return narrativeWorldMaterialization.bind({establishNarrativeEntity});}
+
+export {rankEligibleWorldSignals,worldNarrativeBridgePacket,revalidateWorldNarrativeSignal,openingOpportunityRequests} from './signals.js';
+export {nativeFearClockConsequenceSnapshot} from './fear-clock-signals.js';
+export {worldDirectorBridgeBeats} from './beats.js';
+export {canonicalNarrativeCause} from './cause.js';
+import {worldNarrativeBridgeSource} from '../../frameworks/world/public.js';
+import {worldDirectorBridgeBeats} from './beats.js';
+import {openingOpportunityRequests,worldNarrativeBridgePacket} from './signals.js';
+import {nativeFearClockConsequenceSnapshot} from './fear-clock-signals.js';
+import {canonicalNarrativeCause} from './cause.js';
+import {narrativeWorldBridge} from '../../frameworks/narrative/public.js';
+// Preserve the original module-load source registration; no effects or grants are created.
+worldNarrativeBridgeSource.bind({worldDirectorBridgeBeats,openingOpportunityRequests});
+export function connectNarrativeWorldBridge(){return narrativeWorldBridge.bind({worldNarrativeBridgePacket,worldDirectorBridgeBeats,nativeFearClockConsequenceSnapshot,canonicalNarrativeCause});}

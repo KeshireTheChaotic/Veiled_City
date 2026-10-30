@@ -1,0 +1,50 @@
+[
+  {
+    "path": "bot/src/application/composition/narrative-world.js",
+    "sha256": "d17ec63b035450dd00817da2acb897f0f94b5c0b4516d90201a582f710f188b3"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/public.js",
+    "sha256": "bb7721b8fca2ae29ab58dc1b319aab6bd5da58366fc70fdf0e4b9c350185c9f8"
+  },
+  {
+    "path": "bot/src/frameworks/narrative/public.js",
+    "sha256": "8c35633397234ce75f0dce9abe29a32ac4249c5cf7cc9212ba3dd90620d36519"
+  },
+  {
+    "path": "bot/src/gm.js",
+    "sha256": "45165103c4f7741f99c8759a903bb7ec1594d18489c43ad8a0728ae4d30339f6"
+  },
+  {
+    "path": "bot/src/narrative-director-source.js",
+    "sha256": "43d550d43d688ea0af3605876b192abe770ea2423ea22be4bc71ee672c2ca286"
+  },
+  {
+    "path": "bot/src/narrative-salience.js",
+    "sha256": "bab90ac862acef2e54b3fd4a78e1c164a3e7b235f5cfb0776ebd3cd0c1c92897"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/source-context.js",
+    "sha256": "65910a795df03d750bec97d42154fb95b8dd7df50a7b3e72947fc0b253c8bcb1"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/signals.js",
+    "sha256": "f436ab8a28a811492b9b19d614a34e5723e85e234cdc1a357adfca2628dea573"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/fear-clock-signals.js",
+    "sha256": "c041664ac38fdec15eb12b6b16df1d2b6055d230a1238579590d5025b22c27e6"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/beats.js",
+    "sha256": "c9b9f7b633fbc63bb7cba23b1f3bb76c94b60322d03d5908872146f6679dd44a"
+  },
+  {
+    "path": "bot/src/framework-to-framework/narrative--world/cause.js",
+    "sha256": "5ad62f4b8cfe833938cda6b7b8226f08880a85b39cd1b7f020aef803406eb9df"
+  },
+  {
+    "path": "bot/src/frameworks/narrative/contracts/world-bridge.js",
+    "sha256": "65cee2588bbfaf074204962cde40ea8a49fd7c47b2d3498475f74921052109d5"
+  }
+]

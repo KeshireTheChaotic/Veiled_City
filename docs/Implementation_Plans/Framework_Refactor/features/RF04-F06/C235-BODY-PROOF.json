@@ -1,0 +1,22 @@
+[
+  {
+    "file": "signals.js",
+    "original_region_sha256": "8ddce16dd9ad1851af3e969a880f4c1599ba676b0b8a46ac5879ddf6a2d2b070",
+    "exact_body_match": true
+  },
+  {
+    "file": "fear-clock-signals.js",
+    "original_region_sha256": "9e08b9d62a9798fdbb3dfabb2addc0084358127935b2bb811620b73b7eca5b6f",
+    "exact_body_match": true
+  },
+  {
+    "file": "beats.js",
+    "original_region_sha256": "0a8d91fd76340039e09a1b597b5138f222ab82d51f3ab8eeb47a38094c5fc06b",
+    "exact_body_match": true
+  },
+  {
+    "file": "cause.js",
+    "original_region_sha256": "dade6733659a2072fe95eb1eb40983f4737cdc640e7550fa65a8b6d319f009ad",
+    "exact_body_match": true
+  }
+]

@@ -66,3 +66,5 @@ export {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js'
 export {narrativeCharacterObservation} from './contracts/character-observation.js';
 
 export {narrativeUnitRenderSource} from './contracts/root-sources.js';
+
+export {narrativeWorldBridge} from './contracts/world-bridge.js';
