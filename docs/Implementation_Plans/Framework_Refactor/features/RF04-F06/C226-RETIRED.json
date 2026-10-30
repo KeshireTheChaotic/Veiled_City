@@ -1,0 +1,82 @@
+{
+  "feature": "RF04-C226",
+  "records": [
+    {
+      "id": "066111eafc97b52af7d2d45cc1c7647fa94dc4858068063c066e6b7c9938c26a",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/city-calendar.js",
+      "owner": "world",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "4d49610c9b0ddab7ae73402cde5f707524a2072a0d954beba0aa96c391e75ad5",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/epistemic.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "14f0d9fe9edb4aa0e7989f8b3acea03d3c3942a098de059565330dbfc7a965e0",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/historical-archive.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "301a4696dc0b88ae402306e5506d18c1ee74d1cd77fce246e4cbf5a860e13154",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/presentation-evidence.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "60e894cb69735ab4aa103b9d4d57e2546518488079a25d0797b9e0765de468e4",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/relationship-state.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "04d586f2583bddefa11fac7812f127e3e12aef58d983656a515b8e52f1d92955",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/scene-continuity.js",
+      "owner": "session",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F04",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "df173fedfc2859628ffd907b5f09fe428830750145de1260aa5a6cbe99cf493a",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/semantic-candidate-source.js",
+      "owner": "knowledge",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F03",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

@@ -2183,7 +2183,7 @@
         }
       ],
       "validation": "Consumers fail closed before binding, forward original Knowledge functions and forbid replacement; standalone facade and pair bind the same originals.",
-      "lifecycle": "The standalone facade binds original readers on module load before database construction or migration; application composition rebinds the same originals.",
+      "lifecycle": "C225 historical db.js Application facade eagerly binds original owned sources through standalone-persistence composition before database construction; C226 zero-caller internal root shims retired. Repeated application binding retains the same original functions.",
       "adoption_feature": "RF06-F02",
       "consumers": [
         "bot/src/application/composition/persistence-knowledge.js",
@@ -2217,7 +2217,7 @@
         "occurrences": 266
       },
       "public_api": "bot/src/framework-to-framework/knowledge--persistence/public.js",
-      "scope": "Relationship classification, source evidence, relationship keys, dimension updates, projections and historical archive projection only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged."
+      "scope": "Relationship classification, source evidence, relationship keys, dimension updates, projections and historical archive projection only; other Knowledge/Persistence dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged. C226 legacy internal zero-caller shims retired after standalone SQLite qualification; owned implementations and stable db.js API retained."
     },
     {
       "pair": "knowledge--publication",
@@ -3419,7 +3419,7 @@
         }
       ],
       "validation": "The fixed Persistence consumer fails closed before binding, forwards the original World public function unchanged, and forbids replacement; standalone facade and application pair bind the same original.",
-      "lifecycle": "The standalone facade binds the original root re-export on module load; application composition binds the same original World public function before database construction.",
+      "lifecycle": "C225 historical db.js Application facade eagerly binds original owned sources through standalone-persistence composition before database construction; C226 zero-caller internal root shims retired. Repeated application binding retains the same original functions.",
       "adoption_feature": "RF06-F02",
       "consumers": [
         "bot/src/application/composition/persistence-world.js",
@@ -3450,7 +3450,7 @@
         "occurrences": 881
       },
       "public_api": "bot/src/framework-to-framework/persistence--world/public.js",
-      "scope": "Scheduled city deadline processing only; all other Persistence/World dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged."
+      "scope": "Scheduled city deadline processing only; all other Persistence/World dependencies and legacy facade imports remain migration obligations. C225 same eager standalone bindings now live in Application facade composition; Knowledge canon proof also fixed; class body unchanged. C226 legacy internal zero-caller shims retired after standalone SQLite qualification; owned implementations and stable db.js API retained."
     },
     {
       "pair": "publication--session",

@@ -1,0 +1,12 @@
+{
+  "feature": "RF04-C226",
+  "deleted_shim_sha256": {
+    "bot/src/city-calendar.js": "203d023d22fab8318cb211692a17a95a9a8db40d0338c14222a02deb080fb316",
+    "bot/src/scene-continuity.js": "698e4d4c34fe2ecb2c775667efc5a75a94793cf3a9e7988cbe9baec152ddb77e",
+    "bot/src/epistemic.js": "9f071a3406e93ce89017defee8fe5512256a224a6f68774909b6f9afb781ef84",
+    "bot/src/historical-archive.js": "4050d877c24616df45fb04e9c0f3364f713a5f037abbb1bb7c6811034fccc29f",
+    "bot/src/presentation-evidence.js": "97df4361f7dfc0a8ce871e55d41fbf9fc5c7a2438e8c17b41e39802a41aa935f",
+    "bot/src/relationship-state.js": "af773d9238c0056da70fac8e13017d3df7543e505cbf457eeae83a18d9700c50",
+    "bot/src/semantic-candidate-source.js": "cfc8be45ac95a1853be26b9ad03bca9fca081d2581e1449c678fc66bfaf2ef82"
+  }
+}

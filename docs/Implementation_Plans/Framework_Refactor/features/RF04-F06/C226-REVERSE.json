@@ -1,0 +1,15 @@
+{
+  "feature": "RF04-C226",
+  "source_report": ".reports/C225-final.json",
+  "shim_paths": [
+    "bot/src/city-calendar.js",
+    "bot/src/scene-continuity.js",
+    "bot/src/epistemic.js",
+    "bot/src/historical-archive.js",
+    "bot/src/presentation-evidence.js",
+    "bot/src/relationship-state.js",
+    "bot/src/semantic-candidate-source.js"
+  ],
+  "runtime_and_tool_callers": [],
+  "excluded": "Historical docs and inherited tests are not active runtime/tool consumers; no legacy suite executed."
+}
