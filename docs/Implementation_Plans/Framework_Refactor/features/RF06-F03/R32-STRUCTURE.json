@@ -1,0 +1,10 @@
+{
+  "parent": "f6b5f41edd2706de6397d108fb0f8e02f13a8623",
+  "original_functions": [
+    "publishJournal",
+    "postJournalEntry"
+  ],
+  "both_original_functions_signatures_and_bodies_equal": true,
+  "remaining_root_equal_except_exact_factory_import_composition_export": true,
+  "root_supplies_original_archive_callback_reference": true
+}

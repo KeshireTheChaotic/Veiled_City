@@ -1,0 +1,15 @@
+✔ journal factory requires original archive validator and exposes fixed original function names (1.0501ms)
+✔ session journal preserves exact heading/split/order and original session-scoped archive checks before each send (0.3485ms)
+✔ archive failure before lookup and later revocation stop original session publication without retry (0.2724ms)
+✔ unavailable journal returns false and uncertain transport error propagates once (0.2523ms)
+✔ default journal entry and same-guild native encounter title retain original archive arguments and exact text (0.1807ms)
+✔ unproven or foreign-guild native title is rejected before lookup/send (0.1858ms)
+✔ actual closed lifecycle reader requires exact native title/body and current receipt after awaited channel lookup (0.8149ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 475.0698

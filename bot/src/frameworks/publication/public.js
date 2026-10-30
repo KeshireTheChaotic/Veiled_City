@@ -81,3 +81,5 @@ export {postStateError} from './state-error-delivery.js';
 export {postPrivateRelay} from './private-relay-delivery.js';
 
 export {createReferencePublications} from './reference-publications.js';
+
+export {createJournalPublications} from './journal-delivery.js';
