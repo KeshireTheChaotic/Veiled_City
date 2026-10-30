@@ -1,0 +1,69 @@
+{
+  "fourteen_native_bodies_unchanged_except_forwarding": true,
+  "files": [
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "f2ec10ba199ae35f77703509cb5b712776ab17630c98e9e9f0645fcdb9230ccf"
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "sha256": "1a4a7dd9c3490992c6ae01cab18a686e89e83b10934f52bc073e2e005c6b7d9d"
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "sha256": "eff5cea2c0ae09ae8a3f8f05bccdd37927a9f6aaa299cb4a780539d03832ca72"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "c2a8ad22b98d7fbf83b91eddd66c2ee5a956e398aeb854ebdf58bc7d8c636049"
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "sha256": "46b3b2709f3344131a37c0c12f0662e9b7f4247ef1dc99555552f32d22923248"
+    },
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "sha256": "bee529ec621ca77e8d293d56f3caf17528ab5b28b9d725b7ae9b3b57ed672cdd"
+    },
+    {
+      "path": "bot/src/native-environment-recording.js",
+      "sha256": "1a857ca5e21a1d2ad6cecbcaa56cb2eaafae9de874e64628981b2801ba3a2946"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "68a5819282637f27641b32985a9c3fb8e54af57c00e16c2d06fa93142d52a80d"
+    },
+    {
+      "path": "bot/src/native-equipped-attacks.js",
+      "sha256": "c9c141de96ef3bd35f8c3fa860f94b8ed92428b18c8c2bb744ea9a2ceba1f970"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "5f6ddc1dd8e68397016bf5e8e8a9ac431e55201429c4fa093d3abcec93a2a2f2"
+    },
+    {
+      "path": "bot/src/native-roll-modifiers.js",
+      "sha256": "f29e08fda93998063f26a0f6bd83e467ededeb53d02553c0244d503cc96b0c94"
+    },
+    {
+      "path": "bot/src/native-roll-participation.js",
+      "sha256": "bfdcc0cd08e09658453d90847844977e540dee4299eb70e73c11839cab2f998e"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "sha256": "b5522a9775c1de79311a16dc04c755ef743239f6e853f4a9720052e78f1026e1"
+    },
+    {
+      "path": "bot/src/pre-roll-fear.js",
+      "sha256": "8a5bfb0b8522c6c042e716deb83ce542e4dac42cdb5313b6f767437e8afd9388"
+    },
+    {
+      "path": "bot/src/application/composition/standalone-persistence.js",
+      "sha256": "80110fe717b8d2d0058421caf426e0e91f2394c27efca56513fdde444044bb25"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c62.test.mjs",
+      "sha256": "73eb7d09f90b1829c4b7f215d64f9156769926d9a2bf1ba0e0fa8754a63940bd"
+    }
+  ]
+}

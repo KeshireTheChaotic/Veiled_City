@@ -15,7 +15,9 @@ import {nativeKnowledgeEvidence} from './frameworks/daggerheart/public.js';
 function objectiveEvidence(...args){return nativeKnowledgeEvidence.objectiveEvidence(...args);}function evidenceType(...args){return nativeKnowledgeEvidence.evidenceType(...args);}
 import {nativeWorldEstablishedEvidence} from './frameworks/daggerheart/public.js';
 const {nativeEstablishedFact}=nativeWorldEstablishedEvidence;
-import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}

@@ -5,7 +5,8 @@ import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';

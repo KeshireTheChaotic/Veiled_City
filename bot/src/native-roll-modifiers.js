@@ -2,7 +2,8 @@
 import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {gmRulingContext,nativeGmSceneContext} from './gm-action-ruling.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {isPvpIntent} from './pvp-authority.js';

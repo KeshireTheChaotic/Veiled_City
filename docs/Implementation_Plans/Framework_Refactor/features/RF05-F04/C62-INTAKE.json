@@ -1,0 +1,20 @@
+{
+  "base": "abd86680",
+  "nativeConsumers": [
+    "bot/src/gm-action-capability.js",
+    "bot/src/gm-mechanical-v9.js",
+    "bot/src/mechanical-native-v9.js",
+    "bot/src/native-environment-countdown.js",
+    "bot/src/native-environment-door-chain.js",
+    "bot/src/native-environment-imaging.js",
+    "bot/src/native-environment-recording.js",
+    "bot/src/native-environment-witnesses.js",
+    "bot/src/native-equipped-attacks.js",
+    "bot/src/native-group-features.js",
+    "bot/src/native-roll-modifiers.js",
+    "bot/src/native-roll-participation.js",
+    "bot/src/native-unarmed-attacks.js",
+    "bot/src/pre-roll-fear.js"
+  ],
+  "standaloneComposition": "bot/src/application/composition/standalone-persistence.js"
+}

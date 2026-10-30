@@ -6,7 +6,8 @@ import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {inspectEnvironmentSceneEffect} from './frameworks/daggerheart/public.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

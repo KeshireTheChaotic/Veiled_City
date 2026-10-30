@@ -7,7 +7,9 @@ import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentImagingRules} from './frameworks/daggerheart/public.js';

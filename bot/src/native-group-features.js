@@ -1,6 +1,7 @@
 /** Source-pinned spotlight features with independent, owner-executed reaction children.
  * No model effects, PC dice, choice, or consent are executed during preparation. */
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost} from './gm-action-capability.js';
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';

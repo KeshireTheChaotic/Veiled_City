@@ -1,7 +1,8 @@
 import {consentAction} from './action-consent.js';
 import {pendingRollRequests} from './roll-requests.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
-import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {jsonHash as hash} from './kernel/json-hash.js';
+import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {incomingRollProjection} from './pc-incoming.js';
 import {revalidateNarrativeAudience} from './audience-native-v9.js';

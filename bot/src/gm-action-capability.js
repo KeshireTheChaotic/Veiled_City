@@ -11,7 +11,8 @@ import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
 import {isPvpIntent} from './pvp-authority.js';
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight} from './native-group-features.js';
 import {nativeActorControl} from './native-actor-control.js';

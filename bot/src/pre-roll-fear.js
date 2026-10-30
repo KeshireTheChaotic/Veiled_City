@@ -5,7 +5,8 @@ import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
-import {narrativeSourceVisible} from './scene-fiction-context.js';
+import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
+function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {incomingAttackEvidence,incomingRollProjection} from './pc-incoming.js';
 import {revalidateOutputPublication} from './pvp-output.js';
 import {assertPreRollFearDeathTerminal} from './pre-roll-fear-recovery.js';
