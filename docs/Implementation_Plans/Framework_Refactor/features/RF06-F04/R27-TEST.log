@@ -1,0 +1,15 @@
+✔ one-method configuration capability validates shape and forwards current receiver/result/error only (1.1081ms)
+✔ original deferred GM guard rejects before options, campaign initialization or response (154.5282ms)
+✔ actual setup preserves required option order, native routing fields and private success response (159.8448ms)
+✔ original mode option/environment/assisted fallback and nullable role preserve existing SQL coalesce (165.0689ms)
+✔ original channel conflict and invalid mode errors send nothing and preserve existing campaign fields (165.4797ms)
+✔ caller transaction owns configuration rollback and failed response preserves original already-written setup without retry (195.2319ms)
+✔ option failure precedes persistence and root awaits setup inside unchanged receipt finally (158.5135ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1479.3292

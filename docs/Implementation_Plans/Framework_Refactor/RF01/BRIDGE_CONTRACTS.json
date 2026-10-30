@@ -1396,6 +1396,11 @@
           "from": "discord",
           "to": "persistence",
           "contract": "Original four-method campaign status initialization/read view (ensureCampaign/getActiveSession/getDirectorState/getPartyState), same caller connection/transaction; ensureCampaign and party reader may initialize campaign, no raw DB/other mutation capability."
+        },
+        {
+          "from": "discord",
+          "to": "persistence",
+          "contract": "Original one-method configureCampaign capability for campaign/setup; same connection, original initialization/channel validation/SQL/coalesce/errors, no new write or transaction coordinator."
         }
       ],
       "source_evidence": [
@@ -1446,10 +1451,22 @@
           "to": "bot/src/frameworks/persistence/public.js",
           "line": 15,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 18,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/persistence/public.js",
+          "line": 19,
+          "type": "import"
         }
       ],
-      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation.",
-      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write.",
+      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation. R27 disposable SQLite GM-before-options/storage, option/environment/default mode, role coalesce, native routing/schema failures, caller rollback and response failure after original write; original setup body preserved after deferred GM callback only.",
+      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write. R27 setup receives original application isGM deferred callback before options/storage; Application awaits handler inside unchanged receipt lifecycle.",
       "adoption_feature": "RF06-F04",
       "consumers": [
         "bot/src/commands.js"
@@ -1458,7 +1475,8 @@
         "bot/tests/ai-gm-2026-10/rf06-f04-c12.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c18.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c27.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1475,7 +1493,7 @@
         "occurrences": 42
       },
       "public_api": "bot/src/framework-to-framework/discord--persistence/public.js",
-      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration. R26 campaign status initialization and reads only; no new SQL or native write migration."
+      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration. R26 campaign status initialization and reads only; no new SQL or native write migration. R27 original campaign setup/configureCampaign interface; native write repositories unchanged."
     },
     {
       "pair": "discord--publication",

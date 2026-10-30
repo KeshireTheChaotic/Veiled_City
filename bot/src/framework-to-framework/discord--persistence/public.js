@@ -14,3 +14,7 @@ export function connectDiscordAdministrativeReads(db){return assertAdministrativ
 import {assertCampaignStatusStore} from '../../frameworks/discord/public.js';
 import {createCampaignStatusStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordCampaignStatus(db){return assertCampaignStatusStore(createCampaignStatusStore(db));}
+
+import {assertCampaignConfigurationStore} from '../../frameworks/discord/public.js';
+import {createCampaignConfigurationStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordCampaignConfiguration(db){return assertCampaignConfigurationStore(createCampaignConfigurationStore(db));}

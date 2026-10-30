@@ -1,3 +1,5 @@
+import {handleCampaignSetupCommand} from './frameworks/discord/public.js';
+import {connectDiscordCampaignConfiguration} from './framework-to-framework/discord--persistence/public.js';
 import {handleCampaignStatusCommand} from './framework-to-framework/discord--operations/public.js';
 import {connectDiscordCampaignStatus} from './framework-to-framework/discord--persistence/public.js';
 import {byPrefix,handleAdministrativeReadCommand} from './frameworks/discord/public.js';
@@ -864,15 +866,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       if(handled)return true;
     }
 
-    if(group==="campaign"&&sub==="setup"){
-      if(!isGM(db,interaction)) throw new Error("Manage Server or the configured GM role is required.");
-      const ch=interaction.options.getChannel("play_channel",true);
-      const role=interaction.options.getRole("gm_role");
-      const mode=interaction.options.getString("mode")||process.env.DEFAULT_RESPONSE_MODE||"assisted";
-      const c=db.configureCampaign(interaction.guildId,{playChannelId:ch.id,gmRoleId:role?.id||null,responseMode:mode});
-      await interaction.reply({content:`Configured **${c.name}**. Play channel: <#${ch.id}>. Response mode: **${c.response_mode}**.`,ephemeral:true});
-      return true;
-    }
+    if(group==="campaign"&&sub==="setup"){return await handleCampaignSetupCommand(interaction,{store:connectDiscordCampaignConfiguration(db),isGm:()=>isGM(db,interaction)});}
     if(group==="campaign"&&sub==="status"){return await handleCampaignStatusCommand(interaction,connectDiscordCampaignStatus(db));}
     if(group==="campaign"&&sub==="channels"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");

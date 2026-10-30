@@ -1,0 +1,6 @@
+{
+  "parent": "52abf143d14c2b70d5a3957b6ba2e2f2fa0fb4a0",
+  "original_setup_body_equal_after_only_deferred_guard_substitution": true,
+  "remaining_command_body_equal_except_one_awaited_delegate": true,
+  "all_other_top_level_local_functions_equal": true
+}

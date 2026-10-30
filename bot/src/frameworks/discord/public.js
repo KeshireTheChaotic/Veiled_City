@@ -47,3 +47,6 @@ export {handleAdministrativeReadCommand} from './administrative-read-commands.js
 
 export {assertCampaignStatusStore} from './contracts/campaign-status.js';
 export {replyWithCampaignStatus} from './campaign-status-command.js';
+
+export {handleCampaignSetupCommand} from './campaign-setup-command.js';
+export {assertCampaignConfigurationStore} from './contracts/campaign-configuration.js';
