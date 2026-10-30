@@ -77,3 +77,7 @@ export {validateCompositionShape,compositionEvidence,projectComposition} from '.
 export {establishGmWorldPart,renderGmWorldPart} from './gm-world-narrative.js';
 
 export {sceneDescriptionRequest,defaultSceneDescription,projectSceneDescription,sceneAuthoringContext} from './scene-description.js';
+
+export {materialParaphrases} from './material-paraphrases.js';
+export {hasPcReference} from './pc-reference.js';
+export {FRESH_SCENE_INSTRUCTIONS,renderFreshScenePart,findFreshScenePart,hasFreshSceneResponse,authorFreshSceneRequests} from './fresh-scene-authoring.js';

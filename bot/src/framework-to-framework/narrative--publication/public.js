@@ -10,3 +10,7 @@ export function connectPublicationNarrativeWorld(){return publicationNarrativeWo
 import {projectSceneDescription,defaultSceneDescription} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeScene} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeScene(){return publicationNarrativeScene.bind({projectSceneDescription,defaultSceneDescription});}
+
+import {findFreshScenePart,renderFreshScenePart,hasPcReference} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeAuthoring} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeAuthoring(){return publicationNarrativeAuthoring.bind({findFreshScenePart,renderFreshScenePart,hasPcReference});}

@@ -2,8 +2,8 @@
 import {buildSceneFictionContext,sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {hasPcReference} from './fresh-npc-authoring.js';
-import {materialParaphrases} from './narrative-integrity.js';
+import {hasPcReference} from './frameworks/narrative/public.js';
+import {materialParaphrases} from './frameworks/narrative/public.js';
 import {operationalMetrics} from './operational-metrics.js';
 export {sceneFictionResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:scene-fiction';

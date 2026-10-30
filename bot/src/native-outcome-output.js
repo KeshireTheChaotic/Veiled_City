@@ -4,7 +4,8 @@ import {publicationSessionScene} from './frameworks/publication/public.js';
 const {currentScene,scenePresence}=publicationSessionScene;
 import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
-import {hasPcReference} from './fresh-npc-authoring.js';
+import {publicationNarrativeAuthoring} from './frameworks/publication/public.js';
+const {hasPcReference}=publicationNarrativeAuthoring;
 import {validatedPcEffectProjection} from './pc-effects.js';
 import {visibleIncomingInjury} from './pc-incoming.js';
 import {renderNativeNotice} from './native-notice.js';

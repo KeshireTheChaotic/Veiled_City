@@ -37,3 +37,5 @@ export {publicationNarrativeGrammar} from './contracts/narrative-grammar.js';
 export {publicationNarrativeWorld} from './contracts/narrative-world.js';
 
 export {publicationNarrativeScene} from './contracts/narrative-scene.js';
+
+export {publicationNarrativeAuthoring} from './contracts/narrative-authoring.js';

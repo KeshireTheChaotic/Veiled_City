@@ -24,11 +24,8 @@ function shape(input){
     ||new Set(input.source_refs).size!==input.source_refs.length
     ||input.source_refs.some(ref=>typeof ref!=='string'||!ref||ref.length>200))fail();
 }
-export function hasPcReference(db,guild,text){
-  const value=String(text).toLocaleLowerCase();
-  return db.listGuildCharacters(guild).some(pc=>[pc.id,pc.name].filter(Boolean)
-    .some(name=>value.includes(String(name).toLocaleLowerCase())));
-}
+import {hasPcReference} from './frameworks/narrative/public.js';
+export {hasPcReference};
 function visible(source,scope){return ['party','public'].includes(source.visibility)
   ||scope.mode==='private'&&source.visibility==='character'&&source.subject_key===scope.actorCharacterId;}
 const normalizeScope=scope=>({mode:scope.mode==='private'?'private':'party',actorUserId:scope.actorUserId||null,

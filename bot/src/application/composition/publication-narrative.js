@@ -1,3 +1,3 @@
-import {connectPublicationNarrativeScene,connectPublicationNarrativeWorld,connectPublicationNarrativeGrammar} from '../../framework-to-framework/narrative--publication/public.js';
+import {connectPublicationNarrativeAuthoring,connectPublicationNarrativeScene,connectPublicationNarrativeWorld,connectPublicationNarrativeGrammar} from '../../framework-to-framework/narrative--publication/public.js';
 /** Fixed startup composition; no database, client, model or effects. */
-export function initializePublicationNarrative(){connectPublicationNarrativeScene();connectPublicationNarrativeWorld();return connectPublicationNarrativeGrammar();}
+export function initializePublicationNarrative(){connectPublicationNarrativeAuthoring();connectPublicationNarrativeScene();connectPublicationNarrativeWorld();return connectPublicationNarrativeGrammar();}

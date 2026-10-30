@@ -4,7 +4,8 @@ import {publicationSessionScene} from './frameworks/publication/public.js';
 const {currentScene}=publicationSessionScene;
 import {publicationWorldConstraints} from './frameworks/publication/public.js';
 const {activeCityProxy}=publicationWorldConstraints;
-import {hasPcReference} from './fresh-npc-authoring.js';
+import {publicationNarrativeAuthoring} from './frameworks/publication/public.js';
+const {hasPcReference}=publicationNarrativeAuthoring;
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native hook needs its exact current NPC outcome and audience.'),{code:'NARRATIVE_PVP'});}
 function deadlineProjection(db,guild,hook,scope){

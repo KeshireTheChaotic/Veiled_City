@@ -1,0 +1,74 @@
+{
+  "original_nonimport_bodies_unchanged": true,
+  "extracted_helpers_exact": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "bf65dfe4b57abdd9bcf80cd750d9660d8524c1374582f8155592f70017ced6a4"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "18495f02c1736e3a780ab10a09370b11dd46b3ee72a66a1b68bf0fc2627932f7"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "033d58fbe15bad8649ae8f78884d9c527b379102368a9b96ca874da252dcf7cf"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "b6675687519896e06a95bf07b1b63237e091621a841214aa0d974f2c7859cc36"
+    },
+    {
+      "path": "bot/src/fresh-npc-authoring.js",
+      "sha256": "6aa2b39aef36ec343a0ebb05cca7bb44099f19358b12d3ac57edec14517c32e6"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "24b45a452f4ec759c8cfbb12656d71c081fe9dbf5f99cde34cf4b3fe1d7fce27"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "cdf8e37d7946f6b84ad230c42062011c5d9d17b138ded03f12fd0a369227c8b7"
+    },
+    {
+      "path": "bot/src/narrative-integrity.js",
+      "sha256": "6f216a24ccd65a905e043dd83c447d8a6e7c8ce868cb948af9b3a5329c259936"
+    },
+    {
+      "path": "bot/src/native-hook-output.js",
+      "sha256": "b80674c16b1333c81296300845aec7e6324aa2dfdee048bd3c82e9bad8c6c662"
+    },
+    {
+      "path": "bot/src/native-outcome-output.js",
+      "sha256": "4ea834f5ca8ebce8027b32b2176dad631f763456e67286402c9254287a8ce237"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "40b259d75223ddba6bc4763ebfd4e65ab7f59e14b4dd3a0f0bcf99fe231d5326"
+    },
+    {
+      "path": "bot/src/scene-fiction-authority.js",
+      "sha256": "95d181c969872980eed3f90f43430959a595e772548c7d59db7c8cebe9ee53ef"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/material-paraphrases.js",
+      "sha256": "7f43c77a25c9831452034a6f4f39817f15aeaf3e3222817f8161d0352f097421"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/pc-reference.js",
+      "sha256": "8cc4a6adcfc27f9a17f61820a1aa1e2df5b3409637afd1b30b56f63f23fd2057"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/fresh-scene-authoring.js",
+      "sha256": "d6e52771265b5f8eac7a952c11462ba75576303f7e5f644968ab1d9fa8194b06"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-authoring.js",
+      "sha256": "c1b676b180abdd179dd5dc4f03420452a047c98fbb262b9c431056c17afcc463"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c56.test.mjs",
+      "sha256": "9d9447f6eef2ca784a4e2663c33b2cebdff8fa090e6214721bbea8f4db8b4dcd"
+    }
+  ]
+}
