@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "sourceModules": 997,
+    "unowned": 0,
+    "importOccurrences": 4060,
+    "internalImportOccurrences": 3874,
+    "cycleComponents": 1,
+    "largestCycle": 60,
+    "rawViolationOccurrences": 741,
+    "acceptedLegacyOccurrences": 741,
+    "activeViolationGroups": 0,
+    "transitionErrors": 3,
+    "pass": false
+  },
+  "activeViolations": [],
+  "transitionErrors": [
+    {
+      "code": "INVALID_TRANSITION",
+      "from": "bot/src/lifecycle-output.js",
+      "id": "9410c4f9171949f115f5b4121345a16c79d07fb222921137a228fc573ad40fb6"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/lifecycle-output.js",
+      "id": "9410c4f9171949f115f5b4121345a16c79d07fb222921137a228fc573ad40fb6"
+    },
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/commands.js",
+      "id": "11eea7e26186784e7304f57e2076183028285113e5ff998e278473444fb46d8c"
+    }
+  ],
+  "disposition": "No C80 source violations/obsolete records; three pending lifecycle-output transitions belong to concurrent RF06 R15."
+}

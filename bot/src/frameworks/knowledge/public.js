@@ -58,3 +58,5 @@ export {semanticCandidateOperations,semanticCandidateHash,ownerSemanticSource,as
 export {personalCharacter as personalContinuityCharacter,personalArc,proposeArcBeat,captureArcCandidate,personalInbox,discoverPersonal} from './personal-continuity-service.js';
 
 export {applyHandoutDrafts} from './handout-drafts.js';
+
+export {applyRelationshipDrafts} from './relationship-drafts.js';
