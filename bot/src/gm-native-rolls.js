@@ -8,7 +8,8 @@ import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}
 import {nativeWorldInput} from './frameworks/daggerheart/public.js';
 function captureWorldInput(...args){return nativeWorldInput.captureWorldInput(...args);}
-import {persistPlayerIntents} from './typed-intents.js';
+import {nativeTypedIntentSource} from './frameworks/daggerheart/public.js';
+const {persistPlayerIntents}=nativeTypedIntentSource;
 import {adjudicateAcceptedIntent} from './rules-arbitration.js';
 import {contributeRoll} from './roll-collaboration.js';
 import {rollRevision} from './roll-requests.js';

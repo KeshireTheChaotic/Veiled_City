@@ -1,0 +1,96 @@
+{
+  "base": "c0ce66b2",
+  "original_schema_and_composition_bodies_exact_except_known_imports_and_source_registration": true,
+  "all_four_callers_exact_except_import_source_proxy": true,
+  "export_set_preserved": true,
+  "syntax_pass": 9,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c94.test.mjs tests/ai-gm-2026-10/rf05-f05-c89.test.mjs tests/ai-gm-2026-10/rf05-f05-c90.test.mjs tests/ai-gm-2026-10/rf05-f05-c91.test.mjs tests/ai-gm-2026-10/rf05-f05-c92.test.mjs tests/ai-gm-2026-10/rf05-f05-c93.test.mjs",
+    "pass": 22,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 3259.8605
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-ruling-schema.js",
+      "sha256": "6e3169449b36e4719e78e3ccf6bea3141d574097a97baf00e5129fb053754128"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/typed-intent-source.js",
+      "sha256": "e9efd72953f23680e8a63b85a4ac8e2823b495c55b1fbf7efff85583ddfa9d9f"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "618da4b710367708402bf4f6b23106a62da78fa96ce0b62e2e336e8056f98ace"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js",
+      "sha256": "ff069bff1b02ae10ebe9a46a0ff5b437a6ad88e4e828dbe61eae1211943bf616"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "2144ba86b1befd1106ec46a72980c46aaf38e6f92e1f33253d6d9d02651b41a0"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "55e28bbcdb90118393279c92ea012a57cfc2e95c595e1124ec2d62a91dc0d39e"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "a53c25b44297470c761027e2f6fb3174ecb81bc62bfa43e29eeb393e9446605b"
+    },
+    {
+      "path": "bot/src/gm-native-rolls.js",
+      "sha256": "e5e2cbd102668290c70ec64ff6102aa7075b62786e3a49314c46dcc474ef7e71"
+    },
+    {
+      "path": "bot/src/gm-action-ruling.js",
+      "sha256": "0073b64f22f2f3614fa6f11b83c68e6a1dbed5ffabf7a4e5e8516718de177e7f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c94.test.mjs",
+      "sha256": "f29851ec66f02e3f49f4107c0bc5b8655ba5e3093af6e963ad8c4b7027736422"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c89.test.mjs",
+      "sha256": "8ee4b8db7c4edafb4c642bc684ba159f08b908328f042f21cd7406cee58b60dc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c90.test.mjs",
+      "sha256": "3039155dd727e6f8ced84837b58fb8ed790a75467631285979ede9cd3e96b163"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c91.test.mjs",
+      "sha256": "3f277b06754571622b615031bbcc3a73263e39a19cabe841869c11cedd30dafe"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c92.test.mjs",
+      "sha256": "22343bb5475e90593cb7fcbadf1cc4fdc3068656f964a59b665876b5d76d45da"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c93.test.mjs",
+      "sha256": "2ee0570ccf4b5c81fb56126e49a909aeb17f514c24455d7cc1725fd69d720724"
+    }
+  ],
+  "shared_native_public": {
+    "working_tree_test_fingerprint": "7f3cfa558665f81aa17927a18280ba468beadad5097ea976cae0390cd1e3c1c4",
+    "own_checkpoint_sha256": "a485ce4a7394088540e0df75ba664bce7efd9e03b86177543ec7d01359541c51",
+    "excluded_unrelated_exports": [
+      "createAdvantageOpportunitySource",
+      "createFeatureOpportunityRules"
+    ]
+  },
+  "external_change_after_full_batch": {
+    "commit": "1615ef22",
+    "change": "External opportunity exports removed from shared Native public; C94 exact two-export patch unchanged. Initial full-batch fingerprint retained in shared_native_public.",
+    "targeted_import_test": {
+      "command": "node --test --test-name-pattern \"C94 changed application\" bot/tests/ai-gm-2026-10/rf05-f05-c94.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 8925.6495
+    },
+    "final_graph": "RF05-C94-post-external.json remains one external cycle/zero C94 findings"
+  }
+}

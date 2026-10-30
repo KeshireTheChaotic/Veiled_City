@@ -686,13 +686,15 @@
       "consumers": [
         "bot/src/turn-orchestration.js",
         "bot/src/state.js",
-        "bot/src/application/composition/environment-scene.js"
+        "bot/src/application/composition/environment-scene.js",
+        "bot/src/gm.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf03-f01-c03.test.mjs",
         "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf04-f04-c29.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f04-c29.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f05-c94.test.mjs"
       ],
       "observed_directions": [
         {
@@ -715,7 +717,14 @@
         "occurrences": 114
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js",
-      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle."
+      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle.",
+      "typed_service_composition": {
+        "feature": "RF05-F05 C94",
+        "source": "bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js",
+        "contract": "Original Native ruling shape/validator supplied once to original Intent schema, validation and persistence factories; complete existing API retained.",
+        "native_consumer": "nativeTypedIntentSource.persistPlayerIntents forwards the original composed function only; no mechanical outcome is authorized.",
+        "intent_readers": "Original currentAcceptedIntent/currentTypedMovement registered once at composition; same source/store."
+      }
     },
     {
       "pair": "daggerheart--knowledge",

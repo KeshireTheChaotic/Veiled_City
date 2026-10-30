@@ -25,7 +25,7 @@ import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.j
 import { dispatchAiIntents } from "./ai-intents.js";
 import { persistInterpretation } from "./narrative-context.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
-import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
+import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./framework-to-framework/daggerheart--intent/public.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-arbitration.js';

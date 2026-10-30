@@ -6,7 +6,7 @@ import { conversationPrincipal } from "./frameworks/session/public.js";
 import {continuationInbox} from "./frameworks/session/public.js";
 import {actionReviewInbox} from "./gm-action-review.js";
 import { authoredCandidatesSchema,currentAuthoredCandidatesSchema, AUTHORED_CANDIDATES_PROMPT } from "./frameworks/intent/public.js";
-import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./typed-intents.js";
+import { playerIntentSchema, PLAYER_INTENT_PROMPT, recoverPlayerIntents, autoCompleteOrdinaryMovements, validateIntentResolutions } from "./framework-to-framework/daggerheart--intent/public.js";
 import { tierWorldAdditions } from "./frameworks/knowledge/public.js";
 import { contextMemorySchema, CONTEXT_MEMORY_PROMPT, scopedSceneMemory } from "./frameworks/knowledge/public.js";
 import { presentationContext } from "./frameworks/knowledge/public.js";

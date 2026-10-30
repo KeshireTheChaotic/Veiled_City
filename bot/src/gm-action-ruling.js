@@ -9,8 +9,8 @@ import {isPvpIntent} from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {nativeDeviceUseIssue} from './native-feature-effects.js';
 
-import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
-export {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
+import {gmRulingSchema,validateGmRulingProposal} from './frameworks/daggerheart/public.js';
+export {gmRulingSchema,validateGmRulingProposal} from './frameworks/daggerheart/public.js';
 
 import {createGmRulingRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

@@ -338,7 +338,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/turn-recovery.js","bot/src/application/workflows/turn-recovery.js","application","RF06","DECOMPOSE_BEFORE_MOVE","1","2"
 "bot/src/turn-trace-context.js","bot/src/frameworks/operations/turn-trace-context.js","operations","RF02","MOVED_BYTE_IDENTICAL; PUBLIC_API_ADOPTED; ROOT_COMPATIBILITY_REEXPORT_RETAINED","11","0"
 "bot/src/typed-intent-qualification.js","bot/src/frameworks/operations/typed-intent-qualification.js","operations","RF02","PILOT_MOVE_CANDIDATE","0","0"
-"bot/src/typed-intents.js","bot/src/frameworks/intent/typed-intents.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","4","8"
+"bot/src/typed-intents.js","bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js","daggerheart--intent","RF05","MOVED_COMPLETE","4","8"
 "bot/src/typed-mechanics.js","bot/src/frameworks/daggerheart/typed-mechanics.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","2"
 "bot/src/typed-roll-outcomes.js","bot/src/frameworks/daggerheart/typed-roll-outcomes.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F04+RF05-F02+RF05-F05","2","3"
 "bot/src/typed-roll-proof.js","bot/src/frameworks/daggerheart/typed-roll-proof.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05","16","1"

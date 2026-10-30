@@ -176,3 +176,6 @@ export {nativeNarrativeUnitRenderer} from './contracts/narrative-unit-renderer.j
 export {nativeGeneratedPcEffectSource} from './contracts/generated-pc-effect-source.js';
 
 export {appendNativeResourceGmEvent} from './gm-resource-event.js';
+
+export {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
+export {nativeTypedIntentSource} from './contracts/typed-intent-source.js';
