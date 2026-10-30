@@ -30,3 +30,7 @@ export function connectDiscordGmNpcReads(db){return assertGmNpcReadStore(createG
 import {assertPartyStatusStore} from '../../frameworks/discord/public.js';
 import {createPartyStatusStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordPartyStatus(db){return assertPartyStatusStore(createPartyStatusStore(db));}
+
+import {assertDirectorHistoryStore} from '../../frameworks/discord/public.js';
+import {createDirectorHistoryStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordDirectorHistory(db){return assertDirectorHistoryStore(createDirectorHistoryStore(db));}

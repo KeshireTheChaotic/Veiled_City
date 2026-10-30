@@ -1,0 +1,14 @@
+✔ fixed history capability forwards current receiver/results/errors without raw connection (1.2416ms)
+✔ original null/zero option fallback15 and exact empty private reply retained (0.3579ms)
+✔ original acted/status/id/date/rationale/error fallbacks retained with ordered private chunks (0.2633ms)
+✔ actual SQLite history remains guild scoped/limited and reading never writes (1152.612ms)
+✔ query/response failures propagate without retries or later chunks (0.314ms)
+✔ root retains original Director GM guard/session lookup and awaited receipt lifecycle (0.8603ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1775.0684

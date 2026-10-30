@@ -60,3 +60,5 @@ export {gmFactLine,playerFactLine} from './fact-text.js';
 export {handlePartyStatusCommand,assertPartyStatusStore} from './party-status-command.js';
 
 export {replyWithPrivateChunks} from './private-chunk-reply.js';
+
+export {handleDirectorHistoryCommand,assertDirectorHistoryStore} from './director-history-command.js';

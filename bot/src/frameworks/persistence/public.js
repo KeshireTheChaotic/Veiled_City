@@ -26,3 +26,5 @@ export {createGmFactReadStore} from './gm-fact-reads.js';
 export {createGmNpcReadStore} from './gm-npc-reads.js';
 
 export {createPartyStatusStore} from './party-status.js';
+
+export {createDirectorHistoryStore} from './director-history-reads.js';

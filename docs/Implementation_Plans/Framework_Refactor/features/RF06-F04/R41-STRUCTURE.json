@@ -1,0 +1,6 @@
+{
+  "parent": "dabbe7ab76d91f156acb8000d5cc70af55f6a3fc",
+  "original_branch": "if(sub===\"history\"){\n        const rows=db.listDirectorHistory(interaction.guildId,interaction.options.getInteger(\"limit\")||15);\n        const chunks=chunkTextLines(rows.length?[\"**World Director History**\",...rows.map(r=>`• \\`${r.id.slice(0,8)}\\` **${r.layer}** • ${r.status} • ${r.acted?\"acted\":\"no move\"} • ${r.created_at}\\n  ${r.rationale||r.error||\"No rationale recorded.\"}`)]:[\"No director history recorded yet.\"]);\n        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;\n      }",
+  "remaining_root_preserved_by_exact_single_range_replacement_and_two_imports": true,
+  "original_body_ast_equal_after_only_store_and_equivalent_chunk_substitutions": true
+}

@@ -1,3 +1,5 @@
+import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
+import {connectDiscordDirectorHistory} from './framework-to-framework/discord--persistence/public.js';
 import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
@@ -831,11 +833,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
           state?`Completed passes: round ${state.pass_counts?.round||0}, scene ${state.pass_counts?.scene||0}, downtime ${state.pass_counts?.downtime||0}`:""
         ].filter(Boolean).join("\n"),ephemeral:true}); return true;
       }
-      if(sub==="history"){
-        const rows=db.listDirectorHistory(interaction.guildId,interaction.options.getInteger("limit")||15);
-        const chunks=chunkTextLines(rows.length?["**World Director History**",...rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.layer}** • ${r.status} • ${r.acted?"acted":"no move"} • ${r.created_at}\n  ${r.rationale||r.error||"No rationale recorded."}`)]:["No director history recorded yet."]);
-        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
-      }
+      if(sub==="history"){return await handleDirectorHistoryCommand(interaction,{store:connectDiscordDirectorHistory(db)});}
       if(sub==="pause"){ db.setDirectorPaused(interaction.guildId,true); await interaction.reply({content:"World Director automatic passes are **paused**. Player turns continue normally; pending director state is preserved.",ephemeral:true}); return true; }
       if(sub==="resume"){ db.setDirectorPaused(interaction.guildId,false); await interaction.reply({content:"World Director automatic passes are **resumed**. Any durable pending pass will run on the next normal director opportunity.",ephemeral:true}); return true; }
       if(sub==="run"){
