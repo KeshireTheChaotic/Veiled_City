@@ -1,0 +1,24 @@
+✔ fixed Publication channel port fails before composition and rejects replacement after original binding (0.7339ms)
+✔ original lookup preserves missing, nontext and failed fetch unavailability (0.1852ms)
+✔ private delivery keeps exact receipts, message audience and pre-send validation after composition (1.0434ms)
+✔ unsafe channel before send permits existing private DM fallback without channel exposure (0.2216ms)
+✔ ambiguous send remains uncertain and never falls through to DM (0.1672ms)
+✔ permission change after first chunk stops remaining chunks without fallback (0.1428ms)
+✔ source guard runs before lookup and production startup composes before database/client construction (0.7573ms)
+✔ historical and public receipt exports retain single implementation identity (0.5209ms)
+✔ proven non-send creates original Error with original certainty and message (0.1481ms)
+✔ exact valid acknowledgement returns original receipt and permits dynamic destination only when unpinned (0.1259ms)
+✔ missing/blank/failed/mismatched receipts remain uncertain without mutating original rows (0.7073ms)
+✔ summary preserves durable field names/uncertainty/defaults without exposing payload or audience secrets (0.1834ms)
+✔ separate text port fails uncomposed and binds only original splitter without changing channel contract (0.8026ms)
+✔ original default splitter output retained for scalar, empty, Unicode and mention-bearing publication text (0.6185ms)
+✔ original fenced Markdown behavior and explicit nondefault limits are forwarded unchanged (0.2549ms)
+✔ invalid limits retain original RangeError without changing validation policy (0.1291ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 826.566

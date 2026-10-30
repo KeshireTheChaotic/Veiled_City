@@ -65,3 +65,5 @@ export {handoutMarkdown,handoutSummary} from './handout-text.js';
 export {publicationNarrativeUnits} from './contracts/narrative-units.js';
 
 export {publicationOperations} from './contracts/operations.js';
+
+export {publicationDiscordText} from './contracts/discord-channels.js';

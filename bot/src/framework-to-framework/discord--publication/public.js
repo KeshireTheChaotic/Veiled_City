@@ -11,3 +11,7 @@ import {textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel} from '../../
 import {publicationDiscordChannels} from '../../frameworks/publication/public.js';
 /** Bind original Discord channel capabilities; never choose an audience or retry a send. */
 export function connectPublicationDiscordChannels(){return publicationDiscordChannels.bind({textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel});}
+
+import {splitDiscordText} from '../../frameworks/discord/public.js';
+import {publicationDiscordText} from '../../frameworks/publication/public.js';
+export function connectPublicationDiscordText(){return publicationDiscordText.bind({splitDiscordText});}

@@ -3,7 +3,10 @@ export {notSent,validatePublicationAcknowledgement,outboxSummary} from './framew
 /** Transactional narration outbox; Discord delivery is retryable and never reruns reasoning or mechanics. */
 import { createHash } from "node:crypto";
 import {publicationOpeningQueue} from './frameworks/publication/public.js';
-import { splitDiscordText } from "./discord/chunking.js";
+import {splitDiscordText as originalSplitDiscordText} from './discord/chunking.js';
+import {publicationDiscordText} from './frameworks/publication/public.js';
+publicationDiscordText.bind({splitDiscordText:originalSplitDiscordText});
+const {splitDiscordText}=publicationDiscordText;
 import { assertPvpOutput } from "./pvp-authorship.js";
 import { bindOutputPublication, revalidateOutputPublication, captureOutputArchive, recordOutputArchive,substantivePublication } from "./pvp-output.js";
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";

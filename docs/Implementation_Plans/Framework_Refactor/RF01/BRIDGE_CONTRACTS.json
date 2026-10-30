@@ -1403,6 +1403,11 @@
           "from": "publication",
           "to": "discord",
           "contract": "Original text channel lookup and GM/private permission validators through fixed consumer; no source/audience/payload mutation or send retry."
+        },
+        {
+          "from": "publication",
+          "to": "discord",
+          "contract": "Separate one-function original text-splitting consumer; original limits, fences, mentions, Unicode, results and errors unchanged."
         }
       ],
       "source_evidence": [
@@ -1423,10 +1428,22 @@
           "to": "bot/src/frameworks/publication/public.js",
           "line": 11,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 15,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/publication/public.js",
+          "line": 16,
+          "type": "import"
         }
       ],
-      "validation": "R04 adopts the exact original textChannel/assertGmOnlyChannel/assertPlayerPrivateChannel through one fixed Publication consumer; missing composition/replacement denied. Source/payload and recovery authority remain in Publication. Existing committed-row transport preserves receipt/errors without retries.",
-      "lifecycle": "R04 channel capability binding is invoked by index before DB/client construction and mirrored in fresh RF test composition. General outbox transport contract adoption remains separately accountable.",
+      "validation": "R04 adopts the exact original textChannel/assertGmOnlyChannel/assertPlayerPrivateChannel through one fixed Publication consumer; missing composition/replacement denied. Source/payload and recovery authority remain in Publication. Existing committed-row transport preserves receipt/errors without retries. R14 text port binds original splitter once; no splitter algorithm or channel-port shape change.",
+      "lifecycle": "R04 original channel consumer and R14 separate text consumer bind in existing startup initializer; original channel-port return/API preserved. Legacy hubs retain original splitter source imports/bindings to preserve standalone behavior pending hub migration. General outbox transport adoption separately accountable.",
       "adoption_feature": "RF06-F03",
       "public_api": "bot/src/framework-to-framework/discord--publication/public.js",
       "consumers": [
@@ -1436,7 +1453,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f03-c04.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f03-c04.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f03-c14.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1458,7 +1476,7 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 6
       },
-      "scope": "Qualified channel lookup/privacy consumer only; not complete publication/outbox isolation or live Discord permission qualification."
+      "scope": "Qualified channel/privacy and original text-splitting consumers only; legacy source bindings remain and full outbox isolation/live delivery are unqualified."
     },
     {
       "pair": "discord--session",

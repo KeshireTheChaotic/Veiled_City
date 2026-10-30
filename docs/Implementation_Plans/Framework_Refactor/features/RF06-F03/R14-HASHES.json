@@ -1,0 +1,11 @@
+{
+  "bot/src/frameworks/publication/contracts/discord-channels.js": "6aa4c8d6cfda3438d19e44dd295eed129f642df205e2498a8732b26c430679fe",
+  "bot/src/frameworks/publication/public.js": "501835c128ee14c1613720a262270e83513805235f3f06eb87bc60742b09889e",
+  "bot/src/framework-to-framework/discord--publication/public.js": "60f807f4423880cf25398d3b9072f5b2399abd7c8d006064b70c2b987e28411c",
+  "bot/src/application/composition/publication-discord.js": "6469fae3a9cc08a30b1acd385eb5b0187d750749ad4851fdd15567a104f45f3b",
+  "bot/src/publishing.js": "ca0e9ce14e3712a20fb258bc406099bd6032c6d31c2ffcc29a24f7c6cc682523",
+  "bot/src/publication-outbox.js": "7ffd15973d2c5a086ce7586ed9ba66adcfe74f07bb1546d240b825735f9106aa",
+  "bot/src/pvp-output.js": "123a6e71c7efb84ac62dee158ad83d8b1afb6a6db6328b6edd1796b1ea369bb3",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c14.test.mjs": "2eee7b35f17b9f20390337f2abb042038243b6788205eb3ea7a32f5d6dab5216",
+  "bot/src/frameworks/discord/chunking.js": "01e60a9aaf30f7fa6bafc01f844111e164b0ca961bf3411abe986102807b7c1f"
+}
