@@ -1,0 +1,1293 @@
+{
+  "base": "7e5a3c84",
+  "status": "RF04 scoped exit verified; initiative incomplete",
+  "sourceModulesVerifiedAgainstPassingGate": 933,
+  "ownerModules": [
+    {
+      "path": "bot/src/frameworks/knowledge/authority-projection.js",
+      "owner": "knowledge",
+      "sha256": "3bc38af3af9bc67d9fd3c1923f492b13400dc9d73a1ee69d8315c679d5cddc1a"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/context-memory-service.js",
+      "owner": "knowledge",
+      "sha256": "ad2c8f65f8536bdded4978a89a89092fc41e40262a8d747e624cf0483a9f913f"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/context-memory.js",
+      "owner": "knowledge",
+      "sha256": "ef5eca716351c7b756ef2d5be80bb60470f141916fa08cb2bc5de68933f5bf70"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/context-planner.js",
+      "owner": "knowledge",
+      "sha256": "17d171af591e686a10f9fa89576453957d76117bb358b35aec69f8b4089dc8bf"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/community-evidence-sources.js",
+      "owner": "knowledge",
+      "sha256": "e872277e739dc73bea6abae9f2f80dc324b2421204785c84fa8e6129a4e45d0d"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/context-memory-source.js",
+      "owner": "knowledge",
+      "sha256": "36500fa536f585cf8e150278fb0f0e24831f061f5d5d8e8bbc740bb354d2c9a8"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/history-reconciliation-source.js",
+      "owner": "knowledge",
+      "sha256": "4740a01447cf91d24c13975329655ac4b57b37031a66ea26009456a1c8b70449"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/intent-authored-turn.js",
+      "owner": "knowledge",
+      "sha256": "9a557ab7ecb173e4a2b9620e7bec316573d7e09e4949d6d782fc7a5031e905d6"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/narrative-sources.js",
+      "owner": "knowledge",
+      "sha256": "951cc74779cec854a8f67a528441ff159b4ac015a1d18403484eb8f8bb630b4a"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/narrative-visibility.js",
+      "owner": "knowledge",
+      "sha256": "7b53217cba0449b3381d8698c5ab0c7041d6e650b02a16988086643a430354c5"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/npc-actor-source.js",
+      "owner": "knowledge",
+      "sha256": "c77704734beb405d659f734fae8114b45243cc16c34d57c07b4bcd0d82dcfd02"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/personal-continuity-source.js",
+      "owner": "knowledge",
+      "sha256": "aa13fab03caf6f0dcaedbdb366577c980847bb522f52280f5ee2db09bd31a3b7"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/publication-handout.js",
+      "owner": "knowledge",
+      "sha256": "9bf93a0ded719980e5232e6186ed2b6bbc4337e3ac7f45d8801e22d6c938df37"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/session-owner-terminal.js",
+      "owner": "knowledge",
+      "sha256": "d8b353cfdf092efc2eba32d247a1a50173f57e822ae5dae89643f9327207f200"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/session-scene.js",
+      "owner": "knowledge",
+      "sha256": "c9530681fc2179f8be51beedbf2fcee9e8f622047dfb0526eb5df504c2576451"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-community.js",
+      "owner": "knowledge",
+      "sha256": "be2d55388283ca65d8ffc0d964df4070055e17cc15d425f3bcb45458f78d713a"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-events.js",
+      "owner": "knowledge",
+      "sha256": "e1785951aae7a8d54bcd3cf932e6e3b9ba0bf62dd1acadabc54bf3b7258320a2"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-history.js",
+      "owner": "knowledge",
+      "sha256": "c3bf8eaa3a245863b1573339c1c77ffcb8a9cc5eee73d2b2d9393108666f34f0"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-identities.js",
+      "owner": "knowledge",
+      "sha256": "6b732ab86e500c80634423655c319e0f0c729a8320e49649a4869a46a88fbf04"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-memory.js",
+      "owner": "knowledge",
+      "sha256": "928ff4ae06e63751c9a9b17934e9e7d4022a7cdd8e0f5fa21a50ce76329be516"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/contracts/world-record.js",
+      "owner": "knowledge",
+      "sha256": "02d7318fbed4367c255b363b5bf12979ee2bb67af63d8d8daa800a346bd05153"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "owner": "knowledge",
+      "sha256": "7b332081088646f3800f66d86c84ddbab5df26a18bb6cc3b931d0b24375534b8"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/entity-memory-source.js",
+      "owner": "knowledge",
+      "sha256": "b39ec43f0f3d6a5719103aa5fc70b16717baa5bfbba113790232e2c76191d75a"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/entity-memory.js",
+      "owner": "knowledge",
+      "sha256": "4e830116b3d53015bbc58bf337127b49b435ed8616509d014bcec3bc9738ee26"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/epistemic.js",
+      "owner": "knowledge",
+      "sha256": "d608d6795a62938ef716795799fc404e72cc3bf7ee3e4af05aa335f3a361aa41"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/evidence-custody-service.js",
+      "owner": "knowledge",
+      "sha256": "2619a8301a616f253d0bd526f4a5277550c9230eaea301639de5df02d6642d6f"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/evidence-custody.js",
+      "owner": "knowledge",
+      "sha256": "e25258e791f84031eceaea8342965f1150cfc234ae4652fc68bafef577335745"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/evidence-source.js",
+      "owner": "knowledge",
+      "sha256": "a5567bea8e0f9f9b16038a6b021bf0afeabe6da5fa41df09fd85da68bf933f0b"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/historical-archive.js",
+      "owner": "knowledge",
+      "sha256": "1536b68e81469a4061df400964241b737900041d891c589cb98f5621d32a56fa"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/history-reconciliation-service.js",
+      "owner": "knowledge",
+      "sha256": "6145c1e416d528a1c8c8b22ef92e61214e20a552b98b8f4bd4edc55492b29c5f"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/history-reconciliation.js",
+      "owner": "knowledge",
+      "sha256": "bafb2423e7cb508e65651cdb88347bd31ccd73560bf9a9830083c5e6f2b5f92e"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/legacy-authority.js",
+      "owner": "knowledge",
+      "sha256": "5eab1f365f3655f47701f8453b5b0bb9cba103b4937203bdc4b2f6ec45c96eb4"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/memory-clusters.js",
+      "owner": "knowledge",
+      "sha256": "821d251e4f704c69ac0b21929c36bf171c6bc28387cd1a9e99fdc26280b61c68"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/memory-lifecycle-service.js",
+      "owner": "knowledge",
+      "sha256": "47678695821e205dd44096bdb0425e340ef63e304b728bfed5998876963b4205"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "owner": "knowledge",
+      "sha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/memory-source.js",
+      "owner": "knowledge",
+      "sha256": "117e9548156c2ae02d1aa5811f13d2cfd39b4dbd97ac8d2de41f705b7a8b39d3"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/narrative-memory-service.js",
+      "owner": "knowledge",
+      "sha256": "4fdc3921a287ebfe0c4bf61d579a764b9bcd4b019e7826965faf8368172140b9"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "owner": "knowledge",
+      "sha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/narrative-records.js",
+      "owner": "knowledge",
+      "sha256": "7f1d370e2b6e27287730e2ed594e8fd473a0aaa2c12c3499903e40f5b86314ec"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/owned-community-service.js",
+      "owner": "knowledge",
+      "sha256": "e62a420c9c75ac115c3dfdacce05a043d5c5b4d680e51a161b6704e204157d77"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/owned-community.js",
+      "owner": "knowledge",
+      "sha256": "47e21e43afd126149a6289886025f91cb56b9effe3cd7c2bde70d1ae3a32363b"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/personal-character.js",
+      "owner": "knowledge",
+      "sha256": "8db5f984112a75be52979ace3bda5d322fe0cbd1767910b60682f54ce6e0960f"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/personal-continuity-service.js",
+      "owner": "knowledge",
+      "sha256": "46c9b4ab8a02c9ae441be1a1f67abf73b935a91a1cb56e685ed0fa705cbaa3ce"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/personal-continuity.js",
+      "owner": "knowledge",
+      "sha256": "dcf9f61e2a78327393b58c90e80867522f5468e1dab9383326428390ec1eef02"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/presentation-evidence-service.js",
+      "owner": "knowledge",
+      "sha256": "2c7ef131133c2fed594e724fcb369676792697c85d8dc3e626b23bf3c7677adb"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/presentation-evidence.js",
+      "owner": "knowledge",
+      "sha256": "17e3d11a4297c1ab1deb3d9745291160e30bb691c01968b94918241de14ab21c"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/provenance.js",
+      "owner": "knowledge",
+      "sha256": "74fb8884faac1b5bfc78ee39b008174b7d02bdc336efdcc2e73224ebafa08e52"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public-referents.js",
+      "owner": "knowledge",
+      "sha256": "6bc4d279c9342522fd9c7a46e920ee8c3e6602322bf276fcde8ea0ef51d4a467"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "owner": "knowledge",
+      "sha256": "56781d2e453adc370b7d5ae5011bb9c85dbceef7e85563fc7089932c4729faf6"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/relationship-evidence.js",
+      "owner": "knowledge",
+      "sha256": "cc041b48c9936d4ff6f0dfbf11e8720818a0ad9e81d45e37b949dafce316f026"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/relationship-state.js",
+      "owner": "knowledge",
+      "sha256": "5070e9dee4966d46dfef5b919c232411c1a74f739ef971374f52a148e0169cee"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/scoped-memory-service.js",
+      "owner": "knowledge",
+      "sha256": "2c5e355315ef9e3a204ccdcf2b627338f919809016fc99d7633e7d6ae306427e"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/scoped-memory.js",
+      "owner": "knowledge",
+      "sha256": "d027f38b841ae0d1e890f8b3cb13b098f9ae6b946620696cb8b823490d9e7c98"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/scoped-query.js",
+      "owner": "knowledge",
+      "sha256": "ca47ff8ef202ca0e95c3b52f83d32e6860be2206a182f472e6ed21ec4870e744"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/semantic-candidate-service.js",
+      "owner": "knowledge",
+      "sha256": "7437bd28497a73aa88a1608c3bddae7197bd7043f31f6c49a368f65df94892e3"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/semantic-candidate-source.js",
+      "owner": "knowledge",
+      "sha256": "952fbbb012e21335c23f09a0a9cdbf0b69e8db01a9b7ce762d415320124f4a0f"
+    },
+    {
+      "path": "bot/src/frameworks/npc/cognition-source.js",
+      "owner": "npc",
+      "sha256": "31298c29c8eec8f4faedc8e3a1897de75abfedcf0b9e318e6260a6a230d99f7c"
+    },
+    {
+      "path": "bot/src/frameworks/npc/cognition.js",
+      "owner": "npc",
+      "sha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/intent-strategy.js",
+      "owner": "npc",
+      "sha256": "fd554eb6df5b9c9b594129836a7249b293aa6aba62aac93f71b68d40a052cc08"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/knowledge-clusters.js",
+      "owner": "npc",
+      "sha256": "cd3d38d1c0425541d913043c0b933269567081c3d95d428c29886d2b39f1c148"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/knowledge-evidence.js",
+      "owner": "npc",
+      "sha256": "5ae27ac1ac4d6ec83d9f3ac5104cda91024820776151e339d7e073854199f630"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/knowledge-planner.js",
+      "owner": "npc",
+      "sha256": "227967025d900cb14f31c4f781520864707fe2de316a1b34069c4895209e9c41"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/narrative-context.js",
+      "owner": "npc",
+      "sha256": "404dc1627b159e85bef134b1076433d1221d56ebafaeb4c7a2ec70fef26ebaa2"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/narrative-visibility.js",
+      "owner": "npc",
+      "sha256": "b19521958371a2da487df13437d8642934b3f2491df56998d974ee90f7ae3fe5"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/scene-access.js",
+      "owner": "npc",
+      "sha256": "34c926b8ee67d84a0fd4747dc536ca73306692f5b47109d2b169ca8f44022778"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/session-principal.js",
+      "owner": "npc",
+      "sha256": "f0ec0ffd7cad14b0654928325f135e1ffa0469bafc127dac97163fe1c7827f46"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/session-view.js",
+      "owner": "npc",
+      "sha256": "8fa8fbc4f6aca8cdba0d3cb890a1729111b04a72c162ade6bd79ffc827bae683"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-conversations.js",
+      "owner": "npc",
+      "sha256": "91134964d58125a96631e4f6724d4221b17c0c3b2d8e6f18b82801610a5b48f0"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-evidence-event.js",
+      "owner": "npc",
+      "sha256": "3c2f5241df04d89bffc91be0aa8aaf8450c8a9b7e423692a42ebf60b1642850d"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-evidence-source.js",
+      "owner": "npc",
+      "sha256": "c9cf6b40e48f333fbd9d2ed37db5e837b8dd2f8dfa9520abcb8deb5e1675ff7e"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-motivation.js",
+      "owner": "npc",
+      "sha256": "af6f2208c86f361e6cfd0bff2de1b87ac9ce61b87953d348e1641de16a5372b6"
+    },
+    {
+      "path": "bot/src/frameworks/npc/contracts/world-strategy.js",
+      "owner": "npc",
+      "sha256": "edf60541c7f76598b47ae40a43775d6a9541635bf93d5f7d3eafad575ee10a80"
+    },
+    {
+      "path": "bot/src/frameworks/npc/conversation-source.js",
+      "owner": "npc",
+      "sha256": "119952d6026ba1ccb04f4c8569b7623b2d5bdae9db2ceafe90f406c05adbbe24"
+    },
+    {
+      "path": "bot/src/frameworks/npc/conversations.js",
+      "owner": "npc",
+      "sha256": "6bc29c6eae2ac5677223d1867caed24624f98426ffc6bc18d439402c9bd2630a"
+    },
+    {
+      "path": "bot/src/frameworks/npc/evidence-projection-source.js",
+      "owner": "npc",
+      "sha256": "abdd8b516e22c55086191e42e6e501fc727f6a3c7cda69bf2982fd1c4bd0cd77"
+    },
+    {
+      "path": "bot/src/frameworks/npc/evidence-projection.js",
+      "owner": "npc",
+      "sha256": "491e202b3d9a2d48eb4d745e962e7d19111d0daae4bbea3c98938642f1125727"
+    },
+    {
+      "path": "bot/src/frameworks/npc/knowledge-source.js",
+      "owner": "npc",
+      "sha256": "0539c382bd7faafd9c57c72747f6d6b4d789a17d662c8002976f49ddc3b332c5"
+    },
+    {
+      "path": "bot/src/frameworks/npc/motivation-source.js",
+      "owner": "npc",
+      "sha256": "a5b5f129e3bdacb92a3a75f2840c085aba5caf5aa81c83e85660de243b7791bd"
+    },
+    {
+      "path": "bot/src/frameworks/npc/motivation.js",
+      "owner": "npc",
+      "sha256": "3be2ee5e49111d79437d0fd5d60a851d4adba83857c5154980bebfdeb78cc606"
+    },
+    {
+      "path": "bot/src/frameworks/npc/observation-source.js",
+      "owner": "npc",
+      "sha256": "fc9de062c2ccdb95a2989c54aa6f921b4d95b59f5df6a70bd586e9020139b708"
+    },
+    {
+      "path": "bot/src/frameworks/npc/observation.js",
+      "owner": "npc",
+      "sha256": "e420dfe4d200fb7d93172204f92a0c0118383bc16c39289b1dc38660fbb15231"
+    },
+    {
+      "path": "bot/src/frameworks/npc/public.js",
+      "owner": "npc",
+      "sha256": "f22dc6211e268135b344601a021f0f41aad01fac71dc9409e0145cb960f5b2c9"
+    },
+    {
+      "path": "bot/src/frameworks/npc/strategy-source.js",
+      "owner": "npc",
+      "sha256": "e98fbaa2ad3e4775799a459bcb3fd6c2b8249d272ba015f88ad3bc583652639a"
+    },
+    {
+      "path": "bot/src/frameworks/npc/strategy.js",
+      "owner": "npc",
+      "sha256": "ee2fb1f12abccd5f722ba5fe7fb27628d6f534c329d3e7ed75ae0617d164277d"
+    },
+    {
+      "path": "bot/src/frameworks/session/action-continuation.js",
+      "owner": "session",
+      "sha256": "372b7c4bad1ee117c7a06ce522b91f2f3bef86bcd6c875438ff7ac421e58b749"
+    },
+    {
+      "path": "bot/src/frameworks/session/action-window-overlap.js",
+      "owner": "session",
+      "sha256": "3bd6f02cd8bbd1c6d993b1b665b91f53ce108a9dc0c2f968d2a2c77e7d92bbfe"
+    },
+    {
+      "path": "bot/src/frameworks/session/assembly-context-service.js",
+      "owner": "session",
+      "sha256": "21abdbb470e2798c0dc82bb929002855360949b7b8798ae474066cec516cc011"
+    },
+    {
+      "path": "bot/src/frameworks/session/assembly-context.js",
+      "owner": "session",
+      "sha256": "b9c4e1e870773a825ae349f861899efa730f19cbd94ec1d0bbf98a3100845b8e"
+    },
+    {
+      "path": "bot/src/frameworks/session/assembly-evidence.js",
+      "owner": "session",
+      "sha256": "593b0776fdfc0f824480545ecce28256794a7c13e6c75228496f7f57d3f34d55"
+    },
+    {
+      "path": "bot/src/frameworks/session/assembly-readiness.js",
+      "owner": "session",
+      "sha256": "e72d393199878023587144c9d85c08532042acc36f2cb9af46fb77a489c51307"
+    },
+    {
+      "path": "bot/src/frameworks/session/assembly-state.js",
+      "owner": "session",
+      "sha256": "fd1d83742ee94683ec86eab8ceb57a99197d7d683c84d73029fea2aa9bb91318"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/action-continuation.js",
+      "owner": "session",
+      "sha256": "4f9586d33eaa857477c178b253e1769d33e25ab6099c99390944717c54a74f90"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/assembly-delivery-parts.js",
+      "owner": "session",
+      "sha256": "b6030c5597ddde154a5bac483c1e4f39478fe5754f0138c2618e233b8404909f"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/intent-language.js",
+      "owner": "session",
+      "sha256": "17bc4e3ce28bc1bd2e5200061fc942afe1900bc9fcdd7503c4575f7a2ab4cfcb"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/intent.js",
+      "owner": "session",
+      "sha256": "9c016b816db30ee8d469a4e34ca8a0cdd3544850ebbeb5094553e436b52bf8d5"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/knowledge-sources.js",
+      "owner": "session",
+      "sha256": "dbefac00651bf760badb1d94bc365b3a6b4fa53c5ec299f3c7c597dbbef37944"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/narrative-sources.js",
+      "owner": "session",
+      "sha256": "be9dd12ee7eadb55120ec9e27c813ca6f64d950bd6bc26f13c17bca63a215115"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-action-consent.js",
+      "owner": "session",
+      "sha256": "c44106f8a8ca3393c7235bafe2a3bdb4b908dc46b0a80cccbda015fd02cd52c7"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-checks.js",
+      "owner": "session",
+      "sha256": "f599e54ffecf1a5e15a3900053dc37f7110875fb7ffc4c50834daf1862897a0c"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-movement.js",
+      "owner": "session",
+      "sha256": "7ca5e243c933dcd489cd2f5e2670d90a9570d1076400006e8ac5ecc0dc1f2359"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-rules.js",
+      "owner": "session",
+      "sha256": "1f8c1c33df4b584d9f0f0f7635dc9a6925fcec4bde98eaaeb5a9c2993c412b0f"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/native-vip-admission.js",
+      "owner": "session",
+      "sha256": "f9c92d4bb41d5f36dfd3beaa9a4994bcb94def5cdf8a7ce4a26cc01cd284ca03"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/npc-observation.js",
+      "owner": "session",
+      "sha256": "7d3e5d0dc366f37fa19f00c16757fe47a6870d2bfb025d7dd99477dfccec6f8d"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/opening-authoring.js",
+      "owner": "session",
+      "sha256": "44aed68e2093e448066f1ba0f3f640ca45252dda8375a3d5fb0551410fa0a38a"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/opening-sources.js",
+      "owner": "session",
+      "sha256": "3fb41704dfd072d56b3a2f21dd6acf005ad8336d9d436818d62b7636ee81adcc"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/opening-world.js",
+      "owner": "session",
+      "sha256": "ecb910e38c13c23b30606e8cde332efd746af3ebea998d82bd49889effea07f0"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/personal-continuity.js",
+      "owner": "session",
+      "sha256": "42855be75a3a36d0366fd506518702a81df365330563fe37316d98ad00b647d4"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/publication-continuation.js",
+      "owner": "session",
+      "sha256": "c97124fecf9bccb82e8883a086a3e62f3071ddf3f6ab919bef387dcd57f33c9e"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/publication-recap.js",
+      "owner": "session",
+      "sha256": "8700d571c89b0e593e63779f9064119bac17e301de4bbba167e0a5b4c9313f22"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/pvp-window-source.js",
+      "owner": "session",
+      "sha256": "9383ea6896fa95ca2b8baef2cbfe5fe1ffd1e599024460d9afd7cda5d0dcb6f7"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/range-bands.js",
+      "owner": "session",
+      "sha256": "d04474bae73589ffba1f491aa2f3ea19e57495240633e954086f90fda7056b22"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/scene-world-sources.js",
+      "owner": "session",
+      "sha256": "252e9c52f6dee68a6805732e18c605b407810cf4917c22be2e47b211fe4e5a5d"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/story-continuity-source.js",
+      "owner": "session",
+      "sha256": "b73e3bf23de3d06c10c864ccd50c8d7f7383445bb0f7528fdc5634f8fd13e1fa"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/world-actor-state.js",
+      "owner": "session",
+      "sha256": "0cd919295bdb8504fcaa30dbcfca5594a3e6297964e0c3f5b760c9dfbf7ff9d2"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/world-autonomy.js",
+      "owner": "session",
+      "sha256": "c8290085cb776a594291ece1f57063cbbe0ac6fa8e6309b1c7b851ed3e68bb49"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/world-events.js",
+      "owner": "session",
+      "sha256": "f39c313903f71e327a6c1718ed644fe100a54f39751ba7978896adf26850667d"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/world-institution.js",
+      "owner": "session",
+      "sha256": "60489dca6fa5ff1ea2d796681ccc31a58397cb42ba4442ce5e793d9d9d2e8a2a"
+    },
+    {
+      "path": "bot/src/frameworks/session/contracts/world-npc-availability.js",
+      "owner": "session",
+      "sha256": "c52d14171a82bb1bc0024c51423bc7524a35352514db54948c582890ca0ea3fc"
+    },
+    {
+      "path": "bot/src/frameworks/session/conversation-principal.js",
+      "owner": "session",
+      "sha256": "24642e6803e3f7701deb4be77f7e2e1a2e65e7485a05fb81c35d837e66faa65e"
+    },
+    {
+      "path": "bot/src/frameworks/session/dialogue-continuity.js",
+      "owner": "session",
+      "sha256": "189f64481dca9c4de10a90d9ee481cef08f1a7d6b176f378e3b5784ffd3fe0a2"
+    },
+    {
+      "path": "bot/src/frameworks/session/negotiations.js",
+      "owner": "session",
+      "sha256": "d3c8dec2a71923bc249bd8f3a0da296b4a1deb9beae278e6401cb790992fb199"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-attendance-service.js",
+      "owner": "session",
+      "sha256": "ce618a7b561c8b7974be1338667708f853a5da46138458d70bc3a8a10de39607"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-attendance.js",
+      "owner": "session",
+      "sha256": "bcc34ff0e8e6b383578e6f5f1492934d582b0c996f912360a24bc050f488c09f"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-cohort-state.js",
+      "owner": "session",
+      "sha256": "6545f02ef6c81186c8693923579cb318b96d4f919ddda12f6d52120b70c751ab"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-entry-context.js",
+      "owner": "session",
+      "sha256": "5bbc6517ff469b05fff2fc5195675a47286691b06f78ca9b3c33e1e6c5a1fb0c"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-entry-evidence.js",
+      "owner": "session",
+      "sha256": "c0596ec4a5b3dd808eec94bf762d7d1fde61f3aad991c8c28c1c9760fdee010f"
+    },
+    {
+      "path": "bot/src/frameworks/session/opening-entry-source.js",
+      "owner": "session",
+      "sha256": "e49347d8f4328865188e75c0c007cdd3b28e43e2d32890e86c180646a9722556"
+    },
+    {
+      "path": "bot/src/frameworks/session/owner-action-terminal.js",
+      "owner": "session",
+      "sha256": "5127e7be175d34aabeade0edd231c8f2d29833a57608acfd9679bfebb6441d33"
+    },
+    {
+      "path": "bot/src/frameworks/session/public.js",
+      "owner": "session",
+      "sha256": "1c8b38dca6f2ec91067a2eb23e1abe0bacf1d72a06b0c5b2f2038abb46917fc7"
+    },
+    {
+      "path": "bot/src/frameworks/session/roster.js",
+      "owner": "session",
+      "sha256": "0330c38d8ab651780f3e44efff39602258006caf418666faf1a8ec6ec1637b49"
+    },
+    {
+      "path": "bot/src/frameworks/session/round-eligibility.js",
+      "owner": "session",
+      "sha256": "f5b68f1170619598e72f2de666578783b077cb41b5cf67e72d20bdebf3f12f45"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-action-window.js",
+      "owner": "session",
+      "sha256": "eff4903342e4367320ec72f3cb19ed6ecb2ec9b9d06289cbecc5ac4921b6ad2f"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-continuity.js",
+      "owner": "session",
+      "sha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-entry-native.js",
+      "owner": "session",
+      "sha256": "2d26585bba17a7471fde0217148a8fb374221ea8dc21dec0f613da532070c784"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-entry.js",
+      "owner": "session",
+      "sha256": "84a43f81ffd9cedc16efc04682305a14e2c04d49ab4408bdae11de9d19f563f5"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-setup-service.js",
+      "owner": "session",
+      "sha256": "97830ab6941a10f3bacaa46389adb84eea5dd5c84ea4d1710b3ec9734dc60b04"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-setup.js",
+      "owner": "session",
+      "sha256": "3d8910d4223c2dfd50f5e9974ec1efa09fddff41a4c48e26b19da2da05db28d1"
+    },
+    {
+      "path": "bot/src/frameworks/session/scene-source.js",
+      "owner": "session",
+      "sha256": "8c9d9eca75203908d990d160b30624e2c04fd181b5300bfb89bb680564d0c04c"
+    },
+    {
+      "path": "bot/src/frameworks/session/session-briefs.js",
+      "owner": "session",
+      "sha256": "184444d71a0e24237564836e8d359d8974a1fb128230438af1c52fe94c4d560e"
+    },
+    {
+      "path": "bot/src/frameworks/session/session-opening-service.js",
+      "owner": "session",
+      "sha256": "61605acd19b96b417bfb9169cab52eb32a8b16d99157ba1ba16175c6b92a88bd"
+    },
+    {
+      "path": "bot/src/frameworks/session/session-opening.js",
+      "owner": "session",
+      "sha256": "bd51da108d8fe4ce33a056ebe1de2f58a2225b3656c1a1e8e730e7664cbb67f0"
+    },
+    {
+      "path": "bot/src/frameworks/session/story-continuity.js",
+      "owner": "session",
+      "sha256": "33a0869da0501421b0f72af43751fdd0b080363273235408740c136c4b0b1f87"
+    },
+    {
+      "path": "bot/src/frameworks/session/window-coordinator.js",
+      "owner": "session",
+      "sha256": "671c4c58f21ced9a026b04a4f9e2fd885df53e57a49d2e474bf988e5debaabd3"
+    },
+    {
+      "path": "bot/src/frameworks/world/action-catalog.js",
+      "owner": "world",
+      "sha256": "f312c2f7bdbb6644e70f9b8c07c816da78fd1b81ac0cc20918c6ebee2cf5b534"
+    },
+    {
+      "path": "bot/src/frameworks/world/action-costs.js",
+      "owner": "world",
+      "sha256": "337128a616ecd16e39225d57811be4028d67edf36dfcd4e8ffa5d8def75a09fe"
+    },
+    {
+      "path": "bot/src/frameworks/world/action-diagnostics.js",
+      "owner": "world",
+      "sha256": "93d0ea95338d12eb14809c85b7b383d7b70c8c3993ecae2e2452d2cf5eb17ee5"
+    },
+    {
+      "path": "bot/src/frameworks/world/action-eligibility.js",
+      "owner": "world",
+      "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
+    },
+    {
+      "path": "bot/src/frameworks/world/action-execution.js",
+      "owner": "world",
+      "sha256": "02f9f4b4fa169d5a0fb9d1f1a557fde0d38e5550a3f9860c743a9ed30930059a"
+    },
+    {
+      "path": "bot/src/frameworks/world/active-proxy.js",
+      "owner": "world",
+      "sha256": "c238f7f5ed22d850168c09a0e8ab536b0eb05338db57aed5a3a1c50b1ab99be7"
+    },
+    {
+      "path": "bot/src/frameworks/world/actor-state.js",
+      "owner": "world",
+      "sha256": "8a06a7d69e04a0fea0c884f58e4616abf0a411bbccb1ba700a809477e1480dcd"
+    },
+    {
+      "path": "bot/src/frameworks/world/authorship-service.js",
+      "owner": "world",
+      "sha256": "44f396af65af42525aa80718f5c735ca3545950ffc7fbf4bd1e655fdd9a67ce7"
+    },
+    {
+      "path": "bot/src/frameworks/world/authorship.js",
+      "owner": "world",
+      "sha256": "8e946f43a46a4dbef00140c93154b6dd36a0c0ac389e866420868ccba0f74be9"
+    },
+    {
+      "path": "bot/src/frameworks/world/autonomous-world-contract.js",
+      "owner": "world",
+      "sha256": "a6d34342155e3938202cafb85fab49195b367347d0c82193680990d917569b03"
+    },
+    {
+      "path": "bot/src/frameworks/world/autonomous-world.js",
+      "owner": "world",
+      "sha256": "21bc6b2e8918b79c1a2586e8c2caf42a79f53e0971322d536c4a613637f93a2c"
+    },
+    {
+      "path": "bot/src/frameworks/world/availability.js",
+      "owner": "world",
+      "sha256": "d6eb55b1cbadb8f805857ea836df9d6a9a437f9cb60e84cbafa89a812c50085a"
+    },
+    {
+      "path": "bot/src/frameworks/world/background-identities.js",
+      "owner": "world",
+      "sha256": "db1863a8f63a91bd11565148fc2cd911271b50179ac584212ddca2c28b8649ba"
+    },
+    {
+      "path": "bot/src/frameworks/world/background-identity-service.js",
+      "owner": "world",
+      "sha256": "7f90b0268c184dac10aa4ef476bbbd503f4bbc18a596034793e542e84f003033"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-calendar.js",
+      "owner": "world",
+      "sha256": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-civic.js",
+      "owner": "world",
+      "sha256": "58978b94887af235701c2faada650f4fe033606fdb1417330c7a9a1ab84e0d41"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-context.js",
+      "owner": "world",
+      "sha256": "5904ba4c8ddac5458bc1e312adf98cf7cc449795eadd8f13e3658ee59877e8b1"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-core-rules.js",
+      "owner": "world",
+      "sha256": "e8fe0675462ec76804d0048cea5715dea0ffdd6ff1a1c6ccd0afa614325dcb41"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-flags.js",
+      "owner": "world",
+      "sha256": "1dd505fc9fd0c464d1c2998e20683342fd7ad4c0a36a28cc9b9ddbf38dba2e36"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-source.js",
+      "owner": "world",
+      "sha256": "25d1cc0eb8532263d2ad6f4af5c85fa657c98b49d74cefefbeaa11bca3ad2557"
+    },
+    {
+      "path": "bot/src/frameworks/world/civic-service-source.js",
+      "owner": "world",
+      "sha256": "07efb5c57cc8331d2933e5e4c4355c5ac1dd242e494cebcac0a95dd20ffc37e5"
+    },
+    {
+      "path": "bot/src/frameworks/world/commitment-source.js",
+      "owner": "world",
+      "sha256": "206e82bc7e2ed65fae829f4bb0a739a02541ca67829fdf8e31d58ded6fb203c8"
+    },
+    {
+      "path": "bot/src/frameworks/world/commitments.js",
+      "owner": "world",
+      "sha256": "45bbc7c65ff7416b2f0819b720be5e68920878173fe40d4bc8eaf188f14aa232"
+    },
+    {
+      "path": "bot/src/frameworks/world/consequence-source.js",
+      "owner": "world",
+      "sha256": "3110383b7a8831997f1c6250d06940c05907960c333bc58bf3babe17c9485b04"
+    },
+    {
+      "path": "bot/src/frameworks/world/consequences.js",
+      "owner": "world",
+      "sha256": "8c78475429b968ad959e45a4023b66c9de9744ddc0631d945e51b92fcb8fe520"
+    },
+    {
+      "path": "bot/src/frameworks/world/contact-groups.js",
+      "owner": "world",
+      "sha256": "de416e9be14b50f38c400181e3f4ff12f00427b2e7cecff635a8b15b72f1412b"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/actor-control.js",
+      "owner": "world",
+      "sha256": "88895cfb1587bb8bf3f8104a6b3e57a89a15e7261c462666b37831a9701442cc"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/authoring-context.js",
+      "owner": "world",
+      "sha256": "954fbb6c7d5f97bd52fdcfd3a6102de7dd1365711820047774539e0b273af906"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/autonomous-source.js",
+      "owner": "world",
+      "sha256": "4ecbdbfa7e97b48d9a515ef18d557af69e9f5797a3c168670ac4fed1d6b65751"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/character-observation.js",
+      "owner": "world",
+      "sha256": "09d74cbb390efb1ec1a2b5473f25cdeb61d3fdc27efe229dfa503bf0f7b9ec02"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/context-memory.js",
+      "owner": "world",
+      "sha256": "23f06dcf8ff951b4b5d86ff2139c3deb5a0e4f36eb99a705b2c8bfc6762f378c"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/conversation-principal.js",
+      "owner": "world",
+      "sha256": "7aa198c3604f79b42d138fc0f2e6ea4d9ca83b677638dab5a857e33c20fbcf75"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/delegation-policy.js",
+      "owner": "world",
+      "sha256": "59dd73eea00d6addc991baa22260381e455073098c344be135bb4be661321d3e"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/established-evidence.js",
+      "owner": "world",
+      "sha256": "dd2aac133a9094fcc17a56629885b86ae1c93234144bd25eb78ef699356abb8c"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/intent-dispatch.js",
+      "owner": "world",
+      "sha256": "05eb2ac04574a2bbb493589e0cbfcd3daa91460a37197a01b0fe9eac43ba4ce4"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/intent-validation.js",
+      "owner": "world",
+      "sha256": "e5e9ffa43063a2af25a76efbea80f6a0275bc55347f94602e49fa5d3d2746aa2"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/knowledge-clusters.js",
+      "owner": "world",
+      "sha256": "c7bde41072c3c80aec84a82d5eeee0ac3946a8d994b42ed915aa49a3b82d9d85"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/knowledge-records.js",
+      "owner": "world",
+      "sha256": "42c8e12c6f11ad5341d9f1802c75504441978aa7d2cc39fc73066230c90e6613"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/narrative-authorship.js",
+      "owner": "world",
+      "sha256": "669426b58c3f3417fd4ed46d23046cb970f4d680b2e088085ff74076adbc1a04"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/narrative-sources.js",
+      "owner": "world",
+      "sha256": "30f1cd43364059967891246a08c2d064e72bca6e8403ed0ecb645dd2f9fa92e7"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/native-encounter.js",
+      "owner": "world",
+      "sha256": "886691d8f5421d25cee41ab79fd62e2506a1e0fce28793aa178a340c178e831a"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/native-movement-checks.js",
+      "owner": "world",
+      "sha256": "546fde7d452344732625ad7f0234be4d849c068b0693f9eef82a24b074667585"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-cognition.js",
+      "owner": "world",
+      "sha256": "541dccba14127917ee23a9dbcda99d20589f635a8036100c556396790a3d53fb"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-evidence.js",
+      "owner": "world",
+      "sha256": "a9fdcb745ab2c0a051ab3462ae0b42ff17653458071fafa9a42a779e9df8be47"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-goal-proposal.js",
+      "owner": "world",
+      "sha256": "9c20931cfaa4df1c01eba8ba518111812f400e8f63b7a36f3206c348419d22b5"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-knowledge-source.js",
+      "owner": "world",
+      "sha256": "16144f791e83cd893f26b16843c29c63c83c9e2194ba7c06e4e8d543764daff5"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-opportunity.js",
+      "owner": "world",
+      "sha256": "493458332bfc751fb640006f8db68ad8624f143445d29ca8e365639bd4479d03"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-seed.js",
+      "owner": "world",
+      "sha256": "be09daff890839df91c1799e7a35fa330eff63c6d166f5fee0c0ac332d6494ee"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/npc-visibility.js",
+      "owner": "world",
+      "sha256": "8d3371a9f71f035f9c06a0e1d43a2ffe2c880f309ee9a4a3537fb718f58c8591"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/owner-consent.js",
+      "owner": "world",
+      "sha256": "3fee5f6e21eb4df9fc31f3fdfdacfba6da3a776ac8b46d466a33b50a8f319a16"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/personal-continuity.js",
+      "owner": "world",
+      "sha256": "54bb5ceef17a97e6a31e12a9407875b5c85cb3329941d5f94f8372adcbd21415"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/root-sources.js",
+      "owner": "world",
+      "sha256": "4641e48642d8221fe89f6636522a5ea0e826596e7717a16e164a56b956e8f829"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/round-eligibility.js",
+      "owner": "world",
+      "sha256": "867a0bfb8b9b6d2720e2660a80017c615b4ca204466f946dc9e05bee8c4215d6"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/session-continuation.js",
+      "owner": "world",
+      "sha256": "dda0a4e438b62524044d5ba4e6736e911a8eb97272809a6db49d04f0e7a760d2"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/session-scene.js",
+      "owner": "world",
+      "sha256": "12365c901a7513a1a904d930e71bb397a0fee2bbc8a94b28ae7a0753feb84f28"
+    },
+    {
+      "path": "bot/src/frameworks/world/contracts/story-continuity.js",
+      "owner": "world",
+      "sha256": "dc11d9d3df9d06df01adf47184656aa9643f83c803e01d8df98a1fce3f5b410f"
+    },
+    {
+      "path": "bot/src/frameworks/world/director-action-ranking.js",
+      "owner": "world",
+      "sha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f"
+    },
+    {
+      "path": "bot/src/frameworks/world/director-cadence.js",
+      "owner": "world",
+      "sha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4"
+    },
+    {
+      "path": "bot/src/frameworks/world/director-review.js",
+      "owner": "world",
+      "sha256": "28d2ff76290381c0e5fae37d763ffcde404d6c8528a8aaf988d168205515c7da"
+    },
+    {
+      "path": "bot/src/frameworks/world/director-service.js",
+      "owner": "world",
+      "sha256": "62952a79798335781b130f54f1a9fe7604135a10565260be73a640b1ab522f51"
+    },
+    {
+      "path": "bot/src/frameworks/world/encounter-beats.js",
+      "owner": "world",
+      "sha256": "d20c954a45d5374ad815859929a2681846d4a5160342e886fd59e4556ff50b38"
+    },
+    {
+      "path": "bot/src/frameworks/world/environment-observation.js",
+      "owner": "world",
+      "sha256": "043cb77ad45ce6f31c78c739fac7105ed364b22d27d829d254e3a33d3edebfe7"
+    },
+    {
+      "path": "bot/src/frameworks/world/established-fact-proof.js",
+      "owner": "world",
+      "sha256": "4c89957bfaeba5b1be1d35bc719af3c9d7b2bda2022371b586bb6778d1363e20"
+    },
+    {
+      "path": "bot/src/frameworks/world/execution-source.js",
+      "owner": "world",
+      "sha256": "efe831d1b0c2e073a45c014407eec8293dd5d2fe9e8c050f2c4cd2a440b57089"
+    },
+    {
+      "path": "bot/src/frameworks/world/fear-npc-threat.js",
+      "owner": "world",
+      "sha256": "6a1c1512a1d3b71b797e95de9ff557f1f5d9d54300cbd58aa007cab0b6532cd4"
+    },
+    {
+      "path": "bot/src/frameworks/world/feature-enabled.js",
+      "owner": "world",
+      "sha256": "77dc47a0cd3aa8963b96a72486782856c715333bc491212ad9169ae5dab1cee1"
+    },
+    {
+      "path": "bot/src/frameworks/world/history-context.js",
+      "owner": "world",
+      "sha256": "f26034d0544ff583b0d873b122b6a7e488ed34b27d9c1a2400a2e6519a93a9a0"
+    },
+    {
+      "path": "bot/src/frameworks/world/identity-origin.js",
+      "owner": "world",
+      "sha256": "c9ebc4fa9ff88e34e22f40cb65d1a5242983b180b84f057fb654e5b8b5bd6591"
+    },
+    {
+      "path": "bot/src/frameworks/world/identity-persistence.js",
+      "owner": "world",
+      "sha256": "65cfa3f50eeba7078529b90325a2c879328839b2c6dabfa11e448616b95c528c"
+    },
+    {
+      "path": "bot/src/frameworks/world/identity-rules.js",
+      "owner": "world",
+      "sha256": "f7e8a9e95af23d2339abbd8d523499543b931a80f64f90bfe6246635222cdec6"
+    },
+    {
+      "path": "bot/src/frameworks/world/information-transfer.js",
+      "owner": "world",
+      "sha256": "007e94b5672b2bfd48205e188646e31749accee1966dbca4d2d0a30897cc457e"
+    },
+    {
+      "path": "bot/src/frameworks/world/infrastructure.js",
+      "owner": "world",
+      "sha256": "98a2fab4d033f5ce152357b6354172000753aa251640c1d6bae4abce394e39df"
+    },
+    {
+      "path": "bot/src/frameworks/world/institution-report.js",
+      "owner": "world",
+      "sha256": "7c4e1ad3bd50d6c25e1b1f63f0cf2657e83f60c86e2953d2e333fafada4b2c42"
+    },
+    {
+      "path": "bot/src/frameworks/world/location-language.js",
+      "owner": "world",
+      "sha256": "8c38f182c53017a364fc611d1f07b9a3959f805623f8a38b83ce2dde30b0c97e"
+    },
+    {
+      "path": "bot/src/frameworks/world/long-projects.js",
+      "owner": "world",
+      "sha256": "3ee4c3c03ccb053ea8b1d507735ff8761c6ddb88b8d51650ebdfc2f490a1e03a"
+    },
+    {
+      "path": "bot/src/frameworks/world/minor-identity.js",
+      "owner": "world",
+      "sha256": "d2872867de39b069aa79cfb57cd86fc26ae4241e0982f118972f562abb1bec09"
+    },
+    {
+      "path": "bot/src/frameworks/world/minor-npc-schema.js",
+      "owner": "world",
+      "sha256": "c73e2b5e998ae7c8f6f7657561d9eff93128f8a3d54ba315dcf8349010648b96"
+    },
+    {
+      "path": "bot/src/frameworks/world/minor-npc-service.js",
+      "owner": "world",
+      "sha256": "92710e676f8c564b8a5c823eb8342b4d99ad3c9788f3b6aece317fd44796e49f"
+    },
+    {
+      "path": "bot/src/frameworks/world/npc-action-schema.js",
+      "owner": "world",
+      "sha256": "8fd00370314b54489bbd831802cfd53100f3410eeae5c3f18c42e102b91d4813"
+    },
+    {
+      "path": "bot/src/frameworks/world/npc-signal-memory.js",
+      "owner": "world",
+      "sha256": "de92aef97867242a96a1d76808d5f37656468499c6d169cf9ae60cdad0e758d8"
+    },
+    {
+      "path": "bot/src/frameworks/world/observation-reader.js",
+      "owner": "world",
+      "sha256": "38e17bf28cbcd2d9cf6a08cf3a1f87b5043898429d3f34451f19147f90485258"
+    },
+    {
+      "path": "bot/src/frameworks/world/operation-authority.js",
+      "owner": "world",
+      "sha256": "ea209e75b0847c11a74c61790b795104d8987eb4c7da8c2b59f8d91e6533344b"
+    },
+    {
+      "path": "bot/src/frameworks/world/private-seeds.js",
+      "owner": "world",
+      "sha256": "41924284879fa55280a381495e27c4208601259e052f142fab53ed2bf49b0352"
+    },
+    {
+      "path": "bot/src/frameworks/world/private-world-seed-contract.js",
+      "owner": "world",
+      "sha256": "33b6edfaffaf44ee3e5e4c47fc0ca5a86ae27f67381cbb1eb0546992f53e59fd"
+    },
+    {
+      "path": "bot/src/frameworks/world/public.js",
+      "owner": "world",
+      "sha256": "f5e204beb0ac4f39eebb9d054b4c7b5c6d67d52700d537b7263ad95d9d0367fd"
+    },
+    {
+      "path": "bot/src/frameworks/world/resolution.js",
+      "owner": "world",
+      "sha256": "4195d8349edb1dc2e17f604fdcbdc2fee25e86552dbf0c52ef8aec44338d26e5"
+    },
+    {
+      "path": "bot/src/frameworks/world/reviewed-authoring.js",
+      "owner": "world",
+      "sha256": "91d31c404c9de64bd465221581b3c45b3ec22112600316963e3674b8a2f04797"
+    },
+    {
+      "path": "bot/src/frameworks/world/sanctioned-sources.js",
+      "owner": "world",
+      "sha256": "b6cb798d8d96136c263c4fdb414908fb4d43f87e8e315c570cc198c28581503d"
+    },
+    {
+      "path": "bot/src/frameworks/world/seed-data.js",
+      "owner": "world",
+      "sha256": "be7234346ce9360bad856ba9aabfbefe7a0da47aeba74261490727041a00d79f"
+    },
+    {
+      "path": "bot/src/frameworks/world/seed-drafts.js",
+      "owner": "world",
+      "sha256": "3eb19953fd02ab2ab44b5ac6d7300dfc731357fe01cbc58d361652fcfa0d3ed9"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-candidates.js",
+      "owner": "world",
+      "sha256": "ec667d37663e27e5dc5949b9bc1bb4a70a437a0a26caeedc2baffe267cca1d07"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-overview.js",
+      "owner": "world",
+      "sha256": "9e4b3f8c2fdf040d6c182140fbe43a626ed674553b16881ef3fd13397e4a2379"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-prompt.js",
+      "owner": "world",
+      "sha256": "59b4f8b4fe16b935db253a00b11b3bfdee69e7455201ba4f178e088bf5f3b528"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-query-primitives.js",
+      "owner": "world",
+      "sha256": "6e98ed92c5b82cbb699cefc2cb73976e353dc0b7b9e325836ab8600f9ecbf94b"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+      "owner": "world",
+      "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-receipts.js",
+      "owner": "world",
+      "sha256": "c8746186a68b2edd50ef47339e100b0d2114766d08e801c862e38d2a7e04ec61"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-record.js",
+      "owner": "world",
+      "sha256": "9a47c1e243047abe816bda100a87478f964844631d624a69481a0938a744c54e"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation-update-schema.js",
+      "owner": "world",
+      "sha256": "039840722d43bf640dd4fc1bba8384c5b36da2a9da7fbe7f1dc65ee05e8283ac"
+    },
+    {
+      "path": "bot/src/frameworks/world/simulation.js",
+      "owner": "world",
+      "sha256": "2ae935e9c5e277cd79d221b8a553b4d441022c46e6affc2d314df40b17fe05ce"
+    },
+    {
+      "path": "bot/src/frameworks/world/supply-dependencies.js",
+      "owner": "world",
+      "sha256": "495d115432c7bbd44bbd547f77fd4ce98462415d81ace020810647f236a5c30e"
+    },
+    {
+      "path": "bot/src/frameworks/world/upkeep.js",
+      "owner": "world",
+      "sha256": "b2a0219bea277cde9867edc72a80e019953244a52b9a63b07777c80452822ca6"
+    },
+    {
+      "path": "bot/src/frameworks/world/world-observation.js",
+      "owner": "world",
+      "sha256": "5cd0894757a26dc0df1f6a0aebec9acc75c5de457ec291ab0e8bfba207557cea"
+    },
+    {
+      "path": "bot/src/frameworks/world/world-proposal-schema.js",
+      "owner": "world",
+      "sha256": "5073dabcafb52764f43db9d536ea45c9c81d4f8d3d7e2b0100259a778502871f"
+    }
+  ],
+  "rf04OwnerViolationCount": 0,
+  "rf04OwnerCycleMemberCount": 0,
+  "rf04OverdueTransitionCount": 0,
+  "currentSourceGateSummary": {
+    "sourceModules": 933,
+    "unowned": 0,
+    "importOccurrences": 3835,
+    "internalImportOccurrences": 3651,
+    "cycleComponents": 1,
+    "largestCycle": 76,
+    "rawViolationOccurrences": 906,
+    "acceptedLegacyOccurrences": 906,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "remainingTransitionRecords": 897,
+  "qualification": [
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c37.test.mjs",
+      "sha256": "16172847a90435486a4b3c1965afd82ed1e6c8f90fe37886d2411b7b80ff3f2e",
+      "cases": 6
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c38.test.mjs",
+      "sha256": "e1bd19af3116b181893db4276c70bf2280b9a85442118286c6bf1b840bafc89d",
+      "cases": 2
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c39.test.mjs",
+      "sha256": "8520aab625badab816890f4af964a1dae5bf7aebe3bcb6d68e99a6aac4d1a007",
+      "cases": 3
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c40.test.mjs",
+      "sha256": "f4c3a7c99c87f81149ecf12b77690108e560ee44aa77ae233b4680d32df7eff0",
+      "cases": 3
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c41.test.mjs",
+      "sha256": "f4b62b2c846bdb2a68f5f4793a6191181479ea50020454fdc141173c6e364f2a",
+      "cases": 3
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf04-f07-c42.test.mjs",
+      "sha256": "ec4b6eb7b3901487e31e41842e2bb81a7509292371a6fa0bdcef338f62a9922c",
+      "cases": 3
+    }
+  ],
+  "passingCaseTotal": 20,
+  "qualificationLimitations": [
+    "Individual final terminal results, not a rerun of unchanged passing batches.",
+    "Fresh tests are local under established test boundary; clean checkout does not reproduce the local test files.",
+    "Controlled GM authorizer in C240; no live authentication/transport/provider/deployment proof."
+  ],
+  "nextPhase": "RF05"
+}
