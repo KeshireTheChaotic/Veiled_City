@@ -1,0 +1,15 @@
+✔ reference factory requires only original validation/quarantine callbacks and returns exact named functions (2.6764ms)
+✔ original event routing publishes only eligible configured records with source-derived body and metadata heading (2.7109ms)
+✔ configured synchronization retains thread/NPC/location order and original public-only storage requests (0.4214ms)
+✔ original source rejection quarantines candidate and publishes original pending-review placeholder, unexpected error aborts (0.3486ms)
+✔ source removal/private audience/content change during awaited lookup prevents write and publication receipt (0.7837ms)
+✔ confirmed missing prior message creates replacement but uncertain edit never creates or retries (0.3434ms)
+✔ unavailable channel does not mark published; send failure stops later records without retry (0.2354ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8960.3693

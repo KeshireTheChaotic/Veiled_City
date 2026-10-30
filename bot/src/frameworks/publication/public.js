@@ -79,3 +79,5 @@ export {postGmLog} from './gm-log-delivery.js';
 export {postStateError} from './state-error-delivery.js';
 
 export {postPrivateRelay} from './private-relay-delivery.js';
+
+export {createReferencePublications} from './reference-publications.js';

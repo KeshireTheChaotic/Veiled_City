@@ -1,0 +1,13 @@
+{
+  "parent": "be87756052ea96bc22d6ddedb822cc6ea5d5a24a",
+  "original_functions": [
+    "recordText",
+    "publishRecord",
+    "publishEventResults",
+    "syncConfiguredSurfaces"
+  ],
+  "all_four_original_function_bodies_and_signatures_equal": true,
+  "entire_remaining_root_equal_except_exact_factory_import_composition_export": true,
+  "root_supplies_original_two_callback_references": true,
+  "queued_turn_local_publishEventResults_binding_retained": true
+}
