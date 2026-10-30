@@ -146,16 +146,7 @@ export async function postJournalEntry({db,guild,title="Campaign Update",content
   return true;
 }
 
-export async function postGmLog({db,guild,sessionId=null,title="GM Log",details=""}){
-  const c=db.getCampaign(guild.id);
-  const ch=await textChannel(guild,c?.gm_log_channel_id);
-  if(!ch) return false;
-  try { assertGmOnlyChannel({guild,channel:ch,gmRoleId:c?.gm_role_id||null}); }
-  catch (err) { console.error("Unsafe GM log channel configuration", err); return false; }
-  const text=`**${title}**${sessionId?` · session ${sessionId.slice(0,8)}`:""}\n${String(details||"")}`;
-  for(const part of chunks(text))await ch.send(part);
-  return true;
-}
+export {postGmLog} from './frameworks/publication/public.js';
 
 export async function postStateError({db,guild,error,context="runtime",sessionId=null,attempt=null}){
   const ref=randomUUID().slice(0,8);

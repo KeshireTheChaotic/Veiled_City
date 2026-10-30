@@ -1,0 +1,6 @@
+{
+  "parent": "1421a63e65c88b77c8abad24b249abf9dcc34ce3",
+  "whole_original_function_equal": true,
+  "entire_remaining_publishing_module_equal_except_one_public_reexport": true,
+  "existing_standalone_port_bindings_unchanged": true
+}

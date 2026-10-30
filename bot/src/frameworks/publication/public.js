@@ -73,3 +73,5 @@ export {lifecycleHash,lifecycleProjection} from './lifecycle-output.js';
 export {nativeHookProjection} from './native-hook-output.js';
 
 export {assertProtectedModelEvents} from './gm-event-preflight.js';
+
+export {postGmLog} from './gm-log-delivery.js';

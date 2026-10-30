@@ -1,0 +1,15 @@
+✔ root compatibility and Publication public expose the same original function with exact private text (1.4268ms)
+✔ original default title/session/detail fallback preserves false and string conversion (0.2224ms)
+✔ missing campaign/channel, failed lookup and non-text channel preserve false without sending (0.272ms)
+✔ actual GM privacy checks reject ordinary visibility and missing bot send access before any send (0.6543ms)
+✔ original splitter sends each exact part in order and awaits completion before the next send (0.23ms)
+✔ partial uncertain send failure propagates original error without replacement, retry or later parts (0.5478ms)
+✔ original campaign reader error propagates before channel lookup or send (0.6784ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 828.6085

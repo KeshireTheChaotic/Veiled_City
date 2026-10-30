@@ -1,0 +1,11 @@
+# RF06-F03 R28 — Complete original GM log delivery
+
+Original postGmLog moved intact into Publication gm-log-delivery.js. Uses existing qualified Discord channel/privacy/text ports. Root publishing/public exports share one exact function identity; existing root standalone text/Operations port bindings unchanged. Original campaign getter, optional/unavailable channel false, effective GM permission check/error logging before sends, title/session/details encoding and ordered original splitter/send behavior retained. Partial uncertain send failure propagates without retry/replacement. No DB/receipt/native/schema/policy or recovery change.
+
+Exclusive publishing/Publication public source slot granted by Agent A; INDEX explicitly returned after C92. Runtime3 files, fresh c28 test, feature scope/ledger/hashes/structure/log and RF06 ledger only. R28-STRUCTURE proves whole original function and entire remaining publishing module equal except one public reexport. No new port/capability/registry/transition/index/command change. Other root callers retain same API. Preserve concurrent Intent/owner work.
+
+Frozen node --test bot/tests/ai-gm-2026-10/rf06-f03-c28.test.mjs exit0,7/7passed,zero fail/skip/cancel,828.6085ms. Actual original Discord privacy validator/splitter with synthetic transport: root/public identity, exact title/session/default/details formatting, missing/no-channel/fetch failure/nontext false, everyone/ordinary-role/bot access rejection before send, ordered awaited multipart sends, original error after second uncertain send without retry/later parts, campaign-reader failure before lookup. No test rerun/repair. Syntax4/4 passed. Existing R04/R14 tests not rerun because their code/ports unchanged.
+
+Shared RF05 ratchet exit0: 1031modules/4129imports,0unowned/0active/0errors,727accepted legacy occurrences,cycle60. Includes concurrent Agent A RF05; R28 retires no transition. Full RF06/release unqualified. No live Discord/provider/network/production DB/deployment/push/merge.
+
+Correlated native/turn/effect/receipt persistence remains held until necessary RF05 qualification. Next exact slice RF06-F03 R29 original operational error delivery, subject to source/telemetry/private-audience proof. Rollback only R28 exact paths.
