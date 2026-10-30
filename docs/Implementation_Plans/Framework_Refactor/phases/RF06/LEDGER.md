@@ -33,7 +33,8 @@
 | RF06-F02 R25 | Original campaign-row SQL reader on same connection/proxy | 60b685e3 | 6/6 final new + 7/7 affected passed;318 other methods unchanged |
 | RF06-F04 R26 | Original campaign-status initialization/read command with qualified stores/pairs | 52abf143 | 7/7 passed, original body/remainder equality,syntax9/9 |
 | RF06-F04 R27 | Original campaign setup with deferred original GM guard and one-method store | 6601f417 | 7/7 passed, original branch/remainder equality,syntax8/8 |
-| RF06-F03 R28 | Original GM log delivery in Publication; same root/public function | this R28 checkpoint | 7/7 passed, whole original function/module proof,syntax4/4 |
+| RF06-F03 R28 | Original GM log delivery in Publication; same root/public function | 89d0c01b | 7/7 passed, whole original function/module proof,syntax4/4 |
+| RF06-F03 R29 | Original operational error audit/GM-private delivery in Publication | this R29 checkpoint | 7/7 passed, whole original function/module proof,syntax4/4 |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -44,7 +45,7 @@ Root db.js is a standalone compatibility facade. Baseline d6ec1467 has319 method
 
 ## Architecture and coordination
 
-After R28: shared RF05 ratchet exit0,1031 modules/4129imports,0unowned/0active/0errors,727 accepted legacy occurrences,one cycle60. Snapshot includes concurrent Agent A RF05 progress; separate snapshots do not qualify its entire phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 23 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R29: shared RF05 ratchet exit0,1033 modules/4134imports,0unowned/0active/0errors,727 accepted legacy occurrences,one cycle60. Snapshot includes concurrent Agent A RF05 progress; separate snapshots do not qualify its entire phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 23 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -52,4 +53,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F03 R29 original operational error delivery, subject to source/telemetry/private-audience proof, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F03 R30 original private relay delivery, subject to source/audience/callback/error proof, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

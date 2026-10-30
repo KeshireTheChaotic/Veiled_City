@@ -1,0 +1,6 @@
+{
+  "parent": "89d0c01b4e41d17c7bc01f4a0e7d089dd2765925",
+  "whole_original_function_equal": true,
+  "entire_remaining_publishing_module_equal_except_one_public_reexport": true,
+  "existing_standalone_operations_binding_unchanged": true
+}

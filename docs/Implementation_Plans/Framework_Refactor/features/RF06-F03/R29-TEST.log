@@ -1,0 +1,15 @@
+✔ historical/public identity, original metric singleton and audit/message reference correlation survive extraction (6.2403ms)
+✔ original audit keeps only selected bounded diagnostic fields and copied interaction lifetime (0.3953ms)
+✔ stack/context bounds and triple-backtick replacement retain original exact message encoding (0.2181ms)
+✔ best-effort audit failure never prevents the original channel report (0.284ms)
+✔ missing/failed lookup and unsafe channel keep reference and never publish private diagnostics elsewhere (0.7996ms)
+✔ uncertain send failure is logged once and swallowed with original correlation reference; no retry (0.5776ms)
+✔ original campaign reader failure propagates after audit with no lookup or retry (0.5701ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 827.7264

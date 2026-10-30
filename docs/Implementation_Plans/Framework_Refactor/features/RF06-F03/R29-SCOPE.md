@@ -1,0 +1,5 @@
+# RF06-F03 R29 — Original operational error publication
+
+Move only original postStateError into Publication using original randomUUID and existing qualified Operations/Discord ports. Root reexports same function; existing standalone Operations composition preserved. Whole function and rest of publishing module must match. Preserve metric/incident order, best-effort audit, closed diagnostic fields and lifetime JSON, current campaign/channel lookup, GM privacy guard before send, bounded/backtick-sanitized stack, swallowed/logged send failure and original reference return. No retry/new fallback/DM or privacy policy, persistence/receipt/native/schema change.
+
+Request exclusive Publication public source slot, no registry/new port or index/commands edits. Fresh actual metrics singleton/privacy validator with synthetic audit/transport checks exact correlation, bounded private diagnostics, audit failure, unavailable/unsafe channel and uncertain send failure, campaign getter failure and function identity. One frozen new suite; prior passed unrelated suites not repeated. No network/provider/production state.
