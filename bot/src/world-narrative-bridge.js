@@ -3,7 +3,7 @@ import {jsonHash as hash} from './kernel/json-hash.js';
 import {narrativeSourceVisible,rankWorldNarrativeOpportunities} from './frameworks/narrative/public.js';
 import {worldKnowledgeSources,worldSessionScene,worldConversationPrincipal} from './frameworks/world/public.js';
 function listNarrativeRecords(...args){return worldKnowledgeSources.listNarrativeRecords(...args);}function currentScene(...args){return worldSessionScene.currentScene(...args);}function scenePresence(...args){return worldSessionScene.scenePresence(...args);}function conversationPrincipal(...args){return worldConversationPrincipal.conversationPrincipal(...args);}
-import {findNpcConversationMemory,npcSignalMemoryReferenceValid,activeCityProxy,worldSimulationReceiptForAudience} from './frameworks/world/public.js';
+import {findNpcConversationMemory,npcSignalMemoryReferenceValid,npcConversationMemoryVisible as actorEvidenceVisible,activeCityProxy,worldSimulationReceiptForAudience} from './frameworks/world/public.js';
 import {narrativeUnitRenderSource} from './frameworks/narrative/public.js';
 function renderNarrativeUnit(...args){return narrativeUnitRenderSource.renderNarrativeUnit(...args);}
 import {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './frameworks/narrative/public.js';

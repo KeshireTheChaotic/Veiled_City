@@ -73,7 +73,7 @@ export {inspectNpcAction} from './action-diagnostics.js';
 export {createWorldNpcGoalProposalConsumer,worldNpcGoalProposal} from './contracts/npc-goal-proposal.js';
 export {createWorldNpcSeedConsumer,worldNpcSeed} from './contracts/npc-seed.js';
 export {createWorldNpcVisibilityConsumer,worldNpcVisibility} from './contracts/npc-visibility.js';
-export {findNpcConversationMemory,npcSignalMemoryReferenceValid} from './npc-signal-memory.js';
+export {findNpcConversationMemory,npcSignalMemoryReferenceValid,npcConversationMemoryVisible} from './npc-signal-memory.js';
 export {createWorldEstablishedEvidenceConsumer,worldEstablishedEvidence} from './contracts/established-evidence.js';
 export {nativeEstablishedFact} from './established-fact-proof.js';
 export {worldAuthoringContext} from './contracts/authoring-context.js';

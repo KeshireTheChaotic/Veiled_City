@@ -10,3 +10,6 @@ export function npcSignalMemoryReferenceValid(db,guild,ref,scope){
  const memory=db.listNpcMemories(guild,ref.actor,{status:'active',limit:200}).find(m=>m.id===ref.key);
  return !!memory&&hash(memory)===ref.hash&&worldNpcVisibility.actorEvidenceVisible(db,guild,ref.actor,memory,scope);
 }
+
+/** Replay the original NPC actor-relative eligibility decision without granting disclosure. */
+export function npcConversationMemoryVisible(...args){return worldNpcVisibility.actorEvidenceVisible(...args);}

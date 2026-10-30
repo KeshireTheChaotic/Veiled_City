@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/frameworks/world/npc-signal-memory.js",
+    "sha256": "de92aef97867242a96a1d76808d5f37656468499c6d169cf9ae60cdad0e758d8"
+  },
+  {
+    "path": "bot/src/frameworks/world/public.js",
+    "sha256": "f5e204beb0ac4f39eebb9d054b4c7b5c6d67d52700d537b7263ad95d9d0367fd"
+  },
+  {
+    "path": "bot/src/world-narrative-bridge.js",
+    "sha256": "fc71b35a8d01f977074892b402d6662f5271a469498a980e391f555c4cc3c11f"
+  }
+]
