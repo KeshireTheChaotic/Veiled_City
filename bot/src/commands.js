@@ -1,3 +1,5 @@
+import {handlePartyStatusCommand} from './frameworks/discord/public.js';
+import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
 import {gmFactLine,playerFactLine} from './frameworks/discord/public.js';
 import {handleGmNpcStateCommand} from './frameworks/discord/public.js';
 import {connectDiscordGmNpcReads} from './framework-to-framework/discord--persistence/public.js';
@@ -1741,20 +1743,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       await interaction.reply({content:"Continuing party state saved.",ephemeral:true});
       return true;
     }
-    if(group==="party"&&sub==="status"){
-      const party=db.getPartyState(interaction.guildId);
-      const s=db.getActiveSession(interaction.guildId);
-      const members=party.members?.length?party.members.map(m=>m.name).join(", "):"none";
-      const bonds=party.bonds?.length?party.bonds.slice(0,5).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join("\n"):"No stored practical links.";
-      await interaction.reply({content:[
-        `**Continuing Party**`,
-        `Established: **${party.established?"yes":"no"}**${party.name?` • Name: **${party.name}**`:""}`,
-        `Members: ${members}`,
-        s?`Current session phase: **${s.assembly_phase}**`:"",
-        bonds
-      ].filter(Boolean).join("\n").slice(0,1900),ephemeral:true});
-      return true;
-    }
+    if(group==="party"&&sub==="status"){return await handlePartyStatusCommand(interaction,{store:connectDiscordPartyStatus(db)});}
 
     if(group==="player"&&["private-channel","accessibility"].includes(sub)){
       return await handlePlayerSettingsCommand(interaction,{sub,store:connectDiscordPlayerSettings(db)});

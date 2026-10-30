@@ -1,0 +1,14 @@
+✔ two-method party access preserves current receiver/result/error and fixed shape (1.0868ms)
+✔ exact original empty status is private and reads party before session (0.1858ms)
+✔ original member/name/session/bond rendering and five-bond cap preserved (0.2698ms)
+✔ original display truncates to1900 once without modifying stored party (0.1832ms)
+✔ actual SQLite missing campaign initialization, guild isolation and malformed saved JSON fallback preserved (172.8727ms)
+✔ read/response failures propagate without retries; root awaits within original receipt lifecycle (1.2514ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 767.5649

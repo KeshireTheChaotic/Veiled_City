@@ -1,0 +1,5 @@
+# RF06-F04 R39 — Original continuing-party status
+
+After R38 checkpoint, move only party/status display to Discord through exactly getPartyState/getActiveSession current Persistence methods. getPartyState can initialize missing campaigns; preserve this existing behavior, do not label adapter strictly read-only. Original members/name/established/session/bonds and five-bond cap, no-session/empty defaults, 1900 truncation and ephemeral reply preserved. Establishment/consent/membership mutation paths unchanged. No GM requirement added; root current preparation/receipt lifecycle unchanged and adapter awaited.
+
+Request commands/Discord public/Persistence public/pair public+BRIDGE slots. Fresh real disposable SQLite initialization/historical fallback/guild/no extra writes, exact output/cap/order/receiver/errors and AST proof. No schema/class/native/transaction/index/new domain policy. Frozen fresh batch only; no live/provider/production state. Native correlated repository migration remains held.

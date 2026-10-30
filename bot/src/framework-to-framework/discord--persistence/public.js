@@ -26,3 +26,7 @@ export function connectDiscordGmFactReads(db){return assertGmFactReadStore(creat
 import {assertGmNpcReadStore} from '../../frameworks/discord/public.js';
 import {createGmNpcReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordGmNpcReads(db){return assertGmNpcReadStore(createGmNpcReadStore(db));}
+
+import {assertPartyStatusStore} from '../../frameworks/discord/public.js';
+import {createPartyStatusStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordPartyStatus(db){return assertPartyStatusStore(createPartyStatusStore(db));}

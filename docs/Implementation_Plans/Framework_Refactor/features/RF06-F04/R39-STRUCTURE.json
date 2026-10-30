@@ -1,0 +1,6 @@
+{
+  "parent": "36fd54d34003d4c213ff51469c176843c09dcbbf",
+  "original_branch": "if(group===\"party\"&&sub===\"status\"){\n      const party=db.getPartyState(interaction.guildId);\n      const s=db.getActiveSession(interaction.guildId);\n      const members=party.members?.length?party.members.map(m=>m.name).join(\", \"):\"none\";\n      const bonds=party.bonds?.length?party.bonds.slice(0,5).map(b=>`• ${b.from_character} → ${b.to_character}: ${b.reason}`).join(\"\\n\"):\"No stored practical links.\";\n      await interaction.reply({content:[\n        `**Continuing Party**`,\n        `Established: **${party.established?\"yes\":\"no\"}**${party.name?` • Name: **${party.name}**`:\"\"}`,\n        `Members: ${members}`,\n        s?`Current session phase: **${s.assembly_phase}**`:\"\",\n        bonds\n      ].filter(Boolean).join(\"\\n\").slice(0,1900),ephemeral:true});\n      return true;\n    }",
+  "remaining_root_preserved_by_exact_single_range_replacement_and_two_imports": true,
+  "original_body_ast_equal_after_only_store_substitution": true
+}
