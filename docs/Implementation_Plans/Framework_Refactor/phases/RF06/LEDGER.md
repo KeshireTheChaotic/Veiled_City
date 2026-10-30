@@ -44,7 +44,8 @@
 | RF06-F04 R36 | Original GM fact-list display through fixed read view | 05ca78a3 | 6/6 passed incl actualSQLite,syntax7,originalbranchAST proof |
 | RF06-F04 R37 | Original private GM cognition display through four-read view | e5ee650c | 6/6 passed incl actualSQLite,syntax7,originalbranchAST proof |
 | RF06-F04 R38 | Three original fact display text helpers in Discord | 36fd54d3 | 7/7passed,syntax4,whole function/rootAST proof |
-| RF06-F04 R39 | Original continuing-party status through two-method view | this R39 checkpoint | 6/6passed incl actualSQLite,syntax7,originalbranchAST |
+| RF06-F04 R39 | Original continuing-party status through two-method view | cfca6e14 | 6/6passed incl actualSQLite,syntax7,originalbranchAST |
+| RF06-F04 R40 | Original session-roster adapter through existing pair | this R40 checkpoint | 6/6passed,syntax5,originalguard/report/chunker proof |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -55,7 +56,7 @@ Root db.js is a standalone compatibility facade. Baseline d6ec1467 has319 method
 
 ## Architecture and coordination
 
-After R39: shared RF05 ratchet exit0,1059 modules/4236 imports,0active/0errors,711 accepted,cycle60. Snapshot includes concurrent Agent A RF05 and external AF02 progress. R31/R32 snapshots recorded one external AF02 roll-requests cycle; Agent A C95 resolves that edge without exception expansion. Current snapshot includes that concurrent work and zero registry errors. Separate snapshots do not qualify either full phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 23 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R40: shared RF05 ratchet exit0,1060 modules/4240 imports,zero active/errors,711 accepted,cycle60. Snapshot includes concurrent Agent A RF05 and external AF02 progress. R31/R32 snapshots recorded one external AF02 roll-requests cycle; Agent A C95 resolves that edge without exception expansion. Current snapshot includes that concurrent work and zero registry errors. Separate snapshots do not qualify either full phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 23 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -63,4 +64,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F04 R40 original session roster command adapter after permission/source inventory; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F04 R41 original Director-history private display; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

@@ -7,3 +7,12 @@ export function connectDiscordSessionPrincipal(){return discordSessionPrincipal.
 import {discordSessionScene} from '../../frameworks/discord/public.js';
 import {currentScene} from '../../frameworks/session/public.js';
 export function connectDiscordSessionScene(){return discordSessionScene.bind({currentScene});}
+
+import {replyWithPrivateChunks} from '../../frameworks/discord/public.js';
+import {buildSessionRosterReport,chunkRosterReport} from '../../frameworks/session/public.js';
+/** Application retains original GM/session guards and receipt lifecycle. */
+export async function handleSessionRosterCommand(interaction,db,session){
+  const lines=buildSessionRosterReport(db,interaction.guildId,session);
+  const chunks=chunkRosterReport(lines);
+  return replyWithPrivateChunks(interaction,chunks);
+}

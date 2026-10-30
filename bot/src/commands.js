@@ -1,3 +1,4 @@
+import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
 import {gmFactLine,playerFactLine} from './frameworks/discord/public.js';
@@ -43,7 +44,7 @@ import { createConceptContextPackage } from "./concept-context.js";
 import {normalizeNarrativeMarkdown,narrativeRelativePath} from './frameworks/character/public.js';
 import {createNarrativeExportPackage} from './character-narrative.js';
 import {
-  buildSessionRosterReport, chunkRosterReport, assemblyReadiness,
+  assemblyReadiness,
   registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity, scheduleSessionOpening
 } from "./frameworks/session/public.js";
 import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
@@ -983,11 +984,7 @@ Initial phase: ${s.assembly_phase}`});
     if(group==="session"&&sub==="roster"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may view the session roster.");
       const s=requireSession(db,interaction.guildId);
-      const lines=buildSessionRosterReport(db,interaction.guildId,s);
-      const chunks=chunkRosterReport(lines);
-      await interaction.reply({content:chunks[0],ephemeral:true});
-      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
-      return true;
+      return await handleSessionRosterCommand(interaction,db,s);
     }
     if(group==="session"&&sub==="converged"){
       if(!isGM(db,interaction)) throw new Error("Only a GM/admin may change convergence phase.");

@@ -58,3 +58,5 @@ export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
 export {gmFactLine,playerFactLine} from './fact-text.js';
 
 export {handlePartyStatusCommand,assertPartyStatusStore} from './party-status-command.js';
+
+export {replyWithPrivateChunks} from './private-chunk-reply.js';

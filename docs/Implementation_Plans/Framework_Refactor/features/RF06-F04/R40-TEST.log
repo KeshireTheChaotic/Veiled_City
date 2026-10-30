@@ -1,0 +1,14 @@
+✔ original empty roster uses exact session object/queries and private response (1.108ms)
+✔ actual original report preserves absence/control/proxy labels and missing assignment warning (0.3338ms)
+✔ own original chunker output retains bounded private reply/followUp order for long roster (0.2732ms)
+✔ original report read failure propagates before response without retry (0.3117ms)
+✔ private response failure propagates without retries or later chunks (0.1781ms)
+✔ Application keeps original GM guard/requireSession and awaits within receipt cleanup (1.0726ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23229.0398

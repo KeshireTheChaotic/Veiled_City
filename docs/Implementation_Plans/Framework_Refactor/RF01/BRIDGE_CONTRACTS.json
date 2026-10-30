@@ -1627,6 +1627,11 @@
           "from": "discord",
           "to": "session",
           "contract": "Discord-owned discordSessionPrincipal calls Session conversationPrincipal through the new discord--session pair and connectDiscordSessionPrincipal."
+        },
+        {
+          "from": "discord",
+          "to": "session",
+          "contract": "Original GM roster report/chunker invoked with same database/current session, privately delivered in order; no attendance/control/consent changes."
         }
       ],
       "source_evidence": [
@@ -1649,17 +1654,19 @@
           "type": "import"
         }
       ],
-      "validation": "Fixed consumer-owned function port fails closed before composition and rejects provider replacement; Session retains principal rules. Adapter contains no business rules.",
-      "lifecycle": "Application composition calls initializeDiscordSessionPrincipal before runtime services; binding performs no database read or state write.",
+      "validation": "Fixed consumer-owned function port fails closed before composition and rejects provider replacement; Session retains principal rules. Adapter contains no business rules. R40 actual original report/chunker and synthetic private transport preserve text/queries/limits/GM-session guards/errors.",
+      "lifecycle": "Application composition calls initializeDiscordSessionPrincipal before runtime services; binding performs no database read or state write. R40 Application retains GM guard and requireSession before awaited adapter inside receipt lifecycle.",
       "adoption_feature": "C187",
       "consumers": [
-        "bot/src/application/composition/discord-session.js"
+        "bot/src/application/composition/discord-session.js",
+        "bot/src/commands.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf04-f05-c87.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c40.test.mjs"
       ],
       "public_api": "bot/src/framework-to-framework/discord--session/public.js",
-      "scope": "One fixed Discord-owned conversation principal consumer slot; Session retains conversation identity and hashing rules. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained."
+      "scope": "One fixed Discord-owned conversation principal consumer slot; Session retains conversation identity and hashing rules. C223 supplies only observed original Session scene readers/writers through fixed consumer; Session retains every source/owner/presence/observation rule; database archive shim retained. R40 original guarded session-roster command transport."
     },
     {
       "pair": "discord--world",

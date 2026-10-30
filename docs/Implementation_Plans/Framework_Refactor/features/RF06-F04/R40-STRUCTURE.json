@@ -1,0 +1,7 @@
+{
+  "parent": "06e9e146d19446450016a3615aeaa8ad7ece6367",
+  "original_branch_body": "      const lines=buildSessionRosterReport(db,interaction.guildId,s);\n      const chunks=chunkRosterReport(lines);\n      await interaction.reply({content:chunks[0],ephemeral:true});\n      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});\n      return true;",
+  "root_only_exact_body_and_import_substitutions": true,
+  "original_gm_and_requireSession_guards_unchanged": true,
+  "report_chunker_argument_order_and_response_payloads_equal": true
+}
