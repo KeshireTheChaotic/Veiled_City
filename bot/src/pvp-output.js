@@ -35,7 +35,7 @@ import {publicationNarrativeNpc} from './frameworks/publication/public.js';
 const {findFreshNpcPart,renderFreshNpcPart}=publicationNarrativeNpc;
 import {publicationNarrativeAuthoring} from './frameworks/publication/public.js';
 const {hasPcReference}=publicationNarrativeAuthoring;
-import {nativeHookProjection} from './native-hook-output.js';
+import {nativeHookProjection} from './frameworks/publication/public.js';
 import {nativeOutcomeProjection} from './native-outcome-output.js';
 import {publicationWorldDirectorReview} from './frameworks/publication/public.js';
 function validatePostTurnStateReview(...args){return publicationWorldDirectorReview.validatePostTurnStateReview(...args);}

@@ -1,0 +1,9 @@
+# RF06-F03 R16 — Complete native hook projection ownership
+
+Original native hook/deadline projection reader moved into Publication; only three same-framework imports now resolve directly to owned contracts. Sole source caller pvp-output uses public; root removed after zero active source/supported CLI callers. Whole original source equality passed after only import/newline normalization. Exact saved preparation/deadline readers, checks, error/code, revision encoding and closed text remain.
+
+Parent7593d5d9 plus concurrent Agent A C80/C81 work; branchcodex/clean-ai-gm-2026-10. Agent B owns hook/Publication/pvp-output and exact registry window; no NPC/World/Knowledge/state execution moved. Runtime files root→frameworks/publication/native-hook-output.js, Publication public, pvp-output. One obsolete legacy-location record retired and crosswalk updated; no exception expansion. New c16test/R16scope/ledger/log/hashes/retired records only other files.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f03-c16.test.mjs: exit0,6passed,0failed/skipped/cancelled,90.0305ms. Fresh source-shaped fixtures cover exact read-only NPC preparation, active source/receipt/current scene/PC/proxy/private audience refusal, raw prose and goal mismatch, native deadline/attendance wording, due fictional time/approval/mutation/source checks and delivered-reader compatibility. Lower Session/World/Narrative capabilities are controlled contract fakes; these services/native execution are not requalified. Syntax4/4, whole source equality, scoped whitespace passed; hashes R16-HASHES and graph .reports/RF06-R16-final.json.
+
+No database, native action/calendar execution, SQL/schema, source/audience policy, provider/network/live Discord or PC agency changes. Root was not a stable executable; saved-format reader preserved at final owner. Rollback only R16. Next exact feature RF06-F04 R17 original voice command family boundary. Full RF06/release incomplete and unauthorized.
