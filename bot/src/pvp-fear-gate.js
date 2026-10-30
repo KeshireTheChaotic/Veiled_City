@@ -1,5 +1,5 @@
 /** Provider for native pvp-fear-gate policy. */
-import {validateFearEffect} from './pvp-fear-moves.js';
+import {validateFearEffect} from './frameworks/daggerheart/public.js';
 import {validatePvpAttackRoll} from './pvp-attacks.js';
 import {validateCampaignPvp} from './pvp-campaign-execution.js';
 import {createPvpFearGateRules} from './frameworks/daggerheart/public.js';

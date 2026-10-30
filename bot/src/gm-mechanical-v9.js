@@ -1,6 +1,6 @@
 import {createAudienceAuthority} from './audience-first-capability.js';
 import {authorizeIncomingOffer} from './pc-incoming.js';
-import {assertFearIncomingExecution} from './pvp-fear-moves.js';
+import {assertFearIncomingExecution} from './frameworks/daggerheart/public.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
 import {createGmMechanicalProposalRules} from './frameworks/daggerheart/public.js';

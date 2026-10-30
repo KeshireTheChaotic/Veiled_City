@@ -20,7 +20,8 @@ import {reviewPcDeathMove,choosePcDeathMove,allocatePcDeathRecovery} from './pc-
 import {reviewIncomingAttack,confirmIncomingDefense,resolveIncomingDamage} from './pc-incoming.js';
 import {reviewBrawlOpportunity,passBrawlOpportunity,verifyBrawlAttack} from './pvp-brawl.js';
 import {authorPvpNarrative,draftPvpNarrative,reviewPvpNarrative,sharePvpNarrative} from './pvp-authorship.js';
-import {resumeAutonomousPvpFear} from './pvp-fear-moves.js';
+import {discordNativeFear} from './frameworks/discord/public.js';
+const {resumeAutonomousPvpFear}=discordNativeFear;
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 import {splitDiscordText} from './discord/chunking.js';
 import {reservePvpNotices} from './native-publications.js';

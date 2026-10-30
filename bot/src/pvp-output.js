@@ -11,7 +11,8 @@ import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
 import {publicationCharacterObservation} from './frameworks/publication/public.js';
 const {observationQueries,ambientWorldQueries,renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription}=publicationCharacterObservation;
 
-import { renderFearEffect } from "./pvp-fear-moves.js";
+import {publicationNativeFear} from './frameworks/publication/public.js';
+const {renderFearEffect}=publicationNativeFear;
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;
 import {publicationContinuationOutputSource,publicationSessionContinuation} from "./frameworks/publication/public.js";

@@ -9,7 +9,7 @@ import { capturePvpFear, gatePvpExchange, fearGateKey, pendingPvpFear } from "./
 import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
 function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 import {reservePvpNotices} from "./native-publications.js";
-import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
+import {resolveAutonomousPvpFear} from "./frameworks/daggerheart/public.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';
 export { authorPvpNarrative, reviewPvpNarrative, sharePvpNarrative } from "./pvp-authorship.js";
 

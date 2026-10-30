@@ -5,3 +5,7 @@ export function nativeCombatantLine(combatant){
   const {id,display_name,role,hp_current,hp_max,stress_current,stress_max,status,conditions}=combatant;
   return combatantLine({id,display_name,role,hp_current,hp_max,stress_current,stress_max,status,conditions});
 }
+
+import {discordNativeFear} from '../../frameworks/discord/public.js';
+import {resumeAutonomousPvpFear} from '../../frameworks/daggerheart/public.js';
+export function connectDiscordNativeFear(){return discordNativeFear.bind({resumeAutonomousPvpFear});}

@@ -617,16 +617,24 @@
           "to": "bot/src/action-consent.js",
           "line": 8,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/discord-session.js",
+          "to": "bot/src/framework-to-framework/daggerheart--discord/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
       "validation": "Exact native resolved-combatant DTO fields mapped to existing Discord formatter; no new native decision, outcome or delivery grant.",
       "lifecycle": "Adopted by existing command render paths. Other native/Discord interactions remain legacy and unqualified.",
       "adoption_feature": "RF03-F05",
       "consumers": [
-        "bot/src/commands.js"
+        "bot/src/commands.js",
+        "bot/src/application/composition/discord-session.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf03-f05.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f05.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c32.test.mjs"
       ],
       "observed_directions": [
         {
@@ -642,7 +650,8 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 16
       },
-      "public_api": "bot/src/framework-to-framework/daggerheart--discord/public.js"
+      "public_api": "bot/src/framework-to-framework/daggerheart--discord/public.js",
+      "scope": "undefined C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned."
     },
     {
       "pair": "daggerheart--intent",
@@ -1011,6 +1020,12 @@
           "to": "bot/src/native-outcome-output.js",
           "line": 5,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/native-outcomes.js",
+          "to": "bot/src/framework-to-framework/daggerheart--publication/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
       "validation": "Fixed native outcome consumer and exact native receipt/current owner/audience/source proof; locators never authorize an effect or disclosure.",
@@ -1020,7 +1035,8 @@
         "bot/src/application/composition/native-outcomes.js"
       ],
       "tests": [
-        "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf03-f05-c06.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf04-f04-c32.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1043,7 +1059,7 @@
         "occurrences": 34
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--publication/public.js",
-      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred."
+      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred. C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned."
     },
     {
       "pair": "daggerheart--session",

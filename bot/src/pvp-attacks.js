@@ -11,7 +11,7 @@ import {captureAttackFear,pendingPvpFear} from "./pvp-fear-gate.js";
 import {assertPcCanAct,assertPcAttackable} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization,blazeCriticalResult,validateBlazeSavedRoll} from "./pc-death.js";
 import {brawlAdmission,reserveBrawlAttack,verifyBrawlAttack,consumeBrawlAttack,brawlBatchMayFinish} from "./pvp-brawl.js";
-import {resolveAutonomousPvpFear} from "./pvp-fear-moves.js";
+import {resolveAutonomousPvpFear} from "./frameworks/daggerheart/public.js";
 import {assertPvpSafety} from './pvp-campaign-policy.js';
 import {selectRuleBasis} from './rules-arbitration.js';
 import {assertPreRollFearRollAllowed} from './pre-roll-fear.js';

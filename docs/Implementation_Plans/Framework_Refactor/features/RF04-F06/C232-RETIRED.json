@@ -1,0 +1,86 @@
+{
+  "feature": "RF04-C232",
+  "records": [
+    {
+      "id": "175bd92c3a446dce35632a9fd2c583bc53ff67b5ba70fef2a3e3f8682363a36c",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/pvp-fear-moves.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF04-F01",
+      "expires_after": "RF04",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "682ee1f991c3ad3d85dbc1f271d01add24d35e39ad86dcda3799364085e8b7d3",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/pvp-fear-moves.js",
+      "kind": "static",
+      "specifier": "./pvp-fear-moves.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "d9bf392cdb2d70963c8973709fc4308b3fb9476054a656b4d449cf56edf4ff2f",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/pvp-fear-moves.js",
+      "kind": "static",
+      "specifier": "./pvp-fear-moves.js",
+      "owner": "bootstrap",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F05",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "39c551f040f1c9a6e3b1e21696dcf1e212ee6a7d29ab060823dfd5b9aad0b292",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-publications.js",
+      "to": "bot/src/pvp-fear-moves.js",
+      "kind": "static",
+      "specifier": "./pvp-fear-moves.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "547f8996c1bf0a301cf428c756e85a0bb0d106422e1709163631bc73e8e0a147",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-menu.js",
+      "to": "bot/src/pvp-fear-moves.js",
+      "kind": "static",
+      "specifier": "./pvp-fear-moves.js",
+      "owner": "discord",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "ba44d4fb99c878e482ee3376251c9489c73665171bf10b7118d159ac14348381",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-output.js",
+      "to": "bot/src/pvp-fear-moves.js",
+      "kind": "static",
+      "specifier": "./pvp-fear-moves.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

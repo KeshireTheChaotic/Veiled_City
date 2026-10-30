@@ -9,3 +9,5 @@ export {discordSessionPrincipal} from './contracts/session-principal.js';
 export {discordWorldEvents} from './contracts/world-events.js';
 
 export {discordSessionScene} from './contracts/session-scene.js';
+
+export {discordNativeFear} from './contracts/native-fear.js';

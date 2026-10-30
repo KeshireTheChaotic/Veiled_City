@@ -36,7 +36,7 @@ import { captureAuthoredTurnEnvelope, recordNativeConsumedSpans } from "./author
 import { beginTurnAttempt, advanceTurnAttempt, turnFailureNotice, isTurnReplay } from "./turn-attempts.js";
 import { validateChannelRouting, shouldSendInactiveSessionNotice } from "./routing-diagnostics.js";
 import { operationalMetrics, measureStage,measureNative } from "./operational-metrics.js";
-import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./pvp-fear-moves.js";
+import { resumeAutonomousPvpFear, setPvpFearContentIndex } from "./frameworks/daggerheart/public.js";
 import {beginGenerationFeedback,createChatGptClient} from './frameworks/ai-provider/public.js';
 import {turnLatency} from './turn-latency.js';
 import {enqueueTrackedTurn} from './tracked-turn.js';

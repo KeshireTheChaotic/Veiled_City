@@ -12,7 +12,7 @@ import {pvpProjection} from './pvp-authorship.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {typedRollProof} from './typed-roll-proof.js';
-import {renderFearEffect,validateFearEffect} from './pvp-fear-moves.js';
+import {renderFearEffect,validateFearEffect} from './frameworks/daggerheart/public.js';
 import {damagePvpOwnerContext} from './pvp-profiles.js';
 import {assertGmRulingRequest} from './gm-action-ruling.js';
 import {nativeGmNotice} from './gm-arbitration-output.js';

@@ -29,3 +29,5 @@ export {publicationSessionScene} from './contracts/session-scene.js';
 export {publicationKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 
 export {publicationCharacterObservation} from './contracts/character-observation.js';
+
+export {publicationNativeFear} from './contracts/native-fear.js';

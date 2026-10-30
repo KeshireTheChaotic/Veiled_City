@@ -1,0 +1,26 @@
+{
+  "feature": "RF04-C232",
+  "sha256": {
+    "bot/src/application/composition/discord-session.js": "343228cf0273d952082e7678ad81a3d67471ddbcfd03b44510c47ccf8c32ce86",
+    "bot/src/application/composition/native-outcomes.js": "2153d3b7ee9476fbb4e5503d8c7200c9f6d81b2f23b780b239341efc5b639ddd",
+    "bot/src/commands.js": "058cf66fedb13f368a504b6011162c3d926cda979943e017ca6349f4bed2aa46",
+    "bot/src/framework-to-framework/daggerheart--discord/public.js": "e4f3a0e3ef0335e8323d86d0e651f2ae8b7dcd8213f8e4ec174b3a1effc1c081",
+    "bot/src/framework-to-framework/daggerheart--publication/public.js": "463f02f24ef00f7173758d150337400ff19c5fd5d0bab14b29e4b3297ee8f554",
+    "bot/src/frameworks/daggerheart/public.js": "a686711a56abbb22f8720f638ccfbdfcd4813743db12039540f597b4c85e9670",
+    "bot/src/frameworks/discord/public.js": "8aab21dc388e4e7a3d254df5c3c67ec16835af9d24ae0de0ac332fd9bd111c12",
+    "bot/src/frameworks/publication/public.js": "cde0794180aeb543ed17046a949b27803401f7883bcb53a1f17f520d260956a6",
+    "bot/src/gm-mechanical-v9.js": "040bb066db83c15dced9bc46e8da02a454cfbd8297c8c247a09bf7aeb530b55f",
+    "bot/src/index.js": "b453ca37b8e47a6fd90526206e414ffb3d877ebb14dfd639f1d1c5fa136011d4",
+    "bot/src/native-notice.js": "05d4ed899415efe3b01e1091acb987fdf9fa8bd278edca0e06606c92c97a210e",
+    "bot/src/native-publications.js": "6b9e5f49073a1f5b3427d13b1d72ee3a0b4f32d6449887a15a4deb0bba1531d1",
+    "bot/src/pc-incoming.js": "fc50b4db3af5f5cdbb4c0fb020890bd8e4f3cdb60f4816dda32805e1f74f6842",
+    "bot/src/pvp-attacks.js": "cad8c47b3b73ac3ff9bb9365e754cc4d1f98debbb01064447d5419e9abce460f",
+    "bot/src/pvp-fear-gate.js": "810883f75359c74d347e8db0f4f63cabbdab32ec3c03265b9384793ac12372d2",
+    "bot/src/pvp-menu.js": "fb39031fdd20d0ac97419233ec9f5cd77fb708ffd5410538278cc4f3e763c9ba",
+    "bot/src/pvp-output.js": "96f29c02f72a3c5f2369eef0d477e33d5d7f0c8034d8b8be50bb0ef2c5ef9d23",
+    "bot/src/pvp-rounds.js": "60f269bf752a7227b3197851776416b370e29e38840beeb6942275888ca7d69c",
+    "bot/src/frameworks/daggerheart/fear-service.js": "8f2d142f97b557375abc5cb5a67f68738866cb95dcf9e1dc65195e65127f9940",
+    "bot/src/frameworks/discord/contracts/native-fear.js": "9227b2c3e9fb9fc95065ba87882decfc882d139c0fa264bc75230bc18e0b723d",
+    "bot/src/frameworks/publication/contracts/native-fear.js": "d52ee40cc7769f4cca8265fe59d1cf59925159e77069ef2d733d11e646e32383"
+  }
+}

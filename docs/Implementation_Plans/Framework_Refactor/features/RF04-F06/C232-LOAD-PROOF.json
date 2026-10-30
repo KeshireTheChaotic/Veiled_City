@@ -1,0 +1,18 @@
+{
+  "feature": "RF04-C232",
+  "original_providers": [
+    "bot/src/pvp-rounds.js",
+    "bot/src/pvp-fear-gate.js",
+    "bot/src/pvp-terminal.js",
+    "bot/src/pvp-attacks.js",
+    "bot/src/pvp-damage.js",
+    "bot/src/pvp-brawl.js",
+    "bot/src/pc-incoming.js",
+    "bot/src/pvp-campaign-policy.js",
+    "bot/src/action-consent.js",
+    "bot/src/narrative-pvp.js"
+  ],
+  "missing": [],
+  "entrypoint": "bot/src/index.js",
+  "source_report": ".reports/C232-current.json"
+}

@@ -166,3 +166,5 @@ export {nativeWorldFearThreat} from './contracts/world-fear-threat.js';
 export {nativeFearRoundSource,nativeFearGateSource,nativeFearTerminalSource,nativeFearAttackSource,nativeFearDamageSource,nativeFearBrawlSource,nativeFearIncomingSource,nativeFearSafetySource} from './contracts/fear-peer-sources.js';
 
 export {nativeNarrativePvpOwner} from './contracts/narrative-pvp-owner.js';
+
+export {fearRevision,setPvpFearContentIndex,establishFearContext,assertFearIncomingExecution,selectFearMove,applyFearMove,validateFearEffect,renderFearEffect,resolveAutonomousPvpFear,resumeAutonomousPvpFear,fearInbox,reconcileFearMove} from './fear-service.js';

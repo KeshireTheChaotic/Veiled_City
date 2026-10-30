@@ -11,7 +11,7 @@ import {nativePrincipals} from './frameworks/daggerheart/public.js';
 function conversationPrincipal(...args){return nativePrincipals.conversationPrincipal(...args);}function historicalOwnerPrincipal(...args){return nativePrincipals.historicalOwnerPrincipal(...args);}
 import { assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
-import {assertFearIncomingExecution} from "./pvp-fear-moves.js";
+import {assertFearIncomingExecution} from "./frameworks/daggerheart/public.js";
 import {inspectNativeGmDecision,inspectCommittedGmDecision,commitGmActionCost} from './gm-action-capability.js';
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
 import {nativeAttackPassives,nativeStandardDamage,nativeDamageBonusExpression} from './native-feature-passives.js';
