@@ -1,0 +1,15 @@
+✔ status storage capability is fixed/frozen and forwards current methods with original receiver and errors (1.1169ms)
+✔ missing campaign is initialized by original status behavior with exact private no-session response (208.1151ms)
+✔ actual stored session/director/party values and routing conflicts retain original display and guild scope (159.7906ms)
+✔ malformed saved director/party JSON retains original reader fallbacks (161.9202ms)
+✔ original method order, optional director lookup and single async reply are preserved (0.3895ms)
+✔ same caller transaction owns status initialization and rollback; failed response does not retry or undo original initialization (159.8937ms)
+✔ storage failure sends nothing and root awaits adapter inside unchanged receipt lifecycle (0.877ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1187.1804

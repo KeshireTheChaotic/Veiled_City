@@ -1,3 +1,5 @@
+import {handleCampaignStatusCommand} from './framework-to-framework/discord--operations/public.js';
+import {connectDiscordCampaignStatus} from './framework-to-framework/discord--persistence/public.js';
 import {byPrefix,handleAdministrativeReadCommand} from './frameworks/discord/public.js';
 import {handleDoctorCommand} from './framework-to-framework/discord--operations/public.js';
 import {handlePlayerSettingsCommand} from './frameworks/discord/public.js';
@@ -68,7 +70,6 @@ import { formatDiscovery,discoveryDeliveryProof } from "./discovery-delivery.js"
 import { manageLongProject, projectPhaseRevision } from "./frameworks/world/public.js";
 import { stateRevision } from "./ai-intents.js";
 import { beginInteraction, acknowledgeRules, acknowledgeNative, interactionFailure, interactionResponseExpired, replyOrEdit } from "./discord/interaction-lifecycle.js";
-import { validateChannelRouting } from "./routing-diagnostics.js";
 import { handleRollMenuInteraction, isRollMenuInteraction, openRollMenu } from "./roll-menu.js";
 import {handlePvpMenuInteraction,isPvpMenuInteraction,openPvpMenu} from './pvp-menu.js';
 import {handlePvpSafetyCommand} from './pvp-safety-commands.js';
@@ -872,25 +873,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       await interaction.reply({content:`Configured **${c.name}**. Play channel: <#${ch.id}>. Response mode: **${c.response_mode}**.`,ephemeral:true});
       return true;
     }
-    if(group==="campaign"&&sub==="status"){
-      const c=db.ensureCampaign(interaction.guildId);
-      const s=db.getActiveSession(interaction.guildId);
-      const routing=validateChannelRouting(c);
-      const ch=(id)=>id?`<#${id}>`:"—";
-      await interaction.reply({content:[
-        `**${c.name}**`,
-        `Play: ${ch(c.play_channel_id)} • Mode: **${c.response_mode}**`,
-        `Rules: ${ch(c.rules_channel_id)} • Case board: ${ch(c.case_board_channel_id)} • Journal: ${ch(c.journal_channel_id)}`,
-        `Known NPCs: ${ch(c.known_npcs_channel_id)} • Known locations: ${ch(c.known_locations_channel_id)}`,
-        `GM log: ${ch(c.gm_log_channel_id)} • State errors: ${ch(c.state_errors_channel_id)}`,
-        `Veil Exposure: ${c.veil_exposure}/6 • Fear: ${c.fear??0}/12`,
-        `Session: ${s?`#${s.session_number} ${s.title||""} • ${s.assembly_phase||"assembly"}`:"none active"}`,
-        ...(s?(()=>{ const d=db.getDirectorState(s.id); return [`World Director: round ${d.round_number||1} • scene ${d.scene_number||1}${d.scene_label?` (${d.scene_label})`:""} • pending **${d.pending_pass?.layer||"none"}**`]; })():[]),
-        `Party: ${db.getPartyState(interaction.guildId).established?"established":"not established"}`,
-        `Channel routing: ${routing.ok?"valid":`INVALID (${routing.conflicts.map(row=>row.roles.join("/")).join(", ")})`}`
-      ].join("\n"),ephemeral:true});
-      return true;
-    }
+    if(group==="campaign"&&sub==="status"){return await handleCampaignStatusCommand(interaction,connectDiscordCampaignStatus(db));}
     if(group==="campaign"&&sub==="channels"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const get=(n)=>interaction.options.getChannel(n);

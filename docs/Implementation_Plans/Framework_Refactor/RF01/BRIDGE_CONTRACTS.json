@@ -1289,6 +1289,11 @@
           "from": "discord",
           "to": "operations",
           "contract": "Original read-only GM doctor report/format service to private ordered Discord chunks; original application GM guard and receipt lifecycle retained."
+        },
+        {
+          "from": "discord",
+          "to": "operations",
+          "contract": "Original campaign status uses the existing Operations validateChannelRouting result; no permission/channel mutation or gameplay policy."
         }
       ],
       "source_evidence": [
@@ -1315,10 +1320,22 @@
           "to": "bot/src/frameworks/operations/public.js",
           "line": 7,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--operations/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 14,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--operations/public.js",
+          "to": "bot/src/frameworks/operations/public.js",
+          "line": 15,
+          "type": "import"
         }
       ],
-      "validation": "Fixed Operations-owned consumer requires all three original functions, fails uncomposed, rejects replacement; only fetch/validate capabilities, no sends or permission changes. Original diagnostic issue text and read-only data access preserved.",
-      "lifecycle": "Explicit index startup binding before DB/client construction; fresh RF startup helper mirrors it. Original root privacy and diagnostics files retired after zero active source/supported CLI callers and fresh final-path coverage. R19 doctor is invoked only inside existing commands admin GM guard and awaited before receipt cleanup.",
+      "validation": "Fixed Operations-owned consumer requires all three original functions, fails uncomposed, rejects replacement; only fetch/validate capabilities, no sends or permission changes. Original diagnostic issue text and read-only data access preserved. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation.",
+      "lifecycle": "Explicit index startup binding before DB/client construction; fresh RF startup helper mirrors it. Original root privacy and diagnostics files retired after zero active source/supported CLI callers and fresh final-path coverage. R19 doctor is invoked only inside existing commands admin GM guard and awaited before receipt cleanup. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write.",
       "adoption_feature": "RF06-F03",
       "consumers": [
         "bot/src/application/composition/operations-discord.js",
@@ -1326,7 +1343,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f03-c07.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c19.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c19.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1349,7 +1367,7 @@
         "occurrences": 5
       },
       "public_api": "bot/src/framework-to-framework/discord--operations/public.js",
-      "scope": "R07 diagnostic channel/privacy inspection plus R19 named GM doctor command adapter; no recovery/model/native effect execution."
+      "scope": "R07 diagnostic channel/privacy inspection plus R19 named GM doctor command adapter; no recovery/model/native effect execution. R26 original campaign status routing validation/Discord reply adapter."
     },
     {
       "pair": "discord--persistence",
@@ -1373,6 +1391,11 @@
           "from": "discord",
           "to": "persistence",
           "contract": "Original four read-only backup/preview/ledger/snapshot methods on same connection; no create/restore/rollback capabilities exposed."
+        },
+        {
+          "from": "discord",
+          "to": "persistence",
+          "contract": "Original four-method campaign status initialization/read view (ensureCampaign/getActiveSession/getDirectorState/getPartyState), same caller connection/transaction; ensureCampaign and party reader may initialize campaign, no raw DB/other mutation capability."
         }
       ],
       "source_evidence": [
@@ -1411,10 +1434,22 @@
           "to": "bot/src/frameworks/persistence/public.js",
           "line": 11,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 14,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/persistence/public.js",
+          "line": 15,
+          "type": "import"
         }
       ],
-      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards.",
-      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle.",
+      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation.",
+      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write.",
       "adoption_feature": "RF06-F04",
       "consumers": [
         "bot/src/commands.js"
@@ -1422,7 +1457,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f04-c12.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c18.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1439,7 +1475,7 @@
         "occurrences": 42
       },
       "public_api": "bot/src/framework-to-framework/discord--persistence/public.js",
-      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration."
+      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration. R26 campaign status initialization and reads only; no new SQL or native write migration."
     },
     {
       "pair": "discord--publication",

@@ -1,0 +1,13 @@
+{
+  "bot/src/commands.js": "67473e0b6f838ca1dcd6ba58927527cb73efbab32366d3cca4e709ff00ea22cb",
+  "bot/src/frameworks/discord/public.js": "b8e68e3d21c2d3e8f0e02a485882cec0f04120f6cf4a5487a37c989c586c591b",
+  "bot/src/frameworks/discord/campaign-status-command.js": "07acd2bf434ae1b0d173c65b6bfce940e6450e82a7fae85d034b19d047d0d942",
+  "bot/src/frameworks/discord/contracts/campaign-status.js": "e5a383111d1879a5980c6a963b323ad91d6cecae0c3169e970bff0573b5fcb90",
+  "bot/src/frameworks/persistence/public.js": "29993789962b9404133d3f953f9f9149ba98bfa3194233a75bb0360946b049fc",
+  "bot/src/frameworks/persistence/campaign-status.js": "e0ba67f6f815673ca05112129995bb28289563d67bf29fceb89a638c74f97998",
+  "bot/src/framework-to-framework/discord--operations/public.js": "32600755dc56da5a9d89dd0db64d9cc22dc9098b13d424eb31d52e765d938b9c",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "dd34be6bf25f22519e922f904d58bf75ccdbb6250ffb98bc1bd04cfa154e8a2a",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs": "42b6e218a6e887a580beb14f8c5854cca2f4c3b3283b26bd63a91bc895fbf492",
+  "bot/src/frameworks/persistence/database.js": "f77d6b8e9031ff00439f0c62f2cd42f23c68a28df55821718207c25bc16bb17f",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

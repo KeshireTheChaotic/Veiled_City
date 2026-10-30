@@ -44,3 +44,6 @@ export {replyWithDiagnosticLines} from './diagnostic-reply.js';
 export {byPrefix} from './reference-selection.js';
 export {assertAdministrativeReadStore} from './contracts/administrative-reads.js';
 export {handleAdministrativeReadCommand} from './administrative-read-commands.js';
+
+export {assertCampaignStatusStore} from './contracts/campaign-status.js';
+export {replyWithCampaignStatus} from './campaign-status-command.js';

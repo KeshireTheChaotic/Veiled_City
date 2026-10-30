@@ -10,3 +10,8 @@ export async function handleDoctorCommand(interaction,db){
   const report=await runCampaignDiagnostics({db,guild:interaction.guild});
   return replyWithDiagnosticLines(interaction,formatDiagnostics(report));
 }
+
+import {replyWithCampaignStatus} from '../../frameworks/discord/public.js';
+import {validateChannelRouting} from '../../frameworks/operations/public.js';
+/** Original status initialization/reads; application composes the restricted Persistence view. */
+export function handleCampaignStatusCommand(interaction,store){return replyWithCampaignStatus(interaction,{store,validateChannelRouting});}

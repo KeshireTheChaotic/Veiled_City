@@ -1,0 +1,34 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,rmSync,readFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {VeiledDB,createCampaignStatusStore} from '../../src/frameworks/persistence/public.js';
+import {assertCampaignStatusStore} from '../../src/frameworks/discord/public.js';
+import {connectDiscordCampaignStatus} from '../../src/framework-to-framework/discord--persistence/public.js';
+import {handleCampaignStatusCommand} from '../../src/framework-to-framework/discord--operations/public.js';
+const schema=fileURLToPath(new URL('../../sql/schema.sql',import.meta.url));
+function fixture(t){const dir=mkdtempSync(join(tmpdir(),'veiled-rf06-r26-')),db=new VeiledDB(join(dir,'synthetic.sqlite'),schema),responses=[],interaction={guildId:'guild',reply:async value=>responses.push(value)};t.after(()=>{db.close();assert.equal(dirname(dir),resolve(tmpdir()));assert.ok(dir.startsWith(join(resolve(tmpdir()),'veiled-rf06-r26-')));rmSync(dir,{recursive:true,force:true});});return {db,responses,interaction,store:connectDiscordCampaignStatus(db)};}
+
+test('status storage capability is fixed/frozen and forwards current methods with original receiver and errors',()=>{
+  assert.throws(()=>createCampaignStatusStore({}),TypeError);assert.throws(()=>assertCampaignStatusStore({}),TypeError);const value={},error=new Error('reader'),db={ensureCampaign(guild){assert.equal(this,db);assert.equal(guild,'guild');return value;},getActiveSession(){},getDirectorState(){throw error;},getPartyState(){}};const store=connectDiscordCampaignStatus(db);assert.ok(Object.isFrozen(store));assert.deepEqual(Object.keys(store).sort(),['ensureCampaign','getActiveSession','getDirectorState','getPartyState']);assert.equal(store.db,undefined);assert.equal(store.ensureCampaign('guild'),value);assert.throws(()=>store.getDirectorState(),e=>e===error);db.ensureCampaign=()=>error;assert.equal(store.ensureCampaign('guild'),error);
+});
+test('missing campaign is initialized by original status behavior with exact private no-session response',async t=>{
+  const f=fixture(t);assert.equal(f.db.getCampaign('guild'),undefined);assert.equal(await handleCampaignStatusCommand(f.interaction,f.store),true);assert.equal(f.db.getCampaign('guild').name,'Veiled City');assert.deepEqual(f.responses,[{content:'**Veiled City**\nPlay: — • Mode: **assisted**\nRules: — • Case board: — • Journal: —\nKnown NPCs: — • Known locations: —\nGM log: — • State errors: —\nVeil Exposure: 0/6 • Fear: 0/12\nSession: none active\nParty: not established\nChannel routing: valid',ephemeral:true}]);
+});
+test('actual stored session/director/party values and routing conflicts retain original display and guild scope',async t=>{
+  const f=fixture(t);f.db.ensureCampaign('guild');f.db.ensureCampaign('other',{name:'Hidden campaign'});f.db.db.prepare('INSERT INTO sessions(id,guild_id,session_number,title,director_state_json) VALUES(?,?,?,?,?)').run('session','guild',3,'Old session',JSON.stringify({round_number:4,scene_number:2,scene_label:'Archive',pending_pass:{layer:'scene'}}));f.db.db.prepare('UPDATE campaigns SET active_session_id=?,play_channel_id=?,gm_log_channel_id=?,party_state_json=?,fear=? WHERE guild_id=?').run('session','channel','channel','{"established":true}',5,'guild');await handleCampaignStatusCommand(f.interaction,f.store);const text=f.responses[0].content;assert.match(text,/Session: #3 Old session • assembly/);assert.match(text,/World Director: round 4 • scene 2 \(Archive\) • pending \*\*scene\*\*/);assert.match(text,/Party: established/);assert.match(text,/Veil Exposure: 0\/6 • Fear: 5\/12/);assert.match(text,/Channel routing: INVALID \(play\/gm_log\)/);assert.ok(!text.includes('Hidden campaign'));assert.equal(f.responses[0].ephemeral,true);
+});
+test('malformed saved director/party JSON retains original reader fallbacks',async t=>{
+  const f=fixture(t);f.db.ensureCampaign('guild');f.db.db.prepare('INSERT INTO sessions(id,guild_id,session_number,director_state_json) VALUES(?,?,?,?)').run('session','guild',1,'broken');f.db.db.prepare('UPDATE campaigns SET active_session_id=?,party_state_json=? WHERE guild_id=?').run('session','broken','guild');await handleCampaignStatusCommand(f.interaction,f.store);assert.match(f.responses[0].content,/World Director: round 1 • scene 1 • pending \*\*none\*\*/);assert.match(f.responses[0].content,/Party: not established/);
+});
+test('original method order, optional director lookup and single async reply are preserved',async()=>{
+  const events=[],store={ensureCampaign(guild){events.push(['campaign',guild]);return {name:'Synthetic',response_mode:'assisted',veil_exposure:1};},getActiveSession(guild){events.push(['session',guild]);return {id:'s',session_number:2};},getDirectorState(id){events.push(['director',id]);return {};},getPartyState(guild){events.push(['party',guild]);return {};}};let resolveReply;const pending=handleCampaignStatusCommand({guildId:'guild',reply:()=>{events.push(['reply']);return new Promise(resolve=>resolveReply=resolve);}},store);assert.deepEqual(events,[['campaign','guild'],['session','guild'],['director','s'],['party','guild'],['reply']]);let completed=false;pending.then(()=>completed=true);await Promise.resolve();assert.equal(completed,false);resolveReply();assert.equal(await pending,true);store.getActiveSession=()=>null;events.length=0;await handleCampaignStatusCommand({guildId:'guild',reply:async()=>{}},store);assert.ok(!events.some(e=>e[0]==='director'));
+});
+test('same caller transaction owns status initialization and rollback; failed response does not retry or undo original initialization',async t=>{
+  const f=fixture(t),error=new Error('caller rollback');assert.throws(()=>f.db.transaction(()=>{f.store.ensureCampaign('guild');assert.equal(f.store.getPartyState('guild').established,false);throw error;}),e=>e===error);assert.equal(f.db.getCampaign('guild'),undefined);let replies=0;f.interaction.reply=async()=>{replies++;throw error;};await assert.rejects(handleCampaignStatusCommand(f.interaction,f.store),e=>e===error);assert.equal(replies,1);assert.ok(f.db.getCampaign('guild'));assert.equal(f.db._transactionDepth,0);
+});
+test('storage failure sends nothing and root awaits adapter inside unchanged receipt lifecycle',async()=>{
+  const error=new Error('status storage failed');let replies=0;await assert.rejects(handleCampaignStatusCommand({guildId:'guild',reply:()=>replies++},{ensureCampaign(){throw error;}}),e=>e===error);assert.equal(replies,0);const source=readFileSync(new URL('../../src/commands.js',import.meta.url),'utf8'),at=source.indexOf('return await handleCampaignStatusCommand(');assert.ok(at>source.indexOf('const restoreReceiptCapture='));assert.ok(at<source.lastIndexOf('restoreReceiptCapture();'));assert.ok(!source.includes('from "./routing-diagnostics.js"'));
+});

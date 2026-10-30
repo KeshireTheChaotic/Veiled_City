@@ -10,3 +10,7 @@ export function connectDiscordPlayerSettings(db){return assertPlayerSettingsStor
 import {assertAdministrativeReadStore} from '../../frameworks/discord/public.js';
 import {createAdministrativeReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordAdministrativeReads(db){return assertAdministrativeReadStore(createAdministrativeReadStore(db));}
+
+import {assertCampaignStatusStore} from '../../frameworks/discord/public.js';
+import {createCampaignStatusStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordCampaignStatus(db){return assertCampaignStatusStore(createCampaignStatusStore(db));}
