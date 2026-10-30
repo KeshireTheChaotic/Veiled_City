@@ -1,0 +1,3 @@
+# RF06-F04 R06 — Discord ephemeral reply translation
+
+Frozen after R05. Agent B owns commands.js and Discord public. Move only the existing exported translateEphemeralReplies implementation to Discord reply-options.js, retaining the historical commands.js re-export and same function identity. Preserve once-only wrappers, original this, payload/Promise/error identity, current ephemeral→flag conversion including false and numeric flags. This is transport representation, not source/audience authorization or mutation policy. Remove MessageFlags dependency from commands once no caller remains there; preserve all command handlers. Fresh synthetic interaction methods, syntax and architecture delta checks; no network/DB/provider.

@@ -1,0 +1,9 @@
+# RF06-F04 R06 — Complete
+
+Original translateEphemeralReplies implementation now lives in Discord reply-options.js with MessageFlags transport dependency. commands.js retains its exported compatibility name and calls the same Discord public function. Original exported function source equals the moved body after newline normalization; no wrapper algorithm/flag/method behavior changed. Commands no longer owns MessageFlags translation. Existing authorization and handling order remain intact.
+
+Changed runtime: commands.js, frameworks/discord/public.js; new frameworks/discord/reply-options.js. Fresh test rf06-f04-c06.test.mjs and R06 scope/ledger/log/hashes only. Parent includes R05 34793277 plus concurrent Agent A C72 dd4279dc. No shared registry, schema, Publication API or bootstrap edit.
+
+One frozen run node --test bot/tests/ai-gm-2026-10/rf06-f04-c06.test.mjs; exit0, 6 passed, 0 failed/skipped/cancelled, 425.4065ms. Cases cover three reply methods, once-only translation, receiver/Promise/error identities, true/false flags, unchanged string/null/object payloads and partial/missing interactions. Four changed JS/MJS syntax checks and scoped whitespace check passed. Hashes R06-HASHES.json. Architecture observation .reports/RF06-R06-final.json records shared phase-aware outcome, including concurrent Agent A source; no new exception or R06 transition removal.
+
+No DB, provider, live Discord, saved-reader/native receipt or audience grant change. Historical root export preserved; source-only check confirms that export without loading giant dispatcher for isolated translator tests. This does not qualify complete commands or live interaction delivery. Rollback only R06. Next exact feature RF06-F03 R07 remaining privacy reader adoption and facade retirement, requiring coordinated Operations API/index/registry window. Release unauthorized.

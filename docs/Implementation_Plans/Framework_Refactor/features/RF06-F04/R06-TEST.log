@@ -1,0 +1,14 @@
+✔ public function identity and historical command export preserved (1.1417ms)
+✔ all reply methods convert ephemeral flag once and preserve original this/result identity (0.5574ms)
+✔ false removes legacy option but keeps existing flags without implicit mutation (0.1111ms)
+✔ unmarked objects, strings and null pass through with exact identity (0.0988ms)
+✔ synchronous throws and rejected promises preserve exact error identity (0.3484ms)
+✔ partial/missing interaction methods retain existing no-op behavior (0.0759ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 425.4065

@@ -23,3 +23,5 @@ export {assertGmOnlyChannel,assertPlayerPrivateChannel} from './privacy.js';
 export {textChannel} from './text-channel.js';
 
 export {formatSheet,encounterSummary} from './command-record-text.js';
+
+export {translateEphemeralReplies} from './reply-options.js';
