@@ -1,0 +1,54 @@
+[
+  {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f07-c39.test.mjs",
+    "sha256": "8520aab625badab816890f4af964a1dae5bf7aebe3bcb6d68e99a6aac4d1a007"
+  },
+  {
+    "path": "bot/tests/ai-gm-2026-10/rf04-f07-c40.test.mjs",
+    "sha256": "f4c3a7c99c87f81149ecf12b77690108e560ee44aa77ae233b4680d32df7eff0"
+  },
+  {
+    "path": "bot/src/frameworks/world/action-execution.js",
+    "sha256": "02f9f4b4fa169d5a0fb9d1f1a557fde0d38e5550a3f9860c743a9ed30930059a"
+  },
+  {
+    "path": "bot/src/frameworks/world/action-eligibility.js",
+    "sha256": "e04743abfe8b4d1cbb72299bc12b0fadd5b40309404e0da675d3f3e0f9a4b968"
+  },
+  {
+    "path": "bot/src/frameworks/world/availability.js",
+    "sha256": "d6eb55b1cbadb8f805857ea836df9d6a9a437f9cb60e84cbafa89a812c50085a"
+  },
+  {
+    "path": "bot/src/frameworks/world/execution-source.js",
+    "sha256": "efe831d1b0c2e073a45c014407eec8293dd5d2fe9e8c050f2c4cd2a440b57089"
+  },
+  {
+    "path": "bot/src/frameworks/world/simulation-receipt-core.js",
+    "sha256": "62dcf160732c4c63cdb281bfd0bef4dd0793ee1a1fc9331dadc2b5df81738a32"
+  },
+  {
+    "path": "bot/src/frameworks/session/session-opening.js",
+    "sha256": "bd51da108d8fe4ce33a056ebe1de2f58a2225b3656c1a1e8e730e7664cbb67f0"
+  },
+  {
+    "path": "bot/src/frameworks/session/session-opening-service.js",
+    "sha256": "61605acd19b96b417bfb9169cab52eb32a8b16d99157ba1ba16175c6b92a88bd"
+  },
+  {
+    "path": "bot/src/frameworks/session/assembly-state.js",
+    "sha256": "fd1d83742ee94683ec86eab8ceb57a99197d7d683c84d73029fea2aa9bb91318"
+  },
+  {
+    "path": "bot/src/frameworks/session/assembly-context.js",
+    "sha256": "b9c4e1e870773a825ae349f861899efa730f19cbd94ec1d0bbf98a3100845b8e"
+  },
+  {
+    "path": "bot/src/application/composition/session-world-events.js",
+    "sha256": "a9b1bf158d4da59cae099182928056476d0207c4305001fb8a3db2bb325eea74"
+  },
+  {
+    "path": "bot/src/application/composition/assembly-state.js",
+    "sha256": "f69e9c50c5694b98572c92c16485b81515628b5fee63b28d35a1f9bfb691c6d9"
+  }
+]

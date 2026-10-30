@@ -1,0 +1,144 @@
+[
+  {
+    "batch": "C225",
+    "files": [
+      {
+        "path": "bot/src/db.js",
+        "recorded": "a9f496457aae6e2f434efcd35ac0817b4ce90dbcbe14fec9f996d9c20e80c669",
+        "current": "a9f496457aae6e2f434efcd35ac0817b4ce90dbcbe14fec9f996d9c20e80c669",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--persistence/public.js",
+        "recorded": "888058caa2cd8d27750f686483a5763e564a75b78ffb8f8511c30bde7626d7ae",
+        "current": "888058caa2cd8d27750f686483a5763e564a75b78ffb8f8511c30bde7626d7ae",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/public.js",
+        "recorded": "c38d0b6497f37128f80cabe40db58e6146d9c9d7b548c0f0a0b2ef7d0d8cfdae",
+        "current": "7eb4c81523f7d86bc8df9001470721235dbdbb138a57f4d336aadbb21a0889e7",
+        "exact_match": false
+      },
+      {
+        "path": "bot/src/frameworks/persistence/public.js",
+        "recorded": "a01f714016c15c4efd684cef6f50815041f6a4a9e7ad68c1a61a029e08a0b4d7",
+        "current": "59be6e326fe06d8105ffcbc5dc305baa9f85cd26e0220667e4e8644ae666082e",
+        "exact_match": false
+      },
+      {
+        "path": "bot/src/routing-diagnostics.js",
+        "recorded": "ad8797b314c00dec3cd13f60e6abfa9d525b8d1f50a28378a56230251513022b",
+        "current": "ad8797b314c00dec3cd13f60e6abfa9d525b8d1f50a28378a56230251513022b",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/application/composition/standalone-persistence.js",
+        "recorded": "5f22456ff1f89bf069c9651bc09f8457f0248007cf1dc62b0151daf522b3eb4c",
+        "current": "5f22456ff1f89bf069c9651bc09f8457f0248007cf1dc62b0151daf522b3eb4c",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/framework-to-framework/daggerheart--persistence/public.js",
+        "recorded": "c616d618b92a7558fb11a9df908c6eedf0f411a585ac22e0f51c08c3a92b147b",
+        "current": "c616d618b92a7558fb11a9df908c6eedf0f411a585ac22e0f51c08c3a92b147b",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/framework-to-framework/operations--persistence/public.js",
+        "recorded": "3294f7ff182ba03b092552f6fb9c378efd675d0d18c67e93ac42895576cdc769",
+        "current": "f11676a8d460609338274eafacf26ae647f73e255c0deab0025596cb06ffffab",
+        "exact_match": false
+      },
+      {
+        "path": "bot/src/framework-to-framework/persistence--session/public.js",
+        "recorded": "7cfac4ae98f1ea786435343b5f4de4c1170fe0a53a806acbf205cb381aeb44cc",
+        "current": "7cfac4ae98f1ea786435343b5f4de4c1170fe0a53a806acbf205cb381aeb44cc",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/routing-validation.js",
+        "recorded": "a7c281d46ed671c83b078ceb6779966649a8ebe84c1b67e9172f1bfa6a283ff8",
+        "current": "a7c281d46ed671c83b078ceb6779966649a8ebe84c1b67e9172f1bfa6a283ff8",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/persistence/contracts/database-domain-sources.js",
+        "recorded": "c32c891cdc06d90ab2691de84492552bc9eb1b0c442ad9c67a7bc59f5485428e",
+        "current": "c32c891cdc06d90ab2691de84492552bc9eb1b0c442ad9c67a7bc59f5485428e",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/persistence/database.js",
+        "recorded": "9b6ce93df2e7aae1ae2947e1fcffe9d260a6291961f64ed101d35c651a313582",
+        "current": "9b6ce93df2e7aae1ae2947e1fcffe9d260a6291961f64ed101d35c651a313582",
+        "exact_match": true
+      }
+    ]
+  },
+  {
+    "batch": "C227",
+    "files": [
+      {
+        "path": "bot/src/diagnostics/session5-reader.js",
+        "recorded": "df3210c51abe6baee1eb57008577a4b9b703f2bd3df013d89fdeab3f1dc89752",
+        "current": "df3210c51abe6baee1eb57008577a4b9b703f2bd3df013d89fdeab3f1dc89752",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/framework-to-framework/knowledge--operations/public.js",
+        "recorded": "1a61992de7e1923d0c4d47e5c396a6ecad5383799f1713d5d70e895c7f1d6b5c",
+        "current": "1a61992de7e1923d0c4d47e5c396a6ecad5383799f1713d5d70e895c7f1d6b5c",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/framework-to-framework/operations--persistence/public.js",
+        "recorded": "f11676a8d460609338274eafacf26ae647f73e255c0deab0025596cb06ffffab",
+        "current": "f11676a8d460609338274eafacf26ae647f73e255c0deab0025596cb06ffffab",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/public.js",
+        "recorded": "7eb4c81523f7d86bc8df9001470721235dbdbb138a57f4d336aadbb21a0889e7",
+        "current": "7eb4c81523f7d86bc8df9001470721235dbdbb138a57f4d336aadbb21a0889e7",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/persistence/public.js",
+        "recorded": "59be6e326fe06d8105ffcbc5dc305baa9f85cd26e0220667e4e8644ae666082e",
+        "current": "59be6e326fe06d8105ffcbc5dc305baa9f85cd26e0220667e4e8644ae666082e",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/application/composition/standalone-diagnostics.js",
+        "recorded": "0ccca7fa0f3021c05a6e0929353a14ee5f27513fd7d428a0a3294145082f93da",
+        "current": "0ccca7fa0f3021c05a6e0929353a14ee5f27513fd7d428a0a3294145082f93da",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/contracts/knowledge-disclosure.js",
+        "recorded": "d7adea5f330590346fbb3067c2ca8f35cc60f56b6d13688028b9574c58205567",
+        "current": "d7adea5f330590346fbb3067c2ca8f35cc60f56b6d13688028b9574c58205567",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/contracts/persistence-snapshot.js",
+        "recorded": "77f0854d44cf4cee0309ddaa8153c44a086c180493273f25740e8ed41a985e19",
+        "current": "77f0854d44cf4cee0309ddaa8153c44a086c180493273f25740e8ed41a985e19",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/operations/session5-reader.js",
+        "recorded": "ce784f2abe6f45004b7e28a03a42350f2a09b7a35cbf6ed4a304c576bd32e20d",
+        "current": "ce784f2abe6f45004b7e28a03a42350f2a09b7a35cbf6ed4a304c576bd32e20d",
+        "exact_match": true
+      },
+      {
+        "path": "bot/src/frameworks/persistence/diagnostic-snapshot.js",
+        "recorded": "5fa181a060aa86cdd87daef50ffdba39ebbbe5c365694018828c28dda49dc7b6",
+        "current": "5fa181a060aa86cdd87daef50ffdba39ebbbe5c365694018828c28dda49dc7b6",
+        "exact_match": true
+      }
+    ]
+  }
+]
