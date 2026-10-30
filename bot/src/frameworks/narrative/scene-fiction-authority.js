@@ -1,10 +1,13 @@
 /** Opt-in GM-owned LOCAL fiction. Provenance is verified; arbitrary English is not formally semantically certified. */
-import {buildSceneFictionContext,sceneFictionHash as hash,sceneFictionFailure as fail} from './scene-fiction-context.js';
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {narrativeSceneFictionContextSource} from './contracts/scene-fiction-context.js';
+const {buildSceneFictionContext,sceneFictionHash:hash}=narrativeSceneFictionContextSource;
+import {sceneFictionFailure as fail} from '../../kernel/scene-fiction-failure.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {hasPcReference} from './frameworks/narrative/public.js';
-import {materialParaphrases} from './frameworks/narrative/public.js';
-import {operationalMetrics} from './operational-metrics.js';
+import {hasPcReference} from './pc-reference.js';
+import {materialParaphrases} from './material-paraphrases.js';
+import {narrativeOperationsMetrics} from './contracts/operations-metrics.js';
+const operationalMetrics={record:(...args)=>narrativeOperationsMetrics.recordNarrativeMetric(...args)};
 export {sceneFictionResponseSchema} from './gm-fiction-schema.js';
 const issuer='native:scene-fiction';
 export const SCENE_FICTION_INSTRUCTIONS='Write expressive, specific, playable LOCAL surroundings using ONLY this audience-isolated packet. '

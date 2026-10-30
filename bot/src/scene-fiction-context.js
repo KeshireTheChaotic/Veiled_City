@@ -75,3 +75,7 @@ export function buildSceneFictionContext(db,guild,scope,sourceRef,{operation='de
     prior:local.map(r=>[r.record_key,sceneFictionHash(r.data)]),npcs:sceneFictionHash(npcs)};
   return {packet,state,source,scope:{...scope},sourceRef};
 }
+
+import {narrativeSceneFictionContextSource} from './frameworks/narrative/public.js';
+// Supply original context and hash; no context or audience store is reconstructed.
+narrativeSceneFictionContextSource.bind({buildSceneFictionContext,sceneFictionHash});

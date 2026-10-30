@@ -200,6 +200,9 @@
     ],
     "discord--narrative": [
       "bot/src/framework-to-framework/discord--narrative/public.js"
+    ],
+    "narrative--operations": [
+      "bot/src/framework-to-framework/narrative--operations/public.js"
     ]
   },
   "externalCapabilityOwners": {

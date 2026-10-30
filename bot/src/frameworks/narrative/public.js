@@ -85,3 +85,8 @@ export {FRESH_SCENE_INSTRUCTIONS,renderFreshScenePart,findFreshScenePart,hasFres
 export {configurePortrayal,portrayalPacket} from './portrayal.js';
 
 export {FRESH_NPC_INSTRUCTIONS,renderFreshNpcPart,findFreshNpcPart,hasFreshNpcResponse,authorFreshNpcRequests} from './fresh-npc-authoring.js';
+
+export {narrativeSceneFictionContextSource} from './contracts/scene-fiction-context.js';
+export {narrativeOperationsMetrics} from './contracts/operations-metrics.js';
+
+export {SCENE_FICTION_INSTRUCTIONS,holdSceneFiction,authorSceneFictionRequests,establishSceneFiction,renderSceneFiction} from './scene-fiction-authority.js';

@@ -1,0 +1,75 @@
+{
+  "original_nonimport_bodies_unchanged": true,
+  "static_only_context_provider_path": [
+    "bot/src/index.js",
+    "bot/src/gm.js",
+    "bot/src/scene-fiction-context.js"
+  ],
+  "metrics_initializer_before_GM": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "56583854d09928d7aca6ab445affa8ba91788d36cd2be04b82f91478e3e3ebce"
+    },
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "8f32e5c7bbe41bfc40f67aee290e75d3ff8dbc115077f4ac18c7667802768a3f"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "e06d70659bdd4b26c3dfd5b15dae6c87705b290e083c673ee9a3f0967be86279"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "51ebf8b90565c70710436528448c5b5783f50a6b11873b2aecd815f748696169"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "fdfbf6172598e283b512980752c4fe59ba41d463af3978600e684129cdaf4a78"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "4d3e1896c3c454bd9097aac596cbb6d29bb816f9e937e04f4f50c84c79aff61b"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "c542d438f5a681656cd91c1c11bdc6a6345159a7bea8b7d7e3add04276e26c9a"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "a98f2341cf041ace5bde031f707292e93bb364ae58e6a9976f97c0b85b0da14d"
+    },
+    {
+      "path": "bot/src/scene-fiction-context.js",
+      "sha256": "4b5c1b1d5fe6eba5c485d620465d3d4fcdcdc8c3b47c2ed79c94057c2fb5f32e"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/scene-fiction-authority.js",
+      "sha256": "25d9ae5e73fa716ac7f2aa55f3e08f4a8144c25111365bec4382a4cd3ef7c648"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/scene-fiction-context.js",
+      "sha256": "eb4fa37e50c830c93b2ccd8b1ffeaedffb2e3a4575bbe3ba04181877952dd26c"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/operations-metrics.js",
+      "sha256": "6ceaa733563c64afc6bd2306773b5e4152553be57fa7e1f18916624700a459fb"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-scene-fiction.js",
+      "sha256": "b68181846d0b4cf440cb9629d45acf3c5a4b23ac604287dd7a1a43a2a6d966ad"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--operations/public.js",
+      "sha256": "945882acb771d457bdf3649cc43c1e8cb5b660f0c07acb462ae99494d01681a1"
+    },
+    {
+      "path": "bot/src/application/composition/narrative-operations.js",
+      "sha256": "d22b9b6f053213a822a89eef25be1ab4c5203bf0cfffc71e8303df6342299c3d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c59.test.mjs",
+      "sha256": "a67a638fa9508ebab8663c9728f996c8babafc016d0f5ce29551b43e6aaec776"
+    }
+  ]
+}

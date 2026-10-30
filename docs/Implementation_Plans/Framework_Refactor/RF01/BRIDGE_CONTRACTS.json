@@ -2543,14 +2543,12 @@
         "narrative",
         "operations"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "narrative",
           "to": "operations",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Forward exact original telemetry record call with original singleton receiver; no content or policy."
         }
       ],
       "source_evidence": [
@@ -2559,13 +2557,23 @@
           "to": "bot/src/operational-metrics.js",
           "line": 3,
           "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/narrative-operations.js",
+          "to": "bot/src/framework-to-framework/narrative--operations/public.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fresh original scene-fiction/hold telemetry tests; exact source receiver and current context provider retained.",
+      "lifecycle": "Pure App fixed initializer before runtime construction; no database/client/model or metric event during composition.",
+      "adoption_feature": "RF05-F04",
+      "consumers": [
+        "bot/src/application/composition/narrative-operations.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf05-f04-c59.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "narrative",
@@ -2579,7 +2587,9 @@
         "pair": "narrative--operations",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 2
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/narrative--operations/public.js",
+      "scope": "C59 only original operationalMetrics.record callback for scene-fiction hold; all other observed dependencies retain exact transitions."
     },
     {
       "pair": "narrative--persistence",
@@ -3783,7 +3793,8 @@
         "bot/tests/ai-gm-2026-10/rf05-f04-c53.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c54.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c56.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f04-c58.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c58.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c59.test.mjs"
       ],
       "observed_directions": [
         {
@@ -3806,7 +3817,7 @@
         "occurrences": 22
       },
       "public_api": "bot/src/framework-to-framework/narrative--publication/public.js",
-      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition. C53 forwards only original establishGmWorldPart/renderGmWorldPart through fixed Publication consumer; Narrative retains exact scope/source/composition/replay rules. Remaining pair dependencies stay open. C54 supplies only original projectSceneDescription/defaultSceneDescription; native owner/source/visibility/presence/evidence rules remain in Narrative. C56 forwards original findFreshScenePart/renderFreshScenePart/hasPcReference through fixed Publication consumer, never the generator. Original source/budget/provenance/tripwire rules unchanged. C58 forwards only original findFreshNpcPart/renderFreshNpcPart through separate fixed Publication NPC reader; generator and full source/knowledge/audience/current-context rules remain Narrative-owned."
+      "scope": "C52 only decodeNonmaterialGrammar/establishGrammarScope/renderNonmaterialGrammar/grammarHash. Every other legacy pair obligation remains under its exact existing transition. C53 forwards only original establishGmWorldPart/renderGmWorldPart through fixed Publication consumer; Narrative retains exact scope/source/composition/replay rules. Remaining pair dependencies stay open. C54 supplies only original projectSceneDescription/defaultSceneDescription; native owner/source/visibility/presence/evidence rules remain in Narrative. C56 forwards original findFreshScenePart/renderFreshScenePart/hasPcReference through fixed Publication consumer, never the generator. Original source/budget/provenance/tripwire rules unchanged. C58 forwards only original findFreshNpcPart/renderFreshNpcPart through separate fixed Publication NPC reader; generator and full source/knowledge/audience/current-context rules remain Narrative-owned. C59 forwards original establishSceneFiction/renderSceneFiction/holdSceneFiction through fixed own Publication consumer; no generator."
     }
   ]
 }

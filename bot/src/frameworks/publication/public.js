@@ -41,3 +41,5 @@ export {publicationNarrativeScene} from './contracts/narrative-scene.js';
 export {publicationNarrativeAuthoring} from './contracts/narrative-authoring.js';
 
 export {publicationNarrativeNpc} from './contracts/narrative-npc.js';
+
+export {publicationNarrativeSceneFiction} from './contracts/narrative-scene-fiction.js';

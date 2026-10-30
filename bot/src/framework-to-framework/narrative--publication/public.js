@@ -18,3 +18,7 @@ export function connectPublicationNarrativeAuthoring(){return publicationNarrati
 import {findFreshNpcPart,renderFreshNpcPart} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeNpc} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeNpc(){return publicationNarrativeNpc.bind({findFreshNpcPart,renderFreshNpcPart});}
+
+import {establishSceneFiction,renderSceneFiction,holdSceneFiction} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeSceneFiction} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeSceneFiction(){return publicationNarrativeSceneFiction.bind({establishSceneFiction,renderSceneFiction,holdSceneFiction});}
