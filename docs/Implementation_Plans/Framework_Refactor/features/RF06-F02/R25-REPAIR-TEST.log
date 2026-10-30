@@ -1,0 +1,14 @@
+✔ campaign lookup preserves every SQLite column, legacy JSON text, row prototype and absent/binding behavior without writes (227.3285ms)
+✔ unchanged configure/channel callers return original campaign rows and retain channel conflict checks (165.0634ms)
+✔ unchanged callers still use current getCampaign override with receiver/arguments and result identity (171.2557ms)
+✔ same connection getter sees caller writes across savepoints and rolls back with original transaction coordinator (163.4663ms)
+✔ instrumented original connection remains visible to operational SQL read metrics (158.747ms)
+✔ campaign reader reopens persisted original row and schema without adding writes (166.3715ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1157.0322

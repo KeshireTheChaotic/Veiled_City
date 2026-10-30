@@ -1,0 +1,86 @@
+✔ campaign lookup preserves every SQLite column, legacy JSON text, row prototype and absent/binding behavior without writes (162.44ms)
+✖ unchanged configure/channel callers return original campaign rows and retain channel conflict checks (171.3662ms)
+✔ unchanged callers still use current getCampaign override with receiver/arguments and result identity (239.7598ms)
+✖ same connection getter sees caller writes across savepoints and rolls back with original transaction coordinator (283.1774ms)
+✔ instrumented original connection remains visible to operational SQL read metrics (280.1795ms)
+✖ campaign reader reopens persisted original row and schema without adding writes (259.9762ms)
+✔ narrow preference interface checks shape and preserves original receiver/result/error without raw DB exposure (0.8262ms)
+✔ native privacy validation precedes actual SQLite preferred-channel write and private response (286.9752ms)
+✔ unsafe current channel is rejected without preference write or response (270.7639ms)
+✔ actual accessibility merge preserves legacy fields, explicit false and original response JSON (275.5476ms)
+✔ null options preserve existing preferences and original missing-player error (235.6537ms)
+✔ failed response preserves already-written original preference without retry (153.9901ms)
+✔ unsupported player subcommand returns false without touching its store (0.1746ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 10
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1719.1515
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f02-c25.test.mjs:21:1
+✖ unchanged configure/channel callers return original campaign rows and retain channel conflict checks (171.3662ms)
+  Error: CHECK constraint failed: response_mode IN ('active','assisted','mention')
+      at VeiledDB.configureCampaign (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:658:8)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:22:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 275,
+    errstr: 'constraint failed'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf06-f02-c25.test.mjs:27:1
+✖ same connection getter sees caller writes across savepoints and rolls back with original transaction coordinator (283.1774ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: CHECK constraint failed: response_mode IN ('active','assisted','mention')
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:29:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: CHECK constraint failed: response_mode IN ('active','assisted','mention')
+        at VeiledDB.configureCampaign (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:658:8)
+        at file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:29:44
+        at VeiledDB.transaction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:618:19)
+        at file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:29:24
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:29:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at bot\tests\ai-gm-2026-10\rf06-f02-c25.test.mjs:35:1
+✖ campaign reader reopens persisted original row and schema without adding writes (259.9762ms)
+  Error: CHECK constraint failed: response_mode IN ('active','assisted','mention')
+      at VeiledDB.configureCampaign (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:658:8)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c25.test.mjs:36:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 275,
+    errstr: 'constraint failed'
+  }

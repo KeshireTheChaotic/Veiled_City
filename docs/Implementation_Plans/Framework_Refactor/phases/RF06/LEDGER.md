@@ -29,18 +29,19 @@
 | RF06-F05 R21 | Original config loader in bootstrap | 7d4e2993 + 05765cf4 coordination correction | 8/8 passed; mixed C85 commit documented |
 | RF06-F03 R22 | Original read-only incident report in Operations | f3f4caf7 | 6/6 passed, whole source equal |
 | RF06-F02 R23 | Four independent preference SQL methods, same connection | f42b7076 | 7/7 new + 12/12 affected passed;315 other methods unchanged |
-| RF06-F02 R24 | Six original administrative SQL reads, same connection/dynamic readers | this R24 checkpoint | 7/7 new + 6/6 affected passed;313 other methods unchanged |
+| RF06-F02 R24 | Six original administrative SQL reads, same connection/dynamic readers | 5dda8fcf | 7/7 new + 6/6 affected passed;313 other methods unchanged |
+| RF06-F02 R25 | Original campaign-row SQL reader on same connection/proxy | this R25 checkpoint | 6/6 final new + 7/7 affected passed;318 other methods unchanged |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
 
 ## Current persistence boundary
 
-Root db.js is a standalone compatibility facade. Baseline d6ec1467 has319 methods/412 direct class SQL sites. After R24,319 class methods remain,402 SQL sites stay in database.js,4 are in its private preference repository and6 in its private administrative read repository;313 other methods are structurally unchanged from R23. Migrations retain schema version 460; schema.sql SHA256 D3A69C4C55A876B087556AB7F291265A684C4287233B1651B1692BE34781E374 unchanged. I01-STORAGE-MAP.json captures method parameters, SQL/table candidates, transaction and JSON operations, foreign-key clauses and syntactic caller candidates. No database was opened. See PERSISTENCE-BOUNDARY-INVENTORY.md.
+Root db.js is a standalone compatibility facade. Baseline d6ec1467 has319 methods/412 direct class SQL sites. After R25,319 class methods remain,401 SQL sites stay in database.js,4 are in preferences,6 in administrative reads and1 in campaign configuration;318 other methods are structurally unchanged from R24. Migrations retain schema version 460; schema.sql SHA256 D3A69C4C55A876B087556AB7F291265A684C4287233B1651B1692BE34781E374 unchanged. I01-STORAGE-MAP.json captures method parameters, SQL/table candidates, transaction and JSON operations, foreign-key clauses and syntactic caller candidates. No database was opened. See PERSISTENCE-BOUNDARY-INVENTORY.md.
 
 ## Architecture and coordination
 
-After R24: shared RF05 ratchet exit0,1017 modules/4111imports,zero unowned/active/errors,728 accepted legacy occurrences,one cycle60. Snapshot includes concurrent Agent A C88 progress; initial intermediate C88 registry errors resolved after its source/registry completion. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 22 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R25: shared RF05 ratchet exit0,1019 modules/4091imports,0 unowned/0active/0errors,728 accepted legacy occurrences,one cycle60. Snapshot includes concurrent Agent A RF05 progress; separate snapshots do not qualify its entire phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 22 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -48,4 +49,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F02 R25 independent campaign configuration reads, subject to caller inventory and source slot, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F04 R26 another independently supportable original command family, subject to actual import/caller inventory, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

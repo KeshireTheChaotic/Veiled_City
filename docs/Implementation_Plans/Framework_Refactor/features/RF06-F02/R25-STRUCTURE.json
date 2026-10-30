@@ -1,0 +1,14 @@
+{
+  "parent": "31adeaf7fa9f3ecede0a510911b4c3c45d174df4",
+  "class_methods": 319,
+  "untouched_methods": 318,
+  "extracted_methods": [
+    "getCampaign"
+  ],
+  "old_class_sql_sites": 402,
+  "new_class_sql_sites": 401,
+  "repository_sql_sites": 1,
+  "all_other_class_methods_equal": true,
+  "original_method_signatures_equal": true,
+  "extracted_body_equal_after_only_connection_substitution": true
+}

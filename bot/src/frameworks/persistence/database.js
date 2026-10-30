@@ -1,3 +1,4 @@
+import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
 import * as administrativeReads from './administrative-read-repository.js';
 import * as playerPreferences from './player-preferences-repository.js';
 /** Original SQLite repository implementation; domain capabilities are fixed before construction. */
@@ -632,9 +633,7 @@ export class VeiledDB {
     }
   }
 
-  getCampaign(guildId) {
-    return this.db.prepare("SELECT * FROM campaigns WHERE guild_id=?").get(guildId);
-  }
+  getCampaign(guildId) {return readCampaign(this.db,guildId);}
 
   ensureCampaign(guildId, defaults={}) {
     this.db.prepare(`
