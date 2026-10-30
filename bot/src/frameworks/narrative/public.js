@@ -130,3 +130,5 @@ export {decayedNarrativeWeight,narrativeImportance,canonicalInterestEvidence,not
 export {protectedNarrativeNames,legacyNpcSpeechLine,authorNarrativeRequests,establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';
 
 export {contextSourceKey} from './context-source-key.js';
+
+export {captureContextSource,contextSourceVisible,validateInterpretation,interpretationContext,persistInterpretation} from './interpretation-context.js';

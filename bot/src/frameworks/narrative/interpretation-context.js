@@ -1,20 +1,20 @@
 /** Scoped fictional interpretation. Meaning and referents never authorize movement, consent, knowledge or canon. */
 import { createHash } from "node:crypto";
-import {narrativeKnowledgePersonal} from './frameworks/narrative/public.js';
+import {narrativeKnowledgePersonal} from './contracts/knowledge-personal.js';
 function personalCharacter(...args){return narrativeKnowledgePersonal.personalCharacter(...args);}
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeReaders} from './contracts/knowledge-readers.js';
 function scopedQueryPlan(...args){return narrativeKnowledgeReaders.scopedQueryPlan(...args);}function queryScopedFacts(...args){return narrativeKnowledgeReaders.queryScopedFacts(...args);}
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent, cityAudit}=narrativeWorldPrimitives;
-import {narrativeSessionLocationMatch} from "./frameworks/narrative/public.js";
+import {narrativeSessionLocationMatch} from "./contracts/session-location-match.js";
 function locationMatches(...args){return narrativeSessionLocationMatch.locationMatches(...args);}
-import { interpretationSchema } from "./frameworks/narrative/interpretation-schema.js";
-import { CONTEXT_CONTRACT } from "./frameworks/narrative/interpretation-contract.js";
+import { interpretationSchema } from "./interpretation-schema.js";
+import { CONTEXT_CONTRACT } from "./interpretation-contract.js";
 // Typed movement now comes from the main GM player_intents contract.
 export { interpretationSchema, CONTEXT_CONTRACT };
-import {contextSourceKey} from './frameworks/narrative/public.js';
+import {contextSourceKey} from './context-source-key.js';
 export {contextSourceKey};
 export function captureContextSource(db,guild,user,character,messageId,content,{privateScene=false}={}){
   if(!messageId||!character||db.getCityCalendar(guild).flags.natural_language!==true) return null;

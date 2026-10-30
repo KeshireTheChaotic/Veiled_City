@@ -114,7 +114,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/narrative-authority.js","bot/src/frameworks/narrative/narrative-authority.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","4","9"
 "bot/src/narrative-clauses-v9.js","bot/src/frameworks/narrative/narrative-clauses-v9.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","2"
 "bot/src/narrative-completeness.js","bot/src/frameworks/narrative/narrative-completeness.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","3","1"
-"bot/src/narrative-context.js","bot/src/frameworks/narrative/narrative-context.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","4","5"
+"bot/src/narrative-context.js","bot/src/frameworks/narrative/interpretation-context.js","narrative","RF05","MOVED_COMPLETE","4","5"
 "bot/src/narrative-delegation.js","bot/src/frameworks/narrative/narrative-delegation.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","1"
 "bot/src/narrative-director-source.js","bot/src/frameworks/narrative/narrative-director-source.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","5","6"
 "bot/src/narrative-integrity.js","bot/src/frameworks/narrative/narrative-integrity.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","6","5"

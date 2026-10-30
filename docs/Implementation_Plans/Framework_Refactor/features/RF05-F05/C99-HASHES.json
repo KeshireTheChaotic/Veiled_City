@@ -1,0 +1,42 @@
+{
+  "base": "04fd34a2",
+  "complete_module_and_three_callers_exact_except_imports": true,
+  "syntax_pass": 5,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c99.test.mjs tests/ai-gm-2026-10/rf05-f05-c98.test.mjs",
+    "pass": 5,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 1150.8082
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/interpretation-context.js",
+      "sha256": "d963abe5ddc6c3377c9073a84ff4f645697918d2cf7b3db1632e5a1467d301ab"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "fde99bbd701043c9077431a6fff17b659828a2e722f14f0cfd08fb3b6173cc2f"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "bf1b5a828f7fdaf3fbd9aff0776f25ed8b16e8178012686ae99da2ac5cd3635d"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "19e50fd87340590f571a32ba6b5514920003aa5ca5994122c4ea472e211a84ef"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "d681e03252935be3d24dd7c23bcb215bc07147102d464f3206299543cc15f52c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c99.test.mjs",
+      "sha256": "092c957aaa5ce02e597048bcfa3cc8050cbfee16b6e596d36fa5fb5e549dde27"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c98.test.mjs",
+      "sha256": "9a0f397d8b126b5add2b47d54334b3883f7c687defe9bf1080be95426459e6f3"
+    }
+  ]
+}

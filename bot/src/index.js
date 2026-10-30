@@ -13,7 +13,7 @@ import { GMService } from "./gm.js";
 import { handleCommand } from "./commands.js";
 import { applyAuthoritativeMutation } from "./state.js";
 import { commitGmTurn } from "./turn-orchestration.js";
-import { captureContextSource } from "./narrative-context.js";
+import { captureContextSource } from "./frameworks/narrative/public.js";
 import { conversationPrincipal } from "./frameworks/session/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
