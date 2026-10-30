@@ -1,5 +1,9 @@
 # Instructions for repository agents
 
+## High-priority project direction
+
+Before making any major change to Veilkeeper behavior, architecture, mechanics, persistence, or multiplayer, read [Audience-First Purpose](docs/Implementation_Plans/AUDIENCE_FIRST_PURPOSE.md). Treat it as high-priority project context across agents and future work. For AI-GM implementation, also read the detailed [owner behavior specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md) as directed by the active phase instructions.
+
 ## Coding rules
 * Do not over-engineer or over-complicate the solution. Keep YAGNI in mind at all times. I am not impressed by complex code that does simple tasks, I am impressed by simple, secure, code that does the tasks I need"
 

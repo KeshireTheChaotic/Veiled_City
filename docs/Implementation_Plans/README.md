@@ -2,7 +2,7 @@
 
 **Initial reconciliation audit — COMPLETE.** The 2026-10-21 audit and its findings are historical; current work follows the actual checkout and active phase/feature scopes. Detailed snapshots remain in their evidence files and ledgers.
 
-Before AI-GM work, read the [owner behavior specification](OWNER_AI_GM_BEHAVIOR_SPEC.md) and the complementary `content/ENGINE/AI_GM_CONSTITUTION.md` operational authority.
+Before any major change, read the high-priority [Audience-First Purpose](AUDIENCE_FIRST_PURPOSE.md). Before AI-GM implementation, also read the [owner behavior specification](OWNER_AI_GM_BEHAVIOR_SPEC.md) and the complementary `content/ENGINE/AI_GM_CONSTITUTION.md` operational authority.
 
 The goal is an imaginative, impartial autonomous GM running a living world, rather than a restrictive rules chatbot. Keep expressive, proactive narration and NPC/faction initiative. Players exclusively own PC decisions; native code owns mechanical resolution; audiences receive only entitled information.
 
