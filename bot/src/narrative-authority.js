@@ -21,8 +21,8 @@ import {narrativeNpcEvidence} from './frameworks/narrative/public.js';
 const {actorReferenceVisible}=narrativeNpcEvidence;
 import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
 import {mintNarrativeAudience,revalidateNarrativeAudience} from './frameworks/narrative/public.js';
-import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
-import {constructNativeClause} from './narrative-clauses-v9.js';
+import {compileWriterV9,actToNativeUnit} from './frameworks/narrative/public.js';
+import {constructNativeClause} from './frameworks/narrative/public.js';
 import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
 import {narrativeWorldBackground} from './frameworks/narrative/public.js';

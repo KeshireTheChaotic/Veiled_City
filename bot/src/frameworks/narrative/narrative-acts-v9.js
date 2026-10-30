@@ -1,5 +1,5 @@
 /** Non-effect creative proposals, verified per act. Never bypass legacy validators until v9 is qualified. */
-import {NARRATIVE_ACT_KINDS} from './frameworks/narrative/narrative-act-kinds-v9.js';
+import {NARRATIVE_ACT_KINDS} from './narrative-act-kinds-v9.js';
 export {NARRATIVE_ACT_KINDS};
 const kinds = new Set(NARRATIVE_ACT_KINDS);
 const safeId = value => typeof value === 'string' && value.length > 0 && value.length <= 160;

@@ -1,0 +1,32 @@
+{
+  "base": "db36eb97",
+  "concurrent_rf06_commit": "06dad37a",
+  "three_moved_and_original_consumer_bodies_identical_excluding_imports": true,
+  "syntax_pass": 5,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+      "sha256": "ec4033f8059d1fb0fae942b15fc15731f1b38b6f41736190e5550eae4a7ec859"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/narrative-clauses-v9.js",
+      "sha256": "aed9246f55675894cd80f4dbba95e5fb8401b1ecb51c038bc5f60f184261ab36"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+      "sha256": "1dd450337909d6136de06d4d294dfb1d65145a604fc312f646d8c19c58db9f96"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "714726f3fa6a627f92fcf4bd080eeb1bf12482ac541182df6172782a2f489754"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "e2f715af055b3e02389fe1bdb163b8431b6a8b8335b5ecb27f7d379ddd425467"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c69.test.mjs",
+      "sha256": "c7ee2c51f9461c31e1ec851cb977110fdc6940390ccadec1e85c6e99f5adaf96"
+    }
+  ]
+}

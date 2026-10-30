@@ -1,13 +1,13 @@
-import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 const {factVisibleTo}=narrativeKnowledgeDisclosure;
 /** Native non-effect clause construction. Closed primitives, never model prose or semantic safety labels. */
-import {sceneFictionFailure as fail} from './frameworks/narrative/public.js';
-import {npcAddresses} from './frameworks/narrative/public.js';
-import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+import {sceneFictionFailure as fail} from './scene-fiction-context.js';
+import {npcAddresses} from './narrative-speakers.js';
+import {narrativeWorldConstraints} from './contracts/world-constraints.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
-import {narrativeSourceVisible} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible} from './visibility-source.js';
 
-import {nativeClauseSchema} from './frameworks/narrative/native-clause-schema-v9.js';
+import {nativeClauseSchema} from './native-clause-schema-v9.js';
 export {nativeClauseSchema};
 function shape(schema,value){
   if(schema.anyOf)return schema.anyOf.some(s=>shape(s,value));

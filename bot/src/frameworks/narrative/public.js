@@ -103,3 +103,7 @@ export {narrativeVisible,buildNarrativeContext} from './authority-context.js';
 
 export {npcAddresses,speakerBrief,withoutVerifiedVocative} from './narrative-speakers.js';
 export {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent,inheritDirectorNarrativeSource,directorBriefForAudience,bindDirectorNarrativeSource} from './narrative-director-source.js';
+
+export {NARRATIVE_ACT_KINDS,compileNarrativeActs} from './narrative-acts-v9.js';
+export {nativeClauseSchema,constructNativeClause} from './narrative-clauses-v9.js';
+export {actToNativeUnit,compileWriterV9} from './narrative-writer-v9.js';

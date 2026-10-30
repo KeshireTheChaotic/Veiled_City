@@ -1,0 +1,35 @@
+[
+  {
+    "id": "7cb4a7cc2cdd3c53c2953518401743e84df1d8b8b94357e92893e193055ccb76",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-acts-v9.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "0fb466b9b4a5cf62e893c2e71f41071c68238798cac39c73115d7036457d8640",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-clauses-v9.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "9ba3f92829e5c5b117ce9fb513e1d299d49f6c8e5720d96ece559304ad88c774",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/narrative-writer-v9.js",
+    "owner": "narrative",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F03",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  }
+]
