@@ -27,3 +27,6 @@ export function connectNativeNarrativePvpOwner(){return nativeNarrativePvpOwner.
 import {nativeNarrativeContext} from '../../frameworks/daggerheart/public.js';
 import {narrativeAuthorityContextSource} from '../../frameworks/narrative/public.js';
 export function connectNativeNarrativeContext(){return nativeNarrativeContext.bind({buildNarrativeContext:narrativeAuthorityContextSource.buildNarrativeContext});}
+
+import {narrativeNativeActionConsent} from '../../frameworks/narrative/public.js';
+export function connectNarrativeNativeActionConsent(){return narrativeNativeActionConsent.bind({consentAction:nativeActionConsentSource.consentAction,historicalActionSource:nativeActionConsentSource.historicalActionSource});}

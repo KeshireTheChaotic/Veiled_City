@@ -15,7 +15,7 @@ const {nativeOutcomeProjection}=narrativePublicationOutcomeProjection;
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
-import {noteNarrativeReuse} from './narrative-salience.js';
+import {noteNarrativeReuse} from './frameworks/narrative/public.js';
 import {creativeBrief} from './frameworks/narrative/public.js';
 import {withoutVerifiedVocative} from './frameworks/narrative/public.js';
 import {narrativeNpcEvidence} from './frameworks/narrative/public.js';

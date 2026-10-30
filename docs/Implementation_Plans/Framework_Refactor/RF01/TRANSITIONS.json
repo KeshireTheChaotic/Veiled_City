@@ -623,17 +623,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "abd82065606ab4b5c788fad031ddf5c88e82e487a3634d2c53c9e8d1775190a6",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/narrative-salience.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "de0a7e24c1a5673d947c05a68697eaf4f98fc88d858cac59ed98cd82ca026c8f",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/narrative-tasks-v9.js",
@@ -3809,20 +3798,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "03fca7bb723ba45caa0c04bf0bc8fd10d56463918dc932e6a0fa10ec903526ae",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/action-consent.js",
-      "kind": "static",
-      "specifier": "./action-consent.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "92fa8ff877b4341239f170a709cfe357660ea810a5f8030fc9fb116dcd916b45",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-adversary-context.js",
@@ -5458,20 +5433,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "87cafbb200dcab8da9735c71c7ce3ad14e853b6bf2357346687ffeba2bebd0bd",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/state.js",
-      "to": "bot/src/narrative-salience.js",
-      "kind": "static",
-      "specifier": "./narrative-salience.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "1ae1f4820efaf3a1efab4b513354cf951a52e7abfd5fe81ad63368c901156846",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/state.js",
@@ -6436,20 +6397,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "e255f51d05c6cb9d678616acb4a4fabb7b9478bbb881437fcc93cb83d4269c44",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/narrative-salience.js",
-      "kind": "static",
-      "specifier": "./narrative-salience.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "eab966cec4974d7c499d1f279eab2c8f46050e5085f99060077d4a60aa7a5fa6",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/narrative-pvp.js",
@@ -6540,20 +6487,6 @@
       "to": "bot/src/pvp-rounds.js",
       "kind": "re-export",
       "specifier": "./pvp-rounds.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "bdbc5cf9e44c1c341784da73fda8bfa48385f31319211e5c39dc98bc2274411f",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-salience.js",
-      "to": "bot/src/action-consent.js",
-      "kind": "static",
-      "specifier": "./action-consent.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",
@@ -7019,20 +6952,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "a58487b7fe08e6002b651577038b983538567545277dccecc28787d2cdc642fc",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-witnesses.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
@@ -9116,20 +9035,6 @@
       "to": "bot/src/native-outcome-output.js",
       "kind": "static",
       "specifier": "./native-outcome-output.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "482b311597838f7cb970f12b378d79e338331bea134cd87b3212a708f72b5cf8",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/pvp-output.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
       "owner": "publication",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",

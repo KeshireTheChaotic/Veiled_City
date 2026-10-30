@@ -1,0 +1,47 @@
+{
+  "base": "464fdb0b",
+  "moved_salience_and_two_callers_bodies_identical_excluding_imports_forwarder_rank_reexport_path": true,
+  "syntax_pass": 7,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-salience.js",
+      "sha256": "8f6d4141f755fec7e79024edde141fbde8f219d5a6875d9e6d46b2c824b20d78"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/contracts/native-action-consent.js",
+      "sha256": "8404b4a78e693d6c6e2bac583fb65c08c8e6d6c433554d379aea8364c62bdf35"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "03f6f3f8bf7c9fc492aca489520f35fde8de51f18e3a349d1cae2601f3fab5e4"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+      "sha256": "a9324f003a503865a8a83a063760eab9d12f76af2fb52a29b34e0c7629c3be93"
+    },
+    {
+      "path": "bot/src/application/composition/pvp-agreements.js",
+      "sha256": "a197f4a29c18a993a71c5a4b10c81add4a13b7b8a8c6eff6fff88cd7b3883a24"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "c90f3661677db1f77a357c56cd3c1ad80913c9bc3496f1aa1fbb03777b1fdce6"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "6ae9c8cb4cc96fcc029efba372a368822b5a3eb9ace6a9bd81f26218d514b2a2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c67.test.mjs",
+      "sha256": "2d77f9db0c36bad1af4637f3c8446d136627f6739b8a89129a708a5bb9564457"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs",
+      "sha256": "0079074b79a48557207ca5308cb79a1009a080e62c09589865e8f2ff3fb77b2e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c76.test.mjs",
+      "sha256": "4e951065ff73d0ea489d37a2ba5292bb4df1338fb89983040c324243d1ad3117"
+    }
+  ]
+}

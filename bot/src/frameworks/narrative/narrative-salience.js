@@ -1,25 +1,28 @@
-import {nativeSalienceAvailable,names,mentions,narrativeContextEligible,narrativeImportanceSource} from './frameworks/narrative/public.js';
+import {nativeSalienceAvailable,names,mentions} from './context-eligibility.js';
+import {narrativeContextEligible} from './eligibility-source.js';
+import {narrativeImportanceSource} from './importance-source.js';
 export {nativeSalienceAvailable,narrativeContextEligible};
 /** Retrieval only: deterministic source-bound interest, fictional-time decay and reversible prompt retirement. */
 import {createHash} from 'node:crypto';
-import {narrativeSourceVisible,sceneFictionHash as proofHash} from './frameworks/narrative/public.js';
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible,sceneFictionHash as proofHash} from './scene-fiction-context.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {currentScene}=narrativeSessionScene;
-import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+import {narrativeWorldConstraints} from './contracts/world-constraints.js';
 const {activeCityProxy}=narrativeWorldConstraints;
-import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeReaders} from './contracts/knowledge-readers.js';
 const listNarrativeRecords=(...args)=>narrativeKnowledgeReaders.listNarrativeRecords(...args),NARRATIVE_RECORD_LIMIT=()=>narrativeKnowledgeReaders.narrativeRecordLimit();
-import {narrativeQueryRelevance,narrativeIdentityRelevance} from './frameworks/narrative/public.js';
-import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+import {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
+import {narrativeWorldIdentityOrigin} from './contracts/world-identity-origin.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
-import {consentAction,historicalActionSource} from './action-consent.js';
-import {narrativeIntentCommunication} from './frameworks/narrative/public.js';
+import {narrativeNativeActionConsent} from './contracts/native-action-consent.js';
+const {consentAction,historicalActionSource}=narrativeNativeActionConsent;
+import {narrativeIntentCommunication} from './contracts/intent-communication.js';
 const {characterSourceRanges}=narrativeIntentCommunication;
-import {narrativeWorldIdentityPersistence} from './frameworks/narrative/public.js';
+import {narrativeWorldIdentityPersistence} from './contracts/world-identity-persistence.js';
 function maintainIdentityPersistence(...args){return narrativeWorldIdentityPersistence.maintainIdentityPersistence(...args);}
-import {narrativeWorldBridge} from './frameworks/narrative/public.js';
+import {narrativeWorldBridge} from './contracts/world-bridge.js';
 function canonicalNarrativeCause(...args){return narrativeWorldBridge.canonicalNarrativeCause(...args);}
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex').slice(0,40);
 const visible=(r,s)=>['party','public'].includes(r.visibility)||s.mode==='private'&&r.visibility==='character'&&r.subject_key===s.actorCharacterId;
@@ -165,10 +168,10 @@ export function maintainNarrativeSalience(db,guild){
       db.saveCityRecord(guild,{...row,key:row.record_key,status:'prompt_archived',data:{...row.data,retired_tick:tick}});
   }
 }
-export {rankNarrativeMemory} from './frameworks/narrative/public.js';
+export {rankNarrativeMemory} from './memory-ranking.js';
 
 
 narrativeImportanceSource.provide(narrativeImportance);
-import {narrativeSalienceSource} from './frameworks/narrative/public.js';
+import {narrativeSalienceSource} from './contracts/root-sources.js';
 // Provide this module's original canonical interest evidence reader to the fixed Narrative slot; no other authority is granted.
 narrativeSalienceSource.bind({canonicalInterestEvidence});

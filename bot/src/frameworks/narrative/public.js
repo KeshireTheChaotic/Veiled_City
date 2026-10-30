@@ -122,3 +122,7 @@ export {validateNarrativeCompleteness,recordNarrativeHealth} from './narrative-c
 export {narrativeQueryRelevance,narrativeIdentityRelevance} from './narrative-relevance.js';
 
 export {narrativeIntentCommunication} from './contracts/intent-communication.js';
+
+export {narrativeNativeActionConsent} from './contracts/native-action-consent.js';
+
+export {decayedNarrativeWeight,narrativeImportance,canonicalInterestEvidence,noteNarrativeInterest,noteNarrativeReuse,maintainNarrativeSalience} from './narrative-salience.js';
