@@ -10,7 +10,7 @@ import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';
 import { applySimulationUpdates } from "./frameworks/world/public.js";
 import { validateNarrativeClaims, validateCanonAnnotations, validateCandidateClaims, assertNarrativeApplied } from "./narrative-integrity.js";
 import { prepareAuthorizedTurnOutput, candidateNarrative, assertProtectedModelEvents } from "./pvp-output.js";
-import { recordCharacterPerceptions } from "./character-observation.js";
+import { recordCharacterPerceptions } from "./frameworks/character/public.js";
 import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { assertNpcObservation } from "./frameworks/session/public.js";

@@ -27,3 +27,5 @@ export {publicationKnowledgeDiscovery} from './contracts/knowledge-personal.js';
 export {publicationSessionScene} from './contracts/session-scene.js';
 
 export {publicationKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
+
+export {publicationCharacterObservation} from './contracts/character-observation.js';

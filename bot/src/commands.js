@@ -71,7 +71,7 @@ import { proposePvp, reviewPvp, revisePvp, respondPvp, pvpInbox, choosePvp, roll
 import { synchronizePvpWindow, windowOperation } from "./frameworks/session/public.js";
 import { draftPvpNarrative, ratifyPvpClause, reviewPvpScope, reviewPvpDraft, pvpNarrationInbox } from "./pvp-authorship.js";
 import { captureAuthoredTurnEnvelope } from "./authored-turn-envelope.js";
-import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./character-observation.js";
+import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./frameworks/character/public.js";
 import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./pvp-fear-moves.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";

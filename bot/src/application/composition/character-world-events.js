@@ -1,3 +1,5 @@
+import {connectNarrativeCharacterObservation} from '../../framework-to-framework/character--narrative/public.js';
+import {connectPublicationCharacterObservation} from '../../framework-to-framework/character--publication/public.js';
 import {connectCharacterWorldEvents,connectCharacterWorldObservation,connectWorldCharacterObservation} from '../../framework-to-framework/character--world/public.js';
 /** Fixed bootstrap wiring of World's original event index and observation rendering into Character, and Character's departure witnesses into World; no state writes. */
-export function initializeCharacterWorldEvents(){connectCharacterWorldObservation();connectWorldCharacterObservation();return connectCharacterWorldEvents();}
+export function initializeCharacterWorldEvents(){connectNarrativeCharacterObservation();connectPublicationCharacterObservation();connectCharacterWorldObservation();connectWorldCharacterObservation();return connectCharacterWorldEvents();}

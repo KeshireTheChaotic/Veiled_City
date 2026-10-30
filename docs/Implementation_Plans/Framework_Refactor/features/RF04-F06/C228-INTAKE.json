@@ -1,0 +1,43 @@
+{
+  "base": "653e6496",
+  "rf04_report": ".reports/C227-final.json",
+  "rf05_report": ".reports/C228-rf05-intake.json",
+  "remaining_overdue_records": [
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/character-observation.js",
+      "id": "6aef2a547ef8a66441714f37df9143247917e59b3f722e62802c3f781dd3e40c"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/encounter.js",
+      "id": "de113d87e556b9e057e4634c7b74b74e4acbd49dbd7836bbfc13a8a75fb07eba"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/native-environment-context.js",
+      "id": "c8ca3d7a926bf5c437edd6687ae5cc711ef66686bc994d2fffc38584f6e9a3be"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/pvp-fear-moves.js",
+      "id": "175bd92c3a446dce35632a9fd2c583bc53ff67b5ba70fef2a3e3f8682363a36c"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/world-narrative-bridge.js",
+      "id": "4bc95a553bacc6e98c2d56bf7253c21cab5e76e3330084883deb2e18454697b4"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/world-narrative-bridge.js",
+      "id": "b749993b40541b19325f318321ac624cc099c497597c6cfa09f3019b353a29ed"
+    },
+    {
+      "code": "EXPIRED_TRANSITION",
+      "from": "bot/src/world-narrative-bridge.js",
+      "id": "bda71a2e0997cb11d1df420f438ebd5cfa66280edaf49dcf0f910d86030aac8a"
+    }
+  ],
+  "assessment": "RF04 not complete:7 exact records expire before RF05; no deadline/baseline change permitted. Resolve five named legacy modules/bridge before exit. Other949accepted occurrences retain original RF05/RF06 expiry."
+}

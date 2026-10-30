@@ -8,7 +8,8 @@ const {currentScene}=publicationSessionScene;
 import {publicationSessionPrincipal} from './frameworks/publication/public.js';
 function conversationPrincipal(...args){return publicationSessionPrincipal.conversationPrincipal(...args);}
 import { pvpProjection, validatePvpClause } from "./pvp-authorship.js";
-import { observationQueries, ambientWorldQueries, renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription } from "./character-observation.js";
+import {publicationCharacterObservation} from './frameworks/publication/public.js';
+const {observationQueries,ambientWorldQueries,renderObservation,characterSelfDescriptionForQuery,renderCharacterSelfDescription}=publicationCharacterObservation;
 
 import { renderFearEffect } from "./pvp-fear-moves.js";
 import {publicationWorldEvents} from './frameworks/publication/public.js';

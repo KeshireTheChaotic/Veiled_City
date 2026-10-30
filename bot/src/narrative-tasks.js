@@ -2,7 +2,8 @@
 import {sceneFictionHash as hash,narrativeSourceVisible} from './scene-fiction-context.js';
 import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {renderObservation} from './character-observation.js';
+import {narrativeCharacterObservation} from './frameworks/narrative/public.js';
+const {renderObservation}=narrativeCharacterObservation;
 
 export function narrativeTasks(db,guild,result,scope,sourceRef){
   const source=db.getWorldEvent(guild,sourceRef),text=source?.details.text??source?.details.raw_text;

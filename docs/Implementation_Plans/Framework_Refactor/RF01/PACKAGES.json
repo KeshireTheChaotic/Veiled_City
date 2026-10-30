@@ -188,6 +188,12 @@
     ],
     "daggerheart--persistence": [
       "bot/src/framework-to-framework/daggerheart--persistence/public.js"
+    ],
+    "character--publication": [
+      "bot/src/framework-to-framework/character--publication/public.js"
+    ],
+    "character--narrative": [
+      "bot/src/framework-to-framework/character--narrative/public.js"
     ]
   },
   "externalCapabilityOwners": {

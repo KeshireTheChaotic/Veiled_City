@@ -1,11 +1,11 @@
 /** Read-side PC observations. A question supplies no fact, consent, reaction or mechanical outcome. */
 import { createHash } from "node:crypto";
 function conversationPrincipal(...args){return characterSession.conversationPrincipal(...args);}
-import {characterSession} from './frameworks/character/public.js';
+import {characterSession} from './contracts/session.js';
 function currentScene(...args){return characterSession.currentScene(...args);}function sceneAccess(...args){return characterSession.sceneAccess(...args);}function scenePresence(...args){return characterSession.scenePresence(...args);}
-import {characterWorldEvents} from './frameworks/character/public.js';
+import {characterWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return characterWorldEvents.indexWorldEvent(...args);}
-import {characterWorldObservation,characterIncomingInjury} from './frameworks/character/public.js';
+import {characterWorldObservation,characterIncomingInjury} from './contracts/observation.js';
 function renderWorldObservation(...args){return characterWorldObservation.renderWorldObservation(...args);}function visibleIncomingInjury(...args){return characterIncomingInjury.visibleIncomingInjury(...args);}
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
@@ -305,6 +305,6 @@ export function renderObservation(db,guild,query,scope){
   }
   return {kind:"observation_answer",state,text,query,proof_refs};
 }
-import {characterObservationSource} from './frameworks/character/public.js';
+import {characterObservationSource} from './contracts/observation.js';
 // Provide this module's original departure witness capture to the fixed Character slot; no other authority is granted.
 characterObservationSource.bind({captureDepartureWitnesses});

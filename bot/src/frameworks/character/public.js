@@ -7,3 +7,5 @@ export {createCharacterWorldEventsConsumer,characterWorldEvents} from './contrac
 export {createCharacterSessionConsumer,characterSession} from './contracts/session.js';
 
 export {characterWorldObservation,characterIncomingInjury,characterObservationSource} from './contracts/observation.js';
+
+export {saveVisibleCharacterFacts,saveCharacterSelfDescription,renderCharacterSelfDescription,characterSelfDescriptionForQuery,captureDepartureWitnesses,recordCharacterPerceptions,observationQueries,ambientWorldQueries,renderObservation} from './observation.js';

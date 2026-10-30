@@ -1,0 +1,18 @@
+{
+  "feature": "RF04-C228",
+  "sha256": {
+    "bot/src/application/composition/character-world-events.js": "e2fca8b9fa40a9c11b1db7a2c8f1853e265793f96001e9ae5f09b27745e3dc34",
+    "bot/src/commands.js": "e9dc15bb057bcdb916861030399036cf512f0f8f247ea15aacedfd529c3491a1",
+    "bot/src/frameworks/character/public.js": "e4ec2d8662ee4f04b4df2e9a82d1dc4d3d611ce28a71abbf09f6bb6ebdd70a9f",
+    "bot/src/frameworks/narrative/public.js": "d70d7235d89bf79afa409ecb2a800a586ad6b4c42f7eb9614b37454da96954dd",
+    "bot/src/frameworks/publication/public.js": "b6b96c61b1fab3e187ea97d00dd5681781bfc0735e3097b51a4543fe33ba9cf4",
+    "bot/src/narrative-tasks.js": "c3f89828aa44d866e8e2332da28b6aa203e1cc01f7a3448630d8e6adddab2d6a",
+    "bot/src/pvp-output.js": "b8cc311db549574909fd34c0e7ee1844b7e620e3881cbfac653115f0e0a1d40e",
+    "bot/src/state.js": "fbaac3dcbe2fc378ebb4f1f08a30870b394e743af243db7f4dccfc2ace9a4f70",
+    "bot/src/framework-to-framework/character--narrative/public.js": "8788cad8e03655475a332eb84fabb6c32b62aeede3bd73abb18082bfd564d849",
+    "bot/src/framework-to-framework/character--publication/public.js": "4a7beb4158f94b5a2c0d935f12436a7ac8a50fa911c4ebdc874a4212e2a85356",
+    "bot/src/frameworks/character/observation.js": "c64f62da86e00378201902813edba7028915296b04fc7dc33f51eeedcf0322a2",
+    "bot/src/frameworks/narrative/contracts/character-observation.js": "b07733b317dec551d2c01be16aacbc1258fc345dd14a2107ebb9cdc76d5413c7",
+    "bot/src/frameworks/publication/contracts/character-observation.js": "d6d036323f318a2b89e271b593402e61876e9281fffd22417b1fb5cdeac31371"
+  }
+}
