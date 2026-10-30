@@ -1,0 +1,14 @@
+{
+  "base": "1ba89d14",
+  "body_identical_excluding_import_and_forwarder": true,
+  "files": [
+    {
+      "path": "bot/src/narrative-authority-context.js",
+      "sha256": "65dac20651961ac05cadb8dd35b9be4c6c9c2da429bd298acf400279fb9a8e76"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c64.test.mjs",
+      "sha256": "cda5783c5397a7193acad7b26d233b666d26049eacf072dd353d58da89a022c8"
+    }
+  ]
+}

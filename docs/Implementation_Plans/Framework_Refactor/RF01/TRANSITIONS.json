@@ -3922,20 +3922,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "6b6e79290f9eeb78c9ae17f63f809e4538daa16307ed9d6f0314f9a8fb9dd47d",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/pvp-output.js",
-      "kind": "static",
-      "specifier": "./pvp-output.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b3aad39dd9b91daa2d75300f952232230f9dd21eb54d339695b306d8804ec0bb",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-authority.js",
@@ -6992,20 +6978,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "6dec7f376aa2c208bdc37870f2eec398c8e98d188a630de41f9bc1232aa79165",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/pvp-output.js",
-      "kind": "static",
-      "specifier": "./pvp-output.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."

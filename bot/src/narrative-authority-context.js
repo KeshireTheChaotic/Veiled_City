@@ -10,7 +10,8 @@ function assemblyOrientation(...args){return narrativeBridgeSessionSources.assem
 
 
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './frameworks/narrative/public.js';
-import {protectedPvpScope} from './pvp-output.js';
+import {narrativePublicationProtectedScope} from './frameworks/narrative/public.js';
+const {protectedPvpScope}=narrativePublicationProtectedScope;
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
