@@ -1,3 +1,4 @@
+export {sourceSpanInsideQuote} from './frameworks/intent/public.js';
 /** Immutable authenticated player source plus additive native-consumption annotations. */
 import {authoredTurnEnvelope,authoredTurnHash as hash,authoredTurnKey as keyFor,authoredAnnotationKey as annotationKey} from './frameworks/intent/public.js';
 export {authoredTurnEnvelope};
@@ -31,16 +32,6 @@ export function captureAuthoredTurnEnvelope(db,guild,user,character,messageId,ra
   return authoredTurnEnvelope(db,guild,messageId,principal.character_id);
 }
 
-/** Source-attribution tripwire, not an English action classifier. Apostrophes inside words are not quotes. */
-export function sourceSpanInsideQuote(text,start){
-  let quote=null;
-  for(let i=0;i<start;i++){
-    const c=text[i];if(c==='\\'){i++;continue;}
-    if((c==="'"||c==='’')&&/[\p{L}\p{N}]/u.test(text[i-1]||'')&&/[\p{L}\p{N}]/u.test(text[i+1]||''))continue;
-    if(quote){if(c===quote)quote=null;}
-    else if(c==='"'||c==="'")quote=c;else if(c==='“')quote='”';else if(c==='‘')quote='’';
-  }return quote!==null;
-}
 export function recordNativeConsumedSpans(db,guild,user,character,messageId,spans=[]){
   const envelope=authoredTurnEnvelope(db,guild,messageId,character);
   if(!envelope||envelope.user_id!==user)fail("Current authenticated authored envelope required.");
@@ -60,6 +51,3 @@ export function recordNativeConsumedSpans(db,guild,user,character,messageId,span
 export function overlapsConsumedSpan(envelope,start,end){
   return (envelope?.native_consumed_spans||[]).some(span=>start<span.end&&end>span.start);
 }
-import {intentAuthoredTurnSource} from './frameworks/intent/public.js';
-// Provide this module's original quote span reading to the fixed Intent slot; no other authority is granted.
-intentAuthoredTurnSource.bind({sourceSpanInsideQuote});

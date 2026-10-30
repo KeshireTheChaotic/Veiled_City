@@ -48,3 +48,7 @@ export {messageSpans,routeMessageSpans,serializeSpanLedger} from './message-span
 export {intentNarrativeContext} from './contracts/narrative-context.js';
 
 export {intentCommunicationSource} from './contracts/communication-source.js';
+
+export {sourceSpanInsideQuote} from './source-quote-boundaries.js';
+export {characterSourceRanges,isCharacterSourceSpan} from './source-communication.js';
+export {assertSceneActionSource} from './scene-action-source.js';

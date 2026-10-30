@@ -1,0 +1,58 @@
+{
+  "base": "4ca96801",
+  "parser_quote_guard_and_all_callers_exact_except_known_import_export_registration_and_guard_call": true,
+  "syntax_pass": 10,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c87.test.mjs",
+    "pass": 4,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 1226.8934
+  },
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "8b3524fd058824dd1f7b84d2d5c10e80728d3d3b5fa505cdf6b031a15e3618e0"
+    },
+    {
+      "path": "bot/src/authored-turn-envelope.js",
+      "sha256": "393f6c11127424fc1c39bd648a9735e79a6b232205b388057bfac1588e8dfa39"
+    },
+    {
+      "path": "bot/src/authored-candidates.js",
+      "sha256": "92f7c7593f80b058e7a9e10ff0a2f7a0cb73bc3522793eb031fb8d0d95bd6f00"
+    },
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "002676c264791834fd23cc3086035c6d043b13554cd2cd3d83f04ca57ed9fb55"
+    },
+    {
+      "path": "bot/src/gameplay-intake.js",
+      "sha256": "a3f983aba2a3e7fca6ad20b8f72bd0533925cf08cf35b1b52153893934a85a7c"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "2bcc8453db2e274fcccc206e51454c89347fe6c61682c24c1345f41f95139f01"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/turn-language-sources.js",
+      "sha256": "aea505f9cefc88dedebadebba432935057c6d6d7e1d7a2d6a81eaaccc724c871"
+    },
+    {
+      "path": "bot/src/frameworks/intent/scene-action-source.js",
+      "sha256": "2c5f699c6feea735ad4b763b88ce85ab20214991d9777194bdce72551b48ae43"
+    },
+    {
+      "path": "bot/src/frameworks/intent/source-communication.js",
+      "sha256": "13b5e0619c2b82bcdc3a785710cab7fc82b1063ce78fc1f8a6cfa0b9abf8f3bd"
+    },
+    {
+      "path": "bot/src/frameworks/intent/source-quote-boundaries.js",
+      "sha256": "2d98b246d1273511f05d7bfa30649040eee5635964ba381c380c55bb06f988cb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c87.test.mjs",
+      "sha256": "daf435eedd197e410ff2fb55963324f546cec3ee9454c9ca1f3275784b8e0f88"
+    }
+  ]
+}

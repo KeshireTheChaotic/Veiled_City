@@ -1,5 +1,5 @@
 /** Exact formatting boundaries only. Being IC is necessary, never sufficient authority for an action. */
-import {sourceSpanInsideQuote} from './authored-turn-envelope.js';
+import {sourceSpanInsideQuote} from './source-quote-boundaries.js';
 export function characterSourceRanges(value){
   const text=String(value||''),ranges=[];let ic=true,depth=0,offset=0;
   const append=(start,end)=>{
@@ -34,5 +34,5 @@ export function isCharacterSourceSpan(text,start,end){
     &&characterSourceRanges(text).some(range=>start>=range.start&&end<=range.end);
 }
 
-import {intentCommunicationSource} from './frameworks/intent/public.js';
+import {intentCommunicationSource} from './contracts/communication-source.js';
 intentCommunicationSource.bind({characterSourceRanges});

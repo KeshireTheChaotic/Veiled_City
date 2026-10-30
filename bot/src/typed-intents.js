@@ -15,12 +15,11 @@ import { intentKnowledgeMemory } from './frameworks/intent/public.js';
 import {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
 import {intentOwnerActionTerminal} from './frameworks/intent/public.js';
 function overlapsOwnerActionTerminal(...args){return intentOwnerActionTerminal.overlapsOwnerActionTerminal(...args);}
-import {isCharacterSourceSpan} from './source-communication.js';
+import {isCharacterSourceSpan,sourceSpanInsideQuote} from './frameworks/intent/public.js';
 import {
   authoredTurnEnvelope,
   captureAuthoredTurnEnvelope,
-  overlapsConsumedSpan,
-  sourceSpanInsideQuote
+  overlapsConsumedSpan
 } from './authored-turn-envelope.js';
 
 const text = length => ({type:'string',maxLength:length});

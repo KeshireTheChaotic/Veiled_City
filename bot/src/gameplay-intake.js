@@ -1,5 +1,5 @@
 /** Non-authorizing full-message intake; semantic proposals, never English verbs, decide engagement. */
-import {characterSourceRanges} from './source-communication.js';
+import {characterSourceRanges} from './frameworks/intent/public.js';
 export function explicitSilence(value){
   const text=String(value||'');
   return !characterSourceRanges(text).some(({start,end})=>text.slice(start,end).trim());

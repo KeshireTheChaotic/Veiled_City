@@ -1481,17 +1481,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "851d22f5c566f97e2623c7e44cab460dc3db08d01f3e1b7400ca6cd59f96ddcc",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/source-communication.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "2ff3dc5c3b330e48ed31a4e784c7bb2af838d87feaa490e6be0c36ddfe1adc8e",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/state.js",
@@ -5398,34 +5387,6 @@
       "to": "bot/src/ordinary-effects.js",
       "kind": "static",
       "specifier": "./ordinary-effects.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "570c72080cc6a871b6affabe84424ede01c1b2a934494b32a505ec0449658a5e",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/state.js",
-      "to": "bot/src/source-communication.js",
-      "kind": "static",
-      "specifier": "./source-communication.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "2854e6304bb3fca9c11fc99c1d70a2a203a2a925be513278434893183807523a",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/state.js",
-      "to": "bot/src/authored-turn-envelope.js",
-      "kind": "static",
-      "specifier": "./authored-turn-envelope.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
