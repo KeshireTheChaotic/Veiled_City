@@ -1,0 +1,15 @@
+✔ classification keeps root/public identity, exact keys and existing read-only/unknown policy (0.564ms)
+✔ completed duplicate replays stored result privately without capture or writes (0.5615ms)
+✔ deferred duplicate uses editReply and incomplete/missing/read-only receipts do not replay (0.221ms)
+✔ capture commits receipt/mutation before failed response and fresh redelivery reuses it (0.5225ms)
+✔ capture records once across reply/edit and restoration returns original transport behavior (0.1828ms)
+✔ warning/read-only responses do not create completed mutation receipts (0.1463ms)
+✔ transaction callback failure prevents transport and leaves synthetic store unchanged (0.1613ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 424.7233

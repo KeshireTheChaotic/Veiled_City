@@ -1,0 +1,9 @@
+# RF06-F04 R11 — Complete command mutation classification
+
+Original READ_ONLY keys, commandKey and isMutatingCommand now live in Discord command-mutations.js. Root idempotency.js exports the same function objects through public and uses them internally. Exact set/function bodies and both unchanged replay/capture bodies compare equal to prior tracked source. No command reclassification, extra transaction, SQL change or retry policy.
+
+Changed runtime: idempotency.js, frameworks/discord/public.js; new command-mutations.js. Fresh rf06-f04-c11.test.mjs and R11 scope/ledger/log/hashes only. Agent B exclusive idempotency/Discord window; Agent A Narrative/Native source preserved. No shared index/registry/Public APIs outside Discord.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f04-c11.test.mjs: exit0,7passed,0failed/skipped/cancelled,424.7233ms. Covers original key/default classification, root/public identity, completed and deferred replay, read-only/incomplete no replay, receipt/mutation callback ordering before failed response, redelivery without duplicate capture, warning suppression, restore behavior and synthetic callback rollback preventing send. Synthetic store models the callback contract only; this is not actual SQLite/native-effect or crash-recovery proof. Four changed JS/MJS syntax checks, exact source comparisons and scoped whitespace check passed. Hashes R11-HASHES.json; shared graph .reports/RF06-R11-final.json.
+
+No DB opened, live Discord/provider, schema, saved reader, PC agency or audience-rule change. Root capture/replay stays until a qualified Discord–Persistence adapter proves same synchronous connection/unit of work. Rollback only R11. Next exact feature RF06-F04 R12 scoped command receipt storage interface qualification; SQL/native transaction-sensitive repository migration remains locally held. Phase/release incomplete and unauthorized.

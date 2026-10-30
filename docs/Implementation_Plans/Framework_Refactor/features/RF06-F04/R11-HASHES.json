@@ -1,0 +1,6 @@
+{
+  "bot/src/idempotency.js": "635d69a90764f78cf0a07e0d6a2ef95b474e419f3f9f84335ad5ab5e9aed843b",
+  "bot/src/frameworks/discord/public.js": "155c18af14fef8fb4d44893c18cc82d836015c1b7ce78091fb5ded83a19272f0",
+  "bot/src/frameworks/discord/command-mutations.js": "941b3f252034bfaa40aefa9f2c868765e449607808ea663ba2f1f37bbc38f452",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c11.test.mjs": "64f03538ed18a422deb87e695709efb76f8b6370453d52ce4eab0696f0c696fe"
+}
