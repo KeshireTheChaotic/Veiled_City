@@ -1,0 +1,5 @@
+# RF06-F03 R08 — Reference message publication delivery
+
+Prepare read-only scope while Agent A owns Publication public through C73 and R07 waits for registry. Next source window: extract only original upsertBotMessage from publishing.js into Publication reference-delivery.js, consuming already-qualified publicationDiscordChannels.textChannel. Expose through Publication public and delegate same local callers. Preserve stored channel/message identity, exact confirmed-missing codes 10008/404, original beforeWrite timing, 1990-character cap, error identity, edit uncertainty no send, receipt after acknowledged creation and no blind replacement. No SQL method migration or separate transaction.
+
+Fresh mocks cover missing destination, exact edit reuse, confirmed missing replacement, nonmissing fetch errors, uncertain edit/send errors, source revalidation and persisted ID order. No provider/Discord/production DB. Scope begins only after coordinated Publication public release; read-only preparation creates no source.

@@ -55,3 +55,5 @@ export {publicationDiscordChannels} from './contracts/discord-channels.js';
 export {publicationNarrativeTasks} from './contracts/narrative-tasks.js';
 
 export {publicationNarrativeHealth} from './contracts/narrative-health.js';
+
+export {upsertBotMessage} from './reference-delivery.js';

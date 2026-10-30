@@ -1,0 +1,15 @@
+✔ missing channel returns null without reading receipt, guard or send (0.9476ms)
+✔ existing same-channel reference edits exact message after source guard without new receipt/send (0.194ms)
+✔ only confirmed missing message permits replacement and receipt follows acknowledged send (0.2384ms)
+✔ uncertain/nonmissing fetch errors propagate unchanged without replacement (0.4225ms)
+✔ ambiguous edit or send never falls through to another send or receipt (0.2545ms)
+✔ late source/visibility guard rejects both edit and create before external write (0.2071ms)
+✔ different stored channel creates on current channel and preserves exact 1990-character cap (0.1289ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 440.4368

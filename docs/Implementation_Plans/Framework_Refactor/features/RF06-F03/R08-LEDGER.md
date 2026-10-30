@@ -1,0 +1,9 @@
+# RF06-F03 R08 — Complete reference delivery extraction
+
+Original upsertBotMessage now lives in Publication reference-delivery.js, using the already-qualified Discord channel consumer. publishing.js calls Publication public. Normalized original function body equality passed; only ownership/imports changed. Same stored channel/message handling, missing-message codes, beforeWrite guards, 1990-character cap, acknowledged-create receipt and error propagation. An uncertain fetch/edit/send cannot create a replacement by falling through.
+
+Parent includes Agent B R07 ba765395 and concurrent Agent A C74 preparation; branch codex/clean-ai-gm-2026-10. Publication public window explicitly granted by Agent A; existing health and other exports preserved. Changed runtime: publishing.js, frameworks/publication/public.js; new reference-delivery.js. New fresh rf06-f03-c08.test.mjs and R08 scope/ledger/log/hashes only. No registry, pair, index, domain rule or SQL repository edits.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f03-c08.test.mjs: exit0, 7 passed, 0 failed/skipped/cancelled, 440.4368ms. Synthetic cases cover unavailable channel, exact edit reuse, only numeric confirmed-missing codes, error identity, uncertain edit/send no fallback/receipt, late guard rejection and changed destination/cap. Tests mock Discord and storage methods; not process-crash or actual SQLite qualification. Syntax4/4, original body equality and scoped whitespace check passed. Source/test hashes R08-HASHES.json; architecture shared observation .reports/RF06-R08-final.json.
+
+No schema/readers/effects/PC agency/audience grant changes, live send/provider/DB open. No new retry policy; existing reference-surface durability limits remain. Rollback only R08. Next exact feature RF06-F03 R09 exact publication acknowledgment validator ownership, requiring publication-outbox.js/Publication public window after Agent A release. RF06 incomplete, release unauthorized.
