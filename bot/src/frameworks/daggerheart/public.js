@@ -170,3 +170,5 @@ export {nativeNarrativePvpOwner} from './contracts/narrative-pvp-owner.js';
 export {fearRevision,setPvpFearContentIndex,establishFearContext,assertFearIncomingExecution,selectFearMove,applyFearMove,validateFearEffect,renderFearEffect,resolveAutonomousPvpFear,resumeAutonomousPvpFear,fearInbox,reconcileFearMove} from './fear-service.js';
 
 export {nativeNarrativeContext} from './contracts/narrative-context.js';
+
+export {nativeNarrativeUnitRenderer} from './contracts/narrative-unit-renderer.js';

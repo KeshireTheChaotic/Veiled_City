@@ -61,3 +61,5 @@ export {upsertBotMessage} from './reference-delivery.js';
 export {notSent,validatePublicationAcknowledgement,outboxSummary} from './delivery-receipts.js';
 
 export {handoutMarkdown,handoutSummary} from './handout-text.js';
+
+export {publicationNarrativeUnits} from './contracts/narrative-units.js';

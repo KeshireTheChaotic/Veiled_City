@@ -568,17 +568,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "bd1db7b7eefdc1a77be61647032b362cbdf37f164fae10c6fc08a7d75942c9b3",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/narrative-authority.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "781a2d1596b86ce329ebec2a29a324189853fd8939edf45b28b2de9e32e50b8f",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/narrative-context.js",
@@ -3252,20 +3241,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "71d4ef83c05cd77599de9086f7097dabb27e0279aefde97a6c342c1c7c6ddf26",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/gm.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F04",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "522ac7395efc6274bfe99f4a5a95c291d594e130c36860be08b03b59f934d846",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/gm.js",
@@ -4045,20 +4020,6 @@
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "b21c2dbd5b0745e719ce89df91efc2dd0f5161ab8492fa65a444c92725aeaa51",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-witnesses.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -4979,20 +4940,6 @@
       "to": "bot/src/turn-trace-context.js",
       "kind": "static",
       "specifier": "./turn-trace-context.js",
-      "owner": "publication",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F03",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "0fd717a2f237cd8ff14c8940b9a4ec333fcf723d4a0e5fd8f3d6273e1518b3c9",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/pvp-output.js",
-      "to": "bot/src/narrative-authority.js",
-      "kind": "static",
-      "specifier": "./narrative-authority.js",
       "owner": "publication",
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",

@@ -1,0 +1,71 @@
+{
+  "base": "f949c137",
+  "original_authority_and_three_callers_bodies_identical_excluding_imports_forwarders": true,
+  "syntax_pass": 14,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-authority.js",
+      "sha256": "82b18fc72e3fad2c03b25b6727da84b5b5ddce40ab38191b94d00b986a4adb74"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "1b34eefecc819f0b2d43e0dcc5c97e3c83375b22ed6d24ca2d6f875bba3b696a"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-units.js",
+      "sha256": "f3998da4af8e88b110624a0bff964aa0dbf07dfed2c68007a76a90e3dd31dac7"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "e205c75203bd3d975a88a25936dc6d7c271b5f967157f21a3d70795caeca1ce4"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "923dce66d47fc235e49e80350b2f8db113aab62180db79e74a0d911d5062bcee"
+    },
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "18d96228b8f7a79cefb0e37b5f5497528a4ab4b5301a33810cb6885b4c7a3ca4"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "26c1d4f501e6db4888c54f77e1143701621ee98588bfc90b7c6786c2353bd44e"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "ea3508040dd69b69c179a94e01e4c181b0aaa1e585bcfe83a64c0750800debf2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/narrative-unit-renderer.js",
+      "sha256": "6423ae1267c6430435292ea175463b31e3e5d0b4f9539a8b4e85d15b2ae293d6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "9541222722d67b33595b5a874611285e4020ecb451d41c5cb7bd80ff911ad7e0"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
+      "sha256": "fec81179c6f48cd2c767daa88c8b18d8a880adb488096c73b7c1d36a1a14a37a"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "090ebb15249e474dc977291caf055bed4fd0b5c60e6c1133b78f9a6c1205071d"
+    },
+    {
+      "path": "bot/src/application/composition/native-environment-audience.js",
+      "sha256": "a6b76ad4bb736d7a4f0fb4598878108a930393990f94be923a45ce3804de0fd8"
+    },
+    {
+      "path": "bot/src/application/composition/standalone-persistence.js",
+      "sha256": "6c4647f3b09f790b2dbee1bf7c9cd1f454329fedec4802e62a16b4d356947d4c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c17.test.mjs",
+      "sha256": "5e60831f91256ab3cb9aa7370001de04fe3f9364b8c55c147a0d484791b2183b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c77.test.mjs",
+      "sha256": "ec10efb48216c5cc831638311541f437233f732b3abde81e50d7c8bf58f7025d"
+    }
+  ]
+}

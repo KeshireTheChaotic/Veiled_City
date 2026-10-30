@@ -5,7 +5,8 @@ import {inspectArbitrationOrigin} from './scene-intent-board.js';
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './native-feature-catalog.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
-import {renderNarrativeUnit} from './narrative-authority.js';
+import {nativeNarrativeUnitRenderer} from './frameworks/daggerheart/public.js';
+const {renderNarrativeUnit}=nativeNarrativeUnitRenderer;
 import {nativeWorldProxy,nativeNpcAvailability} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}function assertNpcAvailability(...args){return nativeNpcAvailability.assertNpcAvailability(...args);}
 import {nativeActorControl} from './native-actor-control.js';

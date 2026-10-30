@@ -30,3 +30,7 @@ export function connectNativeNarrativeContext(){return nativeNarrativeContext.bi
 
 import {narrativeNativeActionConsent} from '../../frameworks/narrative/public.js';
 export function connectNarrativeNativeActionConsent(){return narrativeNativeActionConsent.bind({consentAction:nativeActionConsentSource.consentAction,historicalActionSource:nativeActionConsentSource.historicalActionSource});}
+
+import {nativeNarrativeUnitRenderer} from '../../frameworks/daggerheart/public.js';
+import {narrativeUnitRenderSource} from '../../frameworks/narrative/public.js';
+export function connectNativeNarrativeUnitRenderer(){return nativeNarrativeUnitRenderer.bind({renderNarrativeUnit:narrativeUnitRenderSource.renderNarrativeUnit});}

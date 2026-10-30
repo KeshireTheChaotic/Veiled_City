@@ -126,3 +126,5 @@ export {narrativeIntentCommunication} from './contracts/intent-communication.js'
 export {narrativeNativeActionConsent} from './contracts/native-action-consent.js';
 
 export {decayedNarrativeWeight,narrativeImportance,canonicalInterestEvidence,noteNarrativeInterest,noteNarrativeReuse,maintainNarrativeSalience} from './narrative-salience.js';
+
+export {protectedNarrativeNames,legacyNpcSpeechLine,authorNarrativeRequests,establishNarrativeUnits,renderNarrativeUnit} from './narrative-authority.js';

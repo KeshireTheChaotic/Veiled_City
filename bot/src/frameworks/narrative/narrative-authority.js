@@ -1,33 +1,33 @@
-import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 const {objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Delegated ordinary GM fiction; independent typed units, native receipts for effects, no arbitrary raw-output waiver. */
-import {buildNarrativeContext,narrativeVisible} from './frameworks/narrative/public.js';
-import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './frameworks/narrative/public.js';
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {buildNarrativeContext,narrativeVisible} from './authority-context.js';
+import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './scene-fiction-context.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
-import {narrativeWorldMaterialization} from './frameworks/narrative/public.js';
+import {narrativeWorldMaterialization} from './contracts/world-materialization.js';
 function establishNarrativeEntity(...args){return narrativeWorldMaterialization.establishNarrativeEntity(...args);}
-import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+import {narrativeWorldConstraints} from './contracts/world-constraints.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
-import {materialParaphrases} from './frameworks/narrative/public.js';
-import {narrativePublicationOutcomeProjection} from './frameworks/narrative/public.js';
+import {materialParaphrases} from './material-paraphrases.js';
+import {narrativePublicationOutcomeProjection} from './contracts/publication-outcome-projection.js';
 const {nativeOutcomeProjection}=narrativePublicationOutcomeProjection;
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 
-import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
-import {noteNarrativeReuse} from './frameworks/narrative/public.js';
-import {creativeBrief} from './frameworks/narrative/public.js';
-import {withoutVerifiedVocative} from './frameworks/narrative/public.js';
-import {narrativeNpcEvidence} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeMemory} from './contracts/knowledge-memory.js';
+import {noteNarrativeReuse} from './narrative-salience.js';
+import {creativeBrief} from './narrative-delegation.js';
+import {withoutVerifiedVocative} from './narrative-speakers.js';
+import {narrativeNpcEvidence} from './contracts/npc-evidence.js';
 const {actorReferenceVisible}=narrativeNpcEvidence;
-import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './frameworks/narrative/public.js';
-import {mintNarrativeAudience,revalidateNarrativeAudience} from './frameworks/narrative/public.js';
-import {compileWriterV9,actToNativeUnit} from './frameworks/narrative/public.js';
-import {constructNativeClause} from './frameworks/narrative/public.js';
-import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
+import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';
+import {mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
+import {compileWriterV9,actToNativeUnit} from './narrative-writer-v9.js';
+import {constructNativeClause} from './narrative-clauses-v9.js';
+import {narrativeWorldIdentityOrigin} from './contracts/world-identity-origin.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}
-import {narrativeWorldBackground} from './frameworks/narrative/public.js';
-import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/narrative-authority-contract.js';
+import {narrativeWorldBackground} from './contracts/world-background.js';
+import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './narrative-authority-contract.js';
 export {narrativeResponseSchema} from './gm-fiction-schema.js';
 export {NARRATIVE_AUTHORITY_INSTRUCTIONS};
 const issuer='native:narrative-authority';
@@ -318,6 +318,6 @@ export function renderNarrativeUnit(db,guild,key,scope){
   return d.text;
 }
 
-import {narrativeUnitRenderSource} from './frameworks/narrative/public.js';
+import {narrativeUnitRenderSource} from './contracts/root-sources.js';
 // Original renderer retains its native context, grant store and receipt validation.
 narrativeUnitRenderSource.bind({renderNarrativeUnit});

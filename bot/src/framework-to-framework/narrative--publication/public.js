@@ -42,3 +42,7 @@ export function connectPublicationNarrativeTasks(){return publicationNarrativeTa
 import {validateNarrativeCompleteness,recordNarrativeHealth} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeHealth} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeHealth(){return publicationNarrativeHealth.bind({validateNarrativeCompleteness,recordNarrativeHealth});}
+
+import {establishNarrativeUnits,renderNarrativeUnit} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeUnits} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeUnits(){return publicationNarrativeUnits.bind({establishNarrativeUnits,renderNarrativeUnit});}
