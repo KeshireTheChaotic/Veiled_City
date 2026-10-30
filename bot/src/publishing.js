@@ -1,3 +1,4 @@
+import {createPlayMessagePublisher} from './frameworks/publication/public.js';
 import {createJournalPublications} from './frameworks/publication/public.js';
 import {createReferencePublications} from './frameworks/publication/public.js';
 
@@ -33,6 +34,7 @@ import {lifecycleProjection} from './frameworks/publication/public.js';
 import {publicationWorldEvents} from './frameworks/publication/public.js';
 const {indexWorldEvent}=publicationWorldEvents;
 const continuationDeliveryQueue=new KeyedSerialQueue();
+export const postPlayMessage=createPlayMessagePublisher({assertPvpOutput,prepareStoredOutput,substantivePreparedOutput,revalidateOutputPublication});
 const {publishJournal,postJournalEntry}=createJournalPublications({assertArchiveOutput});
 export {publishJournal,postJournalEntry};
 const {publishEventResults,syncConfiguredSurfaces}=createReferencePublications({prepareStoredOutput,quarantineGeneratedOutput});
@@ -104,35 +106,7 @@ export {postPrivateRelay};
 
 
 
-export async function postPlayMessage({db,guild,content,sessionId=null,authority=null,publication=null}){
-  const scope={mode:"party",actorUserId:null,actorCharacterId:null},needsProof=!!db.getActiveSession(guild.id);
-  let substantive=false;
-  const check=()=>{
-    if(publication){
-      if(publication.visibility!=="party"||publication.target_user_id||content!==publication.payload)throw notSent("Exact party publication required.");
-      revalidateOutputPublication(db,guild.id,publication);
-    }else if(authority){
-      const {result,scope:sourceScope}=authority;
-      if(sourceScope?.mode!=="party"||content!==result.narration&&content!==`**Encounter Aftermath**\n${result.player_summary}`)
-        throw Object.assign(new Error("Exact native output body required."),{code:"NARRATIVE_PVP"});
-      assertPvpOutput(db,guild.id,result,sourceScope,{publication:true});
-      substantive=substantivePreparedOutput(db,guild.id,result,sourceScope);
-    }else if(needsProof)substantive=substantivePreparedOutput(db,guild.id,prepareStoredOutput(db,guild.id,content,scope),scope);
-  };
-  check();
-  const c=db.getCampaign(guild.id);
-  const ch=await textChannel(guild,c?.play_channel_id);
-  if(!ch)return {ok:false,via:"unavailable",certainty:"not_sent",messages:[]};
-  const messages=[];
-  for(const part of chunks(content)){
-    check();
-    const sent=await ch.send(part);
-    turnTraceFor(guild.id)?.publication(substantive);
-    messages.push({messageId:sent.id,channelId:sent.channelId||ch.id});
-    if(sessionId) db.addMessage({guildId:guild.id,sessionId,userId:null,speakerName:"Veilkeeper",visibility:"party",content:part});
-  }
-  return {ok:true,via:"play_channel",certainty:"acknowledged",messages,...messages.at(-1)};
-}
+
 
 /** Deliver committed narration without re-entering GM generation or native mechanics. */
 export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false,beforeSend=null}){

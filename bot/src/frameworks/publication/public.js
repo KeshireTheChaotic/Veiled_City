@@ -83,3 +83,5 @@ export {postPrivateRelay} from './private-relay-delivery.js';
 export {createReferencePublications} from './reference-publications.js';
 
 export {createJournalPublications} from './journal-delivery.js';
+
+export {createPlayMessagePublisher} from './play-message-delivery.js';

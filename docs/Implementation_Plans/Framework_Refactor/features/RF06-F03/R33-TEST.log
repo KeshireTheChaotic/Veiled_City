@@ -1,0 +1,15 @@
+✔ publisher factory requires four original output capabilities and retains original function name (0.8375ms)
+✔ original inactive-session text publishes exact parts with acknowledgment/trace/storage ordering and receipts (1.1031ms)
+✔ active-session unstructured text uses original stored-output scope before lookup and every part (0.2497ms)
+✔ exact structured authority narration/aftermath accepted with original publication validation; wrong scope/body refused (0.4703ms)
+✔ publication payload/audience exactness precedes source lookup and current source revocation stops later sends (0.389ms)
+✔ unavailable channel retains original not-sent return after validation; source error prevents lookup (0.193ms)
+✔ partial uncertain send and post-send storage failure preserve original error/order without retry (0.4608ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 529.8539

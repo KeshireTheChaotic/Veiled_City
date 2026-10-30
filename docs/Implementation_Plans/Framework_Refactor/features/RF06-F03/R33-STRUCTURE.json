@@ -1,0 +1,6 @@
+{
+  "parent": "f17c541ad6c309b4af76b2cbd584c36ee8ff401d",
+  "original_whole_function_equal": true,
+  "remaining_root_equal_except_exact_factory_import_composition_export": true,
+  "root_supplies_original_four_callback_references": true
+}
