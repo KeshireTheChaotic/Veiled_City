@@ -6,3 +6,7 @@ export function connectPublicationNarrativeGrammar(){return publicationNarrative
 import {establishGmWorldPart,renderGmWorldPart} from '../../frameworks/narrative/public.js';
 import {publicationNarrativeWorld} from '../../frameworks/publication/public.js';
 export function connectPublicationNarrativeWorld(){return publicationNarrativeWorld.bind({establishGmWorldPart,renderGmWorldPart});}
+
+import {projectSceneDescription,defaultSceneDescription} from '../../frameworks/narrative/public.js';
+import {publicationNarrativeScene} from '../../frameworks/publication/public.js';
+export function connectPublicationNarrativeScene(){return publicationNarrativeScene.bind({projectSceneDescription,defaultSceneDescription});}

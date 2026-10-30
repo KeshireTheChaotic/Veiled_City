@@ -1,0 +1,41 @@
+{
+  "original_bodies_unchanged": true,
+  "files": [
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "f3a0631e16a3f93e6656e24eb7f5eba7da32a6c42055c87e94a90c5cd2ddc041"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "1faf83f1cbae9bdaa9efc31a0ac2ec6de0d8de298c15f49bc276e5e68d9504bf"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "827cd13103571e5ebda4017009654452b8166eb05615bdecc7cac0918250af15"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "b3181e5c9bc7e06917ed27ee86fa2d12a16ffdce8096ce0e3f54cab7a220bd13"
+    },
+    {
+      "path": "bot/src/fresh-scene-authoring.js",
+      "sha256": "6f3de272550437b6bae104b96dbd2f27f0848f08082bb4daa2b2d794abb0d994"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "1096c9063958fc1bcf85e0084863f821e510d8cde66da2180f8a3f4494f424a2"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/scene-description.js",
+      "sha256": "fea3921825e8262872f42e38ecf2cc8559ea1a494626cb4c8546a54694821412"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-scene.js",
+      "sha256": "02dd723ee16e064b6dccc1fb99585438c3a848613798ffc556778018f469c6dc"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c54.test.mjs",
+      "sha256": "b853f1d21b2b61208684aac27641ebbbd7794fc48ccde6e6978345927dec9497"
+    }
+  ]
+}

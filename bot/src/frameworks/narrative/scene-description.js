@@ -1,14 +1,14 @@
-import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
+import {narrativeKnowledgeDisclosure} from './contracts/knowledge-disclosure.js';
 const {factVisibleTo,activeEvidence,objectiveEvidence,evidenceType}=narrativeKnowledgeDisclosure;
 /** Read-only scene composition. Typed sensory grammar is not authority for PC effects or new durable facts. */
 import {createHash} from 'node:crypto';
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {currentScene,scenePresence}=narrativeSessionScene;
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
 
 
-import {narrativeEnvironmentalText} from './frameworks/narrative/public.js';
+import {narrativeEnvironmentalText} from './contracts/environmental-text.js';
 function environmentalText(...args){return narrativeEnvironmentalText.environmentalText(...args);}
 import {sceneAtmosphereSubjects as subjects,sceneAtmosphereVerbs as verbs,sceneAtmosphereEndings as endings} from './gm-fiction-schema.js';
 export {sceneDescriptionSchema} from './gm-fiction-schema.js';
