@@ -1,0 +1,9 @@
+{
+  "bot/src/commands.js": "0303043002147e9f72f67b3de7d92a6b8e5d809204dbfdd6038daa25f4dd29da",
+  "bot/src/frameworks/discord/public.js": "b508874827ba51eb1a62ef80333628b5d5d2e99ac42b652db50322e1478a8df0",
+  "bot/src/frameworks/discord/gm-npc-state.js": "ab8ed65ec5834b795e745885a651bacc6558c3a1987f838d04afb806c5718252",
+  "bot/src/frameworks/persistence/public.js": "17d8f368c09d768e20bf0240e57510294f2c9a51974b64bbf04e9b6a9dcacb23",
+  "bot/src/frameworks/persistence/gm-npc-reads.js": "28f362fca9cc58f91330c105df30ca5725ae19234544b50dbfa300b4b239f4f1",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "165cc720d02aa8c71a45fb76218d84e03ad81798db6ad668d588311e31c3717c",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c37.test.mjs": "da7296f6e9b87d9badf14f1edcfd37389bc75b91327d614b554c8a00676cfab8"
+}

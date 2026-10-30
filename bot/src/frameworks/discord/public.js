@@ -52,3 +52,5 @@ export {handleCampaignSetupCommand} from './campaign-setup-command.js';
 export {assertCampaignConfigurationStore} from './contracts/campaign-configuration.js';
 
 export {handleGmFactListCommand,assertGmFactReadStore} from './gm-fact-list.js';
+
+export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';

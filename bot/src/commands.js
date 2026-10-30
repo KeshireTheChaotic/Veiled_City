@@ -1,3 +1,5 @@
+import {handleGmNpcStateCommand} from './frameworks/discord/public.js';
+import {connectDiscordGmNpcReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleGmFactListCommand} from './frameworks/discord/public.js';
 import {connectDiscordGmFactReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleCampaignSetupCommand} from './frameworks/discord/public.js';
@@ -2253,29 +2255,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           reason:interaction.options.getString("reason",true),message});
         await interaction.reply({content:`Publication part ${id}: ${after.status}. Delivery only; no mechanics rerun.`,ephemeral:true});return true;
       }
-      if(sub==="npc-state"){
-        const profile=db.findNpcProfile(interaction.guildId,interaction.options.getString("npc",true));
-        if(!profile) throw new NotFoundError("NPC cognition profile not found. Run /vc-admin seed-data or use the NPC in play first.");
-        const memories=db.listNpcMemories(interaction.guildId,profile.npc_key,{status:"active",limit:20});
-        const knowledge=db.listNpcKnowledge(interaction.guildId,profile.npc_key,{limit:30});
-        const goals=db.listNpcGoals(interaction.guildId,profile.npc_key,{limit:20});
-        const lines=[
-          `**NPC Cognition — ${profile.display_name}**`,
-          `${profile.role||"Role unspecified"} • activity: **${profile.activity_tier}** • source: ${profile.source}`,
-          profile.public_identity?`Public identity: ${profile.public_identity}`:"",
-          profile.portrayal?`Portrayal: ${profile.portrayal}`:"",
-          `Decision profile: ${JSON.stringify(profile.decision_profile||{})}`,
-          profile.knowledge_boundaries?.length?`Knowledge boundaries: ${profile.knowledge_boundaries.join("; ")}`:"Knowledge boundaries: none recorded",
-          "**Active Goals**",
-          ...(goals.length?goals.map(g=>`• [${g.priority}] **${g.title||g.goal_key}** (${g.horizon}/${g.status}) — ${g.objective}`):["• none"]),
-          "**Knowledge / Beliefs**",
-          ...(knowledge.length?knowledge.map(k=>`• **${k.belief_state}** ${k.knowledge_key} (${k.confidence}%)${k.is_secret?" • secret":""} — ${k.content}`):["• none"]),
-          "**Memories**",
-          ...(memories.length?memories.map(m=>`• **${m.memory_type}** [importance ${m.importance}, confidence ${m.confidence}] — ${m.content}`):["• none"])
-        ].filter(Boolean);
-        const chunks=chunkTextLines(lines);
-        await interaction.reply({content:chunks[0],ephemeral:true}); for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true}); return true;
-      }
+      if(sub==="npc-state"){return await handleGmNpcStateCommand(interaction,{store:connectDiscordGmNpcReads(db)});}
       if(sub==="fact-edit"||sub==="fact-archive"||sub==="fact-promote"){
         const row=db.findFactForGM(interaction.guildId,interaction.options.getString("fact_id",true)); if(!row) throw new NotFoundError("Fact not found.");
         if(sub==="fact-archive"){

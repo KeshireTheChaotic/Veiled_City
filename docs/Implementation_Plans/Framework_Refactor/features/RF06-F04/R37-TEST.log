@@ -1,0 +1,14 @@
+✔ fixed cognition capability validates complete shape and forwards current receiver/results/errors (0.896ms)
+✔ missing profile preserves original NotFoundError before any further read or send (2.0663ms)
+✔ original reader order/limits and exact empty-section private output retained (0.3263ms)
+✔ private fields, belief/secret labels and original goal/memory text remain private across ordered chunks (0.3566ms)
+✔ actual SQLite guild-scoped profile lookup and display do not write or disclose another guild (174.9265ms)
+✔ read/send errors propagate without retry and root preserves GM/receipt boundary (1.2103ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 809.5944

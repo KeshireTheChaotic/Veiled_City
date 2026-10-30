@@ -22,3 +22,7 @@ export function connectDiscordCampaignConfiguration(db){return assertCampaignCon
 import {assertGmFactReadStore} from '../../frameworks/discord/public.js';
 import {createGmFactReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordGmFactReads(db){return assertGmFactReadStore(createGmFactReadStore(db));}
+
+import {assertGmNpcReadStore} from '../../frameworks/discord/public.js';
+import {createGmNpcReadStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordGmNpcReads(db){return assertGmNpcReadStore(createGmNpcReadStore(db));}

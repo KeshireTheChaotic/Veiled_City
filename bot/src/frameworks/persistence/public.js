@@ -22,3 +22,5 @@ export {createCampaignStatusStore} from './campaign-status.js';
 export {createCampaignConfigurationStore} from './campaign-configuration.js';
 
 export {createGmFactReadStore} from './gm-fact-reads.js';
+
+export {createGmNpcReadStore} from './gm-npc-reads.js';
