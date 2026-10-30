@@ -1,0 +1,58 @@
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'discord.js' imported from D:\Library\Development\Veiled_City\bot\src\frameworks\discord\command-definitions.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ bot\tests\ai-gm-2026-10\rf06-f03-c04.test.mjs (155.7606ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'discord.js' imported from D:\Library\Development\Veiled_City\bot\src\frameworks\discord\command-definitions.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ bot\tests\ai-gm-2026-10\rf06-f03-c34.test.mjs (328.3268ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 340.5353
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f03-c04.test.mjs:1:1
+✖ bot\tests\ai-gm-2026-10\rf06-f03-c04.test.mjs (155.7606ms)
+  'test failed'
+
+test at bot\tests\ai-gm-2026-10\rf06-f03-c34.test.mjs:1:1
+✖ bot\tests\ai-gm-2026-10\rf06-f03-c34.test.mjs (328.3268ms)
+  'test failed'

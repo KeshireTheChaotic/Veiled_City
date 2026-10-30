@@ -1,0 +1,22 @@
+✔ fixed Publication channel port fails before composition and rejects replacement after original binding (0.9037ms)
+✔ original lookup preserves missing, nontext and failed fetch unavailability (0.1991ms)
+✔ private delivery keeps exact receipts, message audience and pre-send validation after composition (1.0432ms)
+✔ unsafe channel before send permits existing private DM fallback without channel exposure (0.2007ms)
+✔ ambiguous send remains uncertain and never falls through to DM (0.2887ms)
+✔ permission change after first chunk stops remaining chunks without fallback (0.2276ms)
+✔ source guard runs before lookup and production startup composes before database/client construction (0.7926ms)
+✔ private publisher factory requires four exact original capabilities and retains original function name (0.8186ms)
+✔ generated private output preserves owner scope, exact mentions object, per-part trace and single character message record (1.8915ms)
+✔ generated source rejection quarantines once before lookup; unexpected source errors remain unquarantined (0.6538ms)
+✔ exact saved publication recipient/character/body enforced before player lookup with original revalidation per send (0.4582ms)
+✔ unavailable registered channel retains original DM fallback and recordMessage false suppresses message row (0.3165ms)
+✔ DM fetch failure is proven not-sent, attempted DM send failure uncertain, storage failure after channel send never falls back (0.5475ms)
+✔ protected source revocation after first private part propagates rather than fallback or generic uncertainty (0.3181ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4685.3772
