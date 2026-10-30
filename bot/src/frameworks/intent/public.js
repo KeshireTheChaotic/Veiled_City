@@ -62,3 +62,5 @@ export {proposalFields,proposalIdentity,sameProposal,validateProposal} from './s
 export {proposeIntents,acceptIntentForAdjudication,resolvePendingReferent,currentAcceptedIntent} from './semantic-intake.js';
 
 export {createPlayerIntentValidation} from './player-intent-validation.js';
+
+export {createTypedIntentPersistence} from './typed-intent-persistence.js';

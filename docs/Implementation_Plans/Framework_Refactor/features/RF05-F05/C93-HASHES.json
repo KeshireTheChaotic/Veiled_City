@@ -1,0 +1,42 @@
+{
+  "base": "1421a63e",
+  "all_six_function_bodies_legacy_mapper_helpers_verbatim_except_factory_local_exports": true,
+  "original_root_export_set_and_native_reader_registration_preserved": true,
+  "syntax_pass": 3,
+  "test_runs": [
+    {
+      "command": "node --test tests/ai-gm-2026-10/rf05-f05-c93.test.mjs",
+      "pass": 0,
+      "fail": 4,
+      "exit_code": 1,
+      "duration_ms": 1097.2567,
+      "reason": "Missing actual World personal-continuity connector in fresh fixture."
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/rf05-f05-c93.test.mjs",
+      "pass": 4,
+      "fail": 0,
+      "exit_code": 0,
+      "duration_ms": 1176.723,
+      "reason": "Actual existing connector supplied, no production repair."
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/typed-intents.js",
+      "sha256": "6ed35d63fa0ff973af216b26105a6434083107a19914d91133f4bd028038acec"
+    },
+    {
+      "path": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "sha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "6c1e03d22251ba84ca691006c1f68e54b7f82aed8314c11c24a9e4e75483f4ea"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c93.test.mjs",
+      "sha256": "85aa1b86d859bbf4f00c51e3c5ce94cf75875a90b4d1efe183f435f84b06a81c"
+    }
+  ]
+}
