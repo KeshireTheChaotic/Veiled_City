@@ -1,0 +1,6 @@
+{
+  "bot/src/handout.js": "0dcefbf185e022bc9f689d3f45f1958b74ac85e1fb2be6f01a5198bbad2b5c48",
+  "bot/src/frameworks/publication/public.js": "dc3ba2831d7f6a0740461b4454c6d8e5f0a3e8120a82893a45f0bb56c7c0ee8e",
+  "bot/src/frameworks/publication/handout-text.js": "548be533808f075dbc0d4f1689b76772e8d97c29a8d4928bc306c57705a0848a",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c10.test.mjs": "e59a2e50cb71abdb7122a860b8528a2860a2ead49650de4df4de688ae7bb7592"
+}

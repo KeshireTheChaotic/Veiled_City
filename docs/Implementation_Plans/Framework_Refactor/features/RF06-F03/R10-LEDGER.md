@@ -1,0 +1,9 @@
+# RF06-F03 R10 — Complete handout presentation ownership
+
+Original handoutMarkdown and handoutSummary now live in Publication handout-text.js. Root handout.js and Publication public preserve the same two function identities. Both original exported bodies equal moved source after newline normalization; the null/string accessor is local presentation plumbing, while root filename sanitization retains its existing accessor. All authority prose, optional link labels, fallback text and excerpt/ID limits unchanged. JSON/DOCX/file creation remains in original module; this slice adds no entitlement or source authority.
+
+Parent695987a9 plus concurrent Agent A C75 commit464fdb0b, branch codex/clean-ai-gm-2026-10. Agent A grants Publication public/handout window; no other shared edits. Modified runtime handout.js, frameworks/publication/public.js; new handout-text.js. Fresh rf06-f03-c10.test.mjs plus R10 scope/ledger/log/hashes only.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f03-c10.test.mjs, exit0,6passed,0failed/skipped/cancelled,94.424ms. Tests cover root/public identity, links/visibility/type/authority labels, absent links/content, original authority disclaimers/badges, 1300-character summary/ellipsis/8-character ID, null/numeric content, no input mutation and no extra metadata serialization. No artifact files generated. Syntax4/4, original body equality and scoped whitespace check passed; R10-HASHES.json. Shared graph .reports/RF06-R10-final.json; no new transition/exception.
+
+No database, provider/Discord call, schema, native effect, saved reader or PC agency change. Text rendering itself grants no disclosure rights; existing handout caller qualification remains authoritative. Rollback only R10. Next exact feature RF06-F04 R11 Discord command mutation classification with changed-code duplicate-receipt evidence; no SQL repository migration. Phase/release incomplete and unauthorized.

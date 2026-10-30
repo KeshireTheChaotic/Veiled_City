@@ -1,0 +1,14 @@
+✔ root and public handout text exports retain one implementation (0.456ms)
+✔ markdown preserves source-bound artifact labels and selected links without serializing extra metadata (0.6014ms)
+✔ each authority keeps original distinct disclaimer and summary badge (0.1697ms)
+✔ empty artifact content and absent links preserve original placeholders (0.1108ms)
+✔ summary preserves 1300-character excerpt, ellipsis and eight-character identifier (0.1018ms)
+✔ null and numeric content keep original safe string rendering in summary (0.0887ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.424

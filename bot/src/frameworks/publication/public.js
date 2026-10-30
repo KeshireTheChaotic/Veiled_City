@@ -59,3 +59,5 @@ export {publicationNarrativeHealth} from './contracts/narrative-health.js';
 export {upsertBotMessage} from './reference-delivery.js';
 
 export {notSent,validatePublicationAcknowledgement,outboxSummary} from './delivery-receipts.js';
+
+export {handoutMarkdown,handoutSummary} from './handout-text.js';
