@@ -19,6 +19,13 @@
 | RF06-F04 R11 | Original read-only command classification | 6b7fd0a0 | 7/7 passed |
 | RF06-F04 R12 | Exact command receipt storage view, same connection | this R12 checkpoint | 5/5 new real SQLite/interface + 7/7 affected passed |
 | RF06-F03 R13 | Original metrics/trace/latency/failure consumer; same singletons | this R13 checkpoint | 6/6 new + 12/12 affected passed, syntax18/18 |
+| RF06-F03 R14 | Separate original Discord text consumer; channel API preserved | c2e5cc16 | 4/4 new + 12/12 affected passed |
+| RF06-F03 R15 | Original closed lifecycle reader, root retired | 7593d5d9 | 6/6 passed, whole source equal |
+| RF06-F03 R16 | Original native hook/deadline reader, root retired | 397e08aa | 6/6 passed, whole source equal |
+| RF06-F04 R17 | Original voice command family | 57b0eb8c | 7/7 passed, original branch structure equal |
+| RF06-F04 R18 | Private-channel/accessibility family + original preference store | 9678219a | 7/7 final passed, disposable SQLite/native privacy |
+| RF06-F04 R19 | Named GM doctor adapter in Discord–Operations pair | 3eacf657 | 6/6 passed |
+| RF06-F04 R20 | Four GM read displays + restricted Persistence view | this R20 checkpoint | 6/6 passed, actual SQLite reads do not write |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | this documentation checkpoint | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -29,7 +36,7 @@ Root db.js is a standalone compatibility facade. frameworks/persistence/database
 
 ## Architecture and coordination
 
-After R13: RF05 ratchet exit0, 995 modules, zero unowned/active/errors, 743 accepted legacy occurrences, one cycle of 60. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. Fifteen exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R20: shared RF05 check has 1011 modules, zero unowned/active source violations, 739 accepted legacy occurrences and one cycle of 60. It exits1 only for one pending Agent A C84 transition diagnostic; prior R19 whole-worktree ratchet passed. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. Eighteen exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -37,4 +44,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F03 R14 original Discord text splitting consumer, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F05 R21 original environment config/bootstrap loader, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

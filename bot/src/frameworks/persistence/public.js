@@ -14,3 +14,5 @@ export {openDiagnosticSnapshot} from './diagnostic-snapshot.js';
 export {createCommandReceiptStore} from './command-receipts.js';
 
 export {createPlayerSettingsStore} from './player-settings.js';
+
+export {createAdministrativeReadStore} from './administrative-reads.js';

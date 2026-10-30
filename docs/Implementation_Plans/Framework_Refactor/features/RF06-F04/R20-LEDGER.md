@@ -1,0 +1,11 @@
+# RF06-F04 R20 — Complete read-only administrative views
+
+Four original backup list/restore-preview/mutation-ledger/snapshot list bodies now live in Discord with original prefix selector. Pair supplies only original read methods on same VeiledDB connection; creation/restore/rollback/snapshot writes are not exposed/moved. Root retains shared/per-snapshot GM guards, backup_id read ordering, surrounding errors and awaited receipt cleanup. Existing prefix/empty/ambiguity behavior, query limits, truncation and private replies unchanged.
+
+AST proof matches all four original bodies (snapshots excludes guard retained at caller) and whole original byPrefix function (R20-STRUCTURE). Changed runtime commands.js, Discord public/new reference-selection+administrative-read handler/contract, Persistence public/new read-store, existing pair public. Bridge metadata extended; no transition change, repository, SQL, index or Native/State edit. Parent3eacf657 plus Agent A C83/C84; branchcodex/clean-ai-gm-2026-10. Granted Agent B source/bridge window; TRANSITIONS stayed Agent A's for C84.
+
+One frozen batch node --test bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs: exit0,6passed,0failed/skipped/cancelled,954.9029ms. Fresh disposable real SQLite covers original backup/preview/snapshot counts/guild isolation, empty views/missing preview, private ordered bounded ledger chunks and unchanged total_changes after reads. Additional tests cover original prefix behavior, restricted forwarding/receiver/result/error and storage failure/no send/unknown no-store fallback. Only fixture setup writes disposable data; no real backup creation/restore or live system. Temp paths verified before cleanup.
+
+Syntax9/9, AST proof and scoped whitespace passed; R20-HASHES. Shared .reports/RF06-R20-final.json:1011modules,zero unowned/active violations,739accepted,cycle60; ratchet exit1 only for Agent A C84's one pending transition diagnostic. Leave that record under Agent A ownership. No new exemption.
+
+No production/default DB, provider/network/Discord, rules, native effects, schema, saved-reader or PC agency changes. GM authorization remains original caller responsibility. Rollback only R20. Next exact feature RF06-F05 R21 original environment config loader/bootstrap ownership, after Agent A releases index/TRANSITIONS. Full phase/release incomplete and unauthorized.

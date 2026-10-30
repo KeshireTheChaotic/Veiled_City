@@ -1,0 +1,11 @@
+{
+  "original_branch_bodies_equal": [
+    "backups",
+    "restore-preview",
+    "ledger",
+    "snapshots"
+  ],
+  "snapshot_guard_retained_at_caller": true,
+  "original_prefix_function_equal": true,
+  "original_backup_id_read_retained": true
+}

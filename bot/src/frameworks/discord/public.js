@@ -40,3 +40,7 @@ export {assertPlayerSettingsStore} from './contracts/player-settings.js';
 export {handlePlayerSettingsCommand} from './player-settings-commands.js';
 
 export {replyWithDiagnosticLines} from './diagnostic-reply.js';
+
+export {byPrefix} from './reference-selection.js';
+export {assertAdministrativeReadStore} from './contracts/administrative-reads.js';
+export {handleAdministrativeReadCommand} from './administrative-read-commands.js';

@@ -1,0 +1,11 @@
+{
+  "bot/src/commands.js": "ebfe3991d63986cc71dc2cc0ca4688ff36838b81ec0cc1488dbb64809551a1a4",
+  "bot/src/frameworks/discord/public.js": "89916bb94f560369f8220a166fd3a15bba77c30ece6b3559fdfa6f11000e3d6a",
+  "bot/src/frameworks/discord/reference-selection.js": "1b31a5e95271f8f9edc98654d0456dc68825a29890bff9bf96bba387a0bc46f9",
+  "bot/src/frameworks/discord/administrative-read-commands.js": "536470fc7a2ac92f0312fa42ad7c85debc480dcfbc8ff043f0011ce932e739f0",
+  "bot/src/frameworks/discord/contracts/administrative-reads.js": "034795fa534106241760b36f9e790bd2d9b0fc3d13beb2549b06ae589c03cb2d",
+  "bot/src/frameworks/persistence/public.js": "cede2756ea21f7fe4b86376bd1727e66c3044cfabcf129cfcfc1698481151ca5",
+  "bot/src/frameworks/persistence/administrative-reads.js": "1bde2b4bbe4e351f3457c1e89bb3cbc870e63872152a223eb96f9313fbf47652",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "4ae480e7b62d848532ac3bb51225d19d5422f01f3bc833cd23f435e0a908c1f7",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs": "e27bb191e491e5b99df87b8726eec858fad5eeecae9a0b1d527633510136e179"
+}

@@ -1,0 +1,14 @@
+✔ original prefix selection retains exact priority, first ambiguous prefix and empty-input behavior (0.5531ms)
+✔ administrative interface exposes only original reads and preserves receiver/value/error (0.7192ms)
+✔ real SQLite backup/preview/snapshot views retain original counts and guild isolation with no writes (167.5539ms)
+✔ empty views retain exact responses and missing preview uses original NotFoundError (163.6097ms)
+✔ actual mutation ledger view is read-only, private and ordered across bounded chunks (179.4878ms)
+✔ storage/response errors propagate without retry and unknown subcommand does not access storage (0.1907ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 954.9029

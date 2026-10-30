@@ -1,0 +1,5 @@
+# RF06-F04 R20 — GM administrative read surfaces
+
+Frozen after R19. Agent A grants Persistence/Discord public/existing pair/BRIDGE window; no database.js changes. Qualify only listBackups/backupPreview/listMutationLedger/listSnapshots forwarding. Inspection shows SQL/read helpers only; backup create/restore/snapshot/rollback mutation paths remain untouched. Move original four read bodies into Discord with original byPrefix helper (also imported by remaining root callers), same NotFoundError and chunker alias. Root retains every GM guard and shared backup_id read/order, awaits handler before receipt finally.
+
+No new prefix ambiguity/empty-input policy, query limit, truncation, JSON shape, source authority or viewer permission. Fresh actual disposable SQLite proves reads produce original display without total_changes; transport/source fixtures cover forwarding/errors/prefix matching/empty views/chunk order. Original AST branch bodies must match (snapshots excludes guard retained at caller). No production/default DB/provider/network or transaction-sensitive repository migration.

@@ -6,3 +6,7 @@ export function connectDiscordCommandReceipts(db){return assertCommandReceiptSto
 import {assertPlayerSettingsStore} from '../../frameworks/discord/public.js';
 import {createPlayerSettingsStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordPlayerSettings(db){return assertPlayerSettingsStore(createPlayerSettingsStore(db));}
+
+import {assertAdministrativeReadStore} from '../../frameworks/discord/public.js';
+import {createAdministrativeReadStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordAdministrativeReads(db){return assertAdministrativeReadStore(createAdministrativeReadStore(db));}

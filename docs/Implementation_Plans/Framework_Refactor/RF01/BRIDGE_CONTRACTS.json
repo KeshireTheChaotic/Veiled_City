@@ -1368,6 +1368,11 @@
           "from": "discord",
           "to": "persistence",
           "contract": "Original three-method player preference store, same connection and native SQL/default/error behavior; own-channel privacy validation remains Discord-owned."
+        },
+        {
+          "from": "discord",
+          "to": "persistence",
+          "contract": "Original four read-only backup/preview/ledger/snapshot methods on same connection; no create/restore/rollback capabilities exposed."
         }
       ],
       "source_evidence": [
@@ -1394,9 +1399,21 @@
           "to": "bot/src/frameworks/persistence/public.js",
           "line": 7,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 10,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--persistence/public.js",
+          "to": "bot/src/frameworks/persistence/public.js",
+          "line": 11,
+          "type": "import"
         }
       ],
-      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior.",
+      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards.",
       "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle.",
       "adoption_feature": "RF06-F04",
       "consumers": [
@@ -1404,7 +1421,8 @@
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f04-c12.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c18.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c18.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c20.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1421,7 +1439,7 @@
         "occurrences": 42
       },
       "public_api": "bot/src/framework-to-framework/discord--persistence/public.js",
-      "scope": "R12 command receipt and R18 player preference adapters only; no SQL/repository/native commit migration."
+      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration."
     },
     {
       "pair": "discord--publication",
