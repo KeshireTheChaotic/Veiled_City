@@ -1,3 +1,4 @@
+import * as administrativeReads from './administrative-read-repository.js';
 import * as playerPreferences from './player-preferences-repository.js';
 /** Original SQLite repository implementation; domain capabilities are fixed before construction. */
 import fs from 'node:fs';
@@ -1520,10 +1521,7 @@ export class VeiledDB {
     this.db.prepare(`UPDATE publication_outbox SET status='uncertain',last_failure='Process restarted after send began; reconcile before force resend.',
       updated_at=CURRENT_TIMESTAMP WHERE status='delivering'`).run();
   }
-  listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){
-    const cap=Math.max(1,Math.min(100,Number(limit)||40));
-    return this.db.prepare(`SELECT * FROM mutation_ledger WHERE guild_id=? AND (?='' OR source_layer=?) AND (?='' OR mutation_type=?) ORDER BY created_at DESC LIMIT ?`).all(guildId,sourceLayer,sourceLayer,mutationType,mutationType,cap);
-  }
+  listMutationLedger(guildId,{limit=40,sourceLayer="",mutationType=""}={}){return administrativeReads.listMutationLedger(this.db,guildId,{limit,sourceLayer,mutationType});}
 
   setDirectorPaused(guildId,paused){ this.ensureCampaign(guildId); this.db.prepare("UPDATE campaigns SET director_paused=?,updated_at=CURRENT_TIMESTAMP WHERE guild_id=?").run(paused?1:0,guildId); return !!paused; }
   isDirectorPaused(guildId){ return !!this.getCampaign(guildId)?.director_paused; }
@@ -1541,15 +1539,9 @@ export class VeiledDB {
     this.db.prepare("DELETE FROM campaign_snapshots WHERE id=?").run(snap.id);
     return this.getBackup(id);
   }
-  getBackup(id){ const r=this.db.prepare("SELECT * FROM campaign_backups WHERE id=?").get(id); return r?{...r,state:JSON.parse(r.state_json||"{}")} : null; }
-  listBackups(guildId,limit=20){ return this.db.prepare("SELECT id,label,reason,created_by,created_at FROM campaign_backups WHERE guild_id=? ORDER BY created_at DESC LIMIT ?").all(guildId,Math.max(1,Math.min(50,Number(limit)||20))); }
-  backupPreview(guildId,id){
-    const b=this.getBackup(id); if(!b||b.guild_id!==guildId) throw new Error("Backup not found.");
-    const current={players:this.listPlayers(guildId).length,characters:this.listGuildCharacters(guildId,{includeClosed:true}).length,facts:this.listFactsForGM(guildId,{limit:100}).length,sessions:this.db.prepare("SELECT count(*) n FROM sessions WHERE guild_id=?").get(guildId).n};
-    const tables=b.state?.tables||{};
-    const backup={players:(tables.players||[]).length,characters:(tables.characters||[]).length,facts:(tables.facts||[]).length,sessions:(tables.sessions||[]).length};
-    return {backup:b,current,counts:backup};
-  }
+  getBackup(id){return administrativeReads.getBackup(this.db,id);}
+  listBackups(guildId,limit=20){return administrativeReads.listBackups(this.db,guildId,limit);}
+  backupPreview(guildId,id){return administrativeReads.backupPreview(this.db,guildId,id,(...args)=>this.getBackup(...args),(...args)=>this.listPlayers(...args),(...args)=>this.listGuildCharacters(...args),(...args)=>this.listFactsForGM(...args));}
   restoreBackup(guildId,id,{actorId=null}={}){
     const b=this.getBackup(id); if(!b||b.guild_id!==guildId) throw new Error("Backup not found.");
     const tempId=randomUUID();
@@ -2438,14 +2430,9 @@ export class VeiledDB {
     return stale.length;
   }
 
-  getSnapshot(id){
-    const r=this.db.prepare("SELECT * FROM campaign_snapshots WHERE id=?").get(id);
-    return r?{...r,state:JSON.parse(r.state_json)}:null;
-  }
+  getSnapshot(id){return administrativeReads.getSnapshot(this.db,id);}
 
-  listSnapshots(guildId,limit=12){
-    return this.db.prepare("SELECT id,label,reason,created_by,created_at FROM campaign_snapshots WHERE guild_id=? ORDER BY created_at DESC LIMIT ?").all(guildId,limit);
-  }
+  listSnapshots(guildId,limit=12){return administrativeReads.listSnapshots(this.db,guildId,limit);}
 
   restoreSnapshot(guildId,snapshotId,{actorId=null}={}){
     const snap=this.getSnapshot(snapshotId); if(!snap||snap.guild_id!==guildId) throw new Error("Snapshot not found for this campaign.");

@@ -1,0 +1,19 @@
+{
+  "parent": "d107c4ba2b444e267848d7c4321e81125c87fb47",
+  "class_methods": 319,
+  "untouched_methods": 313,
+  "extracted_methods": [
+    "getBackup",
+    "listBackups",
+    "backupPreview",
+    "getSnapshot",
+    "listSnapshots",
+    "listMutationLedger"
+  ],
+  "old_class_sql_sites": 408,
+  "new_class_sql_sites": 402,
+  "repository_sql_sites": 6,
+  "all_other_class_methods_equal": true,
+  "original_method_signatures_equal": true,
+  "extracted_bodies_equal_after_only_connection_and_reader_substitutions": true
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "c80422d5696a058cd96d66e1edb3721f18b553ad",
+  "sha256": {
+    "bot/src/frameworks/persistence/database.js": "dec900f98258477630c36bb9937ffc016c314642875e8c6d0721966007c52a59",
+    "bot/src/frameworks/persistence/administrative-read-repository.js": "0a0cfe71dded88e8aff638148bf408e2e7990c32bf505f1ddc1a053d3d94fcf3",
+    "bot/tests/ai-gm-2026-10/rf06-f02-c24.test.mjs": "8646a3d44663db07e116599dc6e9257c2790dd3a847de98523eada0a73d5be3f",
+    "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+  }
+}

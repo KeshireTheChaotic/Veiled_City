@@ -1,0 +1,21 @@
+✔ historical backup/snapshot JSON readers retain distinct empty, malformed, scalar and missing results (290.6692ms)
+✔ backup list preserves projection, guild scope, ordering and original bounded numeric limits (225.6447ms)
+✔ snapshot lists retain original unbounded SQL limit behavior and native binding errors (180.2129ms)
+✔ mutation ledger preserves combined source/type filters, default/clamped limits and parameter errors (291.3184ms)
+✔ preview dispatches current class readers in order with exact receiver/options and stops at guard (172.7065ms)
+✔ same connection reads see caller uncommitted writes and nested savepoint rollback without owning commit (173.7994ms)
+✔ closed/reopened readers preserve stored historical shapes and unchanged schema (172.0198ms)
+✔ original prefix selection retains exact priority, first ambiguous prefix and empty-input behavior (0.5907ms)
+✔ administrative interface exposes only original reads and preserves receiver/value/error (0.7896ms)
+✔ real SQLite backup/preview/snapshot views retain original counts and guild isolation with no writes (163.3648ms)
+✔ empty views retain exact responses and missing preview uses original NotFoundError (167.5778ms)
+✔ actual mutation ledger view is read-only, private and ordered across bounded chunks (178.5421ms)
+✔ storage/response errors propagate without retry and unknown subcommand does not access storage (0.2364ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14962.8952
