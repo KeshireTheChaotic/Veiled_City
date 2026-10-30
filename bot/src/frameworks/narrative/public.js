@@ -107,3 +107,5 @@ export {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent,inheritDire
 export {NARRATIVE_ACT_KINDS,compileNarrativeActs} from './narrative-acts-v9.js';
 export {nativeClauseSchema,constructNativeClause} from './narrative-clauses-v9.js';
 export {actToNativeUnit,compileWriterV9} from './narrative-writer-v9.js';
+
+export {narrativePublicationOutcomeProjection} from './contracts/publication-outcome-projection.js';

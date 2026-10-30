@@ -26,3 +26,7 @@ export function connectPublicationNarrativeSceneFiction(){return publicationNarr
 import {protectedPvpScope} from '../../frameworks/publication/public.js';
 import {narrativePublicationProtectedScope} from '../../frameworks/narrative/public.js';
 export function connectNarrativePublicationProtectedScope(){return narrativePublicationProtectedScope.bind({protectedPvpScope});}
+
+import {publicationOutcomeProjectionSource} from '../../frameworks/publication/public.js';
+import {narrativePublicationOutcomeProjection} from '../../frameworks/narrative/public.js';
+export function connectNarrativePublicationOutcomeProjection(){return narrativePublicationOutcomeProjection.bind({nativeOutcomeProjection:publicationOutcomeProjectionSource.nativeOutcomeProjection});}

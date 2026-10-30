@@ -78,3 +78,6 @@ export function nativeOutcomeProjection(db,guild,input,scope){
 
 import {nativeOutcomeConsumer} from './frameworks/publication/public.js';
 nativeOutcomeConsumer.provideSources(()=>({currentScene:(...args)=>currentScene(...args),validatedPcEffectProjection:(...args)=>validatedPcEffectProjection(...args),visibleIncomingInjury:(...args)=>visibleIncomingInjury(...args),renderNativeNotice:(...args)=>renderNativeNotice(...args),ordinaryEffectProjection:(...args)=>ordinaryEffectProjection(...args),validatePvpAttackRoll:(...args)=>validatePvpAttackRoll(...args),validatePvpDamageApplication:(...args)=>validatePvpDamageApplication(...args),validatePvpDamageRoll:(...args)=>validatePvpDamageRoll(...args),nativeEnvironmentOutput:(...args)=>nativeEnvironmentOutput(...args)}));
+
+import {publicationOutcomeProjectionSource} from './frameworks/publication/public.js';
+publicationOutcomeProjectionSource.bind({nativeOutcomeProjection});

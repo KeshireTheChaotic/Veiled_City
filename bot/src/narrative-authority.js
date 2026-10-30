@@ -10,7 +10,8 @@ function establishNarrativeEntity(...args){return narrativeWorldMaterialization.
 import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy,assertNpcAvailability}=narrativeWorldConstraints;
 import {materialParaphrases} from './frameworks/narrative/public.js';
-import {nativeOutcomeProjection} from './native-outcome-output.js';
+import {narrativePublicationOutcomeProjection} from './frameworks/narrative/public.js';
+const {nativeOutcomeProjection}=narrativePublicationOutcomeProjection;
 import {narrativeUnitKinds} from './gm-fiction-schema.js';
 
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
