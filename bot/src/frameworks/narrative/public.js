@@ -94,3 +94,5 @@ export {SCENE_FICTION_INSTRUCTIONS,holdSceneFiction,authorSceneFictionRequests,e
 export {narrativePublicationProtectedScope} from './contracts/publication-protected-scope.js';
 
 export {buildSceneFictionContext,sceneFictionHash,sceneFictionFailure} from './scene-fiction-context.js';
+
+export {registerNarrativeContext,mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';

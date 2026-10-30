@@ -5,7 +5,8 @@ import {jsonHash as hash} from './kernel/json-hash.js';
 import {sceneFictionFailure as fail} from './kernel/scene-fiction-failure.js';
 import {isPvpIntent} from './pvp-authority.js';
 import {incomingRollProjection} from './pc-incoming.js';
-import {revalidateNarrativeAudience} from './audience-native-v9.js';
+import {nativeNarrativeAudience} from './frameworks/daggerheart/public.js';
+const {revalidateNarrativeAudience}=nativeNarrativeAudience;
 import {createMechanicalProjectionRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createMechanicalProjectionRules({capabilities:{consentAction:(...args)=>consentAction(...args),pendingRollRequests:(...args)=>pendingRollRequests(...args),nativeOutcomeProjection:(...args)=>nativeOutcomeProjection(...args),hash:(...args)=>hash(...args),fail:(...args)=>fail(...args),isPvpIntent:(...args)=>isPvpIntent(...args),incomingRollProjection:(...args)=>incomingRollProjection(...args),revalidateNarrativeAudience:(...args)=>revalidateNarrativeAudience(...args)}});}

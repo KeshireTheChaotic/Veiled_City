@@ -69,17 +69,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "17d2feb7674ad3e30f8a60e156d4010fa6ebd32dc58f7c8c5ef7721616e2d24e",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/audience-native-v9.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "fa8f674f4ef3284e2cb6956e0c89a763d5af897981ce2398bcb83748c4676461",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/authored-candidates.js",
@@ -3894,20 +3883,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "b9e9e9cd25b31a879a825762860615525e5e4b470672f868ab88702b8da1b457",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/mechanical-native-v9.js",
-      "to": "bot/src/audience-native-v9.js",
-      "kind": "static",
-      "specifier": "./audience-native-v9.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "b3aad39dd9b91daa2d75300f952232230f9dd21eb54d339695b306d8804ec0bb",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/narrative-authority.js",
@@ -6493,20 +6468,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "06d7a1c0705c3db50bec798d92985f22908fbf026ae177bfc023ea43bb1f287f",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/audience-native-v9.js",
-      "to": "bot/src/narrative-authority-context.js",
-      "kind": "static",
-      "specifier": "./narrative-authority-context.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "d1b530a56e9e10e356b8e8e9ad3a01a2790daaa28c434ea728d03091f5afc3e7",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/gm-action-capability.js",
@@ -6913,20 +6874,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "e70b2868f640710c6a364bc0e08da4ebb5121caefc3425a5ae00a40b32cac0e7",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority-context.js",
-      "to": "bot/src/audience-native-v9.js",
-      "kind": "static",
-      "specifier": "./audience-native-v9.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "78ef2445c823aa8555b18982d44672b9a59bb10175c7b9536fc2486190c712ce",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/narrative-authority.js",
@@ -6961,20 +6908,6 @@
       "to": "bot/src/narrative-salience.js",
       "kind": "static",
       "specifier": "./narrative-salience.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "dcf78b47468ff4222e0c8a85b242765145f16ea7143d5563513452783bc33ca4",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/narrative-authority.js",
-      "to": "bot/src/audience-native-v9.js",
-      "kind": "static",
-      "specifier": "./audience-native-v9.js",
       "owner": "narrative",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F03",

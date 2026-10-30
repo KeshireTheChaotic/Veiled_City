@@ -21,7 +21,7 @@ import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
 function mentionsPublicIdentity(...args){return narrativeKnowledgeReaders.mentionsPublicIdentity(...args);}
-import {registerNarrativeContext} from './audience-native-v9.js';
+import {registerNarrativeContext} from './frameworks/narrative/public.js';
 function assemblyWriterBrief(...args){return narrativeBridgeSessionSources.assemblyWriterBrief(...args);}
 import {narrativeWorldIdentityOrigin} from './frameworks/narrative/public.js';
 function worldIdentityOrigin(...args){return narrativeWorldIdentityOrigin.worldIdentityOrigin(...args);}

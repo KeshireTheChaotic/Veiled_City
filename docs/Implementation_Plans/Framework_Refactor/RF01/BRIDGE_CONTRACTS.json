@@ -823,7 +823,8 @@
         "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c62.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f04-c65.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c65.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c66.test.mjs"
       ],
       "observed_directions": [
         {
@@ -846,7 +847,7 @@
         "occurrences": 111
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--narrative/public.js",
-      "scope": "Bilateral native agreement source and clause/round consumers only; broader native receipt/writer integration remains separately accountable. C47 original environmental audience source integrated; other native environment source families remain accountable. Test local only per owner. C231 native Fear reads bilateral owner context from the same existing Narrative agreement consumer proxy through a fixed native slot; construction/authority unchanged. C62 reuses original fixed nativeEnvironmentNarrative visibility for twelve additional Native consumers, with pure hash/error dependencies in kernel; stable standalone Persistence composition binds same original source. No mechanics or grant changes. C65 five Native original context readers use fixed nativeNarrativeContext forwarding the original Narrative authority source proxy; startup and standalone composition retain original builder and grant identity."
+      "scope": "Bilateral native agreement source and clause/round consumers only; broader native receipt/writer integration remains separately accountable. C47 original environmental audience source integrated; other native environment source families remain accountable. Test local only per owner. C231 native Fear reads bilateral owner context from the same existing Narrative agreement consumer proxy through a fixed native slot; construction/authority unchanged. C62 reuses original fixed nativeEnvironmentNarrative visibility for twelve additional Native consumers, with pure hash/error dependencies in kernel; stable standalone Persistence composition binds same original source. No mechanics or grant changes. C65 five Native original context readers use fixed nativeNarrativeContext forwarding the original Narrative authority source proxy; startup and standalone composition retain original builder and grant identity. C66 mechanical projection uses existing Native audience revalidation consumer; original moved Narrative audience adapter keeps sole opaque source store, standalone composition binds same original functions."
     },
     {
       "pair": "daggerheart--npc",

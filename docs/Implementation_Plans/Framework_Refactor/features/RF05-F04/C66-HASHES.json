@@ -1,0 +1,35 @@
+{
+  "base": "0f8e3627",
+  "adapter_and_three_consumers_bodies_identical_excluding_imports_and_forwarders": true,
+  "syntax_pass": 6,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/audience-native-v9.js",
+      "sha256": "1a8eaf53d9471f6c52d3fb68f789f585f5aa48a38fd964ef96100e1a70302179"
+    },
+    {
+      "path": "bot/src/narrative-authority.js",
+      "sha256": "34129f89978836c603968cfa5720ead5d7ff3241121fc78529ff98f2fa83bf1c"
+    },
+    {
+      "path": "bot/src/narrative-authority-context.js",
+      "sha256": "3610331e9192e8a6e0e3993e48d65f487e283c1fbf0ba6abb65b643f74730f4e"
+    },
+    {
+      "path": "bot/src/mechanical-native-v9.js",
+      "sha256": "fe754042f4f4f581f5c5be8f6cc456bcde4bfc6ced71d1eccb0f16ae2583f44f"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "4086bb6dd9a457df8b63bf9577e28e7c397cf44cab9c715df824ec888aa987d2"
+    },
+    {
+      "path": "bot/src/application/composition/standalone-persistence.js",
+      "sha256": "bc76c63b953cf8e33370310e77a3073cd84544deb78af8edb288d8d7722f7d24"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c66.test.mjs",
+      "sha256": "76b64bf8a0a9dff9fa9e382dae1bc8dd4cccabc1a5d38c336daf72b340a6708a"
+    }
+  ]
+}
