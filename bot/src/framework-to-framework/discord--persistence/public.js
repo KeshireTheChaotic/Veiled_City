@@ -18,3 +18,7 @@ export function connectDiscordCampaignStatus(db){return assertCampaignStatusStor
 import {assertCampaignConfigurationStore} from '../../frameworks/discord/public.js';
 import {createCampaignConfigurationStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordCampaignConfiguration(db){return assertCampaignConfigurationStore(createCampaignConfigurationStore(db));}
+
+import {assertGmFactReadStore} from '../../frameworks/discord/public.js';
+import {createGmFactReadStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordGmFactReads(db){return assertGmFactReadStore(createGmFactReadStore(db));}

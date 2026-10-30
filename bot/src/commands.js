@@ -1,3 +1,5 @@
+import {handleGmFactListCommand} from './frameworks/discord/public.js';
+import {connectDiscordGmFactReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleCampaignSetupCommand} from './frameworks/discord/public.js';
 import {connectDiscordCampaignConfiguration} from './framework-to-framework/discord--persistence/public.js';
 import {handleCampaignStatusCommand} from './framework-to-framework/discord--operations/public.js';
@@ -2317,19 +2319,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         await interaction.reply({content:`Fact recorded as **${vis}** visibility.`,ephemeral:true});
         return true;
       }
-      if(sub==="fact-list"){
-        const rows=db.listFactsForGM(interaction.guildId,{
-          visibility:interaction.options.getString("visibility")||"all",
-          category:interaction.options.getString("category")||"",
-          subjectUserId:interaction.options.getUser("player")?.id||"",
-          search:interaction.options.getString("search")||"",
-          limit:interaction.options.getInteger("limit")||50
-        });
-        const chunks=chunkTextLines(rows.length?[`**Campaign Facts — ${rows.length} shown**`,...rows.map(gmFactLine)]:["No matching campaign facts found."]);
-        await interaction.reply({content:chunks[0],ephemeral:true});
-        for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
-        return true;
-      }
+      if(sub==="fact-list"){return await handleGmFactListCommand(interaction,{store:connectDiscordGmFactReads(db),formatFact:gmFactLine});}
     }
   } catch(err){
     if(interactionResponseExpired(interaction,err)) throw interactionFailure(interaction,err);

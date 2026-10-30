@@ -1,0 +1,14 @@
+✔ fixed fact read capability forwards current receiver/result/error without raw DB exposure (1.1005ms)
+✔ original null/zero defaults produce exact empty private message and original query options (1.4265ms)
+✔ explicit option values and original map callback arguments retained across private chunks (0.229ms)
+✔ actual SQLite filtering stays before limit, remains guild scoped and performs no writes (192.1743ms)
+✔ read/formatter/response failures propagate with no retries or later sends (0.3901ms)
+✔ application retains GM guard, exact formatter and awaited receipt lifecycle (0.6945ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 800.9374

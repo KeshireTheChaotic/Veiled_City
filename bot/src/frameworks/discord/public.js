@@ -50,3 +50,5 @@ export {replyWithCampaignStatus} from './campaign-status-command.js';
 
 export {handleCampaignSetupCommand} from './campaign-setup-command.js';
 export {assertCampaignConfigurationStore} from './contracts/campaign-configuration.js';
+
+export {handleGmFactListCommand,assertGmFactReadStore} from './gm-fact-list.js';

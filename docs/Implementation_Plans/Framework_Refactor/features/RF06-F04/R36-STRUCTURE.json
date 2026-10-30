@@ -1,0 +1,6 @@
+{
+  "parent": "04fd34a2b52d63fedf73ec4408d3f2c90d60bc69",
+  "original_branch": "if(sub===\"fact-list\"){\n        const rows=db.listFactsForGM(interaction.guildId,{\n          visibility:interaction.options.getString(\"visibility\")||\"all\",\n          category:interaction.options.getString(\"category\")||\"\",\n          subjectUserId:interaction.options.getUser(\"player\")?.id||\"\",\n          search:interaction.options.getString(\"search\")||\"\",\n          limit:interaction.options.getInteger(\"limit\")||50\n        });\n        const chunks=chunkTextLines(rows.length?[`**Campaign Facts — ${rows.length} shown**`,...rows.map(gmFactLine)]:[\"No matching campaign facts found.\"]);\n        await interaction.reply({content:chunks[0],ephemeral:true});\n        for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});\n        return true;\n      }",
+  "original_body_ast_equal_after_only_named_store_chunk_and_formatter_substitutions": true,
+  "remaining_root_preserved_by_exact_single_range_replacement_and_two_imports": true
+}
