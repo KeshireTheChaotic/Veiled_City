@@ -30,3 +30,7 @@ export function settlePvpDamageAction(...args){return rules().settlePvpDamageAct
 import {nativePvpDamageApplication} from './frameworks/daggerheart/public.js';
 // Provide this module's original PvP damage application check to the fixed native slot; no other authority is granted.
 nativePvpDamageApplication.bind({validatePvpDamageApplication});
+
+import {nativeFearDamageSource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearDamageSource.bind({settlePvpDamageAction});

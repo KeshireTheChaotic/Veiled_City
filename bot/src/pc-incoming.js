@@ -46,3 +46,7 @@ export function visibleIncomingInjury(...args){return rules().visibleIncomingInj
 import {nativeIncomingInjurySource} from './frameworks/daggerheart/public.js';
 // Provide this module's original visible incoming injury to the fixed native slot; no other authority is granted.
 nativeIncomingInjurySource.bind({visibleIncomingInjury});
+
+import {nativeFearIncomingSource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearIncomingSource.bind({incomingAttackEvidence,rollAutonomousFearIncomingAttack});

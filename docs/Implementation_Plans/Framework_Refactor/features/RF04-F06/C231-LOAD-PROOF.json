@@ -1,0 +1,19 @@
+{
+  "feature": "RF04-C231",
+  "source_report": ".reports/C231-current.json",
+  "entrypoint": "bot/src/index.js",
+  "original_providers": [
+    "bot/src/pvp-rounds.js",
+    "bot/src/pvp-fear-gate.js",
+    "bot/src/pvp-terminal.js",
+    "bot/src/pvp-attacks.js",
+    "bot/src/pvp-damage.js",
+    "bot/src/pvp-brawl.js",
+    "bot/src/pc-incoming.js",
+    "bot/src/pvp-campaign-policy.js",
+    "bot/src/action-consent.js",
+    "bot/src/narrative-pvp.js"
+  ],
+  "missing": [],
+  "qualification": "Static ESM reachability plus actual provider test; no index execution or Discord/provider startup."
+}

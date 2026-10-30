@@ -4,27 +4,37 @@ import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function recordScenePresence(...args){return nativeScenes.recordScenePresence(...args);}
-import { pvpOwnerContext } from "./narrative-pvp.js";
-import { validatePvpRoundReceipt } from "./pvp-rounds.js";
-import { fearGateKey, pendingPvpFear } from "./pvp-fear-gate.js";
-import { settlePvpWindow } from "./pvp-terminal.js";
+import {nativeNarrativePvpOwner} from './frameworks/daggerheart/public.js';
+function pvpOwnerContext(...args){return nativeNarrativePvpOwner.pvpOwnerContext(...args);}
+import {nativeFearRoundSource} from './frameworks/daggerheart/public.js';
+const {validatePvpRoundReceipt}=nativeFearRoundSource;
+import {nativeFearGateSource} from './frameworks/daggerheart/public.js';
+const {fearGateKey,pendingPvpFear}=nativeFearGateSource;
+import {nativeFearTerminalSource} from './frameworks/daggerheart/public.js';
+const {settlePvpWindow}=nativeFearTerminalSource;
 import {nativeWorldActions} from './frameworks/daggerheart/public.js';
 function configureSimulationEntity(...args){return nativeWorldActions.configureSimulationEntity(...args);}function submitNpcAction(...args){return nativeWorldActions.submitNpcAction(...args);}
 import {nativeWorldProxy,nativeNpcAvailability} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}function assertNpcAvailability(...args){return nativeNpcAvailability.assertNpcAvailability(...args);}
 import { validateWorldEncounterActivation, EncounterLibrary } from "./frameworks/daggerheart/public.js";
-import { validatePvpAttackRoll } from "./pvp-attacks.js";
-import {settlePvpDamageAction} from "./pvp-damage.js";
-import {assertBrawlFearOrder,orderedBrawlFear} from "./pvp-brawl.js";
-import {incomingAttackEvidence,rollAutonomousFearIncomingAttack} from "./pc-incoming.js";
+import {nativeFearAttackSource} from './frameworks/daggerheart/public.js';
+const {validatePvpAttackRoll}=nativeFearAttackSource;
+import {nativeFearDamageSource} from './frameworks/daggerheart/public.js';
+const {settlePvpDamageAction}=nativeFearDamageSource;
+import {nativeFearBrawlSource} from './frameworks/daggerheart/public.js';
+const {assertBrawlFearOrder,orderedBrawlFear}=nativeFearBrawlSource;
+import {nativeFearIncomingSource} from './frameworks/daggerheart/public.js';
+const {incomingAttackEvidence,rollAutonomousFearIncomingAttack}=nativeFearIncomingSource;
 import {nativeActionContinuation} from './frameworks/daggerheart/public.js';
 function drainActionContinuations(...args){return nativeActionContinuation.drainActionContinuations(...args);}
 function validateMinorIdentity(...args){return nativeWorldActions.validateMinorIdentity(...args);}
 function preflightNpcIdentity(...args){return nativeWorldActions.preflightNpcIdentity(...args);}
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
 function worldAuthority(...args){return nativeWorldAutonomy.worldAuthority(...args);}
-import {consentAction} from "./action-consent.js";
-import {assertPvpSafety} from './pvp-campaign-policy.js';
+import {nativeActionConsentSource} from './frameworks/daggerheart/public.js';
+function consentAction(...args){return nativeActionConsentSource.consentAction(...args);}
+import {nativeFearSafetySource} from './frameworks/daggerheart/public.js';
+const {assertPvpSafety}=nativeFearSafetySource;
 export const fearRevision=v=>createHash("sha256").update(JSON.stringify(v)??"undefined").digest("hex");
 const hash=fearRevision;
 let fearNpcContent=null;

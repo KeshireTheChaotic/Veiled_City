@@ -10,3 +10,7 @@ export function setCampaignPvpMode(...args){return rules().setCampaignPvpMode(..
 export function setPvpSafetyStop(...args){return rules().setPvpSafetyStop(...args);}
 export function assertPvpSafety(...args){return rules().assertPvpSafety(...args);}
 export function pvpSafetyStatus(...args){return rules().pvpSafetyStatus(...args);}
+
+import {nativeFearSafetySource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearSafetySource.bind({assertPvpSafety});

@@ -14,3 +14,7 @@ export function closePartialFearGate(...args){return rules().closePartialFearGat
 import {nativePvpPendingFear} from './frameworks/daggerheart/public.js';
 // Provide this module's original pending PvP Fear reader to the fixed native slot; no other authority is granted.
 nativePvpPendingFear.bind({pendingPvpFear});
+
+import {nativeFearGateSource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearGateSource.bind({fearGateKey,pendingPvpFear});

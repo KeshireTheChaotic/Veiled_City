@@ -19,3 +19,7 @@ import {nativeActionConsentSource,nativeTypedRollProof,nativeFearEffectSource} f
 import {narrativeBridgeNativeSources} from '../../frameworks/narrative/public.js';
 /** Pass native rules' original action, typed roll and Fear proofs to the Narrative-World bridge unchanged. */
 export function connectNarrativeBridgeNativeSources(){return narrativeBridgeNativeSources.bind({completedActionSource:nativeActionConsentSource.completedActionSource,historicalActionSource:nativeActionConsentSource.historicalActionSource,typedRollProof:nativeTypedRollProof.typedRollProof,validateFearEffect:nativeFearEffectSource.validateFearEffect});}
+
+import {nativeNarrativePvpOwner} from '../../frameworks/daggerheart/public.js';
+import {pvpAgreementConsumer} from '../../frameworks/narrative/public.js';
+export function connectNativeNarrativePvpOwner(){return nativeNarrativePvpOwner.bind({pvpOwnerContext:pvpAgreementConsumer.pvpOwnerContext});}

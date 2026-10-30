@@ -38,3 +38,7 @@ export function rollPvpAttack(...args){return rules().rollPvpAttack(...args);}
 import {nativePvpAttackRoll} from './frameworks/daggerheart/public.js';
 // Provide this module's original PvP attack roll check to the fixed native slot; no other authority is granted.
 nativePvpAttackRoll.bind({validatePvpAttackRoll});
+
+import {nativeFearAttackSource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearAttackSource.bind({validatePvpAttackRoll});

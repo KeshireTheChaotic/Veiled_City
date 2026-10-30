@@ -28,3 +28,7 @@ export function cancelBrawlForWithdrawal(...args){return rules().cancelBrawlForW
 export function cancelBrawlForSafety(...args){return rules().cancelBrawlForSafety(...args);}
 export function reviewBrawlOpportunity(...args){return rules().reviewBrawlOpportunity(...args);}
 export function passBrawlOpportunity(...args){return rules().passBrawlOpportunity(...args);}
+
+import {nativeFearBrawlSource} from './frameworks/daggerheart/public.js';
+// Original provider remains fixed; registration executes before runtime Fear calls.
+nativeFearBrawlSource.bind({assertBrawlFearOrder,orderedBrawlFear});

@@ -1,0 +1,25 @@
+{
+  "feature": "RF04-C231",
+  "renamed_passed_test": {
+    "from": "bot/tests/ai-gm-2026-10/rf04-f04-c31-contract.test.mjs",
+    "to": "bot/tests/ai-gm-2026-10/rf04-f05-c31.test.mjs",
+    "sha256": "b67ba6c7eb16b05c0b83f03da868de032f929d67d81dc18286547a177b1ba232",
+    "content_unchanged": true
+  },
+  "sha256": {
+    "bot/src/application/composition/pvp-agreements.js": "f4484c4c9788b4136866fda2be4688b6006f55fb4641fc7b43cd46a834cb3c62",
+    "bot/src/framework-to-framework/daggerheart--narrative/public.js": "c1a1e1afaf27a53d3b3b1cd13e67dd2f3d3b19690660ead4409e3530b916fe97",
+    "bot/src/frameworks/daggerheart/public.js": "ee5f85b9ae62094b9b991005866363809409b0edde4f4bb20f31833416e22b76",
+    "bot/src/pc-incoming.js": "dc394d77d6c5801203e38f6149a4ef961e41ccaec93e2fcc8fcc5ac8d0ba2fe2",
+    "bot/src/pvp-attacks.js": "37ca0d196ab275e674faba1001a330e244eb3a49486b7be02c812d089220a041",
+    "bot/src/pvp-brawl.js": "855acba2129d429788c199514e6131ece4e7fe2e8a64fe4e7fedef12d4a5f3b2",
+    "bot/src/pvp-campaign-policy.js": "cfe05afec065e74b215bc94ce341272129e4963492f5792e83873090e2f2c497",
+    "bot/src/pvp-damage.js": "5fdf2a1cd9e87143986f2d10322994756106ce17222591fb9354dd34099952cf",
+    "bot/src/pvp-fear-gate.js": "51e83969aa72fb2cb19fd4ac67285a2e98df1da3b0b6c99d11b8d616277315f9",
+    "bot/src/pvp-fear-moves.js": "18997c38aaaeda00c6b4b1c62002ed9740b81b6edaa97dba87fb5be271bc6543",
+    "bot/src/pvp-rounds.js": "b2a5a3f00f7afd19460191054b997d7baf9c818ce8f6529bccef2c32c01dec80",
+    "bot/src/pvp-terminal.js": "d5f3731cc8c20575b3cbeb9fcdb7e7e916df7edf400439e645525e3be567e4c1",
+    "bot/src/frameworks/daggerheart/contracts/fear-peer-sources.js": "6bca1afb1a37a9040223b2dbd8d3ee2169876d5ed880c364220d5e5e8eb2174d",
+    "bot/src/frameworks/daggerheart/contracts/narrative-pvp-owner.js": "17764458f3374823905b2ac6dea44c607e9af30e9ef68611b0e8241d728f094d"
+  }
+}
