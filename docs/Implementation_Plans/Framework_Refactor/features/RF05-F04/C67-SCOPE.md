@@ -1,0 +1,7 @@
+# RF05-F04 C67 — Narrative memory selection
+
+Base c7bb8305. Extract rankNarrativeMemory verbatim from mixed root salience into Narrative memory-ranking.js. Existing local availability and fixed original importance/relevance sources only; no new source stores, scoring, thresholds, canon/persistence authority or output restriction. Root retains historical reexport of identical function; authority-context reads own public implementation. Original source providers remain independently imported through state/Narrative authority. Fresh actual SQLite fallback/budget/ranking/read-only tests; exact body and retained-root comparison, syntax/architecture qualification.
+
+## Complete
+
+Ranking function verbatim and retained salience root unchanged except historical same-function reexport. Existing importance/relevance source bindings used; original independent providers still loaded by state/authority. Fresh initial1/2 passed1299.1751ms; missing guild FK in enabled-case fixture repaired with actual player initialization, only failed case rerun1/1 passed1075.3604ms. Disabled cap/budget/order and enabled relevance/location/ties/novelty/read-only behavior verified on new SQLite. Syntax4/4, two exact cyclic records retired; final957modules/794accepted/zero unowned,active,transition errors/one cycle62 (was63). No persistence/schema/weights/creative changes; archived/pinned ranking and positive complete GM/runtime remain unverified here. Test local-only. Next original authority-context physical move and final own helper imports; RF05 active.

@@ -1,0 +1,28 @@
+{
+  "base": "c7bb8305",
+  "ranking_body_identical": true,
+  "remaining_root_identical_except_rank_reexport": true,
+  "syntax_pass": 4,
+  "files": [
+    {
+      "path": "bot/src/narrative-salience.js",
+      "sha256": "64c0414976e93a1d99259af3ec1cb53d942bf4ecec9718c6fe092579f8901537"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/memory-ranking.js",
+      "sha256": "bf9fdee2e0c45004f25ed51e5f94fe6e87cfae66f372072e57166dbd5a7cc316"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "2bcf4a426d61b3a4a9cfc066f2f1f602888ab03c9a1a34c413702006ce2d853a"
+    },
+    {
+      "path": "bot/src/narrative-authority-context.js",
+      "sha256": "351d6fb44dac5aed627e197bba7e782a985c2b2836c0a3e058ad33e876661fcd"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c67.test.mjs",
+      "sha256": "851197801a9c342ca7cb9699c349c6f8ca982965ca619a63cebd582af23fc91e"
+    }
+  ]
+}

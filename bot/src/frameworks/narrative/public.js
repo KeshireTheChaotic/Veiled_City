@@ -96,3 +96,5 @@ export {narrativePublicationProtectedScope} from './contracts/publication-protec
 export {buildSceneFictionContext,sceneFictionHash,sceneFictionFailure} from './scene-fiction-context.js';
 
 export {registerNarrativeContext,mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
+
+export {rankNarrativeMemory} from './memory-ranking.js';

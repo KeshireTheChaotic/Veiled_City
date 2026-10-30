@@ -16,7 +16,7 @@ import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
 const {activeCityProxy}=narrativeWorldConstraints;
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
 function selectDisclosedNarrativeMemory(...args){return narrativeKnowledgeMemory.selectDisclosedNarrativeMemory(...args);}
-import {rankNarrativeMemory} from './narrative-salience.js';
+import {rankNarrativeMemory} from './frameworks/narrative/public.js';
 import {speakerBrief} from './narrative-speakers.js';
 import {directorBriefForAudience} from './narrative-director-source.js';
 import {narrativeKnowledgeReaders} from './frameworks/narrative/public.js';
