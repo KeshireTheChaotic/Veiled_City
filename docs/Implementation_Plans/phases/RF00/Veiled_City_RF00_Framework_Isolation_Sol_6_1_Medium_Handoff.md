@@ -1,14 +1,10 @@
 # Veiled City — RF00 Framework Isolation
-## Codex implementation plan and handoff — Sol 6.1 Medium
+## Codex implementation plan
 
 **Repository:** `https://github.com/KeshireTheChaotic/Veiled_City`  
 **Development baseline branch:** `codex/clean-ai-gm-2026-10`  
-**Inspected HEAD (2026-10-23):** `f43d002693cb4ee38038b5dbb2c1049de95b3ffd`  
 **Initiative:** `RF` (refactoring), phases `RF00`–`RF07`  
 **Type:** Architecture and implementation refactor, NOT an authorization to deploy, push, merge, or change gameplay.  
-**Assigned model:** Sol 6.1 Medium — lead architect, implementer and reviewer.  
-**Status:** Handoff specification; no source changes have been applied by this handoff.
-
 ---
 
 ## 0. Mission and non-negotiable definition of done
@@ -21,7 +17,7 @@ This is a **behavior-preserving modular-monolith refactor**. Keep a single Disco
 
 ### Scope and evidence at handoff
 
-The development tree at the inspected SHA contains **355 tracked files beneath `bot/src/`**, **347 directly in its root**, **268 under `bot/scripts/`** (255 directly in that root), and **134 under `bot/tests/`**. `bot/src/commands.js` (~202 KiB), `db.js` (~179 KiB), `gm.js` (~138 KiB), `pvp-fear-moves.js` (~79 KiB), `pvp-output.js` (~64 KiB), `simulation.js` (~58 KiB), `index.js` (~52 KiB), and `world-narrative-bridge.js` (~48 KiB) are special coupling hotspots. These are **audit snapshots**, not counts to hard-code into test assertions. Recalculate from actual checkout before implementation.
+`bot/src/commands.js` (~202 KiB), `db.js` (~179 KiB), `gm.js` (~138 KiB), `pvp-fear-moves.js` (~79 KiB), `pvp-output.js` (~64 KiB), `simulation.js` (~58 KiB), `index.js` (~52 KiB), and `world-narrative-bridge.js` (~48 KiB) are special coupling hotspots. These are **audit snapshots**, not counts to hard-code into test assertions. Recalculate from actual checkout before implementation.
 
 `bot/package.json` uses `"type": "module"`, Node `>=22.16.0`, startup `node src/index.js`, and register `node src/register-commands.js`. Preserve the externally visible commands and paths, adapting thin entrypoint wrappers if necessary. The current README identifies SQLite schema **460**; verify its value at actual HEAD and keep schema/storage unchanged unless an explicitly authorized migration is unavoidable.
 
@@ -32,11 +28,10 @@ Before touching production code:
 1. Inspect actual `git status`, HEAD, branch and uncommitted changes. Never overwrite a dirty worktree or reset/rebase/force-push it. Anchor every report to the actual SHA; the inspected SHA above is an initial reference, not a substitute.
 2. Read these in full, honoring their precedence: `docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md`, `content/ENGINE/AI_GM_CONSTITUTION.md`, `docs/Implementation_Plans/README.md`, `docs/Implementation_Plans/CODEX_START_HERE.md`, `docs/Implementation_Plans/TEST_PROTOCOL.md`, `docs/Implementation_Plans/TEST_EXECUTION_NO_POLL.md`, `docs/Implementation_Plans/DECISION_GATES.md`, `docs/Implementation_Plans/CURRENT_SOURCE_CROSSWALK.md`, and relevant current phase/feature ledgers. Check whether each path is present at actual HEAD; report missing references without fabricating replacements.
 3. Read `bot/package.json`, actual import/export definitions, relevant `docs/Setup_and_Scope` files, and actual `bot/sql/schema.sql` before drafting framework boundaries.
-4. Never execute, import, copy, repurpose, or modify inherited legacy `bot/scripts/*-test.mjs`, historical fixtures/golden results, old suite launchers, `npm run validate`, `validate:extended`, `npm test`, or historical CI. These are historical archaeology unless separately authorized. **Author wholly new, feature-local tests for source changed in this RF initiative** in `bot/tests/ai-gm-2026-10/` (e.g. `rf00-f01.test.mjs`), using only currently modified production modules, Node built-ins and freshly authored fakes. Respect the existing protocol's restrictions, even when they limit the claims we can make.
-5. Test launches: **no watching or polling**. Use a single blocking execution per frozen feature batch; if detached, do useful independent work and read its terminal result only at a natural checkpoint. Record genuine exit status; running is not passed.
-6. Do not run paid provider calls, access production databases, trigger CI, deploy, restart production, push, open/merge PRs, or incur provider costs without explicit additional authorization. Offline checks must use disposable temporary SQLite, mocked provider/Discord, and deterministic controlled dice/clock.
-7. Ask the owner before imposing **new** creative/narrative constraints, reducing NPC autonomy, forcing pacing, changing rules, or altering behavior. Isolate a local hold and continue safe unrelated RF work. Critical blockers affecting consent, private knowledge, state/receipt integrity or uncontrollable risk must stop the affected action.
-8. Default to one serial Sol Medium coordinator, zero subagents. Mechanical self-contained moves may be delegated to a lower-effort implementer only with independently complete scope, ownership map and acceptance tests, if user/workflow explicitly supports that delegation. Sol remains accountable for all interface and high-risk choices.
+4. Test launches: **no watching or polling**. Use a single blocking execution per frozen feature batch; if detached, do useful independent work and read its terminal result only at a natural checkpoint. Record genuine exit status; running is not passed.
+5. Do not run paid provider calls, access production databases, trigger CI, deploy, restart production, push, open/merge PRs, or incur provider costs without explicit additional authorization. Offline checks must use disposable temporary SQLite, mocked provider/Discord, and deterministic controlled dice/clock.
+6. Ask the owner before imposing **new** creative/narrative constraints, reducing NPC autonomy, forcing pacing, changing rules, or altering behavior. Isolate a local hold and continue safe unrelated RF work. Critical blockers affecting consent, private knowledge, state/receipt integrity or uncontrollable risk must stop the affected action.
+
 
 ## 2. Target source topology
 
