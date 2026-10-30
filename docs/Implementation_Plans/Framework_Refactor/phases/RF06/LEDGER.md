@@ -39,7 +39,8 @@
 | RF06-F03 R31 | Four original reference publication functions with unchanged proof callbacks | f6b5f41e | 7/7 passed, original functions/root proof,syntax4/4; external graph hold |
 | RF06-F03 R32 | Original journal delivery with unchanged archive callback/lifecycle reader | f17c541a | 7/7 passed, two original functions/root proof,syntax4/4; external graph hold |
 | RF06-F03 R33 | Original play-channel publisher with unchanged proof callbacks/trace/log order | 2f00af23 | 7/7 passed, whole function/root proof,syntax4/4 |
-| RF06-F03 R34 | Original private-player publisher, same validation/permission/uncertainty semantics | this R34 checkpoint | 14/14 fresh+affected passed,whole function/root proof,syntax4/4 |
+| RF06-F03 R34 | Original private-player publisher, same validation/permission/uncertainty semantics | 1428ed20 | 14/14 fresh+affected passed,whole function/root proof,syntax4/4 |
+| RF06-F04 R35 | Original GM overview adapter through existing Discord–Operations pair | this R35 checkpoint | 6/6 final passed,syntax3; C98 intermediate graph qualified |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -58,4 +59,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F03 R35 original handout delivery, subject to native receipt/source/audience prerequisites, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F04 R36 original GM fact-list view after audience/storage interface inventory; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

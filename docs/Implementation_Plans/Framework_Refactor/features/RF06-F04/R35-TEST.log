@@ -1,0 +1,27 @@
+✔ original overview invokes same guild-scoped reads and emits exact private no-session summary (1.5208ms)
+✔ current fact formatter receives original rows and ordered bounded private chunks (0.2166ms)
+✔ active session/director/encounter and roster preserve current filtering (0.6075ms)
+✖ storage and formatting errors propagate before any response (0.1995ms)
+✔ response failure propagates without retries or subsequent chunks (0.3578ms)
+✔ application keeps GM guard and awaits adapter inside original receipt try/finally (0.6568ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 618.6322
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f04-c35.test.mjs:11:1
+✖ storage and formatting errors propagate before any response (0.1995ms)
+  Error: storage
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f04-c35.test.mjs:11:145)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

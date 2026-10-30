@@ -1343,8 +1343,8 @@
           "type": "import"
         }
       ],
-      "validation": "Fixed Operations-owned consumer requires all three original functions, fails uncomposed, rejects replacement; only fetch/validate capabilities, no sends or permission changes. Original diagnostic issue text and read-only data access preserved. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation.",
-      "lifecycle": "Explicit index startup binding before DB/client construction; fresh RF startup helper mirrors it. Original root privacy and diagnostics files retired after zero active source/supported CLI callers and fresh final-path coverage. R19 doctor is invoked only inside existing commands admin GM guard and awaited before receipt cleanup. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write.",
+      "validation": "Fixed Operations-owned consumer requires all three original functions, fails uncomposed, rejects replacement; only fetch/validate capabilities, no sends or permission changes. Original diagnostic issue text and read-only data access preserved. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation. R35 current guild/storage receiver/formatter identity, bounded ordered ephemeral chunks and rejection behavior verified.",
+      "lifecycle": "Explicit index startup binding before DB/client construction; fresh RF startup helper mirrors it. Original root privacy and diagnostics files retired after zero active source/supported CLI callers and fresh final-path coverage. R19 doctor is invoked only inside existing commands admin GM guard and awaited before receipt cleanup. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write. R35 awaited inside original Application GM guard and receipt try/finally; no native/storage mutation.",
       "adoption_feature": "RF06-F03",
       "consumers": [
         "bot/src/application/composition/operations-discord.js",
@@ -1353,7 +1353,8 @@
       "tests": [
         "bot/tests/ai-gm-2026-10/rf06-f03-c07.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c19.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c26.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c35.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1376,7 +1377,7 @@
         "occurrences": 5
       },
       "public_api": "bot/src/framework-to-framework/discord--operations/public.js",
-      "scope": "R07 diagnostic channel/privacy inspection plus R19 named GM doctor command adapter; no recovery/model/native effect execution. R26 original campaign status routing validation/Discord reply adapter."
+      "scope": "R07 diagnostic channel/privacy inspection plus R19 named GM doctor command adapter; no recovery/model/native effect execution. R26 original campaign status routing validation/Discord reply adapter. R35 original GM overview read/format/private response adapter with original caller fact formatter."
     },
     {
       "pair": "discord--persistence",

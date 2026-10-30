@@ -15,3 +15,9 @@ import {replyWithCampaignStatus} from '../../frameworks/discord/public.js';
 import {validateChannelRouting} from '../../frameworks/operations/public.js';
 /** Original status initialization/reads; application composes the restricted Persistence view. */
 export function handleCampaignStatusCommand(interaction,store){return replyWithCampaignStatus(interaction,{store,validateChannelRouting});}
+
+import {buildGmOverview,formatGmOverview} from '../../frameworks/operations/public.js';
+/** Application retains the original GM guard and fact formatter; Discord retains ordered private replies. */
+export async function handleGmOverviewCommand(interaction,db,formatFact){
+  return replyWithDiagnosticLines(interaction,formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact}));
+}

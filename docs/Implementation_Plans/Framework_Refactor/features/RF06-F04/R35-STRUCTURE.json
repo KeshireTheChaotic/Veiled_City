@@ -1,0 +1,7 @@
+{
+  "parent": "53b8aed86fb892cfe07e22641db40c8fb4c469ae",
+  "original_branch": "        const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));\n        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;",
+  "remaining_source_equal_except_exact_import_and_awaited_delegate": true,
+  "original_chunk_helper": "chunkTextLines delegates chunkDiscordLines default1900; replyWithDiagnosticLines uses same splitter and reply/followUp payloads",
+  "old_sha256": "a0df25356fb6cdbea341dce8aa0ccb453d60fe9a7a645db10e0c0ca0a257d30f"
+}

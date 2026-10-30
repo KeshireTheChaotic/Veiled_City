@@ -1,0 +1,14 @@
+✔ original overview invokes same guild-scoped reads and emits exact private no-session summary (1.1903ms)
+✔ current fact formatter receives original rows and ordered bounded private chunks (0.2145ms)
+✔ active session/director/encounter and roster preserve current filtering (0.2456ms)
+✔ storage and formatting errors propagate before any response (0.3673ms)
+✔ response failure propagates without retries or subsequent chunks (0.1749ms)
+✔ application keeps GM guard and awaits adapter inside original receipt try/finally (0.6644ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 598.6373

@@ -55,7 +55,7 @@ import { replayReceiptIfPresent, installReceiptCapture, isMutatingCommand } from
 import {previewHistoricalArchive,applyHistoricalArchive,listHistoricalArchive} from './frameworks/knowledge/public.js';
 import {operationalReport} from './frameworks/operations/public.js';
 import {operationalMetrics} from './operational-metrics.js';
-import { buildGmOverview, formatGmOverview } from './frameworks/operations/public.js';
+import {handleGmOverviewCommand} from './framework-to-framework/discord--operations/public.js';
 import { seedData } from "./frameworks/world/public.js";
 import { handleSeedCommand } from "./seed-commands.js";
 import { KeyedSerialQueue } from "./kernel/serial-queue.js";
@@ -2196,8 +2196,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
           allowedMentions:{parse:[]}});return true;
       }
       if(sub==="overview"){
-        const chunks=chunkTextLines(formatGmOverview(buildGmOverview(db,interaction.guildId),{formatFact:gmFactLine}));
-        await interaction.reply({content:chunks[0],ephemeral:true}); for(const c of chunks.slice(1)) await interaction.followUp({content:c,ephemeral:true}); return true;
+        return await handleGmOverviewCommand(interaction,db,gmFactLine);
       }
       if(sub==="delivery-status"){
         materializeNativeNotices(db,interaction.guildId);

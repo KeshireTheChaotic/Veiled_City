@@ -1,0 +1,5 @@
+# RF06-F04 R35 — Original GM overview adapter
+
+Advance independently of locally held handout/outbox receipt coordinators. Move original GM overview operation into existing discord--operations pair, using original buildGmOverview/formatGmOverview and current caller gmFactLine callback. Existing Discord replyWithDiagnosticLines uses identical chunkDiscordLines default1900 and ordered private reply/follow-ups. Root Application keeps GM guard and awaits adapter within receipt lifecycle. No data/domain/schema/native/storage or privacy policy change.
+
+Request exclusive commands.js/pair public/BRIDGE_CONTRACTS slots. Fresh synthetic storage/transport and disposable SQLite verify original overview reads/rendering/callback/current guild/private chunk/order/errors; structural proof original surrounding command unchanged except awaited adapter and removed now-unused direct Operations imports. One frozen suite, changed syntax/checker, exact INDEX window. No provider/live Discord/production DB. Handout/native/outbox migration remains held pending specific contract.
