@@ -1,0 +1,9 @@
+{
+  "original_branch_bodies_equal": true,
+  "branches": [
+    "private-channel",
+    "accessibility"
+  ],
+  "storage_alias_only": true,
+  "caller_awaits_inside_receipt_try": true
+}

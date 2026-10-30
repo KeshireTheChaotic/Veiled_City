@@ -1,0 +1,39 @@
+✔ narrow preference interface checks shape and preserves original receiver/result/error without raw DB exposure (1.9002ms)
+✔ native privacy validation precedes actual SQLite preferred-channel write and private response (164.0542ms)
+✔ unsafe current channel is rejected without preference write or response (159.4689ms)
+✔ actual accessibility merge preserves legacy fields, explicit false and original response JSON (157.3932ms)
+✖ null options preserve existing preferences and original missing-player error (169.2255ms)
+✔ failed response preserves already-written original preference without retry (157.1713ms)
+✔ unsupported player subcommand returns false without touching its store (0.1168ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1247.8743
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f04-c18.test.mjs:36:1
+✖ null options preserve existing preferences and original missing-player error (169.2255ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   mechanics: 'standard',
+      response_length: 'expanded',
+      screen_reader: true
+    }
+  
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f04-c18.test.mjs:37:201)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { response_length: 'expanded', mechanics: 'standard', screen_reader: true },
+    expected: { screen_reader: true, response_length: 'expanded' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

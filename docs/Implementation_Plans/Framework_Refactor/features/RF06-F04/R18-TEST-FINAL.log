@@ -1,0 +1,15 @@
+✔ narrow preference interface checks shape and preserves original receiver/result/error without raw DB exposure (0.7885ms)
+✔ native privacy validation precedes actual SQLite preferred-channel write and private response (167.3053ms)
+✔ unsafe current channel is rejected without preference write or response (155.5205ms)
+✔ actual accessibility merge preserves legacy fields, explicit false and original response JSON (158.7992ms)
+✔ null options preserve existing preferences and original missing-player error (165.5815ms)
+✔ failed response preserves already-written original preference without retry (161.6225ms)
+✔ unsupported player subcommand returns false without touching its store (0.1221ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1239.445

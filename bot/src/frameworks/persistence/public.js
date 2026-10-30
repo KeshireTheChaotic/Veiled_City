@@ -12,3 +12,5 @@ export {persistenceSessionArchive,persistenceKnowledgeProposal,persistenceOperat
 export {openDiagnosticSnapshot} from './diagnostic-snapshot.js';
 
 export {createCommandReceiptStore} from './command-receipts.js';
+
+export {createPlayerSettingsStore} from './player-settings.js';

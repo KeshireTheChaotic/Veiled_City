@@ -35,3 +35,6 @@ export {assertCommandReceiptStore} from './contracts/command-receipts.js';
 export {replayReceiptIfPresent,installReceiptCapture} from './idempotency.js';
 
 export {handleVoiceCommand} from './voice-commands.js';
+
+export {assertPlayerSettingsStore} from './contracts/player-settings.js';
+export {handlePlayerSettingsCommand} from './player-settings-commands.js';

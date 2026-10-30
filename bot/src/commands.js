@@ -1,5 +1,6 @@
+import {handlePlayerSettingsCommand} from './frameworks/discord/public.js';
 import {handleVoiceCommand} from './frameworks/discord/public.js';
-import {connectDiscordCommandReceipts} from './framework-to-framework/discord--persistence/public.js';
+import {connectDiscordCommandReceipts,connectDiscordPlayerSettings} from './framework-to-framework/discord--persistence/public.js';
 import {translateEphemeralReplies} from './frameworks/discord/public.js';
 import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
@@ -1784,20 +1785,8 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
 
-    if(group==="player"&&sub==="private-channel"){
-      const campaign=db.getCampaign(interaction.guildId);
-      assertPlayerPrivateChannel({guild:interaction.guild,channel:interaction.channel,userId:interaction.user.id,gmRoleId:campaign?.gm_role_id||null});
-      db.setPrivateChannel(interaction.guildId,interaction.user.id,interaction.channelId);
-      await interaction.reply({content:"This channel passed Veilkeeper's privacy validation and is now your preferred private GM channel.",ephemeral:true});
-      return true;
-    }
-    if(group==="player"&&sub==="accessibility"){
-      const patch={};
-      for(const k of ["length","mechanics"]) { const v=interaction.options.getString(k); if(v) patch[k==="length"?"response_length":k]=v; }
-      const sr=interaction.options.getBoolean("screen_reader"); if(sr!==null) patch.screen_reader=sr;
-      const next=db.setAccessibility(interaction.guildId,interaction.user.id,patch);
-      await interaction.reply({content:`Accessibility preferences: \`${JSON.stringify(next)}\``,ephemeral:true});
-      return true;
+    if(group==="player"&&["private-channel","accessibility"].includes(sub)){
+      return await handlePlayerSettingsCommand(interaction,{sub,store:connectDiscordPlayerSettings(db)});
     }
 
     if(group==="roll"&&["pending","result"].includes(sub)){
