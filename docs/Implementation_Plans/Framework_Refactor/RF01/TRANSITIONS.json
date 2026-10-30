@@ -1514,18 +1514,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "073c34e73d140cad278313273fee6ca4445d0ec07ddf658582787f1213331c5a",
-      "code": "EAGER_MODULE_CONSTRUCTION",
-      "from": "bot/src/register-commands.js",
-      "detail": "REST",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "da0cd591cb7d26ea9d4d4e09d1fc4e5d766fd4fa3248c013cd4f95cd6a60d2bb",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/roll-collaboration.js",
@@ -5452,20 +5440,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "87a6555c05e14c73dba5fd49b5da06d02245ac0e4f9575b532402ed04e089916",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/register-commands.js",
-      "to": "bot/src/commands.js",
-      "kind": "static",
-      "specifier": "./commands.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

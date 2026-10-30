@@ -1,0 +1,14 @@
+✔ public registration has one implementation and executable delegates without dispatcher import (1.3025ms)
+✔ missing token or application ID fails before client construction, routes or logging (0.4303ms)
+✔ guild registration sends actual split command definitions once with REST v10 and exact token (14.0305ms)
+✔ absent or empty guild selects global route and preserves global success text (7.6542ms)
+✔ transport failure propagates same error without retry or success log (4.1214ms)
+✔ route failure propagates before transport with no fallback registration (3.2673ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 436.5776
