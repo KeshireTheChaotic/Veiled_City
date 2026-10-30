@@ -11,6 +11,12 @@ function cityAudit(...args){return nativeWorldEvents.cityAudit(...args);}functio
 import { TRAITS } from "./character-system.js";
 import { StateConflictError } from "./kernel/errors.js";
 import {createRollRequestRules} from "./frameworks/daggerheart/public.js";
+import {createAdvantageOpportunitySource} from './frameworks/daggerheart/advantage-opportunity-source.js';
+import {createFeatureOpportunityRules} from './frameworks/daggerheart/feature-opportunity-rules.js';
+import {compileNativeFeatures} from './native-feature-catalog.js';
+import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeEncounterActor} from './native-encounter-relations.js';
+import {nativeActorControl} from './native-actor-control.js';
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";
@@ -28,10 +34,20 @@ const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
 let nativeRequests;
+let nativeFeatureOpportunities;
+function captureAdvantageFeatureOpportunities(db,guild,request){
+  if(!nativeFeatureOpportunities){
+    const source=createAdvantageOpportunitySource({currentScene,nativeEncounterActor,nativeActorControl,
+      indexWorldEvent:(...args)=>nativeWorldEvents.indexWorldEvent(...args)});
+    nativeFeatureOpportunities=createFeatureOpportunityRules({capabilities:{...source,compileNativeFeatures,nativeHouseErratum,nativeEncounterActor,nativeActorControl,currentScene,
+      indexWorldEvent:(...args)=>nativeWorldEvents.indexWorldEvent(...args)}});
+  }
+  return nativeFeatureOpportunities.captureAdvantageFeatureOpportunities(db,guild,request);
+}
 function nativeRollRequests(){
   return nativeRequests??=createRollRequestRules({traits:TRAITS,
     sources:{personalCharacter:(...args)=>personalCharacter(...args),currentScene:(...args)=>currentScene(...args),requireCitySource:(...args)=>requireCitySource(...args),cityAudit:(...args)=>cityAudit(...args),cityKey:(...args)=>cityKey(...args),overlapsOwnerActionTerminal:(...args)=>overlapsOwnerActionTerminal(...args)},
-    mechanics:{isPvpIntent:(...args)=>isPvpIntent(...args),assertNonPvpCombatant:(...args)=>assertNonPvpCombatant(...args),assertPcCanAct:(...args)=>assertPcCanAct(...args),blazeActionAuthorization:(...args)=>blazeActionAuthorization(...args),nativeDefenseAura:(...args)=>nativeDefenseAura(...args),persistNativeDefenseAura:(...args)=>persistNativeDefenseAura(...args),nativeFormationDefense:(...args)=>nativeFormationDefense(...args),persistNativeFormationDefense:(...args)=>persistNativeFormationDefense(...args),nativeVeilExposureDefense:(...args)=>nativeVeilExposureDefense(...args),inspectNativeUnarmedAttack:(...args)=>inspectNativeUnarmedAttack(...args),inspectOrdinaryRollModifier:(...args)=>inspectOrdinaryRollModifier(...args),inspectNativeEquippedAttack:(...args)=>inspectNativeEquippedAttack(...args)},
+    mechanics:{captureAdvantageFeatureOpportunities:(...args)=>captureAdvantageFeatureOpportunities(...args),isPvpIntent:(...args)=>isPvpIntent(...args),assertNonPvpCombatant:(...args)=>assertNonPvpCombatant(...args),assertPcCanAct:(...args)=>assertPcCanAct(...args),blazeActionAuthorization:(...args)=>blazeActionAuthorization(...args),nativeDefenseAura:(...args)=>nativeDefenseAura(...args),persistNativeDefenseAura:(...args)=>persistNativeDefenseAura(...args),nativeFormationDefense:(...args)=>nativeFormationDefense(...args),persistNativeFormationDefense:(...args)=>persistNativeFormationDefense(...args),nativeVeilExposureDefense:(...args)=>nativeVeilExposureDefense(...args),inspectNativeUnarmedAttack:(...args)=>inspectNativeUnarmedAttack(...args),inspectOrdinaryRollModifier:(...args)=>inspectOrdinaryRollModifier(...args),inspectNativeEquippedAttack:(...args)=>inspectNativeEquippedAttack(...args)},
     reserveRollAmendment:(...args)=>reserveRollAmendment(...args)});
 }
 export function rollTraitBreakdown(...args){return nativeRollRequests().rollTraitBreakdown(...args);}

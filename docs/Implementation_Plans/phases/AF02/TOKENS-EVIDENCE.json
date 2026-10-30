@@ -1,0 +1,48 @@
+{
+  "phase": "AF02",
+  "status": "in_progress",
+  "run_id": "AF02-C-token-opportunities-3",
+  "baseline": "be87756052ea96bc22d6ddedb822cc6ea5d5a24a",
+  "command": "node --test tests/ai-gm-2026-10/af02-tokens.test.mjs tests/ai-gm-2026-10/af02-opportunities.test.mjs",
+  "exit_code": 0,
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0,
+  "syntax_files": 8,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "f8bd11ab1565a1058cd982e8629ae86aa24fcf0f8d3fff5cd7d28f1c0c12ed6e"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-token-rules.js",
+      "sha256": "18b52c2ff96779c4c8403c872e6b8074cca6b7307a85a6937faaea40a6e97773"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-opportunity-rules.js",
+      "sha256": "8e63d659b726d3726ca6114913b4117502e00a6d57823bc8c67b857ea10df3ed"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/advantage-opportunity-source.js",
+      "sha256": "d275fb80ded3a7c41dc701d3f830cfbbb96c191f1c330ba5563fc430c8c782c2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+      "sha256": "1a9d5547dd37b72f4d0b9cda5c0dcd42f88209c1a8dcb883c0507cb70cd603db"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "6d405b1a3b50da51331c452274a97ce0d9af99ef162bfd61f74ba45172834bfe"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-tokens.test.mjs",
+      "sha256": "0ddef8ea95830555fe4ad8eb7e1a8480c85fc22cfec27fad06fff86544ec7300"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-opportunities.test.mjs",
+      "sha256": "b6bdd97a5dcafa5d63675648a21001ef6a4aa65da92c6d44f23ebe99a39c6ab2"
+    }
+  ],
+  "additional_syntax": "node --check bot/src/roll-requests.js: exit 0 after equivalent direct-factory import wiring to avoid concurrent public.js changes"
+}

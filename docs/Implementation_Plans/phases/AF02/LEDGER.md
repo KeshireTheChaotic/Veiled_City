@@ -10,9 +10,15 @@ Modified files: the three production modules above; added fresh `bot/tests/ai-gm
 
 Run `AF02-C-operations-1`: four changed-file `node --check` calls — **exit 0**. From `bot/`, `node --test tests/ai-gm-2026-10/af02-operations.test.mjs` — **5 passed, 0 failed, 0 skipped, exit 0**. Tests cover strict shape/balance handling, optional token caps, closed count/threshold/band/conditional modifiers, committed-event duration matching, additive native costs, rejection of PC/token payment substitution, and real in-memory SQLite rollback of Fear when the second native write fails. Exact baseline and input hashes are in EVIDENCE.json. Completed unchanged tests must not be rerun.
 
-## Pending source ruling
+## Owner source ruling — resolved
 
-`adversary:aster-vale-forecast-engine:expected-value` prints: “The first time each scene the PC gains advantage, the Engine gains a Forecast token (max 3).” In multiplayer, this leaves two distinct native occurrence scopes: once per Engine/scene total, or once per Engine/PC/scene. The amendment requires design-time owner rulings for ambiguous original printed rules. An owner question has been presented; no trigger scope or token gain has been implemented for this occurrence. Neither the cap of 3 nor another feature's rule resolves this scope by itself.
+The owner selected **once per scene total** for `adversary:aster-vale-forecast-engine:expected-value`. HR15 v1 pins one gain per Engine actor/scene, independent of which PC gains advantage, with cap 3. Recording the ruling does not enable the currently review-only occurrence.
+
+The shared native token service now supports source-derived gain/spend/clear plans, opaque preparations, immutable occurrence receipts, balance projections, historical inspection and replay across service restart. The host must supply native source/actor/trigger authorization, including historical source proof; a model supplies no amount, cap or occurrence scope. It uses existing city-record/world-event persistence and native synchronous transactions.
+
+`advantage-opportunity-source.js` captures immutable, GM-private native roll-preparation evidence. `feature-opportunity-rules.js` consumes that evidence behind exact autonomous-mode, current GM-owned actor, location/template and source/erratum checks. The existing roll-request factory/composition is wired to that observer. Source-only or held proposals do not block valid PC requests; no player dice, resources, knowledge or NPC cognition are changed. Production Expected Value remains review-only until AF04 activation qualification.
+
+Final run `AF02-C-token-opportunities-3`: eight changed-file syntax checks — **exit 0**. Fresh `af02-tokens.test.mjs` plus `af02-opportunities.test.mjs` — **7 passed, 0 failed, 0 skipped, exit 0**. Earlier token-only checks passed before reader/provenance hardening and source integration; the tested production code then changed, justifying the final combined run. Exact hashes are in TOKENS-EVIDENCE.json. Tests use real disposable SQLite, actual native roll preparation, two PCs/two Engines, per-scene deduplication, cap saturation, manual/control gates, restart replay, stale preparation, source drift, spending underflow, private provenance and rollback. The integration test explicitly qualifies cloned source descriptors in memory; production review-only status is unchanged.
 
 ## Remaining scope / next exact phase
 

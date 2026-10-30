@@ -6,8 +6,8 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
 export const rollRevision=hash;
 export function createRollRequestRules({sources,mechanics,traits:TRAITS,reserveRollAmendment}){
   const {personalCharacter,currentScene,requireCitySource,cityAudit,cityKey,overlapsOwnerActionTerminal}=sources||{};
-  const {isPvpIntent,assertNonPvpCombatant,assertPcCanAct,blazeActionAuthorization,nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense,inspectNativeUnarmedAttack,inspectOrdinaryRollModifier,inspectNativeEquippedAttack}=mechanics||{};
-  if(!Array.isArray(TRAITS)||[personalCharacter,currentScene,requireCitySource,cityAudit,cityKey,overlapsOwnerActionTerminal,isPvpIntent,assertNonPvpCombatant,assertPcCanAct,blazeActionAuthorization,nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense,inspectNativeUnarmedAttack,inspectOrdinaryRollModifier,inspectNativeEquippedAttack,reserveRollAmendment].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native roll request capabilities required.');
+  const {isPvpIntent,assertNonPvpCombatant,assertPcCanAct,blazeActionAuthorization,nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense,inspectNativeUnarmedAttack,inspectOrdinaryRollModifier,inspectNativeEquippedAttack,captureAdvantageFeatureOpportunities}=mechanics||{};
+  if(!Array.isArray(TRAITS)||[personalCharacter,currentScene,requireCitySource,cityAudit,cityKey,overlapsOwnerActionTerminal,isPvpIntent,assertNonPvpCombatant,assertPcCanAct,blazeActionAuthorization,nativeDefenseAura,persistNativeDefenseAura,nativeFormationDefense,persistNativeFormationDefense,nativeVeilExposureDefense,inspectNativeUnarmedAttack,inspectOrdinaryRollModifier,inspectNativeEquippedAttack,captureAdvantageFeatureOpportunities,reserveRollAmendment].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native roll request capabilities required.');
 function sourceActor(db,guild,input){
   if(db.getCityCalendar(guild).flags.roll_requests!==true) throw new StateConflictError("Roll requests are opt-in.");
   const source=requireCitySource(db,guild,input.source_event),session=db.getActiveSession(guild);
@@ -135,6 +135,7 @@ function prepareRollRequest(db,guild,input,actor,context={}){
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
     persistNativeDefenseAura(db,guild,after);
     persistNativeFormationDefense(db,guild,after);
+    captureAdvantageFeatureOpportunities(db,guild,after);
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
 }
