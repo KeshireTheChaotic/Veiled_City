@@ -1,0 +1,3 @@
+# RF06-F01 I01 — Current storage inventory
+
+Read-only scope at d6ec1467 plus concurrent Agent A source. Inspect actual Persistence implementation, constructor/schema, synchronous transactions, serialization and historical readers, method-to-table map and syntactic caller candidates. No import/construction of database modules, no DB opened, no source/test/registry changes. Generate static evidence with Acorn from current source and capture hashes so findings are revision-qualified. Candidate callers are syntactic db receivers rather than type-proven bindings. Correlated native/outbox repository extraction remains held until its specific unit-of-work contract qualifies. Inventory does not qualify persistence runtime or all RF06.

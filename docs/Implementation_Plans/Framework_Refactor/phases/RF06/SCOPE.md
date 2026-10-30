@@ -1,31 +1,19 @@
-# RF06 — Persistence, publication, command, and bootstrap boundaries
+# RF06 — Persistence, publication, commands and bootstrap
 
-## Phase objective
+## Objective and current authorization
 
-Isolate persistence, outbox/publication and Discord transport, command workflows, and application bootstrap while preserving SQL/schema compatibility, synchronous transaction/savepoint behavior, source and audience qualification, exact delivery acknowledgments, saved readers, controller checks, and campaign isolation.
+Preserve storage/schema, synchronous transaction/savepoint behavior, native receipts, audience qualifications, uncertain-delivery recovery, historical readers, controller checks and stable executables while isolating each responsibility.
 
-## Entry gate
+The owner's 2026-10-30 Agent B assignment authorizes independent publication/Discord and command boundaries, persistence inventory and qualified contracts alongside Agent A RF05. Each slice depends on its own prerequisite; no blanket wait for RF05 completion. Do not migrate transaction-sensitive repositories until the necessary RF05 unit-of-work contract is proven.
 
-The roadmap requires domain interfaces and the exact commit contract from RF03–RF05. The current checkout does not meet that gate: RF04 remains incomplete and RF05's current qualification checkpoint records a failed architecture ratchet plus 289 RF05-F03 holds, 58 RF05-F04 assignments, and 442 RF05-F05 assignments. In particular, `state.js` and `turn-orchestration.js` still contain unresolved native commit orchestration. Until those interfaces are qualified, RF06 runtime migrations are held. Read-only source inventory and plan reconciliation may continue.
+## Scope and ownership
 
-## Known ownership assignments
+RF06-F01 maps actual Persistence methods/schema/transactions/serialization/historical readers. F02 incrementally splits storage on the same connection/unit of work with VeiledDB compatibility until zero callers. F03 separates publication from transport without uncertain resend or privacy regression. F04 isolates Discord registration/route/dispatch and delegates domain operations through qualified pairs/workflows. F05 preserves executable paths/config while reducing startup to composition. F06 creates fresh changed-code tests; F07 removes only proven unused facades.
 
-- `db.js` connection, schema migration, and synchronous transaction functions: persistence; split repository access from domain calls before relocation.
-- `pvp-output.js` acceptance and saved output readers: narrative/native/publication responsibilities.
-- `publishing.js` transport sends and private messages: Discord/publication pair; preserve acknowledgment versus uncertain outcomes.
-- `commands.js` and command-family handlers: application workflows with controller/privacy checks intact.
-- `index.js` bootstrap and `voice.js`: bootstrap/application composition; no eager DB connection or login on import.
-- RF06-F06: fresh synthetic SQLite transaction/recovery, retry/restart/outbox acknowledgment, duplicate interaction, private delivery and command dispatch tests. This objective is explicitly defined in the original RF00 owner handoff.
-- RF06-F07: retire facades/shims only after the current reverse graph proves zero active callers; retain externally significant interfaces and historical saved readers. This objective is explicitly defined in the original handoff.
+Agent B reserves commands.js, publishing.js, Discord public and RF06-specific artifacts by slice. Agent A reserves Narrative/GM/state/turn and scheduled Publication/Narrative APIs. Obtain an exclusive window before editing index.js, db.js, any shared API or transition/architecture registry. Stage/commit only owned changes and preserve unrelated work.
 
-## 2026-10-26 audit correction
+## Verification
 
-The previous counts and blanket phase-entry statement above are historical. Current exact obligations are in `../../AUDIT-20261026/HOLD_REGISTER.json`; RF04 has 950, RF05 has 1,025, and RF06 has 416 records. The missing-feature-definition hold is resolved by the original handoff. Independent inventory and source-contract work can proceed when its specific prerequisites exist. Storage/native commit migrations remain held until their actual domain and synchronous unit-of-work contracts are qualified. No phase-level or release qualification follows from this planning correction.
+Only fresh affected-code tests under bot/tests/ai-gm-2026-10; one frozen batch, no watch/polling, no inherited/broad validation. Use synthetic transport/permissions and disposable SQLite only when relevant. Run changed JS/MJS syntax and boundary checks; record actual failures, repairs and exact limits. Passing slice checks do not imply full architecture or live release qualification.
 
-## Execution order
-
-Do not begin RF06 source changes until the entry gate is met. For each feature that becomes active, create its own scope and ledger immediately before work. Keep file relocation separate from behavioral decomposition; do not move mixed modules as a shortcut to ownership.
-
-## Verification and release
-
-Use only new changed-code tests under `bot/tests/ai-gm-2026-10/`, disposable local data, and mocked boundaries. Never execute inherited tests, broad validation, CI, production services/data, paid providers, or polling workflows. Release and deployment remain separately unauthorized.
+Completed and current exact features are in LEDGER.md. Correlated storage/native commit migration is locally held until its specific contract qualifies; continue independent work. No schema/data migration, creative restriction, provider spend, production access, deployment/restart, CI, push or merge authorized.

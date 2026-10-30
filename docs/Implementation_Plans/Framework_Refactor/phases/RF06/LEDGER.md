@@ -1,40 +1,30 @@
-# RF06 — execution ledger
+# RF06 — SQLite, publication, Discord commands and composition
 
-**Status:** ENTRY HOLD — read-only intake only; RF06 runtime implementation has not started.
-**Intake HEAD:** `b0423923c834eb1d9c639249d66a37ccdbb2fb9c`
-**Branch:** `codex/clean-ai-gm-2026-10`
-**Scope:** [`SCOPE.md`](SCOPE.md)
+**Status: partial implementation; independent slices active alongside RF05.** User authorization on 2026-10-30 replaces the old blanket phase-entry hold. Transaction-sensitive repository changes still require their specific qualified domain and synchronous commit contracts.
 
-## Prerequisite evidence
+## Completed independent slices
 
-The roadmap states that RF06 requires domain interfaces and the exact commit contract from RF03–RF05. RF04 remains incomplete. RF05 is recorded as an incomplete checkpoint: architecture ratchet failed; RF05-F03/F04/F05 currently retain 289/58/442 exact assigned entries. `state.js` still contains cross-domain mutation/commit orchestration and `turn-orchestration.js` remains a mixed transactional commit workflow. These are explicit sequencing dependencies, not evidence of a critical runtime defect. RF06 runtime changes therefore remain locally held while safe static planning continues.
+| Feature | Delivered boundary | Commit | Fresh evidence |
+| --- | --- | --- | --- |
+| RF06-F05 R01 | Schema-only registration through Discord public; stable executable/env/routes | 06dad37a | 6/6 passed, syntax passed |
+| RF06-F04 R02 | Existing command root/group aliases decoded inside Discord | d6ec1467 | 4/4 passed, syntax passed |
+| RF06-F03 R03 | Original channel privacy validators inside Discord; commands adopts public | 4f1d459e | 7/7 final passed, syntax/source equality passed |
+| RF06-F01 I01 | Current source/schema/method/caller inventory | this documentation checkpoint | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
-## Source inventory
+Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
 
-Read-only source locations in `bot/src/db.js`: constructor line 28, `migrateSchema` line 39, transaction coordinator line 607, turn attempt persistence line 1315, publication status line 1521, and publication claim line 1529. The ownership inventory classifies `db.js` as persistence but explicitly requires domain-call decomposition before relocation. No database was opened and no runtime source was modified in this intake.
+## Current persistence boundary
 
-The frozen transition manifest currently assigns 17 entries to RF06-F02, 179 to F03, 160 to F04, 43 to F05, and 5 to F07. No transition entries currently target F01 or F06. These counts do not define feature scope or authorize blanket removal. F06/F07 objectives are absent from the inspected source plan and remain unscoped pending authoritative assignment evidence.
+Root db.js is a standalone compatibility facade. frameworks/persistence/database.js contains 319 methods and 412 direct SQL call sites at inspected d6ec1467. Migrations retain schema version 460; schema.sql SHA256 D3A69C4C55A876B087556AB7F291265A684C4287233B1651B1692BE34781E374 unchanged. I01-STORAGE-MAP.json captures method parameters, SQL/table candidates, transaction and JSON operations, foreign-key clauses and syntactic caller candidates. No database was opened. See PERSISTENCE-BOUNDARY-INVENTORY.md.
 
-## Tests and architecture
+## Architecture and coordination
 
-No tests or syntax checks were run for this documentation-only intake; no production modules changed. RF05's latest recorded architecture result remains failed, exit 1, and is cited rather than rerun because this intake changes no source or architecture inputs.
+After R03: RF05 ratchet exit 0, 963 modules, zero unowned/active/transition errors, 780 accepted legacy occurrences, one cycle of 62. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. Three exact obsolete registration/command privacy transitions retired; no exception expansion.
 
-## Holds and rollback
+Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
-Do not start RF06 source migration until RF03–RF05 interfaces and the exact native commit/receipt contract satisfy the roadmap gate. Preserve all existing RF05/RF04 work, user edits, and diagnostic logs. Rollback only this RF06 intake commit if needed. Release remains **NOT AUTHORIZED**.
+## Local holds and next work
 
-## Next step
+Keep the root privacy compatibility reader for publication/index/diagnostics until qualified pair/entrypoint adoption. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Complete the held RF05-owned boundaries or obtain a separately recorded owner decision that changes the phase dependency. Then write RF06-F01's active scope and ledger from the verified feature assignments before any RF06 source edit.
-
-## Owner-authorized Option B publication dependencies
-
-The RF04 owner-authorized deadline reconciliation assigns 12 existing consumer edges to RF06-F03 because their exact targets are Publication-owned output, outbox, transport or handout modules in the relocation crosswalk. RF06-F03's manifest count is now 191 (179 prior + 12 reassigned); this is assignment evidence, not implementation or phase entry. The source edges remain active and require RF06 publication API adoption and fresh affected-code tests before retirement. No RF06 production source or test changed. The RF06 entry gate remains held until RF03–RF05 interfaces and commit semantics qualify. Exact original/updated records and RF04/RF05/RF06 gate results: `../RF04/DEADLINE-REASSIGNMENT.json`. Release remains NOT AUTHORIZED.
-
-## RF06 persistence inventory checkpoint
-
-At `a9069bbbd75ff0fa0648c50e90812ff59a240ee3`, a read-only inspection of `bot/src/db.js` recorded its 2,436 lines, 13 imports, 411 direct SQL call sites, and the connection/schema, synchronous transaction, repository, embedded domain-orchestration, and durable turn/publication receipt seams. The specific decomposition observations and sequencing rules are in [`PERSISTENCE-BOUNDARY-INVENTORY.md`](PERSISTENCE-BOUNDARY-INVENTORY.md). No source or database was changed or opened, so no tests or syntax checks were run. RF06 runtime work remains held by its existing entry gate; this inventory does not qualify an RF06 implementation feature or release.
-
-## Current dependency refresh
-
-At HEAD `be962d06c5b90975b6658755f9b268a4b09e15e6` on `codex/clean-ai-gm-2026-10`, RF05 still fails its architecture ratchet (exit 1): 574 source modules, zero unowned, 2,736 imports, 955 active groups and 955 transition errors. The RF05-F06 evidence hash is `2736502A3D9C0EB13166505C65E20853699B7F3BE0E7065B68A0340F8EF1CC91`. `db.js` remains unchanged at SHA-256 `65D2179E79AAFB927A87EF62D5569DD01A2D5D813CABEE2CB70526322D5E96AA`, matching the inspected inventory source. This is a documentation-only reconciliation; it does not open a database, alter a persistence contract, qualify RF05, or clear the RF06 entry gate. No tests or syntax checks were run.
+Next exact feature: RF06-F03 R04 qualified Discord–Publication privacy/transport adapter, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
