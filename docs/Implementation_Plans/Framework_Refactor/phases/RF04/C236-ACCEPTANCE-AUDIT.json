@@ -1,0 +1,1378 @@
+{
+  "base": "d9015ba2",
+  "kind": "static requirement intake; not runtime or phase completion",
+  "owners": [
+    {
+      "owner": "world",
+      "modules": 103,
+      "legacyLocations": []
+    },
+    {
+      "owner": "npc",
+      "modules": 28,
+      "legacyLocations": []
+    },
+    {
+      "owner": "knowledge",
+      "modules": 56,
+      "legacyLocations": []
+    },
+    {
+      "owner": "session",
+      "modules": 59,
+      "legacyLocations": []
+    }
+  ],
+  "overdue": [],
+  "remainingTransitionRecords": 897,
+  "remainingCycleLargest": 76,
+  "localQualification": {
+    "testFilesInspected": 312,
+    "missingRelativeImportOccurrences": 267,
+    "affectedTestFiles": 125,
+    "missing": [
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c01.test.mjs",
+        "specifier": "../../src/director.js",
+        "target": "bot/src/director.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c02.test.mjs",
+        "specifier": "../../src/city-calendar.js",
+        "target": "bot/src/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c03.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c04.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c05.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c06.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c08.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c09.test.mjs",
+        "specifier": "../../src/city-consequences.js",
+        "target": "bot/src/city-consequences.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "specifier": "../../src/city-depth.js",
+        "target": "bot/src/city-depth.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c13.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c138-root.test.mjs",
+        "specifier": "../../src/world-observation.js",
+        "target": "bot/src/world-observation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c14.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs",
+        "specifier": "../../src/disclosure-authority.js",
+        "target": "bot/src/disclosure-authority.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c15.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+        "specifier": "./src/frameworks/world/city-civic.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/world/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+        "specifier": "./src/frameworks/world/city-civic.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/world/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+        "specifier": "./src/frameworks/intent/contracts/world-operations.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/intent/contracts/world-operations.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+        "specifier": "./src/framework-to-framework/intent--world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/intent--world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-c179.test.mjs",
+        "specifier": "./src/city-commands.js",
+        "target": "bot/tests/ai-gm-2026-10/src/city-commands.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-civic-owner.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-environment-grammar.test.mjs",
+        "specifier": "../../src/environment-observation.js",
+        "target": "bot/src/environment-observation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-simulation-overview.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f01-world-actor-adoption.test.mjs",
+        "specifier": "../../src/world-authoring.js",
+        "target": "bot/src/world-authoring.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f02-c03.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f02-c06.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c01.test.mjs",
+        "specifier": ".\\/frameworks\\/knowledge\\/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c03.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c04.test.mjs",
+        "specifier": "../../src/memory-lifecycle.js",
+        "target": "bot/src/memory-lifecycle.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c06.test.mjs",
+        "specifier": "../../src/memory-lifecycle.js",
+        "target": "bot/src/memory-lifecycle.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c06.test.mjs",
+        "specifier": "../../src/context-memory.js",
+        "target": "bot/src/context-memory.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+        "specifier": "../../src/memory-lifecycle.js",
+        "target": "bot/src/memory-lifecycle.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+        "specifier": "../../src/context-memory.js",
+        "target": "bot/src/context-memory.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c07.test.mjs",
+        "specifier": "../../src/scoped-memory.js",
+        "target": "bot/src/scoped-memory.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c10.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c11.test.mjs",
+        "specifier": "../../src/evidence-custody.js",
+        "target": "bot/src/evidence-custody.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "specifier": "../../src/long-projects.js",
+        "target": "bot/src/long-projects.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c12.test.mjs",
+        "specifier": "../../src/owned-community.js",
+        "target": "bot/src/owned-community.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/owned-community.js",
+        "target": "bot/src/owned-community.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/evidence-custody.js",
+        "target": "bot/src/evidence-custody.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/conversation-principal.js",
+        "target": "bot/src/conversation-principal.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/semantic-candidate-source.js",
+        "target": "bot/src/semantic-candidate-source.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c13.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "specifier": "../../src/conversation-principal.js",
+        "target": "bot/src/conversation-principal.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c14.test.mjs",
+        "specifier": "../../src/semantic-candidate-source.js",
+        "target": "bot/src/semantic-candidate-source.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c15.test.mjs",
+        "specifier": "../../src/narrative-memory.js",
+        "target": "bot/src/narrative-memory.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c68-c69-contract.test.mjs",
+        "specifier": "../../src/evidence-custody.js",
+        "target": "bot/src/evidence-custody.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c68-c69-contract.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c69.test.mjs",
+        "specifier": "../../src/personal-continuity.js",
+        "target": "bot/src/personal-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c71.test.mjs",
+        "specifier": "../../src/owned-community.js",
+        "target": "bot/src/owned-community.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c80.test.mjs",
+        "specifier": "./src/frameworks/knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c80.test.mjs",
+        "specifier": "./src/frameworks/knowledge/evidence-custody-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/evidence-custody-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c80.test.mjs",
+        "specifier": "./src/frameworks/intent/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/intent/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c80.test.mjs",
+        "specifier": "./src/framework-to-framework/intent--knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/intent--knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/frameworks/knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/frameworks/knowledge/owned-community-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/owned-community-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/frameworks/intent/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/intent/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/frameworks/operations/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/operations/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/application/composition/intent-knowledge.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/composition/intent-knowledge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/application/composition/knowledge-operations.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/composition/knowledge-operations.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c81.test.mjs",
+        "specifier": "./src/city-commands.js",
+        "target": "bot/tests/ai-gm-2026-10/src/city-commands.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c82.test.mjs",
+        "specifier": "./src/frameworks/knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c82.test.mjs",
+        "specifier": "./src/frameworks/knowledge/memory-lifecycle-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/memory-lifecycle-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c82.test.mjs",
+        "specifier": "./src/framework-to-framework/knowledge--world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/knowledge--world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c84.test.mjs",
+        "specifier": "./src/frameworks/knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c84.test.mjs",
+        "specifier": "./src/frameworks/intent/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/intent/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c84.test.mjs",
+        "specifier": "./src/framework-to-framework/intent--knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/intent--knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c84.test.mjs",
+        "specifier": "./src/frameworks/knowledge/scoped-memory-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/scoped-memory-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c84.test.mjs",
+        "specifier": "./src/frameworks/knowledge/scoped-memory-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/scoped-memory-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/frameworks/knowledge/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/frameworks/narrative/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/narrative/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/frameworks/publication/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/publication/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/framework-to-framework/knowledge--narrative/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/knowledge--narrative/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/framework-to-framework/knowledge--publication/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/knowledge--publication/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/frameworks/knowledge/narrative-memory-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/knowledge/narrative-memory-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-c85.test.mjs",
+        "specifier": "./src/kernel/json-hash.js",
+        "target": "bot/tests/ai-gm-2026-10/src/kernel/json-hash.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-k02.test.mjs",
+        "specifier": "../../src/evidence-custody.js",
+        "target": "bot/src/evidence-custody.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f03-k02.test.mjs",
+        "specifier": "../../src/owned-community.js",
+        "target": "bot/src/owned-community.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c01.test.mjs",
+        "specifier": ".\\/frameworks\\/session\\/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c02.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c03.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c04.test.mjs",
+        "specifier": "../../src/session-opening-attendance.js",
+        "target": "bot/src/session-opening-attendance.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c05.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
+        "specifier": "../../src/session-opening.js",
+        "target": "bot/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c06.test.mjs",
+        "specifier": "../../src/assembly-planning.js",
+        "target": "bot/src/assembly-planning.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "specifier": "../../src/session-opening-attendance.js",
+        "target": "bot/src/session-opening-attendance.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c07.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "specifier": "../../src/session-opening.js",
+        "target": "bot/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c08.test.mjs",
+        "specifier": "../../src/session-opening-runner.js",
+        "target": "bot/src/session-opening-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "specifier": "../../src/session-opening.js",
+        "target": "bot/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c09.test.mjs",
+        "specifier": "../../src/session-opening-runner.js",
+        "target": "bot/src/session-opening-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c10.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+        "specifier": "../../src/opening-cohort-runner.js",
+        "target": "bot/src/opening-cohort-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+        "specifier": "../../src/opening-entry.js",
+        "target": "bot/src/opening-entry.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+        "specifier": "../../src/session-opening-recovery.js",
+        "target": "bot/src/session-opening-recovery.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c13.test.mjs",
+        "specifier": "../../src/session-opening-runner.js",
+        "target": "bot/src/session-opening-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c141-entry.test.mjs",
+        "specifier": "../../src/scene-entry-native.js",
+        "target": "bot/src/scene-entry-native.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c176.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c176.test.mjs",
+        "specifier": "./src/frameworks/session/opening-attendance-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/opening-attendance-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c177.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c177.test.mjs",
+        "specifier": "./src/frameworks/session/assembly-readiness.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/assembly-readiness.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c177.test.mjs",
+        "specifier": "./frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c177.test.mjs",
+        "specifier": "./assembly-readiness.js",
+        "target": "bot/tests/ai-gm-2026-10/assembly-readiness.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c178.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c178.test.mjs",
+        "specifier": "./src/frameworks/session/session-opening-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/session-opening-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c178.test.mjs",
+        "specifier": "./src/frameworks/publication/contracts/session-evidence.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/publication/contracts/session-evidence.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c178.test.mjs",
+        "specifier": "./src/framework-to-framework/publication--session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/publication--session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c21-semantic.test.mjs",
+        "specifier": "../../src/semantic-candidate-source.js",
+        "target": "bot/src/semantic-candidate-source.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/frameworks/session/assembly-context-service.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/assembly-context-service.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/frameworks/narrative/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/narrative/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/frameworks/publication/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/publication/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/framework-to-framework/narrative--session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/narrative--session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-c86.test.mjs",
+        "specifier": "./src/framework-to-framework/publication--session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/publication--session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-actor-forward.test.mjs",
+        "specifier": "../../src/negotiations.js",
+        "target": "bot/src/negotiations.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-forward.test.mjs",
+        "specifier": "../../src/negotiations.js",
+        "target": "bot/src/negotiations.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-negotiation-native.test.mjs",
+        "specifier": "../../src/negotiations.js",
+        "target": "bot/src/negotiations.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-s01.test.mjs",
+        "specifier": "../../src/assembly-state.js",
+        "target": "bot/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-s02.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f04-s08-notice.test.mjs",
+        "specifier": "../../src/action-continuation.js",
+        "target": "bot/src/action-continuation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "specifier": "../../src/session-opening-attendance.js",
+        "target": "bot/src/session-opening-attendance.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c02.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+        "specifier": "../../src/city-calendar.js",
+        "target": "bot/src/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p01.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/conversation-principal.js",
+        "target": "bot/src/conversation-principal.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/assembly-state.js",
+        "target": "bot/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/disclosure-authority.js",
+        "target": "bot/src/disclosure-authority.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/narrative-memory.js",
+        "target": "bot/src/narrative-memory.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c03-p03.test.mjs",
+        "specifier": "../../src/city-calendar.js",
+        "target": "bot/src/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c04.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "specifier": "../../src/epistemic.js",
+        "target": "bot/src/epistemic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c05.test.mjs",
+        "specifier": "./city-calendar.js",
+        "target": "bot/tests/ai-gm-2026-10/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "specifier": "./disclosure-authority.js",
+        "target": "bot/tests/ai-gm-2026-10/disclosure-authority.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c06.test.mjs",
+        "specifier": "./narrative-records.js",
+        "target": "bot/tests/ai-gm-2026-10/narrative-records.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "specifier": "../../src/world-authorship.js",
+        "target": "bot/src/world-authorship.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c07.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c08.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c09.test.mjs",
+        "specifier": "../../src/city-constraints.js",
+        "target": "bot/src/city-constraints.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c10.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c11.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c118.test.mjs",
+        "specifier": "../../src/world-narrative-bridge.js",
+        "target": "bot/src/world-narrative-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c118.test.mjs",
+        "specifier": "../../src/opening-world-bridge.js",
+        "target": "bot/src/opening-world-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c12.test.mjs",
+        "specifier": "../../src/city-core.js",
+        "target": "bot/src/city-core.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c120-saved-encounter.test.mjs",
+        "specifier": "../../src/world-encounter-beats.js",
+        "target": "bot/src/world-encounter-beats.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c120-saved-reader.test.mjs",
+        "specifier": "../../src/world-simulation-receipts.js",
+        "target": "bot/src/world-simulation-receipts.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c123.test.mjs",
+        "specifier": "../../src/encounter.js",
+        "target": "bot/src/encounter.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c125.test.mjs",
+        "specifier": "../../src/encounter.js",
+        "target": "bot/src/encounter.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c126.test.mjs",
+        "specifier": "../../src/encounter.js",
+        "target": "bot/src/encounter.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c127.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c13.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "specifier": "../../src/assembly-state.js",
+        "target": "bot/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c131.test.mjs",
+        "specifier": "../../src/session-opening.js",
+        "target": "bot/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c132.test.mjs",
+        "specifier": "../../src/assembly-context.js",
+        "target": "bot/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c132.test.mjs",
+        "specifier": "../../src/opening-world-bridge.js",
+        "target": "bot/src/opening-world-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c133.test.mjs",
+        "specifier": "../../src/opening-world-bridge.js",
+        "target": "bot/src/opening-world-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c133.test.mjs",
+        "specifier": "../../src/world-narrative-bridge.js",
+        "target": "bot/src/world-narrative-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c135-compat.test.mjs",
+        "specifier": "../../src/scene-action-window.js",
+        "target": "bot/src/scene-action-window.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c137-compat.test.mjs",
+        "specifier": "../../src/scene-setup.js",
+        "target": "bot/src/scene-setup.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c14.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c16.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c17.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c18.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c19.test.mjs",
+        "specifier": "../../src/scene-continuity.js",
+        "target": "bot/src/scene-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c20.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c24.test.mjs",
+        "specifier": "../../src/autonomous-world.js",
+        "target": "bot/src/autonomous-world.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c26.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c28.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c29.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c30.test.mjs",
+        "specifier": "../../src/simulation.js",
+        "target": "bot/src/simulation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c33.test.mjs",
+        "specifier": "../../src/world-narrative-bridge.js",
+        "target": "bot/src/world-narrative-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "specifier": "../../src/city-civic.js",
+        "target": "bot/src/city-civic.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "specifier": "../../src/long-projects.js",
+        "target": "bot/src/long-projects.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "specifier": "./frameworks/world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "specifier": "./frameworks/world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c39.test.mjs",
+        "specifier": "./city-calendar.js",
+        "target": "bot/tests/ai-gm-2026-10/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c40.test.mjs",
+        "specifier": "../../src/city-consequences.js",
+        "target": "bot/src/city-consequences.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+        "specifier": "../../src/seed-data.js",
+        "target": "bot/src/seed-data.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c41.test.mjs",
+        "specifier": "./frameworks/world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+        "specifier": "./frameworks/narrative/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/narrative/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c42.test.mjs",
+        "specifier": "./frameworks/narrative/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/narrative/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c43.test.mjs",
+        "specifier": "../../src/owned-community.js",
+        "target": "bot/src/owned-community.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c44.test.mjs",
+        "specifier": "./frameworks/intent/public.js",
+        "target": "bot/tests/ai-gm-2026-10/frameworks/intent/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c46.test.mjs",
+        "specifier": "../../src/city-calendar.js",
+        "target": "bot/src/city-calendar.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c48.test.mjs",
+        "specifier": "../../kernel/arbitration-failure.js",
+        "target": "bot/kernel/arbitration-failure.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c54.test.mjs",
+        "specifier": "../../src/character-observation.js",
+        "target": "bot/src/character-observation.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-actor-reopen.test.mjs",
+        "specifier": "../../src/world-resolution.js",
+        "target": "bot/src/world-resolution.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-compliant.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-compliant.test.mjs",
+        "specifier": "../../src/world-resolution.js",
+        "target": "bot/src/world-resolution.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-saved-reader.test.mjs",
+        "specifier": "../../src/world-resolution.js",
+        "target": "bot/src/world-resolution.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-startup.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66-startup.test.mjs",
+        "specifier": "../../src/world-resolution.js",
+        "target": "bot/src/world-resolution.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c66.test.mjs",
+        "specifier": "../../src/world-resolution.js",
+        "target": "bot/src/world-resolution.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c67.test.mjs",
+        "specifier": "../../src/encounter.js",
+        "target": "bot/src/encounter.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c68.test.mjs",
+        "specifier": "../../src/evidence-custody.js",
+        "target": "bot/src/evidence-custody.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c77-background.test.mjs",
+        "specifier": "../../src/world-background-identities.js",
+        "target": "bot/src/world-background-identities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c79.test.mjs",
+        "specifier": "../../src/world-narrative-bridge.js",
+        "target": "bot/src/world-narrative-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c80.test.mjs",
+        "specifier": "../../src/world-private-seeds.js",
+        "target": "bot/src/world-private-seeds.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c91.test.mjs",
+        "specifier": "../../src/world-identity-persistence.js",
+        "target": "bot/src/world-identity-persistence.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c91.test.mjs",
+        "specifier": "../../src/world-narrative-bridge.js",
+        "target": "bot/src/world-narrative-bridge.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f05-c96.test.mjs",
+        "specifier": "../../src/dialogue-continuity.js",
+        "target": "bot/src/dialogue-continuity.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/opening-entry.js",
+        "target": "bot/tests/ai-gm-2026-10/src/opening-entry.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/opening-cohort-runner.js",
+        "target": "bot/tests/ai-gm-2026-10/src/opening-cohort-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "../../src/opening-cohort-runner.js",
+        "target": "bot/src/opening-cohort-runner.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/frameworks/publication/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/publication/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/pvp-output.js",
+        "target": "bot/tests/ai-gm-2026-10/src/pvp-output.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/publication-outbox.js",
+        "target": "bot/tests/ai-gm-2026-10/src/publication-outbox.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c163.test.mjs",
+        "specifier": "./src/publishing.js",
+        "target": "bot/tests/ai-gm-2026-10/src/publishing.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "../../src/assembly-state.js",
+        "target": "bot/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "../../src/assembly-planning.js",
+        "target": "bot/src/assembly-planning.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-state.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-context.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/session-opening.js",
+        "target": "bot/tests/ai-gm-2026-10/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-state.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-context.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/session-opening.js",
+        "target": "bot/tests/ai-gm-2026-10/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/pvp-output.js",
+        "target": "bot/tests/ai-gm-2026-10/src/pvp-output.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/publication-outbox.js",
+        "target": "bot/tests/ai-gm-2026-10/src/publication-outbox.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/publishing.js",
+        "target": "bot/tests/ai-gm-2026-10/src/publishing.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-planning.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-planning.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-publications.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-publications.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/frameworks/publication/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/publication/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c164.test.mjs",
+        "specifier": "./src/assembly-publications.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-publications.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/assembly-context.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-context.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/assembly-state.js",
+        "target": "bot/tests/ai-gm-2026-10/src/assembly-state.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/session-opening.js",
+        "target": "bot/tests/ai-gm-2026-10/src/session-opening.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/application/workflows/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/workflows/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/application/workflows/",
+        "target": "bot/tests/ai-gm-2026-10/src/application/workflows"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/application/workflows/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/workflows/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/application/workflows/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/workflows/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/frameworks/session/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/frameworks/session/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c165-c167.test.mjs",
+        "specifier": "./src/application/workflows/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/application/workflows/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+        "specifier": "./src/framework-to-framework/session--world/public.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/session--world/public.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-c175.test.mjs",
+        "specifier": "./src/framework-to-framework/session--world/opening-opportunities.js",
+        "target": "bot/tests/ai-gm-2026-10/src/framework-to-framework/session--world/opening-opportunities.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+        "specifier": "../../src/conversation-principal.js",
+        "target": "bot/src/conversation-principal.js"
+      },
+      {
+        "test": "bot/tests/ai-gm-2026-10/rf04-f06-private-source.test.mjs",
+        "specifier": "../../src/city-calendar.js",
+        "target": "bot/src/city-calendar.js"
+      }
+    ],
+    "limitation": "Static import existence only; no test execution, authority proof or full dependency closure. Historical local test references are not automatically required current tests."
+  },
+  "scopeChecks": {
+    "rootBridgeRemoved": true,
+    "standaloneDatabaseWrapper": true,
+    "standaloneDiagnosticWrapper": true
+  },
+  "next": "Derive current source qualification coverage for RF04 F01-F07; replace missing-root test cases with newly authored direct public-contract cases, without executing unchanged passing batches."
+}
