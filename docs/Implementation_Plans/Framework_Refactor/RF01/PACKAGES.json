@@ -194,6 +194,9 @@
     ],
     "character--narrative": [
       "bot/src/framework-to-framework/character--narrative/public.js"
+    ],
+    "narrative--publication": [
+      "bot/src/framework-to-framework/narrative--publication/public.js"
     ]
   },
   "externalCapabilityOwners": {

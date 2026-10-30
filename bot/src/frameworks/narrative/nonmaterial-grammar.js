@@ -1,10 +1,10 @@
 /** Read compatibility for complete native nonmaterial renderings, not a classifier for arbitrary prose. */
 import {createHash} from 'node:crypto';
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {currentScene}=narrativeSessionScene;
-import {narrativeSessionPrincipal} from './frameworks/narrative/public.js';
+import {narrativeSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return narrativeSessionPrincipal.conversationPrincipal(...args);}
-import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
+import {narrativeWorldPrimitives} from './contracts/world-primitives.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const questions=["What kind of work would you like to look for?",

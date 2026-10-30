@@ -31,3 +31,5 @@ export {publicationKnowledgeDisclosure} from './contracts/knowledge-disclosure.j
 export {publicationCharacterObservation} from './contracts/character-observation.js';
 
 export {publicationNativeFear} from './contracts/native-fear.js';
+
+export {publicationNarrativeGrammar} from './contracts/narrative-grammar.js';

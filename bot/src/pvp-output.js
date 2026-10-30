@@ -20,7 +20,8 @@ function renderContinuationNotice(...args){return publicationSessionContinuation
 import {renderNativeNotice} from "./native-notice.js";
 import {establishGmWorldPart,renderGmWorldPart} from "./gm-world-narrative.js";
 import {operationalMetrics,measureNative} from './operational-metrics.js';
-import {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash} from './nonmaterial-grammar.js';
+import {publicationNarrativeGrammar} from './frameworks/publication/public.js';
+const {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash}=publicationNarrativeGrammar;
 import {splitDiscordText} from './discord/chunking.js';
 import {findFreshNpcPart,renderFreshNpcPart,hasPcReference} from './fresh-npc-authoring.js';
 import {nativeHookProjection} from './native-hook-output.js';

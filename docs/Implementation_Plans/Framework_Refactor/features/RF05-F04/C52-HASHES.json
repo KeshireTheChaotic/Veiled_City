@@ -1,0 +1,52 @@
+{
+  "source_bodies_unchanged": true,
+  "static_only_load_path": [
+    "bot/src/index.js",
+    "bot/src/gm.js",
+    "bot/src/frameworks/narrative/public.js",
+    "bot/src/frameworks/narrative/nonmaterial-grammar.js"
+  ],
+  "initializer_before_GM": true,
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/nonmaterial-grammar.js",
+      "sha256": "d4d87fb3f7e9002f1b38146db37072bf26134de1110d1bf0aa39987ff5b01fb9"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "605470216945cd34e062f760e2f4107a72770375fd4976aa89885ff6187c224b"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/narrative-grammar.js",
+      "sha256": "e984da15b09dc84a831a5758ddf378838816032b88fdec99580cf1ee9ca7774f"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "312b19fe9bbea1d11109fe1f9018d391a00da356776dce5ed8a3fca2c31678c2"
+    },
+    {
+      "path": "bot/src/framework-to-framework/narrative--publication/public.js",
+      "sha256": "e99c0b8eb8790e1445fa780912eb7c5760425c3be83d6e0a8e49a443ddeff70c"
+    },
+    {
+      "path": "bot/src/application/composition/publication-narrative.js",
+      "sha256": "765b8499da40f4d73344d0f9b40f11ca13c609cf0fd6a66ca958fd64d9fcd1b8"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "baa0ee7f60a251e139b2872ad1689485e276b0dfb74b541e55dd4cdbe50e20c4"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "6442b46f4fd3b4cf930af0df362496a177ecef41ea91fd663eddc491e549a519"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "b3fdd5622cf236a4c89cc269504af652fb1ca247aac04a4992b6053ca17f64fb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c52.test.mjs",
+      "sha256": "d6b69d9800975cb23507c590ca903e5de45c5dab259700814a655911d5829457"
+    }
+  ]
+}

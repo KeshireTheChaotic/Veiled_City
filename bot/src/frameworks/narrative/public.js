@@ -68,3 +68,5 @@ export {narrativeCharacterObservation} from './contracts/character-observation.j
 export {narrativeUnitRenderSource} from './contracts/root-sources.js';
 
 export {narrativeWorldBridge} from './contracts/world-bridge.js';
+
+export {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash} from './nonmaterial-grammar.js';
