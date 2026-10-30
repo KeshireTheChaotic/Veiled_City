@@ -1,0 +1,26 @@
+[
+  {
+    "path": "bot/tests/ai-gm-2026-10/rf05-f06-c60.test.mjs",
+    "sha256": "f747af573c8bd8492b044d19acd7208cc74e705215d3fae1a8f46a7050eb935a"
+  },
+  {
+    "path": "bot/src/frameworks/narrative/fresh-npc-authoring.js",
+    "sha256": "a3c9c92747c105e85be6cb5981bd65f22f45980d8c7cb437ad087ff7560206d4"
+  },
+  {
+    "path": "bot/src/frameworks/narrative/fresh-scene-authoring.js",
+    "sha256": "d6e52771265b5f8eac7a952c11462ba75576303f7e5f644968ab1d9fa8194b06"
+  },
+  {
+    "path": "bot/src/frameworks/narrative/scene-fiction-authority.js",
+    "sha256": "25d9ae5e73fa716ac7f2aa55f3e08f4a8144c25111365bec4382a4cd3ef7c648"
+  },
+  {
+    "path": "bot/src/scene-fiction-context.js",
+    "sha256": "4b5c1b1d5fe6eba5c485d620465d3d4fcdcdc8c3b47c2ed79c94057c2fb5f32e"
+  },
+  {
+    "path": "bot/src/gm.js",
+    "sha256": "4d3e1896c3c454bd9097aac596cbb6d29bb816f9e937e04f4f50c84c79aff61b"
+  }
+]
