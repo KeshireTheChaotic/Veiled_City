@@ -1,0 +1,12 @@
+✔ all split roots preserve subcommand and only existing level/combat aliases change family (0.901ms)
+✔ legacy vc reads group before subcommand and preserves literal group (0.104ms)
+✔ option errors propagate unchanged without later reads or fallback (0.2836ms)
+✔ public decoder identity and caller keep guild/name guards before route and receipt replay after it (0.7063ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421.2423

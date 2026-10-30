@@ -15,3 +15,5 @@ export {discordNativeFear} from './contracts/native-fear.js';
 export {discordNarrativePortrayal} from './contracts/narrative-portrayal.js';
 
 export {registerCommands} from './command-registration.js';
+
+export {resolveCommandRoute} from './command-route.js';

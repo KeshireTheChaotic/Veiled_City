@@ -1,3 +1,4 @@
+import {resolveCommandRoute} from './frameworks/discord/public.js';
 import {nativeCombatantLine as combatantLine} from './framework-to-framework/daggerheart--discord/public.js';
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
 import {
@@ -586,17 +587,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
   const commandName=interaction.commandName;
   if(commandName!=="vc"&&!commandName.startsWith("vc-")) return false;
   if(!interaction.guildId) { await interaction.reply({content:"Veiled City commands must be used in a server.",ephemeral:true}); return true; }
-  let group;
-  let sub;
-  if(commandName==="vc"){
-    // Compatibility with any stale pre-3.2.2 guild command until Discord replaces it.
-    group=interaction.options.getSubcommandGroup();
-    sub=interaction.options.getSubcommand();
-  }else{
-    const root=commandName.slice(3);
-    group=root==="level"?"character":root==="combat"?"encounter":root;
-    sub=interaction.options.getSubcommand();
-  }
+  const {group,sub}=resolveCommandRoute(commandName,interaction.options);
   if((group!=="story"&&!(group==="admin"&&["seed-drafts","seed-package-preview","seed-package-export"].includes(sub))&&!(group==="intel"&&["discover","continuity","organizations","brief","recap","caseboard"].includes(sub))
     &&!(group==="handout"&&sub==="evidence")&&!(group==="downtime"&&sub==="long-project-status")
     &&!(group==="roll"&&["pending","result"].includes(sub)))||isMutatingCommand(group,sub)) await ensurePlayer(db,interaction);

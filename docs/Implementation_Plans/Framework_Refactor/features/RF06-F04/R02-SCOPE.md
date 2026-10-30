@@ -1,0 +1,3 @@
+# RF06-F04 R02 — Command route decoding
+
+Frozen at 06dad37a. Agent B exclusively owns commands.js and Discord public; Agent A owns narrative/gm/state/turn and transition registry. Extract only the existing legacy grouped command and split-root aliases into a pure Discord route decoder. Keep the chat-command/name/guild guards, button dispatch, authorization, receipt replay, player creation and execution ordering in place. No transaction or handler migration. Existing vc-level maps character and vc-combat maps encounter; grouped vc uses its original group unchanged. Preserve option reader errors and call order. Fresh synthetic option-reader cases; syntax checks and architecture delta evidence. No legacy tests or live services.
