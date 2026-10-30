@@ -1,0 +1,42 @@
+{
+  "base": "34d43c4b",
+  "resource_switch_region_and_helpers_verbatim": true,
+  "remaining_state_identical_except_import_helper_and_dispatch": true,
+  "original_pc_effect_wrappers_unchanged": true,
+  "syntax_pass": 5,
+  "test": {
+    "run_id": "RF05-F05-C84",
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c84.test.mjs",
+    "exit_code": 0,
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "duration_ms": 1567.5118
+  },
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "450e2f954e2b50089e47bda28e189e2833a1f1fbb60284c22af7fa04b70b1dd0"
+    },
+    {
+      "path": "bot/src/pc-effects.js",
+      "sha256": "cdf2e339b7c43933c6f413be11c359c234ae17eec2d74371fc9ed9363de1e305"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ed3794b8d034ab19ac1c4fcb9335485089c11928ef506559b81ee472b75781fd"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-resource-event.js",
+      "sha256": "0932695be0517de16a3407038d7318470d4352ddfc5c348073238ea38dd4674d"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/generated-pc-effect-source.js",
+      "sha256": "9d756cfdce3051d53dd1b01a05585e2d1c36c9a39e2e8d8334cb5cf9f0c5633d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c84.test.mjs",
+      "sha256": "a78745875b26029de9f597d2717ac25499d7d6bbb3e6c2873df6ccde7c06d822"
+    }
+  ]
+}

@@ -25,3 +25,6 @@ export function applyPcEffect(...args){return rules().applyPcEffect(...args);}
 export function validateAllyHealingApplication(...args){return rules().validateAllyHealingApplication(...args);}
 export function applyGeneratedPcEffect(...args){return rules().applyGeneratedPcEffect(...args);}
 export function validatedPcEffectProjection(...args){return rules().validatedPcEffectProjection(...args);}
+
+import {nativeGeneratedPcEffectSource} from './frameworks/daggerheart/public.js';
+nativeGeneratedPcEffectSource.bind({applyGeneratedPcEffect});

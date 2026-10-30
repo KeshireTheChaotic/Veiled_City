@@ -1,0 +1,19 @@
+{
+  "reason": "Original state private pc-effects dependency replaced by Daggerheart public handler; checker-proven unused transition only.",
+  "entries": [
+    {
+      "id": "eae3177581584733076f25671aec23d8cd1555e87422be0c74be0d15cb3459c5",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/pc-effects.js",
+      "kind": "static",
+      "specifier": "./pc-effects.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

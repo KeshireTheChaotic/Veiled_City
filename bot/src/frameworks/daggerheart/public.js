@@ -172,3 +172,7 @@ export {fearRevision,setPvpFearContentIndex,establishFearContext,assertFearIncom
 export {nativeNarrativeContext} from './contracts/narrative-context.js';
 
 export {nativeNarrativeUnitRenderer} from './contracts/narrative-unit-renderer.js';
+
+export {nativeGeneratedPcEffectSource} from './contracts/generated-pc-effect-source.js';
+
+export {appendNativeResourceGmEvent} from './gm-resource-event.js';
