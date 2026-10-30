@@ -1,0 +1,27 @@
+{
+  "base": "5980a02a",
+  "original_testimony_and_remaining_state_exact_except_import_reexport": true,
+  "syntax_pass": 2,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c101.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 1925.7509
+  },
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "09200a441f62387329bc1eef72003cf17ef1882babab22be4bf9730660d2e8aa"
+    },
+    {
+      "path": "bot/src/application/workflows/record-npc-testimony.js",
+      "sha256": "13567c20c534f4209fc4c4371f89f67b8a234f644b6e1a3e4df0fff777708bc1"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c101.test.mjs",
+      "sha256": "4842d4a4bc15b90b117ff7ba29eebd34d2e86cc41fe87a87ff7f8fd513bda511"
+    }
+  ],
+  "final_whitespace": "Removed one redundant EOF blank found by cached whitespace check; no behavior change/tests rerun."
+}
