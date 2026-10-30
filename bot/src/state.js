@@ -3,7 +3,7 @@ import {connectUnifiedArbitration} from './framework-to-framework/daggerheart--i
 import { randomUUID, createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './frameworks/session/public.js';
 import {noteNarrativeInterest} from './narrative-salience.js';
-import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './narrative-director-source.js';
+import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './frameworks/narrative/public.js';
 import {lastVerifiedCharacterPresence,reconcileSceneArrival,scenePresence} from './frameworks/session/public.js';
 import { indexWorldEvent } from './frameworks/world/public.js';
 import {normalizeEntityKey as normalizeNpcKey} from './kernel/entity-key.js';

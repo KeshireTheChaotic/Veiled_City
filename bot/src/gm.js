@@ -73,9 +73,9 @@ import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/public.js
 import {openingEntryNarrativeCandidate} from './frameworks/session/public.js';
 import {nativeOutcomeSchema,narrativeRequestSchema} from './frameworks/narrative/public.js';
 import {coordinateNarrative} from './narrative-delegation.js';
-import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './narrative-director-source.js';
+import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirectorNarrativeSource} from './frameworks/narrative/public.js';
 import {configureWorldEncounterCatalog} from './frameworks/world/public.js';
-import {buildNarrativeContext} from './narrative-authority-context.js';
+import {buildNarrativeContext} from './frameworks/narrative/public.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
 import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './frameworks/narrative/public.js';

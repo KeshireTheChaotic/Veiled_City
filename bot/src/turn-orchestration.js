@@ -13,7 +13,7 @@ import {worldInputKey} from './frameworks/world/public.js';
 import {executeUnifiedGmActions} from './gm-native-rolls.js';
 import {EncounterLibrary} from './frameworks/daggerheart/public.js';
 import {prepareAuthorizedTurnOutput} from './pvp-output.js';
-import {nativeDirectorNarrativeSource} from './narrative-director-source.js';
+import {nativeDirectorNarrativeSource} from './frameworks/narrative/public.js';
 /** The commit's strict consequence check, run on a staged preview so a turn with no native state is corrected
  * instead of failing at commit. Dice submissions and unified GM actions only gain receipts at commit. */
 export function reconcilePreviewConsequences(db,guildId,mutation,narrative,scope){

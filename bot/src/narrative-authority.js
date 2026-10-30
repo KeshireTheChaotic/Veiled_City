@@ -1,7 +1,7 @@
 import {narrativeKnowledgeDisclosure} from './frameworks/narrative/public.js';
 const {objectiveEvidence}=narrativeKnowledgeDisclosure;
 /** Delegated ordinary GM fiction; independent typed units, native receipts for effects, no arbitrary raw-output waiver. */
-import {buildNarrativeContext,narrativeVisible} from './narrative-authority-context.js';
+import {buildNarrativeContext,narrativeVisible} from './frameworks/narrative/public.js';
 import {sceneFictionHash as hash,sceneFictionFailure as fail,narrativeSourceVisible} from './frameworks/narrative/public.js';
 import {narrativeWorldPrimitives} from './frameworks/narrative/public.js';
 const {indexWorldEvent}=narrativeWorldPrimitives;
@@ -16,7 +16,7 @@ import {narrativeUnitKinds} from './gm-fiction-schema.js';
 import {narrativeKnowledgeMemory} from './frameworks/narrative/public.js';
 import {noteNarrativeReuse} from './narrative-salience.js';
 import {creativeBrief} from './narrative-delegation.js';
-import {withoutVerifiedVocative} from './narrative-speakers.js';
+import {withoutVerifiedVocative} from './frameworks/narrative/public.js';
 import {narrativeNpcEvidence} from './frameworks/narrative/public.js';
 const {actorReferenceVisible}=narrativeNpcEvidence;
 import {projectNarrativeArtifact,hasNarrativeChoices,narrativeArtifactKey} from './narrative-artifacts.js';

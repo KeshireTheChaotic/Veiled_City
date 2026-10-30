@@ -1,11 +1,11 @@
 /** Audience-filtered actor-relative portrayal. Public fiction never receives unrestricted GM dossiers. */
-import {portrayalPacket} from './frameworks/narrative/public.js';
-import {narrativeSessionScene} from './frameworks/narrative/public.js';
+import {portrayalPacket} from './portrayal.js';
+import {narrativeSessionScene} from './contracts/session-scene.js';
 const {scenePresence,npcEvidenceActive}=narrativeSessionScene;
-import {narrativeWorldConstraints} from './frameworks/narrative/public.js';
+import {narrativeWorldConstraints} from './contracts/world-constraints.js';
 const {activeCityProxy}=narrativeWorldConstraints;
-import {narrativeSourceVisible} from './frameworks/narrative/public.js';
-import {narrativeNpcVisibility} from './frameworks/narrative/public.js';
+import {narrativeSourceVisible} from './visibility-source.js';
+import {narrativeNpcVisibility} from './contracts/npc-visibility.js';
 const {actorEvidenceVisible}=narrativeNpcVisibility;
 const entitled=(db,guild,npc,row,scope)=>actorEvidenceVisible(db,guild,npc,row,scope)
   ||!row.is_secret&&row.source_ref&&npcEvidenceActive(db,guild,npc,row.source_ref)

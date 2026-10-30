@@ -98,3 +98,8 @@ export {buildSceneFictionContext,sceneFictionHash,sceneFictionFailure} from './s
 export {registerNarrativeContext,mintNarrativeAudience,revalidateNarrativeAudience} from './audience-native-v9.js';
 
 export {rankNarrativeMemory} from './memory-ranking.js';
+
+export {narrativeVisible,buildNarrativeContext} from './authority-context.js';
+
+export {npcAddresses,speakerBrief,withoutVerifiedVocative} from './narrative-speakers.js';
+export {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent,inheritDirectorNarrativeSource,directorBriefForAudience,bindDirectorNarrativeSource} from './narrative-director-source.js';
