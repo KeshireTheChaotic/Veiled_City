@@ -1,0 +1,31 @@
+{
+  "phase": "AF02",
+  "status": "foundation_only_phase_in_progress",
+  "run_id": "AF02-C-operations-1",
+  "baseline": "6601f417ca95a989396ee5b0e107cd27d8bb24bd",
+  "command": "node --test tests/ai-gm-2026-10/af02-operations.test.mjs",
+  "exit_code": 0,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "syntax_files": 4,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-operation-plans.js",
+      "sha256": "de3891dda74114bbc58eb268fa8d3de0ac81aff03153ea1f8005a13d36889cbc"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-costs.js",
+      "sha256": "f4868a11f71b0e31d88f81edc0651593fddfdf7576ea50af360a19d44d22f6e4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-window-rules.js",
+      "sha256": "687c2c1a155ae64339a59d1fe492dad68e7b747814958d8339ec2cc8ee2e355e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-operations.test.mjs",
+      "sha256": "9e92ea3bb63b842b411be22795456e2f0e10f33a8048af50046a6857c8e0d423"
+    }
+  ]
+}

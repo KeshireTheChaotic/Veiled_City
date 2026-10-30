@@ -1,7 +1,7 @@
 /** Native feature occurrence lifecycle; no prose can create a trigger, owner choice or effect. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
-import {featureCostPlan} from './feature-costs.js';
+import {featureCostPlan,commitFeatureResources} from './feature-costs.js';
 import {nativeFeatureTriggerEligible} from './feature-trigger-eligibility.js';
 import {featureChoiceProposalIssue} from './feature-choice-policy.js';
 export const FEATURE_PHASES=Object.freeze(['before_attack','after_hit','before_damage_applied','after_damage','on_pc_action','on_scene_event','spotlight_action']);
@@ -182,8 +182,7 @@ function commitFeatureReactionCost(db,guild,decisionKey){
     const feature=compileNativeFeatures().find(f=>f.feature_key===n.feature),actual=authorizeFeatureChoice(db,guild,{binding:row.data.origin,scope:row.data.scope},entry,row.data.proposal,feature);
     if(hash(actual)!==hash(n))throw fail('feature_cost_state_changed');
     const combatant=db.listCombatants(db.getCurrentEncounter(row.data.origin.session).id).find(c=>c.id===n.combatant),before=db.getCampaign(guild).fear;
-    if(n.cost.fear)db.changeFear(guild,-n.cost.fear);
-    const after=db.updateCombatant(combatant.id,{stress_current:combatant.stress_current+n.cost.npc_stress});
+    const after=commitFeatureResources(db,guild,combatant,n.cost).combatant;
     const data={decision:decisionKey,
       opportunity:n.window,ordinal:null,amount:n.cost.fear,before,after:db.getCampaign(guild).fear,expenses:n.cost.expenses,feature_cost:n.cost,
       npc_stress:{combatant:combatant.id,before:combatant.stress_current,after:after.stress_current}};
