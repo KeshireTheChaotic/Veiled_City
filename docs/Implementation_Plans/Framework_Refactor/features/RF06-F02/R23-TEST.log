@@ -1,0 +1,27 @@
+✔ original SQLite row/absence semantics and guild/private-channel filters remain exact (162.7909ms)
+✔ original JSON merge/default/false and return object encoding remain intact (163.4842ms)
+✔ setAccessibility still dispatches through the current VeiledDB getPlayer override exactly once (266.4988ms)
+✔ missing player and malformed legacy JSON retain original errors without an update (396.4032ms)
+✔ same connection outer rollback/nested savepoint contains both preference writes (382.184ms)
+✔ native SQLite update failure preserves prior JSON and exception without added transaction (390.93ms)
+✔ original preference rows remain compatible after close/reopen without schema drift (363.8214ms)
+✔ qualified per-connection view forwards original receiver/callback/value/error without exposing SQL handle (1.1724ms)
+✔ actual SQLite receipt and ledger survive failed response and reopen; duplicate replays without another ledger row (398.9587ms)
+✔ actual SQLite ledger insert failure rolls back earlier receipt and prevents response (378.7502ms)
+✔ same-connection nested savepoint and asynchronous callback rejection retain rollback behavior (384.4774ms)
+✔ original guild plus interaction receipt identity remains separate on the same connection (429.2891ms)
+✔ narrow preference interface checks shape and preserves original receiver/result/error without raw DB exposure (0.8684ms)
+✔ native privacy validation precedes actual SQLite preferred-channel write and private response (387.6097ms)
+✔ unsafe current channel is rejected without preference write or response (393.4669ms)
+✔ actual accessibility merge preserves legacy fields, explicit false and original response JSON (392.4627ms)
+✔ null options preserve existing preferences and original missing-player error (380.7581ms)
+✔ failed response preserves already-written original preference without retry (231.9122ms)
+✔ unsupported player subcommand returns false without touching its store (0.1377ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2271.698

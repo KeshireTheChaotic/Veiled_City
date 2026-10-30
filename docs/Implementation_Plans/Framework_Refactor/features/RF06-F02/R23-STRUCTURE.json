@@ -1,0 +1,17 @@
+{
+  "class_methods": 319,
+  "untouched_methods": 315,
+  "extracted_methods": [
+    "getPlayer",
+    "getPlayerByPrivateChannel",
+    "setPrivateChannel",
+    "setAccessibility"
+  ],
+  "old_class_sql_sites": 412,
+  "new_class_sql_sites": 408,
+  "repository_sql_sites": 4,
+  "total_sql_sites_unchanged": true,
+  "all_other_class_methods_equal": true,
+  "original_method_signatures_equal": true,
+  "extracted_bodies_equal_after_only_connection_and_reader_substitutions": true
+}

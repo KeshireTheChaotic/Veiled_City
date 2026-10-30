@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "7857ee7715420cca80119b933a19cbddb845e0bf95e0bb36cb75067d95329422",
+  "bot/src/frameworks/persistence/player-preferences-repository.js": "c76688f05ae8e65e087de04a0c7b78708ec91eaac7400c1944096414668253c1",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c23.test.mjs": "4c9d0e553918015a288801832fc959b7f9a30943a778a92dcde75d1c214896f2",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}
