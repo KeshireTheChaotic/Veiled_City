@@ -3179,29 +3179,37 @@
         "operations",
         "publication"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "publication",
           "to": "operations",
-          "import_occurrences": 9,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original metric/incident/native measurement/failure projection and async trace/latency callbacks over same singletons; exact arguments/results/errors preserved."
         }
       ],
       "source_evidence": [
         {
-          "from": "bot/src/native-publications.js",
-          "to": "bot/src/errors.js",
-          "line": 9,
+          "from": "bot/src/framework-to-framework/operations--publication/public.js",
+          "to": "bot/src/frameworks/operations/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/operations--publication/public.js",
+          "to": "bot/src/frameworks/publication/public.js",
+          "line": 2,
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF06",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fixed seven original callbacks; repeated original binding idempotent and replacement denied. Preserve singleton/context identity, event data/order, current trace audience filtering and first substantive acknowledgment timing. No telemetry authority over game state.",
+      "lifecycle": "Explicit startup composition before DB/client construction and fresh RF helper mirror. Legacy publication hubs also bind the same stable callback object from one original compatibility import each, preserving standalone call behavior until hub migration. No duplicate singleton.",
+      "adoption_feature": "RF06-F03",
+      "consumers": [
+        "bot/src/application/composition/publication-operations.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf06-f03-c13.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "publication",
@@ -3215,7 +3223,9 @@
         "pair": "operations--publication",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 9
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/operations--publication/public.js",
+      "scope": "R13 telemetry port adopted; three existing compatibility-source imports and timing/failure root facades remain accountable for RF06-F07, not full Operations/Publication isolation."
     },
     {
       "pair": "operations--session",

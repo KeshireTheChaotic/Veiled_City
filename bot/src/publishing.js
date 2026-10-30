@@ -12,11 +12,14 @@ const {textChannel,assertGmOnlyChannel,assertPlayerPrivateChannel}=publicationDi
 import {publicationWorldSimulation} from "./frameworks/publication/public.js";
 const {simulationOverview,acknowledgeSimulationHook}=publicationWorldSimulation;
 import { deliverTurnOutbox, outboxSummary, notSent } from "./publication-outbox.js";
-import { failureTrace } from "./failure-trace.js";
-import {operationalMetrics} from './operational-metrics.js';
+const {failureTrace}=publicationOperations;
+import {publicationTelemetrySource} from './operational-metrics.js';
+import {publicationOperations} from './frameworks/publication/public.js';
+publicationOperations.bind(publicationTelemetrySource);
+const operationalMetrics=publicationOperations;
 import { assertArchiveOutput, archivePvpHistory, assertPvpOutput, prepareStoredOutput, prepareNativeHookOutput,
   quarantineSimulationHook, quarantineGeneratedOutput, revalidateOutputPublication,substantivePreparedOutput } from "./pvp-output.js";
-import {turnTraceFor} from './turn-trace-context.js';
+const {turnTraceFor}=publicationOperations;
 import { queueDirectorPublications } from "./publication-outbox.js";
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
 

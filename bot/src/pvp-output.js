@@ -1,3 +1,4 @@
+const {measureNative}=publicationOperations;
 import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
 const {activeEvidence,objectiveEvidence,evidenceType}=publicationKnowledgeDisclosure;
 /** Receipt-rendered output authority, independent of triggering user. Raw candidates never certify their own contents. */
@@ -20,7 +21,10 @@ function renderContinuationNotice(...args){return publicationSessionContinuation
 import {renderNativeNotice} from "./native-notice.js";
 import {publicationNarrativeWorld} from './frameworks/publication/public.js';
 const {establishGmWorldPart,renderGmWorldPart}=publicationNarrativeWorld;
-import {operationalMetrics,measureNative} from './operational-metrics.js';
+import {publicationTelemetrySource} from './operational-metrics.js';
+import {publicationOperations} from './frameworks/publication/public.js';
+publicationOperations.bind(publicationTelemetrySource);
+const operationalMetrics=publicationOperations;
 import {publicationNarrativeGrammar} from './frameworks/publication/public.js';
 const {decodeNonmaterialGrammar,establishGrammarScope,renderNonmaterialGrammar,grammarHash}=publicationNarrativeGrammar;
 import {splitDiscordText} from './discord/chunking.js';
@@ -34,7 +38,7 @@ import {publicationWorldDirectorReview} from './frameworks/publication/public.js
 function validatePostTurnStateReview(...args){return publicationWorldDirectorReview.validatePostTurnStateReview(...args);}
 import {publicationNarrativeScene} from './frameworks/publication/public.js';
 const {projectSceneDescription,defaultSceneDescription}=publicationNarrativeScene;
-import {turnTraceFor} from './turn-trace-context.js';
+const {turnTraceFor}=publicationOperations;
 const {findFreshScenePart,renderFreshScenePart}=publicationNarrativeAuthoring;
 import {publicationNarrativeSceneFiction} from './frameworks/publication/public.js';
 const {establishSceneFiction,renderSceneFiction,holdSceneFiction}=publicationNarrativeSceneFiction;

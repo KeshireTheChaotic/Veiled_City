@@ -25,3 +25,7 @@ export {operationsPersistenceSnapshot} from './contracts/persistence-snapshot.js
 
 export {runCampaignDiagnostics,formatDiagnostics} from './diagnostics.js';
 export {operationsDiscordDiagnostics} from './contracts/discord-diagnostics.js';
+
+export {TurnLatency,turnLatency} from './turn-latency.js';
+export {failureTrace} from './failure-trace.js';
+export {publicationTelemetrySource} from './publication-telemetry.js';

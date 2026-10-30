@@ -1,0 +1,20 @@
+{
+  "bot/src/turn-latency.js": "bf36708bb02053889a3200f9f4343635e9f0c87e9aa813874ea503cf651478ea",
+  "bot/src/failure-trace.js": "b46a87828ef1f795f2a399aceb8feb2f6f5069ce09f6278f2ee5064df0df5946",
+  "bot/src/operational-metrics.js": "a6c6e62571d453b8b26b070c8dce2f82b70a1de268353ef2a10ac6f151f70f9f",
+  "bot/src/frameworks/operations/turn-latency.js": "26b53d80cf1d6cbbb662f752a83bf350652fe94874932fca82723d44f72c4cd2",
+  "bot/src/frameworks/operations/failure-trace.js": "9e181d7063920dd6e59ff2f6e8876bb3e98c3f6db955dbb2da92440fc670ce6b",
+  "bot/src/frameworks/operations/publication-telemetry.js": "1e251e5f8808779849ce3e2e662e13d6e32be04ee03b41689dd32e60f27f73ee",
+  "bot/src/frameworks/operations/public.js": "11d865e53f03c87df7838f65712852c449c790e9002bfdd3a545aa16573d832b",
+  "bot/src/frameworks/publication/contracts/operations.js": "184d375d01229d004ddb4a0845d259b2e05a7417118782c690a6c8706607b77f",
+  "bot/src/frameworks/publication/public.js": "1d25d37c4b2dfdbfafaeed42a229cefe007f2dbf90b6d7ecb1a390c11c940215",
+  "bot/src/framework-to-framework/operations--publication/public.js": "e2b553a34a5763b8a85c1749d4f9b8a5e45a0f85cb8e867fe1c9e1b1614ade77",
+  "bot/src/application/composition/publication-operations.js": "f0798d4441d30d6db17a0294c26e4a20b9c5a3b4a36fc82f993d2fcb6915a328",
+  "bot/src/application/composition/public.js": "0e225648c5917fa4e18d4d972250a3112e9f0ae741b1035eba1d16f55ddd24bf",
+  "bot/src/index.js": "51cc99e09f620a83fbc6dcc53adec87229d94d54af57d50edec4510b39f2dc49",
+  "bot/src/publishing.js": "6161be7c9843fbeff73bb0383d63e7e6368953058eb75cb1105be489f637ed17",
+  "bot/src/publication-outbox.js": "e9143460a74346151dfe989bdf662445d25859be950ceb83367c399c0aecd6ef",
+  "bot/src/pvp-output.js": "b32acba175b4e294c61138d7994c101fcc4b9d9726cc8135c322b6511b84a191",
+  "bot/tests/ai-gm-2026-10/compose-startup.mjs": "fe2aab5407a2a04338cc7950ef01104c1f5122e619c0ebbf501b1c86ce24391c",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c13.test.mjs": "76568a55bc1fee7b2ab68a35c617a7bc53de1d490fcef539ae4cc7aa63e316ee"
+}

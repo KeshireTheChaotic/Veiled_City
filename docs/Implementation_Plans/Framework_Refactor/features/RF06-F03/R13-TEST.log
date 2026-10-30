@@ -1,0 +1,26 @@
+✔ fixed Publication channel port fails before composition and rejects replacement after original binding (0.741ms)
+✔ original lookup preserves missing, nontext and failed fetch unavailability (0.1832ms)
+✔ private delivery keeps exact receipts, message audience and pre-send validation after composition (0.9631ms)
+✔ unsafe channel before send permits existing private DM fallback without channel exposure (0.2009ms)
+✔ ambiguous send remains uncertain and never falls through to DM (0.1549ms)
+✔ permission change after first chunk stops remaining chunks without fallback (0.1411ms)
+✔ source guard runs before lookup and production startup composes before database/client construction (0.6726ms)
+✔ historical and public receipt exports retain single implementation identity (0.4993ms)
+✔ proven non-send creates original Error with original certainty and message (0.145ms)
+✔ exact valid acknowledgement returns original receipt and permits dynamic destination only when unpinned (0.1124ms)
+✔ missing/blank/failed/mismatched receipts remain uncertain without mutating original rows (0.6913ms)
+✔ summary preserves durable field names/uncertainty/defaults without exposing payload or audience secrets (0.1708ms)
+✔ single original class/singleton/function retained; fixed telemetry source binds idempotently and refuses replacement (0.7953ms)
+✔ record and incident callbacks reach the original Operations metric singleton (0.9262ms)
+✔ native measurement retains synchronous value/error and original trace finally callback (1.0366ms)
+✔ async-local trace identity and guild restriction survive awaits without copying context (0.1344ms)
+✔ original first substantive timing and singleton publication binding remain intact (0.6774ms)
+✔ failure projection keeps original closed fields and excludes raw private text (0.231ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 808.9874

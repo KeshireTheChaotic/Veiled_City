@@ -67,3 +67,6 @@ initializePublicationDiscord();
 
 import {initializeOperationsDiscord} from '../../src/application/composition/operations-discord.js';
 initializeOperationsDiscord();
+
+import {initializePublicationOperations} from '../../src/application/composition/publication-operations.js';
+initializePublicationOperations();

@@ -62,3 +62,5 @@ export {initializeIntentNarrative} from './intent-narrative.js';
 export {initializePublicationDiscord} from './publication-discord.js';
 
 export {initializeOperationsDiscord} from './operations-discord.js';
+
+export {initializePublicationOperations} from './publication-operations.js';
