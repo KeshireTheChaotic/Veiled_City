@@ -1,0 +1,20 @@
+{
+  "base": "0cae9b90",
+  "exact_original_regions": [
+    {
+      "from": "case \"fact\":",
+      "until": "case \"clock_delta\":",
+      "sha256": "08938214cf57b0e64310ccc0dc085f2d5ef9eea01cc8e3c0839f94ff9d97645e"
+    },
+    {
+      "from": "case \"thread\":",
+      "until": "case \"npc_update\":",
+      "sha256": "418d010f0754cfb93bdf00220d1c03c7ac1fc8f6fc2b3ac448919701f53527c0"
+    },
+    {
+      "from": "case \"canon\":",
+      "until": "case \"relationship\":",
+      "sha256": "45c0e67714eace14edc6818179de66b44ef2ab7ef1496773066149caefd9a019"
+    }
+  ]
+}

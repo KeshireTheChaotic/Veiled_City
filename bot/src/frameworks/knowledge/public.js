@@ -62,3 +62,5 @@ export {applyHandoutDrafts} from './handout-drafts.js';
 export {applyRelationshipDrafts} from './relationship-drafts.js';
 
 export {applyCanonProposalDrafts} from './canon-proposal-drafts.js';
+
+export {appendKnowledgeGmEvent} from './gm-event-persistence.js';

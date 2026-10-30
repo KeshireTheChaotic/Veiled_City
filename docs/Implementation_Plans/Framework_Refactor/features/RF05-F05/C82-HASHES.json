@@ -1,0 +1,24 @@
+{
+  "base": "0cae9b90",
+  "three_switch_regions_and_helpers_verbatim": true,
+  "remaining_state_identical_except_imports_and_group_dispatch": true,
+  "syntax_pass": 3,
+  "files": [
+    {
+      "path": "bot/src/state.js",
+      "sha256": "3e69cbd24fdb4918e5a1f57f2719e49080ea3cac7f5e2779357b9b0a78380f46"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/gm-event-persistence.js",
+      "sha256": "4b5c063ca3a18de7c180a9834fde6c29f347dd89df3cf0e0db64f5ee4df3c478"
+    },
+    {
+      "path": "bot/src/frameworks/knowledge/public.js",
+      "sha256": "a8261994e3757d92e8d133df49a366c5fe5cd0f3353afd1800df070929a0baf8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c82.test.mjs",
+      "sha256": "7f6e7adefc59565254f27fa07bb2f223f675bbfede9353b45c3dd57e03a55352"
+    }
+  ]
+}

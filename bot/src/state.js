@@ -1,3 +1,4 @@
+import {appendKnowledgeGmEvent} from './frameworks/knowledge/public.js';
 import {applyCanonProposalDrafts} from './frameworks/knowledge/public.js';
 export {applyCanonProposalDrafts};
 import {applyRelationshipDrafts} from './frameworks/knowledge/public.js';
@@ -8,7 +9,7 @@ import {applyNpcCognitionDrafts} from './frameworks/npc/public.js';
 export {applyNpcCognitionDrafts};
 import {connectUnifiedArbitration} from './framework-to-framework/daggerheart--intent/public.js';
 /** Authoritative AI/state mutation layer. Applies validated structured outputs while enforcing transaction and visibility invariants. */
-import { randomUUID, createHash } from "node:crypto";
+import { createHash } from "node:crypto";
 import {applyAuthoredInitialPosition} from './frameworks/session/public.js';
 import {noteNarrativeInterest} from './frameworks/narrative/public.js';
 import {nativeDirectorNarrativeSource,nativeDirectorNarrativeContent} from './frameworks/narrative/public.js';
@@ -22,7 +23,6 @@ import { recordCharacterPerceptions } from "./frameworks/character/public.js";
 import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { persistInterpretation } from "./narrative-context.js";
-import { typedEvidence } from "./frameworks/knowledge/public.js";
 import { persistAuthoredCandidates } from "./authored-candidates.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./typed-intents.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
@@ -113,21 +113,10 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
       const vis=privateVisibility(e,scope);
       switch(e.type){
         case "fact":
-        case "clue":{
-          if(!String(e.value||"").trim()) fail(`${e.type} event requires value.`);
-          const id=db.addFact(guildId,{
-            category:e.type,
-            key:cleanKey(e.key)||`${e.type}-${randomUUID()}`,
-            content:e.value,
-            visibility:vis.visibility,
-            subjectUserId:vis.targetUserId,
-            subjectCharacterId:vis.targetCharacterId,
-            sessionId,
-            source:"ai_gm",
-            provenance:{...provenance,event:e,epistemic:typedEvidence(db,guildId,e,scope)},
-            confidence:provenance.confidence??100
-          });
-          results.push({type:e.type,ok:true,id,visibility:vis.visibility,before:null,after:db.getFact(guildId,id)});
+        case "clue":
+        case "thread":
+        case "canon":{
+          appendKnowledgeGmEvent(db,guildId,sessionId,e,scope,provenance,vis,results);
           break;
         }
         case "clock_delta":{
@@ -189,23 +178,6 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             cause_receipt:effect.record_key,before,after:structuredClone(afterCharacter?.data?.resources?.[e.key]??null)});
           break;
         }
-        case "thread":{
-          const rawId=cleanKey(e.key)||randomUUID();
-          const owner=scope.actorCharacterId||scope.actorUserId;
-          const id=scope.mode==="private"?`private:${owner}:${rawId}`:rawId;
-          const before=db.getThread(guildId,id)||null;
-          const row=db.upsertThread(guildId,{
-            id,
-            label:String(e.value||rawId),
-            status:["active","resolved","failed","dormant"].includes(e.status)?e.status:"active",
-            visibility:vis.visibility,
-            subjectUserId:vis.targetUserId,
-            subjectCharacterId:vis.targetCharacterId,
-            notes:e.note||""
-          });
-          results.push({type:e.type,ok:true,id,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
-          break;
-        }
         case "npc_update":
         case "location_update":{
           if(!cleanKey(e.key)||!String(e.value||"").trim()) fail(`${e.type} requires key and value.`);
@@ -219,20 +191,6 @@ export function applyGMEvents(db,guildId,sessionId,events=[],scope={mode:"party"
             visibility:vis.visibility,subjectUserId:vis.targetUserId,subjectCharacterId:vis.targetCharacterId
           });
           results.push({type:e.type,ok:true,kind,key:row.entity_key,row,before,after:row,publish:vis.visibility==="party"||vis.visibility==="public"});
-          break;
-        }
-        case "canon":{
-          if(scope.mode==="private"){ block(results,e,"Private AI turns may not write directly to the global canon ledger; record a private fact/clue and let the GM promote it to canon when appropriate."); break; }
-          if(!cleanKey(e.key)||!String(e.value||"").trim()) fail("canon event requires key and value.");
-          const canonVisibility=String(e.visibility||"party").toLowerCase();
-          if(!["public","party","gm"].includes(canonVisibility)) fail("Canon visibility must be public, party, or gm because canon ledger entries are campaign-global.");
-          const before=db.currentCanon(guildId,e.key)||null;
-          if(!before){
-            if(e.epistemic?.kind!=="observation")fail("New AI canon needs committed observation ancestry or explicit human GM promotion; inference is not truth.");
-            typedEvidence(db,guildId,e,scope);
-          }
-          const r=db.proposeCanon(guildId,{key:e.key,value:e.value,visibility:canonVisibility,sessionId,sourceType:"ai",sourceId:"gm",provenance:e.note||"AI GM turn"});
-          results.push({type:e.type,key:e.key,ok:r.status!=="conflict",status:r.status,conflict_id:r.conflict?.id||null,expectedConflict:r.status==="conflict",before,after:r.status==="conflict"?r.conflict:db.currentCanon(guildId,e.key)});
           break;
         }
         case "relationship":
