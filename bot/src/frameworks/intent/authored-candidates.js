@@ -1,19 +1,18 @@
-/** Source-backed semantic candidates from the existing GM call. Native consequences remain separate. */
-import {intentSessionPrincipal} from './frameworks/intent/public.js';
+import {intentSessionPrincipal} from './contracts/session-principal.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import { contextSourceKey } from "./narrative-context.js";
-import { interpretAuthoredText, captureDeclaration } from "./frameworks/intent/public.js";
-import {intentSessionEntry} from "./frameworks/intent/public.js";
+import {interpretAuthoredText,captureDeclaration} from './player-language.js';
+import {intentSessionEntry} from './contracts/session-entry.js';
 function prepareSceneEntry(...args){return intentSessionEntry.prepareSceneEntry(...args);}
-import {intentSessionDialogue} from './frameworks/intent/public.js';
+import {intentSessionDialogue} from './contracts/session-dialogue.js';
 const {captureDialogue}=intentSessionDialogue;
-import {intentSessionScene} from './frameworks/intent/public.js';
+import {intentSessionScene} from './contracts/session-scene.js';
 const {currentScene}=intentSessionScene;
-import {sourceSpanInsideQuote,isCharacterSourceSpan} from './frameworks/intent/public.js';
-import {explicitSilence} from './frameworks/intent/public.js';
-import {authoredCandidatesSchema,currentAuthoredCandidatesSchema,AUTHORED_CANDIDATES_PROMPT} from './frameworks/intent/authored-candidate-schema.js';
-export {authoredCandidatesSchema,currentAuthoredCandidatesSchema,AUTHORED_CANDIDATES_PROMPT};
-export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={}){
+import {sourceSpanInsideQuote} from './source-quote-boundaries.js';
+import {isCharacterSourceSpan} from './source-communication.js';
+import {explicitSilence} from './gameplay-intake.js';
+
+export function createAuthoredCandidatePersistence({contextSourceKey}){
+function persistAuthoredCandidates(db,guild,candidates,scope,provenance={}){
   if(candidates==null)return [];
   if(!Array.isArray(candidates)||candidates.length>6)throw new Error("Bounded authored candidates required.");
   if(candidates.length&&db.getCityCalendar(guild).flags.natural_language!==true)throw new Error("Natural-language candidates are opt-in.");
@@ -70,4 +69,6 @@ export function persistAuthoredCandidates(db,guild,candidates,scope,provenance={
     }
     return row;
   });
+}
+return persistAuthoredCandidates;
 }

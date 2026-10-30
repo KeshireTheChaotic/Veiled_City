@@ -1,0 +1,50 @@
+{
+  "base": "53b8aed8",
+  "candidate_body_key_function_and_root_context_state_callers_exact_except_import_factory_exports": true,
+  "syntax_pass": 8,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c98.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "exit_code": 0,
+    "duration_ms": 606.1435
+  },
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/authored-candidates.js",
+      "sha256": "d3b4847c3cd7a71c5b349091b0ebeea61deb42a1f3345a38c19321ec7ae35c7a"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "828d216d4cb892f4d4cd61e6090247091e4e74fb38099c6372d416e262858d85"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/context-source-key.js",
+      "sha256": "0a77a2b2a061680825d497c80abe6953d6fadf81addfbb3ebd1152c034edb08a"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "e131bf8c3e703f82b0be4410186f52111d24f1fcd5b83ee17911d3df25610d58"
+    },
+    {
+      "path": "bot/src/narrative-context.js",
+      "sha256": "51e470d23934f718fb07130fbb13c7b2904f455a290614ef0d777fb9caca0618"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/authored-candidates.js",
+      "sha256": "0b84141f68a11517f677b9cb04c5dca2cc944e5aa61aadbca3f4885525202713"
+    },
+    {
+      "path": "bot/src/framework-to-framework/intent--narrative/public.js",
+      "sha256": "fe7a3924c42c732d204ff50333f9073d37f24350ce9a1c22d79128dcd3dcf73a"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "6d80c56e44754dd04666e3666396d42a63a3b528a1dfb3ff6daa0f701d3124cf"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c98.test.mjs",
+      "sha256": "007573d10e380730656f9aedd88d923509773c9a6186050f82fcec7454197a0a"
+    }
+  ]
+}

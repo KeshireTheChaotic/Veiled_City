@@ -18,7 +18,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/assembly-state.js","bot/src/frameworks/session/assembly-state.js","session","RF04","EXTRACT_PORTS_BEFORE_MOVE","9","1"
 "bot/src/audience-first-capability.js","bot/src/frameworks/narrative/audience-first-capability.js","narrative","RF05","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/audience-native-v9.js","bot/src/frameworks/narrative/audience-native-v9.js","narrative","RF05","PILOT_MOVE_CANDIDATE","5","0"
-"bot/src/authored-candidates.js","bot/src/frameworks/intent/authored-candidates.js","intent","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","5"
+"bot/src/authored-candidates.js","bot/src/frameworks/intent/authored-candidates.js","intent","RF05","MOVED_COMPLETE","2","5"
 "bot/src/authored-turn-envelope.js","bot/src/frameworks/intent/authored-turn-envelope.js","intent","RF05","MOVED_COMPLETE","9","3"
 "bot/src/authority-policy.js","bot/src/frameworks/daggerheart/authority-policy.js","daggerheart","RF03","PILOT_MOVE_CANDIDATE","1","0"
 "bot/src/authority-projection.js","bot/src/frameworks/knowledge/authority-projection.js","knowledge","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","2","0"

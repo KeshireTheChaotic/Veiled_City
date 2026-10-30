@@ -24,7 +24,7 @@ import { recordCharacterPerceptions } from "./frameworks/character/public.js";
 import { applyAutonomousWorld, worldInputKey } from "./frameworks/world/public.js";
 import { dispatchAiIntents } from "./ai-intents.js";
 import { persistInterpretation } from "./narrative-context.js";
-import { persistAuthoredCandidates } from "./authored-candidates.js";
+import { persistAuthoredCandidates } from "./framework-to-framework/intent--narrative/public.js";
 import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialogue } from "./framework-to-framework/daggerheart--intent/public.js";
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";

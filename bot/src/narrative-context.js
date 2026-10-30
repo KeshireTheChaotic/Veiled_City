@@ -14,7 +14,8 @@ import { interpretationSchema } from "./frameworks/narrative/interpretation-sche
 import { CONTEXT_CONTRACT } from "./frameworks/narrative/interpretation-contract.js";
 // Typed movement now comes from the main GM player_intents contract.
 export { interpretationSchema, CONTEXT_CONTRACT };
-export const contextSourceKey=(messageId,character)=>`context:${createHash("sha256").update(JSON.stringify([messageId,character])).digest("hex").slice(0,40)}`;
+import {contextSourceKey} from './frameworks/narrative/public.js';
+export {contextSourceKey};
 export function captureContextSource(db,guild,user,character,messageId,content,{privateScene=false}={}){
   if(!messageId||!character||db.getCityCalendar(guild).flags.natural_language!==true) return null;
   let principal;try{principal=conversationPrincipal(db,guild,user,character);}catch{return null;}

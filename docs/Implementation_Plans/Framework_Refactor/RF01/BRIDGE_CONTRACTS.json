@@ -1817,12 +1817,14 @@
       "lifecycle": "Pure App initializer before GM, original root authority-context provider independently loaded by GM.",
       "adoption_feature": "RF05-F04",
       "consumers": [
-        "bot/src/application/composition/intent-narrative.js"
+        "bot/src/application/composition/intent-narrative.js",
+        "bot/src/state.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf05-f04-c63.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c72.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f05-c98.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1845,7 +1847,12 @@
         "occurrences": 10
       },
       "public_api": "bot/src/framework-to-framework/intent--narrative/public.js",
-      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects. C75 original Intent characterSourceRanges read by Narrative salience through own fixed consumer and original source proxy, formatting/quote rules and non-authorizing semantics unchanged."
+      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects. C75 original Intent characterSourceRanges read by Narrative salience through own fixed consumer and original source proxy, formatting/quote rules and non-authorizing semantics unchanged.",
+      "authored_candidate_composition": {
+        "feature": "RF05-F05 C98",
+        "source": "bot/src/framework-to-framework/intent--narrative/authored-candidates.js",
+        "contract": "Original Narrative source-key function injected into original Intent candidate persistence; same scope/current-source/interpretation and legacy staging rules, no outcome authority."
+      }
     },
     {
       "pair": "intent--npc",

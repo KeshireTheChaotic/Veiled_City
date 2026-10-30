@@ -69,17 +69,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "fa8f674f4ef3284e2cb6956e0c89a763d5af897981ce2398bcb83748c4676461",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/authored-candidates.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "29b941b6365330bcb377c71ce5ff799f72a39fc4aea130f7bcbacafe3cfb4b32",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/character-export.js",
@@ -1684,20 +1673,6 @@
       "owner": "operations",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "1243c0a5a5f83c2778bcf7fad5dbcb509ea0305f9d58fe43618406bb4c128b11",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/authored-candidates.js",
-      "to": "bot/src/narrative-context.js",
-      "kind": "static",
-      "specifier": "./narrative-context.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
@@ -5105,20 +5080,6 @@
       "to": "bot/src/narrative-context.js",
       "kind": "static",
       "specifier": "./narrative-context.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "256aa2c66f28030dbd0542df3f27dc48c53a0117dedebb9412452090111e8dd4",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/state.js",
-      "to": "bot/src/authored-candidates.js",
-      "kind": "static",
-      "specifier": "./authored-candidates.js",
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",

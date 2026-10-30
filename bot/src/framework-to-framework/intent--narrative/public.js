@@ -10,3 +10,5 @@ export function connectNarrativeIntentEngagement(){return narrativeIntentEngagem
 import {intentCommunicationSource} from '../../frameworks/intent/public.js';
 import {narrativeIntentCommunication} from '../../frameworks/narrative/public.js';
 export function connectNarrativeIntentCommunication(){return narrativeIntentCommunication.bind({characterSourceRanges:intentCommunicationSource.characterSourceRanges});}
+
+export {persistAuthoredCandidates} from './authored-candidates.js';
