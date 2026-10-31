@@ -1,0 +1,32 @@
+{
+  "phase": "AF02",
+  "status": "generic_coordinator_delta_complete_phase_in_progress",
+  "run_id": "AF02-C-mixed-reactions-1",
+  "baseline": "0ab1c7b2e705a2905367186db9c30319b9dac155",
+  "command": "node --test tests/ai-gm-2026-10/af02-mixed-reaction-path.test.mjs",
+  "exit_code": 0,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "syntax_command": "node --check src/frameworks/daggerheart/mixed-reaction-rules.js && node --check src/native-group-features.js && node --check tests/ai-gm-2026-10/af02-mixed-reaction-path.test.mjs",
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/mixed-reaction-rules.js",
+      "sha256": "b17c931deed2844652f24e1d83ce926862e64f4f00f000e35420f148a4c85c62"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "4390507713c9fb26d12de1656c80dd726ceebff65373bae9df2311066f2948c2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-mixed-reaction-path.test.mjs",
+      "sha256": "2d3bd87e6b12d6decb7d8e2363fab035495c73e4fbc16e3582a9e29829409228"
+    }
+  ],
+  "limits": [
+    "Uses injected host callbacks for source-specific PC invitation and NPC receipt writers.",
+    "Not wired into the production group-feature executor or Null Foam condition/release path.",
+    "Offline disposable SQLite evidence; no model, Discord or release qualification."
+  ]
+}
