@@ -7,10 +7,46 @@ import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,group
 import {groupFeatureOutcome} from './group-feature-outcomes.js';
 import {assertExactGroupCohort} from './group-target-rules.js';
 import {prepareMixedReactionCohort,rollNativeNpcReaction,inspectNativeNpcReaction} from './mixed-reaction-rules.js';
+import {createMixedConditionRules} from './mixed-condition-rules.js';
 export function createGroupFeatureExecutionRules({capabilities}){
 const {narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry,RANGE_BANDS}=capabilities||{};
 if([narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry].some(fn=>typeof fn!=="function")||!Array.isArray(RANGE_BANDS))throw new TypeError("Complete native group-feature capabilities required.");
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
+const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeConditionClearAncestry,
+  inspectCause(db,guild,binding,target,{historical}){
+    const {execution,parent}=inspectGroupFeature(db,guild,binding.execution),n=parent.data.native,policy=policies[n.feature];
+    if(!policy?.area||!n.area||!execution.data.mixed)throw fail('group_mixed_condition_source_family');
+    const index=mixedTargets(n).findIndex(t=>t.kind===target.kind&&t.key===target.key),reaction=execution.data.mixed.reactions[index];
+    if(!policy.area||target.kind!=='npc'||index<0||hash(mixedTargets(n)[index])!==hash(target)
+      ||binding.cohort_hash!==execution.data.mixed.cohort_hash||binding.target!==`npc:${target.key}`||binding.outcome!=='failure'
+      ||reaction?.receipt?.result.success!==false||binding.proof!==reaction.receipt.receipt_hash)throw fail('group_mixed_condition_cause');
+    if(!historical){
+      const current=capabilities.planNativeAreaCohort(db,guild,{binding:parent.data.origin,scope:parent.data.scope},n.actor,n.area.area);
+      if(hash(current)!==hash(n.area))throw fail('group_mixed_condition_current_cohort');
+    }
+    return {feature:n.feature,source_hash:n.feature_definition.source_hash,template_hash:n.template_hash,scene:parent.data.origin.scene,
+      session:parent.data.origin.session,condition:policy.condition,expiry:policy.expiry,spellcast_disadvantage:policy.spellcast_disadvantage===true};
+  },
+  readTarget(db,guild,target){
+    const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),c=encounter&&db.listCombatants(encounter.id).find(c=>c.id===target.combatant);
+    if(target.kind!=='npc'||c?.status!=='active'||c.hp_current<=0||c.base_name!==target.combatant_snapshot.base_name)throw fail('group_mixed_condition_current_npc');
+    return c;
+  },
+  writeTarget(db,guild,target,before,conditions){
+    const after=db.updateCombatant(target.combatant,{conditions});
+    if(hash(after.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
+  }});
+function settleAreaNpcConditions(db,guild,execution,{replay=false}={}){
+  const {parent}=inspectGroupFeature(db,guild,execution.record_key),n=parent.data.native,targets=mixedTargets(n);
+  for(const [i,reaction] of execution.data.mixed.reactions.entries()){
+    if(reaction.kind!=='npc'||reaction.receipt.result.success)continue;
+    const binding={execution:execution.record_key,cohort_hash:execution.data.mixed.cohort_hash,target:reaction.target,
+      proof:reaction.receipt.receipt_hash,outcome:'failure'};
+    if(replay)mixedConditions.inspectMixedCondition(db,guild,`mixed-condition:${hash(binding)}`);
+    else mixedConditions.applyMixedCondition(db,guild,binding,targets[i]);
+  }
+  return execution;
+}
 function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
   const policy=validateGroupFeatureProposal(entry,p,feature);
   const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
@@ -61,7 +97,10 @@ function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
 function mixedTargets(n){return n.area.targets.map(target=>target.kind==='npc'?n.npc_targets.find(t=>t.key===target.key):target);}
 function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../content'),rng}={}){
   return db.transaction(()=>{
-    const prior=db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key));if(prior)return inspectGroupFeature(db,guild,prior.record_key).execution;
+    const prior=db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key));if(prior){
+      const inspected=inspectGroupFeature(db,guild,prior.record_key);
+      return inspected.parent.data.native.area?settleAreaNpcConditions(db,guild,inspected.execution,{replay:true}):inspected.execution;
+    }
     const {row,entry}=inspectNativeGmDecision(db,guild,key),n=row.data.native,feature=compileNativeFeatures().find(f=>f.feature_key===n?.feature);
     if(n?.operation!=='commit_group_feature'||hash(planGroupFeature(db,guild,{binding:row.data.origin,scope:row.data.scope},entry,row.data.proposal,feature,{library,opportunity:n.opportunity}))!==hash(n))
       throw fail('group_feature_state_changed');
@@ -97,7 +136,7 @@ function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../cont
           return db.saveCityRecord(guild,{kind:'native_npc_reaction',key:reactionKey,status:'resolved',actor_key:target.key,
             visibility:'gm',source_event:event.event_key,data:receipt});
         },writeExecution:mixed=>saveExecution(children,mixed).data.mixed});
-      return db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key));
+      return settleAreaNpcConditions(db,guild,db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key)));
     }
     return saveExecution(n.targets.map(target=>{const child=createChild(target);return {decision:child.record_key,character:target.character,hash:hash(child.data)};}));
   });
@@ -445,10 +484,11 @@ function validateNativeCondition(db,guild,key){
   }
   return row;
 }
-function activeNativeConditions(db,guild,character){
-  const rows=[];for(let offset=0;;offset+=100){const page=db.listCityRecords(guild,{kind:'pc_native_condition',actor:character,includeGM:true,limit:100,offset});
+function activeNativeConditions(db,guild,character,{kind='character'}={}){
+  if(!['character','npc'].includes(kind))throw fail('native_condition_actor_kind');
+  const rows=[];for(let offset=0;;offset+=100){const page=db.listCityRecords(guild,{kind:kind==='npc'?'native_mixed_condition':'pc_native_condition',actor:character,includeGM:true,limit:100,offset});
     rows.push(...page);if(page.length<100)break;}
-  return rows.map(r=>validateNativeCondition(db,guild,r.record_key)).filter(r=>r.status==='active');
+  return rows.map(r=>kind==='npc'?mixedConditions.inspectMixedCondition(db,guild,r.record_key):validateNativeCondition(db,guild,r.record_key)).filter(r=>r.status==='active');
 }
 /** Only sealed native conditions affect odds. A model/sheet string named Vulnerable grants nothing. */
 function nativeIncomingConditions(db,guild,character){
@@ -465,8 +505,8 @@ function validateIncomingConditions(db,guild,character,proofs,{current=false}={}
   if(current&&hash(proofs)!==hash(nativeIncomingConditions(db,guild,character)))throw fail('incoming_condition_current_state_changed');
 }
 /** Source records are validated here; only current native conditions are handed to Daggerheart. */
-function nativeMovementConditionIssue(db,guild,character,{range=null}={}){
-  return movementConditionIssue(activeNativeConditions(db,guild,character),{range,rangeBands:RANGE_BANDS});
+function nativeMovementConditionIssue(db,guild,character,{range=null,kind='character'}={}){
+  return movementConditionIssue(activeNativeConditions(db,guild,character,{kind}),{range,rangeBands:RANGE_BANDS});
 }
 /** Only the condition-only change made by THIS attack's native spotlight may advance its PC CAS.
  * No general stale-offer waiver, owner refresh, resource drift or odds-changing condition is admitted. */

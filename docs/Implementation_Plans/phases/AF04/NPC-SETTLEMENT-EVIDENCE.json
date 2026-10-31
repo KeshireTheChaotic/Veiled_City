@@ -1,0 +1,80 @@
+{
+  "phase": "AF04",
+  "status": "bound_npc_condition_settlement_and_unified_consumers_complete_pc_and_other_gates_pending",
+  "base_sha": "028e745cc7e60863027750fe5bcf6c15ca2f4288",
+  "commands": [
+    "node --check src/frameworks/daggerheart/group-feature-execution-rules.js",
+    "node --check src/frameworks/daggerheart/native-condition-rules.js",
+    "node --check src/frameworks/daggerheart/unified-adjudication.js",
+    "node --check src/gm-unified-arbitration.js",
+    "node --check tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+    "node --check tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs"
+  ],
+  "syntax_checks_passed": 6,
+  "final_runs": [
+    {
+      "suite": "mixed group preparation",
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "suite": "unified area/condition consumers",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "earlier_runs": [
+    {
+      "passed": 1,
+      "failed": 4,
+      "reason": "Fixture lacked getMutation."
+    },
+    {
+      "passed": 4,
+      "failed": 1,
+      "reason": "NPC effect condition is in validated cause; existing movement consumer only read flat PC field."
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "reason": "NPC consumer fixed."
+    }
+  ],
+  "final_group_rerun_reason": "Added native source-family guard after the passing group run; unchanged unified suite not rerun.",
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "0d6e86f769ddf55fa8f8e6fc3f74bb732de83c594a82836ca18146b321f8bbba"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-condition-rules.js",
+      "sha256": "f4f308f53070ca08ad4fbac6d1b2fea781caf03c705b2f621c87530ce44e87da"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "sha256": "6d1e63859cc78c36e0b66d818283309bcad5d835663811a265270ec6561263ab"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "04fd6650ffdf3b8a7751719f1669f5a2f889a42566f2d5199a05327eb46aa51b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+      "sha256": "d79de9cc84d4f93c69a1f7c73c9e655945ab862bed4de917dd77618e4b15d6d6"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs",
+      "sha256": "48ff2f70695fe6b097db03c5406ddd7da24d5f26cb7c46e8684307defea6dc3c"
+    }
+  ],
+  "limits": [
+    "SQLite group host and injected source/cost proofs; unified entrypoint with injected board/condition services.",
+    "No live scenario, PC settlement, Spellcast enforcement, ordinary-profile condition host, NPC release or activation qualified."
+  ]
+}

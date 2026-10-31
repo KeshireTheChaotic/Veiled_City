@@ -101,6 +101,11 @@ function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new Encou
       native=nativeAlliancePlan(db,guild,o,entry,{library});status='gm_action_ready';reason='GM-owned explicit native NPC alliance only; no PC participation, movement, attack or knowledge grant.';
     }else if(p.disposition==='npc_no_roll'&&['speak','walk','prepare'].includes(entry.operation)&&p.difficulty===null&&p.trait===null
       &&p.stakes==='none'&&!p.feature_ref&&!p.experience_ref&&!p.advantage&&!p.disadvantage){
+      if(entry.operation==='walk'){
+        if(typeof mechanics.nativeMovementConditionIssue!=='function')throw fail('npc_movement_condition_reader_unavailable');
+        const issue=mechanics.nativeMovementConditionIssue(db,guild,entry.actor.key,{kind:'npc'});
+        if(issue)throw fail(issue);
+      }
       status='resolved_no_roll';reason='Ordinary NPC fiction only; no relocation, PC response, damage, knowledge or resource effect.';
     }else if(p.disposition==='gm_attack_roll'&&p.stakes_kind==='native_attack'&&entry.operation==='attack'&&p.rule_basis_refs.includes('srd:adversary-attacks')&&['standard_attack',PROFESSIONAL_ENTRY].includes(p.feature_ref)&&entry.target_refs.length===1&&!p.experience_ref){
       let professional_entry=null,professional_entry_hold=null;
@@ -164,7 +169,8 @@ function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new Encou
  * proposal keeps only its character, NPC and location targets instead of failing the whole player turn. */
 function nativeNpcTargets(db,guild,proposals=[]){
   return proposals.map(p=>({...p,target_refs:[...new Set(p.target_refs)].filter(key=>
-    db.getCharacter(key)||db.getNpcProfile(guild,key)||db.getSimulationEntity(guild,'location',key))}));
+    db.getCharacter(key)||db.getNpcProfile(guild,key)||db.getSimulationEntity(guild,'location',key)
+      ||p.operation==='feature'&&db.getCityRecord(guild,'scene_presence',key)?.data.entity_type==='hazard')}));
 }
 function applyUnifiedArbitration(db,guild,result,playerRows,options={}){
   return db.transaction(()=>applyUnifiedBatch(db,guild,result,playerRows,options));

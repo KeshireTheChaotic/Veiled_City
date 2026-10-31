@@ -10,7 +10,7 @@ export function movementConditionIssue(conditions,{range=null,rangeBands}={}){
   for(const condition of conditions){
     // Daggerheart's Restrained condition bars movement entirely; Unlike All Lanes Stop,
     // it has no range-based exception. Callers pass only source-validated conditions.
-    if(condition.data?.condition==='Restrained')return 'NATIVE_MOVEMENT_RESTRAINED';
+    if((condition.data?.condition??condition.data?.cause?.condition)==='Restrained')return 'NATIVE_MOVEMENT_RESTRAINED';
     if(condition.data.feature===LANES&&(!rangeBands.includes(range)||rangeBands.indexOf(range)>rangeBands.indexOf('Very Close')))
       return 'NATIVE_MOVEMENT_LIMIT_VERY_CLOSE';
   }
