@@ -1,5 +1,5 @@
 /** Receipt-selected output only. No creation, spending, dice or model prose at a publication sink. */
-import {inspectEnvironmentArrival} from './native-environment-arrivals.js';
+import {inspectEnvironmentArrival} from './frameworks/daggerheart/public.js';
 import {environmentSceneProjection} from './frameworks/daggerheart/public.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
@@ -7,7 +7,7 @@ function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
 import {environmentCountdownProjection} from './native-environment-countdown.js';
-import {environmentWitnessAccountsProjection} from './native-environment-witnesses.js';
+import {environmentWitnessAccountsProjection} from './frameworks/daggerheart/public.js';
 import {createEnvironmentOutputRules} from './frameworks/daggerheart/public.js';
 export {environmentOutcomeKinds} from './frameworks/daggerheart/public.js';
 let nativeRules;

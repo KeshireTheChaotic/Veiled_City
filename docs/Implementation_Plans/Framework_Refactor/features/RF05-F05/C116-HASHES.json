@@ -1,0 +1,76 @@
+{
+  "base": "2aea3cc57b2f043bdfec8f1b1970228ceba5ac9d",
+  "exact_original_source_substitutions": true,
+  "original_rules_unchanged": true,
+  "deleted_originals": [
+    "bot/src/native-environment-arrivals.js",
+    "bot/src/native-environment-witnesses.js"
+  ],
+  "syntax_pass": 5,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c116.test.mjs",
+      "pass": 2,
+      "fail": 1,
+      "duration_ms": 761.3077,
+      "disposition": "Failed fixture expected origin check before original witness shape check; repaired only proposal fixture."
+    },
+    {
+      "command": "node --test --test-name-pattern='owning and public' bot/tests/ai-gm-2026-10/rf05-f05-c116.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 441.846,
+      "disposition": "Only failed case rerun."
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1894.4449,
+      "disposition": "Affected offline bootstrap rerun because production import graph changed."
+    }
+  ],
+  "limits": "Original isolated origin factory with original Native callback; actual SQLite missing/self-asserted/foreign receipt refusal and no write/no player/fact effects; offline bootstrap. Does not qualify successful arrival/witness publication, Native costs/receipts/full GM/live.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-arrivals.js",
+      "sha256": "7565afd14012e2129bcc3e038bc47ddfe15548215f9c9dc9f2490a43094430c9"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-witnesses.js",
+      "sha256": "fc11914f08922d2fe21cb739e1078a6d0624e49d57d9ff600a23eb1076856e2c"
+    },
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "sha256": "c6a2f38a1d697e7c9e3a0ecec9da1d4c55fd619157ae9facd44931db17632a7b"
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "sha256": "b5b6dc213167758cdcfcf314a427a645946bff1dc0bf33e072a68d332ec31e0c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "c58ae51cad50ebefe31b334713447fffd73bee0ab726affc3931a20ea6192b1c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-arrival-rules.js",
+      "sha256": "d8a1e9aa51ed646f23c8d25d7d2efccfae4b1ea9062d8076b5a49658b65269c7"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+      "sha256": "82d6ebf71e75d3a2dc0230cafbe71213e732e0c5b384f7a4a84a315646a845d9"
+    },
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c116.test.mjs",
+      "sha256": "1465b926b548d4d4bf54e6c3ef34c55e8a88a81c5395f138063395cf192c078b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}

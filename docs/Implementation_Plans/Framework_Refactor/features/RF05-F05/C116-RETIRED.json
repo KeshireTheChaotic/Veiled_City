@@ -1,0 +1,55 @@
+{
+  "reason": "Original Native arrival/witness providers owned; root files retired, Native dispatch/output public callers and original shared kernel failure helper.",
+  "entries": [
+    {
+      "id": "f795bbab5d36bc6120e302bd66edee2f295ef076bc4981986e71cd3dd834e9a5",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-arrivals.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "aa2fa2d8c8fa305926a19f8df6c1b8c894576938b7777f6d02d22ec153ed5ca9",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-witnesses.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "3d2345ed1455ff706069029ceb91263b570353ef85d658473b4a019b75b0e57b",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-arrivals.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "77e1f73f26f846f82c6ec83139138de3329b8d667ba25dabd0c58959e6a42e32",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-witnesses.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

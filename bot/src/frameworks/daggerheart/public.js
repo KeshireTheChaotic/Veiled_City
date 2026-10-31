@@ -189,3 +189,6 @@ export {inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,
 export {compileNativeHouseErrata,nativeHouseErratum,nativeFeatureReviewContract} from './native-house-errata.js';
 
 export {PROFESSIONAL_ENTRY,professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';
+
+export {applyEnvironmentArrival,inspectEnvironmentArrival} from './native-environment-arrivals.js';
+export {applyEnvironmentWitnessAccounts,inspectEnvironmentWitnessAccounts,environmentWitnessAccountsProjection} from './native-environment-witnesses.js';
