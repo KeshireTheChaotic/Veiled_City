@@ -1,0 +1,9 @@
+{
+  "bot/src/commands.js": "28a8cccc4f08b9abf9bf86f764d5ef32f4ce70a9ca5276e53cae9709350550dd",
+  "bot/src/frameworks/discord/public.js": "008de2edd9c02036a89227e61d019d1a4a3a26ae7103ea790dfdbbcca5ccc41b",
+  "bot/src/frameworks/persistence/public.js": "49cd0ba32a917560a848a2504255aa975ff01af9c9e2549e7301433962c083f7",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "ee7cf91aac33d4ca245f44a018bfc02719d5f331e85911fc8f98a7ba7df4a45a",
+  "bot/src/frameworks/discord/canon-read-commands.js": "45d74b1f572c6f1d46cb29ab2f7974cce7a4f51d80430ba1c3d1466ab599e255",
+  "bot/src/frameworks/persistence/canon-read-store.js": "c4daa6cc69ef226f758bc94f892dbf75790d9e9f18aae386494f5011240babc6",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c57.test.mjs": "3dab6b664a686ebca5b0e22922d1306ffcd38eeab6362197976e60d29721d86c"
+}

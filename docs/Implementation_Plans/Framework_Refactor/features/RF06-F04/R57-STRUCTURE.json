@@ -1,0 +1,7 @@
+{
+  "parent": "92dc0457d46278839b337535dda3544cc1756173",
+  "both_original_bodies_equal_after_only_store_and_gm_callback_substitution": true,
+  "root_conflicts_gm_guard_equal": true,
+  "all_other_root_statements_equal": true,
+  "no_sql_or_class_changes": true
+}

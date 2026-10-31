@@ -1,0 +1,14 @@
+✔ fixed two-reader contract and original dynamic receiver/return/error behavior retained (1.133ms)
+✔ status invokes original GM callback once and preserves query/options/empty private reply (0.1848ms)
+✔ exact status and pending-conflict text/GM badges remain private and unmodified (0.2794ms)
+✔ original1950limit/empty conflict message/read-GM-send errors propagate without retries (0.2759ms)
+✔ actual SQLite read retains original visibility/current/guild and pending-conflict filters without writes (165.5961ms)
+✔ root retains conflicts GM guard and all canonical mutation/receipt authority (1.0422ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 758.5939

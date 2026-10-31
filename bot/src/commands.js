@@ -1,3 +1,5 @@
+import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
+import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {npcControlLabel,formatNpcProxyPacket} from './frameworks/discord/public.js';
 import {handleCharacterListCommand} from './frameworks/discord/public.js';
 import {connectDiscordCharacterList} from './framework-to-framework/discord--persistence/public.js';
@@ -1938,16 +1940,9 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return true;
     }
     if(group==="canon"&&sub==="status"){
-      const rows=db.listCanon(interaction.guildId,{includeGM:isGM(db,interaction),limit:100});
-      await interaction.reply({content:rows.length?`**Campaign Canon**\n${rows.map(r=>`• \`${r.canon_key}\` = ${r.value}${r.visibility==="gm"?" *(GM)*":""}`).join("\n")}`.slice(0,1950):"No structured canon entries yet.",ephemeral:true});
-      return true;
-    }
-    if(group==="canon"&&sub==="conflicts"){
-      if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
-      const rows=db.listCanonConflicts(interaction.guildId);
-      await interaction.reply({content:rows.length?`**Pending Canon Conflicts**\n${rows.map(r=>`• \`${r.id.slice(0,8)}\` **${r.canon_key}**\n  existing: ${r.existing_value}\n  proposed: ${r.proposed_value}`).join("\n")}`.slice(0,1950):"No pending canon conflicts.",ephemeral:true});
-      return true;
-    }
+      return await handleCanonStatusCommand(interaction,{store:connectDiscordCanonReads(db),isGm:()=>isGM(db,interaction)});}
+    if(group==="canon"&&sub==="conflicts"){if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
+      return await handleCanonConflictsCommand(interaction,{store:connectDiscordCanonReads(db)});}
     if(group==="canon"&&sub==="proposals"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       const status=interaction.options.getString("status")||"actionable";

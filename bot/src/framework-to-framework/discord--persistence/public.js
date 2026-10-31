@@ -51,3 +51,7 @@ export function connectDiscordRulesRulings(db){return assertRulesRulingReadStore
 import {assertCharacterListStore} from '../../frameworks/discord/public.js';
 import {createCharacterListStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordCharacterList(db){return assertCharacterListStore(createCharacterListStore(db));}
+
+import {assertCanonReadStore} from '../../frameworks/discord/public.js';
+import {createCanonReadStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordCanonReads(db){return assertCanonReadStore(createCanonReadStore(db));}

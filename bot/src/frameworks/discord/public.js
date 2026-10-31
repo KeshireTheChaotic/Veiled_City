@@ -79,3 +79,5 @@ export {downtimeStatusText,relationshipLine} from './command-record-text.js';
 export {handleCharacterListCommand,assertCharacterListStore} from './character-list-command.js';
 
 export {npcControlLabel,formatNpcProxyPacket} from './npc-proxy-packet.js';
+
+export {handleCanonStatusCommand,handleCanonConflictsCommand,assertCanonReadStore} from './canon-read-commands.js';
