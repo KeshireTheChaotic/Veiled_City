@@ -26,7 +26,7 @@ import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,group
   groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal} from './frameworks/daggerheart/group-feature-rules.js';
 import {groupFeatureOutcome} from './frameworks/daggerheart/group-feature-outcomes.js';
 export {isGroupFeature,groupReactionRules,groupReactionOptions,groupFeatureStakes} from './frameworks/daggerheart/group-feature-rules.js';
-export {splitMixedReactionCohort,rollNativeNpcReaction,inspectNativeNpcReaction} from './frameworks/daggerheart/mixed-reaction-rules.js';
+export {splitMixedReactionCohort,rollNativeNpcReaction,inspectNativeNpcReaction,prepareMixedReactionCohort} from './frameworks/daggerheart/mixed-reaction-rules.js';
 
 import {createGroupFeatureExecutionRules} from './frameworks/daggerheart/public.js';
 let nativeGroup;

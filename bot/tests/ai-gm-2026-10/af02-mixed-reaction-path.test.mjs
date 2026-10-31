@@ -1,11 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {splitMixedReactionCohort,rollNativeNpcReaction,inspectNativeNpcReaction,prepareMixedReactionCohort} from '../../src/frameworks/daggerheart/mixed-reaction-rules.js';
+import {prepareMixedReactionCohort as composedMixedReactionCohort} from '../../src/native-group-features.js';
 import {jsonHash as hash} from '../../src/kernel/json-hash.js';
 import {nativeStore} from './af03-store.mjs';
 
 const targets=[{kind:'character',key:'pc',owner:'owner:pc',presence_hash:'p1'},
   {kind:'npc',key:'foe',presence_hash:'p2',control_hash:'c2',template_hash:'t2'}];
+test('the native group-feature composition exposes the transaction-bound mixed coordinator',()=>{
+  assert.equal(composedMixedReactionCohort,prepareMixedReactionCohort);
+});
 test('mixed cohort preserves owner PC reactions and separately routes native NPC reactions',()=>{
   const split=splitMixedReactionCohort(targets);
   assert.deepEqual(split.pc.map(t=>t.key),['pc']);assert.deepEqual(split.npc.map(t=>t.key),['foe']);
