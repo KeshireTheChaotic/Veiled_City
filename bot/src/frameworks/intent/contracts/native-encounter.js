@@ -6,3 +6,6 @@ export const intentNativeEncounter=Object.freeze({
  get EncounterLibrary(){if(!Library)throw Object.assign(new Error('Intent native encounter library has not been composed.'),{code:'INTENT_NATIVE_ENCOUNTER_COMPOSITION'});return Library;},
  bind(source){if(typeof source?.EncounterLibrary!=='function')throw new TypeError('Original native EncounterLibrary required.');if(Library&&Library!==source.EncounterLibrary)throw new Error('Native encounter library replacement forbidden.');methods.bind(source);Library=source.EncounterLibrary;return this;}
 });
+
+/** Original Native adversary context checks only; no copied execution policy. */
+export const intentNativeAdversaryContext=createFunctionPort(['nativeAdversaryFeatureContext','requireNativeAdversaryFeature'],{code:'INTENT_NATIVE_ADVERSARY_COMPOSITION',label:'Intent Native adversary context'});

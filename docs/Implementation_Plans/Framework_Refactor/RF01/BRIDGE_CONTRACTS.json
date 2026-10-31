@@ -756,6 +756,13 @@
         "consumer": "nativeArbitrationOriginCreator.createArbitrationOrigin in native-environment-trace.js only",
         "authority": "Original creator supplied from same createArbitrationOrigins instance as inspector; existing read-only inspector port unchanged; no copied grants or rules.",
         "qualification_evidence": "features/RF05-F05/C106-HASHES.json"
+      },
+      "native_adversary_context": {
+        "feature": "RF05-F05 C108",
+        "source": "Native-owned nativeAdversaryFeatureContext and requireNativeAdversaryFeature",
+        "consumer": "intentNativeAdversaryContext fixed port in original scene board and unified service composition",
+        "composition": "connectIntentNativeAdversaryContext at existing initializeEnvironmentScene; forwards original functions without copied rules or grants.",
+        "qualification_evidence": "features/RF05-F05/C108-HASHES.json"
       }
     },
     {

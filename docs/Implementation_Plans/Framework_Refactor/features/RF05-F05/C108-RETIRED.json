@@ -1,0 +1,44 @@
+{
+  "reason": "Physical original Native adversary composition with root removal and two Intent readers routed through existing pair integration.",
+  "entries": [
+    {
+      "id": "70431b9a1a8535beac10ee596f758a99c701f19e7b2ea88176b9ffeb45784c57",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-adversary-context.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "a82963dcdc88ed796b0d70f40dcfe58832f28270b9941bc0e70c4eebbc371f9d",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/gm-unified-arbitration.js",
+      "to": "bot/src/native-adversary-context.js",
+      "kind": "static",
+      "specifier": "./native-adversary-context.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "8c3aa9417e278ff67cda739b4958d101f92ac48b672014636b0bb16ae2c47449",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/native-adversary-context.js",
+      "kind": "static",
+      "specifier": "./native-adversary-context.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

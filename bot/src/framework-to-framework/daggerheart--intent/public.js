@@ -25,3 +25,7 @@ import {encounterProposalContext,proposeWorldEncounter,activateDelegatedEncounte
 export function connectIntentNativeEncounter(){return intentNativeEncounter.bind({encounterProposalContext,proposeWorldEncounter,activateDelegatedEncounter,inspectNativeEncounterActivation,nativeEnvironmentBinding,EncounterLibrary});}
 
 export {validateProposal,proposeIntents,acceptIntentForAdjudication,resolvePendingReferent,currentAcceptedIntent,playerIntentSchema,PLAYER_INTENT_PROMPT,validatePlayerIntents,recoverPlayerIntents,persistPlayerIntentDiagnostics,persistPlayerIntents,persistTypedDialogue,currentTypedMovement,autoCompleteOrdinaryMovements,validateIntentResolutions} from './typed-intent-service.js';
+
+import {intentNativeAdversaryContext} from '../../frameworks/intent/public.js';
+import {nativeAdversaryFeatureContext,requireNativeAdversaryFeature} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativeAdversaryContext(){return intentNativeAdversaryContext.bind({nativeAdversaryFeatureContext,requireNativeAdversaryFeature});}

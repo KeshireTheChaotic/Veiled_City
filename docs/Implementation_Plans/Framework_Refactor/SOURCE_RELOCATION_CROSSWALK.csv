@@ -136,7 +136,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/native-adversary-break-the-hold.js","bot/src/frameworks/daggerheart/native-adversary-break-the-hold.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/native-adversary-call-security.js","bot/src/frameworks/daggerheart/native-adversary-call-security.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/native-adversary-conflicting-duty.js","bot/src/frameworks/daggerheart/native-adversary-conflicting-duty.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"
-"bot/src/native-adversary-context.js","bot/src/frameworks/daggerheart/native-adversary-context.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","2","3"
+"bot/src/native-adversary-context.js","bot/src/frameworks/daggerheart/native-adversary-context.js","daggerheart","RF05","IMPLEMENTATION_MOVED_ROOT_RETIRED","0","0"
 "bot/src/native-adversary-drag-down.js","bot/src/frameworks/daggerheart/native-adversary-drag-down.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/native-adversary-exit-clause.js","bot/src/frameworks/daggerheart/native-adversary-exit-clause.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"
 "bot/src/native-adversary-flow-around-it.js","bot/src/frameworks/daggerheart/native-adversary-flow-around-it.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","1"

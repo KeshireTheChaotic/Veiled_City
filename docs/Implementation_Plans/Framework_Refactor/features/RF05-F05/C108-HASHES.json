@@ -1,0 +1,63 @@
+{
+  "base": "59da4995184db02a5abaf2af50f8f8c53dc22394",
+  "exact_source_substitutions": true,
+  "deleted_original": "bot/src/native-adversary-context.js",
+  "syntax_pass": 8,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c108.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c105.test.mjs",
+      "pass": 4,
+      "fail": 0,
+      "duration_ms": 1402.1681
+    },
+    {
+      "command": "node --test --test-name-pattern='pair bootstrap' bot/tests/ai-gm-2026-10/rf05-f05-c108.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1250.5724
+    }
+  ],
+  "limits": "Actual SQLite absent-encounter no-write and original fixed-source identity; synthetic Narrative/Session context, no successful adversary feature execution or live qualification.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-adversary-context.js",
+      "sha256": "f0bb0f680ec7ea4867b9645171bb14fdc0eeefc5ce28d391674637cb15fe9078"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "62b9f73be09fc45e13d20fc851669b4c44cfbb58e2de657812ae9e414d38dfc0"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "c4d918089ac4c0928da1d9ca81b8e03e2f2799638ef7027899cb33b0a4e99aa3"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "8a5662671d65d14713f5a1f85b451ac98cf6efd3ab838e2bfe054d5d2f50fcfd"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "695e03b13344094a8fbe7297ccb2fae3c5ca20dd8fcebcb35a2608c9c6e7b61e"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "737dfc1e510fe719f2356685ac5d7ef1d85a9db4b95633e5b25091575919377a"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-encounter.js",
+      "sha256": "51da01cf41e033f0039a081125370da05b9e38fa6af669defc91c64f4f5dd0d4"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "f428ac547e33fdc7b4f56d42067b862ff373216504c4ff5b066b83274b437c09"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c108.test.mjs",
+      "sha256": "3c5f9fe95f23496b88b1c9ad6bc46292f6b044935c1535a08f355cd8ba97ca7f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c105.test.mjs",
+      "sha256": "2d08054e9a47aac997710d252b459cc0b702fc4c0e645b60c14b992c7baf34e2"
+    }
+  ]
+}

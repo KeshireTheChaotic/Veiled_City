@@ -181,3 +181,5 @@ export {gmRulingSchema,validateGmRulingProposal} from './gm-ruling-schema.js';
 export {nativeTypedIntentSource} from './contracts/typed-intent-source.js';
 
 export {nativeEncounterActorSource} from './contracts/encounter-actor-source.js';
+
+export {nativeAdversaryFeatureContext,inspectNativeAdversaryFeatureContext,requireNativeAdversaryFeature} from './native-adversary-context.js';

@@ -11,7 +11,8 @@ import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.j
 import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js';
 
 import {featureDisposition} from './native-feature-catalog.js';
-import {requireNativeAdversaryFeature} from './native-adversary-context.js';
+import {intentNativeAdversaryContext} from './frameworks/intent/public.js';
+const {requireNativeAdversaryFeature}=intentNativeAdversaryContext;
 import {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
 import {executeEnvironmentProposal} from './native-environment-dispatch.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';

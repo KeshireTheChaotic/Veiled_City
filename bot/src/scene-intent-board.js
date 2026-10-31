@@ -23,7 +23,8 @@ import {preRollFearCandidates} from './pre-roll-fear.js';
 
 import {intentNativeEnvironment} from './frameworks/intent/public.js';
 function nativeEnvironmentInstanceForScope(...args){return intentNativeEnvironment.nativeEnvironmentInstanceForScope(...args);}
-import {nativeAdversaryFeatureContext} from './native-adversary-context.js';
+import {intentNativeAdversaryContext} from './frameworks/intent/public.js';
+const {nativeAdversaryFeatureContext}=intentNativeAdversaryContext;
 import {preparedPositionCandidates} from './native-professional-entry.js';
 import {intentArbitrationOrigin} from './frameworks/intent/public.js';
 import {createArbitrationOrigins} from './frameworks/intent/public.js';
