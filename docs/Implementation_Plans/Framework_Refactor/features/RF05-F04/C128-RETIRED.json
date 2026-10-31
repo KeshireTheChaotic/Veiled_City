@@ -1,0 +1,16 @@
+{
+  "reason": "Existing unintegrated helper moved unchanged to original Narrative owner; exact obsolete root location only.",
+  "entries": [
+    {
+      "id": "de0a7e24c1a5673d947c05a68697eaf4f98fc88d858cac59ed98cd82ca026c8f",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/narrative-tasks-v9.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

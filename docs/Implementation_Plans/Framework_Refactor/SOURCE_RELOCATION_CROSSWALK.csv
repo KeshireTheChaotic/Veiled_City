@@ -126,7 +126,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/narrative-relevance.js","bot/src/frameworks/narrative/narrative-relevance.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","2","1"
 "bot/src/narrative-salience.js","bot/src/frameworks/narrative/narrative-salience.js","narrative","RF05","DECOMPOSE_BEFORE_MOVE","7","9"
 "bot/src/narrative-speakers.js","bot/src/frameworks/narrative/narrative-speakers.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","3","3"
-"bot/src/narrative-tasks-v9.js","bot/src/frameworks/narrative/narrative-tasks-v9.js","narrative","RF05","PILOT_MOVE_CANDIDATE","0","0"
+"bot/src/narrative-tasks-v9.js","bot/src/frameworks/narrative/narrative-tasks-v9.js","narrative","RF05","IMPLEMENTATION_MOVED_ROOT_RETIRED_UNINTEGRATED_HELPER","0","0"
 "bot/src/narrative-tasks.js","bot/src/frameworks/narrative/narrative-tasks.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","3","2"
 "bot/src/narrative-writer-v9.js","bot/src/frameworks/narrative/narrative-writer-v9.js","narrative","RF05","PILOT_MOVE_CANDIDATE","2","0"
 "bot/src/native-actor-control.js","bot/src/frameworks/daggerheart/actor-control-source.js","daggerheart","RF05","IMPLEMENTATION_MOVED_ROOT_RETIRED","0","0"

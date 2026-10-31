@@ -132,3 +132,5 @@ export {protectedNarrativeNames,legacyNpcSpeechLine,authorNarrativeRequests,esta
 export {contextSourceKey} from './context-source-key.js';
 
 export {captureContextSource,contextSourceVisible,validateInterpretation,interpretationContext,persistInterpretation} from './interpretation-context.js';
+
+export {createNarrativeTasks,resolveNarrativeTask,summarizeNarrativeTasks} from './narrative-tasks-v9.js';

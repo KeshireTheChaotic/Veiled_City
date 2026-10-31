@@ -1,0 +1,64 @@
+{
+  "base": "08632edf7896ead41855f21b942e1e2e76b4fb6f",
+  "original_source_exact_after_crlf_normalization": true,
+  "production_readers": 0,
+  "syntax_pass": 2,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f04-c128.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 153.2646
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1754.6521
+    }
+  ],
+  "architecture": {
+    "sourceModules": 1067,
+    "unowned": 0,
+    "importOccurrences": 4325,
+    "internalImportOccurrences": 4128,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "rawViolationOccurrences": 603,
+    "acceptedLegacyOccurrences": 603,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limits": "Existing unintegrated helper physical ownership and own/public function identity; bounded pending construction, synthetic caller proof contract/refusal/no Map mutation on refusal, summary status behavior; guarded offline imports. Synthetic proof callback is not authenticated Native receipt qualification. No runtime task integration, workflow/GM/native/live/release acceptance.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/narrative/narrative-tasks-v9.js",
+      "sha256": "3595787b8f2fc49d0eff2c2f8946bd92cb279ff9d52c098d5285c785b27c27d8"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/public.js",
+      "sha256": "4c0ee9abafbc4d2980414f24ebd095d9043769667a4bd27a3ad39fb4e2ee812c"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "sha256": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c128.test.mjs",
+      "sha256": "65d29e8328d3b38f5be6ab02289062bd7d1c98d90426adab2523b87228947166"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    }
+  ]
+}
