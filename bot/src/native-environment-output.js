@@ -6,7 +6,7 @@ import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
-import {environmentCountdownProjection} from './native-environment-countdown.js';
+import {environmentCountdownProjection} from './frameworks/daggerheart/public.js';
 import {environmentWitnessAccountsProjection} from './frameworks/daggerheart/public.js';
 import {createEnvironmentOutputRules} from './frameworks/daggerheart/public.js';
 export {environmentOutcomeKinds} from './frameworks/daggerheart/public.js';

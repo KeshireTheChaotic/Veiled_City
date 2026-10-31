@@ -9,7 +9,7 @@ import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
 const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
 import {environmentProposalContract} from './frameworks/daggerheart/public.js';
-import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
+import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './frameworks/daggerheart/public.js';
 
 import {createEnvironmentAcousticRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

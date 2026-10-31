@@ -198,3 +198,5 @@ export {validateImagingRecordProposal,applyEnvironmentImagingRecord,inspectEnvir
 export {validateDoorChainProposal,applyEnvironmentDoorChain,inspectEnvironmentDoorChain,environmentDoorChainProjection,nativeEnvironmentDoorChainSituation} from './native-environment-door-chain.js';
 
 export {createNativeEnvironmentRecording,inspectNativeEnvironmentRecording} from './native-environment-recording.js';
+
+export {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,captureCountdownActionAncestry,inspectCountdownActionAncestry,advanceEnvironmentUploadCountdown,adjustEnvironmentUploadCountdown,inspectEnvironmentCountdown,environmentCountdownProjection,environmentUploadState,closingTimeMovesReadiness} from './native-environment-countdown.js';

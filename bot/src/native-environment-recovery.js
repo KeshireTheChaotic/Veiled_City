@@ -1,6 +1,6 @@
 import {inspectEnvironmentSceneEffect} from './frameworks/daggerheart/public.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
-import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
+import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './frameworks/daggerheart/public.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function recordScenePresence(...args){return nativeScenes.recordScenePresence(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';

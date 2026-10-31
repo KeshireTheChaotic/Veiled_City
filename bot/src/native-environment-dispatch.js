@@ -5,7 +5,7 @@ import {applyEnvironmentWitnessAccounts} from './frameworks/daggerheart/public.j
 import {applyEnvironmentDoorChain} from './frameworks/daggerheart/public.js';
 import {applyEnvironmentImagingRecord} from './frameworks/daggerheart/public.js';
 import {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,advanceEnvironmentUploadCountdown,
-  adjustEnvironmentUploadCountdown} from './native-environment-countdown.js';
+  adjustEnvironmentUploadCountdown} from './frameworks/daggerheart/public.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createEnvironmentDispatchRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

@@ -1,0 +1,100 @@
+{
+  "base": "829d950fb25a696f65278ae6cb9d2ba2a88ef3db",
+  "exact_original_source_substitutions": true,
+  "original_countdown_rules_and_proof_interface_unchanged": true,
+  "deleted_original": "bot/src/native-environment-countdown.js",
+  "syntax_pass": 8,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c119.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c118.test.mjs",
+      "pass": 6,
+      "fail": 0,
+      "duration_ms": 1776.7746
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1711.7868,
+      "reason": "Production import graph changed; run after frozen separate R61 source."
+    },
+    {
+      "command": "node --test --test-name-pattern='standalone access' bot/tests/ai-gm-2026-10/rf05-f05-c119.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 2211.9732,
+      "reason": "Added case only; prior passed cases not rerun."
+    }
+  ],
+  "limits": "Original source/ancestry registrations and standalone access loading; actual SQLite absent/counterfeit clock refusal and existing held readiness/no-write/no PC effects; offline bootstrap. No successful countdown/Native costs/receipts/knowledge/GM/live qualification. Shared R61 source hashes recorded but excluded from staging.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-countdown.js",
+      "sha256": "0d6976d0629969defd7d4420313398c919a4df3d231dc5fd6cf3d8300e67bd62"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "80ba0b1faee0216868f1a0a3f35281b63c95a2f6bed649c3947988ecc60f4b12"
+    },
+    {
+      "path": "bot/src/native-environment-recovery.js",
+      "sha256": "bcf94b5f572c521e87e1834ab5a0a16519bca6a08646e81c13c2b9e6acf2ee5f"
+    },
+    {
+      "path": "bot/src/native-environment-output.js",
+      "sha256": "2950f35faf505a13ce143b7b10065fbd30469809541972069713d848780faa53"
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "sha256": "e6837b944a1551599f9d00771509c53d60990a2d1d1513470e75b7657b688bf0"
+    },
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "sha256": "8e0cc5f206f5fe44885823437845bc146a0ad142ffef92ce032ede03b3d5e8ce"
+    },
+    {
+      "path": "bot/src/native-environment-access.js",
+      "sha256": "15a8e8623efcd6f0c7f09034e8a29d083ca4dbac18a17e9e90ec181d5e5ac2d3"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "0da0a5eacd6057151c19fc0201d2d478b210fa4e1c3cf23a666be39c61c2c88e"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+      "sha256": "ec383bac38e0efbe0edb3e07c500034b97e028d0bcd44ccbcac6198376b93937"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-access-peers.js",
+      "sha256": "f3cfddbba8ac0f12be50efc4f61c9418e5bdfd2b342c7db032254ebebb96fce8"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "c1aecc4993b1f3b8d1742d779a8b5a02ff94b778eb039b0bb6f125c3566ff4c4"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "bd87fd5ddc63e48877832fd4a5e56c31cf92b75d949f53d1de367b158e522870"
+    },
+    {
+      "path": "bot/src/application/workflows/discord-interaction-event.js",
+      "sha256": "d494f5469151c132faaebee683a8d2b3efcb14db6459158920523ab2a9daf86b"
+    },
+    {
+      "path": "bot/src/application/workflows/public.js",
+      "sha256": "c5c27d063af00ecd0a6112f2ca52e2e8d175959b9f591a06cc43528a07565753"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c119.test.mjs",
+      "sha256": "c0f0172eba9479e9b400fc218213e236316121fd219d72fb735e822c8640f7a5"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c118.test.mjs",
+      "sha256": "b2029ededc0a0a4c6f2b3eb5dfd1a8ebefe3cdaecebd82eff34cd719e3b121c2"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}
