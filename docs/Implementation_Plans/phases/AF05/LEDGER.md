@@ -7,3 +7,11 @@ Modified files: `gm-mechanical-proposal-rules.js`, `mechanical-boundary-v9.js`, 
 Verification complete for this projection: **6 tests passed, 0 failed, 0 skipped, exit 0**; four changed-file syntax checks passed. Tests cover four native operation routes, source/actor/target/template/task/mode failures, opaque grants, arbitrary patch rejection and the existing standard-attack Fear boundary. These are injected native-service tests, not autonomous real-model scenario or Discord evidence. Do not rerun this unchanged suite.
 
 Remaining scope: eligible trigger discovery and local rejection/reselection scenarios across the remaining adapters, receipt-qualified execution, model staging and full multiplayer recovery evidence. No routine human moderator gate was added; player decisions remain pending until authorized. Next exact work: continue **AF05 orchestration scenario qualification** after the corresponding AF04 operation is executable. AF06 deletion remains gated on actual replacement and consumer evidence.
+
+## Source-local actor discovery — complete for this delta
+
+Runtime actor discovery now omits an entire changed, missing or ambiguous template without disabling unrelated environment candidates or actor taxonomy. Signal target qualification also inspects its exact source occurrence. The strict full-inventory compiler still rejects drift; corrupt pinned taxonomy metadata remains an error. No actor, source definition, classification or mechanical grant is invented.
+
+Modified files: `feature-catalog.js` and fresh `af05-source-local-discovery.test.mjs`. Final changed-code run: **4 passed, 0 failed, 0 skipped, exit 0**; catalog syntax check passed. Three tests had passed before the signal-target production path changed, which justified the final four-test run. Tests include the real environment proposal qualifier with an injected establishment callback; they do not claim a committed world profile or live AI behavior. Evidence is in SOURCE-LOCAL-EVIDENCE.json.
+
+Next exact work: **AF06 current-consumer deletion audit**, while AF04 Null Foam awaits the owner's area-definition ruling. No deletion is justified by this discovery test alone.

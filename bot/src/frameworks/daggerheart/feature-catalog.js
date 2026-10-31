@@ -143,7 +143,9 @@ function nativeFeatureRuleContextsForTemplateHash(kind,templateHash){
 /** Owner taxonomy is additive: existing closed feature descriptors and their saved hashes do not change. */
 function compileNativeActors({adversaries=readAdversaries(),
   environments=readEnvironments()}={}){
-  const features=compileNativeFeatures({adversaries,environments}),taxonomy=definitions.actor_taxonomy,
+  // Discovery is source-local. The strict full inventory audit remains compileNativeFeatures.
+  // Classify the pinned definitions first, then omit an entire stale/ambiguous template.
+  const features=definitions.features,taxonomy=definitions.actor_taxonomy,
     rows=[...new Map(features.map(f=>[`${f.actor_kind}:${f.actor_name}`,{
       version:1,actor_kind:f.actor_kind,actor_key:`${f.actor_kind}:${slug(f.actor_name)}`,actor_name:f.actor_name,
       template_hash:f.template_hash,source_ref:f.source_ref.split('/features/')[0],signal_based:false,taxonomy_ruling:null
@@ -158,7 +160,14 @@ function compileNativeActors({adversaries=readAdversaries(),
     if(!actor||actor.actor_name!==classification.actor_name)throw fail('actor_taxonomy_source_hash_changed');
     actor.signal_based=true;actor.taxonomy_ruling=taxonomy.ruling_ref;
   }
-  return freeze(rows);
+  return freeze(rows.filter(actor=>{
+    const expected=features.filter(f=>f.actor_kind===actor.actor_kind&&f.template_hash===actor.template_hash),
+      sources=actor.actor_kind==='adversary'?adversaries:environments;
+    if(!Array.isArray(sources))return false;
+    const matches=sources.filter(source=>source?.name===actor.actor_name&&hash(source)===actor.template_hash);
+    return matches.length===1&&matches[0].features?.length===expected.length
+      &&expected.every(feature=>inspectNativeFeatureOccurrence(feature.feature_key,{adversaries,environments}).status==='verified_source');
+  }));
 }
 
 /** Read-only classification of an exact trusted template; this grants no alliance, move, cost or effect capability. */
@@ -172,8 +181,8 @@ function nativeActorTaxonomy(kind,template){
 /** Shared necessary-only taxonomy gate. Callers must separately prove live actors, alliance, timing and host legality. */
 function nativeSignalFeatureTarget(featureKey,template){
   if(!['adversary:choir-relay:local-mesh','adversary:choir-relay:route-around'].includes(featureKey))throw fail('signal_feature_source');
-  const feature=compileNativeFeatures().find(f=>f.feature_key===featureKey),actor=nativeActorTaxonomy('adversary',template);
-  if(!feature)throw fail('signal_feature_source');
+  const inspected=inspectNativeFeatureOccurrence(featureKey),feature=inspected.feature,actor=nativeActorTaxonomy('adversary',template);
+  if(inspected.status!=='verified_source')throw fail('signal_feature_source');
   return freeze({feature_key:featureKey,feature_hash:hash(feature),target:actor});
 }
 

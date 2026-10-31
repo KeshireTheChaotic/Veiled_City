@@ -1,0 +1,24 @@
+{
+  "phase": "AF05",
+  "status": "source_local_discovery_delta_complete",
+  "command": "node --test tests/ai-gm-2026-10/af05-source-local-discovery.test.mjs",
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-catalog.js",
+      "sha256": "03cfbff38db79e032d6d92bf5f5fdc7a86fa14e7b3661e191aea60109ab3b12c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af05-source-local-discovery.test.mjs",
+      "sha256": "21d3589a8b269506e943e8a19d4a0dfd0fa0ce272eba88d5bd8c3ffb28cada39"
+    }
+  ],
+  "limits": [
+    "Environment establishment callback injected; no world mutation or profile receipt proved",
+    "No live model, Discord or release evidence"
+  ]
+}
