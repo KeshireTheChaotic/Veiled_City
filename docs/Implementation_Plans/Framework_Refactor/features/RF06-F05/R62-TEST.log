@@ -1,0 +1,12 @@
+✔ public capability is original zero-argument factory with fresh original SDK options and no login (0.9592ms)
+✔ original intent/partial lookup order precedes exact constructor call without new option translation (1.2539ms)
+✔ original constructor failure identity propagates without catch/retry or lifecycle calls (0.2841ms)
+✔ entrypoint keeps explicit login and all qualified event/turn registrations at original composition points (0.4142ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 576.6449

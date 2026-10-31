@@ -1,0 +1,9 @@
+{
+  "parent": "f3cb648598016d48f8f707007df211feef560028",
+  "original_sdk_constructor_and_all_option_asts_equal": true,
+  "all_other_index_statements_equal": true,
+  "construction_at_original_call_site": true,
+  "original_login_and_all_lifecycle_services_unchanged": true,
+  "new_factory_parameters": 0,
+  "no_constructor_injection_or_config_knobs": true
+}

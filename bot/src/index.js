@@ -1,3 +1,4 @@
+import {createDiscordClient} from './frameworks/discord/public.js';
 import {registerInteractionHandler} from './application/workflows/public.js';
 import {registerClientReadyHandler} from './bootstrap/ready.js';
 import {registerShutdownHandlers} from './bootstrap/shutdown.js';
@@ -8,7 +9,7 @@ import {initializeIntentNarrative,initializeNarrativeOperations,initializeDiscor
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
-import { Client, GatewayIntentBits, Partials } from "discord.js";
+
 import { loadConfig } from "./bootstrap/config.js";
 import { VeiledDB } from "./db.js";
 import { ContentIndex } from "./frameworks/content/public.js";
@@ -113,10 +114,7 @@ const gm=new GMService({db,content,config,
 const voice=new VoiceNarrator(config,{db});
 const gmTurnQueue=new KeyedSerialQueue();
 
-const client=new Client({
-  intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessages,GatewayIntentBits.GuildVoiceStates],
-  partials:[Partials.Channel]
-});
+const client=createDiscordClient();
 
 async function sendPrivate(guild,userId,text,sessionId=null,characterId=null){
   return (await sendPlayerPrivate({db,guild,userId,content:text,sessionId,characterId})).ok;

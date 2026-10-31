@@ -456,18 +456,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "641a3bce40ef02770c1eeec1b71db08355b0befc762336f2fe666c9655e7580c",
-      "code": "EAGER_MODULE_CONSTRUCTION",
-      "from": "bot/src/index.js",
-      "detail": "Client",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "c749b9c32d1b04e93acd4e9fc22977e37a93305627ced8050fe99a8cc79a9281",
       "code": "EAGER_MODULE_CALL",
       "from": "bot/src/index.js",

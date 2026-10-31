@@ -83,3 +83,5 @@ export {npcControlLabel,formatNpcProxyPacket} from './npc-proxy-packet.js';
 export {handleCanonStatusCommand,handleCanonConflictsCommand,assertCanonReadStore} from './canon-read-commands.js';
 
 export {createLevelupDraftFormatter} from './levelup-draft-text.js';
+
+export {createDiscordClient} from './client-factory.js';

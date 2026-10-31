@@ -1,0 +1,9 @@
+# RF06-F05 R62 — Complete original Discord client construction boundary
+
+Sole original index newClient expression/options moved into zero-argument Discord factory through existing public API. Exact original SDK constructor/option ASTs and all other index statements unchanged. Same five intents/Channel partials and creation point; login and all lifecycle/config/GM/voice/DB services remain root. No public constructor-injection/config knobs, client caching or eager-behavior/timing change.
+
+Agent A granted exact source AFTER verified R61/C119 and INDEX+TRANSITIONS for separate checkpoints. Checker reported only one unused EAGER_MODULE_CONSTRUCTION Client record641a3bce40ef02770c1eeec1b71db08355b0befc762336f2fe666c9655e7580c; retired that exact record, no exception. Runtime3/freshc62/scope/ledger/hash/structure/retirement/log/TRANSITIONS/phase only; no BRIDGE changes.
+
+Frozen c62 exit0:4/4passed firstlaunch,576.6449ms,zero failure/skip/cancel. Actual public factory identity/arity and actual exported function body executed with FakeClient plus packaged SDK enums: original raw options/fresh instances/getter-before-constructor order/no login, original constructor error identity/no retry/lifecycle calls and root event/login retention. No actual SDK Client instantiated. Syntax4/4/constructor+restindexAST proof passed. Registry-only retirement needed no test rerun. No provider/network/productionDB/fullstartup claim.
+
+Qualified shared RF05 ratchet exit0:1087modules/4345imports,0unowned/0active/0transitionerrors,632accepted,cycle53 including concurrent C119. One B record retired, total26; no exception expansion/fullphase/release claim. Next exact RF06-F05 R63 coordinate original53initializer calls into Application startup coordinator, with index/public adoption locally held until C120newnative-outcomes binding qualified and final bootstrap freeze coordinated. Native correlated repositories remain held. Rollback only R62paths; no push/merge/deploy.
