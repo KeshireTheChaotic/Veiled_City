@@ -5,7 +5,7 @@
 ## Completed evidence available
 
 - AF01 shared context retrieval: 5 fresh tests passed; all 49 exact contexts and 153 source occurrences covered at their source projection boundary.
-- AF02 shared operation foundations: fresh arithmetic/cost/token/opportunity/owner-choice/area-cohort tests passed in their recorded runs. Latest mixed-reaction delta: 4 SQLite-backed tests passed, 0 failed/skipped, exit 0; three changed JS/MJS syntax checks passed. The coordinator is not integrated with a feature effect or Null Foam condition consumer.
+- AF02 shared operation foundations: fresh arithmetic/cost/token/opportunity/owner-choice/area-cohort tests passed in their recorded runs. Latest mixed-reaction delta: 5 SQLite-backed tests passed, 0 failed/skipped, exit 0; two changed JS/MJS syntax checks passed. The production composition exports the coordinator, but it is not integrated with a feature effect or Null Foam condition consumer.
 - AF03 bounded effect migrations: 22 fresh tests passed, 0 failed/skipped, exit 0 across source workflows, effect parity, receipt transitions and nine proof gates.
 - AF04 source capability coverage: 4 tests passed, 0 failed/skipped, exit 0; exact counts 30 native-bounded, 49 context-only, 69 held and 5 fiction-only. Held effects remain held.
 - AF05 projection and actor-local discovery: 6 projection tests and 4 discovery tests passed in recorded runs; these prove native proposal gates, not model choice quality or live multiplayer delivery.
