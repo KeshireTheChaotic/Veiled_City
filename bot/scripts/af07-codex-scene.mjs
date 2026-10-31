@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** AF07 local-only qualification harness. It uses a disposable SQLite campaign and never connects Discord. */
+/** AF07 disposable SQLite qualification. Live Codex/Discord preflight requires explicit opt-in. */
 import {mkdtempSync,rmSync,rmdirSync,existsSync} from 'node:fs';
 import {join,resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -68,7 +68,7 @@ function seed(directory){
   return {db,guild,session,pc,npc:'af07-contractor',scene,close(){db.close();}};
 }
 
-export function createAf07MockAi({fixture,messageId}){
+export function createAf07MockAi({fixture,messageId,proposedFeature=feature}){
   let calls=0;
   return {get calls(){return calls;},responses:{async create(request){
     calls++;
@@ -83,7 +83,7 @@ export function createAf07MockAi({fixture,messageId}){
     output.player_intents=[{type:'other',source_span:'What is happening in this room?',target_name:'',target_key:'',destination:'unspecified',operation:'current_situation',utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'A question about the present scene.'}];
     output.unified_arbitration={version:1,npc_intents:[{actor_key:actor,operation:'feature',target_refs:[pcId],objective_ref:'',source_refs:[],dependencies:[]}],decisions:[{
       intent_ref:intentRef,disposition:'native_feature_resolution',rule_basis_refs:['srd:reaction-rolls'],difficulty:12,trait:'Instinct',stakes_kind:'native_feature',
-      stakes:'The PC owner makes the reaction roll; no result or choice is assumed.',reason:'One source-backed Flashbang use.',difficulty_reason:'The feature sets Difficulty 12.',feature_ref:feature,experience_ref:'',advantage:false,disadvantage:false
+      stakes:'The PC owner makes the reaction roll; no result or choice is assumed.',reason:'One source-backed Flashbang use.',difficulty_reason:'The feature sets Difficulty 12.',feature_ref:proposedFeature,experience_ref:'',advantage:false,disadvantage:false
     }]};
     return {output_text:JSON.stringify(output),output:[],usage:{}};
   }}};
@@ -114,9 +114,11 @@ export async function runAf07Scenario({ai,aiFactory,live=false}={}){
     const mutation=commitGmTurn({db:fixture.db,guild:{id:fixture.guild},session:fixture.session,result,scope:{mode:'party',actorUserId:'owner-af07',actorCharacterId:fixture.pc.id},
       speaker:'af07-qualification',label:'AF07 disposable Codex qualification',meta:{messageId,triggerText:message},content:{root:contentRoot}});
     const executions=fixture.db.listCityRecords(fixture.guild,{kind:'gm_group_feature_execution',includeGM:true,limit:20});
+    const invitations=fixture.db.listCityRecords(fixture.guild,{kind:'gm_arbitration_decision',status:'pending_pc_reaction',includeGM:true,limit:20});
     return {ok:true,live,turnCommitted:true,gmNativeActions:mutation.gmNativeActions?.length||0,
       gmNativeActionKinds:(mutation.gmNativeActions||[]).map(row=>({kind:row.kind||null,status:row.status||null,operation:row.data?.native?.operation||row.operation||null})),
       unifiedDecisions:mutation.unifiedArbitration?.length||0,groupFeatureExecutions:executions.length,
+      ownerReactionInvitations:invitations.length,
       databaseWasTemporary:true,developmentDatabaseReadOnly:live?liveContext.database:null,
       discordConnected:!!discordClient,discordMessageIntents:false,discordMessagesProcessed:false};
   }finally{

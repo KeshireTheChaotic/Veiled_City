@@ -68,5 +68,37 @@
     "Full 153-occurrence legal/illegal/source-drift/cost/receipt/replay and recovery matrix remains incomplete.",
     "No deployment or release qualification was performed."
   ],
-  "human_attention_required": null
+  "human_attention_required": null,
+  "rejection_run": {
+    "run_id": "AF07-REJECTION-20261031-01",
+    "base_sha": "eee0a8a3ed37111977a3f9ea38acecbac404df1b",
+    "commands": [
+      "node --check scripts/af07-codex-scene.mjs",
+      "node --check tests/ai-gm-2026-10/af07-codex-scene.test.mjs",
+      "node --test tests/ai-gm-2026-10/af07-codex-scene.test.mjs"
+    ],
+    "syntax_checks_passed": 2,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "inputs": [
+      {
+        "path": "bot/scripts/af07-codex-scene.mjs",
+        "sha256": "90018d082220417c589112b778f8e05898680c84a9ce77eeb54b430ade08f56e"
+      },
+      {
+        "path": "bot/tests/ai-gm-2026-10/af07-codex-scene.test.mjs",
+        "sha256": "b8a0b8dda0d3d6bf9b070732130ba1548dca00afa9ebb925200ddcc88ba45700"
+      }
+    ],
+    "observations": [
+      "Legal Flashbang created one execution and exactly one pending owner reaction invitation.",
+      "Feature belonging to another adversary committed the unified turn with zero native actions, executions or owner invitations."
+    ],
+    "limits": [
+      "Injected model responses; no new live-model or Discord run.",
+      "No owner dice, NPC condition lifecycle or real-model reselection qualified."
+    ]
+  }
 }
