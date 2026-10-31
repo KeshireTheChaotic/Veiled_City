@@ -1,5 +1,6 @@
 /** GM-only expansion operations; read-only diagnostics never create command receipts or campaign state. */
-import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
+import { PermissionFlagsBits } from "discord.js";
+import {createAttachment} from './frameworks/discord/public.js';
 import { PermissionError } from "./kernel/errors.js";
 import { cityObject } from './frameworks/world/public.js';
 import { ContextPlanner } from "./context-planner.js";
@@ -72,5 +73,5 @@ export async function handleStoryCommand(interaction,{db,gm}){
       sendPlayerPrivate({db,guild:interaction.guild,userId,content,sessionId,characterId,...meta}));
   const preview=sub==="ai-inbox"?result.items.slice(0,5).map(row=>`${row.record_key}: ${row.preview.operation} [${row.status}]\n${row.preview.player_consent}\n${row.preview.blocked_reason||row.preview.likely_effect}`).join("\n\n"):"";
   await interaction.reply({ephemeral:true,allowedMentions:{parse:[]},content:(`Story ${sub}: GM-private result.${preview?`\n${preview}`:""}`).slice(0,1900),
-    files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"story-result.json"})]});
+    files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"story-result.json"})]});
 }

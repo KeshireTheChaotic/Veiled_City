@@ -2,6 +2,8 @@
 
 Base: `2107318d1f286e4ace6f028c76ecdd3a7ea17679` (`RF06 F04 R69 isolate seed command Discord reply`).
 
+Result: `3de506ed97af2a238d4b4d2511604319ed812a28` (`RF06 F04 R70 use Discord city attachment interface`).
+
 The city handler now uses `createAttachment` from the existing Discord public API. Its command permission check, result production, content and JSON serialization are unchanged. Immediate interactions still receive the same ephemeral reply; deferred interactions still receive the same `editReply` payload without a newly added ephemeral option. The only production source path is `bot/src/city-commands.js`.
 
 Pre-edit worktree source SHA256: `005014bb47a6a04354da8b6657230821140be1ee6245f4156d149d155631e3da`. The worktree hash is recorded before the R70 edit; Git's checked-out blob can have a different line-ending hash on this Windows checkout. The source diff replaces only the direct `AttachmentBuilder` import and constructor with the existing public API call.
