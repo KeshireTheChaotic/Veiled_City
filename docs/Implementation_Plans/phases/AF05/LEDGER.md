@@ -1,0 +1,9 @@
+# AF05 — Autonomous orchestration
+
+**IN PROGRESS — source-qualified native feature projection verified, Agent C.** The existing mechanical proposal boundary accepts adversary feature proposals only for an exact current native decision, source/template, actor, target cohort and task. It requires the existing GM discretion flag and explicit autonomous mode. Manual or unset campaigns are not migrated. Four existing operations are admitted: group feature, volley, adversary feature and feature reaction request. Projection neither executes effects nor grants arbitrary mutations, passive token actions, dice or costs.
+
+Modified files: `gm-mechanical-proposal-rules.js`, `mechanical-boundary-v9.js`, root composition `gm-mechanical-v9.js`, the shared prompt in `gm-unified-arbitration.js`, and fresh `af05-mechanical-projection.test.mjs`. The prompt directs scoped capability use, truthful local holds and legal alternate actions without a routine moderator gate; passive tokens are not proposed as extra actions.
+
+Verification complete for this projection: **6 tests passed, 0 failed, 0 skipped, exit 0**; four changed-file syntax checks passed. Tests cover four native operation routes, source/actor/target/template/task/mode failures, opaque grants, arbitrary patch rejection and the existing standard-attack Fear boundary. These are injected native-service tests, not autonomous real-model scenario or Discord evidence. Do not rerun this unchanged suite.
+
+Remaining scope: eligible trigger discovery and local rejection/reselection scenarios across the remaining adapters, receipt-qualified execution, model staging and full multiplayer recovery evidence. No routine human moderator gate was added; player decisions remain pending until authorized. Next exact work: continue **AF05 orchestration scenario qualification** after the corresponding AF04 operation is executable. AF06 deletion remains gated on actual replacement and consumer evidence.

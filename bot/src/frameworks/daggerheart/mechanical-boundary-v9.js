@@ -9,11 +9,14 @@ export function projectGmMechanicalInput({authority,grant,proposal,verifyInput})
   const b=authority.inspect(grant);
   if(b.audience!=='gm_internal'||b.native_capability!=='gm_action'||typeof verifyInput!=='function')error('native_gm_capability');
   const p=verifyInput(proposal,b);
+  const feature=b.native_route==='qualified_feature',featureOperations=['commit_group_feature','commit_adversary_volley','commit_adversary_feature','request_feature_reaction_roll'];
   if(p?.verified!==true||p.source_event!==b.source_event||p.proof_ref!==b.proof_ref||p.request_id!==b.request_id
-    ||p.actor?.kind!=='adversary'||p.actor.id!==b.actor.id||p.operation!=='commit_adversary_attack'
-    ||!['awaiting_owner_defense','native_pending'].includes(p.disposition))error('native_gm_input_proof');
+    ||p.actor?.kind!=='adversary'||p.actor.id!==b.actor.id
+    ||(feature?!featureOperations.includes(p.operation)||p.operation!==b.allowed_operation||!id(b.feature_ref)||p.feature_ref!==b.feature_ref
+      ||!['awaiting_owner_defense','awaiting_owner_reaction','native_pending'].includes(p.disposition)
+      :p.operation!=='commit_adversary_attack'||!['awaiting_owner_defense','native_pending'].includes(p.disposition)))error('native_gm_input_proof');
   return Object.freeze({kind:'mechanical_input',initiator_class:b.initiator_class,operation:p.operation,actor:Object.freeze({...p.actor}),
-    request_ref:p.request_id,source_event:p.source_event,proof_ref:p.proof_ref,disposition:p.disposition,executed:false});
+    request_ref:p.request_id,source_event:p.source_event,proof_ref:p.proof_ref,disposition:p.disposition,...(feature?{feature_ref:p.feature_ref}:{}),executed:false});
 }
 
 /**

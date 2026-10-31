@@ -1,0 +1,41 @@
+{
+  "phase": "AF05",
+  "status": "projection_checkpoint_in_progress",
+  "runs": [
+    {
+      "command": "node --test tests/ai-gm-2026-10/af05-mechanical-projection.test.mjs",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "syntax_checks": 4
+    },
+    {
+      "command": "node --check bot/src/gm-unified-arbitration.js",
+      "exit_code": 0
+    }
+  ],
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-mechanical-proposal-rules.js",
+      "sha256": "9b3dc5cf81c90775a111a8dd34f8a87746e7c5e157a7f9abae07f4df6695b38e"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/mechanical-boundary-v9.js",
+      "sha256": "a69f7347c7d78386ba4172b678f5e700f290ce38cba6d051cfe404a3342ce507"
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "sha256": "fb77a9c8288b448fec08ba34e8ef14b0ed2cd9767ed0f823371aed40a79484fa"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "b97f36104ff334a411bf90763d36a058e615ca88d1f3a15934553cf9d50615e6"
+    }
+  ],
+  "limits": [
+    "Projection is not execution",
+    "Injected tests do not prove real-model selection or multiplayer delivery",
+    "Prompt syntax check does not prove narrative behavior"
+  ]
+}
