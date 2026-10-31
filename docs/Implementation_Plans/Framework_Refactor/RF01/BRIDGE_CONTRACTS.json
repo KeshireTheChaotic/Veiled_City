@@ -1092,15 +1092,15 @@
           "from": "daggerheart",
           "to": "publication",
           "import_occurrences": 15,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "injected_calls": 1,
+          "contract": "Publication-owned exact synchronous GM notice reservation source and Native cancellation-only consumer; transaction ownership remains with original caller"
         },
         {
           "from": "publication",
           "to": "daggerheart",
           "import_occurrences": 19,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "injected_calls": 1,
+          "contract": "Publication-owned exact synchronous GM notice reservation source and Native cancellation-only consumer; transaction ownership remains with original caller"
         }
       ],
       "source_evidence": [
@@ -1148,7 +1148,14 @@
         "occurrences": 34
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--publication/public.js",
-      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred. C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned. C120 original environment locators and receipt renderer are supplied through a fixed read-only Publication consumer; wider legacy projection adoption remains deferred.",
+      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred. C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned. C120 original environment locators and receipt renderer are supplied through a fixed read-only Publication consumer; wider legacy projection adoption remains deferred. RF06-F03 R67 adds the original synchronous GM notice reservation through fixed Publication source/Native consumer; only the qualified Native cancellation callback adopts it, and caller transaction ownership is unchanged.",
+      "gm_notice_reservation": {
+        "feature": "RF06-F03 R67",
+        "source": "Original synchronous reserveGmArbitrationNotice implementation registered as a fixed Publication source",
+        "consumer": "Fixed Native reservation consumer through existing Daggerheart-Publication pair",
+        "adoption": "Only native-feature-effects cancellation callpoint; original reservation function and transaction ownership unchanged",
+        "qualification_evidence": "features/RF06-F03/R67-HASHES.json"
+      },
       "native_environment_output": {
         "feature": "RF05-F05 C120",
         "source": "Original Native nativeEnvironmentOutputCandidates and nativeEnvironmentOutput functions",

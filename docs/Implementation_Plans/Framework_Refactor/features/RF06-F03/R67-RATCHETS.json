@@ -1,0 +1,47 @@
+{
+  "rf05_shared": {
+    "pass": true,
+    "sourceModules": 1069,
+    "importOccurrences": 4333,
+    "acceptedLegacyOccurrences": 600,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "largestCycle": 51,
+    "runBy": "Agent A after C129/R67 source freeze"
+  },
+  "rf06": {
+    "pass": false,
+    "sourceModules": 1069,
+    "importOccurrences": 4333,
+    "activeViolationGroups": 386,
+    "transitionErrors": 386,
+    "largestCycle": 51,
+    "firstErrors": [
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-consent.js",
+        "owner": "daggerheart"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/action-dependency.js",
+        "owner": "intent"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-intent-contracts.js",
+        "owner": "intent"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-intents.js",
+        "owner": "intent"
+      },
+      {
+        "code": "LEGACY_MODULE_LOCATION",
+        "from": "bot/src/ai-review.js",
+        "owner": "operations"
+      }
+    ]
+  }
+}

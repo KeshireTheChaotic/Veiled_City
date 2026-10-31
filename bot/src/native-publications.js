@@ -1,5 +1,6 @@
 /** Native disclosures share the transactional turn outbox, not a parallel best-effort sender. */
 import {noticeHash,renderNativeNotice} from './native-notice.js';
+import {publicationGmNoticeReservation} from './frameworks/publication/public.js';
 import {prepareNativeNoticeOutput} from './pvp-output.js';
 import {queueTurnPublications,deliverTurnOutbox} from './publication-outbox.js';
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
@@ -24,6 +25,7 @@ function gmArbitrationSpec(db,guild,decision){
     notice:{kind:'gm_arbitration_private',ref:decision,revision:projection.revision,user:owner,character}};
 }
 export function reserveGmArbitrationNotice(db,guild,decision){return reserveNativeNotice(db,guild,gmArbitrationSpec(db,guild,decision));}
+publicationGmNoticeReservation.bind({reserveGmArbitrationNotice});
 export function publishGmArbitrationNotice(db,guild,decision,sendPrivate){
   const spec=gmArbitrationSpec(db,guild,decision),row=db.getCityRecord(guild,'gm_arbitration_decision',decision);
   return publishNativeNotice(db,guild,spec,r=>sendPrivate(spec.notice.user,r.payload,row.data.origin.session,spec.notice.character,{publication:r}));

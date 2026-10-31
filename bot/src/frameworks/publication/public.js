@@ -91,3 +91,4 @@ export {createPrivatePlayerPublisher} from './private-player-delivery.js';
 export {publicationDiscordAttachments} from './contracts/discord-channels.js';
 
 export {publicationNativeEnvironmentOutput} from './contracts/native-environment-output.js';
+export {createGmNoticeReservationSource,publicationGmNoticeReservation} from './contracts/gm-notice-reservation-source.js';

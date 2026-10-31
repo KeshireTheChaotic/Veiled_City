@@ -5,12 +5,12 @@ import {typedRollProof} from './typed-roll-proof.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {groupReactionState,applyGroupReactionOutcome,settleGroupFeature} from './native-group-features.js';
-import {reserveGmArbitrationNotice} from './native-publications.js';
+import {nativeGmNoticeReservation} from './frameworks/daggerheart/public.js';
 import {applyNativeStressPassive} from './native-stress-passives.js';
 import {createFeatureEffectRules} from './frameworks/daggerheart/public.js';
 export {nativeDeviceUseIssue} from './frameworks/daggerheart/device-use-eligibility.js';
 let nativeEffects;
-function rules(){return nativeEffects??=createFeatureEffectRules({source:{indexWorldEvent:(...args)=>indexWorldEvent(...args)},mechanics:{inspectNativeGmDecision:(...args)=>inspectNativeGmDecision(...args),inspectFeatureWindow:(...args)=>inspectFeatureWindow(...args),typedRollProof:(...args)=>typedRollProof(...args),groupReactionState:(...args)=>groupReactionState(...args),applyGroupReactionOutcome:(...args)=>applyGroupReactionOutcome(...args),settleGroupFeature:(...args)=>settleGroupFeature(...args),applyNativeStressPassive:(...args)=>applyNativeStressPassive(...args)},notices:{reserveGmArbitrationNotice:(...args)=>reserveGmArbitrationNotice(...args)}});}
+function rules(){return nativeEffects??=createFeatureEffectRules({source:{indexWorldEvent:(...args)=>indexWorldEvent(...args)},mechanics:{inspectNativeGmDecision:(...args)=>inspectNativeGmDecision(...args),inspectFeatureWindow:(...args)=>inspectFeatureWindow(...args),typedRollProof:(...args)=>typedRollProof(...args),groupReactionState:(...args)=>groupReactionState(...args),applyGroupReactionOutcome:(...args)=>applyGroupReactionOutcome(...args),settleGroupFeature:(...args)=>settleGroupFeature(...args),applyNativeStressPassive:(...args)=>applyNativeStressPassive(...args)},notices:{reserveGmArbitrationNotice:(...args)=>nativeGmNoticeReservation.reserveGmArbitrationNotice(...args)}});}
 export function featureReactionStakes(...args){return rules().featureReactionStakes(...args);}
 export function validateFeatureInvitation(...args){return rules().validateFeatureInvitation(...args);}
 export function cancelFeatureReaction(...args){return rules().cancelFeatureReaction(...args);}

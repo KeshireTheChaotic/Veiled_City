@@ -200,6 +200,7 @@ export {createNativeEnvironmentRecording,inspectNativeEnvironmentRecording} from
 export {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,captureCountdownActionAncestry,inspectCountdownActionAncestry,advanceEnvironmentUploadCountdown,adjustEnvironmentUploadCountdown,inspectEnvironmentCountdown,environmentCountdownProjection,environmentUploadState,closingTimeMovesReadiness} from './native-environment-countdown.js';
 
 export {nativeEnvironmentOutputCandidates,nativeEnvironmentOutput} from './native-environment-output.js';
+export {createNativeGmNoticeReservationConsumer,nativeGmNoticeReservation} from './contracts/gm-notice-reservation.js';
 
 export {validateEnvironmentOddsProposal,clearNativeEnvironmentNoise,inspectNativeEnvironmentNoiseClear,nativeEnvironmentNoiseState,prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
 
