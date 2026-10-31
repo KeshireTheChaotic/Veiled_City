@@ -1,0 +1,46 @@
+{
+  "production_changes": 0,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c110.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "duration_ms": 1519.4863
+  },
+  "evidence": "Original source/board, pair Native service and actual SQLite compose and replay empty batch, reject changed board, preserve PC and GM privacy, rollback all three correlated writes.",
+  "limits": "Synthetic Narrative/Session context, supplied empty library, no PC accepted intent or NPC proposal. No Native action/receipt/outbox/full turn/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "eb7d6a143484c8ab7babdfdd8eaacfd1dfe4948b889168f5e7fb9aa7bdc83c94"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "62b9f73be09fc45e13d20fc851669b4c44cfbb58e2de657812ae9e414d38dfc0"
+    },
+    {
+      "path": "bot/src/frameworks/intent/scene-intent-board.js",
+      "sha256": "dc1e5239ae967377ed8bc83da057c84ff5704fda29b0f82dc40f9824e22fecc1"
+    },
+    {
+      "path": "bot/src/frameworks/intent/arbitration-origin.js",
+      "sha256": "12cb848920045c4d94b4f8cd882794db8a8b46dac11cd033a91634003e9e9414"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "sha256": "e748639b4a561ba10f4de4304bc169744caafa69070f151e4c6c7488b70b4366"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "81cdf4c7da2e955f7740b33dc1087882d70eea4042a0fc1d39e1e13c720ea1a0"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/database.js",
+      "sha256": "f77d6b8e9031ff00439f0c62f2cd42f23c68a28df55821718207c25bc16bb17f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c110.test.mjs",
+      "sha256": "7bc8146bbed94409a9cb6ba4dec979aa8244a87f031cdbfc25d7cdf7cb6788aa"
+    }
+  ],
+  "base": "4556493f85112adecf4c9c35d064e24022fab275"
+}
