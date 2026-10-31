@@ -64,3 +64,5 @@ export {initializePublicationDiscord} from './publication-discord.js';
 export {initializeOperationsDiscord} from './operations-discord.js';
 
 export {initializePublicationOperations} from './publication-operations.js';
+
+export {initializeRuntimeFrameworks} from './runtime-initializers.js';

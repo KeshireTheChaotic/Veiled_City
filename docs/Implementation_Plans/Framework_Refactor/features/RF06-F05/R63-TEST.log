@@ -1,0 +1,48 @@
+✖ C113 internal entrypoint imports and original initialization order compose offline (30055.6733ms)
+✔ public coordinator invokes all original53 functions exactly once in original order and ignores returns (0.9802ms)
+✔ original synchronous initializer failure aborts without retries, skips or later binding (0.3711ms)
+✔ all canonical original provider identities and individual public startup APIs remain available (10.4216ms)
+✔ entrypoint has exactly one public startup coordinator and retains constructors, listeners and login (16.494ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30253.7284
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf05-f05-c113.test.mjs:7:1
+✖ C113 internal entrypoint imports and original initialization order compose offline (30055.6733ms)
+  Error: spawnSync C:\Program Files\nodejs\node.exe ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs:11:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -4039,
+    code: 'ETIMEDOUT',
+    syscall: 'spawnSync C:\\Program Files\\nodejs\\node.exe',
+    path: 'C:\\Program Files\\nodejs\\node.exe',
+    spawnargs: [ '--input-type=module', '-e', `import fs from 'node:fs';import http from 'node:http';import https from 'node:https';import net from 'node:net';import tls from 'node:tls';import {syncBuiltinESMExports} from 'node:module';let attempts=0,writes=0;const offline=()=>{attempts++;throw new Error('Offline bootstrap forbids network');};globalThis.fetch=offline;http.request=http.get=https.request=https.get=net.connect=net.createConnection=tls.connect=offline;for(const name of ['writeFileSync','appendFileSync','createWriteStream','mkdirSync'])fs[name]=()=>{writes++;throw new Error('Offline bootstrap forbids filesystem writes');};syncBuiltinESMExports();for(const source of ["file:///D:/Library/Development/Veiled_City/bot/src/application/composition/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/discord/public.js","file:///D:/Library/Development/Veiled_City/bot/src/application/workflows/public.js","file:///D:/Library/Development/Veiled_City/bot/src/bootstrap/ready.js","file:///D:/Library/Development/Veiled_City/bot/src/bootstrap/shutdown.js","file:///D:/Library/Development/Veiled_City/bot/src/bootstrap/config.js","file:///D:/Library/Development/Veiled_City/bot/src/db.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/content/public.js","file:///D:/Library/Development/Veiled_City/bot/src/gm.js","file:///D:/Library/Development/Veiled_City/bot/src/commands.js","file:///D:/Library/Development/Veiled_City/bot/src/state.js","file:///D:/Library/Development/Veiled_City/bot/src/turn-orchestration.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/narrative/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/session/public.js","file:///D:/Library/Development/Veiled_City/bot/src/roll-requests.js","file:///D:/Library/Development/Veiled_City/bot/src/publishing.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/public.js","file:///D:/Library/Development/Veiled_City/bot/src/semantic-engagement.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/public.js","file:///D:/Library/Development/Veiled_City/bot/src/discord/interaction-lifecycle.js","file:///D:/Library/Development/Veiled_City/bot/src/publishing.js","file:///D:/Library/Development/Veiled_City/bot/src/voice.js","file:///D:/Library/Development/Veiled_City/bot/src/pvp-output.js","file:///D:/Library/Development/Veiled_City/bot/src/publication-outbox.js","file:///D:/Library/Development/Veiled_City/bot/src/kernel/serial-queue.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/publication/public.js","file:///D:/Library/Development/Veiled_City/bot/src/application/workflows/public.js","file:///D:/Library/Development/Veiled_City/bot/src/discord/chunking.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/discord/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/operations/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/world/public.js","file:///D:/Library/Development/Veiled_City/bot/src/publishing.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/public.js","file:///D:/Library/Development/Veiled_City/bot/src/turn-attempts.js","file:///D:/Library/Development/Veiled_City/bot/src/routing-diagnostics.js","file:///D:/Library/Development/Veiled_City/bot/src/operational-metrics.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/public.js","file:///D:/Library/Development/Veiled_City/bot/src/frameworks/ai-provider/public.js","file:///D:/Library/Development/Veiled_City/bot/src/turn-latency.js","file:///D:/Library/Development/Veiled_City/bot/src/tracked-turn.js","file:///D:/Library/Development/Veiled_City/bot/src/turn-trace-context.js","file:///D:/Library/Development/Veiled_City/bot/src/application/workflows/public.js"])await import(source);const app=await import("file:///D:/Library/Development/Veiled_City/bot/src/application/composition/public.js");for(const name of ["initializeRuntimeFrameworks"]){if(typeof app[name]!=='function')throw new Error('Missing initializer '+name);app[name]();}console.log(JSON.stringify({calls:["initializeRuntimeFrameworks"],attempts,writes}));` ],
+    error: Error: spawnSync C:\Program Files\nodejs\node.exe ETIMEDOUT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs:11:15)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    status: null,
+    signal: 'SIGTERM',
+    output: [ null, '', '' ],
+    pid: 17520,
+    stdout: '',
+    stderr: ''
+  }

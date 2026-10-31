@@ -1,0 +1,324 @@
+{
+  "count": 53,
+  "contiguous": true,
+  "entries": [
+    {
+      "name": "initializeContentWorld",
+      "arguments": 0,
+      "local": "initializeContentWorld",
+      "source": "./content-world.js"
+    },
+    {
+      "name": "initializeSessionAssemblyState",
+      "arguments": 0,
+      "local": "initializeSessionAssemblyState",
+      "source": "./assembly-state.js"
+    },
+    {
+      "name": "initializeDiscordSessionPrincipal",
+      "arguments": 0,
+      "local": "initializeDiscordSessionPrincipal",
+      "source": "./discord-session.js"
+    },
+    {
+      "name": "initializeWorldActorControl",
+      "arguments": 0,
+      "local": "initializeWorldActorControl",
+      "source": "./world-actor-control.js"
+    },
+    {
+      "name": "initializeWorldExecution",
+      "arguments": 0,
+      "local": "initializeWorldExecution",
+      "source": "./world-execution.js"
+    },
+    {
+      "name": "initializeWorldOwnerConsent",
+      "arguments": 0,
+      "local": "initializeWorldOwnerConsent",
+      "source": "./world-owner-consent.js"
+    },
+    {
+      "name": "initializeNativeSessionMovement",
+      "arguments": 0,
+      "local": "initializeNativeSessionMovement",
+      "source": "./native-session-movement.js"
+    },
+    {
+      "name": "initializeEnvironmentScene",
+      "arguments": 0,
+      "local": "initializeEnvironmentScene",
+      "source": "./environment-scene.js"
+    },
+    {
+      "name": "initializePvpAgreements",
+      "arguments": 0,
+      "local": "initializePvpAgreements",
+      "source": "./pvp-agreements.js"
+    },
+    {
+      "name": "initializeNativeOutcomes",
+      "arguments": 0,
+      "local": "initializeNativeOutcomes",
+      "source": "./native-outcomes.js"
+    },
+    {
+      "name": "initializePublicationNarrative",
+      "arguments": 0,
+      "local": "initializePublicationNarrative",
+      "source": "./publication-narrative.js"
+    },
+    {
+      "name": "initializeDiscordNarrative",
+      "arguments": 0,
+      "local": "initializeDiscordNarrative",
+      "source": "./discord-narrative.js"
+    },
+    {
+      "name": "initializeNarrativeOperations",
+      "arguments": 0,
+      "local": "initializeNarrativeOperations",
+      "source": "./narrative-operations.js"
+    },
+    {
+      "name": "initializeIntentNarrative",
+      "arguments": 0,
+      "local": "initializeIntentNarrative",
+      "source": "./intent-narrative.js"
+    },
+    {
+      "name": "initializeCharacterCreation",
+      "arguments": 0,
+      "local": "initializeCharacterCreation",
+      "source": "./character-creation.js"
+    },
+    {
+      "name": "initializeNpcWorldEvidence",
+      "arguments": 0,
+      "local": "initializeNpcWorldEvidence",
+      "source": "./npc-world-evidence.js"
+    },
+    {
+      "name": "initializeNpcStrategy",
+      "arguments": 0,
+      "local": "initializeNpcStrategy",
+      "source": "./npc-strategy.js"
+    },
+    {
+      "name": "initializeSessionWorldEvents",
+      "arguments": 0,
+      "local": "initializeSessionWorldEvents",
+      "source": "./session-world-events.js"
+    },
+    {
+      "name": "initializeSessionSceneWorld",
+      "arguments": 0,
+      "local": "initializeSessionSceneWorld",
+      "source": "./session-scene-world.js"
+    },
+    {
+      "name": "initializeNpcObservations",
+      "arguments": 0,
+      "local": "initializeNpcObservations",
+      "source": "./npc-observations.js"
+    },
+    {
+      "name": "initializeKnowledgeWorld",
+      "arguments": 0,
+      "local": "initializeKnowledgeWorld",
+      "source": "./knowledge-world.js"
+    },
+    {
+      "name": "initializeNarrativeWorld",
+      "arguments": 0,
+      "local": "initializeNarrativeWorld",
+      "source": "./narrative-world.js"
+    },
+    {
+      "name": "initializeKnowledgeNarrative",
+      "arguments": 0,
+      "local": "initializeKnowledgeNarrative",
+      "source": "./knowledge-narrative.js"
+    },
+    {
+      "name": "initializePublicationKnowledgeNarrativeMemory",
+      "arguments": 0,
+      "local": "initializePublicationKnowledgeNarrativeMemory",
+      "source": "./publication-knowledge-narrative-memory.js"
+    },
+    {
+      "name": "initializeNpcEvidenceProjection",
+      "arguments": 0,
+      "local": "initializeNpcEvidenceProjection",
+      "source": "./npc-evidence-projection.js"
+    },
+    {
+      "name": "initializeNpcCognition",
+      "arguments": 0,
+      "local": "initializeNpcCognition",
+      "source": "./npc-cognition.js"
+    },
+    {
+      "name": "initializeNpcConversations",
+      "arguments": 0,
+      "local": "initializeNpcConversations",
+      "source": "./npc-conversations.js"
+    },
+    {
+      "name": "initializeWorldCandidateContext",
+      "arguments": 0,
+      "local": "initializeWorldCandidateContext",
+      "source": "./world-candidate-context.js"
+    },
+    {
+      "name": "initializeWorldNpcOpportunity",
+      "arguments": 0,
+      "local": "initializeWorldNpcOpportunity",
+      "source": "./world-npc-opportunity.js"
+    },
+    {
+      "name": "initializeNativeNpcEvidence",
+      "arguments": 0,
+      "local": "initializeNativeNpcEvidence",
+      "source": "./native-npc-evidence.js"
+    },
+    {
+      "name": "initializeOperationsNpcReview",
+      "arguments": 0,
+      "local": "initializeOperationsNpcReview",
+      "source": "./operations-npc-review.js"
+    },
+    {
+      "name": "initializeNativeEnvironmentAudience",
+      "arguments": 0,
+      "local": "initializeNativeEnvironmentAudience",
+      "source": "./native-environment-audience.js"
+    },
+    {
+      "name": "initializeNativeWorldEvidence",
+      "arguments": 0,
+      "local": "initializeNativeWorldEvidence",
+      "source": "./native-world-evidence.js"
+    },
+    {
+      "name": "initializeNativeWorldEvents",
+      "arguments": 0,
+      "local": "initializeNativeWorldEvents",
+      "source": "./native-world-events.js"
+    },
+    {
+      "name": "initializeCharacterWorldEvents",
+      "arguments": 0,
+      "local": "initializeCharacterWorldEvents",
+      "source": "./character-world-events.js"
+    },
+    {
+      "name": "initializeNativeScenes",
+      "arguments": 0,
+      "local": "initializeNativeScenes",
+      "source": "./native-scenes.js"
+    },
+    {
+      "name": "initializeNativePrincipals",
+      "arguments": 0,
+      "local": "initializeNativePrincipals",
+      "source": "./native-principals.js"
+    },
+    {
+      "name": "initializeKnowledgeSession",
+      "arguments": 0,
+      "local": "initializeKnowledgeSession",
+      "source": "./knowledge-session.js"
+    },
+    {
+      "name": "initializeCharacterSession",
+      "arguments": 0,
+      "local": "initializeCharacterSession",
+      "source": "./character-session.js"
+    },
+    {
+      "name": "initializePersonalContinuity",
+      "arguments": 0,
+      "local": "initializePersonalContinuity",
+      "source": "./personal-continuity.js"
+    },
+    {
+      "name": "initializeSessionIntent",
+      "arguments": 0,
+      "local": "initializeSessionIntent",
+      "source": "./session-intent.js"
+    },
+    {
+      "name": "initializeOperationsWorldOverview",
+      "arguments": 0,
+      "local": "initializeOperationsWorldOverview",
+      "source": "./operations-world-overview.js"
+    },
+    {
+      "name": "initializeWorldNativeEncounter",
+      "arguments": 0,
+      "local": "initializeWorldNativeEncounter",
+      "source": "./world-native-encounter.js"
+    },
+    {
+      "name": "initializePersistenceKnowledge",
+      "arguments": 0,
+      "local": "initializePersistenceKnowledge",
+      "source": "./persistence-knowledge.js"
+    },
+    {
+      "name": "initializeIntentKnowledge",
+      "arguments": 0,
+      "local": "initializeIntentKnowledge",
+      "source": "./intent-knowledge.js"
+    },
+    {
+      "name": "initializeKnowledgeOperations",
+      "arguments": 0,
+      "local": "initializeKnowledgeOperations",
+      "source": "./knowledge-operations.js"
+    },
+    {
+      "name": "initializePersistenceWorld",
+      "arguments": 0,
+      "local": "initializePersistenceWorld",
+      "source": "./persistence-world.js"
+    },
+    {
+      "name": "initializeNarrativePersistence",
+      "arguments": 0,
+      "local": "initializeNarrativePersistence",
+      "source": "./narrative-persistence.js"
+    },
+    {
+      "name": "initializePublicationSession",
+      "arguments": 0,
+      "local": "initializePublicationSession",
+      "source": "./publication-session.js"
+    },
+    {
+      "name": "initializePublicationWorld",
+      "arguments": 0,
+      "local": "initializePublicationWorld",
+      "source": "./publication-world.js"
+    },
+    {
+      "name": "initializePublicationDiscord",
+      "arguments": 0,
+      "local": "initializePublicationDiscord",
+      "source": "./publication-discord.js"
+    },
+    {
+      "name": "initializeOperationsDiscord",
+      "arguments": 0,
+      "local": "initializeOperationsDiscord",
+      "source": "./operations-discord.js"
+    },
+    {
+      "name": "initializePublicationOperations",
+      "arguments": 0,
+      "local": "initializePublicationOperations",
+      "source": "./publication-operations.js"
+    }
+  ]
+}

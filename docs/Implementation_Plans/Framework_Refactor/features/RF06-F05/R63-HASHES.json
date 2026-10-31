@@ -1,0 +1,14 @@
+{
+  "files": {
+    "bot/src/index.js": "1ca037f49e71376368994e2d307597cea2cc398e7171c46950cda445ccd3b3ba",
+    "bot/src/application/composition/public.js": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2",
+    "bot/src/application/composition/runtime-initializers.js": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055",
+    "bot/tests/ai-gm-2026-10/rf06-f05-c63.test.mjs": "278525fe3c1f80fa04623347054a3bad4bf9f42b01ccb741ff9b39ed900acfc1",
+    "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa",
+    "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF06-F05/R63-INITIALIZERS.json": "cb960719712d6bd820cdf456c9450d1593270b3df7ee0e6e63430fd7042f9e87"
+  },
+  "original_C113_sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24",
+  "C120_native_outcomes_sha256": "f1b00ca9418d7f98abb55b9be6d8a81cd2c194eb09bcd3618473f2924f4ca4e9",
+  "collector_staging": "Excluded by Agent A standing RF05 test boundary; local source hash/results recorded."
+}

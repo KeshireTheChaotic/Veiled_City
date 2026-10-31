@@ -1,11 +1,12 @@
+import {initializeRuntimeFrameworks} from './application/composition/public.js';
 import {createDiscordClient} from './frameworks/discord/public.js';
 import {registerInteractionHandler} from './application/workflows/public.js';
 import {registerClientReadyHandler} from './bootstrap/ready.js';
 import {registerShutdownHandlers} from './bootstrap/shutdown.js';
-import {initializePublicationOperations} from './application/composition/public.js';
-import {initializeOperationsDiscord} from './application/composition/public.js';
-import {initializePublicationDiscord} from './application/composition/public.js';
-import {initializeIntentNarrative,initializeNarrativeOperations,initializeDiscordNarrative,initializePublicationNarrative,initializeContentWorld,initializeSessionAssemblyState,initializeDiscordSessionPrincipal,initializeEnvironmentScene,initializePvpAgreements,initializeNativeOutcomes,initializeCharacterCreation,initializeNpcWorldEvidence,initializeSessionWorldEvents,initializeNarrativeWorld,initializeKnowledgeWorld,initializeKnowledgeNarrative,initializeWorldActorControl,initializeWorldExecution,initializeSessionSceneWorld,initializeWorldOwnerConsent,initializeNativeSessionMovement,initializeNpcObservations,initializeNpcStrategy,initializeNpcEvidenceProjection,initializeNpcCognition,initializeNpcConversations,initializeWorldCandidateContext,initializeWorldNpcOpportunity,initializeNativeNpcEvidence,initializeOperationsNpcReview,initializeNativeEnvironmentAudience,initializeNativeWorldEvidence,initializeNativeWorldEvents,initializeCharacterWorldEvents,initializeNativeScenes,initializeNativePrincipals,initializeKnowledgeSession,initializeCharacterSession,initializePersonalContinuity,initializeSessionIntent,initializeOperationsWorldOverview,initializeWorldNativeEncounter,initializePersistenceKnowledge,initializePersistenceWorld,initializeNarrativePersistence,initializePublicationSession,initializeIntentKnowledge,initializePublicationWorld,initializeKnowledgeOperations,initializePublicationKnowledgeNarrativeMemory} from './application/composition/public.js';
+
+
+
+
 /** Discord runtime orchestration for message routing, serialized GM turns, world-director passes, and post-commit publication. */
 import "dotenv/config";
 import path from "node:path";
@@ -50,59 +51,7 @@ import {enqueueTrackedTurn} from './tracked-turn.js';
 import {currentTurnTrace} from './turn-trace-context.js';
 import {runSessionOpening} from './application/workflows/public.js';
 
-initializeContentWorld();
-initializeSessionAssemblyState();
-initializeDiscordSessionPrincipal();
-initializeWorldActorControl();
-initializeWorldExecution();
-initializeWorldOwnerConsent();
-initializeNativeSessionMovement();
-initializeEnvironmentScene();
-initializePvpAgreements();
-initializeNativeOutcomes();
-initializePublicationNarrative();
-initializeDiscordNarrative();
-initializeNarrativeOperations();
-initializeIntentNarrative();
-initializeCharacterCreation();
-initializeNpcWorldEvidence();
-initializeNpcStrategy();
-initializeSessionWorldEvents();
-initializeSessionSceneWorld();
-initializeNpcObservations();
-initializeKnowledgeWorld();
-initializeNarrativeWorld();
-initializeKnowledgeNarrative();
-initializePublicationKnowledgeNarrativeMemory();
-initializeNpcEvidenceProjection();
-initializeNpcCognition();
-initializeNpcConversations();
-initializeWorldCandidateContext();
-initializeWorldNpcOpportunity();
-initializeNativeNpcEvidence();
-initializeOperationsNpcReview();
-initializeNativeEnvironmentAudience();
-initializeNativeWorldEvidence();
-initializeNativeWorldEvents();
-initializeCharacterWorldEvents();
-initializeNativeScenes();
-initializeNativePrincipals();
-initializeKnowledgeSession();
-initializeCharacterSession();
-initializePersonalContinuity();
-initializeSessionIntent();
-initializeOperationsWorldOverview();
-initializeWorldNativeEncounter();
-initializePersistenceKnowledge();
-initializeIntentKnowledge();
-initializeKnowledgeOperations();
-initializePersistenceWorld();
-initializeNarrativePersistence();
-initializePublicationSession();
-initializePublicationWorld();
-initializePublicationDiscord();
-initializeOperationsDiscord();
-initializePublicationOperations();
+initializeRuntimeFrameworks();
 const config=loadConfig();
 const log=createLogger(config.logLevel);
 const db=new VeiledDB(config.dbPath,path.resolve(process.cwd(),"./sql/schema.sql"),{sqlMetrics:true});

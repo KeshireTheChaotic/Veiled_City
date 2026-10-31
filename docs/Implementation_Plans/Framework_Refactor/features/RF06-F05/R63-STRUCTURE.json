@@ -1,0 +1,17 @@
+{
+  "parent": "0ab1c7b2e705a2905367186db9c30319b9dac155",
+  "original_call_count": 53,
+  "coordinator_call_count": 53,
+  "root_startup_call_count": 1,
+  "all_original_call_asts_equal": true,
+  "all_original_import_references_equal": true,
+  "all_other_index_asts_equal": true,
+  "existing_public_statements_equal": true,
+  "no_provider_body_or_port_change": true,
+  "no_new_self_barrel_import": true,
+  "original_collector_reconstructed_sha256_matches_C120": true,
+  "offline_guards_and_30000ms_timeout_unchanged": true,
+  "C120_native_outcomes_provider_hash_matches": true,
+  "index_bytes_before": 56714,
+  "index_bytes_after": 53429
+}
