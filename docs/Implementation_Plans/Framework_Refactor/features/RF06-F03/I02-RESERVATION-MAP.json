@@ -1,0 +1,145 @@
+{
+  "parent": "b04969d29d777ede6350e0c10cd64b2e1bdbc823",
+  "evidence": "Static syntax/lexical ancestry only; not complete dynamic caller/rollback/recovery qualification.",
+  "files": {
+    "bot/src/native-publications.js": "6b9e5f49073a1f5b3427d13b1d72ee3a0b4f32d6449887a15a4deb0bba1531d1",
+    "bot/src/native-environment-trace.js": "aff1e1801bed8fc72df4f6b8ccb9c7d2bd6f74a6e43c2ce29b28f9bd8172eff1",
+    "bot/src/native-group-features.js": "6426fcde0d38110cf18939dd02dfe9f76cfc5654e0f409336ebe9fecf561b4fe",
+    "bot/src/native-feature-effects.js": "423447b13bbf9913774bcff0b381136e4ef2372dab9ecd3afeb736813f4bbf4c",
+    "bot/src/commands.js": "9bc743b795689ee440ef6f44e53df22e20d013a45425608909b7bf95ebb92365",
+    "bot/src/frameworks/daggerheart/environment-trace-rules.js": "3fd39b25bd15fd76c9981476e587dbee9fc780406b03fd488f7f6d8c786f14d0",
+    "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": "8bd161353e5e8ad577347e6dee3d64c1d00ba7a704277f66eb8be0ba9a23f267",
+    "bot/src/frameworks/daggerheart/feature-effect-rules.js": "bc37fba29f8725a812ead6ed4d9f991b75d64eb04a8a283aca104f967fdbc05d",
+    "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js": "18ade4e6212bc96036336aa954c96ea16043ad22a8c824358976cd412b20cab4",
+    "bot/src/frameworks/daggerheart/gm-execution-rules.js": "1d48a8c3147d8c51d74246ab9b780698eb1ff1c14d148e78f7ac69d77678a40c"
+  },
+  "schema_version": 460,
+  "schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+  "signatures": [
+    {
+      "name": "gmArbitrationSpec",
+      "line": 17,
+      "parameters": [
+        "db",
+        "guild",
+        "decision"
+      ],
+      "async": false
+    },
+    {
+      "name": "reserveGmArbitrationNotice",
+      "line": 26,
+      "parameters": [
+        "db",
+        "guild",
+        "decision"
+      ],
+      "async": false
+    },
+    {
+      "name": "reserveNativeNotice",
+      "line": 32,
+      "parameters": [
+        "db",
+        "guild",
+        "spec"
+      ],
+      "async": false
+    },
+    {
+      "name": "queueNativeNotice",
+      "line": 38,
+      "parameters": [
+        "db",
+        "guild",
+        "{kind,key,source,notice}"
+      ],
+      "async": false
+    },
+    {
+      "name": "publishNativeNotice",
+      "line": 58,
+      "parameters": [
+        "db",
+        "guild",
+        "{kind,key,source,notice}",
+        "send"
+      ],
+      "async": false
+    }
+  ],
+  "calls": [
+    {
+      "file": "bot/src/native-environment-trace.js",
+      "line": 23,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "nativeTrace",
+      "call": "reserveGmArbitrationNotice(...args)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/native-group-features.js",
+      "line": 33,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "rules",
+      "call": "reserveGmArbitrationNotice(...args)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/native-feature-effects.js",
+      "line": 13,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "rules",
+      "call": "reserveGmArbitrationNotice(...args)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/commands.js",
+      "line": 582,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "executeCommand",
+      "call": "reserveGmArbitrationNotice(db,interaction.guildId,decision.record_key)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/environment-trace-rules.js",
+      "line": 74,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "captureEnvironmentTrace",
+      "call": "reserveGmArbitrationNotice(db,guild,d.decision)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "line": 190,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "applyGroupReactionOutcome",
+      "call": "reserveGmArbitrationNotice(db,guild,row.record_key)",
+      "lexical_transaction_ancestors": 1
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/feature-effect-rules.js",
+      "line": 48,
+      "callee": "reserveGmArbitrationNotice",
+      "enclosing_named_function": "cancelFeatureReaction",
+      "call": "reserveGmArbitrationNotice(db,guild,decision)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js",
+      "line": 48,
+      "callee": "captureEnvironmentTrace",
+      "enclosing_named_function": "finalize",
+      "call": "captureEnvironmentTrace(db,guild,actionId)",
+      "lexical_transaction_ancestors": 0
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "line": 145,
+      "callee": "cancelFeatureReaction",
+      "enclosing_named_function": "withdrawGmReactionInvitation",
+      "call": "cancelFeatureReaction(db,guild,row.record_key)",
+      "lexical_transaction_ancestors": 1
+    }
+  ]
+}
