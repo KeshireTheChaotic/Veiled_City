@@ -18,7 +18,8 @@ import {featureWindowChoices,inspectFeatureWindow} from './native-feature-window
 import {executableNativeFeatures,compileNativeActors} from './native-feature-catalog.js';
 
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
-import {nativeActorControl} from './native-actor-control.js';
+import {intentNativeActorControl} from './frameworks/intent/public.js';
+const {nativeActorControl}=intentNativeActorControl;
 import {preRollFearCandidates} from './pre-roll-fear.js';
 
 import {intentNativeEnvironment} from './frameworks/intent/public.js';

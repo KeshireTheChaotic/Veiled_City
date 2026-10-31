@@ -3,7 +3,7 @@ import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
 const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {nativeEncounterActor} from './native-encounter-relations.js';
-import {nativeActorControl} from './native-actor-control.js';
+import {nativeActorControl} from './frameworks/daggerheart/public.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';

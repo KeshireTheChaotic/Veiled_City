@@ -17,7 +17,7 @@ import {compileNativeFeatures} from './native-feature-catalog.js';
 import {nativeHouseErratum} from './native-house-errata.js';
 import {nativeEncounterActorSource} from './frameworks/daggerheart/public.js';
 const {nativeEncounterActor}=nativeEncounterActorSource;
-import {nativeActorControl} from './native-actor-control.js';
+import {nativeActorControl} from './frameworks/daggerheart/public.js';
 import { isPvpIntent, assertNonPvpCombatant } from "./pvp-authority.js";
 import {assertPcCanAct} from "./pc-native-eligibility.js";
 import {blazeActionAuthorization} from "./pc-death.js";

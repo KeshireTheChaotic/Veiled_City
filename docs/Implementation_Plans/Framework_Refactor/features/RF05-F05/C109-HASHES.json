@@ -1,0 +1,63 @@
+{
+  "base": "93855bd961f0fc55ab55f6a8d920c8e5882110fc",
+  "exact_source_substitutions": true,
+  "deleted_original": "bot/src/native-actor-control.js",
+  "syntax_pass": 11,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c109.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "duration_ms": 1338.5886
+  },
+  "limits": "Actual Native classifier and opaque origin store with actual SQLite; Narrative/Session context synthetic. Full packet/Native execution/live not qualified.",
+  "files": [
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "44c159160457a0edb794837b81c7a9aea737870c19a6b6a5f651d82bf434f75f"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "16bba0f031c06bdc4e71628b9385e4b96a6858c9c5846e29be76e0c756646d4a"
+    },
+    {
+      "path": "bot/src/native-equipped-attacks.js",
+      "sha256": "197fee4d4d548c3010f15f0da86e01162a7f4bce02f444342968257a3530e44a"
+    },
+    {
+      "path": "bot/src/native-stress-passives.js",
+      "sha256": "bd7e4982c0a33db17ba017bcd835df76068b6d00153045d74ef493578fcbf2ec"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "sha256": "a24c795b6b8e717063f1190d20f46941e047513caf89ff582ce202b1f9f27096"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "9d9c9368025dedeb99023ee017c8c7d2f59310a9245f29ddeded4faafcf27141"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "eb7d6a143484c8ab7babdfdd8eaacfd1dfe4948b889168f5e7fb9aa7bdc83c94"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-encounter.js",
+      "sha256": "1bc456d0a09cd5eb2e4c10e9b03bf57677929253160408e2ac568f3992b50eef"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "92e23fa6a01dd04b9420504057b91e493e437b5fc71b65a745a3d6adc972f51d"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "81cdf4c7da2e955f7740b33dc1087882d70eea4042a0fc1d39e1e13c720ea1a0"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "30a3ea74416896b4ee544387aede20bf7f70db3c028caa763eb4ccb91a590471"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c109.test.mjs",
+      "sha256": "9909965d457d357a64ab274d38429f9cbf62db5da894de0c159c8fc47ddba1b3"
+    }
+  ]
+}

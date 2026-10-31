@@ -1,0 +1,30 @@
+{
+  "reason": "Retire Native actor-control compatibility facade; Native readers own public, Intent original classifier callback routed through existing pair.",
+  "entries": [
+    {
+      "id": "fbc01993a71caac05d781f2b6214e76672099dd9e08ed21ef03bf878bb01486d",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-actor-control.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "af07419cab9caf2a56015a84788f9d5be7d7cf57a4956709fb8707db3c2383c6",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/native-actor-control.js",
+      "kind": "static",
+      "specifier": "./native-actor-control.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

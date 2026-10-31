@@ -763,6 +763,13 @@
         "consumer": "intentNativeAdversaryContext fixed port in original scene board and unified service composition",
         "composition": "connectIntentNativeAdversaryContext at existing initializeEnvironmentScene; forwards original functions without copied rules or grants.",
         "qualification_evidence": "features/RF05-F05/C108-HASHES.json"
+      },
+      "native_actor_control": {
+        "feature": "RF05-F05 C109",
+        "source": "Original nativeActorControl singleton in Daggerheart",
+        "consumer": "intentNativeActorControl supplied to original origin and scene-board factories",
+        "composition": "connectIntentNativeActorControl at existing environment bootstrap; no copied classification or execution authority",
+        "qualification_evidence": "features/RF05-F05/C109-HASHES.json"
       }
     },
     {

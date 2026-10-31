@@ -29,3 +29,7 @@ export {validateProposal,proposeIntents,acceptIntentForAdjudication,resolvePendi
 import {intentNativeAdversaryContext} from '../../frameworks/intent/public.js';
 import {nativeAdversaryFeatureContext,requireNativeAdversaryFeature} from '../../frameworks/daggerheart/public.js';
 export function connectIntentNativeAdversaryContext(){return intentNativeAdversaryContext.bind({nativeAdversaryFeatureContext,requireNativeAdversaryFeature});}
+
+import {intentNativeActorControl} from '../../frameworks/intent/public.js';
+import {nativeActorControl} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativeActorControl(){return intentNativeActorControl.bind({nativeActorControl});}

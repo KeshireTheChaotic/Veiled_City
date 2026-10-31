@@ -16,7 +16,7 @@ import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
 function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
 import {compileNativeFeatures} from './native-feature-catalog.js';
 import {inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight} from './native-group-features.js';
-import {nativeActorControl} from './native-actor-control.js';
+import {nativeActorControl} from './frameworks/daggerheart/public.js';
 import {preRollFearOpportunity,commitPreRollFearCost} from './pre-roll-fear.js';
 
 import {createGmCapabilityRules} from './frameworks/daggerheart/public.js';

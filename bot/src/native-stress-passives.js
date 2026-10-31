@@ -9,7 +9,7 @@ import {validateGroupReactionEffect} from './native-group-features.js';
 import {validateFeatureReactionEffect} from './native-feature-effects.js';
 import {inspectManyDeathsEffect} from './native-feature-hit.js';
 import {validatedPcEffectProjection} from './pc-effects.js';
-import {nativeActorControl} from './native-actor-control.js';
+import {nativeActorControl} from './frameworks/daggerheart/public.js';
 import {assertNonPvpCombatant} from './pvp-authority.js';
 
 import {createStressPassiveRules} from './frameworks/daggerheart/public.js';

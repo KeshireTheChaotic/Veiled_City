@@ -9,3 +9,6 @@ export const intentNativeEncounter=Object.freeze({
 
 /** Original Native adversary context checks only; no copied execution policy. */
 export const intentNativeAdversaryContext=createFunctionPort(['nativeAdversaryFeatureContext','requireNativeAdversaryFeature'],{code:'INTENT_NATIVE_ADVERSARY_COMPOSITION',label:'Intent Native adversary context'});
+
+/** Original Native control classification only; never execution authority. */
+export const intentNativeActorControl=createFunctionPort(['nativeActorControl'],{code:'INTENT_NATIVE_ACTOR_CONTROL_COMPOSITION',label:'Intent Native actor control'});
