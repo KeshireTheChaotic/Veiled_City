@@ -724,6 +724,30 @@
         "contract": "Original Native ruling shape/validator supplied once to original Intent schema, validation and persistence factories; complete existing API retained.",
         "native_consumer": "nativeTypedIntentSource.persistPlayerIntents forwards the original composed function only; no mechanical outcome is authorized.",
         "intent_readers": "Original currentAcceptedIntent/currentTypedMovement registered once at composition; same source/store."
+      },
+      "arbitration_origin_readers": {
+        "feature": "RF05-F05 C105",
+        "source": "intentArbitrationOrigin.inspectArbitrationOrigin",
+        "consumer": "nativeArbitrationOrigin.inspectArbitrationOrigin",
+        "composition": "Existing connectNativeArbitrationOrigin at initializeEnvironmentScene; original root origin registration retained, no copied validator or new authority.",
+        "migrated_readers": [
+          "bot/src/native-adversary-context.js",
+          "bot/src/native-environment-arrivals.js",
+          "bot/src/native-environment-countdown.js",
+          "bot/src/native-environment-door-chain.js",
+          "bot/src/native-environment-imaging.js",
+          "bot/src/native-environment-noise.js",
+          "bot/src/native-environment-proposals.js",
+          "bot/src/native-environment-witnesses.js",
+          "bot/src/native-equipped-attacks.js",
+          "bot/src/native-roll-modifiers.js",
+          "bot/src/native-roll-participation.js",
+          "bot/src/native-unarmed-attacks.js",
+          "bot/src/pre-roll-fear.js",
+          "bot/src/pvp-attacks.js"
+        ],
+        "qualification": "Original opaque store/bridge identity and adversary/Fear forged/stale refusals; Narrative/Session context synthetic. Full Native mechanics/startup/live unqualified.",
+        "qualification_evidence": "features/RF05-F05/C105-HASHES.json"
       }
     },
     {

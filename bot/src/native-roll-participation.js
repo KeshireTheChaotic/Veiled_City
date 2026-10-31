@@ -1,5 +1,6 @@
 /** Source-bound collaboration eligibility. This never enrolls an owner, spends Hope or rolls dice. */
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}

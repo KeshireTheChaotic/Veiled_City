@@ -1,5 +1,6 @@
 /** Bounded native PC-to-NPC unarmed eligibility. Never rolls, grants gear, or admits PC targets. */
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';

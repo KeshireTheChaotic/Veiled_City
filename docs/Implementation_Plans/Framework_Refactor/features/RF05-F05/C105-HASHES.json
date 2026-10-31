@@ -1,0 +1,74 @@
+{
+  "base": "222f79c487bdaeddc2991c8ccf54dac326193a90",
+  "exact_remaining_sources": true,
+  "syntax_pass": 14,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c105.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "duration_ms": 1168.4798
+  },
+  "limits": "Original source/bridge/store and original adversary/Fear refusal paths with synthetic Narrative/Session context; no successful Native mechanics or startup/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/native-adversary-context.js",
+      "sha256": "49171234c006b27913485e15af783dd387d926df6e2662f3e3b681f29984a74c"
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "sha256": "a118423fe4ad99dfd52a5192d7fc1f5f898f6441c51be84a7648c4056d3c0353"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "4c5ea7d209342dae6766c6eaaf3293ffa93f55c12cd697c009027c16f2c538d2"
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "sha256": "9db066e6d35d613b6f613262fc0a4c9d048c31fd9c91165603197fd2e886285e"
+    },
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "sha256": "ff0e016ce5e3648f4c7a0e2461c29c6064e1e809727d7a165e6be960d5e84a07"
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "sha256": "29ae826a6b789ee43c21a698775d0d93b8731ab49366b538e39b09678c725423"
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "sha256": "40ea4d59b6983ff3323ac7f3ec13407ce32170cc73c052f1b83549394287e85b"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "f83ad0e1c118298c977dd1062a2164290724298490076523e6601659d402ae4b"
+    },
+    {
+      "path": "bot/src/native-equipped-attacks.js",
+      "sha256": "4f146fc8ea40efab0f3bd8e290eda4f53d70c1ec08a9bba6f56cbddbd59f4deb"
+    },
+    {
+      "path": "bot/src/native-roll-modifiers.js",
+      "sha256": "055b38d404abb7bb4d3223a9f33523a5f108fad8d85231413e1546759eec45cc"
+    },
+    {
+      "path": "bot/src/native-roll-participation.js",
+      "sha256": "f75f862a9a91f21353c6978b2c334b485731ff0f210068b74469817e322aedcd"
+    },
+    {
+      "path": "bot/src/native-unarmed-attacks.js",
+      "sha256": "260a2f2eb1cc25884bfffa0389c94147a1d7a13a9599e1edd3ffed735fc5ce4f"
+    },
+    {
+      "path": "bot/src/pre-roll-fear.js",
+      "sha256": "1b125ad88ca9681507aa840dbcdf5f4c7e2d328d66e46e52ef659e24ca9085b7"
+    },
+    {
+      "path": "bot/src/pvp-attacks.js",
+      "sha256": "48086d9cf58d6d485dc6ff67fdfbe41d9a15acaf60c0cf3b1d27a9c4840a6e8d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c105.test.mjs",
+      "sha256": "76ff9837f40b71ddee93c2e300cd15c261488cc7f03a56fdcfbef77961e72e7f"
+    }
+  ]
+}

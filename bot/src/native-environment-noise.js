@@ -5,7 +5,8 @@ import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.
 import {historicalActionSource} from './action-consent.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';

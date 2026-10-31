@@ -1,5 +1,6 @@
 /** Ordinary contextual odds, not feature activation, owner spending or a claimed outcome. */
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {gmRulingContext,nativeGmSceneContext} from './gm-action-ruling.js';
 import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';

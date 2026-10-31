@@ -1,5 +1,6 @@
 /** Native preparation of an EXISTING exact human-approved equipped attack. No equipment acquisition or rule invention. */
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {consentAction,historicalActionSource} from './action-consent.js';
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';

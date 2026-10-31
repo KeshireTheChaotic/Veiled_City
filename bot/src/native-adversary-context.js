@@ -1,7 +1,8 @@
 /** Bound existing adversary provenance, never NPC creation, statistics, knowledge or execution permission. */
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeActorControl} from './native-actor-control.js';
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {executableNativeFeatures,featureDisposition,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate} from './native-feature-catalog.js';
 import {createAdversaryBindingRules} from './frameworks/daggerheart/public.js';
 let nativeBinding;

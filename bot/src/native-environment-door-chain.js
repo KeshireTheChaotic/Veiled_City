@@ -1,4 +1,5 @@
-import {inspectArbitrationOrigin} from './scene-intent-board.js';
+import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
 const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
