@@ -1,5 +1,6 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
-import { intentContext, delegationPolicy, stateRevision, reviewAiIntent } from "./ai-intents.js";
+import { intentContext, delegationPolicy, reviewAiIntent } from "./ai-intents.js";
+import {stateRevision} from "./kernel/state-revision.js";
 import {operationsWorldSeedDrafts} from './frameworks/operations/public.js';
 const {reviewSeedDraft}=operationsWorldSeedDrafts;
 import {operationsNpcReview} from "./frameworks/operations/public.js";
