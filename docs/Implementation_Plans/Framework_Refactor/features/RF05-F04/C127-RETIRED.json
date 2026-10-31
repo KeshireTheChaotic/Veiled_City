@@ -1,0 +1,16 @@
+{
+  "reason": "All production consumers already adopted original Intent public API; unused re-export facade retired after fresh replacement qualification.",
+  "entries": [
+    {
+      "id": "da6b9fd102adc717ad12a977333d35955f3a7023555875b77b1e953a6ec9485d",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/decision-advisory.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    }
+  ]
+}

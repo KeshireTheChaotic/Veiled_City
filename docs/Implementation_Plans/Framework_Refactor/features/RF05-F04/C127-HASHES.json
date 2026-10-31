@@ -1,0 +1,78 @@
+{
+  "base": "a00cf841292f119ef3c17d06ea1f4e0ce5b0fc5e",
+  "owned_engine_unchanged": true,
+  "production_root_consumers": 0,
+  "production_change": "Delete unused one-line forwarding facade only; existing original own/public functions and all callers unchanged.",
+  "syntax": "No surviving production source changed; no source syntax rerun.",
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f04-c127.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 634.797
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1760.7034
+    }
+  ],
+  "older_fresh_test": "C09 only obsolete root import adapted to original own implementation; not run, not staged. No legacy test or fixture executed/deleted.",
+  "architecture": {
+    "sourceModules": 1067,
+    "unowned": 0,
+    "importOccurrences": 4324,
+    "internalImportOccurrences": 4127,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "rawViolationOccurrences": 604,
+    "acceptedLegacyOccurrences": 604,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limits": "Original public/own API identity and actual SQLite enabled/disabled advisory/refusal cases with no writes or PC/fact effects; guarded offline graph including independently committed AF04 source. No new Native authority, full GM/routing/provider/live/release qualification.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/decision-advisory.js",
+      "sha256": "c266582463f08077a42ef47225a6c59e6b5564847b2943f8654f2e716eb7d7e3"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "997f2cbc8e52a1de8c74191fc7bedef87ff650179f55b0e5d617ffb15f4bc799"
+    },
+    {
+      "path": "bot/src/gm.js",
+      "sha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "sha256": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-condition-rules.js",
+      "sha256": "df6cb9d5f3bcd1d748462229aa02dd176c14b944a9e8177e31966f3b4a66bbf9"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c127.test.mjs",
+      "sha256": "21963730638801ee7bc6abe8a581a7e7b4f7088ff2dac88088c46ee0288fddfb"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c09.test.mjs",
+      "sha256": "c299fc619bb9243fe8b0df68681d29fa76a19bc3f45354bb9096bfa0433aa8e7"
+    }
+  ]
+}
