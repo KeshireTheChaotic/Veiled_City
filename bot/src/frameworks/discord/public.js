@@ -77,3 +77,5 @@ export {handleRulesRulingsCommand,assertRulesRulingReadStore} from './rules-ruli
 export {downtimeStatusText,relationshipLine} from './command-record-text.js';
 
 export {handleCharacterListCommand,assertCharacterListStore} from './character-list-command.js';
+
+export {npcControlLabel,formatNpcProxyPacket} from './npc-proxy-packet.js';

@@ -1,0 +1,11 @@
+{
+  "parent": "3c7ffbb8df04e7abb1071b54736d15d7c9ba9797",
+  "functions": [
+    "npcControlLabel",
+    "formatNpcProxyPacket"
+  ],
+  "whole_function_asts_equal": true,
+  "all_other_commands_statements_equal": true,
+  "all_original_control_and_knowledge_instruction_strings_equal": true,
+  "proxy_revision_checks_and_lifecycle_callers_equal": true
+}

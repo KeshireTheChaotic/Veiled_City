@@ -1,0 +1,14 @@
+✔ original control labels and unknown/falsy fallback values retained (0.5174ms)
+✔ offered packet retains original sections and voluntary claim/decline prompts without mutation (0.6459ms)
+✔ active packet preserves all original control boundaries and role-specific authority text (1.1673ms)
+✔ optional missing packet sections and original array-only formatting retained (0.1222ms)
+✔ original truncation and invalid options/proxy/getter errors retained (0.3993ms)
+✔ root retains original packet revision checks, private delivery and proxy lifecycle callers (0.7144ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 584.9915

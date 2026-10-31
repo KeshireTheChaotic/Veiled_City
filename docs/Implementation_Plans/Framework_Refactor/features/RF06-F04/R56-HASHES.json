@@ -1,0 +1,6 @@
+{
+  "bot/src/commands.js": "eef775b46a1c7fec734bebe032c604f5332021969fb3f36eac2a4116de3b0461",
+  "bot/src/frameworks/discord/public.js": "9a87ca64072c69cdf6df7ae26b9cb7f05c073698f185596ba5103d3683e659f5",
+  "bot/src/frameworks/discord/npc-proxy-packet.js": "6a69b678ca117c2d498420d23a85389deee2d69516520032b582d97941cb174c",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c56.test.mjs": "0c0d86af738a611d06f461c392b7c294b8e2e31c83a15b6f3b7d96c664f4cc7a"
+}
