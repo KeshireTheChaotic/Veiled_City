@@ -74,3 +74,5 @@ export {createAuthoredCandidatePersistence} from './authored-candidates.js';
 export {createArbitrationOrigins} from './arbitration-origin.js';
 
 export {createSceneIntentBoardService} from './scene-intent-board.js';
+
+export {UNIFIED_ARBITRATION_PROMPT} from './unified-arbitration-prompt.js';

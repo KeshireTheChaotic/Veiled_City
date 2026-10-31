@@ -1,0 +1,19 @@
+{
+  "reason": "GM consumes original unified arbitration prompt through Intent public; root Native provider composition no longer imported for prompt.",
+  "entries": [
+    {
+      "id": "f0468c832d771f35368a6c76c13ad129eff618d313f67cea5163eb4f2c01c5bd",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/gm-unified-arbitration.js",
+      "kind": "static",
+      "specifier": "./gm-unified-arbitration.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

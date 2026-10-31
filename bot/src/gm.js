@@ -77,7 +77,7 @@ import {bindDirectorNarrativeSource,inheritDirectorNarrativeSource,nativeDirecto
 import {configureWorldEncounterCatalog} from './frameworks/world/public.js';
 import {buildNarrativeContext} from './frameworks/narrative/public.js';
 import {createArbitrationOrigin,arbitrationPromptBoard,bindArbitrationTurn} from './scene-intent-board.js';
-import {UNIFIED_ARBITRATION_PROMPT} from './gm-unified-arbitration.js';
+import {UNIFIED_ARBITRATION_PROMPT} from './frameworks/intent/public.js';
 import {narrativeResponseV9Schema,NARRATIVE_V9_INSTRUCTIONS,NATIVE_CLAUSE_INSTRUCTIONS} from './frameworks/narrative/public.js';
 import {createModelTransport} from './frameworks/ai-provider/public.js';
 
