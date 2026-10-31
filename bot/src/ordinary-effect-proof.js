@@ -13,7 +13,7 @@ import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {validateNativeCondition} from './native-group-features.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
-import {inspectNativeEnvironmentNoiseClear} from './native-environment-noise.js';
+import {inspectNativeEnvironmentNoiseClear} from './frameworks/daggerheart/public.js';
 import {inspectNativeEnvironmentResolution,environmentResolutionText} from './native-environment-recovery.js';
 
 import {createOrdinaryEffectProofRules} from './frameworks/daggerheart/public.js';

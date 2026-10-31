@@ -1,0 +1,5 @@
+# RF05-F05 C121 — Acoustic composition ownership
+
+Complete: move original native-environment-noise composition into Daggerheart; preserve original lazy factory and all rules. Use existing ordinary-proof and historical-consent interfaces. Migrate three Native readers to public and retire root only after source/identity/SQLite refusal and affected import qualification. No new rules, state, schema, SQL, permissions or source protocols. Unrelated AF and Agent B changes excluded.
+
+Qualification complete: three fresh source-identity and disposable SQLite refusal cases passed (1580.5096 ms); five changed-source syntax checks passed and five original rule/source contracts remain exact. Agent B R63 affected offline bootstrap passed (2484.2328 ms) on its diagnostic retry with unchanged guards and 30-second timeout; original timeout retained as unexplained evidence. See C121-HASHES.json. Five exact obsolete transition records retired and source relocation recorded. Positive Native effects, receipts, publication and full GM/live operation remain unqualified.

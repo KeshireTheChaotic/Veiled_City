@@ -589,17 +589,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "926d802896c3900baff3e7321db7a266d0a2e92f266d7e1a4a27f7368a70597b",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-environment-noise.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "09abf55c3e4a76a51ed1fe0f1ea25f73deaeae4afc49efd91eb3f9058ea22957",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-environment-proposals.js",
@@ -5342,34 +5331,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "360f6237538b5bdce29b4a5ebd81ae6c79ec412162874991e014a756434989fd",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-noise.js",
-      "to": "bot/src/ordinary-effect-proof.js",
-      "kind": "static",
-      "specifier": "./ordinary-effect-proof.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "fab48a5fb2424723284875e346320fc9c570fe2116f50368ff05aaf5a5105790",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-noise.js",
-      "to": "bot/src/action-consent.js",
-      "kind": "static",
-      "specifier": "./action-consent.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "a53d56f51fc4fd6f3ff5961edca05aa8ae4459352b99ad1712e929d7ad0ad8e4",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-environment-recovery.js",
@@ -6252,20 +6213,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "9cb1d498db19450d7464eb17b55132f751275d67caf0215ac8c421466fd4f0c5",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-roll-modifiers.js",
-      "to": "bot/src/native-environment-noise.js",
-      "kind": "static",
-      "specifier": "./native-environment-noise.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "3a2304578e903dec3f3defa0f4b53237896465e4d61afdfd8d855aa6f9bbf716",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-roll-participation.js",
@@ -6468,20 +6415,6 @@
       "to": "bot/src/native-condition-recovery.js",
       "kind": "static",
       "specifier": "./native-condition-recovery.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "af710a2afd8e382c32472d4af2868c380bf82ee66fbc63a17656d853a87800e8",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/ordinary-effect-proof.js",
-      "to": "bot/src/native-environment-noise.js",
-      "kind": "static",
-      "specifier": "./native-environment-noise.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",

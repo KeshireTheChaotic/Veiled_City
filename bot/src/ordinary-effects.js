@@ -12,7 +12,7 @@ import {applicationPrincipal} from './kernel/application-authority.js';
 import {applyRoutineEvidenceAnalysis,verifyRoutineEvidenceAnalysis,routineEvidenceContext} from './native-evidence-analysis.js';
 import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
 import {activeNativeConditions} from './native-group-features.js';
-import {clearNativeEnvironmentNoise} from './native-environment-noise.js';
+import {clearNativeEnvironmentNoise} from './frameworks/daggerheart/public.js';
 import {resolveNativeEnvironmentEvent,environmentResolutionText} from './native-environment-recovery.js';
 
 

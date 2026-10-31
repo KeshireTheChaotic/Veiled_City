@@ -1,0 +1,94 @@
+{
+  "base": "0ab1c7b2e705a2905367186db9c30319b9dac155",
+  "exact_original_source_substitutions": true,
+  "original_rules_and_lazy_composition_preserved": true,
+  "deleted_original": "bot/src/native-environment-noise.js",
+  "syntax_pass": 5,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c121.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 1580.5096
+    },
+    {
+      "command": "Affected C113 offline bootstrap, executed by Agent B R63",
+      "initial_result": "Child ETIMEDOUT at unchanged 30000ms before output; cause unconfirmed.",
+      "retry_result": "Diagnostic-only progress markers; same guards and timeout; pass 1 fail 0",
+      "duration_ms": 2484.2328,
+      "evidence": "features/RF06-F05/R63-BOOTSTRAP-DIAGNOSTIC.log"
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c121.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "reason": "Concurrent AF removal of obsolete Native public exports changed tested source; affected batch rerun.",
+      "pass": 4,
+      "fail": 0,
+      "duration_ms": 1760.6272
+    }
+  ],
+  "limits": "Function identity, original fixed source registration and refusal paths; actual disposable SQLite missing-receipt and counterfeit-source refusal without writes. Positive noise clear/recovery, dice, publication and full GM/live behavior remain unqualified.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-noise.js",
+      "sha256": "c8a1d315a6111f7747cad563fdfcfd9b7bb9bb8abcc3029c0d9f512b3b20e2a1"
+    },
+    {
+      "path": "bot/src/native-roll-modifiers.js",
+      "sha256": "d792d70f1b6ec201d38ef3d5bc58caf8f6b8acfd5cdcf5dea5c32b1c7263a39d"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "d49e3791393e7a8527c1ab52b91ba10829dae251ca6cdb8fafa0dcd8b45ee268"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "657f4f019de6fc901e6c4489842c583215e9cf9305c45ddc1a5709232f565f34"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "522b257dcdd2867c187b492c135cd54e556699eccee32a62bf2739fd3839eaaa"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-acoustic-rules.js",
+      "sha256": "628584cdd4c123acb97494c9de4cc769fb8d95fecc0b2a25b41e84dab6cc5293"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-odds-contract.js",
+      "sha256": "e7bd61e6d2e11661fc04522283f93ce071710e87cd142c3bea9977139f15f93e"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-access-peers.js",
+      "sha256": "f3cfddbba8ac0f12be50efc4f61c9418e5bdfd2b342c7db032254ebebb96fce8"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/action-consent-source.js",
+      "sha256": "f9ecc1cd2fa8172b4344541bd0a8ca1a31b60294b3901fe1e5cd3d3c5fd4518e"
+    },
+    {
+      "path": "bot/src/action-consent.js",
+      "sha256": "49f73d7a5301d195ba84f6b7324ab7df4351fde0781bb1e90afd19bc73b07e95"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c121.test.mjs",
+      "sha256": "11953c682a68ae0a5189a7b2d6de7282cbd23467c8322a062e4bcebbdae09d1b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    }
+  ],
+  "architecture": {
+    "sourceModules": 1067,
+    "unowned": 0,
+    "importOccurrences": 4317,
+    "internalImportOccurrences": 4120,
+    "cycleComponents": 1,
+    "largestCycle": 52,
+    "rawViolationOccurrences": 622,
+    "acceptedLegacyOccurrences": 622,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "public_export_note": "Working tree hash includes two unrelated AF export removals, preserved unstaged. C121 index blob contains only original HEAD plus acoustic export."
+}

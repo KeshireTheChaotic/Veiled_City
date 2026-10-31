@@ -1,17 +1,19 @@
 /** Printed nightclub acoustics: native recovery and odds ancestry, never PC narration or invented resources. */
-import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
-import {featureDisposition} from './frameworks/daggerheart/public.js';
-import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
-import {historicalActionSource} from './action-consent.js';
-import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+import {inspectNativeEnvironmentInstance} from './native-environment-instance.js';
+import {featureDisposition} from './native-feature-catalog.js';
+import {nativeAccessOrdinaryProof} from './contracts/environment-access-peers.js';
+const {ordinaryActionProof,ordinaryPrerequisite}=nativeAccessOrdinaryProof;
+import {nativeActionConsentSource} from './contracts/action-consent-source.js';
+const {historicalActionSource}=nativeActionConsentSource;
+import {nativeWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
+import {nativeArbitrationOrigin} from './contracts/environment-sources.js';
 const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
-import {nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
-import {environmentProposalContract} from './frameworks/daggerheart/public.js';
-import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './frameworks/daggerheart/public.js';
+import {nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
+import {environmentProposalContract} from './native-environment-capabilities.js';
+import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
 
-import {createEnvironmentAcousticRules} from './frameworks/daggerheart/public.js';
+import {createEnvironmentAcousticRules} from './environment-acoustic-rules.js';
 let nativeRules;
 function rules(){return nativeRules??=createEnvironmentAcousticRules({capabilities:{inspectNativeEnvironmentInstance:(...args)=>inspectNativeEnvironmentInstance(...args),featureDisposition:(...args)=>featureDisposition(...args),ordinaryActionProof:(...args)=>ordinaryActionProof(...args),ordinaryPrerequisite:(...args)=>ordinaryPrerequisite(...args),historicalActionSource:(...args)=>historicalActionSource(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args),inspectArbitrationOrigin:(...args)=>inspectArbitrationOrigin(...args),nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),captureCountdownActionAncestry:(...args)=>captureCountdownActionAncestry(...args),inspectCountdownActionAncestry:(...args)=>inspectCountdownActionAncestry(...args)}});}
 export function validateEnvironmentOddsProposal(...args){return rules().validateEnvironmentOddsProposal(...args);}

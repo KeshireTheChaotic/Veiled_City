@@ -8,7 +8,7 @@ function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narra
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {isPvpIntent} from './pvp-authority.js';
-import {prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
+import {prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './frameworks/daggerheart/public.js';
 
 import {createRollModifierRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
