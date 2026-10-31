@@ -131,7 +131,7 @@ export {createNativePrincipalsConsumer,nativePrincipals} from './contracts/princ
 export {createNativeNpcAvailabilityConsumer,nativeNpcAvailability} from './contracts/npc-availability.js';
 export {createNativeOwnerActionTerminalConsumer,nativeOwnerActionTerminal} from './contracts/owner-action-terminal.js';
 export {RANGE_BANDS} from './range-bands.js';
-export {nativeWorldAuthoring,nativeNarrativeAudience,nativeArbitrationOrigin,nativeGmOpportunityPeer,reservedCampaignFearPeer,doorChainSituationPeer,imagingSituationPeer} from './contracts/environment-sources.js';
+export {nativeWorldAuthoring,nativeNarrativeAudience,nativeArbitrationOrigin,nativeArbitrationOriginCreator,nativeGmOpportunityPeer,reservedCampaignFearPeer,doorChainSituationPeer,imagingSituationPeer} from './contracts/environment-sources.js';
 export {establishNativeEnvironmentInstance,inspectNativeEnvironmentInstance,nativeEnvironmentInstanceCapabilities,nativeEnvironmentInstanceForScope} from './native-environment-instance.js';
 export {environmentSceneCapabilities,environmentSceneService,validateMundaneEnvironmentDetail,validateMaintenanceMemoryFact,applyEnvironmentSceneAction,inspectEnvironmentSceneEffect,environmentSceneProjection,nativeEnvironmentSituation} from './native-environment-scene.js';
 export {nativeActionConsentSource} from './contracts/action-consent-source.js';

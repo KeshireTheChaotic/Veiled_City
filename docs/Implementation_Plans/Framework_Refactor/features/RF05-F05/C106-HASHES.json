@@ -1,0 +1,57 @@
+{
+  "base": "0732642500e0c78b540ef0f1f4a9f65773882e76",
+  "exact_source_substitutions": true,
+  "syntax_pass": 8,
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/contracts/environment-sources.js",
+      "sha256": "21fd5ae5b9757695271a3812180c3da8237095ca84ecd129090eba451363bd04"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-sources.js",
+      "sha256": "fdf6222d74fbc56995e78e49a90f9df88e17365ebc8168ad1dda2371e626b69d"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "fa4898e834b767b80ceae215dc405a9ee8cf6a47a277a5f7b4361880dd577ba5"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "83f9f82edcde2bbd82cbbe23b223dc67563b16f0fc0749de2002bf5cc4759fdd"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "14b0f3d5d17cf57f2d474a9e924016c5f287f34bab50b980f0226387b261b673"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "14acb34a311e528fdd2416b9b5208a307b5d9915d1bb2fb2b1b1e60596324527"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "f7cb302afebf719a6b123fefa3368aaa702229d80b3ccce5b5ce5757a1e21e41"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "321597ff86bab5253aefb504e6f090ca9e228ec207ccc033f5496bded6b5a2fd"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c106.test.mjs",
+      "sha256": "1559965e661dfb78b10bcb70aa6770e5b6a602846f63340a4a3dc0d87053ca48"
+    }
+  ],
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c106.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "duration_ms": 1043.4729
+  },
+  "limits": "Actual environment bootstrap idempotence, original shared origin store and trace forged/stale refusal; Narrative/Session context synthetic. Successful Native trace and full index/live not qualified.",
+  "additional_test": {
+    "command": "node --test --test-name-pattern='actual bootstrap' bot/tests/ai-gm-2026-10/rf05-f05-c106.test.mjs",
+    "pass": 1,
+    "fail": 0,
+    "duration_ms": 1159.7666,
+    "reason": "New case only; prior passed cases not rerun."
+  }
+}

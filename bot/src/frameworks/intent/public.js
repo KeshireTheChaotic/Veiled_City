@@ -11,7 +11,7 @@ export {createIntentWorldPrimitivesConsumer,intentWorldPrimitives} from './contr
 export {createIntentWorldActionsConsumer,intentWorldActions} from './contracts/world-actions.js';
 export {createIntentNpcPolicyConsumer,intentNpcPolicy} from './contracts/npc-policy.js';
 export {createIntentNpcEvidenceConsumer,intentNpcEvidence} from './contracts/npc-evidence.js';
-export {intentArbitrationOrigin,intentNativeEnvironment} from './contracts/environment-sources.js';
+export {intentArbitrationOrigin,intentArbitrationOriginCreator,intentNativeEnvironment} from './contracts/environment-sources.js';
 export {authoredTurnEnvelope,authoredTurnHash,authoredTurnKey,authoredAnnotationKey} from './authored-turn-reader.js';
 export {intentPlayerLanguage} from './contracts/player-language.js';
 export {intentAiIntentDispatch,intentTypedIntentReaders} from './contracts/world-dispatch-sources.js';

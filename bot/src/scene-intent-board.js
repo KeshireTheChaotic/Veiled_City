@@ -32,3 +32,5 @@ import {createSceneIntentBoardService} from './frameworks/intent/public.js';
 export const {arbitrationPromptBoard,bindArbitrationTurn,arbitrationTurnOrigin,currentScenePlayerInputs,buildSceneIntentBoard}=createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates});
 // Provide this module's original inspectArbitrationOrigin to the fixed port; no other authority is granted.
 intentArbitrationOrigin.bind({inspectArbitrationOrigin});
+import {intentArbitrationOriginCreator} from './frameworks/intent/public.js';
+intentArbitrationOriginCreator.bind({createArbitrationOrigin});

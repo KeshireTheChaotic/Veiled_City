@@ -748,6 +748,14 @@
         ],
         "qualification": "Original opaque store/bridge identity and adversary/Fear forged/stale refusals; Narrative/Session context synthetic. Full Native mechanics/startup/live unqualified.",
         "qualification_evidence": "features/RF05-F05/C105-HASHES.json"
+      },
+      "arbitration_origin_creator": {
+        "feature": "RF05-F05 C106",
+        "composition": "connectNativeArbitrationOriginCreator at original environment-scene startup",
+        "source": "intentArbitrationOriginCreator.createArbitrationOrigin",
+        "consumer": "nativeArbitrationOriginCreator.createArbitrationOrigin in native-environment-trace.js only",
+        "authority": "Original creator supplied from same createArbitrationOrigins instance as inspector; existing read-only inspector port unchanged; no copied grants or rules.",
+        "qualification_evidence": "features/RF05-F05/C106-HASHES.json"
       }
     },
     {

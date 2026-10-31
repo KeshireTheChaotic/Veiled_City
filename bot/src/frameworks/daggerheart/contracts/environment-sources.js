@@ -3,6 +3,7 @@ import {createFunctionPort} from '../../../kernel/function-port.js';
 export const nativeWorldAuthoring=createFunctionPort(['verifiedWorldAuthoringContext','worldIdentityOrigin'],{code:'NATIVE_WORLD_AUTHORING_COMPOSITION',label:'Native World authoring context'});
 export const nativeNarrativeAudience=createFunctionPort(['mintNarrativeAudience','revalidateNarrativeAudience'],{code:'NATIVE_NARRATIVE_AUDIENCE_COMPOSITION',label:'Native narrative audience'});
 export const nativeArbitrationOrigin=createFunctionPort(['inspectArbitrationOrigin'],{code:'NATIVE_ARBITRATION_ORIGIN_COMPOSITION',label:'Native arbitration origin'});
+export const nativeArbitrationOriginCreator=createFunctionPort(['createArbitrationOrigin'],{code:'NATIVE_ARBITRATION_ORIGIN_COMPOSITION',label:'Native arbitration origin creator'});
 /** Legacy native modules that stay at their root paths provide these when they load. */
 export const nativeGmOpportunityPeer=createFunctionPort(['nativeGmOpportunity'],{code:'NATIVE_ENVIRONMENT_PEER_COMPOSITION',label:'Native GM opportunity peer'});
 export const reservedCampaignFearPeer=createFunctionPort(['reservedCampaignFear'],{code:'NATIVE_ENVIRONMENT_PEER_COMPOSITION',label:'Native campaign Fear peer'});
