@@ -17,7 +17,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | content--persistence | PROPOSED_NO_API | content → persistence | 0 / 0 | RF06 |
 | content--world | PROPOSED_NO_API | content → world | 0 / 0 | RF04 |
 | daggerheart--discord | ADOPTED | daggerheart → discord | 1 / 1 | RF03-F05 |
-| daggerheart--intent | ADOPTED | intent → daggerheart; daggerheart → intent | 2 / 2 | RF03-F01 |
+| daggerheart--intent | ADOPTED | intent → daggerheart; daggerheart → intent | 3 / 3 | RF03-F01, RF05-F04 C130 |
 | daggerheart--knowledge | PROPOSED_NO_API | daggerheart → knowledge | 0 / 0 | RF03 |
 | daggerheart--narrative | ADOPTED | narrative → daggerheart; daggerheart → narrative; daggerheart → narrative | 2 / 3 | RF03-F05 |
 | daggerheart--npc | ADOPTED | daggerheart → npc | 1 / 1 | RF04-F05 |

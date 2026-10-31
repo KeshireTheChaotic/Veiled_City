@@ -1,0 +1,80 @@
+{
+  "feature": "RF05-F04 C130",
+  "base": "5efd590dede6a73d56d8ecadc1b434a8eb679eba",
+  "originalIntentImplementationUnchanged": true,
+  "rootCompatibilityFacadeRetained": true,
+  "productionReadersOfRootFacade": 0,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f04-c130.test.mjs",
+    "pass": 1,
+    "fail": 0,
+    "duration_ms": 695.4845,
+    "receiptReference": "synthetic; no Native receipt authenticity/effect claim"
+  },
+  "bootstrap": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+    "pass": 1,
+    "fail": 0,
+    "duration_ms": 1815.8081
+  },
+  "changedJavaScriptSyntax": {
+    "checked": 7,
+    "pass": 7
+  },
+  "databaseSchemaSha256": "D3A69C4C55A876B087556AB7F291265A684C4287233B1651B1692BE34781E374",
+  "architecture": {
+    "c130CheckpointBeforeR69SourceEdit": {
+      "sourceModules": 1070,
+      "unowned": 0,
+      "importOccurrences": 4337,
+      "largestCycle": 51,
+      "acceptedLegacyOccurrences": 597,
+      "activeViolationGroups": 0,
+      "transitionErrors": 0,
+      "pass": true
+    },
+    "currentSharedWorktreeAfterR69Commit": {
+      "sourceModules": 1071,
+      "unowned": 0,
+      "importOccurrences": 4339,
+      "largestCycle": 51,
+      "acceptedLegacyOccurrences": 596,
+      "activeViolationGroups": 0,
+      "transitionErrors": 1,
+      "pass": false,
+      "soleTransitionError": {
+        "code": "UNUSED_TRANSITION",
+        "from": "bot/src/seed-commands.js",
+        "id": "b39ff4f00cace8abe2b841cc7c666dc5aeadb713322e7f1ca98eb6f6a0f28fbc",
+        "ownerWork": "Agent B RF06-F04 R69; exact record retirement pending"
+      }
+    }
+  },
+  "retiredTransitionIds": [
+    "114543a0ed11abfa99dc15cee5401636363772c96f0b4e10673fd6cd6928aaa7",
+    "28d8b316a1b8fbddec76b199a0569918b77067c60d5788855e9208c8f5714dc1",
+    "89afb0ad1e3db8212ad6cd42bfc8bce739637f411c31ca93c69f0d09fbd02a89"
+  ],
+  "sourceHashes": {
+    "bot/src/frameworks/daggerheart/contracts/intent-action-plan.js": "c0a7116e696e6f55d1d74048155d601995973be1121fdb4bff6b36d86abd8bb7",
+    "bot/src/frameworks/daggerheart/public.js": "ccc767f4138956aebabcd21a261bfe93f1ab0ae84e9789228e5b4952a9aaab3f",
+    "bot/src/framework-to-framework/daggerheart--intent/public.js": "f5234e0559aa5d41c939e294cba7fbd574044a6b087f20190cfcfaf94881bfe7",
+    "bot/src/application/composition/environment-scene.js": "1f6dec9e938e602cf62c1e1425d6c758b689d2a9cbba5dcfcaa7a56b87bf56de",
+    "bot/src/pvp-damage.js": "b6f7d79db144b67f1e21851f0b8a417bbc8b5206fe802c9df647288dcd67ea37",
+    "bot/src/pvp-terminal.js": "2e4e6df358bc9ea90ce7eb4e8bd94c5ff5b15b1b942f82052c6243d0143415fc",
+    "bot/src/typed-roll-outcomes.js": "9318983053765864d4d87082df36450c8a8855fc771bf1570230a529e8af23da",
+    "bot/src/action-dependency.js": "62497550a20bd674d8e85d57d0f7351009eca7acecea49f06f63a7fb2a297b48",
+    "bot/src/frameworks/intent/action-dependency.js": "837aa40bea1ae6bd5cf9402f88dc508fe9373367a9c05badcfce53b22494d71d"
+  },
+  "evidenceHashes": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C130-SCOPE.md": "9a661966ef90fdaa179cf5ea4eed8bcedaa28c4202f3c83bcd64c0b0ef9f2ddf",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C130-RETIRED.json": "1cdcc051f06e2b3016415ada7672b696cdbb68317a89103d0c2691c4c9075437",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "832e16389b27287005b28237abb5dc279348d0c9ff3b417c34c50dc7eedc3430",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "7bc3db6286afb31582c1d938d0b9b5198df612114d7790d98f3d67259bb0d597",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "4cabdcfbb668b0ef0a8d096c54ffaa891a8ce809792dd3de8cb52702ce611253",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "a5f2c8b5cc7b3c4a826056172defa1e559ea4fb3c45fcd998cbe657260dead52",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/LEDGER.md": "82c2c471f4e6b73ca95b2deb3a9004efa97e95feb0725df04006d92c246ec44b",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF05/LEDGER.md": "55bedd31320aff9e1b7d9d642998a1502f940a43cd044abc535daca755dde621",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c130.test.mjs": "b9205d8da9cf4999f398d0de24fa247dd8dad8262c3dad183a0d4ff023f050dc"
+  }
+}

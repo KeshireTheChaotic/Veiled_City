@@ -1,6 +1,7 @@
 /** Native terminal receipt provider; preserves the caller's transaction. */
 import {pvpAttemptKey} from './pvp-authority.js';
-import {transitionAction} from './action-dependency.js';
+import {nativeIntentActionPlan} from './frameworks/daggerheart/public.js';
+function transitionAction(...args){return nativeIntentActionPlan.transitionAction(...args);}
 import {pendingPvpFear} from './pvp-fear-gate.js';
 import {createPvpTerminalRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

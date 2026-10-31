@@ -201,6 +201,7 @@ export {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,capt
 
 export {nativeEnvironmentOutputCandidates,nativeEnvironmentOutput} from './native-environment-output.js';
 export {createNativeGmNoticeReservationConsumer,nativeGmNoticeReservation} from './contracts/gm-notice-reservation.js';
+export {nativeIntentActionPlan} from './contracts/intent-action-plan.js';
 
 export {validateEnvironmentOddsProposal,clearNativeEnvironmentNoise,inspectNativeEnvironmentNoiseClear,nativeEnvironmentNoiseState,prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
 

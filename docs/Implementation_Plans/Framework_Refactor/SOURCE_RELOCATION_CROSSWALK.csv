@@ -3,7 +3,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/scripts/export-campaign.mjs","bot/scripts/export-campaign.mjs","tooling","RF07","EXTRACT_PORTS_BEFORE_MOVE","0","1"
 "bot/src/action-consent.js","bot/src/frameworks/daggerheart/action-consent.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","38","4"
 "bot/src/action-continuation.js","bot/src/frameworks/session/action-continuation.js","session","RF04","DECOMPOSE_BEFORE_MOVE","10","11"
-"bot/src/action-dependency.js","bot/src/frameworks/intent/action-dependency.js","intent","RF05","PILOT_MOVE_CANDIDATE","6","0"
+"bot/src/action-dependency.js","bot/src/frameworks/intent/action-dependency.js","intent","RF05","ROOT_COMPATIBILITY_FACADE_RETAINED; NATIVE_PAIR_ADOPTION_COMPLETE","3","0"
 "bot/src/ai-gm-test-selection.js","bot/src/frameworks/operations/ai-gm-test-selection.js","operations","RF02","PILOT_MOVE_CANDIDATE","0","0"
 "bot/src/ai-intent-contracts.js","bot/src/frameworks/intent/ai-intent-contracts.js","intent","RF05","PILOT_MOVE_CANDIDATE","6","0"
 "bot/src/ai-intents.js","bot/src/frameworks/intent/ai-intents.js","intent","RF05","DECOMPOSE_BEFORE_MOVE","24","32"

@@ -6,7 +6,8 @@ function personalCharacter(...args){return nativePersonalContinuity.personalChar
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {pendingPvpFear} from "./pvp-fear-gate.js";
-import {buildActionPlan,transitionAction} from "./action-dependency.js";
+import {nativeIntentActionPlan} from './frameworks/daggerheart/public.js';
+function buildActionPlan(...args){return nativeIntentActionPlan.buildActionPlan(...args);}function transitionAction(...args){return nativeIntentActionPlan.transitionAction(...args);}
 import {completeBlazeAction,validatePcDeathOutcome} from "./pc-death.js";
 import {assertPcAttackable} from "./pc-native-eligibility.js";
 import {assertBrawlDamageSources,releaseBrawlLocks,pvpWindowDamageSources} from "./pvp-brawl.js";

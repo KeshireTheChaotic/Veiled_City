@@ -664,7 +664,7 @@
         {
           "from": "intent",
           "to": "daggerheart",
-          "contract": "Exact authored input reader and accepted typed intents for native owner/source/selection validation."
+          "contract": "Exact authored input reader and accepted typed intents for native owner/source/selection validation. RF05-F04 C130 additionally supplies the original Intent buildActionPlan and transitionAction functions to Native via a fixed consumer; no action authority is added."
         },
         {
           "from": "daggerheart",
@@ -717,7 +717,7 @@
         "occurrences": 114
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js",
-      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle.",
+      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle. C130 adds the original Intent action-plan and transition functions to a fixed Native consumer used by three Native application modules; transaction and receipt authority remains at existing Native call sites.",
       "typed_service_composition": {
         "feature": "RF05-F05 C94",
         "source": "bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js",
@@ -798,6 +798,14 @@
         "consumer": "intentNativeEnvironmentActions in original unified arbitration composition",
         "composition": "connectIntentNativeEnvironmentActions at existing environment bootstrap; fixed original source functions, replacement forbidden",
         "qualification_evidence": "features/RF05-F05/C124-HASHES.json"
+      },
+      "native_action_plan": {
+        "feature": "RF05-F04 C130",
+        "source": "Original Intent buildActionPlan and transitionAction from Intent public",
+        "consumer": "Daggerheart nativeIntentActionPlan fixed two-function consumer",
+        "composition": "Existing initializeEnvironmentScene binds the existing Daggerheart–Intent pair before lazy Native services are used",
+        "authority": "Action dependencies remain non-authoritative scheduling state; the bridge mints no Native outcome or receipt. Existing Native call sites retain effect and receipt validation; C130 test uses a synthetic receipt reference only.",
+        "qualification_evidence": "features/RF05-F04/C130-HASHES.json"
       }
     },
     {

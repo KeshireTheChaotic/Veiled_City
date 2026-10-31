@@ -1,0 +1,47 @@
+{
+  "reason": "The three Native consumers now use the existing Daggerheart–Intent pair; original Native rule call sites are unchanged.",
+  "entries": [
+    {
+      "id": "114543a0ed11abfa99dc15cee5401636363772c96f0b4e10673fd6cd6928aaa7",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-damage.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "28d8b316a1b8fbddec76b199a0569918b77067c60d5788855e9208c8f5714dc1",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-terminal.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "89afb0ad1e3db8212ad6cd42bfc8bce739637f411c31ca93c69f0d09fbd02a89",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/typed-roll-outcomes.js",
+      "to": "bot/src/action-dependency.js",
+      "kind": "static",
+      "specifier": "./action-dependency.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

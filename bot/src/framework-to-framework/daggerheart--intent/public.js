@@ -50,3 +50,8 @@ import {intentNativeEnvironmentActions} from '../../frameworks/intent/public.js'
 import {applyNativeEnvironmentProfileProposals,executeEnvironmentProposal} from '../../frameworks/daggerheart/public.js';
 /** Supply the original Native services; validation and transactions remain Native. */
 export function connectIntentNativeEnvironmentActions(){return intentNativeEnvironmentActions.bind({applyNativeEnvironmentProfileProposals,executeEnvironmentProposal});}
+
+import {nativeIntentActionPlan} from '../../frameworks/daggerheart/public.js';
+import {buildActionPlan,transitionAction} from '../../frameworks/intent/public.js';
+/** Supply Intent's original scheduling and receipt-transition functions to Native unchanged. */
+export function connectNativeIntentActionPlan(){return nativeIntentActionPlan.bind({buildActionPlan,transitionAction});}
