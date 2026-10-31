@@ -10,6 +10,8 @@ Changed-source syntax: `node --check src/pvp-menu.js` and `node --check tests/ai
 
 Fixture history: the first attempt lacked the established AI-intent compatibility initializer; the second assumed character location survives session assignment. The fixture now initializes runtime bindings and sets both test characters to the same existing location after assignment. These were fixture setup issues, not source defects. The final focused run and syntax checks passed.
 
-Fresh test path SHA256: `f5f2a08319940f3c452b9a9bdcd2802f2c8d1605ef0b14274d65452f136eb312` (`bot/tests/ai-gm-2026-10/rf06-f04-r74.test.mjs`). The test remains ignored/local under the current RF convention and is not staged. Source base Git blob: `956be4368c7209011c7bf2ff3a8058df29500e2a`. Result commit: pending the coordinated index window.
+Fresh test path SHA256: `f5f2a08319940f3c452b9a9bdcd2802f2c8d1605ef0b14274d65452f136eb312` (`bot/tests/ai-gm-2026-10/rf06-f04-r74.test.mjs`). The test remains ignored/local under the current RF convention and is not staged. Source base Git blob: `956be4368c7209011c7bf2ff3a8058df29500e2a`.
+
+Result: `28415e87a70b7f3c7eab304b4f54c4fd86d20f1d` (`RF06 F04 R74 use Discord PvP menu attachment interface`).
 
 No transition record was retired because `pvp-menu.js` retains Discord UI component builders and numerous other existing responsibilities. No schema/persisted reader change, transaction-sensitive repository, live Discord/provider call, production database, deployment, CI, push, or merge is involved. Rollback: revert only the R74 source and evidence paths. Next exact feature: RF06-F04 R75, inspect the next independent command/publication boundary after Agent A returns the shared index window; do not extend this private PvP attachment slice into transaction or consent behavior.

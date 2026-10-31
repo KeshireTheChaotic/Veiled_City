@@ -60,7 +60,7 @@ import {
   assemblyReadiness,
   registerOpeningAttendance, carryOpeningAttendance, prepareOpeningEntryOpportunity, scheduleSessionOpening
 } from "./frameworks/session/public.js";
-import { chunkDiscordLines, splitDiscordText } from "./discord/chunking.js";
+import { chunkDiscordLines, splitDiscordText } from "./frameworks/discord/public.js";
 import {createInteractionTextDelivery} from './frameworks/discord/public.js';
 import {deliverVerifiedAssembly,prepareAssemblyReconciliation,reconcileAssemblyNotSent,assemblyHasHistory,prepareAssemblyRefresh,refreshAssemblyPlan,
   runSessionOpening,sessionOpeningStatus,continueSessionOpening,prepareSessionOpeningDeliveryReview,recoverSessionOpeningDelivery,

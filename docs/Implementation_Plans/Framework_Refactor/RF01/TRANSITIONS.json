@@ -1552,20 +1552,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "2a85b60d4f9d73d367f0db3958c1463b43c9283f7af39b324fd9e74cd8ef3490",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/commands.js",
-      "to": "bot/src/discord/chunking.js",
-      "kind": "static",
-      "specifier": "./discord/chunking.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "15b8683246c41ff7d42bf0bad7d3876d533a624d1d94aa9fc04130a27a51c7e8",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/commands.js",

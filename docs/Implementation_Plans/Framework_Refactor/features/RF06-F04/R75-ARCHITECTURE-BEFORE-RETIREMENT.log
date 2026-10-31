@@ -1,0 +1,10 @@
+{
+  "activeForCommands": [],
+  "transitionErrorsForCommands": [
+    {
+      "code": "UNUSED_TRANSITION",
+      "from": "bot/src/commands.js",
+      "id": "2a85b60d4f9d73d367f0db3958c1463b43c9283f7af39b324fd9e74cd8ef3490"
+    }
+  ]
+}
