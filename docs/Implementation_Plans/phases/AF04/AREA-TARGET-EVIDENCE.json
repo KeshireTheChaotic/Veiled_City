@@ -1,0 +1,34 @@
+{
+  "phase": "AF04",
+  "status": "semantic_area_target_bridge_complete_native_execution_pending",
+  "base_sha": "8dd461709efc2f6ca8e560f0d4feebe616f13326",
+  "commands": [
+    "node --check src/frameworks/intent/scene-intent-board.js",
+    "node --check tests/ai-gm-2026-10/af04-scene-area-targets.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-scene-area-targets.test.mjs"
+  ],
+  "syntax_checks_passed": 2,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "prior_run": {
+    "passed": 2,
+    "failed": 0,
+    "reason_for_final_run": "Production row visibility guard added afterward."
+  },
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/intent/scene-intent-board.js",
+      "sha256": "9f96aa55e62f6808fd92347b30446527e9c96a41f45d6bde473599f098fb664d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-scene-area-targets.test.mjs",
+      "sha256": "8e211714f60b127e8214501918d6274c53a32b9c866434090526bc626af0b927"
+    }
+  ],
+  "limits": [
+    "Semantic target functions and disposable SQLite; no full unified-turn area execution.",
+    "Native range/cohort, mixed condition host and Spellcast/release integration remain required."
+  ]
+}

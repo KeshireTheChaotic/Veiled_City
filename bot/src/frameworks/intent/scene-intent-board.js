@@ -15,6 +15,33 @@ const {indexWorldEvent}=intentWorldPrimitives;
 import {intentNativeEnvironment} from './contracts/environment-sources.js';
 function nativeEnvironmentInstanceForScope(...args){return intentNativeEnvironment.nativeEnvironmentInstanceForScope(...args);}
 
+/** Visible, established area identities for semantic targeting; native execution rechecks footprint/range/cohort. */
+export function sceneAreaTargetCandidates(db,guild,origin,{sourceVisible=narrativeSourceVisible}={}){
+  const {binding,scope}=origin,areas=[];
+  for(let offset=0;;offset+=100){
+    const page=db.listCityRecords(guild,{kind:'scene_presence',status:'active',includeGM:true,limit:100,offset});
+    for(const row of page){
+      const d=row.data,source=db.getWorldEvent(guild,row.source_event);
+      if(row.status!=='active'||typeof row.record_key!=='string'||row.record_key.length>160||!row.record_key
+        ||!(['party','public'].includes(row.visibility)||row.visibility==='character'&&scope.mode==='private'&&row.subject_key===scope.actorCharacterId)
+        ||d?.entity_type!=='hazard'||d.state!=='actually_present'||!d.zone||d.zone==='scene'
+        ||d.scene!==binding.scene||d.session_id!==binding.session||row.location_key!==binding.location
+        ||source?.status!=='active'||source.scene!==binding.scene||source.session_id!==binding.session||source.location_key!==binding.location
+        ||!sourceVisible(db,guild,source.event_key,scope))continue;
+      areas.push({ref:row.record_key,zone:d.zone,source_ref:source.event_key,presence_hash:hash(row),execution_authorized:false});
+    }
+    if(page.length<100)break;
+  }
+  return areas.sort((a,b)=>a.ref.localeCompare(b.ref)).slice(0,16);
+}
+
+export function sceneIntentTargetsValid(db,guild,origin,operation,targets,options){
+  if(!Array.isArray(targets)||new Set(targets).size!==targets.length)return false;
+  const areas=operation==='feature'?sceneAreaTargetCandidates(db,guild,origin,options):[];
+  return targets.every(key=>typeof key==='string'&&!!key&&(!!db.getCharacter(key)||!!db.getNpcProfile(guild,key)
+    ||!!db.getSimulationEntity(guild,'location',key)||areas.some(area=>area.ref===key)));
+}
+
 export function createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates}){
 const bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
@@ -31,6 +58,7 @@ function arbitrationPromptBoard(db,guild,origin){
     catch(error){if(!['GM_ARBITRATION','NATIVE_ENCOUNTER_ACTIVATION'].includes(error.code))throw error;}
   }
   return {version:1,source:o.binding.source,scene:o.binding.scene,location:o.binding.location,audience:o.scope.mode,
+    area_candidates:sceneAreaTargetCandidates(db,guild,o),
     environment_context:environment,
     local_environment_context:localEnvironment,
     environment_candidates:compileNativeActors().filter(a=>a.actor_kind==='environment'
@@ -106,8 +134,7 @@ function buildSceneIntentBoard(db,guild,origin,playerRows=[],npcProposals=[],nat
     if(!actor||nativeActorControl(db,guild,'npc',p.actor_key).owner_control_type!=='ai_world'||activeCityProxy(db,guild,p.actor_key)||entity?.state.location_key!==o.binding.location)throw fail('npc_current_local_control');
     assertNpcAvailability(db,guild,p.actor_key,{type:'contact',location_key:o.binding.location});
     if(p.objective_ref&&!actor.objectives.includes(p.objective_ref)||p.source_refs.some(ref=>!actorReferenceVisible(db,guild,p.actor_key,ref,o.scope)))throw fail('npc_objective_or_knowledge');
-    if(new Set(p.target_refs).size!==p.target_refs.length||p.target_refs.some(key=>!db.getCharacter(key)&&!db.getNpcProfile(guild,key)
-      &&!db.getSimulationEntity(guild,'location',key)))throw fail('npc_native_target');
+    if(!sceneIntentTargetsValid(db,guild,o,p.operation,p.target_refs))throw fail('npc_native_target');
     const ref=child?`npc-intent:${hash([o.binding.source,p.actor_key,p.operation,child.record_key])}`:actor.intents[p.operation];if(seen.has(ref))throw fail('duplicate_npc_intent');seen.add(ref);
     const entry={intent_ref:ref,proposal_ref:ref,actor:{type:'npc',key:p.actor_key,controller:'ai_gm',...(!legacy?{owner_control_type:'ai_world'}:{})},
       scene_ref:o.binding.scene,session:o.binding.session,operation:p.operation,
