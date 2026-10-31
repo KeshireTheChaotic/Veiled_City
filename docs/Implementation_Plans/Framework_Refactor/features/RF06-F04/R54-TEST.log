@@ -1,0 +1,14 @@
+✔ one-method contract rejects incomplete sources and retains dynamic original receiver/results/errors (1.2426ms)
+✔ original guild/user/includeClosed query and exact empty private reply retained (0.2026ms)
+✔ original order/status/guest/raw markdown output remains private and unmodified (0.213ms)
+✔ original read and async reply errors propagate unchanged with no retry (0.235ms)
+✔ actual SQLite command includes own closed characters and excludes other owner/guild without writes (215.8388ms)
+✔ root route still composes the view inside unchanged command receipt workflow (0.6478ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 825.1897

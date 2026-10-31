@@ -34,3 +34,5 @@ export {createDirectorStatusStore} from './director-status-reads.js';
 export {createGmAccessStore} from './gm-access.js';
 
 export {createRulesRulingReadStore} from './rules-ruling-reads.js';
+
+export {createCharacterListStore} from './character-list-reads.js';

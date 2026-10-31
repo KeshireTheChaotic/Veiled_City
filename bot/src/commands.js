@@ -1,3 +1,5 @@
+import {handleCharacterListCommand} from './frameworks/discord/public.js';
+import {connectDiscordCharacterList} from './framework-to-framework/discord--persistence/public.js';
 import {downtimeStatusText,relationshipLine} from './frameworks/discord/public.js';
 import {handleRulesRulingsCommand} from './frameworks/discord/public.js';
 import {connectDiscordRulesRulings} from './framework-to-framework/discord--persistence/public.js';
@@ -1231,11 +1233,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       return true;
     }
 
-    if(group==="character"&&sub==="list"){
-      const rows=db.listCharacters(interaction.guildId,interaction.user.id,{includeClosed:true});
-      await interaction.reply({content:rows.length?rows.map(c=>`• **${c.name}** — ${c.status}${c.is_guest?" / guest":""}`).join("\n"):"You have no characters yet.",ephemeral:true});
-      return true;
-    }
+    if(group==="character"&&sub==="list"){return await handleCharacterListCommand(interaction,{store:connectDiscordCharacterList(db)});}
     if(group==="character"&&sub==="select"){
       const s=requireSession(db,interaction.guildId);
       const previous=db.activeAssignment(s.id,interaction.user.id);

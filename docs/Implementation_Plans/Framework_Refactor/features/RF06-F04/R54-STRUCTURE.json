@@ -1,0 +1,7 @@
+{
+  "parent": "ca2a9941f69b97d4719caee3b2ee067afcecc3f0",
+  "original_command_body_equal_after_only_store_substitution": true,
+  "all_other_root_statements_equal": true,
+  "unchanged_query_arguments_and_private_response": true,
+  "sql_or_class_changes": false
+}

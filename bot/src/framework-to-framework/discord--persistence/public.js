@@ -47,3 +47,7 @@ export function isGm(db,interaction){return hasGmAccess(createGmAccessStore(db),
 import {assertRulesRulingReadStore} from '../../frameworks/discord/public.js';
 import {createRulesRulingReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordRulesRulings(db){return assertRulesRulingReadStore(createRulesRulingReadStore(db));}
+
+import {assertCharacterListStore} from '../../frameworks/discord/public.js';
+import {createCharacterListStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordCharacterList(db){return assertCharacterListStore(createCharacterListStore(db));}

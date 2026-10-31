@@ -75,3 +75,5 @@ export {replyOrEdit} from './reply-or-edit.js';
 export {handleRulesRulingsCommand,assertRulesRulingReadStore} from './rules-rulings-command.js';
 
 export {downtimeStatusText,relationshipLine} from './command-record-text.js';
+
+export {handleCharacterListCommand,assertCharacterListStore} from './character-list-command.js';
