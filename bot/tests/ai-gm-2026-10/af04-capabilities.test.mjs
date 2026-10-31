@@ -44,6 +44,13 @@ test('HR15 qualifies only native Forecast gain and HR16 remains a source ruling 
   assert.equal(foam.interpretation.reaction.pc_trait,'Agility');
   assert.equal(foam.interpretation.reaction.pc_executor,'authenticated_owner');
   assert.equal(foam.interpretation.cost_policy,'existing_native_costs_unchanged');
+  const area=errata.nativeHouseErratum('HR17',2);
+  assert.equal(area.status,'review_only');assert.equal(area.native_handler,null);
+  assert.deepEqual(area.interpretation.reaction,foam.interpretation.reaction);
+  assert.deepEqual(area.interpretation.activation,{npc_stress:1,cost_applies:'when_actor_has_native_Stress_track',
+    cost_timing:'before_area_effect',area_selector:'adversary_controller',area_range:'Close',area_range_origin:'acting_adversary',
+    area:'designated_local_area',affected:'everyone_within_designated_area',exclude_allies:false,exclude_caster:false});
+  assert.equal(errata.nativeFeatureReviewContract('adversary:ritual-enforcement-team:null-foam').erratum_version,2);
   assert.equal(c.featureDisposition('adversary:ritual-enforcement-team:null-foam').status,'needs_rules_review');
   const held=errata.nativeFeatureReviewContract('adversary:pale-court-executioner:break-the-line');
   assert.equal(held.native_authority_granted,false);assert.match(held.missing,/independent_secondary_owner_choice/);

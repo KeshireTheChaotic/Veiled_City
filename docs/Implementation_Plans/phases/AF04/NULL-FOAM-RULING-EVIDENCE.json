@@ -1,0 +1,29 @@
+{
+  "phase": "AF04",
+  "status": "owner_area_ruling_recorded_executor_pending",
+  "erratum": "HR17",
+  "version": 2,
+  "command": "node --test tests/ai-gm-2026-10/af04-capabilities.test.mjs",
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "e1b174745c40d30e95cae9ecdf0a6c2ecc6c8b40623f4c7709aca61494743f5b"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-holds.json",
+      "sha256": "7a6c09a767de350a81bc80c9835b5537e858ec13f6a50e87e3c40b1daee66428"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-capabilities.test.mjs",
+      "sha256": "341ec7a3d0ccb20603a52137f3ce6804ba07e5a9f9d81b30632010169429b894"
+    }
+  ],
+  "limits": [
+    "Ruling and source qualification only",
+    "No area effects, PC dice, NPC dice or condition mutation executed"
+  ]
+}
