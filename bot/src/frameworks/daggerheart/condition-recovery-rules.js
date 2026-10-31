@@ -14,9 +14,13 @@ const actionHash=action=>hash({key:action.record_key,source:action.source_event,
 function actionProof(db,guild,condition,input,scope){
   const proof=ordinaryActionProof(db,guild,input.accepted_intent,scope),action=proof.row,
     result=ordinaryPrerequisite(db,guild,{prerequisite_ref:input.prerequisite},proof).receipt;
+  const legacy=CLEARABLE.has(condition.data.feature)&&condition.data.condition==='Vulnerable'&&condition.data.expiry==='until_cleared',
+    sourced=condition.data.version===2&&condition.data.cause?.feature===condition.data.feature
+      &&condition.data.cause.condition===condition.data.condition&&condition.data.cause.expiry===condition.data.expiry
+      &&(condition.data.condition==='Restrained'&&condition.data.expiry==='until_freed'
+        ||condition.data.condition==='Vulnerable'&&condition.data.expiry==='until_cleared');
   if(condition.subject_key!==proof.pc.id||condition.data.owner!==proof.principal.user
-    ||condition.data.scene!==proof.scene.key||!CLEARABLE.has(condition.data.feature)
-    ||condition.data.condition!=='Vulnerable'||condition.data.expiry!=='until_cleared'
+    ||condition.data.scene!==proof.scene.key||!legacy&&!sourced
     ||action.data.type!=='interact'||action.data.operation!=='clear_condition'||action.data.target_key!==condition.record_key
     ||!['resolved_no_roll','success'].includes(result.data.outcome))throw fail('condition_clear_exact_native_owner_action');
   return {proof,action,result};

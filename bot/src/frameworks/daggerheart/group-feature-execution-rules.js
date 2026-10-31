@@ -345,6 +345,13 @@ function recordNativeSpotlight(db,guild,cost){
   return pointer;
 }
 function validateNativeCondition(db,guild,key){
+  const candidate=db.getCityRecord(guild,'pc_native_condition',key);
+  if(candidate?.data.version===2){
+    if(typeof capabilities.inspectMixedCondition!=='function')throw fail('native_condition_mixed_host_unavailable');
+    const inspected=capabilities.inspectMixedCondition(db,guild,key);
+    if(inspected?.kind!=='pc_native_condition'||hash(inspected)!==hash(candidate))throw fail('native_condition_mixed_reader_source');
+    return inspected;
+  }
   const row=db.getCityRecord(guild,'pc_native_condition',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
     // The condition's original effect is already committed history, not permission for another NPC action.
     effect=v&&validateGroupReactionEffect(db,guild,v.effect,{historical:true}),child=effect&&db.getCityRecord(guild,'gm_arbitration_decision',effect.data.decision),
