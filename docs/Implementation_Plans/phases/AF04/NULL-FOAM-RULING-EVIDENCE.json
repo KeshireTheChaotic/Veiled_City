@@ -1,6 +1,6 @@
 {
   "phase": "AF04",
-  "status": "owner_area_ruling_recorded_executor_pending",
+  "status": "owner_area_ruling_recorded_mixed_executor_and_conditions_held",
   "erratum": "HR17",
   "version": 2,
   "command": "node --test tests/ai-gm-2026-10/af04-capabilities.test.mjs",
