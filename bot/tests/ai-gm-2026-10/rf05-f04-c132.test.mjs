@@ -17,7 +17,4 @@ test('Intent feature-to-flag contract has one public owner and unchanged compati
   const dispatcher=await readFile(fileURLToPath(new URL('../../src/ai-intents.js',import.meta.url)),'utf8');
   assert.doesNotMatch(dispatcher,/export\s+const\s+FEATURE_FLAGS\s*=/);
   assert.match(dispatcher,/import\s*\{\s*FEATURE_FLAGS\s*,\s*validateIntent\s*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
-  const review=await readFile(fileURLToPath(new URL('../../src/ai-review.js',import.meta.url)),'utf8');
-  assert.match(review,/import\s*\{[^}]*\bFEATURE_FLAGS\b[^}]*\}\s*from\s*["']\.\/ai-intents\.js["']/);
-  assert.doesNotMatch(review,/FEATURE_FLAGS\s*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
 });

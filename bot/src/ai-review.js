@@ -1,5 +1,5 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
-import { intentContext, delegationPolicy, stateRevision, reviewAiIntent, FEATURE_FLAGS } from "./ai-intents.js";
+import { intentContext, delegationPolicy, stateRevision, reviewAiIntent } from "./ai-intents.js";
 import {operationsWorldSeedDrafts} from './frameworks/operations/public.js';
 const {reviewSeedDraft}=operationsWorldSeedDrafts;
 import {operationsNpcReview} from "./frameworks/operations/public.js";
@@ -27,13 +27,14 @@ function reviewPreview(row){
       :effects[feature]||"Native reviewed domain change; inspect source, revisions and effect details before approval.",
     budget:data.impact||null,authority:"Preview only; execution rechecks current source, scope, consent, rules and resources."};
 }
-export function reviewInbox(db,guild,{kind="ai_intent",page=1,status=""}={}){
+export function reviewInbox(db,guild,{kind="ai_intent",page=1,status=""}={},featureFlags){
+  if(!featureFlags||typeof featureFlags!=="object"||Array.isArray(featureFlags)) throw new Error("Intent feature flag catalog required.");
   if(!REVIEW_KINDS.includes(kind)||!Number.isInteger(page)||page<1||page>10000) throw new Error("Known review kind and bounded page required.");
   const rows=db.listCityRecords(guild,{kind,status,includeGM:true,limit:21,offset:(page-1)*20});
   const policy=delegationPolicy(db,guild),flags=db.getCityCalendar(guild).flags;
   return {visibility:"gm",kind,page,has_more:rows.length>20,items:rows.slice(0,20).map(row=>({...row,preview:reviewPreview(row),expected_revision:stateRevision(row),
     recovery:"Refresh stale sources/policy, defer/reject, or use native GM review. Republish this inbox to repair delivery; never retry effects."})),
-    eligibility:Object.entries(FEATURE_FLAGS).map(([feature,flag])=>({feature,enabled:flags[flag]===true,delegation:policy.mode,
+    eligibility:Object.entries(featureFlags).map(([feature,flag])=>({feature,enabled:flags[flag]===true,delegation:policy.mode,
       paused:db.isDirectorPaused(guild),expired:policy.expires_minute!==null&&db.getSimulationClock(guild).minute>=policy.expires_minute,
       allowed_operations:policy.allow.filter(op=>op.startsWith(`${feature}.`))})),
     operator_context:intentContext(db,guild),player_consent:"Only authenticated owner commands can establish PC arcs or phase consent."};

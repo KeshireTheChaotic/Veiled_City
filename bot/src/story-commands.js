@@ -20,6 +20,7 @@ import { manageMemoryCluster } from "./frameworks/knowledge/public.js";
 import { expansionStatus } from "./expansion-contracts.js";
 import { delegationOperation, stateRevision, projectPrivateEffect } from "./ai-intents.js";
 import { reviewInbox, reviewWorkflow } from "./ai-review.js";
+import {FEATURE_FLAGS} from './frameworks/intent/public.js';
 import { reconcileHistory } from "./frameworks/knowledge/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import { sendPlayerPrivate } from "./publishing.js";
@@ -34,7 +35,7 @@ export async function handleStoryCommand(interaction,{db,gm}){
   let result;
   if(sub==="brief") result=sessionBrief(db,guild,{mode:"gm",gm:true});
   else if(sub==="delegation") result=delegationOperation(db,guild,input,interaction.user.id);
-  else if(sub==="ai-inbox") result=reviewInbox(db,guild,input);
+  else if(sub==="ai-inbox") result=reviewInbox(db,guild,input,FEATURE_FLAGS);
   else if(sub==="ai-review") result=reviewWorkflow(db,guild,input,interaction.user.id);
   else if(sub==="context") result=new ContextPlanner(db).plan(guild,input);
   else if(sub==="expansion-status") result=expansionStatus(db,guild);

@@ -1,0 +1,11 @@
+✔ Intent dispatch consumes the public validator and retains the compatibility identity (5.5036ms)
+✔ Intent feature-to-flag contract has one public owner and unchanged compatibility identity (9.2048ms)
+✔ application supplies Intent public feature catalog to Operations review (11.4147ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1154.7954
