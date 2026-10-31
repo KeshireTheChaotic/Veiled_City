@@ -6,4 +6,10 @@ Delivered files: `audit-context-consumers.mjs`, `CONTEXT-CONSUMERS.json`, this l
 
 Known limits: exact static symbols cannot prove runtime equivalence or exclude computed/external clients. The shared public export surface is concurrently involved in RF05/RF06 work. No code, authored content, old tests or historical readers were deleted. Professional Entry's separate native first-use/Advantage machinery is explicitly protected.
 
-Next exact work: **AF06 shared native scene-consumer equivalence and ownership/export migration**, then remove only wrappers whose replacement and current consumers are verified. AF04 Null Foam remains separately pending the owner's area-definition decision. AF07 runtime/model qualification is unfinished; this audit is not release evidence.
+## Environment facades — removed after native consumer verification
+
+Fresh `af06-native-context-scene.test.mjs` exercised all 22 exact environment source contexts through the actual native environment-profile receipt writer/reader and `nativeEnvironmentSituation`. Profile replay, original source hashes, private/wrong-location isolation, scene transition holds and read-only historical inspection passed: **1 test passed, 0 failed, exit 0**. World-authoring/audience ports use injected native test providers and disposable SQLite; this is not live model or Discord evidence.
+
+The 22 nine-line `native-environment-*` context facades listed in CONTEXT-CONSUMERS.json were then deleted after checking their exact hashes and verifying zero current runtime import/symbol consumers. The underlying factory module, public exports, authored content, actual effect readers and Professional Entry mechanics remain. No inherited tests were removed or run. Current retirement ownership is in RETIRED-CONTEXT-FACADES.json; historical RF/audit manifests remain snapshots.
+
+Next exact work: **AF06 retire the two old factory implementations and their public exports**, coordinating around the concurrently edited public surface, and qualify the remaining generalized effect consumers. AF04 Null Foam's owner area ruling is resolved; its mixed reaction/condition integration remains unfinished. AF07 runtime/model qualification is unfinished.

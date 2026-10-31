@@ -1,0 +1,135 @@
+{
+  "phase": "AF06",
+  "status": "22_environment_facades_retired",
+  "owner": "daggerheart",
+  "replacement": [
+    "bot/src/frameworks/daggerheart/feature-context-projection.js",
+    "bot/src/frameworks/daggerheart/native-environment-scene.js",
+    "bot/src/frameworks/daggerheart/native-environment-instance.js"
+  ],
+  "retired": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-auction.js",
+      "before_sha256": "47d5f818fa29b9b10431c1d2e14331b8b9a1356b90aa3bac7327ac9cc50c4fcc",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+      "before_sha256": "e6234185afda93b6ed0e1c865873146c414f94b41ab4ac6d3983a2a18d98ed40",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+      "before_sha256": "20bcf792a79d6e5145da644b850c1fda0c5646b6a1d6a2eb09dc709d543d7779",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+      "before_sha256": "f935db4f28cd6c6e5c89db4684abc89c95f50801f39c3ab970a600469ed92141",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+      "before_sha256": "d44e694e2bf9fb0466655bb968f4202adef0597c27d8865f5d403870c93bfe23",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+      "before_sha256": "47f12e81055924ae0cd45ccebc7cae33953a77ba2b03436a0de857c3fde08d69",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+      "before_sha256": "f2cc692f138f826a2fe2f845084e5c4d9fb0c239ddfc8aa2811de400a2150bfb",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+      "before_sha256": "d38119bd79cfc7c4bb78d0a6e477620eb379a5cdb91f7ebe5847be337b5e3012",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+      "before_sha256": "2ae5174053d7cf0197cd308ee20671fa36cac1debdc6bc2fa0aa79d7a720a66f",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+      "before_sha256": "d4763634da0da392bd56cad3a96aeaf3c42306a12b2b3c0debd2e7af1b976c32",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+      "before_sha256": "4e95c1da7340c09e638306f47bf004db243336324d80a4e9f10e658b316200a7",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+      "before_sha256": "178e51c4967609eac94bc693284187245c584a58d15e9a284f8686654693cbc3",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+      "before_sha256": "241df328cc33dcb999ecce226fd4df6a28698e82209770cada6b1e4b4af66ccd",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+      "before_sha256": "274cf55fcaebf82cdd0c9ac099dca42830c15cd46bb34100b4b94c37ce0fed2b",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+      "before_sha256": "f401d599d4bf7faab2cef402121f43daee7fe2a65e0a0be9f3ecf08d2a8c514a",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+      "before_sha256": "40979e8cc10322721e73562b20c68ad4c1db0d9639e7e8423f44e7cff97252fd",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+      "before_sha256": "4a0ff118ccec312faf895cdb4eccc7f13632d6ef4c41081a43f084544cfe6dac",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+      "before_sha256": "8377fe77a9626675bc3880e475d6fece6c82c860916b2ef2f9cfc449e5610e27",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+      "before_sha256": "8a00e91fb4523d2ecf7769ebe4f3d9d096a0c2392d76383358b1c4fc16f56fb4",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+      "before_sha256": "5dc36e08bb57c6fd938f01cc893dcd9b3d6892a55409667b1ea90266acf6ca19",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+      "before_sha256": "32525488b17f82653eda3d59ccbdbebc9a315535f87b24941b40d6c64564dae1",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+      "before_sha256": "6244ccb0fe1bdc60c374111a513a0515d7113ac6a4267b828c1059a8f078c4d1",
+      "current": "deleted_no_runtime_consumers"
+    }
+  ],
+  "qualification": {
+    "command": "node --test tests/ai-gm-2026-10/af06-native-context-scene.test.mjs",
+    "passed": 1,
+    "failed": 0,
+    "exit_code": 0,
+    "test_sha256": "b26fb868ebb80d02a64951473bb803e8df59e53469002c4c78c4293152f46db1"
+  },
+  "remaining": [
+    "adversary-contexts.js",
+    "environment-rule-contexts.js",
+    "public factory exports"
+  ],
+  "historical_manifests": "Pinned prior audit snapshots are retained; this is the current retirement overlay."
+}
