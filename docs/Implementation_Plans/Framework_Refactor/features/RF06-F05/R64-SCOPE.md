@@ -1,0 +1,5 @@
+# RF06-F05 R64 — Qualified public splitter import
+
+Change only index.js splitDiscordText import from the compatibility shim to the existing Discord public API. Both export the same authoritative function object; all remaining import/call/entrypoint ASTs stay unchanged. No splitter algorithm or publication policy changes. Verify fresh runtime identity and complete remaining-entrypoint AST equivalence; syntax and affected guarded bootstrap only, without rerunning unchanged splitter algorithm suites.
+
+Agent A grants exact index import plus checker-proven record9335ce366e8ced9512e385be3a8dea6fb0ffcf7e22b80191426adc3f11927887 retirement. Agent C returned empty INDEX after its AF commits. Native public/recovery and four A TRANSITIONS retirements are unrelated and remain unstaged in B checkpoint. After C122verified b576b053, all four A retirements are already HEAD. Registry pre-edit bytes match current HEAD; whole-stage only B record removal. Never apply an earlier HEAD blob. Explicit release to A after verified R64commit.

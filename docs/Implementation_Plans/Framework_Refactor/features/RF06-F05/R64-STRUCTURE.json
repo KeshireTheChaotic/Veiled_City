@@ -1,0 +1,9 @@
+{
+  "parent": "b576b053723ab1aa8e72d301a32edf05e0daf084",
+  "only_import_source_changed": true,
+  "imported_binding_name_unchanged": true,
+  "all_other_entrypoint_asts_equal": true,
+  "checkpoint_parent": "b576b053723ab1aa8e72d301a32edf05e0daf084",
+  "current_HEAD_rest_AST_reconfirmed": true,
+  "shim_and_public_function_runtime_identity_equal": true
+}

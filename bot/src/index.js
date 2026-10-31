@@ -34,7 +34,7 @@ import { KeyedSerialQueue } from "./kernel/serial-queue.js";
 import {queueDirectorAfterPartyTurn} from "./frameworks/world/public.js";
 import {blockedMutationRows,describeBlockedAction} from "./frameworks/publication/public.js";
 import {lowConfidenceReviewItems,normalizeDirectorConfidence} from "./application/workflows/public.js";
-import { splitDiscordText } from "./discord/chunking.js";
+import { splitDiscordText } from './frameworks/discord/public.js';
 import { assertPlayerPrivateChannel } from './frameworks/discord/public.js';
 import { createLogger } from "./frameworks/operations/public.js";
 import { runNpcDirector } from "./frameworks/world/public.js";

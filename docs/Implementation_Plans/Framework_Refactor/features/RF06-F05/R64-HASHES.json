@@ -1,0 +1,8 @@
+{
+  "bot/src/index.js": "c03dd26484f88bc3e4e27dd9d7ee1b85a7b8551c03b166fd059780957bbdb9a0",
+  "bot/src/discord/chunking.js": "555220daab0bfc0f7ebb6ddae02239b8d8eb8dcb6538ecc259fa7bd2c9c431bd",
+  "bot/src/frameworks/discord/public.js": "eeb979b5a976212705d7d6d35c01ecc17d707b8d8378cc0a0a9448f15daf99c1",
+  "bot/src/frameworks/discord/chunking.js": "01e60a9aaf30f7fa6bafc01f844111e164b0ca961bf3411abe986102807b7c1f",
+  "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa",
+  "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "04ed80fe5c02e31b0e486fd521ca3b8e1a745b7b3890860c480095bbf416748b"
+}

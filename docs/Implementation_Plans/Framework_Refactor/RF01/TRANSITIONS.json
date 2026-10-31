@@ -2916,20 +2916,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "9335ce366e8ced9512e385be3a8dea6fb0ffcf7e22b80191426adc3f11927887",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/index.js",
-      "to": "bot/src/discord/chunking.js",
-      "kind": "static",
-      "specifier": "./discord/chunking.js",
-      "owner": "bootstrap",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F05",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "63c977288622eb06b049753d8dfec921392e1a94b1571680b3fc587da39ffa6c",
       "code": "IMPORTS_PRIVATE_API",
       "from": "bot/src/index.js",
