@@ -1,0 +1,23 @@
+✔ original full row/raw text/null-prototype/guild/active/missing semantics preserved without writes (176.2261ms)
+✔ original active/guild/order/eight-result cap and default/undefined query retained (185.1787ms)
+✔ original String/lowercase/key matching and historical escaped tokenization remain unchanged (160.9127ms)
+✔ query conversion failure propagates before any instrumented SQL read (264.9819ms)
+✔ same connection reads observe original caller writes/nested savepoint and outer rollback (179.9956ms)
+✔ original instrumentation proxy sees both SQL reads without extra connection or writes (157.1392ms)
+✔ reopened original historical row/search/schema remain stable and read-only (185.1308ms)
+✔ stateless root/public function identity and original acknowledgement state remain shared (0.5725ms)
+✔ fresh response forwards exact original payload/result with original receiver (0.1348ms)
+✔ deferred/replied edit preserves strings and original content-only object projection (0.5334ms)
+✔ fixed search view preserves dynamic original receiver/arguments/results/errors (0.4157ms)
+✔ original empty/list text/1950cap/private reply versus deferred edit preserved (0.3008ms)
+✔ actual SQLite active/guild/order/cap8 search stays read-only (315.2977ms)
+✔ search and response failures preserve exact errors without retry (0.322ms)
+✔ root retains original acknowledgement/receipt flow and no new GM check in saved-rulings branch (0.6505ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1414.498

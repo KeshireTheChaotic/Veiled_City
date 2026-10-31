@@ -1,3 +1,4 @@
+import * as rulingReads from './rules-ruling-repository.js';
 import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
 import * as administrativeReads from './administrative-read-repository.js';
 import * as playerPreferences from './player-preferences-repository.js';
@@ -2589,12 +2590,8 @@ export class VeiledDB {
       .run(id,guildId,k,question||key,ruling.trim(),createdBy);
     return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND ruling_key=?").get(guildId,k);
   }
-  searchRulesRulings(guildId,query=""){
-    const q=String(query).toLowerCase();
-    return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND active=1 ORDER BY updated_at DESC").all(guildId)
-      .filter(r=>!q||q.includes(r.ruling_key)||r.question.toLowerCase().split(/\\s+/).some(w=>w.length>4&&q.includes(w))).slice(0,8);
-  }
-  getRulesRuling(guildId,key){return this.db.prepare("SELECT * FROM rules_rulings WHERE guild_id=? AND ruling_key=? AND active=1").get(guildId,key)||null;}
+  searchRulesRulings(guildId,query=""){return rulingReads.searchRulesRulings(this.db,guildId,query);}
+  getRulesRuling(guildId,key){return rulingReads.getRulesRuling(this.db,guildId,key);}
 
   audit(guildId,sessionId,actorType,actorId,action,payload={}) {
     this.db.prepare(`

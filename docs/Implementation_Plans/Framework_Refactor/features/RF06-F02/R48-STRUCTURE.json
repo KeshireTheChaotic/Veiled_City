@@ -1,0 +1,15 @@
+{
+  "parent": "c7d6a0adaaf7b61d63d5e67504c9f34f5e39961d",
+  "class_methods": 319,
+  "untouched_methods": 317,
+  "extracted_methods": [
+    "searchRulesRulings",
+    "getRulesRuling"
+  ],
+  "original_signatures_equal": true,
+  "all_other_method_asts_equal": true,
+  "original_bodies_equal_after_only_connection_substitution": true,
+  "old_class_sql_sites": 401,
+  "new_class_sql_sites": 399,
+  "repository_sql_sites": 2
+}

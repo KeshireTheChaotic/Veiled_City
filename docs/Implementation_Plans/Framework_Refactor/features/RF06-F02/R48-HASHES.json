@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "096fef0525b2ea30bdf78a5a52c3f5f84253aaf5aeb5dde4243d9ee4018b07d5",
+  "bot/src/frameworks/persistence/rules-ruling-repository.js": "0cad9afa4c9fe3c0f83f50d2b02b6351e9c10beba3d73c7c04ecc77a6cdedda4",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c48.test.mjs": "1dc28bbcb8a4509f49ee35eafbd9d927dd609663b73a399444b3ce3d993ac30c",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}
