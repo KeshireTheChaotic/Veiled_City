@@ -1,8 +1,8 @@
 /** Owner-private UI only. Accepted typed intents are canonical adjudication inputs;
  * human declarations own intent; native receipts own outcomes. No UI flag grants GM authority. */
 import {createHash,randomUUID} from 'node:crypto';
-import {ActionRowBuilder,ButtonBuilder,ButtonStyle,StringSelectMenuBuilder,ModalBuilder,TextInputBuilder,TextInputStyle,AttachmentBuilder} from 'discord.js';
-import {discordSessionPrincipal} from './frameworks/discord/public.js';
+import {ActionRowBuilder,ButtonBuilder,ButtonStyle,StringSelectMenuBuilder,ModalBuilder,TextInputBuilder,TextInputStyle} from 'discord.js';
+import {discordSessionPrincipal,createAttachment} from './frameworks/discord/public.js';
 function conversationPrincipal(...args){return discordSessionPrincipal.conversationPrincipal(...args);}
 import {discordSessionScene} from './frameworks/discord/public.js';
 const {currentScene}=discordSessionScene;
@@ -186,7 +186,7 @@ function payload(db,guild,r,{library}={}){
   if(actions.length>12)shownActions.push(['actions-prev','Earlier controls'],['actions-next','More controls']);
   for(let n=0;n<shownActions.length;n+=5)components.push(new ActionRowBuilder().addComponents(shownActions.slice(n,n+5).map(([a,l])=>button(r,a,l))));
   return {payload:{content:`**Private PvP — ${page+1}/${pages.length}**\n${pages[page]}`,ephemeral:true,allowedMentions:{parse:[]},components,
-    files:[new AttachmentBuilder(Buffer.from(text),{name:'private-pvp-review.txt'})]},actions:shownActions.map(x=>x[0]),choices,
+    files:[createAttachment(Buffer.from(text),{name:'private-pvp-review.txt'})]},actions:shownActions.map(x=>x[0]),choices,
     pages:{page,choice_page:Math.min(Math.max(0,view.choice_page||0),Math.max(0,Math.floor((choices.length-1)/20))),action_page:actionPage},
     limits:{page:pages.length-1,choice_page:Math.max(0,Math.floor((choices.length-1)/20)),action_page:Math.floor((actions.length-1)/12)}};
 }
