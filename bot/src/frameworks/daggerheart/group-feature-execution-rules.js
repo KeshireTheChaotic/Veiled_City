@@ -18,6 +18,29 @@ function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
   if(encounter?.status!=='active'||c?.status!=='active'||c.hp_current<=0||!template||hash(template)!==feature.template_hash
     ||activeCityProxy(db,guild,entry.actor.key)||actor?.data.state!=='actually_present'||actor.location_key!==o.binding.location
     ||db.getWorldEvent(guild,binding.source_event)?.status!=='active'||db.getWorldEvent(guild,actor.source_event)?.status!=='active')throw fail('group_feature_actor_source');
+  if(policy.area){
+    if(entry.target_refs.length!==1||typeof capabilities.planNativeAreaCohort!=='function')throw fail('group_feature_area_reference');
+    const area=capabilities.planNativeAreaCohort(db,guild,o,entry.actor.key,entry.target_refs[0]),targets=[],npc_targets=[];
+    if(!area.targets.length)throw fail('group_feature_empty_area');
+    for(const target of area.targets){
+      if(target.kind==='character'){
+        const pc=personalCharacter(db,guild,target.owner,target.key),principal=conversationPrincipal(db,guild,target.owner,target.key),
+          presence=scenePresence(db,guild,'character',target.key);
+        if(principal.kind!=='owner'||pc.owner_user_id!==target.owner||hash(presence)!==target.presence_hash)throw fail('group_feature_area_owner');
+        targets.push({character:pc.id,owner:target.owner,principal:principal.revision,
+          target_snapshot:{target:target.presence_hash,principal:principal.revision,area:area.area_hash},resources_hash:hash(pc.data.resources)});
+      }else{
+        const matches=binding.data.combatants.filter(b=>b.actor===target.key),combatant=matches.length===1&&db.listCombatants(encounter.id).find(v=>v.id===matches[0].id),
+          sourceTemplate=combatant&&library.findAdversary(combatant.base_name);
+        if(!combatant||combatant.status!=='active'||combatant.hp_current<=0||!sourceTemplate)throw fail('group_feature_area_npc_source');
+        npc_targets.push({...target,combatant:combatant.id,combatant_snapshot:combatant,template_hash:hash(sourceTemplate)});
+      }
+    }
+    const costSource=policy.stress_when_tracked&&c.stress_max===0?{...feature,costs:feature.costs.filter(v=>v.resource!=='npc_stress')}:feature,
+      cost=featureCostPlan(costSource,{timing:'spotlight_action',fear:db.getCampaign(guild).fear,stress:c.stress_current,stressMax:c.stress_max});
+    return {operation:'commit_group_feature',feature:feature.feature_key,feature_hash:hash(feature),feature_definition:feature,template_hash:feature.template_hash,
+      actor:entry.actor.key,combatant:c.id,actor_source:actor.source_event,combatant_hash:hash(c),targets,npc_targets,area,opportunity,cost};
+  }
   const eligible=db.roster(scene.session_id).filter(r=>r.character_id&&['present','late','guest'].includes(r.presence)).map(r=>db.getCharacter(r.character_id)).filter(pc=>{
     const target=scenePresence(db,guild,'character',pc.id),range=actor.data.zone===target?.data.zone?'Melee':target?.data.range;
     return target?.data.state==='actually_present'&&target.location_key===actor.location_key&&RANGE_BANDS.includes(range)
@@ -38,6 +61,7 @@ function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../cont
   return db.transaction(()=>{
     const prior=db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key));if(prior)return inspectGroupFeature(db,guild,prior.record_key).execution;
     const {row,entry}=inspectNativeGmDecision(db,guild,key),n=row.data.native,feature=compileNativeFeatures().find(f=>f.feature_key===n?.feature);
+    if(n?.area)throw fail('group_feature_area_execution_not_qualified');
     if(n?.operation!=='commit_group_feature'||hash(planGroupFeature(db,guild,{binding:row.data.origin,scope:row.data.scope},entry,row.data.proposal,feature,{library,opportunity:n.opportunity}))!==hash(n))
       throw fail('group_feature_state_changed');
     const cost=commitGmActionCost(db,guild,key),children=n.targets.map(target=>{
