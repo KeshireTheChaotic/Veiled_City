@@ -7,7 +7,7 @@ const {requireCitySource,cityObject,cityInteger,cityAudit,indexWorldEvent}=inten
 const {inspectNpcAction,inspectInstitutionAction,submitInstitutionAction,executeInstitutionAction}=intentWorldActions;
 /** Shared governed intent pipeline: bound authority, closed contracts, atomic receipts and native domain adapters. */
 import { createHash } from "node:crypto";
-import { validateIntent } from "./ai-intent-contracts.js";
+import { validateIntent } from "./frameworks/intent/public.js";
 import {intentSessionScene} from './frameworks/intent/public.js';
 const {recordScenePresence, scenePresence, sceneView}=intentSessionScene;
 import {intentWorldConstraints} from './frameworks/intent/public.js';
