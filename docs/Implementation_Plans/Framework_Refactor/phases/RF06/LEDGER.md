@@ -73,7 +73,7 @@
 | RF06-F03 I02 | Original GM notice reservation/caller transaction inventory | ab7ef4d7523b1fa86a21209657617b0238048ca9 | static5helpers/9callsites/source hashes/schema;no runtime suite |
 | RF06-F03 R65 | Real owner projection and original withdrawal reservation rollback | 04541b066646e1399b7b63ae582d488946901901 | 1/1 final actual SQLite; all-table rollback, retry and replay; five fixture failures retained |
 | RF06-F03 R66 | Original group owner roll/effect reservation rollback | this R66 checkpoint | affected withdrawal1pass; group1/1 final; all-table rollback/retry/saved replay;syntax3 |
-| RF06-F03 R67 | Existing Native–Publication reservation port for qualified cancellation callback | this R67 checkpoint | 2/2 actual SQLite+port; C113 1/1 after both freezes; syntax8/8; exact two transitions retired |
+| RF06-F03 R67 | Existing Native–Publication reservation port for qualified cancellation callback | 4bda0a6bdef9e6621931c21baae0cc30b2ba01ff | 2/2 actual SQLite+port; C113 1/1 after both freezes; syntax8/8; two R67 edges plus one joint C129 location transition |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
