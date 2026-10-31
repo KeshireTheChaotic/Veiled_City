@@ -5,7 +5,8 @@ const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './frameworks/daggerheart/public.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
-import {nativeGmOpportunity} from './gm-action-capability.js';
+import {nativeGmOpportunityPeer} from './frameworks/daggerheart/public.js';
+const {nativeGmOpportunity}=nativeGmOpportunityPeer;
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
 function establishNarrativeEntity(...args){return nativeWorldAutonomy.establishNarrativeEntity(...args);}function worldAuthority(...args){return nativeWorldAutonomy.worldAuthority(...args);}
 import {nativeWorldAuthoring} from './frameworks/daggerheart/public.js';

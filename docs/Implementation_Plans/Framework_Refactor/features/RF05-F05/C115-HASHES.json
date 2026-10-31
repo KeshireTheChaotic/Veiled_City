@@ -1,0 +1,60 @@
+{
+  "base": "95c5c4e4fffd567af6340e8b0e3c616c53be5b7b",
+  "exact_source_substitutions": true,
+  "original_sources_and_ports_unchanged": true,
+  "syntax_pass": 5,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c115.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+    "pass": 4,
+    "fail": 0,
+    "duration_ms": 2343.3402,
+    "reason_for_affected_rerun": "Production import graph changed."
+  },
+  "limits": "Original source identity, actual SQLite refusal/zero reservation/no writes, independent original provider registration and offline bootstrap. Does not qualify successful Native opportunity/action/receipt or live readiness.",
+  "files": [
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "sha256": "d582b2b86226c948f3c86e0713829e8b32e10e1dece1c2cc76be688acc9ef53c"
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "sha256": "04776dce59f98185c883b1b376e0fa966920e8fd162fc0f39f46b582c1240663"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "3b3e95a37c95865214bdef0789df7d19bae74653fc95d34a0152f4a017b40e53"
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "sha256": "5759e532d237fa6862ba8f1d6997108d4716bf12f993caef5e596024e25826b5"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "62ac7e67401220f015998b052050c934619002b9b4a1003e311a27791eaaf74c"
+    },
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "0069da540c3f4045a6b062f5347938f351f9831a313513cb4f29864ab2bd3dc8"
+    },
+    {
+      "path": "bot/src/fear-reservations.js",
+      "sha256": "5479946f249e36b923d64ddf1293d7e41c6841dae21b1537615842bc2d335255"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-sources.js",
+      "sha256": "fdf6222d74fbc56995e78e49a90f9df88e17365ebc8168ad1dda2371e626b69d"
+    },
+    {
+      "path": "bot/src/kernel/function-port.js",
+      "sha256": "9cf6749e89ca2a3d52766e145e9344b6c7d058112831febbbf088e6efc4e8c1c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c115.test.mjs",
+      "sha256": "abd05d33b6f896d1856a5eff4305dbb9e76cebfb734857f604b414f2b8daf380"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}

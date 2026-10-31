@@ -3,7 +3,8 @@ const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './frameworks/daggerheart/public.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
-import {nativeGmOpportunity} from './gm-action-capability.js';
+import {nativeGmOpportunityPeer} from './frameworks/daggerheart/public.js';
+const {nativeGmOpportunity}=nativeGmOpportunityPeer;
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

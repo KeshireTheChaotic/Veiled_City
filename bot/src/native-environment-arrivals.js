@@ -4,8 +4,10 @@ import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
 const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './frameworks/daggerheart/public.js';
-import {nativeGmOpportunity} from './gm-action-capability.js';
-import {reservedCampaignFear} from './fear-reservations.js';
+import {nativeGmOpportunityPeer} from './frameworks/daggerheart/public.js';
+const {nativeGmOpportunity}=nativeGmOpportunityPeer;
+import {reservedCampaignFearPeer} from './frameworks/daggerheart/public.js';
+const {reservedCampaignFear}=reservedCampaignFearPeer;
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';
 function establishNarrativeEntity(...args){return nativeWorldAutonomy.establishNarrativeEntity(...args);}
 import {nativeWorldAuthoring} from './frameworks/daggerheart/public.js';
