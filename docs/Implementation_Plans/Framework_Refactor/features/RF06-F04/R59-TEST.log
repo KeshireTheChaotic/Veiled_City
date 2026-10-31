@@ -1,0 +1,14 @@
+✔ composition requires only original display callbacks and empty draft calls neither (1.1185ms)
+✔ actual existing advancement callbacks retain exact unselected level2 text and owner choice prompt (0.3669ms)
+✔ selected plan and actual level5 display retains original mandatory card and cleared marks text (0.2251ms)
+✔ original callback order/arguments and exact callback errors propagate without rule translation (0.2212ms)
+✔ original malformed plan errors, character fallback and1900UTF16limit retained (0.2068ms)
+✔ root binds original composed callbacks and retains planning/confirmation callers unchanged (0.9548ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 772.7639

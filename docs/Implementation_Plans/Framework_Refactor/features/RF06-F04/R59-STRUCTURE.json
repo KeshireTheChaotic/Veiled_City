@@ -1,0 +1,8 @@
+{
+  "parent": "9bc1465cdf002ce63664fa50f1ffef15f4ecc84c",
+  "whole_original_inner_function_ast_equal": true,
+  "all_other_root_statements_equal": true,
+  "binding_immediately_after_original_advancement_composition": true,
+  "original_rule_and_formatter_callers_unchanged": true,
+  "no_native_or_character_source_changes": true
+}

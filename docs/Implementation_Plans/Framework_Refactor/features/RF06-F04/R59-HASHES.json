@@ -1,0 +1,6 @@
+{
+  "bot/src/commands.js": "9bc743b795689ee440ef6f44e53df22e20d013a45425608909b7bf95ebb92365",
+  "bot/src/frameworks/discord/public.js": "c3261570d42bf9be92eb6caf0cba59552220552bd9583dd1dad40626fa32c036",
+  "bot/src/frameworks/discord/levelup-draft-text.js": "f7449beb6c1c7c58283feffa1f392bef812784e29948a9a19504c19bea583795",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c59.test.mjs": "4aeca8b7236f46a41d6b70fb7e584c85e9b60d0a7b7e8479cc791dd043fbd69a"
+}

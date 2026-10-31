@@ -1,0 +1,9 @@
+# RF06-F04 R59 — Complete original level-up draft display
+
+Whole original formatLevelupDraft now inside Discord formatter factory receiving only the same tierAchievement/legalAdvancements callbacks already composed in Application. Original inner-function AST/signature and all remaining command statement ASTs exact; factory binds immediately after original advancement composition. Both existing callers, planning/confirmation/owner choices/mandatory card fields/errors/1900limit remain original. No rule copy or Native/Character source/public change.
+
+Agent A granted source after R58; commands adoption waited until verified C1189bc1465c import edit committed, then reanchored complete commands proof to that parent and preserved recording import. B holds INDEX for separate R59thenR60 exact checkpoints. Runtime3/freshc59/scope/ledger/hash/structure/log/phase only; no registry/SQL edits.
+
+Frozen c59 exit0:6/6passed firstlaunch,772.7639ms,zero failure/skip/cancel. Missing display callbacks refused; null draft lazily calls neither rule; original function name/arity; actual existing advancement service level2/level5 outputs, selected/unselected owner prompts/card fields, exact callback order/arguments/errors, fallback/malformed plan/no mutation/limit and original root rule/formatter callers. Syntax4/4/sourceproof passed. No provider/network/productionDB or mechanical action.
+
+Shared RF05 ratchet exit0:1085modules/4340imports,0unowned/0active/0transitionerrors,641accepted,cycle55 including concurrent C118 and prepared R60startup change. No exception expansion/fullphase/release claim. Native correlated repositories remain held. Next exact RF06-F05 R60 already qualified frozen client-ready callback checkpoint; R61interaction callback requires new source window after R60commit. Rollback only R59paths; no push/merge/deploy.
