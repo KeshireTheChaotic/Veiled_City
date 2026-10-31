@@ -1,0 +1,7 @@
+{
+  "parent": "308886d62d2ef8c0aedfefb83e6987e19bc2ce5b",
+  "original_registration_and_callback_ast_equal_after_console_dependency_alias": true,
+  "all_other_index_statement_asts_equal": true,
+  "original_once_event_and_sync_async_error_order_retained": true,
+  "no_database_client_provider_construction_or_login_changes": true
+}

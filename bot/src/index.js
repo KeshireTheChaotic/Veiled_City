@@ -1,3 +1,4 @@
+import {registerClientReadyHandler} from './bootstrap/ready.js';
 import {registerShutdownHandlers} from './bootstrap/shutdown.js';
 import {initializePublicationOperations} from './application/composition/public.js';
 import {initializeOperationsDiscord} from './application/composition/public.js';
@@ -584,18 +585,7 @@ async function processPartyTurn(message,directMention,attempt=null){
   if(attempt)advanceTurnAttempt(db,attempt.turn_id,outputErrors.length?"needs_recovery":"delivered",outputErrors.length?{terminalCode:"PUBLICATION_FAILED",errorRef:outputErrors[0].ref}:{});
 }
 
-client.once("clientReady",()=>{
-  db.markAllInterruptedPublicationsUncertain();
-  for(const guild of client.guilds.cache.values()){
-    try{resumeAutonomousPvpFear(db,guild.id,{limit:12});}
-    catch(error){log.error("Autonomous immediate Fear recovery requires review",error);}
-    // Only a never-attempted native opening can execute automatically. Interrupted/uncertain work is held.
-    void runSessionOpening({db,guild,gm}).catch(()=>log.error('Native session opening requires source review.'));
-  }
-  console.log(`Veilkeeper v3.5.5 logged in as ${client.user.tag}`);
-  console.log(`Voice narration: ${config.voiceEnabled?`enabled (${config.voiceName}/${config.voiceModel})`:"disabled"}.`);
-  console.log(`Indexed ${content.chunks.length} Veiled City content chunks.`);
-});
+registerClientReadyHandler({client,db,gm,log,config,content,resumeAutonomousPvpFear,runSessionOpening});
 
 client.on("interactionCreate",async interaction=>{
   try{

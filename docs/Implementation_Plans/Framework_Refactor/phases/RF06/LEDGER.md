@@ -64,7 +64,8 @@
 | RF06-F04 R56 | Original NPC proxy packet/control display in Discord | 92dc0457d46278839b337535dda3544cc1756173 | 6/6fresh;syntax4;whole/restcommandAST exact |
 | RF06-F04 R57 | Original canon status/conflict read displays through existing pair | 4a88cccbdf4edce180347da9e8041701dad4592d | 6/6fresh;syntax7;whole/restcommandAST+GMguard exact |
 | RF06-F02 R58 | Original canon status/conflict SQL readers, same connection | 308886d62d2ef8c0aedfefb83e6987e19bc2ce5b | 12/12fresh+affected;syntax3;317othermethodAST exact |
-| RF06-F04 R59 | Original level-up draft text with same composed rule callbacks | this R59 checkpoint | 6/6fresh;syntax4;wholeformatter/restcommandAST exact |
+| RF06-F04 R59 | Original level-up draft text with same composed rule callbacks | 067a35aa3eed5a2d6f5fc1a756eaebd6d3756236 | 6/6fresh;syntax4;wholeformatter/restcommandAST exact |
+| RF06-F05 R60 | Original ready event registration in bootstrap; same recovery/order | this R60 checkpoint | 6/6fresh;syntax3;callback/restindexAST exact;A affectedbootstrap passed |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -75,7 +76,7 @@ Root db.js is a standalone compatibility facade. Baseline d6ec1467 has319 method
 
 ## Architecture and coordination
 
-After R59: shared RF05 ratchet exit0,1085 modules/4340 imports,0active/0errors,641 accepted,cycle55. Snapshot includes concurrent Agent A RF05 and external AF02 progress. R31/R32 snapshots recorded one external AF02 roll-requests cycle; Agent A C95 resolves that edge without exception expansion. Current snapshot includes concurrent C118 and prepared R60 progress with zero registry errors. Separate snapshots do not qualify either full phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 25 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
+After R60: shared RF05 ratchet exit0,1085 modules/4340 imports,0active/0errors,641 accepted,cycle55. Snapshot includes concurrent Agent A RF05 and external AF02 progress. R31/R32 snapshots recorded one external AF02 roll-requests cycle; Agent A C95 resolves that edge without exception expansion. Current snapshot includes concurrent C118 and R59/R60 progress with zero registry errors. Separate snapshots do not qualify either full phase. R01's RF06 check exited 1 with 526 earlier-phase expired groups; RF06 was not rerun after unrelated changes and is not qualified. Current measurements include concurrent Agent A RF05 work and cannot be credited solely to Agent B. 25 exact obsolete registration/privacy/diagnostic transitions retired across these Agent B slices; no exception expansion.
 
 Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands.js, publishing.js, Discord public and feature-local RF06 artifacts; Agent A owns Narrative/GM/state/turn and explicitly scheduled Publication pair/API work. Shared transition/manifest windows pass explicitly at commit boundaries. Preserve all owner and other-agent dirty changes; commits stage only each slice's exact paths.
 
@@ -83,4 +84,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F05 R60 frozen client-ready callback checkpoint; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F05 R61 original interaction event orchestration after exclusive index grant; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

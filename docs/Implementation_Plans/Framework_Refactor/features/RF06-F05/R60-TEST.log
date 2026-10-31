@@ -1,0 +1,14 @@
+✔ registration is inert until actual once event and preserves original per-guild recovery/output order (1.0156ms)
+✔ original interrupted-publication failure aborts before native recovery or logged-in messages (0.2895ms)
+✔ original per-guild Fear error logs same identity and continues opening and later guilds (0.1521ms)
+✔ original rejected opening logs review without retry or suppressing normal ready output (0.2004ms)
+✔ original opening is not awaited and synchronous callback error still propagates (0.2087ms)
+✔ entrypoint retains private turn handlers, shutdown and original login after ready registration (0.422ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52.9758

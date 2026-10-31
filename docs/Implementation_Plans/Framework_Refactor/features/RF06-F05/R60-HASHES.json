@@ -1,0 +1,5 @@
+{
+  "bot/src/index.js": "1bf90a885475fe3d318973601ff062814999df530c2104d56790f3217d81333c",
+  "bot/src/bootstrap/ready.js": "032f2e6c134b608ff7b4f6d62217c84c8620027995abaafc07d68c40672f08ff",
+  "bot/tests/ai-gm-2026-10/rf06-f05-c60.test.mjs": "3bef97e2afc6633e451b019378a77fb1b24de18d09996f62564c7a898d3103a1"
+}
