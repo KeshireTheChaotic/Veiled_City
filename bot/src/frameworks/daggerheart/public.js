@@ -200,3 +200,5 @@ export {validateDoorChainProposal,applyEnvironmentDoorChain,inspectEnvironmentDo
 export {createNativeEnvironmentRecording,inspectNativeEnvironmentRecording} from './native-environment-recording.js';
 
 export {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,captureCountdownActionAncestry,inspectCountdownActionAncestry,advanceEnvironmentUploadCountdown,adjustEnvironmentUploadCountdown,inspectEnvironmentCountdown,environmentCountdownProjection,environmentUploadState,closingTimeMovesReadiness} from './native-environment-countdown.js';
+
+export {nativeEnvironmentOutputCandidates,nativeEnvironmentOutput} from './native-environment-output.js';

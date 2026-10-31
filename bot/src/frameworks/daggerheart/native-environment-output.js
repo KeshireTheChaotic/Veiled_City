@@ -1,15 +1,15 @@
 /** Receipt-selected output only. No creation, spending, dice or model prose at a publication sink. */
-import {inspectEnvironmentArrival} from './frameworks/daggerheart/public.js';
-import {environmentSceneProjection} from './frameworks/daggerheart/public.js';
-import {jsonHash as hash} from './kernel/json-hash.js';
-import {nativeScenes} from './frameworks/daggerheart/public.js';
+import {inspectEnvironmentArrival} from './native-environment-arrivals.js';
+import {environmentSceneProjection} from './native-environment-scene.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {nativeScenes} from './contracts/scenes.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
-import {assertEnvironmentAudience} from './frameworks/daggerheart/public.js';
-import {environmentCountdownProjection} from './frameworks/daggerheart/public.js';
-import {environmentWitnessAccountsProjection} from './frameworks/daggerheart/public.js';
-import {createEnvironmentOutputRules} from './frameworks/daggerheart/public.js';
-export {environmentOutcomeKinds} from './frameworks/daggerheart/public.js';
+import {arbitrationFailure as fail} from '../../kernel/arbitration-failure.js';
+import {assertEnvironmentAudience} from './environment-audience-source.js';
+import {environmentCountdownProjection} from './native-environment-countdown.js';
+import {environmentWitnessAccountsProjection} from './native-environment-witnesses.js';
+import {createEnvironmentOutputRules} from './environment-output-rules.js';
+export {environmentOutcomeKinds} from './environment-output-rules.js';
 let nativeRules;
 function rules(){return nativeRules??=createEnvironmentOutputRules({capabilities:{inspectEnvironmentArrival:(...args)=>inspectEnvironmentArrival(...args),environmentSceneProjection:(...args)=>environmentSceneProjection(...args),hash:(...args)=>hash(...args),currentScene:(...args)=>currentScene(...args),fail:(...args)=>fail(...args),assertEnvironmentAudience:(...args)=>assertEnvironmentAudience(...args),environmentCountdownProjection:(...args)=>environmentCountdownProjection(...args),environmentWitnessAccountsProjection:(...args)=>environmentWitnessAccountsProjection(...args)}});}
 export function nativeEnvironmentOutputCandidates(...args){return rules().nativeEnvironmentOutputCandidates(...args);}

@@ -15,7 +15,8 @@ import {publicationWorldReceipts} from './frameworks/publication/public.js';
 function worldSimulationReceiptForAudience(...args){return publicationWorldReceipts.worldSimulationReceiptForAudience(...args);}
 import {validatePvpAttackRoll} from './pvp-attacks.js';
 import {validatePvpDamageApplication,validatePvpDamageRoll} from './pvp-damage.js';
-import {nativeEnvironmentOutput} from './native-environment-output.js';
+import {publicationNativeEnvironmentOutput} from './frameworks/publication/public.js';
+const {nativeEnvironmentOutput}=publicationNativeEnvironmentOutput;
 export {nativeOutcomeSchema} from './gm-fiction-schema.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fail(){throw Object.assign(new Error('Native output needs the exact committed outcome, current owner and audience.'),{code:'NARRATIVE_PVP'});}

@@ -63,7 +63,8 @@ function openingCohortNarrativeCandidate(...args){return publicationSessionEvide
 function assemblyHookSelection(...args){return publicationSessionEvidence.assemblyHookSelection(...args);}
 function assemblyOrientation(...args){return publicationSessionEvidence.assemblyOrientation(...args);}
 import {lifecycleProjection,lifecycleHash} from './frameworks/publication/public.js';
-import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
+import {publicationNativeEnvironmentOutput} from './frameworks/publication/public.js';
+const {nativeEnvironmentOutputCandidates}=publicationNativeEnvironmentOutput;
 
 const hash=v=>createHash("sha256").update(JSON.stringify(v??null)).digest("hex");
 const prepared=new WeakMap();

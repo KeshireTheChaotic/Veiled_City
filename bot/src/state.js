@@ -31,7 +31,7 @@ import { persistPlayerIntents, persistPlayerIntentDiagnostics, persistTypedDialo
 import { adjudicateAcceptedIntent } from "./rules-arbitration.js";
 import {adjudicateGmRuling} from "./gm-action-ruling.js";
 import {applyUnifiedArbitration,prepareUnifiedCollaboration} from './gm-unified-arbitration.js';
-import {nativeEnvironmentOutputCandidates} from './native-environment-output.js';
+import {nativeEnvironmentOutputCandidates} from './frameworks/daggerheart/public.js';
 import { coordinateTypedActionWindows } from "./frameworks/session/public.js";
 import { buildActionPlan, executableActionSpans, transitionAction } from "./frameworks/intent/public.js";
 import { saveContextMemories } from './frameworks/knowledge/public.js';

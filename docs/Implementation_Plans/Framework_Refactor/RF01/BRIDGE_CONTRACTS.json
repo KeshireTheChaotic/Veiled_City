@@ -1141,7 +1141,15 @@
         "occurrences": 34
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--publication/public.js",
-      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred. C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned."
+      "scope": "Mechanical receipt authoring/publication projection only. World observation, owner scene entry, custody and commitment source rendering remain original publication responsibilities; wider legacy publication adoption deferred. C232 original Native Fear publication proof/render or Discord resumption forwards through fixed consumer; Native retains every permission/receipt/effect rule; World producer remains World-owned. C120 original environment locators and receipt renderer are supplied through a fixed read-only Publication consumer; wider legacy projection adoption remains deferred.",
+      "native_environment_output": {
+        "feature": "RF05-F05 C120",
+        "source": "Original Native nativeEnvironmentOutputCandidates and nativeEnvironmentOutput functions",
+        "consumer": "publicationNativeEnvironmentOutput fixed two-method read-only source in native-outcome-output.js and pvp-output.js",
+        "composition": "connectPublicationNativeEnvironmentOutput before original Native outcome bindings at existing initializeNativeOutcomes; original initializer return/source factory retained",
+        "authority": "Locators are proposals, never receipts. Original Native renderer retains all source/current owner/audience/ancestry validation; no policy or state copied into pair.",
+        "qualification_evidence": "features/RF05-F05/C120-HASHES.json"
+      }
     },
     {
       "pair": "daggerheart--session",

@@ -1,0 +1,72 @@
+{
+  "reason": "Original Native environment output owned/root retired; Publication readers use fixed pair source, App reader Native public; exact checker-proven location/private/cross records only.",
+  "entries": [
+    {
+      "id": "792aa81727849fea2d7ccee736a70d4f849ba049260b5692f72f51ae37b4c63a",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-output.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "81597b91a92089047b668810452f8fb6cfcc7ba494b5e9995cea3f34746e817d",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-output.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "2804694e452881aabc0e1a277bfd7e0c872a03eb6f584fa93e858bbc855ed7df",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-outcome-output.js",
+      "to": "bot/src/native-environment-output.js",
+      "kind": "static",
+      "specifier": "./native-environment-output.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "9a5b072f39f95f70c9096d6318fb8d9ab58f578f7ee7d7accf042ad2ab5b67fa",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/pvp-output.js",
+      "to": "bot/src/native-environment-output.js",
+      "kind": "static",
+      "specifier": "./native-environment-output.js",
+      "owner": "publication",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F03",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "e069ec8de1b142da53f08ef70a6b232c3ec96d4e543d818fb5dc6881c3660e43",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/state.js",
+      "to": "bot/src/native-environment-output.js",
+      "kind": "static",
+      "specifier": "./native-environment-output.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

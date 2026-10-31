@@ -1,0 +1,91 @@
+{
+  "base": "a92a49931e8f49445f30b5c49c8d78e35e7cf447",
+  "exact_original_source_substitutions": true,
+  "native_output_rules_unchanged": true,
+  "original_initializer_return_preserved": true,
+  "deleted_original": "bot/src/native-environment-output.js",
+  "syntax_pass": 9,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c120.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 3,
+      "fail": 1,
+      "duration_ms": 1789.1468,
+      "disposition": "Fixture expected bare locator instead of original version4 native_outcome envelope; assertion and case-local source composition repaired, production unchanged."
+    },
+    {
+      "command": "node --test --test-name-pattern='actual SQLite scoped' bot/tests/ai-gm-2026-10/rf05-f05-c120.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 618.2838,
+      "disposition": "Only failed case rerun; other passed cases retained."
+    }
+  ],
+  "limits": "Original read-only Native API and initializer, actual SQLite private scope/foreign guild/counterfeit locator refusal/no write/no PC/fact effects, offline bootstrap under frozen R62 source. Locators are not receipts; no successful Native rendering/disclosure/full GM/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-output.js",
+      "sha256": "9c87e670a6268681ef262294d6658f9b70ffa96355049113909b405b86d6c190"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/native-environment-output.js",
+      "sha256": "914fb731cd034eb2af0645b8c664fbef6efe1a036dad3b4fdbba1013f4eeb484"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "e9f401389e115b65654b85620e4928992db0f386da2a991516d07730ffd25db8"
+    },
+    {
+      "path": "bot/src/frameworks/publication/public.js",
+      "sha256": "f97c9a6250e13e9aa8140e7a2e81a374c807ddca1e53b9364f48cc728ea5eb02"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--publication/public.js",
+      "sha256": "72383686f9784b6ab691b3ddb89a0c69570a66f1a399f57a940aa2ad69067a4f"
+    },
+    {
+      "path": "bot/src/application/composition/native-outcomes.js",
+      "sha256": "f1b00ca9418d7f98abb55b9be6d8a81cd2c194eb09bcd3618473f2924f4ca4e9"
+    },
+    {
+      "path": "bot/src/native-outcome-output.js",
+      "sha256": "2f371d5b8bb9a71b52def77cd924bc68b055f2b9a13a91797498981ddf07dc6b"
+    },
+    {
+      "path": "bot/src/pvp-output.js",
+      "sha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66"
+    },
+    {
+      "path": "bot/src/state.js",
+      "sha256": "400ec856ed71dc9b3999d2fe4521f247e20cb2249520f7d261c162b62b77d622"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-output-rules.js",
+      "sha256": "ab0287cdd5b8b515653ba03295514ddb2cbb59ba3c6956e1b21d8697030dd00d"
+    },
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "85a41095379718aebaecd07c993c2d197d31211968714fbed6279e9ee108b998"
+    },
+    {
+      "path": "bot/src/frameworks/discord/client-factory.js",
+      "sha256": "5c9d2dc3f30316dcb528c9852c23f7a2553a6aa4f2abbc64fa7f00ae8c742729"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "eeb979b5a976212705d7d6d35c01ecc17d707b8d8378cc0a0a9448f15daf99c1"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c120.test.mjs",
+      "sha256": "f112f71368410afb66fd9aa80f93a9872377682f6fe5c5f3ac5b2ef6de790001"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}
