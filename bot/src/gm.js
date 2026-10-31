@@ -59,7 +59,7 @@ import {ordinaryEffectsSchema,ORDINARY_EFFECT_PROMPT} from './frameworks/daggerh
 import {ordinaryEffectContext} from './ordinary-effects.js';
 import {authorFreshNpcRequests,hasFreshNpcResponse,FRESH_NPC_INSTRUCTIONS,freshNpcResponseSchema} from './frameworks/narrative/public.js';
 import {worldInputKey} from './frameworks/world/public.js';
-import {shadowEngagement} from './engagement-shadow.js';
+import {shadowEngagement} from './frameworks/intent/public.js';
 import {authorFreshSceneRequests,hasFreshSceneResponse,FRESH_SCENE_INSTRUCTIONS,freshSceneResponseSchema} from './frameworks/narrative/public.js';
 import {authorSceneFictionRequests,SCENE_FICTION_INSTRUCTIONS,sceneFictionResponseSchema} from './frameworks/narrative/public.js';
 import {sceneFictionFailure,buildSceneFictionContext} from './frameworks/narrative/public.js';

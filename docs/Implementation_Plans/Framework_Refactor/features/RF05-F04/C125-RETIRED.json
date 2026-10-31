@@ -1,0 +1,30 @@
+{
+  "reason": "Original shadow classifier owned in Intent and original GM reader uses public; exact obsolete root location/private import records.",
+  "entries": [
+    {
+      "id": "a77da1a1fe0d5d16442c091e59e91a8a7979e9cfc7154c77d0042bce839d06a1",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/engagement-shadow.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "119518a4b18539af77a133b5a71b29353b9e39620f9b0f29cc51db9aa3be1eda",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/engagement-shadow.js",
+      "kind": "static",
+      "specifier": "./engagement-shadow.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

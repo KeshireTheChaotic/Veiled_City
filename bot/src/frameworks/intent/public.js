@@ -78,3 +78,5 @@ export {createSceneIntentBoardService} from './scene-intent-board.js';
 export {UNIFIED_ARBITRATION_PROMPT} from './unified-arbitration-prompt.js';
 
 export {intentNativeEnvironmentActions} from './contracts/native-environment-actions.js';
+
+export {shadowEngagement} from './engagement-shadow.js';
