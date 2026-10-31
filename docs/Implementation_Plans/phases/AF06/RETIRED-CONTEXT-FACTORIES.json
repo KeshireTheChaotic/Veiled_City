@@ -1,0 +1,43 @@
+{
+  "phase": "AF06",
+  "status": "projection_factories_retired",
+  "baseline": "0ab1c7b2e705a2905367186db9c30319b9dac155",
+  "replacement": [
+    "bot/src/frameworks/daggerheart/feature-context-projection.js",
+    "bot/src/frameworks/daggerheart/feature-catalog.js"
+  ],
+  "retired": [
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "before_git_blob": "1e183f717ad837feb76bb8ccd424de0ab9df15d1",
+      "current": "deleted_no_runtime_consumers"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+      "before_git_blob": "2c1186745e0ea71f34fb80fd22d2264050bfbd91",
+      "current": "deleted_no_runtime_consumers"
+    }
+  ],
+  "removed_public_exports": [
+    "createNativeAdversaryContextProjectors",
+    "22 createNativeEnvironment*Context factories"
+  ],
+  "retired_legacy_tests_after_replacement_coverage": [
+    "bot/tests/ai-gm-2026-10/rf03-f02-c01.test.mjs",
+    "bot/tests/ai-gm-2026-10/rf03-f04-c03.test.mjs"
+  ],
+  "replacement_run": {
+    "run_id": "AF06-C-context-retirement-1",
+    "command": "node --test tests/ai-gm-2026-10/af06-shared-context-retirement.test.mjs",
+    "exit_code": 0,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "syntax_files": 2,
+    "syntax_exit_code": 0
+  },
+  "remaining_native_mechanics": [
+    "bot/src/frameworks/daggerheart/professional-entry-rules.js",
+    "Professional Entry execution and historical receipt readers"
+  ]
+}

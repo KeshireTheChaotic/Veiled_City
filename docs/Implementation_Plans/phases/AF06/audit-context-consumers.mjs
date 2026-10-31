@@ -12,8 +12,8 @@ const modules=new Map(walk(path.join(root,'bot/src')).filter(p=>p.endsWith('.js'
 const digest=text=>createHash('sha256').update(text).digest('hex');
 const base='bot/src/frameworks/daggerheart/',adversary=base+'adversary-contexts.js',environment=base+'environment-rule-contexts.js';
 const wrappers=[...modules].filter(([p,t])=>p.startsWith(base+'native-environment-')&&t.includes("from './environment-rule-contexts.js'"));
-assert.equal(wrappers.length,22,'Expected 22 current environment context facades; reconcile moved paths before deletion.');
-const candidates=new Set([adversary,environment,...wrappers.map(([p])=>p)]);
+assert.equal(wrappers.length,0,'The 22 environment context facades were already retired; reconcile any reintroduced facade before deletion.');
+const candidates=new Set([adversary,environment,...wrappers.map(([p])=>p)].filter(p=>modules.has(p)));
 const features=JSON.parse(fs.readFileSync(path.join(root,base+'native-feature-definitions.json'),'utf8')).features.filter(f=>f.native_handler?.endsWith('_context'));
 assert.equal(features.length,49);
 const refs=symbol=>[...modules].flatMap(([p,text])=>text.split(/\r?\n/).flatMap((line,i)=>new RegExp('\\b'+symbol+'\\b','u').test(line)?[{path:p,line:i+1,text:line.trim()}]:[]));
