@@ -99,3 +99,45 @@ export function prepareMixedReactionCohort({transaction,targets,key,readReceipt,
     return saved;
   });
 }
+
+/** Hand verified reactions to the existing effect writers; pending owners never acquire an outcome.
+ * Storage and PC proof inspection are trusted native capabilities, not model callbacks.
+ */
+export function settleMixedReactionCohort({transaction,targets,execution,inspectPcReaction,readEffect,inspectEffect,applyEffect,writeProgress}){
+  if([transaction,inspectPcReaction,readEffect,inspectEffect,applyEffect,writeProgress].some(fn=>typeof fn!=='function'))
+    throw fail('mixed_reaction_settlement_capabilities');
+  const cohort=splitMixedReactionCohort(targets);
+  if(execution?.version!==1||typeof execution.key!=='string'||!execution.key||execution.cohort_hash!==cohort.cohort_hash
+    ||!Array.isArray(execution.reactions)||execution.reactions.length!==targets.length)throw fail('mixed_reaction_execution_source');
+  return transaction(()=>{
+    const progress=targets.map((target,i)=>{
+      const reaction=execution.reactions[i],identity=`${target.kind}:${target.key}`;
+      if(reaction.kind!==target.kind||reaction.target!==identity)throw fail('mixed_reaction_execution_source');
+      let proof;
+      if(target.kind==='character'){
+        proof=inspectPcReaction(target,reaction);
+        if(proof===null)return {target:identity,status:'pending'};
+        if(!proof||!['success','failure','withdrawn'].includes(proof.outcome)||typeof proof.receipt_hash!=='string'||!proof.receipt_hash)
+          throw fail('mixed_reaction_pc_outcome_source');
+        if(proof.outcome==='withdrawn')return {target:identity,status:'withdrawn',proof:proof.receipt_hash};
+      }else{
+        const receipt=inspectNativeNpcReaction(reaction.receipt);
+        if(receipt.target.key!==target.key||receipt.target.presence_hash!==target.presence_hash
+          ||receipt.target.control_hash!==target.control_hash||receipt.target.template_hash!==target.template_hash)
+          throw fail('mixed_reaction_npc_target');
+        proof={outcome:receipt.result.success?'success':'failure',receipt_hash:receipt.receipt_hash};
+      }
+      const key=`mixed-effect:${hash([execution.key,identity])}`,binding={execution:execution.key,cohort_hash:cohort.cohort_hash,
+        target:identity,proof:proof.receipt_hash,outcome:proof.outcome};
+      const saved=readEffect(key)||applyEffect(key,target,proof,binding);
+      const effect=inspectEffect(saved,binding);
+      if(!effect||effect.key!==key||hash(effect.binding)!==hash(binding))throw fail('mixed_reaction_effect_source');
+      return {target:identity,status:'resolved',effect:key,proof:proof.receipt_hash};
+    });
+    const result={version:1,execution:execution.key,cohort_hash:cohort.cohort_hash,
+      status:progress.some(p=>p.status==='pending')?'awaiting_owners':'resolved',targets:progress};
+    const saved=writeProgress(result);
+    if(hash(saved)!==hash(result))throw fail('mixed_reaction_progress_persistence');
+    return saved;
+  });
+}

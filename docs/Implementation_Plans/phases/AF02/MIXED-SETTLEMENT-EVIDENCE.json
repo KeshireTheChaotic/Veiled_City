@@ -1,0 +1,34 @@
+{
+  "phase": "AF02",
+  "status": "interface_complete_production_integration_pending",
+  "base_sha": "3de506ed97af2a238d4b4d2511604319ed812a28",
+  "commands": [
+    "node --check src/frameworks/daggerheart/mixed-reaction-rules.js",
+    "node --check src/native-group-features.js",
+    "node --check tests/ai-gm-2026-10/af02-mixed-reaction-settlement.test.mjs",
+    "node --test tests/ai-gm-2026-10/af02-mixed-reaction-settlement.test.mjs"
+  ],
+  "syntax_checks_passed": 3,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/mixed-reaction-rules.js",
+      "sha256": "0c0db71c599f0203bb635d304638a05f9175e893dbcb3b4e8c5497c8d42e2d5f"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "0b84987502eeba32104bffd74950d986ffc8e9a030bdf9a05c630b57e4131d1b"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-mixed-reaction-settlement.test.mjs",
+      "sha256": "e6321fa6792c5f9e5828ea24525ad90239935ef89287451e63dbfb1c36c70c4b"
+    }
+  ],
+  "limits": [
+    "Injected native host callbacks and disposable in-memory SQLite.",
+    "No Null Foam activation, condition writes, Spellcast consumers, owner dice submission integration or live service qualification."
+  ]
+}
