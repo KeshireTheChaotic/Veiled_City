@@ -1,0 +1,1638 @@
+{
+  "phase": "AF06",
+  "status": "current_static_consumer_audit_only",
+  "head": "ca2a9941f69b97d4719caee3b2ee067afcecc3f0",
+  "method": "Exact JavaScript symbol references across current bot/src. Does not resolve dynamic property construction, external clients or runtime equivalence.",
+  "counts": {
+    "source_context_occurrences": 49,
+    "adversary_projectors": 27,
+    "environment_facades": 22,
+    "candidate_modules": 24,
+    "external_reference_sites": 23
+  },
+  "external_consumers": [
+    "bot/src/frameworks/daggerheart/public.js"
+  ],
+  "entries": [
+    {
+      "path": "bot/src/frameworks/daggerheart/adversary-contexts.js",
+      "sha256": "13b38e65729574c3da66a1bc5b1479a68a0453d80e2b0c692f43c620d5e9fcc2",
+      "symbols": [
+        {
+          "symbol": "createNativeAdversaryContextProjectors",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 16,
+              "text": "export {createNativeAdversaryContextProjectors} from './adversary-contexts.js';"
+            }
+          ],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryBreakTheHoldContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryProfessionalEntryContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryMarkTheVariableContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryReadoutContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryRideTheCurrentContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryPeripheralContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryStealTheFocusContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversarySympatheticRelayContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversarySnatchALinkContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryFlowAroundItContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryDragDownContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryBlankSpotContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryRouteAroundContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryTermsFirstContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryPinToTheDealContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryISawThatContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversarySelfFulfillingEventContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryAlwaysAPriceContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryBadFutureContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryExitClauseContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryPredatoryGraceContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryReputationAttackContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryCallSecurityContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryUrbanCoverContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryRootSnareContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryLoopholeContext",
+          "external_references": [],
+          "candidate_references": []
+        },
+        {
+          "symbol": "projectNativeAdversaryConflictingDutyContext",
+          "external_references": [],
+          "candidate_references": []
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+      "sha256": "4241171ee05a2f648533d9fd8a4d4eec6a55f7f8b862d6b38fafebe193cef861",
+      "symbols": [
+        {
+          "symbol": "createNativeEnvironmentAuctionContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-auction.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentAuctionContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-auction.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentAuctionContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentChainOfTitleContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentChainOfTitleContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentChainOfTitleContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentConsensusEngineContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentConsensusEngineContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentConsensusEngineContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentContainmentShuttersContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentContainmentShuttersContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentContainmentShuttersContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentContaminatedSceneContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentContaminatedSceneContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentContaminatedSceneContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentEveryoneIsWatchingContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentEveryoneIsWatchingContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentEveryoneIsWatchingContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentExpressThroughMemoryContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentExpressThroughMemoryContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentExpressThroughMemoryContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentGuestRightContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentGuestRightContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentGuestRightContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentLastTrainRulesContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentLastTrainRulesContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentLastTrainRulesContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentMarketNeutralityContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentMarketNeutralityContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentMarketNeutralityContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentMetaphorPhysicsContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentMetaphorPhysicsContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentMetaphorPhysicsContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentModelRoomContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentModelRoomContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentModelRoomContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentNoConsensusContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentNoConsensusContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentNoConsensusContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentNoOrdinarySignalContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentNoOrdinarySignalContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentNoOrdinarySignalContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentPriceOfferContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentPriceOfferContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentPriceOfferContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentPrivateRoomContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentPrivateRoomContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentPrivateRoomContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentProcedureContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentProcedureContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentProcedureContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentSealedDocketContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentSealedDocketContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentSealedDocketContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentThinWallsContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentThinWallsContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentThinWallsContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentThirdRailSpiritContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentThirdRailSpiritContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentThirdRailSpiritContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentThreeVectorsContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentThreeVectorsContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentThreeVectorsContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        },
+        {
+          "symbol": "createNativeEnvironmentWrongOfferingContext",
+          "external_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/public.js",
+              "line": 29,
+              "text": "export {createNativeEnvironmentAuctionContext,createNativeEnvironmentChainOfTitleContext,createNativeEnvironmentConsensusEngineContext,createNativeEnvironmentContainmentShuttersContext,createNativeEnvironmentContaminatedSceneContext,createNativeEnvironmentEveryoneIsWatchingContext,createNativeEnvironmentExpressThroughMemoryContext,createNativeEnvironmentGuestRightContext,createNativeEnvironmentLastTrainRulesContext,createNativeEnvironmentMarketNeutralityContext,createNativeEnvironmentMetaphorPhysicsContext,createNativeEnvironmentModelRoomContext,createNativeEnvironmentNoConsensusContext,createNativeEnvironmentNoOrdinarySignalContext,createNativeEnvironmentPriceOfferContext,createNativeEnvironmentPrivateRoomContext,createNativeEnvironmentProcedureContext,createNativeEnvironmentSealedDocketContext,createNativeEnvironmentThinWallsContext,createNativeEnvironmentThirdRailSpiritContext,createNativeEnvironmentThreeVectorsContext,createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            }
+          ],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+              "line": 5,
+              "text": "import {createNativeEnvironmentWrongOfferingContext} from './environment-rule-contexts.js';"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+              "line": 7,
+              "text": "function context(){return nativeContext??=createNativeEnvironmentWrongOfferingContext({nativeEnvironmentInstanceForScope:(...args)=>nativeEnvironmentInstanceForScope(...args),environmentProposalContract:(...args)=>environmentProposalContract(...args),featureDisposition:(...args)=>featureDisposition(...args),nativeFeatureRuleContext:(...args)=>nativeFeatureRuleContext(...args)});}"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-auction.js",
+      "sha256": "47d5f818fa29b9b10431c1d2e14331b8b9a1356b90aa3bac7327ac9cc50c4fcc",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentAuctionContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 11,
+              "text": "function projectNativeEnvironmentAuctionContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 25,
+              "text": "return projectNativeEnvironmentAuctionContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 28,
+              "text": "return Object.freeze({projectNativeEnvironmentAuctionContext,nativeEnvironmentAuctionSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentAuctionSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 24,
+              "text": "function nativeEnvironmentAuctionSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 28,
+              "text": "return Object.freeze({projectNativeEnvironmentAuctionContext,nativeEnvironmentAuctionSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-chain-of-title.js",
+      "sha256": "e6234185afda93b6ed0e1c865873146c414f94b41ab4ac6d3983a2a18d98ed40",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentChainOfTitleContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 36,
+              "text": "function projectNativeEnvironmentChainOfTitleContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 49,
+              "text": "return projectNativeEnvironmentChainOfTitleContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 52,
+              "text": "return Object.freeze({projectNativeEnvironmentChainOfTitleContext,nativeEnvironmentChainOfTitleSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentChainOfTitleSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 48,
+              "text": "function nativeEnvironmentChainOfTitleSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 52,
+              "text": "return Object.freeze({projectNativeEnvironmentChainOfTitleContext,nativeEnvironmentChainOfTitleSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-consensus-engine.js",
+      "sha256": "20bcf792a79d6e5145da644b850c1fda0c5646b6a1d6a2eb09dc709d543d7779",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentConsensusEngineContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 60,
+              "text": "function projectNativeEnvironmentConsensusEngineContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 74,
+              "text": "return projectNativeEnvironmentConsensusEngineContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 77,
+              "text": "return Object.freeze({projectNativeEnvironmentConsensusEngineContext,nativeEnvironmentConsensusEngineSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentConsensusEngineSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 73,
+              "text": "function nativeEnvironmentConsensusEngineSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 77,
+              "text": "return Object.freeze({projectNativeEnvironmentConsensusEngineContext,nativeEnvironmentConsensusEngineSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-containment-shutters.js",
+      "sha256": "f935db4f28cd6c6e5c89db4684abc89c95f50801f39c3ab970a600469ed92141",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentContainmentShuttersContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 87,
+              "text": "function projectNativeEnvironmentContainmentShuttersContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 101,
+              "text": "return projectNativeEnvironmentContainmentShuttersContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 104,
+              "text": "return Object.freeze({projectNativeEnvironmentContainmentShuttersContext,nativeEnvironmentContainmentShuttersSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentContainmentShuttersSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 100,
+              "text": "function nativeEnvironmentContainmentShuttersSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 104,
+              "text": "return Object.freeze({projectNativeEnvironmentContainmentShuttersContext,nativeEnvironmentContainmentShuttersSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-contaminated-scene.js",
+      "sha256": "d44e694e2bf9fb0466655bb968f4202adef0597c27d8865f5d403870c93bfe23",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentContaminatedSceneContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 114,
+              "text": "function projectNativeEnvironmentContaminatedSceneContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 128,
+              "text": "return projectNativeEnvironmentContaminatedSceneContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 131,
+              "text": "return Object.freeze({projectNativeEnvironmentContaminatedSceneContext,nativeEnvironmentContaminatedSceneSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentContaminatedSceneSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 127,
+              "text": "function nativeEnvironmentContaminatedSceneSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 131,
+              "text": "return Object.freeze({projectNativeEnvironmentContaminatedSceneContext,nativeEnvironmentContaminatedSceneSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-everyone-is-watching.js",
+      "sha256": "47f12e81055924ae0cd45ccebc7cae33953a77ba2b03436a0de857c3fde08d69",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentEveryoneIsWatchingContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 141,
+              "text": "function projectNativeEnvironmentEveryoneIsWatchingContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 155,
+              "text": "return projectNativeEnvironmentEveryoneIsWatchingContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 158,
+              "text": "return Object.freeze({projectNativeEnvironmentEveryoneIsWatchingContext,nativeEnvironmentEveryoneIsWatchingSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentEveryoneIsWatchingSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 154,
+              "text": "function nativeEnvironmentEveryoneIsWatchingSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 158,
+              "text": "return Object.freeze({projectNativeEnvironmentEveryoneIsWatchingContext,nativeEnvironmentEveryoneIsWatchingSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-express-through-memory.js",
+      "sha256": "f2cc692f138f826a2fe2f845084e5c4d9fb0c239ddfc8aa2811de400a2150bfb",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentExpressThroughMemoryContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 168,
+              "text": "function projectNativeEnvironmentExpressThroughMemoryContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 182,
+              "text": "return projectNativeEnvironmentExpressThroughMemoryContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 185,
+              "text": "return Object.freeze({projectNativeEnvironmentExpressThroughMemoryContext,nativeEnvironmentExpressThroughMemorySituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentExpressThroughMemorySituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 181,
+              "text": "function nativeEnvironmentExpressThroughMemorySituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 185,
+              "text": "return Object.freeze({projectNativeEnvironmentExpressThroughMemoryContext,nativeEnvironmentExpressThroughMemorySituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-guest-right.js",
+      "sha256": "d38119bd79cfc7c4bb78d0a6e477620eb379a5cdb91f7ebe5847be337b5e3012",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentGuestRightContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 193,
+              "text": "function projectNativeEnvironmentGuestRightContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 207,
+              "text": "return projectNativeEnvironmentGuestRightContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 210,
+              "text": "return Object.freeze({projectNativeEnvironmentGuestRightContext,nativeEnvironmentGuestRightSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentGuestRightSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 206,
+              "text": "function nativeEnvironmentGuestRightSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 210,
+              "text": "return Object.freeze({projectNativeEnvironmentGuestRightContext,nativeEnvironmentGuestRightSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-last-train-rules.js",
+      "sha256": "2ae5174053d7cf0197cd308ee20671fa36cac1debdc6bc2fa0aa79d7a720a66f",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentLastTrainRulesContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 220,
+              "text": "function projectNativeEnvironmentLastTrainRulesContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 234,
+              "text": "return projectNativeEnvironmentLastTrainRulesContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 237,
+              "text": "return Object.freeze({projectNativeEnvironmentLastTrainRulesContext,nativeEnvironmentLastTrainRulesSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentLastTrainRulesSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 233,
+              "text": "function nativeEnvironmentLastTrainRulesSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 237,
+              "text": "return Object.freeze({projectNativeEnvironmentLastTrainRulesContext,nativeEnvironmentLastTrainRulesSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-market-neutrality.js",
+      "sha256": "d4763634da0da392bd56cad3a96aeaf3c42306a12b2b3c0debd2e7af1b976c32",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentMarketNeutralityContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 247,
+              "text": "function projectNativeEnvironmentMarketNeutralityContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 261,
+              "text": "return projectNativeEnvironmentMarketNeutralityContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 264,
+              "text": "return Object.freeze({projectNativeEnvironmentMarketNeutralityContext,nativeEnvironmentMarketNeutralitySituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentMarketNeutralitySituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 260,
+              "text": "function nativeEnvironmentMarketNeutralitySituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 264,
+              "text": "return Object.freeze({projectNativeEnvironmentMarketNeutralityContext,nativeEnvironmentMarketNeutralitySituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-metaphor-physics.js",
+      "sha256": "4e95c1da7340c09e638306f47bf004db243336324d80a4e9f10e658b316200a7",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentMetaphorPhysicsContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 272,
+              "text": "function projectNativeEnvironmentMetaphorPhysicsContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 285,
+              "text": "return projectNativeEnvironmentMetaphorPhysicsContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 288,
+              "text": "return Object.freeze({projectNativeEnvironmentMetaphorPhysicsContext,nativeEnvironmentMetaphorPhysicsSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentMetaphorPhysicsSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 284,
+              "text": "function nativeEnvironmentMetaphorPhysicsSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 288,
+              "text": "return Object.freeze({projectNativeEnvironmentMetaphorPhysicsContext,nativeEnvironmentMetaphorPhysicsSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-model-room.js",
+      "sha256": "178e51c4967609eac94bc693284187245c584a58d15e9a284f8686654693cbc3",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentModelRoomContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 298,
+              "text": "function projectNativeEnvironmentModelRoomContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 312,
+              "text": "return projectNativeEnvironmentModelRoomContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 315,
+              "text": "return Object.freeze({projectNativeEnvironmentModelRoomContext,nativeEnvironmentModelRoomSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentModelRoomSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 311,
+              "text": "function nativeEnvironmentModelRoomSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 315,
+              "text": "return Object.freeze({projectNativeEnvironmentModelRoomContext,nativeEnvironmentModelRoomSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-consensus.js",
+      "sha256": "241df328cc33dcb999ecce226fd4df6a28698e82209770cada6b1e4b4af66ccd",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentNoConsensusContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 323,
+              "text": "function projectNativeEnvironmentNoConsensusContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 336,
+              "text": "return projectNativeEnvironmentNoConsensusContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 339,
+              "text": "return Object.freeze({projectNativeEnvironmentNoConsensusContext,nativeEnvironmentNoConsensusSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentNoConsensusSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 335,
+              "text": "function nativeEnvironmentNoConsensusSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 339,
+              "text": "return Object.freeze({projectNativeEnvironmentNoConsensusContext,nativeEnvironmentNoConsensusSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-no-ordinary-signal.js",
+      "sha256": "274cf55fcaebf82cdd0c9ac099dca42830c15cd46bb34100b4b94c37ce0fed2b",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentNoOrdinarySignalContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 347,
+              "text": "function projectNativeEnvironmentNoOrdinarySignalContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 362,
+              "text": "return projectNativeEnvironmentNoOrdinarySignalContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 365,
+              "text": "return Object.freeze({projectNativeEnvironmentNoOrdinarySignalContext,nativeEnvironmentNoOrdinarySignalSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentNoOrdinarySignalSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 361,
+              "text": "function nativeEnvironmentNoOrdinarySignalSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 365,
+              "text": "return Object.freeze({projectNativeEnvironmentNoOrdinarySignalContext,nativeEnvironmentNoOrdinarySignalSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-price-offer.js",
+      "sha256": "f401d599d4bf7faab2cef402121f43daee7fe2a65e0a0be9f3ecf08d2a8c514a",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentPriceOfferContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 375,
+              "text": "function projectNativeEnvironmentPriceOfferContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 389,
+              "text": "return projectNativeEnvironmentPriceOfferContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 392,
+              "text": "return Object.freeze({projectNativeEnvironmentPriceOfferContext,nativeEnvironmentPriceOfferSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentPriceOfferSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 388,
+              "text": "function nativeEnvironmentPriceOfferSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 392,
+              "text": "return Object.freeze({projectNativeEnvironmentPriceOfferContext,nativeEnvironmentPriceOfferSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-private-room.js",
+      "sha256": "40979e8cc10322721e73562b20c68ad4c1db0d9639e7e8423f44e7cff97252fd",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentPrivateRoomContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 402,
+              "text": "function projectNativeEnvironmentPrivateRoomContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 416,
+              "text": "return projectNativeEnvironmentPrivateRoomContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 419,
+              "text": "return Object.freeze({projectNativeEnvironmentPrivateRoomContext,nativeEnvironmentPrivateRoomSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentPrivateRoomSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 415,
+              "text": "function nativeEnvironmentPrivateRoomSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 419,
+              "text": "return Object.freeze({projectNativeEnvironmentPrivateRoomContext,nativeEnvironmentPrivateRoomSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-procedure.js",
+      "sha256": "4a0ff118ccec312faf895cdb4eccc7f13632d6ef4c41081a43f084544cfe6dac",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentProcedureContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 427,
+              "text": "function projectNativeEnvironmentProcedureContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 440,
+              "text": "return projectNativeEnvironmentProcedureContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 443,
+              "text": "return Object.freeze({projectNativeEnvironmentProcedureContext,nativeEnvironmentProcedureSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentProcedureSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 439,
+              "text": "function nativeEnvironmentProcedureSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 443,
+              "text": "return Object.freeze({projectNativeEnvironmentProcedureContext,nativeEnvironmentProcedureSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-sealed-docket.js",
+      "sha256": "8377fe77a9626675bc3880e475d6fece6c82c860916b2ef2f9cfc449e5610e27",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentSealedDocketContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 453,
+              "text": "function projectNativeEnvironmentSealedDocketContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 467,
+              "text": "return projectNativeEnvironmentSealedDocketContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 470,
+              "text": "return Object.freeze({projectNativeEnvironmentSealedDocketContext,nativeEnvironmentSealedDocketSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentSealedDocketSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 466,
+              "text": "function nativeEnvironmentSealedDocketSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 470,
+              "text": "return Object.freeze({projectNativeEnvironmentSealedDocketContext,nativeEnvironmentSealedDocketSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-thin-walls.js",
+      "sha256": "8a00e91fb4523d2ecf7769ebe4f3d9d096a0c2392d76383358b1c4fc16f56fb4",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentThinWallsContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 478,
+              "text": "function projectNativeEnvironmentThinWallsContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 491,
+              "text": "return projectNativeEnvironmentThinWallsContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 494,
+              "text": "return Object.freeze({projectNativeEnvironmentThinWallsContext,nativeEnvironmentThinWallsSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentThinWallsSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 490,
+              "text": "function nativeEnvironmentThinWallsSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 494,
+              "text": "return Object.freeze({projectNativeEnvironmentThinWallsContext,nativeEnvironmentThinWallsSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-third-rail-spirit.js",
+      "sha256": "5dc36e08bb57c6fd938f01cc893dcd9b3d6892a55409667b1ea90266acf6ca19",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentThirdRailSpiritContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 504,
+              "text": "function projectNativeEnvironmentThirdRailSpiritContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 518,
+              "text": "return projectNativeEnvironmentThirdRailSpiritContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 521,
+              "text": "return Object.freeze({projectNativeEnvironmentThirdRailSpiritContext,nativeEnvironmentThirdRailSpiritSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentThirdRailSpiritSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 517,
+              "text": "function nativeEnvironmentThirdRailSpiritSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 521,
+              "text": "return Object.freeze({projectNativeEnvironmentThirdRailSpiritContext,nativeEnvironmentThirdRailSpiritSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-three-vectors.js",
+      "sha256": "32525488b17f82653eda3d59ccbdbebc9a315535f87b24941b40d6c64564dae1",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentThreeVectorsContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 531,
+              "text": "function projectNativeEnvironmentThreeVectorsContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 545,
+              "text": "return projectNativeEnvironmentThreeVectorsContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 548,
+              "text": "return Object.freeze({projectNativeEnvironmentThreeVectorsContext,nativeEnvironmentThreeVectorsSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentThreeVectorsSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 544,
+              "text": "function nativeEnvironmentThreeVectorsSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 548,
+              "text": "return Object.freeze({projectNativeEnvironmentThreeVectorsContext,nativeEnvironmentThreeVectorsSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-wrong-offering.js",
+      "sha256": "6244ccb0fe1bdc60c374111a513a0515d7113ac6a4267b828c1059a8f078c4d1",
+      "symbols": [
+        {
+          "symbol": "projectNativeEnvironmentWrongOfferingContext",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 558,
+              "text": "function projectNativeEnvironmentWrongOfferingContext(capabilities){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 572,
+              "text": "return projectNativeEnvironmentWrongOfferingContext(nativeEnvironmentInstanceForScope(db,guild,scope,location));"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 575,
+              "text": "return Object.freeze({projectNativeEnvironmentWrongOfferingContext,nativeEnvironmentWrongOfferingSituation});"
+            }
+          ]
+        },
+        {
+          "symbol": "nativeEnvironmentWrongOfferingSituation",
+          "external_references": [],
+          "candidate_references": [
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 571,
+              "text": "function nativeEnvironmentWrongOfferingSituation(db,guild,scope,location){"
+            },
+            {
+              "path": "bot/src/frameworks/daggerheart/environment-rule-contexts.js",
+              "line": 575,
+              "text": "return Object.freeze({projectNativeEnvironmentWrongOfferingContext,nativeEnvironmentWrongOfferingSituation});"
+            }
+          ]
+        }
+      ],
+      "durable_writer_calls": []
+    }
+  ],
+  "protected_paths": [
+    "bot/src/frameworks/daggerheart/professional-entry-rules.js",
+    "bot/src/native-professional-entry.js",
+    "bot/src/frameworks/daggerheart/feature-context-projection.js",
+    "bot/src/frameworks/daggerheart/adversary-binding-rules.js",
+    "bot/src/frameworks/daggerheart/native-environment-scene.js"
+  ],
+  "deletion_gate": "Do not delete from this static artifact alone. Reconcile current public exports and ownership manifests with Agents A/B, verify shared context through native scene consumers, and preserve historical source/receipt readers and Professional Entry mechanics."
+}
