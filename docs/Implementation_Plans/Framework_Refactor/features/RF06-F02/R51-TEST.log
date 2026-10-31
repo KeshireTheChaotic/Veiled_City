@@ -1,0 +1,28 @@
+✔ memory guild/key/status/retrievable/case and original parsed-row shape retained (289.0628ms)
+✔ memory relevance is ranking not filtering, first20 token cap and original numeric caps retained (1600.3282ms)
+✔ knowledge guild/key/belief/relevance/raw secret/null-prototype behavior retained (286.7702ms)
+✔ historical tags JSON/default/null/error and knowledge token input failures preserve original errors/no writes (360.5055ms)
+✔ original option getter order once and token conversion failure precede SQL instrumentation (299.4162ms)
+✔ same caller transaction/knowledge savepoint rollback contains original memory and knowledge writes (284.6746ms)
+✔ same SQL instrumentation reads and reopened saved shapes/schema stable without writes (252.0277ms)
+✔ profile scope/key normalization and parsed/raw row shapes remain original (288.2776ms)
+✔ list original tier/filter/order/offset/default limits and guild isolation retained (1551.0761ms)
+✔ historical JSON empty defaults/null/unusual values/malformed errors retained (277.7997ms)
+✔ list getters once/order and original early errors before instrumented SQL retained (314.7648ms)
+✔ unchanged fuzzy finder dispatch, exact-match priority and default first200 boundary retained (287.5385ms)
+✔ original upsert return and nested/outer transaction rollback use caller connection (273.8472ms)
+✔ actual instrumented connection and reopened stored shapes/schema remain stable without writes (306.7358ms)
+✔ fixed cognition capability validates complete shape and forwards current receiver/results/errors (0.7921ms)
+✔ missing profile preserves original NotFoundError before any further read or send (0.6309ms)
+✔ original reader order/limits and exact empty-section private output retained (0.3072ms)
+✔ private fields, belief/secret labels and original goal/memory text remain private across ordered chunks (0.3282ms)
+✔ actual SQLite guild-scoped profile lookup and display do not write or disclose another guild (358.5443ms)
+✔ read/send errors propagate without retry and root preserves GM/receipt boundary (0.8516ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3476.2831

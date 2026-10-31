@@ -1,3 +1,4 @@
+import * as npcProfileReads from './npc-profile-read-repository.js';
 import * as npcCognitionReads from './npc-cognition-read-repository.js';
 import * as gmFactReads from './gm-fact-repository.js';
 import * as rulingReads from './rules-ruling-repository.js';
@@ -1726,10 +1727,7 @@ export class VeiledDB {
     return this.getNpcProfile(guildId,key);
   }
 
-  getNpcProfile(guildId,npcKey){
-    const r=this.db.prepare("SELECT * FROM npc_profiles WHERE guild_id=? AND npc_key=?").get(guildId,String(npcKey||"").trim().toLowerCase());
-    return r?{...r,decision_profile:JSON.parse(r.decision_profile_json||"{}"),knowledge_boundaries:JSON.parse(r.knowledge_boundaries_json||"[]"),capabilities:JSON.parse(r.capabilities_json||"[]")} : null;
-  }
+  getNpcProfile(guildId,npcKey){return npcProfileReads.getNpcProfile(this.db,guildId,npcKey);}
 
   findNpcProfile(guildId,query){
     const q=String(query||"").trim().toLowerCase(); if(!q) return null;
@@ -1738,13 +1736,7 @@ export class VeiledDB {
       ||rows.find(x=>x.npc_key.startsWith(q)||x.display_name.toLowerCase().includes(q))||null;
   }
 
-  listNpcProfiles(guildId,{activityTier="",limit=200,offset=0}={}){
-    const cap=Math.max(1,Math.min(500,Number(limit)||200));
-    const start=Math.max(0,Math.min(5000,Math.trunc(Number(offset)||0)));
-    const rows=this.db.prepare(`SELECT * FROM npc_profiles WHERE guild_id=? AND (?='' OR activity_tier=?) ORDER BY display_name,npc_key LIMIT ? OFFSET ?`)
-      .all(guildId,activityTier,activityTier,cap,start);
-    return rows.map(r=>({...r,decision_profile:JSON.parse(r.decision_profile_json||"{}"),knowledge_boundaries:JSON.parse(r.knowledge_boundaries_json||"[]"),capabilities:JSON.parse(r.capabilities_json||"[]")}));
-  }
+  listNpcProfiles(guildId,{activityTier="",limit=200,offset=0}={}){return npcProfileReads.listNpcProfiles(this.db,guildId,{activityTier,limit,offset});}
 
   addNpcMemory(guildId,{npcKey,memoryType="episodic",content,subjectType="entity",subjectKey="",sentiment=0,importance=50,confidence=100,sourceType="observed",sourceRef="",tags=[],status="active",dedupe=true}={}){
     const key=String(npcKey||"").trim().toLowerCase(); const text=String(content||"").trim();

@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "52f90f23ba25b0f5266ece8373fe32607a15bbae2cfff80db2e4410cb850c826",
+  "bot/src/frameworks/persistence/npc-profile-read-repository.js": "94f7ab961d8c6d253153f94e14dc7470c95c08e4c3bb6bdb45e85753dab7b528",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c51.test.mjs": "073d7d0b5de26c8ad1175f1808c6f9fb201d00ddc3f7de6daa399172d6d8bd3f",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}
