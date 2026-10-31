@@ -72,3 +72,5 @@ export {authoredSceneText,worldRequirements,hasCharacterInvitation,responseOblig
 export {createAuthoredCandidatePersistence} from './authored-candidates.js';
 
 export {createArbitrationOrigins} from './arbitration-origin.js';
+
+export {createSceneIntentBoardService} from './scene-intent-board.js';

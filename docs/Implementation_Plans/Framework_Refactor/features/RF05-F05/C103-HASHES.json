@@ -1,0 +1,30 @@
+{
+  "base": "dabbe7ab",
+  "original_board_region_freeze_and_remaining_root_exact": true,
+  "syntax_pass": 3,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c103.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "duration_ms": 156.6341
+  },
+  "limits": "Synthetic interfaces and in-memory record store; real Native prompt and SQLite transaction qualification deferred.",
+  "files": [
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "80d6a302d445e5c1fbc8ce61ee5453cd2c810e08ddc989ab390dead8803675c5"
+    },
+    {
+      "path": "bot/src/frameworks/intent/scene-intent-board.js",
+      "sha256": "dc1e5239ae967377ed8bc83da057c84ff5704fda29b0f82dc40f9824e22fecc1"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "e8e6287b84f963233b777df857ea13d4d10beeca69a4a2221476e0387bce3936"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c103.test.mjs",
+      "sha256": "c9a66e05e927896235f9083133299f3d5b5ae5bad4a877453a12d34c23623bde"
+    }
+  ]
+}
