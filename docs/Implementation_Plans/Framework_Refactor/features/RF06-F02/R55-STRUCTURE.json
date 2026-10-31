@@ -1,0 +1,12 @@
+{
+  "parent": "f5d5c28ff6e98b4f08f7b8a10f577bc0d19b0828",
+  "class_methods": 319,
+  "untouched_methods": 318,
+  "extracted_method": "listCharacters",
+  "original_signatures_equal": true,
+  "all_other_method_asts_equal": true,
+  "original_body_equal_after_connection_substitution": true,
+  "old_class_sql_sites": 394,
+  "new_class_sql_sites": 393,
+  "repository_sql_sites": 1
+}

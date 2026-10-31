@@ -1,3 +1,4 @@
+import * as characterLists from './character-list-repository.js';
 import * as npcProfileReads from './npc-profile-read-repository.js';
 import * as npcCognitionReads from './npc-cognition-read-repository.js';
 import * as gmFactReads from './gm-fact-repository.js';
@@ -791,12 +792,7 @@ export class VeiledDB {
     return c ? {...c,data:JSON.parse(c.character_json)} : null;
   }
 
-  listCharacters(guildId,ownerUserId,{includeClosed=true}={}) {
-    let sql="SELECT * FROM characters WHERE guild_id=? AND owner_user_id=?";
-    if(!includeClosed) sql+=" AND status IN ('active','reserve','guest')";
-    sql+=" ORDER BY CASE status WHEN 'active' THEN 0 WHEN 'reserve' THEN 1 WHEN 'guest' THEN 2 ELSE 3 END,name";
-    return this.db.prepare(sql).all(guildId,ownerUserId).map(c=>({...c,data:JSON.parse(c.character_json)}));
-  }
+  listCharacters(guildId,ownerUserId,{includeClosed=true}={}) {return characterLists.listCharacters(this.db,guildId,ownerUserId,{includeClosed});}
 
   findOwnedCharacter(guildId,userId,query) {
     const chars=this.listCharacters(guildId,userId,{includeClosed:false});

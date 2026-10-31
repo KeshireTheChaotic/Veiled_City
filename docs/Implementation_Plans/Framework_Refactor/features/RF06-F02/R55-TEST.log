@@ -1,0 +1,19 @@
+✔ original guild/owner/status/name order and full closed rows retained without writes (311.748ms)
+✔ original includeClosed default/truthiness/getter-once/null-option behavior retained (164.3776ms)
+✔ raw JSON and parsed object/null/primitive values/errors retain original row shape (167.5494ms)
+✔ same caller character creation and nested/outer rollback preserve visibility and connection (277.2547ms)
+✔ original instrumented read and reopened saved rows/schema stable without display writes (174.824ms)
+✔ one-method contract rejects incomplete sources and retains dynamic original receiver/results/errors (1.1212ms)
+✔ original guild/user/includeClosed query and exact empty private reply retained (0.1571ms)
+✔ original order/status/guest/raw markdown output remains private and unmodified (0.1828ms)
+✔ original read and async reply errors propagate unchanged with no retry (0.2376ms)
+✔ actual SQLite command includes own closed characters and excludes other owner/guild without writes (298.9942ms)
+✔ root route still composes the view inside unchanged command receipt workflow (0.7339ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1315.4929

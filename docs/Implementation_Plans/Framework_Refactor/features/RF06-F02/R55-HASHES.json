@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "7e53f972a3cfe9ef554b959165b5dd67336ee1e6e8a986d8a5f0db68ff9c81f5",
+  "bot/src/frameworks/persistence/character-list-repository.js": "5397696a4b8c982ba1f1033f7019ab1940c6aaf240a5f8991b92b548b16a7fed",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c55.test.mjs": "2f5033320f81d00b694fc8cfa0a2471813a7a591d91c9da9323e5b80e5984ad4",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}
