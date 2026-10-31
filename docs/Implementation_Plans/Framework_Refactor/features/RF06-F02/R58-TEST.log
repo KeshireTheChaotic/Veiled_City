@@ -1,0 +1,20 @@
+✔ canon original current/guild/public-party filters and raw full-GM metadata retained (161.416ms)
+✔ canon original unnormalized truthiness and SQLite limit semantics retained (283.0165ms)
+✔ pending conflict original guild/status/date ordering and optional left-join raw shape retained (232.216ms)
+✔ original options getter order once and failing getter before SQL retained (219.6677ms)
+✔ same caller canonical writes and nested/outer rollback remain visible without extra transaction (158.7808ms)
+✔ same instrumented connection and reopened raw historical shapes/schema retained without writes (165.8079ms)
+✔ fixed two-reader contract and original dynamic receiver/return/error behavior retained (1.1454ms)
+✔ status invokes original GM callback once and preserves query/options/empty private reply (0.1888ms)
+✔ exact status and pending-conflict text/GM badges remain private and unmodified (0.2747ms)
+✔ original1950limit/empty conflict message/read-GM-send errors propagate without retries (0.2704ms)
+✔ actual SQLite read retains original visibility/current/guild and pending-conflict filters without writes (280.709ms)
+✔ root retains conflicts GM guard and all canonical mutation/receipt authority (0.8363ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1328.3588

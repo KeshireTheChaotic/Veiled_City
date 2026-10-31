@@ -1,3 +1,4 @@
+import * as canonReads from './canon-read-repository.js';
 import * as characterLists from './character-list-repository.js';
 import * as npcProfileReads from './npc-profile-read-repository.js';
 import * as npcCognitionReads from './npc-cognition-read-repository.js';
@@ -2448,12 +2449,9 @@ export class VeiledDB {
     return {status:"accepted",event:this.currentCanon(guildId,k)};
   }
 
-  listCanon(guildId,{includeGM=false,limit=100}={}){
-    const sql=includeGM?"SELECT * FROM canon_events WHERE guild_id=? AND status='current' ORDER BY canon_key LIMIT ?":"SELECT * FROM canon_events WHERE guild_id=? AND status='current' AND visibility IN ('public','party') ORDER BY canon_key LIMIT ?";
-    return this.db.prepare(sql).all(guildId,limit);
-  }
+  listCanon(guildId,{includeGM=false,limit=100}={}){return canonReads.listCanon(this.db,guildId,{includeGM,limit});}
 
-  listCanonConflicts(guildId){ return this.db.prepare("SELECT cc.*,ce.value existing_value FROM canon_conflicts cc LEFT JOIN canon_events ce ON ce.id=cc.existing_event_id WHERE cc.guild_id=? AND cc.status='pending' ORDER BY cc.created_at").all(guildId); }
+  listCanonConflicts(guildId){return canonReads.listCanonConflicts(this.db,guildId);}
 
   resolveCanonConflict(guildId,id,{resolution="existing",customValue="",actorId=null}={}){
     const c=this.db.prepare("SELECT * FROM canon_conflicts WHERE id=? AND guild_id=? AND status='pending'").get(id,guildId); if(!c) throw new Error("Pending canon conflict not found.");

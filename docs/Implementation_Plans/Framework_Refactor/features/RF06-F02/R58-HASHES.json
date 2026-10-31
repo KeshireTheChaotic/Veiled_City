@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "44265017c29d08aa2e3f335c4c4b77b221d93581373ea198f11834d61ff218d9",
+  "bot/src/frameworks/persistence/canon-read-repository.js": "a12c6194df43f0d702695ba968c8e457b4aff2cbf610c200b1ef47cae7e99cff",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c58.test.mjs": "096aba1904f0abd9b8c9141be0dd0330f6634563a0d2fc310ac49c60253e6554",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

@@ -1,0 +1,15 @@
+{
+  "parent": "4a88cccbdf4edce180347da9e8041701dad4592d",
+  "class_methods": 319,
+  "untouched_methods": 317,
+  "extracted_methods": [
+    "listCanon",
+    "listCanonConflicts"
+  ],
+  "original_signatures_equal": true,
+  "all_other_method_asts_equal": true,
+  "both_original_bodies_equal_after_connection_substitution": true,
+  "old_class_sql_sites": 393,
+  "new_class_sql_sites": 391,
+  "repository_sql_sites": 2
+}
