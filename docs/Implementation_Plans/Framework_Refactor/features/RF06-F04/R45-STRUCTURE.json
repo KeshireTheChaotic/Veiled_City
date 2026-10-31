@@ -1,0 +1,20 @@
+{
+  "parent": "0732642500e0c78b540ef0f1f4a9f65773882e76",
+  "original_constructor_sites": [
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(report,null,2)),{name:'historical-archive.json'})",
+    "new AttachmentBuilder(data,{name:'veilkeeper-operations.json'})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"organization-continuity.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"long-project.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(rows,null,2)),{name:\"long-project-status.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"continuity-inbox.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"personal-continuity.json\"})",
+    "new AttachmentBuilder(pkg.buffer,{name:pkg.name})",
+    "new AttachmentBuilder(pkg.buffer,{name:pkg.name})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"world-encounter.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:\"evidence-continuity.json\"})",
+    "new AttachmentBuilder(Buffer.from(JSON.stringify(packet,null,2)),{name:\"scoped-session-brief.json\"})"
+  ],
+  "all_twelve_argument_asts_equal": true,
+  "remaining_root_ast_equal_except_named_constructor_call_and_import_substitutions": true,
+  "SDK_permission_import_retained": true
+}

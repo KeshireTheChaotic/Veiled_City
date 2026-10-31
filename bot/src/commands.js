@@ -1,3 +1,4 @@
+import {createAttachment} from './frameworks/discord/public.js';
 import {exportAttachments} from './frameworks/discord/public.js';
 import {handleDirectorStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorStatus} from './framework-to-framework/discord--persistence/public.js';
@@ -25,10 +26,7 @@ import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
 import {nativeCombatantLine as combatantLine} from './framework-to-framework/daggerheart--discord/public.js';
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
-import {
-  PermissionFlagsBits,
-  AttachmentBuilder
-} from "discord.js";
+import {PermissionFlagsBits} from "discord.js";
 import { dualityRoll, parseDice } from "./frameworks/daggerheart/public.js";
 import { establishFact } from "./frameworks/knowledge/public.js";
 import { indexWorldEvent } from './frameworks/world/public.js';
@@ -484,7 +482,7 @@ async function handleCommandBody(interaction,{db,gm,voice=null}){
           :applyHistoricalArchive(db,interaction.guildId,interaction.user.id,{preview:token,reason,interactionId:interaction.id},options);
       const content=operation==='apply'?`Archived ${report.archived} ended-session records. No gameplay outcomes changed. Backup: ${report.backup_id}.`
         :`GM-private historical ${operation}: ${report.eligible} eligible, ${report.held} held, ${report.already_archived} archived. Details${operation==='preview'?' and confirmation token':''} attached.`;
-      await interaction.editReply({content,files:[new AttachmentBuilder(Buffer.from(JSON.stringify(report,null,2)),{name:'historical-archive.json'})],
+      await interaction.editReply({content,files:[createAttachment(Buffer.from(JSON.stringify(report,null,2)),{name:'historical-archive.json'})],
         allowedMentions:{parse:[]}});
     }catch(error){throw interactionFailure(interaction,error);}
     return true;
@@ -498,7 +496,7 @@ async function handleCommandBody(interaction,{db,gm,voice=null}){
       const report=operationalReport(db,interaction.guildId,{authorized:true,reference:interaction.options.getString('incident')});
       const data=Buffer.from(JSON.stringify(report,null,2));
       await interaction.editReply({content:'Read-only GM operational report. Cost estimates are NOT billed charges; no recovery was executed.',
-        files:[new AttachmentBuilder(data,{name:'veilkeeper-operations.json'})],allowedMentions:{parse:[]}});
+        files:[createAttachment(data,{name:'veilkeeper-operations.json'})],allowedMentions:{parse:[]}});
     }catch(error){throw interactionFailure(interaction,error);}
     return true;
   }
@@ -787,32 +785,32 @@ async function executeCommand(interaction,{db,gm,voice=null}){
       const result=sub==="organization"?organizationRequest(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)))
         :organizationInbox(db,interaction.guildId,interaction.user.id);
       await interaction.reply({ephemeral:true,content:"Private owner proposals and explicit participation; no automatic funds, NPC appointments or world changes.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"organization-continuity.json"})]});return true;
+        files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"organization-continuity.json"})]});return true;
     }
     if(group==="downtime"&&sub==="long-project"){
       const result=manageLongProject(db,interaction.guildId,interaction.user.id,JSON.parse(interaction.options.getString("json",true)),{gm:isGM(db,interaction)});
       await interaction.reply({ephemeral:true,content:"Private long-project continuity; no automatic PC costs or benefits.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"long-project.json"})]});return true;
+        files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"long-project.json"})]});return true;
     }
     if(group==="downtime"&&sub==="long-project-status"){
       const rows=db.longProjectInbox(interaction.guildId,interaction.user.id,{gm:isGM(db,interaction)})
         .map(row=>({...row,expected_revision:stateRevision(row),phase_revision:row.kind==="long_project"?projectPhaseRevision(row):null}));
       await interaction.reply({ephemeral:true,content:"Private project proposals and current phase revisions; accept-proposal and consent use /vc-downtime long-project.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(rows,null,2)),{name:"long-project-status.json"})]});return true;
+        files:[createAttachment(Buffer.from(JSON.stringify(rows,null,2)),{name:"long-project-status.json"})]});return true;
     }
     if(group==="intel"&&sub==="continuity"){
       const result=personalInbox(db,interaction.guildId,interaction.user.id).concat(
         db.getCityCalendar(interaction.guildId).flags.natural_language===true?consentOffers(db,interaction.guildId,interaction.user.id).map(row=>
           ({kind:"owner_offer",key:row.record_key,expected_revision:row.revision,terms:row.terms,authority:"Nonbinding current proposal; respond freely. Exact revision/terms are necessary for consequential consent."})):[]);
       await interaction.reply({ephemeral:true,content:"Private continuity inbox and current revision-bound terms. What do you want to say or clarify? Native commands remain available.",
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"continuity-inbox.json"})]});return true;
+        files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"continuity-inbox.json"})]});return true;
     }
     if(group==="intel"&&["arc","discover"].includes(sub)){
       const input=JSON.parse(interaction.options.getString("json")||"{}");
       if(sub==="discover") for(const key of ["query","mode"]){const value=interaction.options.getString(key);if(value!==null&&value!==undefined) input[key]=value;}
       const result=sub==="arc"?personalArc(db,interaction.guildId,interaction.user.id,input):discoverPersonal(db,interaction.guildId,interaction.user.id,input);
       await deliverInteractionText(interaction,sub==="discover"?formatDiscovery(db,interaction.guildId,interaction.user.id,result):"Character-private continuity; recorded knowledge only.",
-        {files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})],
+        {files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"personal-continuity.json"})],
           beforeSend:sub==='discover'?discoveryDeliveryProof(db,interaction.guildId,interaction.user.id,input,result):null});return true;
     }
     if(group==="admin"&&(["seed-drafts","seed-add","seed-edit","seed-remove","seed-approve","seed-reject"].includes(sub)||sub.startsWith("seed-package-"))){
@@ -1164,7 +1162,7 @@ Initial phase: ${s.assembly_phase}`});
       const pkg=createConceptContextPackage({db,contentRoot:gm.content.root,guildId:interaction.guildId,userId:interaction.user.id,historySessions:history});
       const s=db.getActiveSession(interaction.guildId);
       db.audit(interaction.guildId,s?.id||null,"player",interaction.user.id,"character_concept_context_export",{history_sessions:history,files:pkg.files});
-      await interaction.reply({content:`Player-safe character-creation context package generated from the **current campaign state** with the last **${history}** completed session recap(s). Upload this ZIP to ChatGPT and follow the included AI instructions.`,files:[new AttachmentBuilder(pkg.buffer,{name:pkg.name})],ephemeral:true});
+      await interaction.reply({content:`Player-safe character-creation context package generated from the **current campaign state** with the last **${history}** completed session recap(s). Upload this ZIP to ChatGPT and follow the included AI instructions.`,files:[createAttachment(pkg.buffer,{name:pkg.name})],ephemeral:true});
       return true;
     }
     if(group==="character"&&sub==="import-gm-hooks"){
@@ -1233,7 +1231,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
       if(!gm&&c.owner_user_id!==interaction.user.id) throw new Error("You may only export your own player narrative.");
       const pkg=createNarrativeExportPackage({db,guildId:interaction.guildId,character:c,scope});
       db.audit(interaction.guildId,sess?.id||null,gm?"gm":"player",interaction.user.id,"character_narrative_export",{character_id:c.id,scope,files:pkg.files});
-      await interaction.reply({content:`Narrative Markdown export for **${c.name}**. The ZIP preserves the standard \`PLAYER/PLAYERS\` and/or \`GM_PRIVATE/PLAYERS\` paths.`,files:[new AttachmentBuilder(pkg.buffer,{name:pkg.name})],ephemeral:true});
+      await interaction.reply({content:`Narrative Markdown export for **${c.name}**. The ZIP preserves the standard \`PLAYER/PLAYERS\` and/or \`GM_PRIVATE/PLAYERS\` paths.`,files:[createAttachment(pkg.buffer,{name:pkg.name})],ephemeral:true});
       return true;
     }
 
@@ -1453,7 +1451,7 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
         const input=JSON.parse(interaction.options.getString("json",true));
         const result=manageWorldEncounter(db,interaction.guildId,input,interaction.user.id,lib);
         await interaction.reply({ephemeral:true,content:`World encounter ${result.status}: ${result.record_key}. Combat is not forced.`,
-          files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"world-encounter.json"})]});return true;
+          files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"world-encounter.json"})]});return true;
       }
       if(sub==="build"){
         const roster=livePcRoster(db,session.id);
@@ -1664,7 +1662,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         const result=sub==="custody"?manageEvidence(db,interaction.guildId,JSON.parse(interaction.options.getString("json",true)),interaction.user.id,{gm:gmUser})
           :evidenceView(db,interaction.guildId,interaction.options.getString("id",true),interaction.user.id,{gm:gmUser});
         await interaction.reply({ephemeral:true,content:"Scoped evidence continuity; custody and interpretations do not establish guilt or canon.",
-          files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"evidence-continuity.json"})]});return true;
+          files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"evidence-continuity.json"})]});return true;
       }
       if(sub==="list"){
         const c=activeCharacterForUser(db,interaction.guildId,interaction.user.id);
@@ -2129,7 +2127,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="intel"&&(sub==="brief"||sub==="recap"&&db.getCityCalendar(interaction.guildId).flags.session_briefs===true)){
       const packet=sessionBrief(db,interaction.guildId,{mode:sub==="brief"?"character":"shared",user:interaction.user.id});
       await interaction.reply({content:formatSessionBrief(packet),ephemeral:true,allowedMentions:{parse:[]},
-        files:[new AttachmentBuilder(Buffer.from(JSON.stringify(packet,null,2)),{name:"scoped-session-brief.json"})]});return true;
+        files:[createAttachment(Buffer.from(JSON.stringify(packet,null,2)),{name:"scoped-session-brief.json"})]});return true;
     }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);

@@ -1,0 +1,12 @@
+✔ actual original SDK type/buffer/name/options retained without input mutation (0.9232ms)
+✔ original omitted options/path-string and non-string names retain native SDK behavior (1.2554ms)
+✔ native options getter errors propagate original identity without retries (0.2695ms)
+✔ root routes all twelve original constructors through Discord and preserves serialization/name expressions (1.3463ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 558.284

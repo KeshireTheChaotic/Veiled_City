@@ -66,3 +66,5 @@ export {handleDirectorHistoryCommand,assertDirectorHistoryStore} from './directo
 export {handleDirectorStatusCommand,assertDirectorStatusStore} from './director-status-command.js';
 
 export {exportAttachments} from './export-attachments.js';
+
+export {createAttachment} from './attachment.js';
