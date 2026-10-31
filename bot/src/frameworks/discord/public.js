@@ -70,3 +70,6 @@ export {exportAttachments} from './export-attachments.js';
 export {createAttachment} from './attachment.js';
 
 export {hasGmAccess} from './gm-access.js';
+
+export {replyOrEdit} from './reply-or-edit.js';
+export {handleRulesRulingsCommand,assertRulesRulingReadStore} from './rules-rulings-command.js';

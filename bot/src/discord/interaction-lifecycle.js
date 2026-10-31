@@ -49,7 +49,4 @@ async function acknowledge(interaction,subcommand,ephemeral){
   })();
   return state.acknowledgement;
 }
-export async function replyOrEdit(interaction,payload){
-  if(interaction.deferred||interaction.replied) return interaction.editReply(typeof payload==="string"?payload:{content:payload.content});
-  return interaction.reply(payload);
-}
+export {replyOrEdit} from '../frameworks/discord/public.js';

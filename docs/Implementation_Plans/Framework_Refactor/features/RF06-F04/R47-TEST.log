@@ -1,0 +1,16 @@
+✔ stateless root/public function identity and original acknowledgement state remain shared (0.5132ms)
+✔ fresh response forwards exact original payload/result with original receiver (0.1161ms)
+✔ deferred/replied edit preserves strings and original content-only object projection (0.5049ms)
+✔ fixed search view preserves dynamic original receiver/arguments/results/errors (0.4012ms)
+✔ original empty/list text/1950cap/private reply versus deferred edit preserved (0.2577ms)
+✔ actual SQLite active/guild/order/cap8 search stays read-only (171.7939ms)
+✔ search and response failures preserve exact errors without retry (0.3024ms)
+✔ root retains original acknowledgement/receipt flow and no new GM check in saved-rulings branch (1.0058ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 784.829

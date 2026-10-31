@@ -1,0 +1,8 @@
+{
+  "parent": "93855bd961f0fc55ab55f6a8d920c8e5882110fc",
+  "whole_original_reply_helper_ast_equal": true,
+  "entire_remaining_legacy_lifecycle_ast_unchanged": true,
+  "original_rulings_branch_body_ast_equal_after_only_store_substitution": true,
+  "remaining_root_exact_range_and_import_changes_only": true,
+  "original_acknowledgement_WeakMap_metrics_unchanged": true
+}

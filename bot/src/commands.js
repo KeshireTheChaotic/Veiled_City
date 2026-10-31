@@ -1,3 +1,5 @@
+import {handleRulesRulingsCommand} from './frameworks/discord/public.js';
+import {connectDiscordRulesRulings} from './framework-to-framework/discord--persistence/public.js';
 import {isGm as isGM} from './framework-to-framework/discord--persistence/public.js';
 import {createAttachment} from './frameworks/discord/public.js';
 import {exportAttachments} from './frameworks/discord/public.js';
@@ -1837,11 +1839,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       await replyOrEdit(interaction,{content:`Saved **GM_RULING** \`${row.ruling_key}\`: ${row.ruling}`,ephemeral:true});
       return true;
     }
-    if(group==="rules"&&sub==="rulings"){
-      const rows=db.searchRulesRulings(interaction.guildId,"");
-      await replyOrEdit(interaction,{content:rows.length?`**Campaign GM Rulings**\n${rows.map(r=>`• \`${r.ruling_key}\` — ${r.question}: **${r.ruling}**`).join("\n")}`.slice(0,1950):"No saved GM rulings.",ephemeral:true});
-      return true;
-    }
+    if(group==="rules"&&sub==="rulings"){return await handleRulesRulingsCommand(interaction,{store:connectDiscordRulesRulings(db)});}
 
     if(group==="downtime"&&sub==="open"){
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");

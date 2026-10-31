@@ -1,0 +1,11 @@
+{
+  "bot/src/commands.js": "fb3cb320e862a8e133dec7d9ff71c4eae219e4194274669cccb4a0236256c5ff",
+  "bot/src/discord/interaction-lifecycle.js": "a15950bb08c661b1785a39ce42d4c286d21aeb486e3c2f4a4d2e3944e6f75b96",
+  "bot/src/frameworks/discord/public.js": "81594ad76bf1c960f74e6e51df20a5cf20f08b27d49a0132483542f036366523",
+  "bot/src/frameworks/discord/reply-or-edit.js": "957d19f2d2c7c626fcdf98b4e61cac58783af7f68d5c1106f57952d6cdae0c93",
+  "bot/src/frameworks/discord/rules-rulings-command.js": "739ba8fbe1e584385a9b663f8c5bab3c08c3c69e3055193c0bdd4361997c18e0",
+  "bot/src/frameworks/persistence/public.js": "bc67b067b3d6cfacf41a5efad5e781fa08655dbf6bd8a9f2595150d22d279284",
+  "bot/src/frameworks/persistence/rules-ruling-reads.js": "93b0c31335bc88c3076090030a37ebb034507c0d89ea06171404830ec5a53487",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "c201e5c0c2058942632461f6c84c7d840025bf039db079f8c9c8d18b5a7b0982",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c47.test.mjs": "677cee0c2addb0a48e2684554259546eaa3fae6f302f21b65abdb28d4e592fc1"
+}
