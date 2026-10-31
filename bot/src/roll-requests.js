@@ -36,7 +36,7 @@ const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
 let nativeRequests;
 let nativeFeatureOpportunities;
-function captureAdvantageFeatureOpportunities(db,guild,request){
+export function captureAdvantageFeatureOpportunities(db,guild,request){
   if(!nativeFeatureOpportunities){
     const source=createAdvantageOpportunitySource({currentScene,nativeEncounterActor,nativeActorControl,
       indexWorldEvent:(...args)=>nativeWorldEvents.indexWorldEvent(...args)});

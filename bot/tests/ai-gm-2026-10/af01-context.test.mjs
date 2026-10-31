@@ -52,7 +52,7 @@ test('all 153 occurrences are available only for their current exact template, i
   assert.equal(count,153);
   assert.deepEqual(c.nativeFeatureRuleContextsForTemplateHash('character','anything'),[]);
   assert.deepEqual(c.nativeFeatureRuleContextsForTemplateHash('adversary','stale'),[]);
-  assert.equal(c.executableNativeFeatures().length,78);
+  assert.equal(c.executableNativeFeatures().length,79); // AF04 additionally qualifies HR15's native token-gain path.
 });
 
 test('changed actor/source or ruling holds the affected rule without dropping independent templates',()=>{

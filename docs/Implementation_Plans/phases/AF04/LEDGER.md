@@ -1,0 +1,13 @@
+# AF04 — Source-bound capability classification
+
+**IN PROGRESS — Agent C.** All 153 occurrences now report a source-bound capability: 30 bounded native adapters, 49 rule-context producers, 69 mechanical holds and 5 fictional interpretations with explicit remaining native prerequisites. These labels grant neither execution nor publication authority. The 74 original review-only occurrences remaining after Expected Value each have specific source-pinned missing operations or evidence requirements. They are not implemented by classification.
+
+Expected Value is enabled only for native Forecast gain: one gain per Engine actor per scene total, cap 3. Native roll preparation and authenticated paid Help provide trigger evidence. Current actor/control/scene/source checks, historical receipt readers and replay deduplication remain enforced. Spending Forecast and replacing dice remain held. Runtime catalog totals are 79 supported and 74 review-only; supported context is not effect execution.
+
+Owner rulings HR16 and HR17 pin Break the Line's primary-target ally/range origin and Null Foam's native NPC d20 plus applicable source-backed Experience (0 otherwise). Both remain review-only. PC dice and choices remain owner-controlled; ordinary costs remain enforced. Null Foam additionally needs an exact affected-area contract and mixed-recipient condition workflow.
+
+Modified files: `feature-capability-rules.js`, `native-feature-holds.json`, `feature-catalog.js`, `house-errata.js`, `native-feature-definitions.json`, `native-house-errata.json` under `bot/src/frameworks/daggerheart/`; fresh `af04-capabilities.test.mjs`; adjusted source-sensitive AF01/AF02 tests. The latter changed because production catalog/errata changed.
+
+Verification: the pre-HR17 combined AF01 context, AF02 token/opportunity and AF04 capability run passed **18 tests, 0 failed, 0 skipped, exit 0**; six changed-file syntax checks passed. HR17 changed the errata input afterward; its fresh qualification is recorded separately in EVIDENCE.json. Disposable SQLite and injected native-service tests are offline evidence, not live model, Discord or release qualification.
+
+Next exact work: **AF04 Null Foam mixed PC/NPC area reaction integration**, using AF02 shared operations. Complete the other held mechanics before claiming all-feature execution. AF05's bounded projection checkpoint does not remove these prerequisites. No legacy wrapper or historical reader was deleted.

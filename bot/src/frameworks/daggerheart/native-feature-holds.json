@@ -1,0 +1,813 @@
+{
+  "version": 1,
+  "authority": "source_constraints_only_no_execution_grant",
+  "entries": [
+    {
+      "feature": "adversary:clause-eater:digest-the-contract",
+      "source_hash": "e5ab662b56beba876a1397fc5641df36aeb464f41041fa7f4463ec8ad50504d0",
+      "template_hash": "c2923812a24566e4ca25120a7dd760ff9af2b409a47346cfc8ea6eca1ae59297",
+      "fiction_only": false,
+      "missing": [
+        "Verified active supernatural bargain and actual Close-range relation",
+        "scoped defense Difficulty modifier"
+      ]
+    },
+    {
+      "feature": "adversary:ritual-enforcement-team:null-foam",
+      "source_hash": "56e5fcfe6ab7ad83c53b6234d7f13563a72a353c13cbcd74744517eb52c71cd2",
+      "template_hash": "4ff707aa710c7a898736ed4a302cd5113d8f48a9f248480e47c6cd3733f68157",
+      "fiction_only": false,
+      "missing": [
+        "Native Close-range point and exact affected actor cohort",
+        "independent Agility 14 reactions",
+        "Restrained and Spellcast disadvantage until verified release"
+      ]
+    },
+    {
+      "feature": "adversary:traffic-saint:right-of-way",
+      "source_hash": "b914a830882cb33ae4f3b9a46067d57b244a104a9511a7ac2314a719bd3b4dff",
+      "template_hash": "7e899508db8331d30664201d226ce4f2ff2c19b7837bab3255a4ce820a358140",
+      "fiction_only": false,
+      "missing": [
+        "Native alliance and marked road/track/corridor evidence",
+        "actual Close range",
+        "terrain and forced-movement exception consumers"
+      ]
+    },
+    {
+      "feature": "adversary:skin-thief:perfect-surface",
+      "source_hash": "b893fc1a1dfcbc079374bafdebe112d9665edf865297371a8de8eefee70d7e7e",
+      "template_hash": "6747a8ed3ea6a819f2dd5f22aa8ea69e90660d9255a2c7574f820732233a6bcd",
+      "fiction_only": true,
+      "missing": [
+        "Established studied person and copied appearance",
+        "contradiction/supernatural inspection proof",
+        "no copied PC capabilities or memory"
+      ]
+    },
+    {
+      "feature": "adversary:skin-thief:borrow-a-memory",
+      "source_hash": "e328b5a2e51f79c5b0baf6aea45ea4ee815dc5a61af47064e6636e4bf95693c8",
+      "template_hash": "6747a8ed3ea6a819f2dd5f22aa8ea69e90660d9255a2c7574f820732233a6bcd",
+      "fiction_only": false,
+      "missing": [
+        "Actual failed PC action against this actor",
+        "NPC Stress payment",
+        "audience-entitled recent surface-fact source and NPC knowledge write"
+      ]
+    },
+    {
+      "feature": "adversary:skin-thief:wear-the-doubt",
+      "source_hash": "fbb797319153111250844d5c440f4b99d94fe0ac2b25ccbe273f9dc8c653d85b",
+      "template_hash": "6747a8ed3ea6a819f2dd5f22aa8ea69e90660d9255a2c7574f820732233a6bcd",
+      "fiction_only": false,
+      "missing": [
+        "Printed Fear payment and Instinct 16 owner reaction",
+        "native Vulnerable condition",
+        "verified concrete-fact recovery"
+      ]
+    },
+    {
+      "feature": "adversary:aster-vale-forecast-engine:spend-forecast",
+      "source_hash": "d287ea494175f8e9e5e47710b73ca80521e6fbf1aec97ab113ae9ea470cf76a0",
+      "template_hash": "5d3f99c2a04191cb1ff37adc473af4d11ae0598ae85c844569c3a47fec9857cc",
+      "fiction_only": false,
+      "missing": [
+        "Actual available Forecast token",
+        "native alliance and pending attack/action window",
+        "pre-dice +2 modifier and atomic token spend"
+      ]
+    },
+    {
+      "feature": "adversary:aster-vale-forecast-engine:model-collapse",
+      "source_hash": "2343f552f8107da6cd8d40213472eec1b7422c6d406acdf637e8f90c026730f1",
+      "template_hash": "5d3f99c2a04191cb1ff37adc473af4d11ae0598ae85c844569c3a47fec9857cc",
+      "fiction_only": false,
+      "missing": [
+        "Actual Severe-damage occurrence",
+        "atomically clear this actor's Forecast pool",
+        "verified allied actor and NPC Vulnerable writer"
+      ]
+    },
+    {
+      "feature": "adversary:wraith-pack:replay-the-moment",
+      "source_hash": "94387394b0d7bf5be28a99d4274966f59cb8a32144333d97c616e5860c5f1113",
+      "template_hash": "f93fa4b254539a239efc9eca86c4b05225112e540f17580d7712d42cbc63011b",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress payment and Knowledge 14 owner reaction",
+        "source-bound death memory",
+        "native Vulnerable condition and grounded-action recovery"
+      ]
+    },
+    {
+      "feature": "adversary:pale-court-elder:ownership-has-weight",
+      "source_hash": "54789d2e2c673e8d7dbdd29cf3babca78fb3834a5b77d1d212cb188880e2fa03",
+      "template_hash": "b1397efced004a3099bf6f85aac637dbdbd39bce91cf1427413abb2d8f8c85fb",
+      "fiction_only": false,
+      "missing": [
+        "Established legal ownership/control of current property",
+        "separate defense and reaction Difficulty consumers"
+      ]
+    },
+    {
+      "feature": "adversary:pale-court-elder:call-the-household",
+      "source_hash": "210894b4a748eae4a8be720a2fdf25cb17aa343ca5e755fd0a988cb2a6d7a86f",
+      "template_hash": "b1397efced004a3099bf6f85aac637dbdbd39bce91cf1427413abb2d8f8c85fb",
+      "fiction_only": false,
+      "missing": [
+        "Printed Fear payment",
+        "available Knight/two Thralls and actual Far-range arrival",
+        "bounded encounter activation without teleporting absent actors"
+      ]
+    },
+    {
+      "feature": "adversary:pale-court-elder:invitation-revoked",
+      "source_hash": "4a9706f0fec049415b301a64f2607e465044dda854a4c54641ea724150dd12c7",
+      "template_hash": "b1397efced004a3099bf6f85aac637dbdbd39bce91cf1427413abb2d8f8c85fb",
+      "fiction_only": false,
+      "missing": [
+        "Prior communicated hospitality rule and actual deliberate violation",
+        "HR04 Stress cost and source-specific spotlight waiver"
+      ]
+    },
+    {
+      "feature": "adversary:blacksite-null-team:countermeasure-suite",
+      "source_hash": "e28f49bcf72ca00a3c05f49ccfe5fe57412a0c2ae0d4cebd7dea1b6e1287cedd",
+      "template_hash": "103206298c3232ba9f286fd2a0b94454b8504bc8d4dee70c46d84f0b3fea16a7",
+      "fiction_only": false,
+      "missing": [
+        "First actual Spellcast Roll targeting this actor per scene",
+        "pre-dice disadvantage and immutable first-use receipt"
+      ]
+    },
+    {
+      "feature": "adversary:blacksite-null-team:sever-the-working",
+      "source_hash": "72dbcc901b7d9b409956e302d5e70965b2c304a68145e8197d92688f51982cff",
+      "template_hash": "103206298c3232ba9f286fd2a0b94454b8504bc8d4dee70c46d84f0b3fea16a7",
+      "fiction_only": false,
+      "missing": [
+        "Two NPC Stress",
+        "actual ongoing magic effect tier/range/creator",
+        "Tier 2 suppression or Tier 3+ creator Spellcast 17 continuation"
+      ]
+    },
+    {
+      "feature": "adversary:choir-junction-intelligence:distributed",
+      "source_hash": "b3832299c4f7f6b84ca022c6ceb5c12031d7beab99c9c4cd16e1776045a922ec",
+      "template_hash": "5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b",
+      "fiction_only": false,
+      "missing": [
+        "Meaningful established network node per Severe hit",
+        "native node-neutralization and defeat mapping"
+      ]
+    },
+    {
+      "feature": "adversary:choir-junction-intelligence:all-systems-speak",
+      "source_hash": "3e1268c5c9f43ac6ffd729d9618d2657bc3bfdf9086568e7ded420501b3750c8",
+      "template_hash": "5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment and Instinct 18 owner reaction",
+        "two Stress and exact ordinary electronic-resource disabling through scene end"
+      ]
+    },
+    {
+      "feature": "adversary:choir-junction-intelligence:reroute",
+      "source_hash": "edfa2605b3cc7b3a7ad7e80651dce623383d2c5a3c3361d45dfe52ea623a760b",
+      "template_hash": "5c43d1e56113bec4f5aa07f311d79497fe6b5e7e5f8289aabef031ec6c28b85b",
+      "fiction_only": false,
+      "missing": [
+        "Pending final HP interrupt",
+        "established unrevealed active node",
+        "once-only 1 HP retention and entitled node revelation"
+      ]
+    },
+    {
+      "feature": "adversary:old-green-warden:older-than-the-street",
+      "source_hash": "94c00abce2a6a43ebd92868d14b1166e195f47efc50579b33f69c755bc26a503",
+      "template_hash": "63b0c285b5c94bfb6777b6056f35c692c7b4373a4692fa18cea06bb63d202fa1",
+      "fiction_only": true,
+      "missing": [
+        "Actual local stone/soil/vegetation/pavement barrier or terrain",
+        "NPC-only movement exception",
+        "no PC displacement"
+      ]
+    },
+    {
+      "feature": "adversary:old-green-warden:take-back-the-block",
+      "source_hash": "e156159e089c94a57ac2587b9c2fd56e107981ef41ee79a72870f6fad0faee3f",
+      "template_hash": "63b0c285b5c94bfb6777b6056f35c692c7b4373a4692fa18cea06bb63d202fa1",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "bounded actual Close-area transformation",
+        "Agility 17 reactions",
+        "native 3d8+4 magic damage/Armor and Restrained recovery"
+      ]
+    },
+    {
+      "feature": "adversary:name-eater:hard-to-describe",
+      "source_hash": "b35af7be6393f6be51af7e9eed21b358ea7e8def80125004cf82f4af9381b9b8",
+      "template_hash": "c11aa7f59ac0f6647b1f7ca2a9c3e1659fb5c30cb1a515616bfeb82bab58cc61",
+      "fiction_only": false,
+      "missing": [
+        "First attack/Spellcast occurrence",
+        "absence/presence of entitled true-name/photo/recording/anchored-description proof",
+        "pre-dice disadvantage"
+      ]
+    },
+    {
+      "feature": "adversary:name-eater:eat-the-introduction",
+      "source_hash": "728eecbdf7bc7d86717172536b7854768081524b9ee6286ed6888dfaa604aed5",
+      "template_hash": "c11aa7f59ac0f6647b1f7ca2a9c3e1659fb5c30cb1a515616bfeb82bab58cc61",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment and Presence 18 owner reaction",
+        "actual known NPC connection",
+        "scoped NPC-only memory suppression and restoration"
+      ]
+    },
+    {
+      "feature": "adversary:name-eater:no-one-called-that",
+      "source_hash": "3fcb2e906a6320136dc9000cba843a3bc002d26707116514dec2bd63133592fb",
+      "template_hash": "c11aa7f59ac0f6647b1f7ca2a9c3e1659fb5c30cb1a515616bfeb82bab58cc61",
+      "fiction_only": false,
+      "missing": [
+        "Actual NPC assistance arrival and physical-reminder exception",
+        "NPC Stress cost",
+        "source-backed delay/uncertainty without PC choice invention"
+      ]
+    },
+    {
+      "feature": "adversary:veil-anchor-sentinel:edit-the-scene",
+      "source_hash": "de3d4428d56b2a7a4d18914d5cdc9ca5722307f793ea685c96949c44d290f445",
+      "template_hash": "8a9352c6cabf6c9cdf2dbdb5e3c2c84f66a66cf22c8ce95a8bde600f806a729a",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress",
+        "actual unattended mundane object/barrier/detail and Close range",
+        "plausible native repositioning with no direct PC damage"
+      ]
+    },
+    {
+      "feature": "adversary:morrowline-matured:three-moves-ahead",
+      "source_hash": "fd690dbfd05abe623ee29a2cb024a819126f3b5704c858ab6b8281bc07b2c2bd",
+      "template_hash": "ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad",
+      "fiction_only": false,
+      "missing": [
+        "Dangerous-scene start",
+        "three immutable GM-private predictions",
+        "distinct verified matching PC actions",
+        "capped Forecast gain receipts"
+      ]
+    },
+    {
+      "feature": "adversary:morrowline-matured:spend-forecast",
+      "source_hash": "848814f03a79dfdbd5a1929d4f617fd668543cbfd495c0b9c04175bd2b3a8f0e",
+      "template_hash": "ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad",
+      "fiction_only": false,
+      "missing": [
+        "HR08 token spend and same-owner pending action-d12 replacement",
+        "two-stage native finalization before metacurrency",
+        "immutable old faces"
+      ]
+    },
+    {
+      "feature": "adversary:morrowline-matured:branch-pruning",
+      "source_hash": "c5ee7f203922e254703901ba45673ea49e4c17300055c9030b453262cdc95942",
+      "template_hash": "ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "two source-legal bounded outcomes and explicit owner choice",
+        "verified executed third option before one Hope grant"
+      ]
+    },
+    {
+      "feature": "adversary:morrowline-matured:unknown-variable",
+      "source_hash": "e008f15dd7ff0dddedcda8a3777f7330a3a98e332bb433450e50768cb215d59d",
+      "template_hash": "ac82c9eb16bc13d7294fccf9c8cb6f71796cce992c030a7f77c81c16263bccad",
+      "fiction_only": false,
+      "missing": [
+        "Authenticated action and source-backed model exclusion",
+        "no inferred PC emotion",
+        "atomic actor Forecast clear"
+      ]
+    },
+    {
+      "feature": "adversary:glass-market-debt-reaper:standing-debt",
+      "source_hash": "b056d07b1dbb8ec931dbe9757ba16f34411d80ab460e9a8047b3901642167fa4",
+      "template_hash": "c9ef8d9e62baff3681daa47c7097d2a42373bc23c7345e7d671282ffb69da838",
+      "fiction_only": false,
+      "missing": [
+        "Actual due debt to this Reaper's client",
+        "eligible first action per actor/scene",
+        "pre-dice advantage"
+      ]
+    },
+    {
+      "feature": "adversary:glass-market-debt-reaper:seize-collateral",
+      "source_hash": "6513507dd9742c8c48ee6ec89d5a762e9aa6924b6d12e1bea62709bbfbbf126a",
+      "template_hash": "c9ef8d9e62baff3681daa47c7097d2a42373bc23c7345e7d671282ffb69da838",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress and exact portable debt-linked item",
+        "Finesse 18 owner reaction",
+        "magical-protection evidence and native custody transfer"
+      ]
+    },
+    {
+      "feature": "adversary:glass-market-debt-reaper:paid-in-full",
+      "source_hash": "3e075ce57c56b9db6a01420d86a1ce543628d517670215a8b985102f46c06240",
+      "template_hash": "c9ef8d9e62baff3681daa47c7097d2a42373bc23c7345e7d671282ffb69da838",
+      "fiction_only": true,
+      "missing": [
+        "Actual debt fulfillment and separate-obligation check",
+        "GM-owned cessation of hostilities without invented PC payment or forgiveness"
+      ]
+    },
+    {
+      "feature": "adversary:catastrophic-echo:pattern-hunger",
+      "source_hash": "55269eb0f655e9173f706b3dd411688b991e61cc8d7938b68be5712940bf7dda",
+      "template_hash": "f71790aec63e3a6da0e6b4395c6af2ae58c7344c2ebc503779b62361a4c03086",
+      "fiction_only": false,
+      "missing": [
+        "Established original-disaster detail",
+        "distinct actual scene recurrence",
+        "source-scoped capped +4 damage modifier"
+      ]
+    },
+    {
+      "feature": "adversary:catastrophic-echo:break-the-pattern",
+      "source_hash": "4e60ea7640e3c1cff3822722f30798595489ca088a64f30d4ef21add27c534a9",
+      "template_hash": "f71790aec63e3a6da0e6b4395c6af2ae58c7344c2ebc503779b62361a4c03086",
+      "fiction_only": false,
+      "missing": [
+        "HR13 original-event detail identities",
+        "same-PC identification and deliberate disruption progress",
+        "once-per-scene -2 Difficulty"
+      ]
+    },
+    {
+      "feature": "adversary:pale-regent:the-house-is-me",
+      "source_hash": "d0d674da435e8a80c0f43f6fd9f78da1a79f408ccdbd269148e2af7ad90a8b74",
+      "template_hash": "00949a801df5e696f63819d56baf70d50e6b52642c7863b1d25cbd238b7bdfab",
+      "fiction_only": false,
+      "missing": [
+        "Established controlled property",
+        "actual mirror/camera/invited-servant network and Far range",
+        "NPC-only sensory evidence"
+      ]
+    },
+    {
+      "feature": "adversary:pale-regent:second-face",
+      "source_hash": "de3056934af6f2afbcf01fa7ca00a7c533a0564f130a93947fefce5dd12578e2",
+      "template_hash": "00949a801df5e696f63819d56baf70d50e6b52642c7863b1d25cbd238b7bdfab",
+      "fiction_only": false,
+      "missing": [
+        "Pending first final-HP interrupt",
+        "vessel/ritual/blood reserve established earlier in campaign",
+        "4 HP retention and loss of The House Is Me"
+      ]
+    },
+    {
+      "feature": "adversary:pale-regent:terms-of-surrender",
+      "source_hash": "66e07027d79194305314010505a9fcb11800b4ddfdd1a56ecbe2fa9b48a1817a",
+      "template_hash": "00949a801df5e696f63819d56baf70d50e6b52642c7863b1d25cbd238b7bdfab",
+      "fiction_only": true,
+      "missing": [
+        "Actual owner-offered binding concession and NPC valuation",
+        "negotiation only, without accepting or transferring the concession for the PC"
+      ]
+    },
+    {
+      "feature": "adversary:citywide-choir:no-single-body",
+      "source_hash": "4e3fd4b2e6984778f0ec49dde935cbdca722e11fda5826d735e415bb0c525049",
+      "template_hash": "54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1",
+      "fiction_only": false,
+      "missing": [
+        "Established meaningful node and native sever/convince/cleanse/destroy outcome per HP",
+        "no weapon damage without valid target"
+      ]
+    },
+    {
+      "feature": "adversary:citywide-choir:every-screen",
+      "source_hash": "3394a9f94ff7c1eef1ed47b034fd45af649c979674273dd15f3a7f4add78ef2c",
+      "template_hash": "54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment and actual nearby devices",
+        "Knowledge 20 owner reaction",
+        "two Stress and native Vulnerable effect/recovery"
+      ]
+    },
+    {
+      "feature": "adversary:citywide-choir:failover",
+      "source_hash": "1fff7f3b6362467f40ddeb90bf405f3b260b692715abe9935577b3b6b530eea2",
+      "template_hash": "54e14f252028372412bb36247086bd664f38867b07c3b571cd6d330cec19a4d1",
+      "fiction_only": false,
+      "missing": [
+        "Actual node neutralization",
+        "another established node",
+        "simultaneous-isolation proof",
+        "atomic activation without invented topology"
+      ]
+    },
+    {
+      "feature": "adversary:veil-engine-custodian:rewrite-witnesses",
+      "source_hash": "fbaf4906489c3e4bcab535e6f71dc898a71d2ef1a1c358019d9103c92b89ab30",
+      "template_hash": "d1b823311b7081bbfbeab45ec3fa87ac1809f61f0b7351a3e1a4e745a85874e1",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "at most three actual nearby GM-owned NPCs",
+        "exact recent NPC memory scope",
+        "evidence/supernatural restoration and no PC memory write"
+      ]
+    },
+    {
+      "feature": "adversary:veil-engine-custodian:quarantine-reality",
+      "source_hash": "f628f2b7e566a6ed98990ad352c18fb9f0367fccd71e9b100460a1588c358e32",
+      "template_hash": "d1b823311b7081bbfbeab45ec3fa87ac1809f61f0b7351a3e1a4e745a85874e1",
+      "fiction_only": false,
+      "missing": [
+        "Two NPC Stress",
+        "actual Close-area threshold cohort",
+        "native sealing",
+        "owner-authored Difficulty 20 break/bypass/redefine recovery"
+      ]
+    },
+    {
+      "feature": "adversary:hunger-behind-glass:perfect-offer",
+      "source_hash": "eaa716729df029783d2066a3d5d10246b1149e3fb8b09cb84b6ec98ee651cc9e",
+      "template_hash": "aea1e4cb55d0a45281ae76d2db7c5dbe70cd3c2b98bd9ae634386c7fc126ee3d",
+      "fiction_only": true,
+      "missing": [
+        "Source-backed owner-expressed desire and genuinely payable offer",
+        "once-per-scene use",
+        "no inferred PC acceptance or objective desire"
+      ]
+    },
+    {
+      "feature": "adversary:hunger-behind-glass:compound-interest",
+      "source_hash": "a7a522090f0ad5d0aae470f7bbf111186ef797bfdbcaf98d98eee23aa136ca03",
+      "template_hash": "aea1e4cb55d0a45281ae76d2db7c5dbe70cd3c2b98bd9ae634386c7fc126ee3d",
+      "fiction_only": false,
+      "missing": [
+        "Actual Hope spend while benefiting from an explicit bargain",
+        "immutable Debt gain",
+        "demand only at three tokens within original terms"
+      ]
+    },
+    {
+      "feature": "adversary:hunger-behind-glass:foreclose",
+      "source_hash": "777f0de41b05c3d9aaee35e2ec5b5eb478707f33e6ce5bdfb09680bbd7a7f02e",
+      "template_hash": "aea1e4cb55d0a45281ae76d2db7c5dbe70cd3c2b98bd9ae634386c7fc126ee3d",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "actual unpaid explicit debt and promised collateral",
+        "Presence 21 owner reaction",
+        "exact native due collateral effect"
+      ]
+    },
+    {
+      "feature": "adversary:sovereign-of-the-green:territory-incarnate",
+      "source_hash": "fa6e8eec6c156d44b71814e7df82c4c8ebe147682bf4b476e02f34e4d28ac807",
+      "template_hash": "9d7aa23df6b20928aa382ee32e338136712a48115aff566eb471820db9b8b2c2",
+      "fiction_only": false,
+      "missing": [
+        "Established strong natural presence and actual origin terrain",
+        "NPC-only terrain immunity and Far-range attack-origin proof"
+      ]
+    },
+    {
+      "feature": "adversary:sovereign-of-the-green:season-out-of-place",
+      "source_hash": "486ca70e2d845faa12445127f6f4b86436b930cc8440c957e5ae7fb629155143",
+      "template_hash": "9d7aa23df6b20928aa382ee32e338136712a48115aff566eb471820db9b8b2c2",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "bounded Far-area transformation",
+        "owner Agility/Strength 20 reaction",
+        "4d10+10 native damage/Armor and persistent hazard"
+      ]
+    },
+    {
+      "feature": "adversary:sovereign-of-the-green:old-bargain",
+      "source_hash": "442de584db6967255670c27f84b9cddb36981e7acf05004a0701929d8d9d66d9",
+      "template_hash": "9d7aa23df6b20928aa382ee32e338136712a48115aff566eb471820db9b8b2c2",
+      "fiction_only": false,
+      "missing": [
+        "Authenticated invoked historical land agreement and leverage",
+        "bounded conflict pause and GM-owned good-faith negotiation"
+      ]
+    },
+    {
+      "feature": "adversary:pale-court-executioner:break-the-line",
+      "source_hash": "9d48694a3de369a1e49f6a994ed94d0e3c9e1324b863fb9014599c598f3a58fb",
+      "template_hash": "ec35d5f7a7f19a5c41df6a53b3e54511dc2b2e84a856051d6bce00e1e1a6c7c7",
+      "fiction_only": false,
+      "missing": [
+        "HR16 primary-target ally and Very Close relation to that target",
+        "one Stress",
+        "native standard attack/damage/push and independent ally Stress-or-push choice"
+      ]
+    },
+    {
+      "feature": "adversary:pale-court-executioner:no-appeal",
+      "source_hash": "8c0edbbf94d0b2e9c074e83cc4c88900883e96e67f32f4024070b98733184db0",
+      "template_hash": "ec35d5f7a7f19a5c41df6a53b3e54511dc2b2e84a856051d6bce00e1e1a6c7c7",
+      "fiction_only": false,
+      "missing": [
+        "Actual condition-clear/escape occurrence within Close",
+        "one NPC Stress",
+        "actor-only move to actual Very Close position"
+      ]
+    },
+    {
+      "feature": "adversary:choir-storm-node:network-sight",
+      "source_hash": "9043554b1075d43f4423842a3d4f9fc81748a9741e51b4fd287782d66219d11b",
+      "template_hash": "633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af",
+      "fiction_only": false,
+      "missing": [
+        "Established powered camera/sensor topology and actual Far range",
+        "NPC-only perception without omniscient secrets"
+      ]
+    },
+    {
+      "feature": "adversary:choir-storm-node:brownout",
+      "source_hash": "89fdaa371aa0a127c399ca137abba494b6053df5169d5df8f49b7d8697cbffa2",
+      "template_hash": "633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress",
+        "actual Close-range devices/lighting cohort",
+        "native disable until Severe damage or scene transition"
+      ]
+    },
+    {
+      "feature": "adversary:choir-storm-node:arc-through",
+      "source_hash": "f1b15ef73bb5405ef79c6a095634682c3cf3cb662845a18d005f45a1220e5af9",
+      "template_hash": "633f044799981991e3a3f94078a9484a46a8566a25cc201df7698c1ac4e341af",
+      "fiction_only": false,
+      "missing": [
+        "Actual visible electronic-device use within Far",
+        "one NPC Stress and separately native standard attack/owner defenses"
+      ]
+    },
+    {
+      "feature": "adversary:green-root-host:take-the-pavement",
+      "source_hash": "cd22500e55da89119d67c50048f31602dbac6e1025cc3967cd0945ec86cf9c00",
+      "template_hash": "f0253cf92dc720c4be3b8b977a137ceec03ffaf1036076dbc446843cef10185d",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress and actual Close-ground affected PC cohort",
+        "independent Agility 19 reactions",
+        "native Restrained and verified release"
+      ]
+    },
+    {
+      "feature": "adversary:green-root-host:regrow-through-concrete",
+      "source_hash": "27e2a72af8056ab35da54194b3c891a8c679b7d4f4a109086ba57a403817de00",
+      "template_hash": "f0253cf92dc720c4be3b8b977a137ceec03ffaf1036076dbc446843cef10185d",
+      "fiction_only": false,
+      "missing": [
+        "Pending final HP",
+        "substantial nearby living growth",
+        "one Fear",
+        "once-per-scene 1 HP retention receipt"
+      ]
+    },
+    {
+      "feature": "adversary:civic-null-operative:countermeasure-suite",
+      "source_hash": "7392cdfaff565c422abb8f5571f7404a1717c5f7d14bfc2ac1dc42a0375a83ad",
+      "template_hash": "177b10e71c46edf4477a7ee3566350ee16a857d69180ef7db8adbd419a99f4ec",
+      "fiction_only": false,
+      "missing": [
+        "First actual overt magic effect targeting this actor",
+        "identified/studied-source exception",
+        "exact pre-dice disadvantage/first-use semantics"
+      ]
+    },
+    {
+      "feature": "adversary:civic-null-operative:containment-foam",
+      "source_hash": "3808455cb7cec3f452c582324cbf1fcfdf1c60abd0ed7e92f8c89370ae4f5c49",
+      "template_hash": "177b10e71c46edf4477a7ee3566350ee16a857d69180ef7db8adbd419a99f4ec",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress",
+        "exact Close-range creature",
+        "Strength 20 owner reaction",
+        "native Restrained and release/movement enforcement"
+      ]
+    },
+    {
+      "feature": "adversary:civic-null-operative:clean-exit",
+      "source_hash": "e88ab524711d51ecc4934a776fd4cddf54303e28d3e3c22e6e335515d8f293b8",
+      "template_hash": "177b10e71c46edf4477a7ee3566350ee16a857d69180ef7db8adbd419a99f4ec",
+      "fiction_only": false,
+      "missing": [
+        "Actual nearby allied defeat",
+        "NPC Stress",
+        "actor-only Far move or exact nearby evidence custody, with no automatic PC transfer"
+      ]
+    },
+    {
+      "feature": "adversary:aster-vale-catastrophe-analyst:forecast-window",
+      "source_hash": "5741bd4acf734c6b67ec1261f8ae8bb98b84722b5b0d02aecd41cb9ca9e78c9d",
+      "template_hash": "7058e2c3115d9b2e0efad7aa9964532b2c16f9fd268e89210e6398384ea2d906",
+      "fiction_only": false,
+      "missing": [
+        "NPC Stress",
+        "actual allied Far-range actor",
+        "next action/reaction advantage consumers and expiration on Analyst Severe damage"
+      ]
+    },
+    {
+      "feature": "adversary:aster-vale-catastrophe-analyst:bad-branch",
+      "source_hash": "26d2693654d16fd1323e5255571114256f6906c9bc37a5b967d5954a5431a294",
+      "template_hash": "7058e2c3115d9b2e0efad7aa9964532b2c16f9fd268e89210e6398384ea2d906",
+      "fiction_only": false,
+      "missing": [
+        "Actual PC success-with-Fear receipt",
+        "NPC Stress",
+        "actual Far-range ally and native better-position move without extra Fear"
+      ]
+    },
+    {
+      "feature": "adversary:veil-engine-knifewalker:outside-the-frame",
+      "source_hash": "68b99ca1aa51b52b3ca8d39b2814456b7d058f5f116b0cf4bcfe723b9f99fdbc",
+      "template_hash": "031e5dfd8db7ed6122309b60fa1d1c6f10fbf4a84111f0db43239458f594ce0d",
+      "fiction_only": false,
+      "missing": [
+        "Source-proved absence of active PC observation",
+        "actor-only Close-range relocation without path traversal",
+        "no guessed player attention"
+      ]
+    },
+    {
+      "feature": "adversary:veil-engine-knifewalker:cut-the-connection",
+      "source_hash": "16689ae17825e957592f0ec332708a2e33ec763d6b31aa31dfbcd090bb96474f",
+      "template_hash": "031e5dfd8db7ed6122309b60fa1d1c6f10fbf4a84111f0db43239458f594ce0d",
+      "fiction_only": false,
+      "missing": [
+        "Actual prior damage to this PC",
+        "NPC Stress",
+        "native Help an Ally suppression until verified Stress clear or meaningful aid"
+      ]
+    },
+    {
+      "feature": "adversary:veil-engine-knifewalker:never-where-recorded",
+      "source_hash": "cd1a85e2377f7d7488840026ae5760447fad9785b9a23eefc364cab2b259274f",
+      "template_hash": "031e5dfd8db7ed6122309b60fa1d1c6f10fbf4a84111f0db43239458f594ce0d",
+      "fiction_only": false,
+      "missing": [
+        "Actual pending ranged attack from beyond Close",
+        "NPC Stress",
+        "pre-dice disadvantage without rewriting saved odds"
+      ]
+    },
+    {
+      "feature": "environment:abandoned-mall-glass-market:closing-time-moves",
+      "source_hash": "90a7dfb71dc15c19cadb63fec2ab15e2a2a164bd40b5d114b0a97283fcfa920f",
+      "template_hash": "9dd2d059a31f678bc584808a1519d2bab2622f51f614c0be63c1637493a4994f",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "native relocation countdown after one meaningful exchange",
+        "established exit destinations, no automatic PC travel"
+      ]
+    },
+    {
+      "feature": "environment:storm-drain-shrine:flash-flood",
+      "source_hash": "ced130b1fc7a0f45556a564707e8dee877ec41f769d8e905470a32fd5f0ac81a",
+      "template_hash": "f3b4ece93c32b4b29adaf83ffb16653c7acb0b27af5c9b3e6d70b5c0e2b15953",
+      "fiction_only": false,
+      "missing": [
+        "Established low-channel cohort",
+        "independent Agility 11 reactions",
+        "1d8+2 physical damage/Armor and actual downstream Very Close forced movement"
+      ]
+    },
+    {
+      "feature": "environment:pale-court-townhouse:ownership-bites",
+      "source_hash": "05619567b93cfe3bfb67ecf2183edd7cf0f56dce137d5196fe722b2f5fd26d11",
+      "template_hash": "24375b3fe2b4606ed929b808eb2924be4e848595b8c029f815a3fed8814e9c18",
+      "fiction_only": false,
+      "missing": [
+        "Previously communicated house rule and actual deliberate guest violation",
+        "source-chosen 2d6+3 magic damage or Vulnerable until departure"
+      ]
+    },
+    {
+      "feature": "environment:flooded-river-threshold:current-with-intent",
+      "source_hash": "868322818f0bfee3725b6f7e8bf5a1ccdb2d50cc289c3e375b07c1b600006e2b",
+      "template_hash": "01715b6b8578e187eea2e71f93d33ea6279abb4752f841f957a3f18bb68fe52f",
+      "fiction_only": false,
+      "missing": [
+        "Exact local target",
+        "Strength 14 owner reaction",
+        "2d8+3 physical damage/Armor and actual deep-water direction/forced movement"
+      ]
+    },
+    {
+      "feature": "environment:flooded-river-threshold:old-marker-stone",
+      "source_hash": "ae48316a5ee2fa3bf7b4bcf8fca9accfa4b2e96daa61389a2b6de59592b509d7",
+      "template_hash": "01715b6b8578e187eea2e71f93d33ea6279abb4752f841f957a3f18bb68fe52f",
+      "fiction_only": false,
+      "missing": [
+        "Actual discovery and honoring of original boundary",
+        "native environment Difficulty -2 with source proof"
+      ]
+    },
+    {
+      "feature": "environment:flooded-river-threshold:city-vs-river",
+      "source_hash": "9ff96204e2555c3f7a002532394eb04873dd81871ec517a4a5a8e5fb8947317d",
+      "template_hash": "01715b6b8578e187eea2e71f93d33ea6279abb4752f841f957a3f18bb68fe52f",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment and actual infrastructure/service",
+        "native failure and independent simultaneous scene problem"
+      ]
+    },
+    {
+      "feature": "environment:glass-market-grand-concourse:neutrality-has-teeth",
+      "source_hash": "99c9c26f40400fa151f59b914027476cd23dd88a2137af9a7d48a98a66abc6fc",
+      "template_hash": "78cd4c8e38a0bfd156d1c2e1d8793ce1cc88c78d744725b6c88e1847571ef947",
+      "fiction_only": false,
+      "missing": [
+        "Actual open violence",
+        "formal-duel/debt-collection exception",
+        "available Tier 3 enforcement and source-qualified native arrival"
+      ]
+    },
+    {
+      "feature": "environment:archive-beneath-the-courthouse:records-reject-you",
+      "source_hash": "3e2152e30e7015c6f7afc4d5b992db9d8c75b06cbcbbd2f3418baf01cdedd039",
+      "template_hash": "57b075db846e45a01accbc9022b4a062451525c8a898a8d142f5fab4320004c5",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "Presence 17 owner reaction",
+        "exact mundane database/document target",
+        "identity-entry suppression and correction"
+      ]
+    },
+    {
+      "feature": "environment:district-blackout:choir-volume",
+      "source_hash": "b42851f226bffb4e3d726e94eed170c2da35fe5435717b75128f94aad8de4f46",
+      "template_hash": "24bcd46f4a3a205a6bc8f48768c751d453d8de8beb0e6839ee68081e54cd980c",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "actual powered backup systems in Close",
+        "explicit owner grounding opportunity before native one Stress"
+      ]
+    },
+    {
+      "feature": "environment:rupture-district:reality-collision",
+      "source_hash": "72ac5d1c881a84be7b7412d23fd81f69b169f5db356cef9df01e7f2b888abc23",
+      "template_hash": "1543b06bf42f7e35dff152f5ca8ba26e9bfbadd944f41b38ce1d7cbf991da7f7",
+      "fiction_only": false,
+      "missing": [
+        "Exact target",
+        "Instinct 20 owner reaction",
+        "native 4d8+8 magic damage/Armor and Vulnerable recovery"
+      ]
+    },
+    {
+      "feature": "environment:rupture-district:mass-witness",
+      "source_hash": "95be876bcb6b176929fbb5477c146eeaf2058b80db28452de5cb180cec620ef0",
+      "template_hash": "1543b06bf42f7e35dff152f5ca8ba26e9bfbadd944f41b38ce1d7cbf991da7f7",
+      "fiction_only": false,
+      "missing": [
+        "Actual spectacular action and crowd-level exposure evidence",
+        "source-qualified Veil Exposure consequence without private-scene leakage"
+      ]
+    },
+    {
+      "feature": "environment:networked-dream:algorithmic-undertow",
+      "source_hash": "ab168906521f62f0930ef8afe16e37818c1ea1fbd679ae691be967dd967782e3",
+      "template_hash": "91311d37cd3e25905676ae06eeb13595735c8f2e55e853b1da8fb9a9a8c91e8d",
+      "fiction_only": false,
+      "missing": [
+        "Knowledge 20 owner reaction",
+        "native one Hope loss",
+        "source-bound feed trap and owner-authored premise disruption/rejection"
+      ]
+    },
+    {
+      "feature": "environment:networked-dream:viral-door",
+      "source_hash": "68ff3b8c94be9cc99fe29562f814883913ad197ba97c13059c414fedecb464d1",
+      "template_hash": "91311d37cd3e25905676ae06eeb13595735c8f2e55e853b1da8fb9a9a8c91e8d",
+      "fiction_only": false,
+      "missing": [
+        "Fear payment",
+        "entitled earlier campaign memory/rumor/ad/fear source",
+        "compatible native location/obstacle creation without PC relocation or canon laundering"
+      ]
+    }
+  ]
+}

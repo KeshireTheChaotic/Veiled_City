@@ -1,6 +1,7 @@
 /** Native descriptor, handler/source and taxonomy rules. Read-only production source callbacks never grant execution, consent or disclosure. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
+import {featureRuntimeCapability} from './feature-capability-rules.js';
 export function createNativeFeatureCatalog({definitions,authoredRules,readAdversaries,readEnvironments}){
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/gu,'-').replace(/^-|-$/gu,'');
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
@@ -8,7 +9,7 @@ freeze(definitions);
 freeze(authoredRules);
 // Populated only when a handler's real native path has passed its phase qualification.
 // planned_handler in the inventory is documentation, never dispatch authority.
-const handlers=Object.freeze({blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true,many_deaths_fear_opportunity:true,horde_marked_half_damage:true,local_mesh_allied_zone:true,coordinated_volley:true,flashbang_owner_choice:true,all_lanes_stop_group:true,regent_owner_resource_choice:true,stack_formation_remaining_hp:true,veil_exposure_difficulty:true,sentence_native_vulnerable_damage:true,first_pc_stress_clear:true,sirens_outside:true,upload_countdown:true,nightclub_auditory_disadvantage:true,environment_emergency_cascade:true,environment_code_blue:true,nightclub_vip_threshold:true,environment_mundane_correction:true,nightclub_inconsistent_witnesses:true,environment_maintenance_memory:true,shrine_local_memory_advantage:true,environment_door_chain:true,environment_imaging_record:true,environment_patient_procedure_context:true,environment_thin_walls_context:true,environment_chain_of_title_context:true,environment_no_consensus_context:true,environment_metaphor_physics_context:true,environment_no_ordinary_signal_context:true,environment_consensus_engine_context:true,environment_guest_right_context:true,environment_private_room_context:true,environment_price_offer_context:true,environment_auction_context:true,environment_model_room_context:true,environment_containment_shutters_context:true,environment_sealed_docket_context:true,environment_three_vectors_context:true,environment_market_neutrality_context:true,environment_contaminated_scene_context:true,environment_everyone_is_watching_context:true,environment_wrong_offering_context:true,environment_last_train_rules_context:true,environment_express_through_memory_context:true,environment_third_rail_spirit_context:true,adversary_break_the_hold_context:true,adversary_professional_entry_context:true,adversary_mark_the_variable_context:true,adversary_readout_context:true,adversary_ride_the_current_context:true,adversary_peripheral_context:true,adversary_steal_the_focus_context:true,adversary_sympathetic_relay_context:true,adversary_snatch_a_link_context:true,adversary_flow_around_it_context:true,adversary_drag_down_context:true,adversary_blank_spot_context:true,adversary_route_around_context:true,adversary_terms_first_context:true,adversary_pin_to_the_deal_context:true,adversary_i_saw_that_context:true,adversary_self_fulfilling_event_context:true,adversary_always_a_price_context:true,adversary_bad_future_context:true,adversary_exit_clause_context:true,adversary_predatory_grace_context:true,adversary_reputation_attack_context:true,adversary_call_security_context:true,adversary_urban_cover_context:true,adversary_root_snare_context:true,adversary_clause_eater_loophole_context:true,adversary_clause_eater_conflicting_duty_context:true,intrusion_trace_owner_payment:true});
+const handlers=Object.freeze({native_token_gain:true,blood_rush_hold_position:true,pack_pressure:true,feedback:true,first_severe_to_major:true,many_deaths_fear_opportunity:true,horde_marked_half_damage:true,local_mesh_allied_zone:true,coordinated_volley:true,flashbang_owner_choice:true,all_lanes_stop_group:true,regent_owner_resource_choice:true,stack_formation_remaining_hp:true,veil_exposure_difficulty:true,sentence_native_vulnerable_damage:true,first_pc_stress_clear:true,sirens_outside:true,upload_countdown:true,nightclub_auditory_disadvantage:true,environment_emergency_cascade:true,environment_code_blue:true,nightclub_vip_threshold:true,environment_mundane_correction:true,nightclub_inconsistent_witnesses:true,environment_maintenance_memory:true,shrine_local_memory_advantage:true,environment_door_chain:true,environment_imaging_record:true,environment_patient_procedure_context:true,environment_thin_walls_context:true,environment_chain_of_title_context:true,environment_no_consensus_context:true,environment_metaphor_physics_context:true,environment_no_ordinary_signal_context:true,environment_consensus_engine_context:true,environment_guest_right_context:true,environment_private_room_context:true,environment_price_offer_context:true,environment_auction_context:true,environment_model_room_context:true,environment_containment_shutters_context:true,environment_sealed_docket_context:true,environment_three_vectors_context:true,environment_market_neutrality_context:true,environment_contaminated_scene_context:true,environment_everyone_is_watching_context:true,environment_wrong_offering_context:true,environment_last_train_rules_context:true,environment_express_through_memory_context:true,environment_third_rail_spirit_context:true,adversary_break_the_hold_context:true,adversary_professional_entry_context:true,adversary_mark_the_variable_context:true,adversary_readout_context:true,adversary_ride_the_current_context:true,adversary_peripheral_context:true,adversary_steal_the_focus_context:true,adversary_sympathetic_relay_context:true,adversary_snatch_a_link_context:true,adversary_flow_around_it_context:true,adversary_drag_down_context:true,adversary_blank_spot_context:true,adversary_route_around_context:true,adversary_terms_first_context:true,adversary_pin_to_the_deal_context:true,adversary_i_saw_that_context:true,adversary_self_fulfilling_event_context:true,adversary_always_a_price_context:true,adversary_bad_future_context:true,adversary_exit_clause_context:true,adversary_predatory_grace_context:true,adversary_reputation_attack_context:true,adversary_call_security_context:true,adversary_urban_cover_context:true,adversary_root_snare_context:true,adversary_clause_eater_loophole_context:true,adversary_clause_eater_conflicting_duty_context:true,intrusion_trace_owner_payment:true});
 
 function verifyFeatureDescriptor(row,actor,kind){
   if(!row||!actor||!Array.isArray(actor.features)||typeof actor.features[row.index]!=='string')throw fail('feature_source_shape');
@@ -65,7 +66,7 @@ function featureDisposition(key,sources){
   const inspected=inspectNativeFeatureOccurrence(key,sources),row=inspected.feature;
   if(inspected.status==='held_source')return Object.freeze({status:'needs_rules_review',reason:inspected.reason,feature:row});
   if(!row)return Object.freeze({status:'needs_rules_review',reason:'Unregistered feature; no native handler or execution authority.',feature:null});
-  if(row.status!=='supported')return Object.freeze({status:'needs_rules_review',reason:`${row.reason} No qualified native handler; no cost, roll or effect.`,feature:row});
+  if(row.status!=='supported')return Object.freeze({status:'needs_rules_review',reason:`${featureRuntimeCapability(row).missing.join('; ')} No qualified native handler; no cost, roll or effect.`,feature:row});
   return Object.freeze({status:'supported',reason:'Qualified descriptor only; current native trigger, actor, costs and targets still required.',feature:row});
 }
 
@@ -87,12 +88,17 @@ function compileNativeFeatureRuleContexts({adversaries=readAdversaries(),
   return freeze(features.map(feature=>({version:1,feature:feature.feature_key,source_ref:feature.source_ref,
     source_hash:feature.source_hash,template_hash:feature.template_hash,index:feature.index,
     printed_rule:actors.get(`${feature.actor_kind}:${feature.actor_name}`).features[feature.index],
-    catalog_status:feature.status,native_handler:feature.native_handler,
+    catalog_status:feature.status,native_handler:feature.native_handler,capability:featureRuntimeCapability(feature),
     authority:'Printed source context only; native trigger, owner choices, effects and publication require their own verified adapters.',
     execution_authorized:false})));
 }
 function nativeFeatureRuleContext(key){
-  return typeof key==='string'?compileNativeFeatureRuleContexts().find(row=>row.feature===key)||null:null;
+  const inspected=inspectNativeFeatureOccurrence(key);
+  if(inspected.status!=='verified_source')return null;
+  const feature=inspected.feature;
+  return freeze({version:1,feature:feature.feature_key,source_ref:feature.source_ref,source_hash:feature.source_hash,template_hash:feature.template_hash,index:feature.index,
+    printed_rule:inspected.printed_rule,catalog_status:feature.status,native_handler:feature.native_handler,capability:featureRuntimeCapability(feature),
+    authority:'Printed source context only; native trigger, owner choices, effects and publication require their own verified adapters.',execution_authorized:false});
 }
 
 /** Current-template GM-private source only. Review-only rules inform fiction, never native dispatch. */
@@ -115,7 +121,7 @@ function nativeFeatureRuleContextsForTemplate(kind,template,{adversaries=readAdv
         &&(source.source_hash!==feature.source_hash||source.template_hash!==feature.template_hash))))return [];
       return [{version:1,feature:feature.feature_key,source_ref:feature.source_ref,source_hash:feature.source_hash,
         template_hash:feature.template_hash,feature_hash:hash(feature),index:feature.index,printed_rule,
-        catalog_status:feature.status,native_handler:feature.native_handler,visibility:'gm',
+        catalog_status:feature.status,native_handler:feature.native_handler,capability:featureRuntimeCapability(feature),visibility:'gm',
         trigger_kind:feature.trigger_kind,target_policy:feature.target_policy,roll_protocol:feature.roll_protocol,costs:feature.costs,
         house_rules:rules.map(rule=>({id:rule.id,version:rule.version,hash:hash(rule),status:rule.status,
           interpretation:structuredClone(rule.interpretation),limitations:structuredClone(rule.limitations||[])})),

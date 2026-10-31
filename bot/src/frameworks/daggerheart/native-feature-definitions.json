@@ -916,13 +916,13 @@
       "template_hash": "5d3f99c2a04191cb1ff37adc473af4d11ae0598ae85c844569c3a47fec9857cc",
       "index": 0,
       "type": "Passive",
-      "status": "review_only",
-      "trigger_kind": "unmapped",
-      "target_policy": "unmapped",
-      "roll_protocol": "unmapped",
-      "costs": null,
-      "native_handler": null,
-      "reason": "No qualified native feature handler."
+      "status": "supported",
+      "trigger_kind": "on_native_advantage_gain",
+      "target_policy": "self",
+      "roll_protocol": "none",
+      "costs": [],
+      "native_handler": "native_token_gain",
+      "reason": "HR15 v1: one Forecast gain per Engine actor/scene total, cap 3, from native pre-dice net advantage or authenticated paid Help. Current GM ownership, scene/location and exact source are required. No token spending, modeled prediction or player roll is authorized."
     },
     {
       "feature_key": "adversary:aster-vale-forecast-engine:spend-forecast",

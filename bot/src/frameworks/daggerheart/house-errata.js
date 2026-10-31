@@ -1,7 +1,7 @@
 /** Native interpretation of explicitly owner-authored errata; source files remain provider-owned. */
 export function createNativeHouseErrata({data,signal,compileNativeFeatures,nativeFeatureRuleContext,hash,fail}){
 const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};
-const handlers=Object.freeze({many_deaths_fear_opportunity:Object.freeze([1]),local_mesh_allied_zone:Object.freeze([2]),intrusion_trace_owner_payment:Object.freeze([1])});
+const handlers=Object.freeze({native_token_gain:Object.freeze([1]),many_deaths_fear_opportunity:Object.freeze([1]),local_mesh_allied_zone:Object.freeze([2]),intrusion_trace_owner_payment:Object.freeze([1])});
 
 function compileNativeHouseErrata(){
   const features=compileNativeFeatures();
@@ -32,14 +32,14 @@ function nativeFeatureReviewContract(key){
   const source=nativeFeatureRuleContext(key);if(!source)return null;
   const entry=compileNativeHouseErrata().filter(e=>e.sources.some(s=>s.kind==='feature'&&s.key===key)).sort((a,b)=>b.version-a.version)[0];
   if(!entry)return freeze({version:1,feature:key,source,
-    missing:'Exact source-defined native trigger/effect/current-and-saved adapter is not implemented; printed text is not execution permission.',
+    missing:source.capability?.missing?.join('; ')||'Exact source-defined native trigger/effect/current-and-saved adapter is not implemented; printed text is not execution permission.',
     native_authority_granted:false,effect_status:'not_executed',
-    recovery:'Implement the exact bounded source contract with native receipts and owner controls; do not substitute generic success or infer costs.'});
+    recovery:'Hold only this feature; select another legal source-backed ability or ordinary GM action. Native receipts and owner controls are required before any promised effect; do not infer costs or substitute generic success.'});
   return freeze({version:1,erratum:entry.id,erratum_version:entry.version,erratum_hash:hash(entry),feature:key,
     source,
-    requirements:entry.interpretation,missing:entry.interpretation.missing||entry.limitations?.join(' ')||'Native adapter for this exact operation.',
+    requirements:entry.interpretation,missing:entry.interpretation.missing||entry.limitations?.join(' ')||source.capability?.missing?.join('; ')||'Native adapter for this exact operation.',
     native_authority_granted:false,effect_status:'not_executed',
-    recovery:'Implement and qualify the missing source/owner/rules adapter, then obtain a fresh native adjudication. No PC choice, dice, consent, cost or terminal outcome is inferred.'});
+    recovery:'Hold only this feature; select another legal source-backed ability or ordinary GM action. Qualify the missing source/owner/rules adapter before fresh native adjudication. No PC choice, dice, consent, cost or terminal outcome is inferred.'});
 }
 
 return Object.freeze({compileNativeHouseErrata,nativeHouseErratum,nativeFeatureReviewContract});

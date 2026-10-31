@@ -34,10 +34,19 @@ test('owner ruling pins Expected Value to one Engine/scene total with cap three'
   assert.equal(rule.authority_ref,'owner:expected-value-once-per-scene:v1');
   assert.equal(rule.interpretation.scope,'once_per_engine_actor_per_scene_total');
   assert.equal(rule.interpretation.per_pc,false);assert.equal(rule.interpretation.cap,3);
-  assert.equal(rule.status,'review_only'); // Recording the ruling alone must not enable execution.
+  assert.equal(rule.status,'supported');assert.equal(rule.native_handler,'native_token_gain');
   const definitions=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-feature-definitions.json',import.meta.url),'utf8'));
   const feature=definitions.features.find(f=>f.feature_key===rule.sources[0].key);
   assert.equal(rule.sources[0].source_hash,feature.source_hash);assert.equal(rule.sources[0].template_hash,feature.template_hash);
+});
+
+test('owner ruling pins Break the Line’s secondary ally and range origin without enabling the unimplemented effect',()=>{
+  const data=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-house-errata.json',import.meta.url),'utf8'));
+  const rule=data.entries.find(e=>e.id==='HR16'&&e.version===1);
+  assert.equal(rule.authority_ref,'owner:break-the-line-target-ally:v1');assert.equal(rule.status,'review_only');
+  assert.equal(rule.interpretation.secondary_actor,'ally_of_primary_target');assert.equal(rule.interpretation.secondary_range_origin,'primary_target');
+  assert.equal(rule.interpretation.secondary_range,'Very Close');assert.equal(rule.interpretation.secondary_choice_owner,'affected_actor_controller');
+  assert.deepEqual(rule.interpretation.secondary_choice,['mark_1_Stress','native_forced_push']);assert.equal(rule.interpretation.silence,'pending');
 });
 
 test('distinct PCs in one scene share one gain; later scenes gain until the cap, replay survives restart',()=>{

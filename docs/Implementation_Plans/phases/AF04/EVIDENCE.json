@@ -1,0 +1,59 @@
+{
+  "phase": "AF04",
+  "status": "in_progress",
+  "capabilities": {
+    "native_bounded": 30,
+    "rule_context_only": 49,
+    "held": 69,
+    "fiction_only": 5
+  },
+  "runs": [
+    {
+      "scope": "AF01 context, AF02 tokens/opportunities, AF04 capabilities before HR17",
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "syntax_checks": 6
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af04-capabilities.test.mjs",
+      "reason": "HR17 source input changed",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-capability-rules.js",
+      "sha256": "9d5ef7db7bba78b8d4171e78f8f18c31eb439b53d26b1ee0cc8c5659a8ea3512"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-holds.json",
+      "sha256": "4be82dd5f39e43ebc08d045f8eb0ff78186f05a343c68b291102ed0fed321924"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-catalog.js",
+      "sha256": "c3a2fad097ff52ac8f2812616b3a1d0ec4bd6fec8793aaf8b92e679033abef1a"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "4a7dac6e5c8850fdb154ded4bcb3fd9d00cce14e3a6f3bd2d1b0f32d470ee2c6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-definitions.json",
+      "sha256": "3c30beeab34b74adab853db5073f96ec534f5e9073c65da1313469156e39eebf"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "10e7ce9298b9ba1e70e815e42da7cb3a35ae106b77401dcf17514de3550640d1"
+    }
+  ],
+  "limits": [
+    "Offline injected native-service and disposable SQLite evidence",
+    "74 occurrences remain review-only",
+    "No live provider, Discord, deployment or release qualification"
+  ]
+}

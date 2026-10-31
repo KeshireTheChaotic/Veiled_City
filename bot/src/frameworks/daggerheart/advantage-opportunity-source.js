@@ -7,6 +7,22 @@ export function createAdvantageOpportunitySource({currentScene,nativeEncounterAc
   const issuer='native:roll-opportunity';
   const keyFor=request=>`roll-opportunity:${hash([request,'advantage_gain'])}`;
 
+  function hasNativeAdvantage(db,guild,request){
+    const b=request?.data?.breakdown;
+    if(!b||![b.advantage,b.disadvantage].every(Number.isSafeInteger)||b.advantage<0||b.disadvantage<0)return false;
+    if(b.advantage>b.disadvantage)return true;
+    if(b.advantage!==b.disadvantage||!request.data.helpers?.length)return false;
+    for(const helper of request.data.helpers){
+      const roll=db.getSavedRoll(guild,helper.roll_id),operation=db.getCityRecord(guild,'roll_operation',helper.operation_key),delta=operation?.data.resource_deltas?.find(d=>d.character===helper.character);
+      if(roll?.roll_type!=='help'||roll.session_id!==request.data.session_id||roll.character_id!==helper.character||roll.discord_user_id!==helper.user
+        ||roll.payload.request!==request.record_key||roll.payload.hope_spent!==1||roll.payload.die!==helper.die||roll.payload.proof!==helper.proof
+        ||!Number.isInteger(helper.die)||helper.die<1||helper.die>6||operation?.data.op!=='help'||operation.data.request!==request.record_key
+        ||operation.data.user!==helper.user||operation.data.authorization?.pay_hope!==true||delta?.hope?.delta!==-1)
+        throw fail('native_advantage_helper_payment_proof');
+    }
+    return true;
+  }
+
   function inspectAdvantageGain(db,guild,key,{historical=false}={}){
     const row=db.getCityRecord(guild,'native_roll_opportunity',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
       mutation=event&&db.getMutation(guild,event.source_id),request=v?.request_snapshot,source=request&&db.getWorldEvent(guild,request.source_event),scene=!historical&&currentScene(db,guild);
@@ -21,8 +37,7 @@ export function createAdvantageOpportunitySource({currentScene,nativeEncounterAc
       ||source.scene!==v.scene||source.session_id!==v.session||request?.record_key!==v.request||request.status!=='pending'
       ||request.visibility!=='character'||request.subject_key!==v.character||request.data.character_id!==v.character
       ||request.data.owner_user_id!==v.owner||request.data.scene!==v.scene||request.data.session_id!==v.session
-      ||!Number.isSafeInteger(request.data.breakdown.advantage)||!Number.isSafeInteger(request.data.breakdown.disadvantage)
-      ||request.data.breakdown.advantage<=request.data.breakdown.disadvantage||request.data.breakdown.unresolved.length
+      ||!hasNativeAdvantage(db,guild,request)||request.data.breakdown.unresolved.length
       ||!Array.isArray(v.actors)||v.actors.some(actor=>typeof actor.key!=='string'||!actor.snapshot||!actor.control||!actor.template_hash)
       ||!historical&&(scene.key!==v.scene||scene.session_id!==v.session
         ||hash(db.getCityRecord(guild,'roll_request',v.request))!==hash(request)))throw fail('native_advantage_opportunity_ancestry');
@@ -32,8 +47,7 @@ export function createAdvantageOpportunitySource({currentScene,nativeEncounterAc
 
   function captureAdvantageGain(db,guild,request){
     const b=request?.data?.breakdown;
-    if(request?.status!=='pending'||!b||!Number.isSafeInteger(b.advantage)||!Number.isSafeInteger(b.disadvantage)
-      ||b.advantage<=b.disadvantage||b.unresolved?.length)return null;
+    if(request?.status!=='pending'||!b||!hasNativeAdvantage(db,guild,request)||b.unresolved?.length)return null;
     const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),
       binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),actors=[];
     if(request.data.scene!==scene.key||request.data.session_id!==scene.session_id
@@ -54,7 +68,7 @@ export function createAdvantageOpportunitySource({currentScene,nativeEncounterAc
       scene:scene.key,session:scene.session_id,location,character:request.subject_key,owner:request.data.owner_user_id,actors};
     return db.transaction(()=>{
       const prior=db.getCityRecord(guild,'native_roll_opportunity',key);
-      if(prior){inspectAdvantageGain(db,guild,key,{historical:true});return key;}
+      if(prior){inspectAdvantageGain(db,guild,key,{historical:true});return hash(prior.data.request_snapshot)===hash(request)?key:null;}
       const mutation=db.recordMutation(guild,{sessionId:scene.session_id,actorType:'ai_gm',actorId:issuer,sourceLayer:'native_feature',
         mutationType:'capture_roll_opportunity',entityKey:key,visibility:'gm',after:data});
       const event=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_roll_opportunity',source_kind:'mutation',source_id:mutation.id,
