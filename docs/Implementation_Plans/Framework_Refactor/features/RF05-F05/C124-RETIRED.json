@@ -1,0 +1,55 @@
+{
+  "reason": "Original Native proposal and dispatch composition owned/root retired; Intent now consumes fixed original services through existing pair. Exact checker-proven obsolete location/cross-framework records only.",
+  "entries": [
+    {
+      "id": "81e7de07d49fe23dcc959929a2dc2eaba5c17bcdbe054a455bb084f37c064d50",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-dispatch.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "09abf55c3e4a76a51ed1fe0f1ea25f73deaeae4afc49efd91eb3f9058ea22957",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-proposals.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "b62f7afb9000637c45d7a9938f1551ec75aa56f1af421f21b6cfb67676e85cee",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/gm-unified-arbitration.js",
+      "to": "bot/src/native-environment-proposals.js",
+      "kind": "static",
+      "specifier": "./native-environment-proposals.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "98f6c2e618d7938335a69ecee0fde2c61c9bb6e1b6de6a9e4b069505b21895b5",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/gm-unified-arbitration.js",
+      "to": "bot/src/native-environment-dispatch.js",
+      "kind": "static",
+      "specifier": "./native-environment-dispatch.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

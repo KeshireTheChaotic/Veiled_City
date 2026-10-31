@@ -14,8 +14,9 @@ import {intentNativeFeatureCatalog} from './frameworks/intent/public.js';
 const {featureDisposition}=intentNativeFeatureCatalog;
 import {intentNativeAdversaryContext} from './frameworks/intent/public.js';
 const {requireNativeAdversaryFeature}=intentNativeAdversaryContext;
-import {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
-import {executeEnvironmentProposal} from './native-environment-dispatch.js';
+import {intentNativeEnvironmentActions} from './frameworks/intent/public.js';
+const {applyNativeEnvironmentProfileProposals,executeEnvironmentProposal}=intentNativeEnvironmentActions;
+
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
 import {intentNativeErrata} from './frameworks/intent/public.js';

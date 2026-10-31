@@ -1,0 +1,109 @@
+{
+  "base": "80522a31ed8bef2eecf7f36dbb5a2e455af2624e",
+  "exact_original_source_substitutions": true,
+  "original_native_engines_and_unified_adjudication_unchanged": true,
+  "deleted_originals": [
+    "bot/src/native-environment-proposals.js",
+    "bot/src/native-environment-dispatch.js"
+  ],
+  "syntax_pass": 8,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c124.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 1361.0743
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c123.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 1721.1274,
+      "reason": "C123 import paths adapted to relocated public services; production graph and actual initializer changed."
+    }
+  ],
+  "architecture": {
+    "sourceModules": 1068,
+    "unowned": 0,
+    "importOccurrences": 4323,
+    "internalImportOccurrences": 4126,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "rawViolationOccurrences": 610,
+    "acceptedLegacyOccurrences": 610,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limits": "Original Native services, fixed source binding/replacement refusal, actual initializer return/idempotence, closed refusals and actual SQLite opaque-origin/counterfeit/foreign-guild refusal without writes or PC/fact effects; guarded actual offline bootstrap. Positive Native environment profile establishment/dispatch, transaction receipts/publication/full GM/live remain unqualified.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-proposals.js",
+      "sha256": "727ddd8a650a2f3f8b0fe41715062e917fb993926070b194871c9acd6adb78c4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-dispatch.js",
+      "sha256": "1ab31c42bc560fdbca43d73171835d286ac061c9924ee10adddd6c5ac76c2258"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-environment-actions.js",
+      "sha256": "50732b3d7bbd174c78ebf69b341999e1199433b2661604c9c586214902837a79"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "7b65e57f061be22177b551cef1788a2172e33b215ff16cd3f9f4acaf17822579"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "ca926248ab983a9900586f1b27c0c0b87060e68e7e36dd8c6c0d05bd436cfb57"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "03dde91f661fccc569375b1f4b8f956722fb398fe1c9ccaba5ed5f71cfe001b0"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "7a5fe0ed9f6309195334a48214f4e64e9d87eda6eb34dbedfcfa454d8472e933"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "35b2d445342617bd7278b4ca91f2ca6158a068d0007e4d901076790bad765851"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-profile-proposal-rules.js",
+      "sha256": "b5d2acc00c299bd716c85f575e3543670bd3e51c022b6636e464552a1f1d5774"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-dispatch-rules.js",
+      "sha256": "13a2c993816bbcdcce761c01ba93119e2630ce90d6b005a0fba026b8151bc0b9"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "sha256": "e748639b4a561ba10f4de4304bc169744caafa69070f151e4c6c7488b70b4366"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c124.test.mjs",
+      "sha256": "dc6b9a272411acacdde6ba33111f07021de3369c4f4651a834ee90837d3b4430"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c123.test.mjs",
+      "sha256": "e8506fe3d7da1fbac0858d62fe7eb03b9f6cf87165ea37579ac99d2394da94f5"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "c03dd26484f88bc3e4e27dd9d7ee1b85a7b8551c03b166fd059780957bbdb9a0"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "sha256": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055"
+    }
+  ]
+}

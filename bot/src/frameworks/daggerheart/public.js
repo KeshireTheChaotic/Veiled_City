@@ -204,3 +204,6 @@ export {nativeEnvironmentOutputCandidates,nativeEnvironmentOutput} from './nativ
 export {validateEnvironmentOddsProposal,clearNativeEnvironmentNoise,inspectNativeEnvironmentNoiseClear,nativeEnvironmentNoiseState,prepareEnvironmentNoiseOdds,prepareEnvironmentMemoryOdds,inspectEnvironmentNoiseOdds} from './native-environment-noise.js';
 
 export {resolveNativeEnvironmentEvent,inspectNativeEnvironmentResolution,environmentResolutionText} from './native-environment-recovery.js';
+
+export {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
+export {executeEnvironmentProposal} from './native-environment-dispatch.js';

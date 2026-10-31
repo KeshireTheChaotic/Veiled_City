@@ -45,3 +45,8 @@ export function connectIntentNativeErrata(){return intentNativeErrata.bind({nati
 import {intentNativePreparedPositions} from '../../frameworks/intent/public.js';
 import {professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry} from '../../frameworks/daggerheart/public.js';
 export function connectIntentNativePreparedPositions(){return intentNativePreparedPositions.bind({professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry});}
+
+import {intentNativeEnvironmentActions} from '../../frameworks/intent/public.js';
+import {applyNativeEnvironmentProfileProposals,executeEnvironmentProposal} from '../../frameworks/daggerheart/public.js';
+/** Supply the original Native services; validation and transactions remain Native. */
+export function connectIntentNativeEnvironmentActions(){return intentNativeEnvironmentActions.bind({applyNativeEnvironmentProfileProposals,executeEnvironmentProposal});}

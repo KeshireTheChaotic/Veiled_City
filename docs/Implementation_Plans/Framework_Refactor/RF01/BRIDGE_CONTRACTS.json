@@ -791,6 +791,13 @@
         "consumer": "intentNativePreparedPositions in original board/unified composition",
         "composition": "connectIntentNativePreparedPositions at existing environment bootstrap; original lazy Native factory/rules remain sole authority",
         "qualification_evidence": "features/RF05-F05/C114-HASHES.json"
+      },
+      "native_environment_actions": {
+        "feature": "RF05-F05 C124",
+        "source": "Original Native applyNativeEnvironmentProfileProposals and executeEnvironmentProposal lazy services; rules and transaction call points unchanged",
+        "consumer": "intentNativeEnvironmentActions in original unified arbitration composition",
+        "composition": "connectIntentNativeEnvironmentActions at existing environment bootstrap; fixed original source functions, replacement forbidden",
+        "qualification_evidence": "features/RF05-F05/C124-HASHES.json"
       }
     },
     {
