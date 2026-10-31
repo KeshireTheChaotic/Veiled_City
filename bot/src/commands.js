@@ -1,3 +1,4 @@
+import {exportAttachments} from './frameworks/discord/public.js';
 import {handleDirectorStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorStatus} from './framework-to-framework/discord--persistence/public.js';
 import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
@@ -127,9 +128,7 @@ const interactionQueue=new KeyedSerialQueue();
 export { buildCommands } from './frameworks/discord/public.js';
 
 
-function exportAttachments(files){
-  return files.map(f=>new AttachmentBuilder(f.buffer,{name:f.name}));
-}
+
 
 function findOwnedAnyCharacter(db,guildId,userId,query){
   const rows=db.listCharacters(guildId,userId,{includeClosed:true});

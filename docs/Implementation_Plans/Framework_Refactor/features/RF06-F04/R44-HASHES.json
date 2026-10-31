@@ -1,0 +1,6 @@
+{
+  "bot/src/commands.js": "b2b664e5396338f9e0b69bdd46c08b070a3b61b4d1da97136663fd64a684c607",
+  "bot/src/frameworks/discord/public.js": "1b5eac91123f9727ab9be40839180e6993614c06c23be2b84ffc8f23a75f1c61",
+  "bot/src/frameworks/discord/export-attachments.js": "a3a2a81a185d7482e3c0bd8f26426d72c77ab5d0fa6d304e93798d89131296d8",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c44.test.mjs": "ad2660440152906bf45147f0d84d260b79e69ff53370f85e9c122f52f30caffd"
+}

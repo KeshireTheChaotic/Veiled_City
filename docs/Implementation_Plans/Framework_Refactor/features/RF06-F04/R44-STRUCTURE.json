@@ -1,0 +1,6 @@
+{
+  "parent": "222f79c487bdaeddc2991c8ccf54dac326193a90",
+  "whole_original_helper_ast_equal": true,
+  "remaining_root_ast_equal_except_one_public_import": true,
+  "all_three_original_callsites_and_other_SDK_uses_unchanged": true
+}

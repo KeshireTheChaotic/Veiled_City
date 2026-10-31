@@ -64,3 +64,5 @@ export {replyWithPrivateChunks} from './private-chunk-reply.js';
 export {handleDirectorHistoryCommand,assertDirectorHistoryStore} from './director-history-command.js';
 
 export {handleDirectorStatusCommand,assertDirectorStatusStore} from './director-status-command.js';
+
+export {exportAttachments} from './export-attachments.js';
