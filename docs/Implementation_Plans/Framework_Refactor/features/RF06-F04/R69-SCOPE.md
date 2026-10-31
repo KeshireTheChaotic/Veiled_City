@@ -4,4 +4,4 @@ Move the existing GM seed command's Discord response payload construction into a
 
 Owned source paths: `bot/src/seed-commands.js`, `bot/src/frameworks/discord/public.js`, and new `bot/src/frameworks/discord/seed-command-output.js`. Owned evidence paths: the fresh R69 test, this scope/ledger/log, and the RF06 phase ledger. No SQL, persistence, transaction, World behavior, command registration, authorization, index startup, or gameplay changes.
 
-The exact legacy transition for the old direct Discord attachment capability is pending Agent A's active C130 shared-manifest checkpoint. Do not include or alter that manifest record without the follow-up exclusive transition window.
+At implementation start, the exact legacy transition for the old direct Discord attachment capability was pending Agent A's C130 shared-manifest checkpoint. After C130 committed, R69 retired only that exact record in its separately leased transition commit (`508b424e1b38ec7ead8cf39f2a5e3edf22555cde`), with the original entry retained in `R69-RETIRED.json`.

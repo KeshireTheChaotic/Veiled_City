@@ -1,0 +1,3 @@
+Final focused run: node --test tests/ai-gm-2026-10/rf06-f04-r70.test.mjs — exit 0, 2 passed / 0 failed, duration 881.9968 ms.
+Changed-source syntax: node --check src/city-commands.js; node --check tests/ai-gm-2026-10/rf06-f04-r70.test.mjs — both exit 0.
+No database, provider, live Discord, or broad test suite was used.

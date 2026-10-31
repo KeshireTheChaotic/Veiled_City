@@ -1,7 +1,8 @@
 import {recordCityUpkeep} from './frameworks/world/public.js';
 import {configureCityFlags} from './framework-to-framework/narrative--world/public.js';
 /** GM-only civic commands. No generic city-state endpoint is available to players. */
-import { AttachmentBuilder, PermissionFlagsBits } from "discord.js";
+import { PermissionFlagsBits } from "discord.js";
+import {createAttachment} from './frameworks/discord/public.js';
 import { PermissionError } from "./kernel/errors.js";
 import { cityObject, calendarStatus, configureCalendar, indexWorldEvent, scheduleCityEvent, reviewCityEvent } from './frameworks/world/public.js';
 import { updateCityCore, assignDistrictLocation, fileInstitutionReport, addWorldLink, submitInstitutionAction, reviewInstitutionAction,
@@ -49,7 +50,7 @@ export async function handleCityCommand(interaction,{db,gm}){
   else if(sub==="preview") result={clock:calendarStatus(db,guildId),due:db.dueCitySchedules(guildId),mutates:false};
   else throw new Error("Unknown city command.");
   const payload={content:`City ${sub} complete. Civic records are GM-private; no PC actions or mechanics were applied.`,
-    files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"city-state.json"})]};
+    files:[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"city-state.json"})]};
   if(interaction.deferred) await interaction.editReply(payload);
   else await interaction.reply({...payload,ephemeral:true});
   return true;
