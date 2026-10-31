@@ -1,0 +1,34 @@
+{
+  "base": "03554f14",
+  "production_changes": 0,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c104.test.mjs",
+    "pass": 2,
+    "fail": 0,
+    "duration_ms": 558.1294
+  },
+  "evidence": "Actual disposable SQLite and original World indexing; synthetic origin inspector. Private source/board, immutable replay, no character changes, correlated caller rollback and retry.",
+  "limits": "Does not qualify accepted PC sources, NPC proposals, full Native prompts or live turn.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/intent/scene-intent-board.js",
+      "sha256": "dc1e5239ae967377ed8bc83da057c84ff5704fda29b0f82dc40f9824e22fecc1"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/world-primitives.js",
+      "sha256": "6ba399ec426d9c457b0ec3841bf92fcdc517e8c8a2cb0af04fbfc21b9f5ec45a"
+    },
+    {
+      "path": "bot/src/frameworks/world/city-calendar.js",
+      "sha256": "72b4cb0df5e0c3c54038e26073f6091b8c861c1266d5df947c0538e84c82ff9e"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/database.js",
+      "sha256": "f77d6b8e9031ff00439f0c62f2cd42f23c68a28df55821718207c25bc16bb17f"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c104.test.mjs",
+      "sha256": "b9301a37e4ed3a16e99e2c5a2fa642932270872a03cf35dc02885331cf54f5b7"
+    }
+  ]
+}
