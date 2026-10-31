@@ -1,0 +1,16 @@
+{
+  "phase": "AF07",
+  "status": "in_progress_offline_delta_evidence_only",
+  "release_qualified": false,
+  "real_model_staging_started": false,
+  "live_discord_started": false,
+  "deployment_started": false,
+  "limits": [
+    "Phase-specific evidence files contain the completed offline test runs.",
+    "AF04 mixed reaction and condition/release execution remains incomplete.",
+    "AF05 real-model selection and autonomous completion remain unverified.",
+    "Full 153-occurrence legal/illegal/effect/replay matrix is incomplete.",
+    "Authorized staging target and provider/Discord charge approval are needed for the amendment's real-model scenario."
+  ],
+  "human_attention_required": "Identify the staging database/campaign and authorize provider charges and any Discord connection before real-model staging."
+}
