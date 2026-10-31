@@ -8,3 +8,5 @@ export * from './session-opening-recovery.js';
 export * from './opening-flow.js';
 
 export {lowConfidenceReviewItems,normalizeDirectorConfidence} from './director-result.js';
+
+export {registerInteractionHandler} from './discord-interaction-event.js';

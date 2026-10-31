@@ -1,0 +1,15 @@
+✔ original event registration and awaited command dependencies retain successful undefined result (1.3591ms)
+✔ original command error logs then records same guild/session/context before private reply (0.2338ms)
+✔ original expired response records state error then short-circuits repliability and sending (0.1779ms)
+✔ original deferred/replied edit path and response rejection swallowing retained without retry (0.2119ms)
+✔ original missing guild skips state lookup and uses same unknown-command/null-session fallbacks (0.1906ms)
+✔ original state-error failure propagates and nonrepliable interactions remain unsent (0.4142ms)
+✔ entrypoint retains ready/message/shutdown/login and delegates original interaction registration (0.4414ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54.8929

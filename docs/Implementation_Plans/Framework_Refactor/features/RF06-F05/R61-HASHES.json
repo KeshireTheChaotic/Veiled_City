@@ -1,0 +1,7 @@
+{
+  "bot/src/index.js": "bd87fd5ddc63e48877832fd4a5e56c31cf92b75d949f53d1de367b158e522870",
+  "bot/src/application/workflows/discord-interaction-event.js": "d494f5469151c132faaebee683a8d2b3efcb14db6459158920523ab2a9daf86b",
+  "bot/src/application/workflows/public.js": "c5c27d063af00ecd0a6112f2ca52e2e8d175959b9f591a06cc43528a07565753",
+  "bot/tests/ai-gm-2026-10/rf06-f05-c61.test.mjs": "33b9650524220435037e1692ab65624ba7883a4c570b3b88df8eeccd1a343336",
+  "bot/tests/ai-gm-2026-10/rf06-f05-c60.test.mjs": "1cc2b2a8a2e2104b95416e673ba20c3bb4bb0ce856b3f7040032501a1d4e9399"
+}
