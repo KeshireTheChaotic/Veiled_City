@@ -1,0 +1,5 @@
+# RF06-F02 R50 — Original NPC memory/knowledge list queries
+
+Only listNpcMemories/listNpcKnowledge move into private same-connection npc-cognition-read-repository.js. Preserve class signatures/default getters, exact SQL/guild/key/status/belief filters, relevance-ranking-only tokens/dedup20/caps/ordering, lowercase-without-new-trim behavior, tags JSON/default/error and distinct row prototypes/secret metadata. All317othermethods including profiles/goals/city lifecycle joins/recall/writes/effects/receipts/transactions/migrations unchanged AST; schema460/hash unchanged. No NPC belief/canon/policy/source/authority or data fix.
+
+Request exact two-method database.js extension after R49; independent R37 GM view qualified current read callbacks, fresh nonempty/ranking/historical cases required. One frozen fresh+affected R37 batch with real disposable SQLite status/relevance/cap/JSON/scope/error/caller rollback/proxy/reopen. No broad or unchanged unrelated suite rerun. No public/registry/index/native/class-write changes; no provider/live/production state. Correlated native repositories remain held.

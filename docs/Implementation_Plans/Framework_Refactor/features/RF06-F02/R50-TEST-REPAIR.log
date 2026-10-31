@@ -1,0 +1,15 @@
+✔ memory guild/key/status/retrievable/case and original parsed-row shape retained (168.3205ms)
+✔ memory relevance is ranking not filtering, first20 token cap and original numeric caps retained (803.8275ms)
+✔ knowledge guild/key/belief/relevance/raw secret/null-prototype behavior retained (173.0588ms)
+✔ historical tags JSON/default/null/error and knowledge token input failures preserve original errors/no writes (167.965ms)
+✔ original option getter order once and token conversion failure precede SQL instrumentation (208.5965ms)
+✔ same caller transaction/knowledge savepoint rollback contains original memory and knowledge writes (210.8676ms)
+✔ same SQL instrumentation reads and reopened saved shapes/schema stable without writes (169.2453ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2003.9754

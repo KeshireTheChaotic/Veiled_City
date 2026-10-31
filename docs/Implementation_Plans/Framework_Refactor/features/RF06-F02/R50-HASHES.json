@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "47160853693a0347150071b43d2961608ada086417b76ebdca99945a7108189a",
+  "bot/src/frameworks/persistence/npc-cognition-read-repository.js": "b109fb9798852fdb281033543d626e850e990cada848de6eece20f4e9f4ff6f2",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c50.test.mjs": "6db034a6012ba480c2d0d72bab521b9baaa57fdb8104419fe2930cbd65edabff",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

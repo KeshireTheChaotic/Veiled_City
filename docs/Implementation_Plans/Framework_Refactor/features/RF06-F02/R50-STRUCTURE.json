@@ -1,0 +1,15 @@
+{
+  "parent": "2962b0822f0dbeb5d20800f483493b7bab170f1e",
+  "class_methods": 319,
+  "untouched_methods": 317,
+  "extracted_methods": [
+    "listNpcMemories",
+    "listNpcKnowledge"
+  ],
+  "original_signatures_equal": true,
+  "all_other_method_asts_equal": true,
+  "both_original_bodies_equal_after_only_connection_substitution": true,
+  "old_class_sql_sites": 398,
+  "new_class_sql_sites": 396,
+  "repository_sql_sites": 2
+}

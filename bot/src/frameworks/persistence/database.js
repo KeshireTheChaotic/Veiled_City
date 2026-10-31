@@ -1,3 +1,4 @@
+import * as npcCognitionReads from './npc-cognition-read-repository.js';
 import * as gmFactReads from './gm-fact-repository.js';
 import * as rulingReads from './rules-ruling-repository.js';
 import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
@@ -1770,16 +1771,7 @@ export class VeiledDB {
       .all(guildId,npcKey,`corrects:${id}`).map(row=>({...row,tags:JSON.parse(row.tags_json||"[]")}));
   }
 
-  listNpcMemories(guildId,npcKey,{status="",limit=100,queryTokens=[]}={}){
-    const cap=Math.max(1,Math.min(500,Number(limit)||100));
-    const wanted=[...new Set(queryTokens.map(String))].slice(0,20);
-    const relevance=wanted.length?wanted.map(()=>"CASE WHEN instr(lower(content||' '||subject_key||' '||tags_json),?)>0 THEN 1 ELSE 0 END").join("+"):"0.0";
-    return this.db.prepare(`SELECT * FROM npc_memories WHERE guild_id=? AND npc_key=?
-      AND (?='' OR status=? OR (?='retrievable' AND status IN ('active','challenged')))
-      ORDER BY (${relevance}) DESC,importance DESC,created_at DESC LIMIT ?`)
-      .all(guildId,String(npcKey||"").toLowerCase(),status,status,status,...wanted.map(token=>token.toLowerCase()),cap)
-      .map(r=>({...r,tags:JSON.parse(r.tags_json||"[]")}));
-  }
+  listNpcMemories(guildId,npcKey,{status="",limit=100,queryTokens=[]}={}){return npcCognitionReads.listNpcMemories(this.db,guildId,npcKey,{status,limit,queryTokens});}
 
   markNpcMemoriesRecalled(ids=[]){
     const stmt=this.db.prepare("UPDATE npc_memories SET recall_count=recall_count+1,last_recalled_at=CURRENT_TIMESTAMP WHERE id=?");
@@ -1796,14 +1788,7 @@ export class VeiledDB {
     return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?").get(guildId,key,kk);
   }
 
-  listNpcKnowledge(guildId,npcKey,{beliefState="",limit=100,queryTokens=[]}={}){
-    const cap=Math.max(1,Math.min(500,Number(limit)||100));
-    const wanted=[...new Set(queryTokens.map(String))].slice(0,20);
-    const relevance=wanted.length?wanted.map(()=>"CASE WHEN instr(lower(content||' '||knowledge_key),?)>0 THEN 1 ELSE 0 END").join("+"):"0.0";
-    return this.db.prepare(`SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND (?='' OR belief_state=?)
-      ORDER BY (${relevance}) DESC,updated_at DESC LIMIT ?`)
-      .all(guildId,String(npcKey||"").toLowerCase(),beliefState,beliefState,...wanted.map(token=>token.toLowerCase()),cap);
-  }
+  listNpcKnowledge(guildId,npcKey,{beliefState="",limit=100,queryTokens=[]}={}){return npcCognitionReads.listNpcKnowledge(this.db,guildId,npcKey,{beliefState,limit,queryTokens});}
 
   getNpcKnowledge(guildId,npcKey,knowledgeKey){
     return this.db.prepare("SELECT * FROM npc_knowledge WHERE guild_id=? AND npc_key=? AND knowledge_key=?")

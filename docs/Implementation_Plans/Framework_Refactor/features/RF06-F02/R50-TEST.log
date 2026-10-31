@@ -1,0 +1,47 @@
+✔ memory guild/key/status/retrievable/case and original parsed-row shape retained (288.8118ms)
+✖ memory relevance is ranking not filtering, first20 token cap and original numeric caps retained (554.0478ms)
+✔ knowledge guild/key/belief/relevance/raw secret/null-prototype behavior retained (239.1804ms)
+✔ historical tags JSON/default/null/error and knowledge token input failures preserve original errors/no writes (164.3598ms)
+✔ original option getter order once and token conversion failure precede SQL instrumentation (168.8236ms)
+✔ same caller transaction/knowledge savepoint rollback contains original memory and knowledge writes (162.9457ms)
+✔ same SQL instrumentation reads and reopened saved shapes/schema stable without writes (176.5913ms)
+✔ fixed cognition capability validates complete shape and forwards current receiver/results/errors (0.8627ms)
+✔ missing profile preserves original NotFoundError before any further read or send (0.6509ms)
+✔ original reader order/limits and exact empty-section private output retained (0.3208ms)
+✔ private fields, belief/secret labels and original goal/memory text remain private across ordered chunks (0.3523ms)
+✔ actual SQLite guild-scoped profile lookup and display do not write or disclose another guild (477.699ms)
+✔ read/send errors propagate without retry and root preserves GM/receipt boundary (0.8315ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1860.9884
+
+✖ failing tests:
+
+test at bot\tests\ai-gm-2026-10\rf06-f02-c50.test.mjs:15:1
+✖ memory relevance is ranking not filtering, first20 token cap and original numeric caps retained (554.0478ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'token20'
+  - 'token0'
+          ^
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f02-c50.test.mjs:15:293)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'token20',
+    expected: 'token0',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
