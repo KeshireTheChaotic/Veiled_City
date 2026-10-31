@@ -1,7 +1,8 @@
 /** Restart-safe owner-private Discord roll controls backed by opaque scoped tokens. */
 import { randomUUID } from "node:crypto";
 import {createHash} from 'node:crypto';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder,AttachmentBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from "discord.js";
+import {createAttachment} from './frameworks/discord/public.js';
 import { arbitrateRollOptions, discoverRollOptions } from "./roll-options.js";
 import { contributeRoll } from "./roll-collaboration.js";
 import { formatRollRequest, ownedRollRequest, rollRevision } from "./roll-requests.js";
@@ -58,7 +59,7 @@ function render(db,guild,tokenRow){
     new ButtonBuilder().setCustomId(custom(tokenRow.record_key,'b','details-prev')).setLabel('Earlier details').setStyle(ButtonStyle.Secondary).setDisabled(detailPage===0),
     new ButtonBuilder().setCustomId(custom(tokenRow.record_key,'b','details-next')).setLabel('More details').setStyle(ButtonStyle.Secondary).setDisabled(detailPage+1>=pages.length)));
   return {content:`**Private roll details ${detailPage+1}/${pages.length}; choices ${page+1}/${Math.max(1,Math.ceil(choices.length/20))}**\n${pages[detailPage]}\n\nSelection is a preview. Confirm authorizes the listed costs; Roll now is separate. Complete text is attached.`,
-    components,ephemeral:true,allowedMentions:{parse:[]},files:[new AttachmentBuilder(Buffer.from(lines.join('\n')),{name:'private-roll-options.txt'})]};
+    components,ephemeral:true,allowedMentions:{parse:[]},files:[createAttachment(Buffer.from(lines.join('\n')),{name:'private-roll-options.txt'})]};
 }
 
 export function openRollMenu(db,guild,user,request){
