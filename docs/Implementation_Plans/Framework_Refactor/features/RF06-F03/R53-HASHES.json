@@ -1,0 +1,10 @@
+{
+  "bot/src/publishing.js": "e95765ada62ef464f5394f1009f19e5140a14e4efa17d9d2389f944d5829c5e1",
+  "bot/src/framework-to-framework/discord--publication/public.js": "35359999f096abb3355967400f3d7284857629bd117b7f14d0ae11e48c952fcc",
+  "bot/src/frameworks/publication/public.js": "43481e535ff773fea9079e97847a4818654230d4ce99f18d809def846f39103e",
+  "bot/src/frameworks/publication/contracts/discord-channels.js": "6663e5e6625db7bd5af5fe2b29303f80dcecbf6ce0f013ed7ea69203283a42b8",
+  "bot/src/application/composition/publication-discord.js": "19ccfc7eb11dd5509631c6d180134cd7917de547733ffb9639f637e553fc63eb",
+  "bot/tests/ai-gm-2026-10/rf06-f03-c53.test.mjs": "55dd93209cf6db7e5dc9b7fb954de492b35bfb62c123c49e52af54c620a77bce",
+  "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "5c36292f7db201f93f89e10f1ff0925c75920ce1e92a6a5b455f746916f7c00a",
+  "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "bc813ddbdfbe955066c35241a8140c6447f06e029d9ab87cc7c13e935082db47"
+}

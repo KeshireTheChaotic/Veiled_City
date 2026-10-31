@@ -1,0 +1,5 @@
+# RF06-F03 R53 — Handout attachment construction only
+
+Replace sole root publishing.js AttachmentBuilder construction with the existing Discord createAttachment capability through the existing discord--publication pair. Preserve every constructor argument and all other root statements, including handoutFiles mapping, source revision/recipient/visibility revalidation, status writes, errors and uncertain-delivery handling. Do not migrate handout serialization, lifecycle/outbox/receipt/persistence transactions or retry decisions.
+
+Require exclusive publishing.js/pair source and BRIDGE/TRANSITIONS slots. Retire only obsolete SDK ownership record 2f85e645b920e0c7bfc1ce3724dd5d641fbeabd1b779fe8521149310134ca683 after adoption. Qualified stateless exact constructor identity/buffer/name/order/error coverage and actual handout markdown/JSON/DOCX wrapping; offline only. A separate fixed one-function Publication consumer binds in existing startup composition after the initial direct-pair approach was rejected; initializer return/channel API retained. No new bootstrap or constructor implementation, content policy or send operation.

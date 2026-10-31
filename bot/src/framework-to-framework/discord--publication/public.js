@@ -15,3 +15,8 @@ export function connectPublicationDiscordChannels(){return publicationDiscordCha
 import {splitDiscordText} from '../../frameworks/discord/public.js';
 import {publicationDiscordText} from '../../frameworks/publication/public.js';
 export function connectPublicationDiscordText(){return publicationDiscordText.bind({splitDiscordText});}
+
+/** Stateless original SDK construction; caller retains files, audience and delivery authority. */
+import {createAttachment} from '../../frameworks/discord/public.js';
+import {publicationDiscordAttachments} from '../../frameworks/publication/public.js';
+export function connectPublicationDiscordAttachments(){return publicationDiscordAttachments.bind({createAttachment});}

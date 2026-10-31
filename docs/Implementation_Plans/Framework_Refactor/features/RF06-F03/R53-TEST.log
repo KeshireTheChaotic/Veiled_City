@@ -1,0 +1,13 @@
+✔ pair exposes exact existing Discord constructor capability with original SDK type/buffer/name (0.8654ms)
+✔ actual unchanged handout wrapper preserves file mapping order, buffer identities and defaults (0.1939ms)
+✔ original file getter/serialization errors retain identity and abort before later mapping (0.387ms)
+✔ actual handout formats preserve original filenames/player data and binary DOCX without sends (10.2475ms)
+✔ root removes sole SDK dependency while retaining handout revision and uncertain delivery safeguards (0.1235ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 633.7693

@@ -1,0 +1,12 @@
+{
+  "parent": "95c5c4e4fffd567af6340e8b0e3c616c53be5b7b",
+  "constructor_sites": 1,
+  "all_constructor_argument_asts_equal": true,
+  "all_other_root_statement_asts_equal": true,
+  "handout_delivery_authority_and_recovery_unchanged": true,
+  "existing_discord_capability_identity_reexport": false,
+  "fixed_one_function_consumer_bound_in_existing_initializer": true,
+  "initial_direct_pair_import_rejected_and_removed": true,
+  "final_root_rest_and_constructor_argument_asts_equal": true,
+  "initializer_other_statements_and_return_equal": true
+}

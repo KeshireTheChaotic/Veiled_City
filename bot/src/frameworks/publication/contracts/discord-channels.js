@@ -4,3 +4,6 @@ export const publicationDiscordChannels=createFunctionPort(['textChannel','asser
 
 /** Separate original text-splitting contract; channel consumer API remains unchanged. */
 export const publicationDiscordText=createFunctionPort(['splitDiscordText'],{code:'PUBLICATION_DISCORD_TEXT_COMPOSITION',label:'Publication Discord text'});
+
+/** Original SDK attachment construction only; no content, recipient or delivery policy. */
+export const publicationDiscordAttachments=createFunctionPort(['createAttachment'],{code:'PUBLICATION_DISCORD_ATTACHMENTS_COMPOSITION',label:'Publication Discord attachments'});

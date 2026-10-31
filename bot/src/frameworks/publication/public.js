@@ -87,3 +87,5 @@ export {createJournalPublications} from './journal-delivery.js';
 export {createPlayMessagePublisher} from './play-message-delivery.js';
 
 export {createPrivatePlayerPublisher} from './private-player-delivery.js';
+
+export {publicationDiscordAttachments} from './contracts/discord-channels.js';

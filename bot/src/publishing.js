@@ -6,7 +6,8 @@ import {createReferencePublications} from './frameworks/publication/public.js';
 import {publicationKnowledgeDisclosure} from './frameworks/publication/public.js';
 const {activeEvidence,factVisibleTo}=publicationKnowledgeDisclosure;
 /** Discord publication boundary. Authoritative state is committed before these non-authoritative output operations run. */
-import { AttachmentBuilder } from "discord.js";
+import {publicationDiscordAttachments} from './frameworks/publication/public.js';
+const {createAttachment:createPublicationAttachment}=publicationDiscordAttachments;
 import {publicationOpeningDelivery} from './frameworks/publication/public.js';
 import { handoutFiles, handoutSummary } from "./handout.js";
 import { randomUUID,createHash } from "node:crypto";
@@ -149,7 +150,7 @@ export async function deliverQueuedTurn({db,guild,turnId,forceUncertain=false,be
 
 
 function handoutAttachments(handout,format="markdown"){
-  return handoutFiles(handout,format).map(f=>new AttachmentBuilder(f.buffer,{name:f.name}));
+  return handoutFiles(handout,format).map(f=>createPublicationAttachment(f.buffer,{name:f.name}));
 }
 
 export async function deliverHandout({db,guild,handout,format="markdown"}){

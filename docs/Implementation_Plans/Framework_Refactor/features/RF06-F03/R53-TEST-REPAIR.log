@@ -1,0 +1,18 @@
+✔ separate text port fails uncomposed and binds only original splitter without changing channel contract (5.4776ms)
+✔ original default splitter output retained for scalar, empty, Unicode and mention-bearing publication text (1.631ms)
+✔ original fenced Markdown behavior and explicit nondefault limits are forwarded unchanged (0.5389ms)
+✔ invalid limits retain original RangeError without changing validation policy (0.1636ms)
+✔ fixed constructor consumer fails uncomposed, startup preserves return and rejects replacement (0.8478ms)
+✔ fixed consumer forwards original SDK type/buffer/name without changing caller options (0.5088ms)
+✔ actual unchanged handout wrapper preserves file mapping order, buffer identities and defaults (0.1997ms)
+✔ original file getter/serialization errors retain identity and abort before later mapping (0.2263ms)
+✔ actual handout formats preserve original filenames/player data and binary DOCX without sends (2.0504ms)
+✔ root removes sole SDK dependency while retaining handout revision and uncertain delivery safeguards (0.1158ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1206.3112
