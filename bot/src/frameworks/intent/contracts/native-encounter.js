@@ -18,3 +18,6 @@ export const intentNativeFeatureCatalog=createFunctionPort(['featureDisposition'
 
 /** Native review diagnosis only; no execution or effect authority. */
 export const intentNativeErrata=createFunctionPort(['nativeFeatureReviewContract'],{code:'INTENT_NATIVE_ERRATA_COMPOSITION',label:'Intent Native errata review'});
+
+/** Original Native prepared-position evidence functions; no copied feature identifier or policy. */
+export const intentNativePreparedPositions=createFunctionPort(['professionalEntryFeature','establishPreparedPositions','preparedPositionCandidates','qualifyProfessionalEntry'],{code:'INTENT_NATIVE_PREPARED_POSITION_COMPOSITION',label:'Intent Native prepared positions'});

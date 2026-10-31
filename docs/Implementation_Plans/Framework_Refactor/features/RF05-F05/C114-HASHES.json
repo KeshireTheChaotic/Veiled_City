@@ -1,0 +1,74 @@
+{
+  "base": "4ff074a78ecda294436b726b5ae8add7f8cfce82",
+  "exact_source_substitutions": true,
+  "original_rules_unchanged": true,
+  "deleted_original": "bot/src/native-professional-entry.js",
+  "syntax_pass": 10,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c114.test.mjs",
+      "pass": 1,
+      "fail": 3,
+      "duration_ms": 1065.007,
+      "disposition": "Three fixture setup errors: existing schema requires encounter pc_count >=2; corrected only fixture count1 to2."
+    },
+    {
+      "command": "node --test --test-name-pattern='actual SQLite|caller rollback|absent roll' bot/tests/ai-gm-2026-10/rf05-f05-c114.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 1068.7058,
+      "disposition": "Only failed cases rerun; prior passed identity case retained."
+    }
+  ],
+  "limits": "Actual SQLite and original Native/Session/World methods; seeded encounter/location/input fixture. GM-private position lifecycle, immutable replay/retraction/rollback and absent-use refusal; not Native encounter activation, dice execution, successful one-use receipt or full GM/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-professional-entry.js",
+      "sha256": "0d1a74074ab5222b5faa8395df9a017ab7bb20f022a1ba5cf4afa44b0d92f7c8"
+    },
+    {
+      "path": "bot/src/gm-native-rolls.js",
+      "sha256": "cc57dace9370a0af1a61f1c8de7c2e60676ac5efd480e9e3e8fbe1af8c5243fc"
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "sha256": "8ec9749a77f37a6626d9663987bb00bcb9b3789bfec631b9ad55caa4d9977f63"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "ed2f768b4169d0197f980fbf47e849349d3183b9897d24db7106adf7359cc6d7"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "b2929617add023b4c0a71166e034766b12ac685df9396475e00feb759ce5c4e6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "6ead1417ee03ce6e55ecd32c7f211c8f55e25cd5c1d4da76146cc1eeadd1bf6d"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-encounter.js",
+      "sha256": "f6102be4338b27c2ac16937057dc619233c42a7ed237010900bc429dc6b64dd7"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "f310f8111601989bfd24286c0e4aa0188457a2b5b424b27dac2a10000d1c1c6f"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "ed0514ea1bf0c18c4e7074c865b60fbd2f8a3b8c57a7c8db47e9f1ec44359d38"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "7499e5d490aad1fdd2916d7d0a48a6b57fcff625dd4e942a362b7f6431b71e01"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/professional-entry-rules.js",
+      "sha256": "a08284995b43c432aa49a1d14d19510a98d340843294f7cb7f807f4931ec22ac"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c114.test.mjs",
+      "sha256": "4bb3aabb4b4f271a7a8b748841e583a221b07f306ceddced4f3c1af2640d5b58"
+    }
+  ]
+}

@@ -187,3 +187,5 @@ export {nativeAdversaryFeatureContext,inspectNativeAdversaryFeatureContext,requi
 export {inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,executableNativeFeatures,compileNativeFeatureRuleContexts,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate,nativeFeatureRuleContextsForTemplateHash,compileNativeActors,nativeActorTaxonomy,nativeSignalFeatureTarget} from './native-feature-catalog.js';
 
 export {compileNativeHouseErrata,nativeHouseErratum,nativeFeatureReviewContract} from './native-house-errata.js';
+
+export {PROFESSIONAL_ENTRY,professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';

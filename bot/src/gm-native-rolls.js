@@ -21,7 +21,7 @@ import {commitFeatureChoice,commitFeatureReactionCost} from './native-feature-wi
 import {applyFeatureReactionOutcome,validateFeatureInvitation,featureReactionStakes,cancelFeatureReaction} from './native-feature-effects.js';
 import {commitNativeNpcAlliance} from './native-encounter-relations.js';
 import {prepareGroupFeature,inspectGroupFeature,groupReactionState,groupReactionDetails,groupReactionOptions} from './native-group-features.js';
-import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';
+import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './frameworks/daggerheart/public.js';
 
 import {createGmExecutionRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

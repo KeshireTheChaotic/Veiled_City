@@ -20,7 +20,7 @@ import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
 import {nativeIncomingConditions,validateIncomingConditions,incomingConditionOdds,nativeAttackExpiryRevision} from './native-group-features.js';
 import {settlePreRollFearForIncoming} from './pre-roll-fear.js';
-import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './native-professional-entry.js';
+import {PROFESSIONAL_ENTRY,professionalEntryRollState,commitProfessionalEntryUse,inspectProfessionalEntryUse} from './frameworks/daggerheart/public.js';
 
 import {createIncomingAttackRules} from './frameworks/daggerheart/public.js';
 let nativeIncoming;

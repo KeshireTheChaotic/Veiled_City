@@ -784,6 +784,13 @@
         "consumer": "intentNativeErrata in original unified service composition",
         "composition": "connectIntentNativeErrata at existing environment bootstrap; source rules/JSON/Signal and review authority unchanged",
         "qualification_evidence": "features/RF05-F05/C112-HASHES.json"
+      },
+      "native_prepared_positions": {
+        "feature": "RF05-F05 C114",
+        "source": "Original Native prepared-position methods and trivial getter returning original PROFESSIONAL_ENTRY constant",
+        "consumer": "intentNativePreparedPositions in original board/unified composition",
+        "composition": "connectIntentNativePreparedPositions at existing environment bootstrap; original lazy Native factory/rules remain sole authority",
+        "qualification_evidence": "features/RF05-F05/C114-HASHES.json"
       }
     },
     {

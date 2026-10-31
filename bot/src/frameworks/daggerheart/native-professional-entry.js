@@ -1,10 +1,11 @@
 /** Source provider for native prepared-position evidence and encounter use. */
-import {nativeScenes} from './frameworks/daggerheart/public.js';
+import {nativeScenes} from './contracts/scenes.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}
-import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
+import {nativeWorldEvents} from './contracts/world-events.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {createProfessionalEntryRules} from './frameworks/daggerheart/public.js';
-export {PROFESSIONAL_ENTRY} from './frameworks/daggerheart/professional-entry-rules.js';
+import {createProfessionalEntryRules} from './professional-entry-rules.js';
+import {PROFESSIONAL_ENTRY} from './professional-entry-rules.js';
+export {PROFESSIONAL_ENTRY};
 let nativeRules;
 function rules(){return nativeRules??=createProfessionalEntryRules({capabilities:{currentScene:(...args)=>currentScene(...args),scenePresence:(...args)=>scenePresence(...args),indexWorldEvent:(...args)=>indexWorldEvent(...args)}});}
 export function establishPreparedPositions(...args){return rules().establishPreparedPositions(...args);}
@@ -13,3 +14,6 @@ export function qualifyProfessionalEntry(...args){return rules().qualifyProfessi
 export function professionalEntryRollState(...args){return rules().professionalEntryRollState(...args);}
 export function commitProfessionalEntryUse(...args){return rules().commitProfessionalEntryUse(...args);}
 export function inspectProfessionalEntryUse(...args){return rules().inspectProfessionalEntryUse(...args);}
+
+/** Original Native feature identifier for fixed Intent composition. */
+export const professionalEntryFeature=()=>PROFESSIONAL_ENTRY;

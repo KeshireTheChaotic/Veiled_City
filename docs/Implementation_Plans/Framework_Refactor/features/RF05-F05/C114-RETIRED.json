@@ -1,0 +1,44 @@
+{
+  "reason": "Original Native prepared-position composition physically owned; two Native public readers and two Intent readers through fixed existing pair; root retired.",
+  "entries": [
+    {
+      "id": "4ac7e82feb93ec134d7073c5bbcfdda9f208b40daaaf5e93d801915aae930ecc",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-professional-entry.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "c4a9c31304baede72ff0000c0c23495d13000f8aa67a96bc406419d327400599",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/gm-unified-arbitration.js",
+      "to": "bot/src/native-professional-entry.js",
+      "kind": "static",
+      "specifier": "./native-professional-entry.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "66dedf48ca43902621daad0759732ffe779c156f680ad5183ed3e01540f28f35",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/scene-intent-board.js",
+      "to": "bot/src/native-professional-entry.js",
+      "kind": "static",
+      "specifier": "./native-professional-entry.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

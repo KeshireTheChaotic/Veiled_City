@@ -27,7 +27,8 @@ import {intentNativeEnvironment} from './frameworks/intent/public.js';
 function nativeEnvironmentInstanceForScope(...args){return intentNativeEnvironment.nativeEnvironmentInstanceForScope(...args);}
 import {intentNativeAdversaryContext} from './frameworks/intent/public.js';
 const {nativeAdversaryFeatureContext}=intentNativeAdversaryContext;
-import {preparedPositionCandidates} from './native-professional-entry.js';
+import {intentNativePreparedPositions} from './frameworks/intent/public.js';
+const {preparedPositionCandidates}=intentNativePreparedPositions;
 import {intentArbitrationOrigin} from './frameworks/intent/public.js';
 import {createArbitrationOrigins} from './frameworks/intent/public.js';
 export const {createArbitrationOrigin,inspectArbitrationOrigin}=createArbitrationOrigins({nativeActorControl});

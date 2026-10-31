@@ -41,3 +41,7 @@ export function connectIntentNativeFeatureCatalog(){return intentNativeFeatureCa
 import {intentNativeErrata} from '../../frameworks/intent/public.js';
 import {nativeFeatureReviewContract} from '../../frameworks/daggerheart/public.js';
 export function connectIntentNativeErrata(){return intentNativeErrata.bind({nativeFeatureReviewContract});}
+
+import {intentNativePreparedPositions} from '../../frameworks/intent/public.js';
+import {professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativePreparedPositions(){return intentNativePreparedPositions.bind({professionalEntryFeature,establishPreparedPositions,preparedPositionCandidates,qualifyProfessionalEntry});}
