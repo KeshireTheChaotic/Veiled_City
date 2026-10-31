@@ -23,7 +23,7 @@ import {authorPvpNarrative,draftPvpNarrative,reviewPvpNarrative,sharePvpNarrativ
 import {discordNativeFear} from './frameworks/discord/public.js';
 const {resumeAutonomousPvpFear}=discordNativeFear;
 import {KeyedSerialQueue} from "./kernel/serial-queue.js";
-import {splitDiscordText} from './discord/chunking.js';
+import {splitDiscordText} from './frameworks/discord/public.js';
 import {reservePvpNotices} from './native-publications.js';
 import {PermissionError,StateConflictError,UserInputError} from "./kernel/errors.js";
 import {setPvpSafetyStop} from './pvp-campaign-policy.js';
