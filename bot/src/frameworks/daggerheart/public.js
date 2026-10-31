@@ -192,3 +192,7 @@ export {PROFESSIONAL_ENTRY,professionalEntryFeature,establishPreparedPositions,p
 
 export {applyEnvironmentArrival,inspectEnvironmentArrival} from './native-environment-arrivals.js';
 export {applyEnvironmentWitnessAccounts,inspectEnvironmentWitnessAccounts,environmentWitnessAccountsProjection} from './native-environment-witnesses.js';
+
+export {environmentProposalContract} from './native-environment-capabilities.js';
+export {validateImagingRecordProposal,applyEnvironmentImagingRecord,inspectEnvironmentImagingRecord,environmentImagingProjection,nativeEnvironmentImagingSituation} from './native-environment-imaging.js';
+export {validateDoorChainProposal,applyEnvironmentDoorChain,inspectEnvironmentDoorChain,environmentDoorChainProjection,nativeEnvironmentDoorChainSituation} from './native-environment-door-chain.js';

@@ -2,8 +2,8 @@
 import {applyEnvironmentArrival} from './frameworks/daggerheart/public.js';
 import {applyEnvironmentSceneAction} from './frameworks/daggerheart/public.js';
 import {applyEnvironmentWitnessAccounts} from './frameworks/daggerheart/public.js';
-import {applyEnvironmentDoorChain} from './native-environment-door-chain.js';
-import {applyEnvironmentImagingRecord} from './native-environment-imaging.js';
+import {applyEnvironmentDoorChain} from './frameworks/daggerheart/public.js';
+import {applyEnvironmentImagingRecord} from './frameworks/daggerheart/public.js';
 import {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,advanceEnvironmentUploadCountdown,
   adjustEnvironmentUploadCountdown} from './native-environment-countdown.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';

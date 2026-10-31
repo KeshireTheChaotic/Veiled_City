@@ -8,7 +8,7 @@ function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...ar
 import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
 const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
-import {environmentProposalContract} from './native-environment-capabilities.js';
+import {environmentProposalContract} from './frameworks/daggerheart/public.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './native-environment-countdown.js';
 
 import {createEnvironmentAcousticRules} from './frameworks/daggerheart/public.js';

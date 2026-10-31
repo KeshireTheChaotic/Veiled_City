@@ -1,0 +1,65 @@
+{
+  "base": "3c7ffbb8df04e7abb1071b54736d15d7c9ba9797",
+  "exact_source_substitutions": true,
+  "original_rule_engines_capability_source_and_fixed_interfaces_unchanged": true,
+  "deleted_originals": [
+    "bot/src/native-environment-imaging.js",
+    "bot/src/native-environment-door-chain.js",
+    "bot/src/native-environment-capabilities.js"
+  ],
+  "syntax_pass": 5,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c117.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+    "pass": 4,
+    "fail": 0,
+    "duration_ms": 1737.5591,
+    "reason_for_affected_rerun": "Production import and peer registration graph changed."
+  },
+  "limits": "Original identities/source registrations; actual SQLite empty/missing/self-asserted situation suppression, no write/no PC/fact effects; offline bootstrap. Does not qualify successful Native record/arrival, audience delivery/receipt or full GM/live.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-imaging.js",
+      "sha256": "d5001b638f084f8defac850135eda9204aa22e8b03de7a88f13e7d00bdd6f0d1"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-door-chain.js",
+      "sha256": "32b8666091e85d8236010dea6a232f5f1062b118e4e2cb55702754fd88b0b0f6"
+    },
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "sha256": "7fda56c4633a27012430856143ef008f48d1f0c5808cb68ac5fca8cc70963aa4"
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "sha256": "f72842000db753bf762a21667cde280ef08a2065f9683ce4b71c9a95cc4557bb"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "c039cb88874683b9f3e40bae1191321ada3e7b7526bc1ed67d33bc1d613cc1f2"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-imaging-rules.js",
+      "sha256": "43473da5146e456e4e77b7af3a18c044740eed2399fcda14cbe323569f91eb71"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-door-chain-rules.js",
+      "sha256": "38fe70a0411e3137305ac827dd4a78284f5c9ce5de1214fccb4fd93f9e2ef006"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-capabilities.js",
+      "sha256": "bb074c8e0aa5f8a304dade936531de00921fe7c3c443e68e5770407f54fd9b70"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-sources.js",
+      "sha256": "fdf6222d74fbc56995e78e49a90f9df88e17365ebc8168ad1dda2371e626b69d"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c117.test.mjs",
+      "sha256": "da11f73907dc8e813e78cafdd421625da1b067c1014c06a100084f7d3c37aa71"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}
