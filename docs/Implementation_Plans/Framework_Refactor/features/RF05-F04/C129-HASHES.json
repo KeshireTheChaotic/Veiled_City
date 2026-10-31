@@ -1,0 +1,39 @@
+{
+  "base": "a95642bdd3a7e1f06fe77d934c11f3f7e8acc08d",
+  "sourceBodyPreserved": "original normalized source with only the two recorded import substitutions",
+  "productionReaders": 0,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f04-c129.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "duration_ms": 859.0757
+  },
+  "bootstrap": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+    "pass": 1,
+    "fail": 0,
+    "duration_ms": 2439.4415
+  },
+  "architecture": {
+    "sourceModules": 1069,
+    "unowned": 0,
+    "importOccurrences": 4333,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "acceptedLegacyOccurrences": 600,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true,
+    "transitionsSha256": "C5D176A3D269C58C202CF1E1C7C07AB6A28A631DBD1564B34B33A547597E0326"
+  },
+  "retiredTransitionId": "776dd180485471324d144fc0572b8aa54db765b4fca4da923331686e81bbce76",
+  "retiredRecordSha256": "4f13be5224af6a2ae5e828a8e909228779be1fc51e1297d2bab1e32403e4d587",
+  "crosswalkSha256": "95d609fbfcac0f8b3e05272a1f66a50e4de7a67ca8ece834dcd72955255ae35b",
+  "syntaxFiles": 9,
+  "files": {
+    "bot/src/frameworks/intent/movement-language.js": "f7b33c70d99d7bdc74b60884a553f63e1e4c8fb227c63ed4d087af99e8e63f03",
+    "bot/src/frameworks/intent/public.js": "4330ba56354c825db3e2b616b44e75cc35dbf200e335e91303e2d5e81ce219ff",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c129.test.mjs": "a5eec9a457d9d7be33e2af05e8ba6dcfb6cf24daed221384f400d81afe64e0d9",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C129-SCOPE.md": "a5be8ba68cc6f43fae21ff0ba5411f3ba09a4e9a748f4e5b6469b51469d5dc2e"
+  }
+}

@@ -82,3 +82,5 @@ export {intentNativeEnvironmentActions} from './contracts/native-environment-act
 export {shadowEngagement} from './engagement-shadow.js';
 
 export {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
+
+export {persistMovementCandidates,currentMovementCandidate} from './movement-language.js';

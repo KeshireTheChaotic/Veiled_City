@@ -1,7 +1,7 @@
 /** Semantic movement candidates preserve authored meaning while native validators retain all travel authority. */
-import {intentSessionScene} from './frameworks/intent/public.js';
+import {intentSessionScene} from './contracts/session-scene.js';
 const {currentScene}=intentSessionScene;
-import {stateRevision} from './kernel/state-revision.js';
+import {stateRevision} from '../../kernel/state-revision.js';
 
 const movement=/\b(?:duck|slip|head|cut|go|walk|step|move|return|enter|leave|take)\b/i;
 const conditional=/\b(?:if|might|would|could|hypothetically|suppose|imagine|planning)\b/i;
