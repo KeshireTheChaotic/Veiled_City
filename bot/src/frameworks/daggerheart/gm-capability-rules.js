@@ -1,7 +1,7 @@
 /** Native authority and execution policy; injected source/other-native capabilities confer no model authority. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
-import {featureCostPlan} from './feature-costs.js';
+import {featureCostPlan,commitFeatureResources} from './feature-costs.js';
 export function createGmCapabilityRules({capabilities}){
 const {buildNarrativeContext,activeCityProxy,consentAction,historicalActionSource,scenePresence,sceneAccess,conversationPrincipal,actorReferenceVisible,typedRollProof,isPvpIntent,narrativeSourceVisible,compileNativeFeatures,inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight,nativeActorControl,preRollFearOpportunity,commitPreRollFearCost,RANGE_BANDS}=capabilities||{};
 if([buildNarrativeContext,activeCityProxy,consentAction,historicalActionSource,scenePresence,sceneAccess,conversationPrincipal,actorReferenceVisible,typedRollProof,isPvpIntent,narrativeSourceVisible,compileNativeFeatures,inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight,nativeActorControl,preRollFearOpportunity,commitPreRollFearCost].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native GM capabilities required.');
@@ -93,6 +93,7 @@ function nativeGmOpportunity(db,guild,board){
 }
 /** Called inside the attack's native transaction, after defense checks, before RNG. */
 function commitGmActionCost(db,guild,decisionKey){
+  return db.transaction(()=>{
   const {row,entry,board}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native,opportunity=nativeGmOpportunity(db,guild,board);
   if(!['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
   const selected=new Set(db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200})
@@ -113,14 +114,14 @@ function commitGmActionCost(db,guild,decisionKey){
   const plan=featureCostPlan(descriptor||{costs:feature?[{resource:'fear',amount:feature}]:[]},{timing:'spotlight_action',additionalSpotlight:!!spotlight,experience:!!experience,
     fear:before,stress:combatant?.stress_current||0,stressMax:combatant?.stress_max||0});
   if(!Number.isSafeInteger(before)||before<amount||before>12)throw fail('insufficient_gm_fear');
-  const after=opportunity.pre_roll_fear?commitPreRollFearCost(db,guild,opportunity.pre_roll_fear,decisionKey).after
-    :amount?db.changeFear(guild,-amount):before;
-  const stressed=combatant&&db.updateCombatant(combatant.id,{stress_current:combatant.stress_current+plan.npc_stress}),
+  const payment=opportunity.pre_roll_fear?{fear:{after:commitPreRollFearCost(db,guild,opportunity.pre_roll_fear,decisionKey).after},combatant:null}
+    :commitFeatureResources(db,guild,combatant,plan),after=payment.fear.after,stressed=payment.combatant,
     nativeSpotlight=planNativeSpotlight(db,guild,entry.actor.key,row.data.origin.scene,key),
     receipt=db.saveCityRecord(guild,{kind:'gm_action_cost_receipt',key,status:'committed',source_event:row.source_event,visibility:'gm',
       data:{decision:decisionKey,opportunity:opportunity.key,ordinal,amount,before,after,expenses:plan.expenses,spotlight:nativeSpotlight,
         ...(combatant?{npc_stress:{combatant:combatant.id,before:combatant.stress_current,after:stressed.stress_current}}:{})}});
   recordNativeSpotlight(db,guild,receipt);return receipt;
+  });
 }
 
 return Object.freeze({nativeReactionTarget,inspectNativeGmDecision,inspectCommittedGmDecision,nativeGmOpportunity,commitGmActionCost});

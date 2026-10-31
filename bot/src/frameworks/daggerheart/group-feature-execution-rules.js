@@ -5,6 +5,7 @@ import {featureCostPlan} from './feature-costs.js';
 import {incomingConditionOdds,movementConditionIssue} from './native-condition-rules.js';
 import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal} from './group-feature-rules.js';
 import {groupFeatureOutcome} from './group-feature-outcomes.js';
+import {assertExactGroupCohort} from './group-target-rules.js';
 export function createGroupFeatureExecutionRules({capabilities}){
 const {narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry,RANGE_BANDS}=capabilities||{};
 if([narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry].some(fn=>typeof fn!=="function")||!Array.isArray(RANGE_BANDS))throw new TypeError("Complete native group-feature capabilities required.");
@@ -24,9 +25,7 @@ function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
       &&RANGE_BANDS.indexOf(range)<=RANGE_BANDS.indexOf(policy.range)
       &&sceneAccess(db,guild,{observer_type:'npc',observer_key:entry.actor.key,target_type:'character',target_key:pc.id,sense:'sight'});
   });
-  if(!entry.target_refs.length||!policy.all&&entry.target_refs.length!==1||new Set(entry.target_refs).size!==entry.target_refs.length
-    ||entry.target_refs.some(id=>!eligible.some(pc=>pc.id===id))
-    ||policy.all&&hash([...entry.target_refs].sort())!==hash(eligible.map(pc=>pc.id).sort()))throw fail('group_feature_exact_target_cohort');
+  assertExactGroupCohort(entry.target_refs,eligible.map(pc=>pc.id),{all:policy.all});
   const targets=entry.target_refs.map(id=>{
     const pc=eligible.find(pc=>pc.id===id),snapshot=nativeReactionTarget(db,guild,o,pc,entry.actor.key,{maxRange:policy.range});
     return {character:id,owner:pc.owner_user_id,principal:snapshot.principal,target_snapshot:snapshot,resources_hash:hash(pc.data.resources)};

@@ -1,0 +1,46 @@
+{
+  "phase": "AF02",
+  "status": "bounded_cost_and_area_foundation_verified",
+  "runs": [
+    {
+      "command": "node --test tests/ai-gm-2026-10/af02-gm-cost-transaction.test.mjs",
+      "passed": 2,
+      "failed": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af02-area-cohorts.test.mjs",
+      "passed": 4,
+      "failed": 0,
+      "exit_code": 0
+    }
+  ],
+  "syntax_checks": 3,
+  "syntax_exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-capability-rules.js",
+      "sha256": "2dffe21eca592f020bbba51953227c30ba11bbae263456d3ebe5d78f0dcb2bd0"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-target-rules.js",
+      "sha256": "895d92fa02993758dbe281c1f230e8b0db6785fee5ed5838eb9fc69d20a60b69"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "8bd161353e5e8ad577347e6dee3d64c1d00ba7a704277f66eb8be0ba9a23f267"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-gm-cost-transaction.test.mjs",
+      "sha256": "230ba40a0bee6654541938d718d36fa35275e1dae3fe6fccd8eac0029456f4be"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af02-area-cohorts.test.mjs",
+      "sha256": "748f698c63494d27d18f778655d51b5b62205e5320eb5d37fcaf39839bd0a6c8"
+    }
+  ],
+  "limitations": [
+    "Read-only area plans do not activate Null Foam",
+    "Injected source capabilities and disposable SQLite; no live scene or delivery proof"
+  ]
+}
