@@ -85,3 +85,4 @@ export {handleCanonStatusCommand,handleCanonConflictsCommand,assertCanonReadStor
 export {createLevelupDraftFormatter} from './levelup-draft-text.js';
 
 export {createDiscordClient} from './client-factory.js';
+export {seedCommandReply} from './seed-command-output.js';

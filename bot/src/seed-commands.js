@@ -1,8 +1,8 @@
 /** Private seed draft management; callers must enforce GM authorization before invoking this handler. */
-import { AttachmentBuilder } from "discord.js";
 import { cityObject } from './frameworks/world/public.js';
 import { addSeedDraft, editSeedDraft, reviewSeedDraft } from "./frameworks/world/public.js";
 import { previewContentPackage, importContentPackage, reviewContentPackage, exportContentPackage } from "./content-packages.js";
+import {seedCommandReply} from './frameworks/discord/public.js';
 
 export async function handleSeedCommand(interaction,{db}){
   const sub=interaction.options.getSubcommand(),guildId=interaction.guildId,actorId=interaction.user.id;
@@ -30,9 +30,6 @@ export async function handleSeedCommand(interaction,{db}){
   else if(["seed-approve","seed-reject","seed-remove"].includes(sub)) result=reviewSeedDraft(db,guildId,id,sub.slice(5),actorId,{
     reason:interaction.options.getString("reason")||"",publicVoice:interaction.options.getBoolean("public_voice")===true});
   else throw new Error("Unknown seed draft command.");
-  const summary=result.drafts?result.drafts.map(row=>`${row.record_key} | ${row.data.proposal.kind} | ${row.data.proposal.key}`).join("\n")
-    :`${result.record_key||result.name||"Validated package"} | ${result.status||"read-only definitions"}`;
-  await interaction.reply({content:`${sub} complete (GM-only).\n${summary||"No matching drafts."}`.slice(0,1950),ephemeral:true,
-    allowedMentions:{parse:[]},files:[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"seed-drafts.json"})]});
+  await interaction.reply(seedCommandReply(sub,result));
   return true;
 }
