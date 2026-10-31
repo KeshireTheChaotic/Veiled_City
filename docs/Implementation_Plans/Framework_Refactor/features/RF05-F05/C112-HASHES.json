@@ -1,0 +1,85 @@
+{
+  "base": "2b6c4e1eb6825ce0cb699ccb82ed6cb31357e0cc",
+  "exact_source_substitutions": true,
+  "source_urls_resolve_to_original_files": true,
+  "rules_and_data_unchanged": true,
+  "deleted_original": "bot/src/native-house-errata.js",
+  "syntax_pass": 13,
+  "test": {
+    "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c112.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "duration_ms": 516.9011
+  },
+  "limits": "Original source validation, immutable source loading and review forwarding; no successful Native execution, full GM or live qualification.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.js",
+      "sha256": "56eab282d69a28605daa579102aa655b57d54aa2035c7d38faa1898ea696a6e0"
+    },
+    {
+      "path": "bot/src/native-defense-aura.js",
+      "sha256": "9f68e405c6b7ca26ac7bfe46734247d9ad8a082f7366cdd162e7cc0e6b5fb149"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "08ff8b02689b7d17f2c499f5d0b660e8714369c7e7fac1baae54fc78f564d905"
+    },
+    {
+      "path": "bot/src/native-feature-hit.js",
+      "sha256": "51ec9b5f4ccc7a3860680220f78edf00e49f7b93b73bfaeeaa6957b7346187c0"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "sha256": "4f9a0f4db251aaabf38924097b2fb0ff4a55cbe1482a1a3fe496f76f5bbd80a9"
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "sha256": "9686a42b9aa83ea882a2230ed999b00f2451b50431d0466f884dbd229180066c"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "52933ecee890395300badd929e84beece59495e536a1a494a774107f7e523dd8"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "51ff59cfe86aabd8db6db3082400ac32902345663551d105af5e84f1d6839af9"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "fde45cb40e8803fd6249f2bd446470f0e9d349ad7a2990ace5a8780d9bb31811"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-encounter.js",
+      "sha256": "5940bec11620f2b713e8fa3a4baa75bfc32f68b163ef80ed94702691e3cd5784"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "fc0b6fdba32451ed72a7fe23254903b63214d934eff40570cba488c89d51bc71"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "3f482efe096229e84a68860d9ff25f5d6a4224c3496ff5b673eb26b60fababc7"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "a5a6678865cd870fc9b486a6c501bf8c49fc051a8a3499c207a8cf7216e7aba5"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/house-errata.js",
+      "sha256": "4a7dac6e5c8850fdb154ded4bcb3fd9d00cce14e3a6f3bd2d1b0f32d470ee2c6"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-house-errata.json",
+      "sha256": "10e7ce9298b9ba1e70e815e42da7cb3a35ae106b77401dcf17514de3550640d1"
+    },
+    {
+      "path": "content/CARDS/DOMAINS/SIGNAL.md",
+      "sha256": "dc2d0192c22d20471d6a0b52e4f537411b9ce825b80658584fa575bb0cf7b64e"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c112.test.mjs",
+      "sha256": "7d175f4414ec1e1582509eeb9abc623b3c229a5f415d97fb1eb24118df103fc9"
+    }
+  ]
+}

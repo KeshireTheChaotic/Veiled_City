@@ -18,7 +18,8 @@ import {applyNativeEnvironmentProfileProposals} from './native-environment-propo
 import {executeEnvironmentProposal} from './native-environment-dispatch.js';
 import {authorizeFeatureChoice,reserveFeatureWindow,pendingFeatureWindows} from './native-feature-windows.js';
 import {nativeAlliancePlan} from './native-encounter-relations.js';
-import {nativeFeatureReviewContract} from './native-house-errata.js';
+import {intentNativeErrata} from './frameworks/intent/public.js';
+const {nativeFeatureReviewContract}=intentNativeErrata;
 import {isGroupFeature,planGroupFeature} from './native-group-features.js';
 import {prepareNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {reservePreRollFear,bindPreRollFearBoard,cancelPreRollFear} from './pre-roll-fear.js';

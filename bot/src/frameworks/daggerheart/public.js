@@ -185,3 +185,5 @@ export {nativeEncounterActorSource} from './contracts/encounter-actor-source.js'
 export {nativeAdversaryFeatureContext,inspectNativeAdversaryFeatureContext,requireNativeAdversaryFeature} from './native-adversary-context.js';
 
 export {inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,executableNativeFeatures,compileNativeFeatureRuleContexts,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate,nativeFeatureRuleContextsForTemplateHash,compileNativeActors,nativeActorTaxonomy,nativeSignalFeatureTarget} from './native-feature-catalog.js';
+
+export {compileNativeHouseErrata,nativeHouseErratum,nativeFeatureReviewContract} from './native-house-errata.js';

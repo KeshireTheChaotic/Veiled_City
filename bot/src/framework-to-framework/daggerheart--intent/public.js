@@ -37,3 +37,7 @@ export function connectIntentNativeActorControl(){return intentNativeActorContro
 import {intentNativeFeatureCatalog} from '../../frameworks/intent/public.js';
 import {featureDisposition,executableNativeFeatures,compileNativeActors} from '../../frameworks/daggerheart/public.js';
 export function connectIntentNativeFeatureCatalog(){return intentNativeFeatureCatalog.bind({featureDisposition,executableNativeFeatures,compileNativeActors});}
+
+import {intentNativeErrata} from '../../frameworks/intent/public.js';
+import {nativeFeatureReviewContract} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativeErrata(){return intentNativeErrata.bind({nativeFeatureReviewContract});}

@@ -15,3 +15,6 @@ export const intentNativeActorControl=createFunctionPort(['nativeActorControl'],
 
 /** Native catalog reads; classification and source rules remain in Native. */
 export const intentNativeFeatureCatalog=createFunctionPort(['featureDisposition','executableNativeFeatures','compileNativeActors'],{code:'INTENT_NATIVE_CATALOG_COMPOSITION',label:'Intent Native catalog'});
+
+/** Native review diagnosis only; no execution or effect authority. */
+export const intentNativeErrata=createFunctionPort(['nativeFeatureReviewContract'],{code:'INTENT_NATIVE_ERRATA_COMPOSITION',label:'Intent Native errata review'});

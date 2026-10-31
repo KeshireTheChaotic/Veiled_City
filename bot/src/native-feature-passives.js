@@ -2,7 +2,7 @@
 import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
-import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';
 function activeCityProxy(...args){return nativeWorldProxy.activeCityProxy(...args);}
 import {createAdversaryAttackPassiveRules} from './frameworks/daggerheart/public.js';

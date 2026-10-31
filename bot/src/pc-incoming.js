@@ -16,7 +16,7 @@ import {inspectNativeGmDecision,inspectCommittedGmDecision,commitGmActionCost} f
 import {captureIncomingFeatureWindows} from './native-feature-windows.js';
 import {nativeAttackPassives,nativeStandardDamage,nativeDamageBonusExpression} from './native-feature-passives.js';
 import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
-import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {nativeHitFeatureCandidates,applyManyDeathsAfterIncoming} from './native-feature-hit.js';
 import {nativeIncomingConditions,validateIncomingConditions,incomingConditionOdds,nativeAttackExpiryRevision} from './native-group-features.js';
 import {settlePreRollFearForIncoming} from './pre-roll-fear.js';

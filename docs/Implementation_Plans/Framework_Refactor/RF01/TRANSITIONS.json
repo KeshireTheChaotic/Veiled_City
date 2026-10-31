@@ -832,17 +832,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "e68a180ef79d359d10e108db1005ce73300ba8ad222e3bfde7679219cb1db3a4",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-house-errata.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F07",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "54c56c0b7f368db7e678e9490e93b7966fd72c3a2502bcef53e7fa0049f5f39a",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-notice.js",
@@ -2599,20 +2588,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "8c08a0dab40666339a36f1efbe53bce46e1a740faea29121b4d16aa331f60033",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/gm-unified-arbitration.js",
-      "to": "bot/src/native-house-errata.js",
-      "kind": "static",
-      "specifier": "./native-house-errata.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "725d5bd6b88013e4ceb5eae493514dc3e4a4ab85e7d90dcfb5147729d0ac0fb4",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/gm-unified-arbitration.js",
@@ -3546,20 +3521,6 @@
       "max_occurrences": 1,
       "remove_in_feature": "RF06-F03",
       "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "04bbe895bb337940da8d7b06a0aced5d9d3aadc6f80a1533b0430b7b8fbea084",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-house-errata.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },

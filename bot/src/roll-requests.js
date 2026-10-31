@@ -14,7 +14,7 @@ import {createRollRequestRules} from "./frameworks/daggerheart/public.js";
 import {createAdvantageOpportunitySource} from './frameworks/daggerheart/advantage-opportunity-source.js';
 import {createFeatureOpportunityRules} from './frameworks/daggerheart/feature-opportunity-rules.js';
 import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
-import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {nativeEncounterActorSource} from './frameworks/daggerheart/public.js';
 const {nativeEncounterActor}=nativeEncounterActorSource;
 import {nativeActorControl} from './frameworks/daggerheart/public.js';

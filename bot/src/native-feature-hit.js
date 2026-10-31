@@ -1,6 +1,6 @@
 /** Source-pinned on-hit errata. Native hit/Fear ancestry, not a GM d20 face or model claim, authorizes the effect. */
 import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
-import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {inspectNativeGmDecision} from './gm-action-capability.js';
 import {typedRollProof} from './typed-roll-proof.js';
 import {validateIncomingDamageApplication,incomingAttackEvidence} from './pc-incoming.js';

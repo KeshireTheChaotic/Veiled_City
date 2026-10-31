@@ -5,7 +5,7 @@ import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
 const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance,nativeEnvironmentInstanceForScope} from './frameworks/daggerheart/public.js';
 import {featureDisposition} from './frameworks/daggerheart/public.js';
-import {nativeHouseErratum} from './native-house-errata.js';
+import {nativeHouseErratum} from './frameworks/daggerheart/public.js';
 import {historicalActionSource,consentAction} from './action-consent.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {typedRollProof} from './typed-roll-proof.js';
