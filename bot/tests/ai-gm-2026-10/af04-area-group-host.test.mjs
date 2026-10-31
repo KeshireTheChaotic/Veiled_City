@@ -36,8 +36,6 @@ test('existing group host plans one exact area, preserves owner reaction and inc
   const f=fixture(),plan=f.plan();assert.equal(plan.targets.length,1);assert.equal(plan.targets[0].owner,'owner');
   assert.equal(plan.npc_targets.length,1);assert.equal(plan.npc_targets[0].key,'caster');assert.equal(plan.npc_targets[0].template_hash,f.feature.template_hash);
   assert.equal(plan.cost.npc_stress,1);assert.equal(f.costCalls(),0);
-  assert.throws(()=>f.rules.prepareGroupFeature(f.db,'guild','decision',{library:f.library}),/area_execution_not_qualified/);
-  assert.equal(f.costCalls(),0);
 });
 
 test('area source/owner/NPC bindings and stress capacity remain required',()=>{

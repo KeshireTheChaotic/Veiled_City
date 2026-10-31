@@ -39,7 +39,7 @@ function executeUnifiedGmActions(db,guild,decisions,{library=new EncounterLibrar
     if(n.operation==='request_feature_reaction_roll')return commitFeatureReactionCost(db,guild,row.record_key);
     if(n.operation==='commit_adversary_attack')return prepareArbitratedIncomingAttack(db,guild,row.record_key,{library});
     if(n.operation==='commit_adversary_volley')return prepareArbitratedVolley(db,guild,row.record_key,{library});
-    if(n.operation==='commit_group_feature')return prepareGroupFeature(db,guild,row.record_key,{library});
+    if(n.operation==='commit_group_feature')return prepareGroupFeature(db,guild,row.record_key,{library,rng});
     if(n.operation==='commit_adversary_feature')return commitFeatureChoice(db,guild,row.record_key,{library});
     if(n.operation==='commit_npc_alliance')return commitNativeNpcAlliance(db,guild,row.record_key,{library});
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);

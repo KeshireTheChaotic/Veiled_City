@@ -1,0 +1,57 @@
+{
+  "phase": "AF04",
+  "status": "atomic_group_mixed_preparation_complete_effects_held",
+  "base_sha": "8762bfd7e3dcc5e11f519dee276db1673497c7cf",
+  "commands": [
+    "node --check src/frameworks/daggerheart/group-feature-execution-rules.js",
+    "node --check src/frameworks/daggerheart/gm-execution-rules.js",
+    "node --check tests/ai-gm-2026-10/af04-area-group-host.test.mjs",
+    "node --check tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-area-group-host.test.mjs tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs"
+  ],
+  "syntax_checks_passed": 4,
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "runs": [
+    {
+      "passed": 6,
+      "failed": 0,
+      "reason": "Initial mixed preparation coverage."
+    },
+    {
+      "passed": 6,
+      "failed": 1,
+      "reason": "After native array guard added; new legacy fixture omitted PC location."
+    },
+    {
+      "passed": 7,
+      "failed": 0,
+      "exit_code": 0,
+      "reason": "Fixture corrected; tested production unchanged."
+    }
+  ],
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "cd713d354b2518654edb4da410c53621e1e5b508bf8f7ee3b7a0200bec9d6df7"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "sha256": "387a2bbce3c898c86078639eebc5df5ac66b6b877aa53b9e810f4fcaafe13f44"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-area-group-host.test.mjs",
+      "sha256": "5c759d32adb25ed6906b67f31bb16e90269c562584253aadf5be9fa39344b01c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+      "sha256": "44e303f3e9a46f86321afa235e06f8863bb92aa1fb000d53aaaf4ef52f4dfbd6"
+    }
+  ],
+  "limits": [
+    "SQLite actual group preparation, injected source/cost services; no live unified turn.",
+    "Feature catalog remains held; condition settlement, Spellcast, ordinary NPC profiles and NPC release remain incomplete."
+  ]
+}
