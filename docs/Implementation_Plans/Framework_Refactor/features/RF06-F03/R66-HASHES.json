@@ -1,0 +1,16 @@
+{
+  "qualification": "original group owner submission; trace not qualified",
+  "withdrawalBodyUnchanged": true,
+  "producerExtractionExact": true,
+  "sha256": {
+    "bot/tests/ai-gm-2026-10/rf06-f03-r65.test.mjs": "cc5794faeda6e453042bb9cc4b0826777c123bedeef26d0f773b51e8b33d1a18",
+    "bot/tests/ai-gm-2026-10/rf06-f03-r66.test.mjs": "2398c4fdacd0f44fef96381c176eba40c77e857013b0c5aff249c92cc591207b",
+    "bot/tests/ai-gm-2026-10/rf06-reservation-fixture.mjs": "3e4770d6f3ede17f78c0d14aa8c2d8fcc92113186b1f710167aac9d58ba9efdc",
+    "bot/src/native-publications.js": "6b9e5f49073a1f5b3427d13b1d72ee3a0b4f32d6449887a15a4deb0bba1531d1",
+    "bot/src/gm-arbitration-output.js": "e8cb41e74c610dc23d511b989351b45255d55ba5f2d6a055edf7df9fb814e0ab",
+    "bot/src/frameworks/daggerheart/gm-execution-rules.js": "1d48a8c3147d8c51d74246ab9b780698eb1ff1c14d148e78f7ac69d77678a40c",
+    "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": "8bd161353e5e8ad577347e6dee3d64c1d00ba7a704277f66eb8be0ba9a23f267",
+    "bot/src/frameworks/daggerheart/feature-effect-rules.js": "bc37fba29f8725a812ead6ed4d9f991b75d64eb04a8a283aca104f967fdbc05d",
+    "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+  }
+}

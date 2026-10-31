@@ -1,0 +1,43 @@
+✔ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (129.4742ms)
+✖ original group owner roll and condition roll back with failed reservation, then replay saved outcome (85.4175ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1769.4463
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f03-r66.test.mjs:8:1
+✖ original group owner roll and condition roll back with failed reservation, then replay saved outcome (85.4175ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /r66 reservation failure/. Input:
+
+  'StateConflictError: Native roll collaboration is opt-in.'
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r66.test.mjs:20:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: StateConflictError: Native roll collaboration is opt-in.
+        at fail (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/roll-collaboration-rules.js:11:30)
+        at Object.contributeRoll (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/roll-collaboration-rules.js:217:5)
+        at contributeRoll (file:///D:/Library/Development/Veiled_City/bot/src/roll-collaboration.js:40:56)
+        at contributeRoll (file:///D:/Library/Development/Veiled_City/bot/src/gm-native-rolls.js:28:754)
+        at file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/gm-execution-rules.js:166:18
+        at VeiledDB.transaction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:624:19)
+        at Object.submitGmReactionInvitation (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/daggerheart/gm-execution-rules.js:153:13)
+        at submitGmReactionInvitation (file:///D:/Library/Development/Veiled_City/bot/src/gm-native-rolls.js:35:68)
+        at file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r66.test.mjs:20:21
+        at getActual (node:assert:611:5) {
+      [cause]: undefined
+    },
+    expected: /r66 reservation failure/,
+    operator: 'throws',
+    diff: 'simple'
+  }
