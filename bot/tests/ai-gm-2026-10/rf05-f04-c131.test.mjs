@@ -9,7 +9,7 @@ import {validateIntent as compatibilityValidateIntent} from '../../src/ai-intent
 test('Intent dispatch consumes the public validator and retains the compatibility identity',async()=>{
   assert.equal(typeof dispatchAiIntents,'function');
   const source=await readFile(fileURLToPath(new URL('../../src/ai-intents.js',import.meta.url)),'utf8');
-  assert.match(source,/import\s*\{\s*validateIntent\s*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
+  assert.match(source,/import\s*\{[^}]*\bvalidateIntent\b[^}]*\}\s*from\s*["']\.\/frameworks\/intent\/public\.js["']/);
   assert.doesNotMatch(source,/from\s*["']\.\/ai-intent-contracts\.js["']/);
   assert.equal(compatibilityValidateIntent,publicValidateIntent);
   const valid={version:1,feature:'setup',target_key:'setup-1',expected_revision:'',policy_revision:0,source_prerequisites:[],

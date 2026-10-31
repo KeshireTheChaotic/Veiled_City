@@ -1,4 +1,7 @@
 /** Versioned, closed model intent contracts. Authority, receipts and derived impact are application-owned. */
+export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
+  strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
+  memory:"memory_consolidation",density:"activity_density"};
 const text=(maxLength=160)=>({type:"string",maxLength});
 const choice=(...values)=>({type:"string",enum:values});
 const integer=(minimum,maximum)=>({type:"integer",minimum,maximum});

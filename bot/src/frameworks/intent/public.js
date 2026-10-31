@@ -2,7 +2,7 @@ export {createAuthoredRollSourceCapability} from './contracts/authored-roll-sour
 export {buildActionPlan,executableActionSpans,transitionAction,signalActionContinuation} from './action-dependency.js';
 export {authoredCandidatesSchema,currentAuthoredCandidatesSchema,AUTHORED_CANDIDATES_PROMPT} from './authored-candidate-schema.js';
 export {createUnifiedAdjudicationSourcePort} from './contracts/unified-adjudication-source.js';
-export {INTENT_PAYLOADS,INTENT_PROMPT,intentArraySchema,intentOperations,validateIntent} from './ai-intent-contracts.js';
+export {FEATURE_FLAGS,INTENT_PAYLOADS,INTENT_PROMPT,intentArraySchema,intentOperations,validateIntent} from './ai-intent-contracts.js';
 export {decisionAdvisorySchema,requiredDecisionAdvisorySchema,decisionPromptContext,decisionContext,validateDecisionAdvisory} from './decision-advisory.js';
 export {ARBITRATION_DISPOSITIONS,npcSceneIntentSchema,gmArbitrationProposalSchema,unifiedArbitrationSchema,matchesArbitrationSchema,arbitrationFailure} from './gm-arbitration-contract.js';
 export {delegationPolicy} from './delegation-policy.js';
