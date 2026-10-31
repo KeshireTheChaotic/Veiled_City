@@ -196,3 +196,5 @@ export {applyEnvironmentWitnessAccounts,inspectEnvironmentWitnessAccounts,enviro
 export {environmentProposalContract} from './native-environment-capabilities.js';
 export {validateImagingRecordProposal,applyEnvironmentImagingRecord,inspectEnvironmentImagingRecord,environmentImagingProjection,nativeEnvironmentImagingSituation} from './native-environment-imaging.js';
 export {validateDoorChainProposal,applyEnvironmentDoorChain,inspectEnvironmentDoorChain,environmentDoorChainProjection,nativeEnvironmentDoorChainSituation} from './native-environment-door-chain.js';
+
+export {createNativeEnvironmentRecording,inspectNativeEnvironmentRecording} from './native-environment-recording.js';

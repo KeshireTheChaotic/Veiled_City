@@ -15,7 +15,7 @@ import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
-import {inspectNativeEnvironmentRecording} from './native-environment-recording.js';
+import {inspectNativeEnvironmentRecording} from './frameworks/daggerheart/public.js';
 
 import {createEnvironmentCountdownRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

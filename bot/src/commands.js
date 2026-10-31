@@ -579,7 +579,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
         const row=establishEnvironmentAdmission(db,interaction.guildId,proposal,{mode:'private',actorUserId:interaction.user.id,actorCharacterId:character});
         result={request:row.record_key,status:row.status,authority:'Private admission proof only; movement and all other restrictions remain separately validated.'};
       }else if(input.op==='recording-upload'){
-        const {createNativeEnvironmentRecording}=await import('./native-environment-recording.js');
+        const {createNativeEnvironmentRecording}=await import('./frameworks/daggerheart/public.js');
         const row=createNativeEnvironmentRecording(db,interaction.guildId,interaction.user.id,input,{interactionId:interaction.id,authoredText});
         result={request:row.record_key,status:row.status,handout:row.data.handout.id,creation_source:row.data.creation,
           authority:'Owner-authorized recording and upload choice only; no public disclosure, NPC knowledge or PC consequence.'};

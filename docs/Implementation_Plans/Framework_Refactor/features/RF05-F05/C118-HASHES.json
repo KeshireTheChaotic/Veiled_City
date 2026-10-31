@@ -1,0 +1,82 @@
+{
+  "base": "308886d62d2ef8c0aedfefb83e6987e19bc2ce5b",
+  "exact_source_substitutions": true,
+  "original_rules_and_existing_proof_sources_unchanged": true,
+  "commands_only_recording_import_changed": true,
+  "deleted_original": "bot/src/native-environment-recording.js",
+  "syntax_pass": 4,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c118.test.mjs bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 3,
+      "fail": 1,
+      "duration_ms": 1747.5072,
+      "disposition": "Counterfeit-record fixture omitted creation ref eagerly read by original inspector; corrected only fixture."
+    },
+    {
+      "command": "node --test --test-name-pattern='self-asserted Native' bot/tests/ai-gm-2026-10/rf05-f05-c118.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1343.7847,
+      "disposition": "Only failed fresh case rerun."
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1711.6664,
+      "disposition": "Affected bootstrap repeated after separate authorized R60 index/ready production change, now frozen hashes recorded."
+    }
+  ],
+  "limits": "Actual SQLite recording authority/forged artifact refusal/no handout, fact or player effects; original proof registration and offline bootstrap. Does not qualify successful recording/upload, delivery/knowledge, receipts/full Native unit-of-work/GM/live. Shared R60 index/ready source fingerprints recorded but those files are not staged in C118.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-recording.js",
+      "sha256": "69ffde2d6e0e6be18480d4c2bc2fa8b6e52063c7158c72d72e0b93c9f85178ee"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "5de15d6069067c8cb5d0d30e09d598b1aa411ebc72a01ab99638f5299b4ce2d9"
+    },
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "72cd7fb31a1d9f5f2dd05ff89df4046893d3fbd75cfe20e3b4060af48a4b6a35"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "81ac3cbee2c39082efd700250a284ee995d7dabafc1063fb5e226a8bff44c778"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-recording-rules.js",
+      "sha256": "3a07ddf969008f2d3c65af52a867835b8b5a99e97db2e3e4a725fc8806be3967"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "c1aecc4993b1f3b8d1742d779a8b5a02ff94b778eb039b0bb6f125c3566ff4c4"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-access-peers.js",
+      "sha256": "f3cfddbba8ac0f12be50efc4f61c9418e5bdfd2b342c7db032254ebebb96fce8"
+    },
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "1bf90a885475fe3d318973601ff062814999df530c2104d56790f3217d81333c"
+    },
+    {
+      "path": "bot/src/bootstrap/ready.js",
+      "sha256": "032f2e6c134b608ff7b4f6d62217c84c8620027995abaafc07d68c40672f08ff"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c118.test.mjs",
+      "sha256": "533386fa44afdcc5fa96512356bdae27e9885f8b36708cae4a9c4abb94fb8585"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "1ae84ee390e2436a193aa794ec8c467e9c6f7b115a0699cb54707769e4fc9d24"
+    }
+  ]
+}

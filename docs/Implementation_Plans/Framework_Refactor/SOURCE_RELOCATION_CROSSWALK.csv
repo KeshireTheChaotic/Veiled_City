@@ -192,7 +192,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/native-environment-private-room.js","bot/src/frameworks/daggerheart/native-environment-private-room.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","2"
 "bot/src/native-environment-procedure.js","bot/src/frameworks/daggerheart/native-environment-procedure.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","2"
 "bot/src/native-environment-proposals.js","bot/src/frameworks/daggerheart/native-environment-proposals.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF05-F02+RF05-F03+RF05-F05","1","5"
-"bot/src/native-environment-recording.js","bot/src/frameworks/daggerheart/native-environment-recording.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05","2","4"
+"bot/src/native-environment-recording.js","bot/src/frameworks/daggerheart/native-environment-recording.js","daggerheart","RF05","IMPLEMENTATION_MOVED_ROOT_RETIRED","0","0"
 "bot/src/native-environment-recovery.js","bot/src/frameworks/daggerheart/native-environment-recovery.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF04-F01+RF04-F04+RF05-F02+RF05-F03+RF05-F05","2","5"
 "bot/src/native-environment-scene.js","bot/src/frameworks/world/native-environment-scene.js","world","RF04","DECOMPOSE_BEFORE_MOVE","5","33"
 "bot/src/native-environment-sealed-docket.js","bot/src/frameworks/daggerheart/native-environment-sealed-docket.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","1","2"

@@ -1,0 +1,86 @@
+{
+  "reason": "Original recording composition Native-owned with already-existing proof interfaces, root retired; original countdown/public and recording-upload command/public callers; exact obsolete location/private/cycle records only.",
+  "entries": [
+    {
+      "id": "efef9cf1be07286ada17cbcb35aa18b1c7b9edd41855b28c0c3b24248107bf58",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/native-environment-recording.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "4ece6fd9823f8236570efed5a9d532677e31d1d701c45e71d4cdf37a80a005c6",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/commands.js",
+      "to": "bot/src/native-environment-recording.js",
+      "kind": "dynamic-literal",
+      "specifier": "./native-environment-recording.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "87a2164801e568a879fb8c828e4e7b162f6ebf0b92ce312a2c69d155b60371b8",
+      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
+      "from": "bot/src/native-environment-recording.js",
+      "to": "bot/src/gm-arbitration-contract.js",
+      "kind": "static",
+      "specifier": "./gm-arbitration-contract.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "29fcba26ea0d25eea033089461259438ec77752ccbbbadf6b5ebb446ae47a463",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-countdown.js",
+      "to": "bot/src/native-environment-recording.js",
+      "kind": "static",
+      "specifier": "./native-environment-recording.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "4d58ff902ac1fa9c2c33c9b0854e85c698581cf60534e070b004ddc00cd5ba91",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-recording.js",
+      "to": "bot/src/ordinary-effect-proof.js",
+      "kind": "static",
+      "specifier": "./ordinary-effect-proof.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    },
+    {
+      "id": "46bb45a0a0faed79a6b660e15503d56c1c610329fc29723e86933b6036ad0dc2",
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/native-environment-recording.js",
+      "to": "bot/src/native-environment-countdown.js",
+      "kind": "static",
+      "specifier": "./native-environment-countdown.js",
+      "owner": "daggerheart",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F05",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
+    }
+  ]
+}
