@@ -10,7 +10,8 @@ function nativeEnvironmentBinding(db,guild,{encounter:ref,scene,location},{libra
     throw fail('environment_closed_native_locator');
   const actual=currentScene(db,guild),encounter=db.getEncounter(ref),
     binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
-    proposal=binding&&db.getCityRecord(guild,'encounter_proposal',binding.data.proposal),
+    proposalRef=typeof binding?.data?.proposal==='string'?binding.data.proposal:null,
+    proposal=proposalRef&&db.getCityRecord(guild,'encounter_proposal',proposalRef),
     source=proposal&&db.getWorldEvent(guild,proposal.source_event),
     template=encounter&&library.environments.find(e=>e.name===encounter.environment_name);
   const rejection=environmentEncounterRejection({guild,ref,scene,location,actual,encounter,
