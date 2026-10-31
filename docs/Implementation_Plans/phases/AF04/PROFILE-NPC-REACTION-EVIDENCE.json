@@ -1,0 +1,29 @@
+{
+  "phase": "AF04",
+  "status": "profile_npc_reaction_primitive_complete_host_pending",
+  "base_sha": "0025f664d61667501c777a61ccce38b162b45876",
+  "commands": [
+    "node --check src/frameworks/daggerheart/mixed-reaction-rules.js",
+    "node --check tests/ai-gm-2026-10/af04-profile-npc-reaction.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-profile-npc-reaction.test.mjs"
+  ],
+  "syntax_checks_passed": 2,
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/mixed-reaction-rules.js",
+      "sha256": "d84bb5b972e85622997717a4405d9174a6d8ee592d33cc691864d66f47432458"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-profile-npc-reaction.test.mjs",
+      "sha256": "fd1663bcf6e6e24d8a946e13f51a1a8a9842e477831e5748b8afc08f2d6ac444"
+    }
+  ],
+  "limits": [
+    "Injected RNG pure arithmetic/source-shape tests, no source-host/database/live-service qualification.",
+    "Area host and ordinary NPC condition state remain unconnected."
+  ]
+}

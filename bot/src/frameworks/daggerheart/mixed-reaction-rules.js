@@ -17,10 +17,13 @@ export function splitMixedReactionCohort(targets){
     npc:Object.freeze(targets.filter(t=>t.kind==='npc').map(t=>Object.freeze({...t}))),cohort_hash:hash(targets)});
 }
 
-/** Resolve one GM-controlled NPC reaction from an exact adversary statblock Experience. */
-export function rollNativeNpcReaction({target,combatant,template,experienceName=null,difficulty,rng}){
+/** Resolve one GM-controlled NPC reaction from a native statblock, or a pinned ordinary profile at +0. */
+export function rollNativeNpcReaction({target,combatant=null,template=null,profile=null,experienceName=null,difficulty,rng}){
+  const ordinary=profile!==null;
   if(target?.kind!=='npc'||target.owner||!target.presence_hash||!target.control_hash
-    ||!combatant||combatant.status!=='active'||combatant.hp_current<=0||!template||hash(template)!==target.template_hash
+    ||(ordinary?combatant!==null||template!==null||profile.npc_key!==target.key||!profile.guild_id
+      ||hash(profile)!==target.profile_hash||target.profile_hash!==target.template_hash||experienceName!==null
+      :!combatant||combatant.status!=='active'||combatant.hp_current<=0||!template||hash(template)!==target.template_hash)
     ||!Number.isSafeInteger(difficulty)||difficulty<0)throw fail('mixed_reaction_npc_source');
   let modifier=0,experience=null;
   if(experienceName!==null){
@@ -30,16 +33,19 @@ export function rollNativeNpcReaction({target,combatant,template,experienceName=
     experience={name:matches[0].name,modifier:matches[0].modifier};modifier=experience.modifier;
   }
   const result=gmD20Roll({kind:'reaction',modifier,difficulty},rng);
-  const data={version:1,target:{kind:target.kind,key:target.key,presence_hash:target.presence_hash,control_hash:target.control_hash,
-    template_hash:target.template_hash},combatant_hash:hash(combatant),experience,result};
+  const data={version:ordinary?2:1,target:{kind:target.kind,key:target.key,presence_hash:target.presence_hash,control_hash:target.control_hash,
+    template_hash:target.template_hash},combatant_hash:ordinary?null:hash(combatant),
+    ...(ordinary?{profile:{key:profile.npc_key,hash:target.profile_hash}}:{}),experience,result};
   return Object.freeze({...data,receipt_hash:hash(data)});
 }
 
 /** Recompute roll arithmetic and immutable receipt digest before accepting an NPC reaction. */
 export function inspectNativeNpcReaction(receipt){
   const {receipt_hash,...data}=receipt||{},r=data.result,templateHash=data.target?.template_hash;
-  if(data.version!==1||data.target?.kind!=='npc'||!data.target.key||!data.target.presence_hash||!data.target.control_hash
-    ||!templateHash||!data.combatant_hash||!r||!['gm_d20'].includes(r.family)||r.kind!=='reaction'
+  if(![1,2].includes(data.version)||data.target?.kind!=='npc'||!data.target.key||!data.target.presence_hash||!data.target.control_hash
+    ||!templateHash||(data.version===1?!data.combatant_hash||data.profile!==undefined
+      :data.combatant_hash!==null||data.profile?.key!==data.target.key||data.profile?.hash!==templateHash||data.experience!==null)
+    ||!r||!['gm_d20'].includes(r.family)||r.kind!=='reaction'
     ||data.experience!==null&&(!data.experience||typeof data.experience.name!=='string'||!Number.isSafeInteger(data.experience.modifier)||data.experience.modifier<0)
     ||r.modifier!==(data.experience?.modifier??0)||hash(receipt_hash?data:null)!==receipt_hash)throw fail('mixed_reaction_npc_receipt');
   let i=0;const expected=gmD20Roll({kind:'reaction',modifier:r.modifier,difficulty:r.difficulty},()=>r.faces[i++]);
