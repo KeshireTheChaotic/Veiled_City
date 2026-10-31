@@ -1,0 +1,14 @@
+✔ downtime empty-cycle short circuit and original empty notes/projects text retained (1.9146ms)
+✔ downtime exact ordered project text and original raw values remain unmodified (0.5177ms)
+✔ downtime original UTF16 limit and malformed-input errors retained (0.329ms)
+✔ relationship exact labels/fallbacks/signed zero/notes and raw markdown retained (0.1337ms)
+✔ relationship original coercion/missing-field/error behavior retained without new validation (0.1824ms)
+✔ root keeps original audience filtering, private replies and sanctioned relationship mutations (0.7833ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 563.1764

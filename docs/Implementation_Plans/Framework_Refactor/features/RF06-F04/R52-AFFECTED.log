@@ -1,0 +1,13 @@
+✔ public views use one implementation and missing records keep existing responses (0.5674ms)
+✔ zero resources and mixed experience formats render without inventing default resources (0.7147ms)
+✔ partial sheet retains unknown/unset labels and default stress maximum (0.0808ms)
+✔ encounter display retains group/body counts, adjustments and budget remainder without mutation (0.2449ms)
+✔ long encounter text preserves existing 1900-character truncation (0.102ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 566.1184

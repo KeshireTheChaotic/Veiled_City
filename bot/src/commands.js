@@ -1,3 +1,4 @@
+import {downtimeStatusText,relationshipLine} from './frameworks/discord/public.js';
 import {handleRulesRulingsCommand} from './frameworks/discord/public.js';
 import {connectDiscordRulesRulings} from './framework-to-framework/discord--persistence/public.js';
 import {isGm as isGM} from './framework-to-framework/discord--persistence/public.js';
@@ -307,11 +308,7 @@ function visibleDowntimeProjects(db,cycle,userId,isGm){
   return rows.filter(r=>r.visibility==="party"||r.discord_user_id===userId||owned.has(r.character_id));
 }
 
-function downtimeStatusText(cycle,projects){
-  if(!cycle) return "No open downtime cycle.";
-  const lines=projects.map(p=>`• \`${p.id.slice(0,8)}\` **${p.title}** [${p.project_type}] — ${p.progress}/${p.max_progress} — ${p.status}`);
-  return [`**${cycle.label}** — ${cycle.status}`,cycle.notes||"",lines.length?lines.join("\n"):"No submitted projects."].filter(Boolean).join("\n").slice(0,1900);
-}
+
 
 async function deletePublishedNotInSnapshot({db,guild,snapshot}){
   const target=new Set((snapshot?.state?.tables?.published_messages||[]).map(r=>`${r.channel_id}:${r.message_id}`));
@@ -341,7 +338,7 @@ function handoutVisibleTo(db,guildId,userId,handout,isGm=false){
   if(handout.visibility==="character"){const c=activeCharacterForUser(db,guildId,userId); return !!c&&c.id===handout.subject_character_id;}
   return false;
 }
-function relationshipLine(r){return `• \`${r.id.slice(0,8)}\` **${r.from_label||r.from_key}** — ${r.relationship_type} (${r.score>=0?"+":""}${r.score}) → **${r.to_label||r.to_key}**${r.note?` — ${r.note}`:""}`;}
+
 function resolveEndpoint(db,guildId,type,value){
   if(type==="character"){const c=db.findGuildCharacter(guildId,value,{includeClosed:true}); if(!c) throw new Error(`Character endpoint not found: ${value}`); return {key:c.id,label:c.name};}
   return {key:db.relationshipEntityKey(type,value),label:String(value).trim()};

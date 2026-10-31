@@ -33,3 +33,12 @@ export function encounterSummary(e){
     e.notes?`Notes: ${e.notes}`:""
   ].filter(Boolean).join("\n").slice(0,1900);
 }
+
+/** Original command display text. Callers retain visibility, authorization and mutations. */
+export function downtimeStatusText(cycle,projects){
+  if(!cycle) return "No open downtime cycle.";
+  const lines=projects.map(p=>`• \`${p.id.slice(0,8)}\` **${p.title}** [${p.project_type}] — ${p.progress}/${p.max_progress} — ${p.status}`);
+  return [`**${cycle.label}** — ${cycle.status}`,cycle.notes||"",lines.length?lines.join("\n"):"No submitted projects."].filter(Boolean).join("\n").slice(0,1900);
+}
+
+export function relationshipLine(r){return `• \`${r.id.slice(0,8)}\` **${r.from_label||r.from_key}** — ${r.relationship_type} (${r.score>=0?"+":""}${r.score}) → **${r.to_label||r.to_key}**${r.note?` — ${r.note}`:""}`;}

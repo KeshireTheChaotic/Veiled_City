@@ -1,0 +1,12 @@
+{
+  "parent": "95c5c4e4fffd567af6340e8b0e3c616c53be5b7b",
+  "functions": [
+    "downtimeStatusText",
+    "relationshipLine"
+  ],
+  "whole_function_asts_equal": true,
+  "all_remaining_commands_statements_equal": true,
+  "original_callers_guards_filters_mutations_receipts_equal": true,
+  "existing_destination_statements_equal": true,
+  "initial_destination_overwrite_detected_by_module_instantiation": true
+}

@@ -1,0 +1,3 @@
+# RF06-F04 R52 — Original downtime and relationship display text
+
+Move whole original downtimeStatusText/relationshipLine functions from commands.js into Discord command-record-text.js, imported through Discord public. Preserve every other command statement and caller, including visibleDowntimeProjects, ownership/GM checks, relationship query filters, sanctioned mutations, receipts, ephemeral replies and existing 1900/1950 limits. No level-up mechanics/formatters, proxy authority, world policy or store contracts change. Fresh exact text/default/error/coercion/truncation/no-mutation coverage and whole-function/rest-command AST equivalence. No provider/production/Discord network calls. B owns commands.js and Discord public; shared INDEX requires separate grant.

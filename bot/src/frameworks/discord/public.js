@@ -73,3 +73,5 @@ export {hasGmAccess} from './gm-access.js';
 
 export {replyOrEdit} from './reply-or-edit.js';
 export {handleRulesRulingsCommand,assertRulesRulingReadStore} from './rules-rulings-command.js';
+
+export {downtimeStatusText,relationshipLine} from './command-record-text.js';
