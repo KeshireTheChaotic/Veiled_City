@@ -13,7 +13,7 @@ import {applyRoutineEvidenceAnalysis,verifyRoutineEvidenceAnalysis,routineEviden
 import {clearNativeConditionFromOutcome} from './native-condition-recovery.js';
 import {activeNativeConditions} from './native-group-features.js';
 import {clearNativeEnvironmentNoise} from './frameworks/daggerheart/public.js';
-import {resolveNativeEnvironmentEvent,environmentResolutionText} from './native-environment-recovery.js';
+import {resolveNativeEnvironmentEvent,environmentResolutionText} from './frameworks/daggerheart/public.js';
 
 
 import {createOrdinaryEffectRules} from './frameworks/daggerheart/public.js';

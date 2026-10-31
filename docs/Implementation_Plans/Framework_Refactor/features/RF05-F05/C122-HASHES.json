@@ -1,0 +1,81 @@
+{
+  "base": "1c5eb93fe5f78abfec19bfecd2b616a134fb469b",
+  "exact_original_source_substitutions": true,
+  "original_rule_transaction_and_receipt_checks_unchanged": true,
+  "deleted_original": "bot/src/native-environment-recovery.js",
+  "syntax_pass": 4,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c122.test.mjs",
+      "pass": 3,
+      "fail": 0,
+      "duration_ms": 1608.4161
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1775.0452
+    }
+  ],
+  "architecture": {
+    "sourceModules": 1067,
+    "unowned": 0,
+    "importOccurrences": 4318,
+    "internalImportOccurrences": 4121,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "rawViolationOccurrences": 618,
+    "acceptedLegacyOccurrences": 618,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  },
+  "limits": "Source identity and exact original composition; actual SQLite missing/counterfeit/foreign-scope receipt refusal without writes or PC/fact changes; guarded real offline bootstrap on recorded dirty working tree. Positive emergency resolution, hazard departure, receipt/outbox transaction rollback and full GM/live behavior remain unqualified.",
+  "files": [
+    {
+      "path": "bot/src/frameworks/daggerheart/native-environment-recovery.js",
+      "sha256": "714e67ef9b94b0c68db51def7aa6ec105a70db56e8438a8c69bd00ce73d236cc"
+    },
+    {
+      "path": "bot/src/ordinary-effect-proof.js",
+      "sha256": "2132646d026b821179e5745e89309ee35e783625c0c2147ed81b098dea22caaa"
+    },
+    {
+      "path": "bot/src/ordinary-effects.js",
+      "sha256": "f50eaca1094389eeee860f87630212fb1cc7a4ffbb17ec571c3f355c02a2302c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ae6f7580c775f6a4085c7272b049953799961c207776131afbb046bcc01a6259"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/environment-recovery-rules.js",
+      "sha256": "7dc5ecdeac6b43e4c40f81238b67b0b48908c6146ce6882034b09488ea56147c"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/environment-access-peers.js",
+      "sha256": "f3cfddbba8ac0f12be50efc4f61c9418e5bdfd2b342c7db032254ebebb96fce8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c122.test.mjs",
+      "sha256": "a4d36a5a28aa6958ae5db59a8608c6fd8ceea913e6416b21dbe27fa8d4a0a070"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "1ca037f49e71376368994e2d307597cea2cc398e7171c46950cda445ccd3b3ba"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "sha256": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    }
+  ]
+}

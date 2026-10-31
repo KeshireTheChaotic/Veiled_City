@@ -14,7 +14,7 @@ function scenePresence(...args){return nativeScenes.scenePresence(...args);}
 import {validateNativeCondition} from './native-group-features.js';
 import {inspectNativeConditionClearAncestry} from './native-condition-recovery.js';
 import {inspectNativeEnvironmentNoiseClear} from './frameworks/daggerheart/public.js';
-import {inspectNativeEnvironmentResolution,environmentResolutionText} from './native-environment-recovery.js';
+import {inspectNativeEnvironmentResolution,environmentResolutionText} from './frameworks/daggerheart/public.js';
 
 import {createOrdinaryEffectProofRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

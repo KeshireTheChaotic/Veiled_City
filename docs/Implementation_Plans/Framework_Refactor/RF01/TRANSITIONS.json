@@ -600,17 +600,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "eaa8a87527775f11596be71bebf6c6ff5eab96170b4f31f6c00cbec4dd92b356",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/native-environment-recovery.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "a7bbcf5d7b1980e2d62d28cffe799e4bc0a30f113194b9404731a61bab00dd6c",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/native-environment-trace.js",
@@ -3221,20 +3210,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "4875759b89c71419704837294d5873d93c3b3b0d7c23a42933f68dbdc4d4bd7c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/native-environment-recovery.js",
-      "to": "bot/src/gm-arbitration-contract.js",
-      "kind": "static",
-      "specifier": "./gm-arbitration-contract.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "d4c7a8a81f2f4431f2b482da56552f5102af1fa8ab0dff4ba51aa18a8960958a",
       "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
       "from": "bot/src/native-environment-trace.js",
@@ -5331,20 +5306,6 @@
       "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
     },
     {
-      "id": "a53d56f51fc4fd6f3ff5961edca05aa8ae4459352b99ad1712e929d7ad0ad8e4",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/native-environment-recovery.js",
-      "to": "bot/src/ordinary-effect-proof.js",
-      "kind": "static",
-      "specifier": "./ordinary-effect-proof.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
       "id": "b98108ee1f31ac67b46612e537e555c4dd2b52397d9926693e51dcb512efe0fc",
       "code": "CYCLIC_IMPORT_EDGE",
       "from": "bot/src/native-environment-trace.js",
@@ -6415,20 +6376,6 @@
       "to": "bot/src/native-condition-recovery.js",
       "kind": "static",
       "specifier": "./native-condition-recovery.js",
-      "owner": "daggerheart",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing cycle import; decompose through consumer-owned port; no SCC-wide waiver."
-    },
-    {
-      "id": "c36278509079acee5b095ff1fbde833e43faea21e50d4004098258b1f5498903",
-      "code": "CYCLIC_IMPORT_EDGE",
-      "from": "bot/src/ordinary-effect-proof.js",
-      "to": "bot/src/native-environment-recovery.js",
-      "kind": "static",
-      "specifier": "./native-environment-recovery.js",
       "owner": "daggerheart",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
