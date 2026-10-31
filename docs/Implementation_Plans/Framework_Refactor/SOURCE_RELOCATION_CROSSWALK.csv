@@ -206,7 +206,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/native-established-fact.js","bot/src/frameworks/world/native-established-fact.js","world","RF04","EXTRACT_PORTS_BEFORE_MOVE","3","3"
 "bot/src/native-evidence-analysis.js","bot/src/frameworks/daggerheart/native-evidence-analysis.js","daggerheart","RF05","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF05-F05","2","0"
 "bot/src/native-experience-eligibility.js","bot/src/frameworks/daggerheart/native-experience-eligibility.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","3","3"
-"bot/src/native-feature-catalog.js","bot/src/frameworks/daggerheart/native-feature-catalog.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","75","2"
+"bot/src/native-feature-catalog.js","bot/src/frameworks/daggerheart/native-feature-catalog.js","daggerheart","RF05","IMPLEMENTATION_MOVED_ROOT_RETIRED","0","0"
 "bot/src/native-feature-damage.js","bot/src/frameworks/daggerheart/native-feature-damage.js","daggerheart","RF03","DECOMPOSE_BEFORE_MOVE","2","5"
 "bot/src/native-feature-definitions.json","bot/src/frameworks/daggerheart/native-feature-definitions.json","daggerheart","RF03","DECOMPOSE_BEFORE_MOVE","0","0"
 "bot/src/native-feature-effects.js","bot/src/frameworks/daggerheart/native-feature-effects.js","daggerheart","RF03","DECOMPOSE_BEFORE_MOVE","4","4"

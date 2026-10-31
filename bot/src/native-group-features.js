@@ -2,7 +2,7 @@
  * No model effects, PC dice, choice, or consent are executed during preparation. */
 import {nativeEnvironmentNarrative} from './frameworks/daggerheart/public.js';
 function narrativeSourceVisible(...args){return nativeEnvironmentNarrative.narrativeSourceVisible(...args);}
-import {compileNativeFeatures} from './native-feature-catalog.js';
+import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
 import {inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost} from './gm-action-capability.js';
 import {featureCostPlan} from './frameworks/daggerheart/feature-costs.js';
 import {nativeScenes,RANGE_BANDS} from './frameworks/daggerheart/public.js';

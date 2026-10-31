@@ -770,6 +770,13 @@
         "consumer": "intentNativeActorControl supplied to original origin and scene-board factories",
         "composition": "connectIntentNativeActorControl at existing environment bootstrap; no copied classification or execution authority",
         "qualification_evidence": "features/RF05-F05/C109-HASHES.json"
+      },
+      "native_feature_catalog": {
+        "feature": "RF05-F05 C111",
+        "source": "Original featureDisposition/executableNativeFeatures/compileNativeActors singleton catalog",
+        "consumer": "intentNativeFeatureCatalog in original board and unified service composition",
+        "composition": "connectIntentNativeFeatureCatalog at existing environment bootstrap; original catalog data/rules/loader untouched",
+        "qualification_evidence": "features/RF05-F05/C111-HASHES.json"
       }
     },
     {

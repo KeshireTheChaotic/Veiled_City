@@ -41,7 +41,7 @@ export {intentKnowledgePersonal} from './contracts/knowledge-personal.js';
 
 export {intentSessionScene} from './contracts/session-scene.js';
 
-export {intentNativeEncounter,intentNativeAdversaryContext,intentNativeActorControl} from './contracts/native-encounter.js';
+export {intentNativeEncounter,intentNativeAdversaryContext,intentNativeActorControl,intentNativeFeatureCatalog} from './contracts/native-encounter.js';
 
 export {messageSpans,routeMessageSpans,serializeSpanLedger} from './message-span-ledger.js';
 

@@ -1,7 +1,7 @@
 import {nativeArbitrationOrigin} from './frameworks/daggerheart/public.js';
 const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
-import {featureDisposition} from './native-feature-catalog.js';
+import {featureDisposition} from './frameworks/daggerheart/public.js';
 import {environmentProposalContract} from './native-environment-capabilities.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';

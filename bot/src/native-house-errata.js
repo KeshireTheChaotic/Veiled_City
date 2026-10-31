@@ -1,6 +1,6 @@
 /** Immutable source loading and capability wiring for native owner errata. */
 import fs from 'node:fs';
-import {compileNativeFeatures,nativeFeatureRuleContext} from './native-feature-catalog.js';
+import {compileNativeFeatures,nativeFeatureRuleContext} from './frameworks/daggerheart/public.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
 import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
 import {createNativeHouseErrata} from './frameworks/daggerheart/house-errata.js';

@@ -1,5 +1,5 @@
 /** Source-pinned Memory Leech passive. Completed PC receipts precede this separately validated NPC consequence. */
-import {compileNativeFeatures} from './native-feature-catalog.js';
+import {compileNativeFeatures} from './frameworks/daggerheart/public.js';
 import {nativeEncounterActor} from './native-encounter-relations.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}

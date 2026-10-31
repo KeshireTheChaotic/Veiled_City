@@ -1,5 +1,5 @@
 /** Native trigger occurrences. Proposals/private prose cannot mint triggers, spotlight or costs. */
-import {compileNativeFeatures,executableNativeFeatures,featureDisposition} from './native-feature-catalog.js';
+import {compileNativeFeatures,executableNativeFeatures,featureDisposition} from './frameworks/daggerheart/public.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}
 import {nativeWorldProxy} from './frameworks/daggerheart/public.js';

@@ -33,3 +33,7 @@ export function connectIntentNativeAdversaryContext(){return intentNativeAdversa
 import {intentNativeActorControl} from '../../frameworks/intent/public.js';
 import {nativeActorControl} from '../../frameworks/daggerheart/public.js';
 export function connectIntentNativeActorControl(){return intentNativeActorControl.bind({nativeActorControl});}
+
+import {intentNativeFeatureCatalog} from '../../frameworks/intent/public.js';
+import {featureDisposition,executableNativeFeatures,compileNativeActors} from '../../frameworks/daggerheart/public.js';
+export function connectIntentNativeFeatureCatalog(){return intentNativeFeatureCatalog.bind({featureDisposition,executableNativeFeatures,compileNativeActors});}

@@ -1,5 +1,5 @@
 /** Source provider for extracted native-defense-aura native policy. */
-import {compileNativeFeatures,compileNativeActors,nativeSignalFeatureTarget} from './native-feature-catalog.js';
+import {compileNativeFeatures,compileNativeActors,nativeSignalFeatureTarget} from './frameworks/daggerheart/public.js';
 import {nativeEncounterActor,nativeNpcAlliance,inspectNativeNpcAllianceReceipt} from './native-encounter-relations.js';
 import {nativeScenes} from './frameworks/daggerheart/public.js';
 function sceneAccess(...args){return nativeScenes.sceneAccess(...args);}function currentScene(...args){return nativeScenes.currentScene(...args);}function scenePresence(...args){return nativeScenes.scenePresence(...args);}

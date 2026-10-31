@@ -1,6 +1,6 @@
 /** Printed nightclub acoustics: native recovery and odds ancestry, never PC narration or invented resources. */
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
-import {featureDisposition} from './native-feature-catalog.js';
+import {featureDisposition} from './frameworks/daggerheart/public.js';
 import {ordinaryActionProof,ordinaryPrerequisite} from './ordinary-effect-proof.js';
 import {historicalActionSource} from './action-consent.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';

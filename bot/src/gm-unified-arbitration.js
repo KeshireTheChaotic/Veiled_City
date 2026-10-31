@@ -10,7 +10,8 @@ import {isPvpIntent} from './pvp-authority.js';
 import {nativeGmOpportunity,nativeReactionTarget} from './gm-action-capability.js';
 import {inspectIncomingCandidate,inspectVolleyCandidate} from './pc-incoming.js';
 
-import {featureDisposition} from './native-feature-catalog.js';
+import {intentNativeFeatureCatalog} from './frameworks/intent/public.js';
+const {featureDisposition}=intentNativeFeatureCatalog;
 import {intentNativeAdversaryContext} from './frameworks/intent/public.js';
 const {requireNativeAdversaryFeature}=intentNativeAdversaryContext;
 import {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';

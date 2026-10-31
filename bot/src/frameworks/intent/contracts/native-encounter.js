@@ -12,3 +12,6 @@ export const intentNativeAdversaryContext=createFunctionPort(['nativeAdversaryFe
 
 /** Original Native control classification only; never execution authority. */
 export const intentNativeActorControl=createFunctionPort(['nativeActorControl'],{code:'INTENT_NATIVE_ACTOR_CONTROL_COMPOSITION',label:'Intent Native actor control'});
+
+/** Native catalog reads; classification and source rules remain in Native. */
+export const intentNativeFeatureCatalog=createFunctionPort(['featureDisposition','executableNativeFeatures','compileNativeActors'],{code:'INTENT_NATIVE_CATALOG_COMPOSITION',label:'Intent Native catalog'});

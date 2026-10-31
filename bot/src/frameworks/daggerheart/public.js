@@ -183,3 +183,5 @@ export {nativeTypedIntentSource} from './contracts/typed-intent-source.js';
 export {nativeEncounterActorSource} from './contracts/encounter-actor-source.js';
 
 export {nativeAdversaryFeatureContext,inspectNativeAdversaryFeatureContext,requireNativeAdversaryFeature} from './native-adversary-context.js';
+
+export {inspectNativeFeatureOccurrence,compileNativeFeatures,featureDisposition,executableNativeFeatures,compileNativeFeatureRuleContexts,nativeFeatureRuleContext,nativeFeatureRuleContextsForTemplate,nativeFeatureRuleContextsForTemplateHash,compileNativeActors,nativeActorTaxonomy,nativeSignalFeatureTarget} from './native-feature-catalog.js';

@@ -3,7 +3,7 @@ const {inspectArbitrationOrigin}=nativeArbitrationOrigin;
 import {nativeNarrativeContext} from './frameworks/daggerheart/public.js';
 const {buildNarrativeContext}=nativeNarrativeContext;
 import {inspectNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
-import {featureDisposition} from './native-feature-catalog.js';
+import {featureDisposition} from './frameworks/daggerheart/public.js';
 import {nativeGmOpportunity} from './gm-action-capability.js';
 import {reservedCampaignFear} from './fear-reservations.js';
 import {nativeWorldAutonomy} from './frameworks/daggerheart/public.js';

@@ -15,7 +15,8 @@ import {matchesArbitrationSchema,npcSceneIntentSchema,arbitrationFailure as fail
 import {intentWorldPrimitives} from './frameworks/intent/public.js';
 const {indexWorldEvent}=intentWorldPrimitives;
 import {featureWindowChoices,inspectFeatureWindow} from './native-feature-windows.js';
-import {executableNativeFeatures,compileNativeActors} from './native-feature-catalog.js';
+import {intentNativeFeatureCatalog} from './frameworks/intent/public.js';
+const {executableNativeFeatures,compileNativeActors}=intentNativeFeatureCatalog;
 
 import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
 import {intentNativeActorControl} from './frameworks/intent/public.js';

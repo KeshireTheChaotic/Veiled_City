@@ -1,0 +1,137 @@
+{
+  "base": "c7d6a0adaaf7b61d63d5e67504c9f34f5e39961d",
+  "exact_source_substitutions": true,
+  "original_catalog_implementation_unchanged": true,
+  "deleted_original": "bot/src/native-feature-catalog.js",
+  "syntax_pass": 28,
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f05-c111.test.mjs",
+    "cwd": "bot",
+    "pass": 3,
+    "fail": 0,
+    "duration_ms": 1481.7572
+  },
+  "limits": "Original root prompt, actual Native catalog and SQLite with synthetic Narrative/Session packet and no NPCs. No successful Native action/receipt/full GM/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/gm-action-capability.js",
+      "sha256": "0069da540c3f4045a6b062f5347938f351f9831a313513cb4f29864ab2bd3dc8"
+    },
+    {
+      "path": "bot/src/gm-mechanical-v9.js",
+      "sha256": "148f9a0ff5e5ac3d7774aa5a602037d7d9bd0107f6e46d7731856a874dc5c25e"
+    },
+    {
+      "path": "bot/src/native-defense-aura.js",
+      "sha256": "453d53c233b63e33960e8156541b2a3e2c21ac7edd306949596a79fe839315f6"
+    },
+    {
+      "path": "bot/src/native-encounter-relations.js",
+      "sha256": "6b63bdee9c8582b79c7371055bef6351df9b4ceee8ea96dd4001ccc989dbea1f"
+    },
+    {
+      "path": "bot/src/native-environment-arrivals.js",
+      "sha256": "fa29eb54ae2369e73b88fc55289ac909a595c60a9f41209969759a0de9d97c15"
+    },
+    {
+      "path": "bot/src/native-environment-countdown.js",
+      "sha256": "5b6dca967b091de7aaa2da60c774dab83a44b3aadbf9f271f23c2e3f64c4c3db"
+    },
+    {
+      "path": "bot/src/native-environment-door-chain.js",
+      "sha256": "2c1454e09c9356c1ea815fd40b4c66e352cb425f836989c0ac0b866b0c323c98"
+    },
+    {
+      "path": "bot/src/native-environment-imaging.js",
+      "sha256": "bcb845baabef7f4fc4aafe53bf14f23236bc78e8d47ab94184037d5ceeb847e5"
+    },
+    {
+      "path": "bot/src/native-environment-noise.js",
+      "sha256": "e1bfa7d79d6f11d5bee3c87ee9e93911e1a62674dfeb37f3e82cdacf8c1a9018"
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "sha256": "10dfa83274d3b5bb08dad24f691e836c40cc99456d855713a6657125a218ad53"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "e31e10d54b8612ed89ad87b9962eab6109551fa7edce67dfea9d8f54a7a6112d"
+    },
+    {
+      "path": "bot/src/native-environment-witnesses.js",
+      "sha256": "a8d44725066412a08f9b4be0fe3051e99a42071c7d3bf1e9f49f39a45b6c3a3d"
+    },
+    {
+      "path": "bot/src/native-feature-damage.js",
+      "sha256": "429548e01fdeea1d987a10c3bb412ca9cbea5f4b1dbfe310f7df91b0ac4f00a4"
+    },
+    {
+      "path": "bot/src/native-feature-hit.js",
+      "sha256": "d1180d2efdd03bb0f078e5bc4cf88e708f04103f82d6aa666fd74c99c69a291b"
+    },
+    {
+      "path": "bot/src/native-feature-passives.js",
+      "sha256": "3fdbd0f116b6e21dc93a3ea061a046c5710ec957f5ba8f0437da24bb8b97b8e4"
+    },
+    {
+      "path": "bot/src/native-feature-windows.js",
+      "sha256": "90a5865651d67f5eccf400dc837f3d165ab4d3c4b67f06dbb42416e6b8c4280c"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "41bb5c8bc3c20b2b12073fc99846bace084d7c2957b5c6e98908b1e364309088"
+    },
+    {
+      "path": "bot/src/native-house-errata.js",
+      "sha256": "9005cde4685b499c571496cfb72bc8fe93279f3cd9d9315124d7966f99b51a10"
+    },
+    {
+      "path": "bot/src/native-stress-passives.js",
+      "sha256": "37cf63ea0786868b5b2e751d1fb6f6c89d9808756d55bcad8a936a1d3d99b2f3"
+    },
+    {
+      "path": "bot/src/pc-incoming.js",
+      "sha256": "3d1d368aa03ccf631b289b96dc02aeb93074ced5a447ac6c7e9e6c142c0b43bd"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "a35da8b2bfcedff1bb6968d8043377e1d350acd3924a91f436cf9db148a212fc"
+    },
+    {
+      "path": "bot/src/gm-unified-arbitration.js",
+      "sha256": "42417147234fb1ac79aa4a0530a9f5e31b9c11c420285cab49944e81aeeae269"
+    },
+    {
+      "path": "bot/src/scene-intent-board.js",
+      "sha256": "2eefbae25252cd867f833139faea381fce7781e9924d2aab9ae35275751ae8ab"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "78cf71e5181175ce32af25f951ebf8e25367eb21d7ecc082b19264a9c1099fd7"
+    },
+    {
+      "path": "bot/src/frameworks/intent/contracts/native-encounter.js",
+      "sha256": "2af4cdfc0ca0d3175d8f37aa121387856f76ac8e0ea6b92ad1e31853f8a07d01"
+    },
+    {
+      "path": "bot/src/frameworks/intent/public.js",
+      "sha256": "ec371d267ffd4659ed96aabd258e4c789c6af00c1bd81c4c69e36597671bed75"
+    },
+    {
+      "path": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+      "sha256": "a65049df69f53cf75aa80a201d696365057a7ef4d128315ad2bf7c0453371c18"
+    },
+    {
+      "path": "bot/src/application/composition/environment-scene.js",
+      "sha256": "dee636f5cec9ad49a8d1f866bfea33d890779081405887cd5526d8c00fb3a9ac"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/native-feature-catalog.js",
+      "sha256": "1c25fe0e8a55c14e8b37bb0a1a5b438cc6990ba8ccec4a6441451b35cf637646"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c111.test.mjs",
+      "sha256": "665250b38af3d15bbc88a5a7edf5a918e19679913c0c4e0cb73f727eea6cf113"
+    }
+  ]
+}
