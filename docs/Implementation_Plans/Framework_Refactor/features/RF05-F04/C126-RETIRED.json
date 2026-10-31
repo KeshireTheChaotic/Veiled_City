@@ -1,0 +1,44 @@
+{
+  "reason": "Original request-local semantic engagement singleton owned/root retired; original GM and entrypoint consumers use Intent public. Exact obsolete location/private import records only.",
+  "entries": [
+    {
+      "id": "181091bdc1a11144ea16c795c350895c65b1d8e6c08ad74a347a5db3a941fce2",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/semantic-engagement.js",
+      "owner": "intent",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F02",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "56b3967300eadab7be785ddecf3bffc1b04164a981d0f8b34dfc6b57f3358f32",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/gm.js",
+      "to": "bot/src/semantic-engagement.js",
+      "kind": "static",
+      "specifier": "./semantic-engagement.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F04",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    },
+    {
+      "id": "33773bcfade6fbcd043ac744d185127b76fbcb3ac755c7b943f08f3de52d680c",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/index.js",
+      "to": "bot/src/semantic-engagement.js",
+      "kind": "static",
+      "specifier": "./semantic-engagement.js",
+      "owner": "bootstrap",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F05",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

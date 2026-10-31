@@ -1,9 +1,9 @@
 /** Request-local router interpretation. No effect, consent, listener or disclosure authority. */
-import {intentSessionPrincipal} from './frameworks/intent/public.js';
+import {intentSessionPrincipal} from "./contracts/session-principal.js";
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import {intentSessionScene} from './frameworks/intent/public.js';
+import {intentSessionScene} from "./contracts/session-scene.js";
 const {currentScene}=intentSessionScene;
-import {jsonHash as hash} from './kernel/json-hash.js';
+import {jsonHash as hash} from '../../kernel/json-hash.js';
 const bindings=new WeakMap();
 export const engagementKinds=['scene_description','current_situation','conversation','action','rules','no_response','uncertain'];
 export function bindSemanticEngagement(db,guild,scope,sourceRef,classification){

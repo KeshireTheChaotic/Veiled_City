@@ -67,7 +67,7 @@ import {assemblyNarrativeCandidate} from './pvp-output.js';
 import {openingCohortNarrativeCandidate} from './frameworks/session/public.js';
 import {assemblyInputs,hookHash,certifyAssemblyPlan} from './frameworks/session/public.js';
 import {sceneObservationOperation,narrativeModel} from './frameworks/narrative/public.js';
-import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
+import {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './frameworks/intent/public.js';
 import {authorNarrativeRequests,narrativeResponseSchema} from './frameworks/narrative/public.js';
 import {NARRATIVE_AUTHORITY_INSTRUCTIONS} from './frameworks/narrative/public.js';
 import {openingEntryNarrativeCandidate} from './frameworks/session/public.js';

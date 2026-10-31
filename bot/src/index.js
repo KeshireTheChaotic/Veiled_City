@@ -23,7 +23,7 @@ import { conversationPrincipal } from "./frameworks/session/public.js";
 import { publishRollRequests } from "./roll-requests.js";
 import {publishContinuationNotices} from "./publishing.js";
 import { captureWorldInput,worldInputKey } from "./frameworks/world/public.js";
-import {currentSemanticEngagement} from './semantic-engagement.js';
+import {currentSemanticEngagement} from './frameworks/intent/public.js';
 import {routeGameplayIntake,routerFailureEngagement} from "./frameworks/intent/public.js";
 import { interactionResponseExpired } from "./discord/interaction-lifecycle.js";
 import { publishEventResults, postGmLog, postStateError, deliverHandout, postPlayMessage, deliverQueuedTurn, sendPlayerPrivate } from "./publishing.js";
