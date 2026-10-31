@@ -1,3 +1,5 @@
+import {handleDirectorStatusCommand} from './frameworks/discord/public.js';
+import {connectDiscordDirectorStatus} from './framework-to-framework/discord--persistence/public.js';
 import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorHistory} from './framework-to-framework/discord--persistence/public.js';
 import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
@@ -824,15 +826,7 @@ async function executeCommand(interaction,{db,gm,voice=null}){
     if(group==="director"){
       if(!isGM(db,interaction)) throw new PermissionError("GM/admin permission required.");
       const session=db.getActiveSession(interaction.guildId);
-      if(sub==="status"){
-        const state=session?db.getDirectorState(session.id):null;
-        await interaction.reply({content:[
-          `**World Director** — ${db.isDirectorPaused(interaction.guildId)?"PAUSED":"active"}`,
-          session?`Session ${session.session_number} • Round cadence ${state.round_number} • Scene ${state.scene_number}${state.scene_label?` (${state.scene_label})`:""}`:"No active session.",
-          state?.pending_pass?`Pending: **${state.pending_pass.layer}** — ${state.pending_pass.reason||"no reason recorded"}`:"Pending: none",
-          state?`Completed passes: round ${state.pass_counts?.round||0}, scene ${state.pass_counts?.scene||0}, downtime ${state.pass_counts?.downtime||0}`:""
-        ].filter(Boolean).join("\n"),ephemeral:true}); return true;
-      }
+      if(sub==="status"){return await handleDirectorStatusCommand(interaction,{store:connectDiscordDirectorStatus(db),session});}
       if(sub==="history"){return await handleDirectorHistoryCommand(interaction,{store:connectDiscordDirectorHistory(db)});}
       if(sub==="pause"){ db.setDirectorPaused(interaction.guildId,true); await interaction.reply({content:"World Director automatic passes are **paused**. Player turns continue normally; pending director state is preserved.",ephemeral:true}); return true; }
       if(sub==="resume"){ db.setDirectorPaused(interaction.guildId,false); await interaction.reply({content:"World Director automatic passes are **resumed**. Any durable pending pass will run on the next normal director opportunity.",ephemeral:true}); return true; }

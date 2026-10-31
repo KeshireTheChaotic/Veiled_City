@@ -34,3 +34,7 @@ export function connectDiscordPartyStatus(db){return assertPartyStatusStore(crea
 import {assertDirectorHistoryStore} from '../../frameworks/discord/public.js';
 import {createDirectorHistoryStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordDirectorHistory(db){return assertDirectorHistoryStore(createDirectorHistoryStore(db));}
+
+import {assertDirectorStatusStore} from '../../frameworks/discord/public.js';
+import {createDirectorStatusStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordDirectorStatus(db){return assertDirectorStatusStore(createDirectorStatusStore(db));}

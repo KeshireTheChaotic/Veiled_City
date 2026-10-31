@@ -1,0 +1,7 @@
+{
+  "parent": "cde2b74ee77e89b57fead85892b612af00636c85",
+  "original_branch": "if(sub===\"status\"){\n        const state=session?db.getDirectorState(session.id):null;\n        await interaction.reply({content:[\n          `**World Director** — ${db.isDirectorPaused(interaction.guildId)?\"PAUSED\":\"active\"}`,\n          session?`Session ${session.session_number} • Round cadence ${state.round_number} • Scene ${state.scene_number}${state.scene_label?` (${state.scene_label})`:\"\"}`:\"No active session.\",\n          state?.pending_pass?`Pending: **${state.pending_pass.layer}** — ${state.pending_pass.reason||\"no reason recorded\"}`:\"Pending: none\",\n          state?`Completed passes: round ${state.pass_counts?.round||0}, scene ${state.pass_counts?.scene||0}, downtime ${state.pass_counts?.downtime||0}`:\"\"\n        ].filter(Boolean).join(\"\\n\"),ephemeral:true}); return true;\n      }",
+  "original_body_ast_equal_after_only_store_substitution": true,
+  "remaining_root_preserved_by_exact_single_range_replacement_and_two_imports": true,
+  "original_session_lookup_and_gm_guards_retained": true
+}

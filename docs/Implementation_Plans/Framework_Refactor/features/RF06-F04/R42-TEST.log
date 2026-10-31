@@ -1,0 +1,14 @@
+✔ status read interface is fixed/frozen and forwards current receiver/result/error (1.1411ms)
+✔ original no-session status performs only paused read and exact private output (0.2084ms)
+✔ original selected session/read order/paused/pending label/count text retained (0.1399ms)
+✔ original reason/count defaults and single untruncated private response retained (2.5391ms)
+✔ actual SQLite historical Director JSON fallback and paused reading preserve schema/no writes (468.8385ms)
+✔ read/reply failures propagate once and root retains GM/session/receipt order (1.1883ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10394.7444

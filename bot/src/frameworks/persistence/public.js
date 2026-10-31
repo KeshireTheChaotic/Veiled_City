@@ -28,3 +28,5 @@ export {createGmNpcReadStore} from './gm-npc-reads.js';
 export {createPartyStatusStore} from './party-status.js';
 
 export {createDirectorHistoryStore} from './director-history-reads.js';
+
+export {createDirectorStatusStore} from './director-status-reads.js';

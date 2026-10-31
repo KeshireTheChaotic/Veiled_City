@@ -1,0 +1,9 @@
+{
+  "bot/src/commands.js": "564e3f50203f5bf176df2110626b4d61a0ec4fd720a0854b7cee8b3240355677",
+  "bot/src/frameworks/discord/public.js": "907a4805a8a0b081f359a8afe32821deded34c656a8a88e519d4411159c41dcf",
+  "bot/src/frameworks/discord/director-status-command.js": "06dbb38fdcea66bee9770fb1f2f5cca2ad4f9b418295a81a08051ed75e02407e",
+  "bot/src/frameworks/persistence/public.js": "07931955737b5b85d85d47f7eb6aaf50a32d4b6d442ba60472a8f6a22b904d2d",
+  "bot/src/frameworks/persistence/director-status-reads.js": "3bfe52acbe6ed70ef1eee48abb317b7ed39bca56811058be7199f731ce02e36b",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "30fc1e9e310d258bb258b7e3abfa36f85f469fb190af04e2b039fe5a72dcbe84",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c42.test.mjs": "82a089326e4ac03cbb0669dec7bd3041d91e654aeab3b72f75925aacaed096df"
+}

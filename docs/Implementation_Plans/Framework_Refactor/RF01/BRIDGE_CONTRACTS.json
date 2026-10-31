@@ -1431,6 +1431,11 @@
           "from": "discord",
           "to": "persistence",
           "contract": "Original listDirectorHistory reader only, same connection/current receiver/SQL caps; no pause/resume/run or raw database."
+        },
+        {
+          "from": "discord",
+          "to": "persistence",
+          "contract": "Original getDirectorState/isDirectorPaused view for Director status; same caller session, connection/receiver and saved-state fallback, no pause/resume/run capability."
         }
       ],
       "source_evidence": [
@@ -1495,8 +1500,8 @@
           "type": "import"
         }
       ],
-      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation. R27 disposable SQLite GM-before-options/storage, option/environment/default mode, role coalesce, native routing/schema failures, caller rollback and response failure after original write; original setup body preserved after deferred GM callback only. R36 actual disposable SQLite guild/filter-before-limit/no-write proof plus shape/callback/error/private-chunk tests. R37 real disposable SQLite guild isolation/no-write, exact original limits/text/errors/private chunks. R39 actual SQLite initialization/historical fallback/guild scope, exact display caps/order/errors and no policy mutation. R41 actual SQLite guild/limit/no-write plus original formatting/chunk/fallback/error proofs.",
-      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write. R27 setup receives original application isGM deferred callback before options/storage; Application awaits handler inside unchanged receipt lifecycle. R36 invoked only inside unchanged application GM guard and awaited before receipt cleanup. R37 inside unchanged Application GM guard, awaited before receipt cleanup. R39 same existing general-player route inside receipt lifecycle, no GM restriction added. R41 original Application GM guard and active session lookup remain before awaited adapter inside receipt lifecycle.",
+      "validation": "Complete fixed method shape only; forwarding preserves original receiver and caller callback. Original replay/capture bodies unchanged. Fresh disposable SQLite rollback, reopen/replay, nested transaction/async refusal and guild identity evidence; no native effect or repository migration. R18 validates three original preference methods; actual disposable SQLite and native privacy tests preserve merge/false/null/pre-send behavior. R20 actual disposable SQLite total_changes checks show backup/preview/ledger/snapshot display reads do not write; caller retains original GM guards. R26 real disposable SQLite status initialization/session/director/party fallback/conflict and caller-rollback evidence; exact original response/body/order preserved, single awaited reply and error propagation. R27 disposable SQLite GM-before-options/storage, option/environment/default mode, role coalesce, native routing/schema failures, caller rollback and response failure after original write; original setup body preserved after deferred GM callback only. R36 actual disposable SQLite guild/filter-before-limit/no-write proof plus shape/callback/error/private-chunk tests. R37 real disposable SQLite guild isolation/no-write, exact original limits/text/errors/private chunks. R39 actual SQLite initialization/historical fallback/guild scope, exact display caps/order/errors and no policy mutation. R41 actual SQLite guild/limit/no-write plus original formatting/chunk/fallback/error proofs. R42 real disposable SQLite historical fallback/paused/no-write, exact original text/defaults/read order/failures.",
+      "lifecycle": "Per command store construction after existing player preparation; used only for replay/capture. Root historical API forwards same functions pending RF06-F07 review. No database/client creation by imports or pair. R18 scopes preference view only for two supported player subcommands inside unchanged receipt lifecycle. R26 Application composes the restricted Persistence status store with Operations routing validator through existing pairs; awaited inside original receipt try/finally. Missing campaign initialization remains an existing write. R27 setup receives original application isGM deferred callback before options/storage; Application awaits handler inside unchanged receipt lifecycle. R36 invoked only inside unchanged application GM guard and awaited before receipt cleanup. R37 inside unchanged Application GM guard, awaited before receipt cleanup. R39 same existing general-player route inside receipt lifecycle, no GM restriction added. R41 original Application GM guard and active session lookup remain before awaited adapter inside receipt lifecycle. R42 original Application GM guard and active-session lookup retained, same session passed and handler awaited within receipt lifecycle.",
       "adoption_feature": "RF06-F04",
       "consumers": [
         "bot/src/commands.js"
@@ -1510,7 +1515,8 @@
         "bot/tests/ai-gm-2026-10/rf06-f04-c36.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c37.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f04-c39.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f04-c41.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f04-c41.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c42.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1527,7 +1533,7 @@
         "occurrences": 42
       },
       "public_api": "bot/src/framework-to-framework/discord--persistence/public.js",
-      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration. R26 campaign status initialization and reads only; no new SQL or native write migration. R27 original campaign setup/configureCampaign interface; native write repositories unchanged. R36 original GM fact-list read/formatter/private reply adapter. R37 original private GM NPC cognition display. R39 original continuing-party status initialization/display. R41 original private Director-history display."
+      "scope": "R12 receipts, R18 preferences and R20 read-only admin adapters; no SQL/repository/native commit or restore migration. R26 campaign status initialization and reads only; no new SQL or native write migration. R27 original campaign setup/configureCampaign interface; native write repositories unchanged. R36 original GM fact-list read/formatter/private reply adapter. R37 original private GM NPC cognition display. R39 original continuing-party status initialization/display. R41 original private Director-history display. R42 original private Director-status display."
     },
     {
       "pair": "discord--publication",
