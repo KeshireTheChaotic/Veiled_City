@@ -50,7 +50,7 @@
 | RF06-F04 R42 | Original Director-status through two-method view | eab23475 | 6/6passed,syntax7,originalbranchAST; fingerprints unchanged on resume |
 | RF06-F05 R43 | Original SIGINT/SIGTERM registration in bootstrap | 222f79c4 | 5/5passed,syntax3,exact callbacks/restindexAST |
 | RF06-F04 R44 | Original export attachment construction in Discord | 07326425 | 5/5passed,syntax4,whole helper/rootAST proof |
-| RF06-F04 R45 | Twelve original command attachment constructors through Discord | this R45 checkpoint | 4/4passed,syntax4,argument/restrootAST proof |
+| RF06-F04 R45 | Twelve original command attachment constructors through Discord | 0e3ab1bf | 4/4passed,syntax4,argument/restrootAST proof |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.

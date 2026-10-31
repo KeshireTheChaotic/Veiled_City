@@ -1,0 +1,13 @@
+✔ original wrapping retains actual SDK type, buffer identity, exact names and order without input mutation (0.9744ms)
+✔ original empty array returns fresh empty output and original map receiver dispatch preserved (0.1649ms)
+✔ original field getter order and source exception identity retained (0.3165ms)
+✔ original invalid input errors and abort-before-later-row behavior retained without added policy (0.2101ms)
+✔ root adopts same public helper while preserving player/GM/evidence calls (0.8403ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 562.8457
