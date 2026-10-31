@@ -1,0 +1,20 @@
+{
+  "feature": "RF06-F04 R72",
+  "reason": "The read-only simulation status command now wraps its existing complete JSON result with the Discord-owned createAttachment API. The GM gate and all transaction, update, review, and publication branches remain unchanged.",
+  "qualification_base": "7209b3269ec89795fd4d588d029928c609143fe6",
+  "entries": [
+    {
+      "id": "2c6af039aa088ea19066e0bca6a3dbc799561261fc20fd082fbc04398ece5270",
+      "code": "EXTERNAL_CAPABILITY_OWNER",
+      "from": "bot/src/simulation-commands.js",
+      "kind": "static",
+      "specifier": "discord.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

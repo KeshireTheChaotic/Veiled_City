@@ -2,6 +2,8 @@
 
 Base: `3de506ed97af2a238d4b4d2511604319ed812a28` (`RF06 F04 R70 use Discord city attachment interface`).
 
+Result: `7209b3269ec89795fd4d588d029928c609143fe6` (`RF06 F04 R71 use Discord story attachment interface`).
+
 The story command now uses `createAttachment` from the existing Discord public API. Its GM gate, command dispatch, result generation, optional inbox preview, content truncation, ephemeral delivery, mention suppression, and reply call are unchanged. The only production source path is `bot/src/story-commands.js`; `PermissionFlagsBits` remains imported from `discord.js` for the original permission decision.
 
 Pre-edit worktree source SHA256: `90d6fdaf42d09047d8444a79e314cfcfe07019d0f582be649113b48cacf63850`. Git blob SHA256 at the same base: `5a55129f86e8ab4da8b3be38cbef166d6ba6e6abd61fd9ef88fda323d31dacdb` (Windows checkout line-ending conversion).

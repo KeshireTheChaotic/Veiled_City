@@ -1,5 +1,5 @@
 /** GM-only simulation configuration, review, inspection, and explicit fictional time advancement. */
-import { AttachmentBuilder } from "discord.js";
+import {createAttachment} from './frameworks/discord/public.js';
 import { PermissionError, NotFoundError } from "./kernel/errors.js";
 import { applySimulationUpdates, configureSimulationEntity, simulationOverview, submitNpcAction,
   resolveNpcAction, shareInformation, processSimulationEvents } from "./frameworks/world/public.js";
@@ -73,7 +73,7 @@ export async function handleSimulationCommand(interaction,{db,isGm,sub}){
     await interaction.editReply(`Delivered ${delivered} queued NPC hook(s).`);
     return true;
   }else throw new Error("Unknown simulation command.");
-  const files=[new AttachmentBuilder(Buffer.from(JSON.stringify(result,null,2)),{name:"simulation.json"})];
+  const files=[createAttachment(Buffer.from(JSON.stringify(result,null,2)),{name:"simulation.json"})];
   // The receipt wrapper captures completion before any Discord publication.
   await interaction.reply({content:summary,files,ephemeral:true});
   if(publish) await publishSimulationHooks({db,guild:interaction.guild,sessionId:db.getActiveSession(guildId)?.id||null});
