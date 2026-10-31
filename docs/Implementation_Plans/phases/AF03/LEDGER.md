@@ -1,6 +1,6 @@
 # AF03 — Existing effect migration and exceptional proof gates
 
-**IN PROGRESS — all 20 bounded effect occurrences ported; targeted offline parity complete, wider qualification pending.** Agent C. AF02's remaining new movement/domain operation work and AF05/AF07 runtime qualification are not declared complete.
+**COMPLETE — all 20 bounded effect occurrences ported and targeted offline parity passed.** Wider cross-boundary/runtime qualification remains AF07 work; this phase does not claim full release qualification.
 
 ## Delivered
 
@@ -29,4 +29,4 @@ All 20 declarations match original printed-rule/template hashes and reject chang
 
 These are native-rule tests with injected source/service boundaries, not whole-application, live-AI or delivery qualification. They do not authorize removal merely because a mock passed. Preserve old proof/receipt consumers until AF05 and AF07 scenario evidence closes those boundaries. Production feature statuses remain unchanged; the 75 original review-only occurrences are not collectively enabled.
 
-Continue AF02's missing movement/area/domain operations, using the source rulings already received. Then qualify AF03's wider cross-boundary scenarios and proceed to AF04's exact capability/hold classification and activation. AF06 deletion remains gated.
+Next exact phase: **AF04 — activate or explicitly hold each previously unsupported occurrence using source-specific native operations/proofs**. AF02's remaining movement/area/domain operations continue as shared prerequisites. AF06 deletion remains gated on AF05 runtime evidence and a current consumer audit.

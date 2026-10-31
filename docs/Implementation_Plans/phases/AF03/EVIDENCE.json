@@ -1,6 +1,6 @@
 {
   "phase": "AF03",
-  "status": "bounded_ports_verified_wider_qualification_pending",
+  "status": "bounded_effect_ports_complete_targeted_offline_parity_passed",
   "baseline": "53b8aed86fb892cfe07e22641db40c8fb4c469ae",
   "runs": [
     {
