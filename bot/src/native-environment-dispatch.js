@@ -6,7 +6,7 @@ import {applyEnvironmentDoorChain} from './frameworks/daggerheart/public.js';
 import {applyEnvironmentImagingRecord} from './frameworks/daggerheart/public.js';
 import {establishEnvironmentUploadRecording,startEnvironmentUploadCountdown,advanceEnvironmentUploadCountdown,
   adjustEnvironmentUploadCountdown} from './frameworks/daggerheart/public.js';
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {arbitrationFailure as fail} from './kernel/arbitration-failure.js';
 import {createEnvironmentDispatchRules} from './frameworks/daggerheart/public.js';
 let nativeRules;
 function rules(){return nativeRules??=createEnvironmentDispatchRules({capabilities:{applyEnvironmentArrival:(...args)=>applyEnvironmentArrival(...args),applyEnvironmentSceneAction:(...args)=>applyEnvironmentSceneAction(...args),applyEnvironmentWitnessAccounts:(...args)=>applyEnvironmentWitnessAccounts(...args),applyEnvironmentDoorChain:(...args)=>applyEnvironmentDoorChain(...args),applyEnvironmentImagingRecord:(...args)=>applyEnvironmentImagingRecord(...args),establishEnvironmentUploadRecording:(...args)=>establishEnvironmentUploadRecording(...args),startEnvironmentUploadCountdown:(...args)=>startEnvironmentUploadCountdown(...args),advanceEnvironmentUploadCountdown:(...args)=>advanceEnvironmentUploadCountdown(...args),adjustEnvironmentUploadCountdown:(...args)=>adjustEnvironmentUploadCountdown(...args),fail:(...args)=>fail(...args)}});}

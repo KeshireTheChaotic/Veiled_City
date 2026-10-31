@@ -6,7 +6,7 @@ const {buildNarrativeContext}=nativeNarrativeContext;
 import {establishNativeEnvironmentInstance} from './frameworks/daggerheart/public.js';
 import {compileNativeActors,executableNativeFeatures} from './frameworks/daggerheart/public.js';
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {arbitrationFailure as fail} from './kernel/arbitration-failure.js';
 
 import {createEnvironmentProfileProposalRules} from './frameworks/daggerheart/public.js';
 let nativeRules;

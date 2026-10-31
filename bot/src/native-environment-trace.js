@@ -15,7 +15,7 @@ import {assertPcCanAct,hopeCap} from './pc-native-eligibility.js';
 import {nativeWorldEvents} from './frameworks/daggerheart/public.js';
 function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}
 import {jsonHash as hash} from './kernel/json-hash.js';
-import {arbitrationFailure as fail} from './gm-arbitration-contract.js';
+import {arbitrationFailure as fail} from './kernel/arbitration-failure.js';
 import {reserveGmArbitrationNotice} from './native-publications.js';
 import {captureCountdownActionAncestry,inspectCountdownActionAncestry} from './frameworks/daggerheart/public.js';
 import {createEnvironmentTraceRules} from './frameworks/daggerheart/public.js';

@@ -1,0 +1,83 @@
+{
+  "base": "b576b053723ab1aa8e72d301a32edf05e0daf084",
+  "exact_source_substitutions": true,
+  "syntax_pass": 3,
+  "test_batches": [
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c123.test.mjs",
+      "pass": 2,
+      "fail": 0,
+      "duration_ms": 1079.1038
+    },
+    {
+      "command": "node --test bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "pass": 1,
+      "fail": 0,
+      "duration_ms": 1728.4123
+    }
+  ],
+  "limits": "Exact constructor identity and Native source bodies, closed dispatch/profile refusal before database access, actual guarded offline bootstrap. No positive Native trace, policy, transaction, publication or full GM/live qualification.",
+  "files": [
+    {
+      "path": "bot/src/native-environment-dispatch.js",
+      "sha256": "343895598fede90801a04e17231b05df35c317d6548f1d2258c87233f6a61855"
+    },
+    {
+      "path": "bot/src/native-environment-proposals.js",
+      "sha256": "73414f26b6e9035f143eb74b1433c2af24a7d4e0ab979c5d586d15c3a9c71f6c"
+    },
+    {
+      "path": "bot/src/native-environment-trace.js",
+      "sha256": "aff1e1801bed8fc72df4f6b8ccb9c7d2bd6f74a6e43c2ce29b28f9bd8172eff1"
+    },
+    {
+      "path": "bot/src/index.js",
+      "sha256": "c03dd26484f88bc3e4e27dd9d7ee1b85a7b8551c03b166fd059780957bbdb9a0"
+    },
+    {
+      "path": "bot/src/application/composition/public.js",
+      "sha256": "ada90485c64188112f5df9f76b971608d17567484690e5eea8d0ccc3dac2e3d2"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "sha256": "d6df9dac1c86006b4a288d28491ea1bba619e09807125f10aeb270f8cef09055"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "ae6f7580c775f6a4085c7272b049953799961c207776131afbb046bcc01a6259"
+    },
+    {
+      "path": "bot/src/kernel/arbitration-failure.js",
+      "sha256": "4d7d13121fc05e73813f95f2f4bf26fb250577a2a52d427e18c46a9e7d4c7b8c"
+    },
+    {
+      "path": "bot/src/frameworks/intent/gm-arbitration-contract.js",
+      "sha256": "3504904f06e5d8094a67905cfe870e22f4500b7e9e150b607119b810ebf8e0c2"
+    },
+    {
+      "path": "bot/src/gm-arbitration-contract.js",
+      "sha256": "ad0784276b998f88988d54346448509828dbffc118df732c9fbadc33b72e6d29"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c123.test.mjs",
+      "sha256": "dc9d40f8d8a12c0c389d6250d32cb546d099b833975e06610b20231112707dcd"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f05-c113.test.mjs",
+      "sha256": "0f8f75c6e82fde50deb0a87ebcaa752b058e4712ab6262b3abb1f0139ea3dafa"
+    }
+  ],
+  "architecture": {
+    "sourceModules": 1067,
+    "unowned": 0,
+    "importOccurrences": 4318,
+    "internalImportOccurrences": 4121,
+    "cycleComponents": 1,
+    "largestCycle": 51,
+    "rawViolationOccurrences": 614,
+    "acceptedLegacyOccurrences": 614,
+    "activeViolationGroups": 0,
+    "transitionErrors": 0,
+    "pass": true
+  }
+}
