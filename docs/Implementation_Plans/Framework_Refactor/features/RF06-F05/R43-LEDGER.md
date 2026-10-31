@@ -1,0 +1,9 @@
+# RF06-F05 R43 — Complete original shutdown signal registration
+
+Only index final SIGINT/SIGTERM registrations moved into bootstrap/shutdown.js. Same two distinct callbacks/register order/position before login, default original process object and synchronous voice.destroy→db.close→client.destroy→exit(0). Original callback ASTs equal after only injected process receiver substitution; entire remaining index AST unchanged except helper import/one call. No awaiting/catch/retry/debounce/cleanup policy change, GM/turn/native/DB schema change or real signal execution.
+
+Agent A explicitly granted exclusive index source slot for these two statements only. Runtime2files/fresh c43/scope/ledger/hash/structure/log/phase ledger only; no shared public/BRIDGE/registry/db edits. Shared INDEX requires explicit current grant before exact commit; preserve C104 docs and all owner edits. Original npm executable/path/config unchanged.
+
+Frozen node --test bot/tests/ai-gm-2026-10/rf06-f05-c43.test.mjs exit0,5/5passed,zero failure/skip/cancel,53.1345ms. Entirely fake lifecycle/voice/DB/client cases: distinct callback registration/no sideeffect, exact receivers/order/exitcode, thrown cleanup stopping later actions, ignored thenables/repeated signals, registration failure and root call before login. Syntax3/3, AST/source/hash checks passed. No test repair/rerun or real process/DB/client/provider/network calls.
+
+Shared RF05 ratchet exit0:1067modules/4272imports,zero unowned/active/transitionerrors,711accepted,cycle60. Includes concurrent Agent A C104; no R43 transition retirement/exception expansion or full RF06/release qualification. Correlated handout/outbox repositories held until specific unit-of-work contract. No deployment/push/merge. Next exact RF06-F04 R44 original per-command attachment construction transport, subject to current caller inventory. Rollback only exact R43paths.

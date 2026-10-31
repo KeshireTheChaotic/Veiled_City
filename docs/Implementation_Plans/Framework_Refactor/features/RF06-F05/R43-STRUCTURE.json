@@ -1,0 +1,15 @@
+{
+  "parent": "eab2347523a9414092c0bab12b531dd820e532ff",
+  "both_original_callback_asts_equal_after_only_process_receiver_substitution": true,
+  "remaining_root_ast_equal_except_one_helper_import_and_registration": true,
+  "signals": [
+    "SIGINT",
+    "SIGTERM"
+  ],
+  "order": [
+    "voice.destroy",
+    "db.close",
+    "client.destroy",
+    "process.exit(0)"
+  ]
+}

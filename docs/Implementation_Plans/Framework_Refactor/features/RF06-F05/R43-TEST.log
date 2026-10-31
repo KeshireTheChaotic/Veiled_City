@@ -1,0 +1,13 @@
+✔ registers original two distinct callbacks in order without performing cleanup (0.8721ms)
+✔ each original signal invokes cleanup and exit in exact original receiver/order (0.1552ms)
+✔ original cleanup failure propagates and prevents later actions without retries (0.7396ms)
+✔ original ignored thenables and repeated signal calls remain synchronous without debounce (0.1259ms)
+✔ original registration failure stops second handler and startup calls helper immediately before login (0.4938ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.1345

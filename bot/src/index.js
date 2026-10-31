@@ -1,3 +1,4 @@
+import {registerShutdownHandlers} from './bootstrap/shutdown.js';
 import {initializePublicationOperations} from './application/composition/public.js';
 import {initializeOperationsDiscord} from './application/composition/public.js';
 import {initializePublicationDiscord} from './application/composition/public.js';
@@ -686,7 +687,7 @@ client.on("messageCreate",async message=>{
   }
 });
 
-process.on("SIGINT",()=>{ voice.destroy(); db.close(); client.destroy(); process.exit(0); });
-process.on("SIGTERM",()=>{ voice.destroy(); db.close(); client.destroy(); process.exit(0); });
+registerShutdownHandlers({voice,db,client});
+
 
 await client.login(config.discordToken);
