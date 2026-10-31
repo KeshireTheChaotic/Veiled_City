@@ -70,7 +70,8 @@
 | RF06-F05 R62 | Exact original Discord SDK client factory through public API | a92a49931e8f49445f30b5c49c8d78e35e7cf447 | 4/4fresh;syntax4;constructor/restindexAST exact;1obsolete record retired |
 | RF06-F05 R63 | Exact53startup initializers in Application coordinator | 7ed4d996f0a2a7fa9189dabad98d1a4223e87d70 | 4/4fresh+1affected retry;syntax5;originalcalls/importrefs/restindexAST exact |
 | RF06-F05 R64 | Entrypoint splitter import uses existing Discord public | 79349aff835efa8f83569fa102ce42378e227d3f | runtimeidentity/restAST exact;syntax1;affected1/1;1record retired |
-| RF06-F03 I02 | Original GM notice reservation/caller transaction inventory | this I02 checkpoint | static5helpers/9callsites/source hashes/schema;no runtime suite |
+| RF06-F03 I02 | Original GM notice reservation/caller transaction inventory | ab7ef4d7523b1fa86a21209657617b0238048ca9 | static5helpers/9callsites/source hashes/schema;no runtime suite |
+| RF06-F03 R65 | Real owner projection and original withdrawal reservation rollback | this R65 checkpoint | 1/1 final actual SQLite; all-table rollback, retry and replay; five fixture failures retained |
 | RF06-F01 I01 | Current source/schema/method/caller inventory | 2b23b858 | Static Acorn extraction exit 0; no runtime tests/DB opens |
 
 Feature scopes, full outcomes including initial failed test expectations, hashes, modified paths, rollback and limits are in ../../features/RF06-F05/R01-LEDGER.md, ../../features/RF06-F04/R02-LEDGER.md, ../../features/RF06-F03/R03-LEDGER.md and ../../features/RF06-F01/I01-LEDGER.md. Existing C148 and CHUNK01 remain separately qualified prior slices; this checkpoint does not replace their evidence.
@@ -89,4 +90,4 @@ Exclusive ownership coordinated through Agent A RF05 chat: Agent B owns commands
 
 Root privacy and operations diagnostic helpers are now retired after qualified pair/entrypoint adoption and zero active caller evidence. Existing publication uncertain-delivery, native effect/outbox transactions, stored proof readers and command receipt checks remain unchanged. Transaction-sensitive SQL migration requires exact caller/unit-of-work proof; RF05 completeness as a whole is not a prerequisite for independent slices.
 
-Next exact feature: RF06-F03 R65 agree/qualify original reservation forwarding and nonempty caller rollback contract; handout migration locally held, followed by additional independent command/publication boundaries. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.
+Next exact feature: RF06-F03 R66 agree narrow original synchronous forwarding with Agent A and qualify each adopting caller. R65 proves the original withdrawal caller and real owner projection; group dice/effects and environment-trace adoption remain locally held on their specific proofs. Handout migration locally held; independent command/publication boundaries continue. No full RF06 or RF07 completion claim. No live Discord/provider calls, production DB access, deployment, CI, push or merge. Release remains unauthorized.

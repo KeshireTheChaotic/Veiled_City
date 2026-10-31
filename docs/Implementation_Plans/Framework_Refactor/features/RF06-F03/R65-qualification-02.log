@@ -1,0 +1,23 @@
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (12.2372ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1667.6946
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f03-r65.test.mjs:20:1
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (12.2372ms)
+  TypeError: Provided value cannot be bound to SQLite parameter 7.
+      at VeiledDB.initializeCombatants (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:2024:11)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r65.test.mjs:36:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'ERR_INVALID_ARG_TYPE'
+  }

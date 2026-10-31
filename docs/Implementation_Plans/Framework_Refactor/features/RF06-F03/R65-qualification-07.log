@@ -1,0 +1,9 @@
+✔ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (134.6121ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1764.8142

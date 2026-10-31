@@ -1,0 +1,25 @@
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (78.748ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1792.9187
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f03-r65.test.mjs:20:1
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (78.748ms)
+  Error: Unified GM arbitration held: private_notice_recipient
+      at arbitrationFailure (file:///D:/Library/Development/Veiled_City/bot/src/kernel/arbitration-failure.js:2:65)
+      at nativeGmNotice (file:///D:/Library/Development/Veiled_City/bot/src/gm-arbitration-output.js:41:84)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r65.test.mjs:52:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'GM_ARBITRATION',
+    expected: true
+  }

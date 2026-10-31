@@ -1,0 +1,32 @@
+file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/contracts/strategy-delegate-source.js:2
+export function createNativeStrategyDelegateSource(){let factory=null;return Object.freeze({provideSource(native){if(typeof native!=='function')throw new TypeError('Native strategy delegate factory required.');if(factory&&factory!==native)throw new Error('Native strategy delegate source replacement forbidden.');factory=native;},delegateFunction(){if(!factory)throw Object.assign(new Error('Native strategy delegate source has not been provided.'),{code:'NATIVE_STRATEGY_DELEGATE_COMPOSITION'});const fn=factory();if(typeof fn!=='function')throw new TypeError('Native strategy delegate function required.');return fn;}});}
+                                                                                                                                                                                                                                                                                                                                                                                             ^
+
+Error: Native strategy delegate source has not been provided.
+    at Object.delegateFunction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/contracts/strategy-delegate-source.js:2:382)
+    at connectNpcIntentStrategy (file:///D:/Library/Development/Veiled_City/bot/src/framework-to-framework/intent--npc/public.js:3:103)
+    at initializeNpcStrategy (file:///D:/Library/Development/Veiled_City/bot/src/application/composition/npc-strategy.js:3:126)
+    at initializeRuntimeFrameworks (file:///D:/Library/Development/Veiled_City/bot/src/application/composition/runtime-initializers.js:73:3)
+    at file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r65.test.mjs:15:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  code: 'NATIVE_STRATEGY_DELEGATE_COMPOSITION'
+}
+
+Node.js v24.19.0
+✖ tests\ai-gm-2026-10\rf06-f03-r65.test.mjs (1492.8638ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1498.1953
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f03-r65.test.mjs:1:1
+✖ tests\ai-gm-2026-10\rf06-f03-r65.test.mjs (1492.8638ms)
+  'test failed'

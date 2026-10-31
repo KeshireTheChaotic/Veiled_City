@@ -1,0 +1,29 @@
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (20.5514ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1752.9633
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f03-r65.test.mjs:20:1
+✖ original owner withdrawal rolls back on reservation failure and queues a real owned notice on retry (20.5514ms)
+  Error: Scene fiction held: camera_disabled. No character action or outcome was inferred.
+      at sceneFictionFailure (file:///D:/Library/Development/Veiled_City/bot/src/kernel/scene-fiction-failure.js:2:66)
+      at Object.buildNarrativeContext (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/narrative/context-builder.js:44:67)
+      at buildNarrativeContext (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/narrative/authority-context.js:44:65)
+      at port.<computed> (file:///D:/Library/Development/Veiled_City/bot/src/kernel/function-port.js:10:58)
+      at port.<computed> (file:///D:/Library/Development/Veiled_City/bot/src/kernel/function-port.js:10:58)
+      at createArbitrationOrigin (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/arbitration-origin.js:14:13)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f03-r65.test.mjs:43:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17) {
+    code: 'SCENE_FICTION',
+    expected: true,
+    diagnostic: { category: 'camera_disabled' }
+  }
