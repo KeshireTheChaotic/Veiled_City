@@ -1,0 +1,21 @@
+✔ all original GM filters apply before limit and remain guild/archive scoped without writes (306.6365ms)
+✔ original caps/defaults/numeric coercion and created-at/rowid ordering retained (381.1848ms)
+✔ original wildcard/parameterized search and raw row/text/prototype fields unchanged (232.0576ms)
+✔ original option getter order runs once and query normalization error precedes instrumented SQL (153.116ms)
+✔ same connection fact reads observe caller updates/savepoints and roll back with caller coordinator (157.2279ms)
+✔ original SQL instrumentation proxy gets one read and no query writes or replacement connection (157.0886ms)
+✔ reopened saved fact rows/query/schema remain identical and read-only (180.2707ms)
+✔ fixed fact read capability forwards current receiver/result/error without raw DB exposure (1.0957ms)
+✔ original null/zero defaults produce exact empty private message and original query options (0.3098ms)
+✔ explicit option values and original map callback arguments retained across private chunks (0.2165ms)
+✔ actual SQLite filtering stays before limit, remains guild scoped and performs no writes (301.058ms)
+✔ read/formatter/response failures propagate with no retries or later sends (0.3258ms)
+✔ application retains GM guard, exact formatter and awaited receipt lifecycle (0.6748ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1673.7249

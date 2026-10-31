@@ -1,0 +1,11 @@
+{
+  "parent": "2b6c4e1eb6825ce0cb699ccb82ed6cb31357e0cc",
+  "class_methods": 319,
+  "untouched_methods": 318,
+  "original_signatures_equal": true,
+  "all_other_method_asts_equal": true,
+  "original_query_body_equal_after_only_connection_substitution": true,
+  "old_class_sql_sites": 399,
+  "new_class_sql_sites": 398,
+  "repository_sql_sites": 1
+}

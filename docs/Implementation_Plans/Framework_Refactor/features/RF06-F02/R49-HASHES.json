@@ -1,0 +1,6 @@
+{
+  "bot/src/frameworks/persistence/database.js": "192ee1f8fbdec9140af77b415dcda3b55185d174d0e62defd3f1027a9b6c7b99",
+  "bot/src/frameworks/persistence/gm-fact-repository.js": "2f4d95786665f9576a9ec0fad0bf577c0f99befca66dd249c6145ac6a6f6779d",
+  "bot/tests/ai-gm-2026-10/rf06-f02-c49.test.mjs": "6aabca8f6be45a616fc0df5b56383240f5180afe3696d339cda2af84234c3660",
+  "bot/sql/schema.sql": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374"
+}

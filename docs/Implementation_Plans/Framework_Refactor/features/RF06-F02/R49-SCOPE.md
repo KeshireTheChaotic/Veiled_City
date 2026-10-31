@@ -1,0 +1,5 @@
+# RF06-F02 R49 — Original GM-fact SQL reader
+
+Only listFactsForGM moves from database.js to private gm-fact-repository.js, same caller connection/proxy. Preserve class signature/destructured defaults, normalization order, original SQL guild/archive/visibility/category/user/search predicates before LIMIT, wildcard semantics, ordering/cap1–100/default50, row fields/prototype/errors. All other318methods including find/add/update/archive fact, native evidence/receipts/outbox/transactions/migrations unchanged AST; schema460/hash unchanged. No new permission or fact authority, connection/cache/transaction/query fix.
+
+Exact one-method source grant from Agent A after R48. R36 current GM-read interface and actual SQLite filter/guild/no-write evidence qualify independent query only; no correlated repository qualification. Fresh real SQLite comprehensive filters/caps/defaults/wildcards/raw rows/errors/query getters/caller transaction/savepoint/rollback/proxy/reopen plus affected R36 once because actual query path changes. AST/signature/source proof, syntax/checker/exact INDEX. No public/registry/index/class-write/native/provider/live/production changes.
