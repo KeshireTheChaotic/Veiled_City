@@ -1,0 +1,10 @@
+{
+  "bot/src/commands.js": "faa6cb05bb908345205979f489f82847885ba21c923ce8f9e923bfa9537a98fb",
+  "bot/src/frameworks/discord/public.js": "c637590747fe6ff730c150ff5b02d5f08d22bd746e1fcf067be13b0469dbbe19",
+  "bot/src/frameworks/discord/gm-access.js": "53dabc7f817c9d9c4302351d3b2bc077214ed6cbce826d23cce6280db37d9da0",
+  "bot/src/frameworks/persistence/public.js": "b68e18b55f36d7bf9ffb08225ab0c43f963c8f2d6acb2c7afa4d2ad8361cd8f7",
+  "bot/src/frameworks/persistence/gm-access.js": "a33d34c0d9609abb294d237ec71b91d330d28030c10d02949fa43b0d41d887e0",
+  "bot/src/framework-to-framework/discord--persistence/public.js": "32bfcaab628a7a0197de3cdd0aa5ca4ec44685c096fa371ea3db3b2c98656cc3",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c46.test.mjs": "451e06fc0d3cabf55cfa74afa1cef830466ff0b14b521837580b106c038da5fc",
+  "bot/tests/ai-gm-2026-10/rf06-f04-c45.test.mjs": "2c44827ab5cdfd41d21ec7c61a20c438bf06a587c6a5cd379ea40f6d14739f3b"
+}

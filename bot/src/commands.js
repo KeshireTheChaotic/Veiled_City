@@ -1,3 +1,4 @@
+import {isGm as isGM} from './framework-to-framework/discord--persistence/public.js';
 import {createAttachment} from './frameworks/discord/public.js';
 import {exportAttachments} from './frameworks/discord/public.js';
 import {handleDirectorStatusCommand} from './frameworks/discord/public.js';
@@ -26,7 +27,7 @@ import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
 import {nativeCombatantLine as combatantLine} from './framework-to-framework/daggerheart--discord/public.js';
 /** Discord command schema and interaction dispatcher. Authorization and privacy checks belong at command boundaries; persistence belongs in VeiledDB. */
-import {PermissionFlagsBits} from "discord.js";
+
 import { dualityRoll, parseDice } from "./frameworks/daggerheart/public.js";
 import { establishFact } from "./frameworks/knowledge/public.js";
 import { indexWorldEvent } from './frameworks/world/public.js';
@@ -140,11 +141,7 @@ function findOwnedAnyCharacter(db,guildId,userId,query){
 async function ensurePlayer(db,interaction){
   return db.upsertPlayer(interaction.guildId,interaction.user.id,interaction.member?.displayName||interaction.user.username);
 }
-function isGM(db,interaction){
-  if(interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)) return true;
-  const c=db.getCampaign(interaction.guildId);
-  return !!(c?.gm_role_id && interaction.member?.roles?.cache?.has(c.gm_role_id));
-}
+
 function requireSession(db,guildId){
   const s=db.getActiveSession(guildId);
   if(!s) throw new NotFoundError("No active session.");

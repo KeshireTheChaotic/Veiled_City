@@ -68,3 +68,5 @@ export {handleDirectorStatusCommand,assertDirectorStatusStore} from './director-
 export {exportAttachments} from './export-attachments.js';
 
 export {createAttachment} from './attachment.js';
+
+export {hasGmAccess} from './gm-access.js';

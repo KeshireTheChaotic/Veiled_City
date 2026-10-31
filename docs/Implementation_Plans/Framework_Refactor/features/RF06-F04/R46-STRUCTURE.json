@@ -1,0 +1,7 @@
+{
+  "parent": "59da4995184db02a5abaf2af50f8f8c53dc22394",
+  "whole_original_guard_body_ast_equal_after_only_store_receiver_substitution": true,
+  "remaining_root_ast_equal_except_import_and_original_local_guard_removal": true,
+  "original_guard_callsites_unchanged": true,
+  "SDK_permission_rule_unchanged": true
+}

@@ -30,3 +30,5 @@ export {createPartyStatusStore} from './party-status.js';
 export {createDirectorHistoryStore} from './director-history-reads.js';
 
 export {createDirectorStatusStore} from './director-status-reads.js';
+
+export {createGmAccessStore} from './gm-access.js';

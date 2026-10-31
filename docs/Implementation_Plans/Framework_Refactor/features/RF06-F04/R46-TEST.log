@@ -1,0 +1,19 @@
+✔ actual original SDK type/buffer/name/options retained without input mutation (0.9236ms)
+✔ original omitted options/path-string and non-string names retain native SDK behavior (1.2883ms)
+✔ native options getter errors propagate original identity without retries (0.2765ms)
+✔ root routes all twelve original constructors through Discord and preserves serialization/name expressions (1.3336ms)
+✔ actual ManageGuild/Administrator short-circuit without touching missing or proxy DB (0.594ms)
+✔ configured role uses current original DB method/receiver/guild and boolean result (0.4837ms)
+✔ original absent campaign/role/member/permissions cases stay false without added authorization (0.1517ms)
+✔ original permission/DB/role getter errors propagate in unchanged order and exact identity (0.3539ms)
+✔ lazy fixed store performs no upfront shape access and exposes only current campaign reader (0.1972ms)
+✔ actual SQLite same-user roles remain campaign/guild scoped without writes (203.1791ms)
+✔ root adopts same GM predicate alias with all guard callers retained and no SDK permission implementation (1.0476ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 796.4662

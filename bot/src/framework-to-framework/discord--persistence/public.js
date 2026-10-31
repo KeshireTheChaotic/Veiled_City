@@ -38,3 +38,8 @@ export function connectDiscordDirectorHistory(db){return assertDirectorHistorySt
 import {assertDirectorStatusStore} from '../../frameworks/discord/public.js';
 import {createDirectorStatusStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordDirectorStatus(db){return assertDirectorStatusStore(createDirectorStatusStore(db));}
+
+import {hasGmAccess} from '../../frameworks/discord/public.js';
+import {createGmAccessStore} from '../../frameworks/persistence/public.js';
+/** Exact original GM predicate with lazy same-DB lookup; no new authorization policy. */
+export function isGm(db,interaction){return hasGmAccess(createGmAccessStore(db),interaction);}
