@@ -1,0 +1,41 @@
+{
+  "feature": "RF05-F04 C138",
+  "validation_head": "33e28cd0bec6bd84c23096961b7941ec688eda17",
+  "tests": {
+    "final_pass": 5,
+    "initial_pass": 4,
+    "affected_pass": 9,
+    "initial_fail": 1,
+    "final_fail": 0,
+    "syntax_pass": 5
+  },
+  "architecture": {
+    "accepted": 593,
+    "modules": 1083,
+    "transition_errors": 0,
+    "imports": 4396,
+    "active": 0,
+    "largest_cycle": 51,
+    "pass": true
+  },
+  "original_function_raw_sha256": "32970b6edc2a040a5fe1eabadd2231d15e37b597a4bd6cd6e8a88e99cd399a19",
+  "notes": [
+    "Initial failure was missing grant-denial fixture composition; production body unchanged.",
+    "Shared worktree gate includes uncommitted R78 and AF04 source; no whole-tree release qualification.",
+    "Synthetic adapter verifies review transaction boundaries, not actual native effect correctness.",
+    "Failed raw log hashed but kept local; passing logs committed."
+  ],
+  "sha256": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C138-TEST-FINAL.log": "95501042b1839e207085c1027e8069568e8dc16906858101378a709b35660a63",
+    "bot/src/frameworks/intent/public.js": "b62de479578d977ef62a9ad0d8f84ef5c94bf01a263ae8074cdf3b1ba738a050",
+    "bot/src/frameworks/intent/review-action.js": "895209ba09cb8027693dde356decbd45c7c5e6eb09000a1f542133f766237fbf",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C138-ARCHITECTURE.log": "a94e7265796d69508345b90fe6e645609ffa7a1d616d3fb6268447ee918f58ed",
+    ".reports/RF05-C138-gate.json": "56410376ca095c92418088df558a7147e942cd67b949ca66e81a55a6c5e14639",
+    "bot/src/ai-intents.js": "54003a6295f17de238c1ef6011f6f8ed7d654c21333981aaba4c4a31151c01c3",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C138-TEST.log": "bb815da3b4badbb15b1a205306019d8968dd15ea55f7768426ffc2cbe355432f",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C138-SCOPE.md": "6ded68272df648db1da7c27a4b30ff881c70ff8b66002bf8049471c0c6c03253",
+    "bot/src/frameworks/intent/contracts/review-execution.js": "c018a2ec6c8063f286d4b064215629d7480c67919c6e26167bb786d9519c00b4",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c138.test.mjs": "67612e1afe86f5c95f14275c6dbe2139bd9afe6c1e9b7ad959f630814ef9020c",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C138-AFFECTED-TEST.log": "5def4a2a9566255a32db748f761e6e64bdf6c080d1697466327499c716abcd42"
+  }
+}

@@ -86,3 +86,4 @@ export {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanti
 export {persistMovementCandidates,currentMovementCandidate} from './movement-language.js';
 export {intentContext} from './context-reader.js';
 export {intentKnowledgeContext} from './contracts/knowledge-context.js';
+export {reviewAiIntent} from './review-action.js';
