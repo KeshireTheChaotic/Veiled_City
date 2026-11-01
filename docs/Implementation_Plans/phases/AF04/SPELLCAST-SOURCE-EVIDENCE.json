@@ -1,0 +1,46 @@
+{
+  "commands": [
+    "node --check src/frameworks/daggerheart/encounter-library.js",
+    "node --check src/frameworks/daggerheart/feature-roll-source-rules.js",
+    "node --check tests/ai-gm-2026-10/af04-spellcast-source.test.mjs",
+    "node --test tests/ai-gm-2026-10/af04-spellcast-source.test.mjs"
+  ],
+  "skipped": 0,
+  "passed": 4,
+  "syntax_checks_passed": 3,
+  "exit_code": 0,
+  "failed": 0,
+  "phase": "AF04",
+  "status": "spellcast_source_identity_complete_roll_consumer_pending",
+  "source": "https://www.daggerheart.com/wp-content/uploads/2026/08/DH_SRD_2_2026_08_25.pdf",
+  "inputs": [
+    {
+      "sha256": "306f2131b56a37fdadbb93720a4da10fc513ba4cd78504bdf7e4ecda665335cd",
+      "path": "bot/src/frameworks/daggerheart/encounter-library.js"
+    },
+    {
+      "sha256": "0b627eb871b418c1227c7332ab550d3c0086bd780e18eded62af6ccd7439c9b0",
+      "path": "bot/src/frameworks/daggerheart/feature-roll-source-rules.js"
+    },
+    {
+      "sha256": "e6a8fb95d7c395da9e264c78ad0c0ede4313b050478eed2f97cf76e27752f196",
+      "path": "bot/tests/ai-gm-2026-10/af04-spellcast-source.test.mjs"
+    },
+    {
+      "sha256": "b3525d2ebde6aa8de5615bcd4a7904c8127d8b7c2fe592f9335dde2552f2780f",
+      "path": "content/CARDS/domain_cards.json"
+    }
+  ],
+  "notes": [
+    "Initial3 cases passed; malformed-loadout production guard then justified final4-case run.",
+    "Exact packaged source and its explicit roll clause are inspected; card type and matching trait are insufficient.",
+    "SRD subclass identity is explicit, including Assassin/Witch differences and selected multiclass slot."
+  ],
+  "source_version": "2.0 (2026-08-25)",
+  "limits": [
+    "Read-only classification; no activation, payment, dice or feature effect permission.",
+    "Current packaged domain cards only; official class/subclass features and campaign overrides need their corresponding source adapters.",
+    "Legacy string loadouts cannot prove an active card and remain held.",
+    "Roll preparation, saved proof and condition disadvantage consumption are not yet connected; Null Foam remains review-only."
+  ]
+}
