@@ -1,0 +1,11 @@
+✔ application supplies Intent public feature catalog to Operations review (3.329ms)
+✔ Operations review consumes the neutral kernel revision primitive directly (2.8495ms)
+✔ Operations receives only the unchanged Intent policy reader through fixed composition (1.0922ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1127.9101

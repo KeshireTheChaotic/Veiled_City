@@ -17,6 +17,9 @@
     "world"
   ],
   "publicEntrypoints": {
+    "intent--operations": [
+      "bot/src/framework-to-framework/intent--operations/public.js"
+    ],
     "ai-provider": [
       "bot/src/frameworks/ai-provider/public.js"
     ],

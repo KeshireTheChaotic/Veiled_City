@@ -2097,14 +2097,12 @@
         "intent",
         "operations"
       ],
-      "status": "PROPOSED_NO_API",
+      "status": "ADOPTED",
       "directions": [
         {
           "from": "operations",
           "to": "intent",
-          "import_occurrences": 2,
-          "injected_calls": 0,
-          "contract": "Observed dependency only; exact port remains with accountable migration"
+          "contract": "Original delegationPolicy reader only; same caller database, guild, saved policy identity, defaults and exceptions. No configuration or execution authority."
         }
       ],
       "source_evidence": [
@@ -2115,11 +2113,15 @@
           "type": "import"
         }
       ],
-      "validation": "Retain source and audience authority; design exact port in owning migration; observed imports do not prove runtime traffic.",
-      "lifecycle": "Observed proposal; no package/API/consumer claimed.",
-      "adoption_feature": "RF05",
-      "consumers": [],
-      "tests": [],
+      "validation": "Fresh C135 tests qualify fixed composition, saved identity/defaults, exact receiver/arguments, error propagation and replacement refusal.",
+      "lifecycle": "Runtime initializer binds once before review commands; repeated identical binding is allowed and replacement forbidden.",
+      "adoption_feature": "RF05-F04 C135",
+      "consumers": [
+        "bot/src/application/composition/runtime-initializers.js"
+      ],
+      "tests": [
+        "bot/tests/ai-gm-2026-10/rf05-f04.test.mjs"
+      ],
       "observed_directions": [
         {
           "from": "operations",
@@ -2133,7 +2135,9 @@
         "pair": "intent--operations",
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 2
-      }
+      },
+      "public_api": "bot/src/framework-to-framework/intent--operations/public.js",
+      "scope": "Delegation policy read only. intentContext and reviewAiIntent compatibility imports remain unqualified."
     },
     {
       "pair": "intent--persistence",

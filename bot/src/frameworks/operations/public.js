@@ -31,3 +31,4 @@ export {failureTrace} from './failure-trace.js';
 export {publicationTelemetrySource} from './publication-telemetry.js';
 
 export {operationalReport} from './health.js';
+export {operationsIntentPolicy} from './contracts/intent-policy.js';
