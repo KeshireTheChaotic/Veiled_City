@@ -209,3 +209,5 @@ export {resolveNativeEnvironmentEvent,inspectNativeEnvironmentResolution,environ
 
 export {applyNativeEnvironmentProfileProposals} from './native-environment-proposals.js';
 export {executeEnvironmentProposal} from './native-environment-dispatch.js';
+
+export {nativeOrdinaryProofSource} from './contracts/ordinary-proof-source.js';

@@ -1,0 +1,43 @@
+{
+  "feature": "RF05-F04 C143",
+  "starting_head": "eb513fed591d63f97df5e950ff1036a970676c5f",
+  "tests": {
+    "initial_adoption_pass": 15,
+    "syntax_pass": 4,
+    "fail": 0,
+    "final_source_port_pass": 15
+  },
+  "architecture": {
+    "largest_cycle": 51,
+    "active": 0,
+    "modules": 1091,
+    "transition_errors": 0,
+    "pass": true,
+    "imports": 4428,
+    "accepted": 590
+  },
+  "rejected_adoption": {
+    "new_to_legacy_imports": 7,
+    "active": 88,
+    "disposition": "Reverted exactly; no exemptions added.",
+    "transition_errors": 5,
+    "largest_cycle": 56
+  },
+  "notes": [
+    "Final port exposes existing provider; full provider relocation remains deferred.",
+    "Shared worktree gate includes concurrent R81/AF07 work; no release qualification."
+  ],
+  "sha256": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C143-ARCHITECTURE.log": "d0f5b9b61f5719372414520b63192f0910058a69128e22b7963cea1a7bfb18ff",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C143-TEST.log": "ffa2ceccd845999d4c9010e478cbb6f2efe278e5a84836938a2a619fe49dcf7a",
+    "bot/src/frameworks/daggerheart/contracts/ordinary-proof-source.js": "abcf9e8fe5ba9a21e55ade7a10d44a469f35bcaf9c58034e4a0dfa785ed160fe",
+    "bot/src/frameworks/daggerheart/public.js": "e0aa20b5db11178c51ec7e1cdea48d0a546631ef2d7b2f6b450d28a68a2f9b8e",
+    ".reports/C143-adoption-rejected.log": "aa001a9c7b84fc73108cb7def501ff26a59567cff49109af2560978ae61b13ff",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C143-TEST-FINAL.log": "062db31394621aa98d8e3f46c14cb212704e061a40e807657f58974b099572a3",
+    ".reports/RF05-C143-gate.json": "5c74d6ed45300c2552c178b3c1513bf71754f64967b3820296c461470da2ffcd",
+    "bot/src/ordinary-effect-proof.js": "c1231d79789093e38fb400319444e5d2683af8964cf1166d7eae73a6301fb0a9",
+    ".reports/RF05-C143-adoption-rejected.json": "fdcb2617ec8b97e4b54d51ec1c406aad160eb29dcc7421123a32c0ed02c8d1eb",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C143-SCOPE.md": "166bea6114ddf4ad2a7ab7f209691b7a0d100bc51e9ca564b6c612a798ec82f3",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c143.test.mjs": "ac26a03d4427712703f9f766143e101ea9214a15ac0f27c793b3096c452192d7"
+  }
+}

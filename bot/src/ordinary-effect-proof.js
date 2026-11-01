@@ -32,3 +32,7 @@ export function verifyOrdinaryEffect(...args){return rules().verifyOrdinaryEffec
 export function ordinaryEffectProjection(...args){return rules().ordinaryEffectProjection(...args);}
 import {nativeAccessOrdinaryProof} from './frameworks/daggerheart/public.js';
 nativeAccessOrdinaryProof.bind({ordinaryActionProof,ordinaryPrerequisite});
+
+// Provide original lazy proof functions to the fixed Native public source; no rules or state are copied.
+import {nativeOrdinaryProofSource} from './frameworks/daggerheart/public.js';
+nativeOrdinaryProofSource.bind({effectHash,effectKey,effectFail,ordinaryActionProof,ordinaryPrerequisite,effectTarget,effectVisibility,assertOrdinaryBinding,effectObservation,verifyOrdinaryEffect,ordinaryEffectProjection});
