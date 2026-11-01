@@ -87,3 +87,5 @@ C135 adopts Intent–Operations for the original delegationPolicy reader through
 C137 extends the same pair with the original public Intent context reader for GM-only Operations review. Review execution remains outside this qualified read contract; dedicated context evidence is in C137-HASHES.json.
 
 C139 adds the unchanged authenticated Intent review action through a fixed Operations consumer. Intent retains native validation/commit authority; the last Operations root Intent import is retired. Actual workflow SQLite and fixed-composition evidence is in C139-HASHES.json.
+
+C144 extends Daggerheart–Intent with the original ordinary-binding proof only. Existing Native provider authority and initialization remain; Intent has no direct root proof import. Qualification is recorded in C144-HASHES.json.

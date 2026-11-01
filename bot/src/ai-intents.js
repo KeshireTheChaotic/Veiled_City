@@ -37,7 +37,6 @@ function mundaneEntryImpact(...args){return intentSessionEntry.mundaneEntryImpac
 function resolveMundaneEntry(...args){return intentSessionEntry.resolveMundaneEntry(...args);}
 import {intentKnowledgeSemanticProof} from './frameworks/intent/public.js';
 function assertSemanticCandidateProof(...args){return intentKnowledgeSemanticProof.assertSemanticCandidateProof(...args);}
-import {assertOrdinaryBinding} from './ordinary-effect-proof.js';
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
 import {delegationCatalog} from './delegation-catalog.js';
@@ -118,8 +117,6 @@ export function delegationOperation(db,guild,input,reviewer){
   });
 }
 import {preflight,applyNative} from './frameworks/intent/native-preflight.js';
-import {intentOrdinaryBinding} from './frameworks/intent/contracts/ordinary-binding.js';
-intentOrdinaryBinding.bind({assertOrdinaryBinding});
 export function projectPrivateEffect(db,guild,input,reviewer){
   if(!reviewer||Object.keys(input).sort().join()!=="expected_revision,key,observation,op,projection_key"||input.op!=="project-effect"
     ||typeof input.observation!=="string"||!input.observation.trim()||input.observation.length>1500)throw new Error("Closed authenticated GM observation review required.");

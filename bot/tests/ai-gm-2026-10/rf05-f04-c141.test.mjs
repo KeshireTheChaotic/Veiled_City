@@ -1,3 +1,4 @@
+import {connectIntentNativeOrdinaryBinding} from '../../src/framework-to-framework/daggerheart--intent/public.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
@@ -37,3 +38,5 @@ test('actual dispatcher commits once, replays without effect/budget duplication 
  assert.equal(row.status,fail?'blocked':'accepted');assert.deepEqual(f.events(),fail?['audit']:['effect','audit']);
  if(fail){assert.match(row.data.diagnostic,/synthetic effect failed/);assert.deepEqual(budget,{operations:0,cost:0});}else{const [replay]=dispatchAiIntents(f.db,'g',[proposal()],context);assert.deepEqual(replay,row);assert.deepEqual(budget,{operations:1,cost:1});assert.deepEqual(f.events(),['effect','audit']);}
  }finally{f.close();}}});
+
+connectIntentNativeOrdinaryBinding();

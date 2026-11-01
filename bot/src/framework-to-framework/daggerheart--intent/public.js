@@ -55,3 +55,7 @@ import {nativeIntentActionPlan} from '../../frameworks/daggerheart/public.js';
 import {buildActionPlan,transitionAction} from '../../frameworks/intent/public.js';
 /** Supply Intent's original scheduling and receipt-transition functions to Native unchanged. */
 export function connectNativeIntentActionPlan(){return nativeIntentActionPlan.bind({buildActionPlan,transitionAction});}
+import {intentOrdinaryBinding} from '../../frameworks/intent/public.js';
+import {nativeOrdinaryProofSource} from '../../frameworks/daggerheart/public.js';
+/** Original Native proof only; Intent does not create source or effect authority. */
+export function connectIntentNativeOrdinaryBinding(){return intentOrdinaryBinding.bind({assertOrdinaryBinding:nativeOrdinaryProofSource.assertOrdinaryBinding});}

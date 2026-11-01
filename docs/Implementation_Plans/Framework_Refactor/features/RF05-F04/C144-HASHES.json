@@ -1,0 +1,45 @@
+{
+  "feature": "RF05-F04 C144",
+  "starting_head": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "tests": {
+    "final_pass": 18,
+    "fail": 0,
+    "syntax_pass": 8,
+    "skipped": 0,
+    "duration_ms": 1520.1041,
+    "initial_pass": 18
+  },
+  "architecture": {
+    "pass": true,
+    "modules": 1092,
+    "active": 0,
+    "imports": 4433,
+    "transition_errors": 0,
+    "largest_cycle": 51,
+    "accepted": 589
+  },
+  "notes": [
+    "Repeated batch justified by initializer guard edit after initial pass.",
+    "Shared worktree gate includes concurrent R82/AF07 source; not release qualification.",
+    "Native provider root implementation remains explicit; only Intent direct source dependency retired."
+  ],
+  "sha256": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C144-TEST-FINAL.log": "e6e39f30505fdba57ce5dadb970bb913ab9fe1adbd6454c93618d5e61662f88f",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c144.test.mjs": "ed96a9237d2b558bffd07d673648083c0bd7d5408cdc90bfe4f3add218659295",
+    "bot/src/application/composition/environment-scene.js": "3143bae965cfb9f0a42c2123274de1ac202911c62d6fa8949f50a332985ced67",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C144-ARCHITECTURE.log": "28f9d2d93662d11feb5e7c229afba2834f7a0a85c342c697a7181ec7f992bde1",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c138.test.mjs": "ac8e939bda7fe37fee941340e02f7be0a2ab4a9d67747a86545769d1dcd10a33",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "7ef0b5591024539a220bc9de72c44f0141a99a241c0e12426b1e9780c3b5936f",
+    "bot/src/framework-to-framework/daggerheart--intent/public.js": "7f902a751f2ce51d8648adaf6f1dc96d78db613e11077f388945a6fd1d08363e",
+    "bot/src/ai-intents.js": "e5ecbc86b3776bdab7731172d2f39d0b78ffc95549443a46fa3f1d4d1fbeec41",
+    ".reports/RF05-C144-gate.json": "8ff17d672e4b76b01a83b2701b4a56639236799fa74cae8933ecb269fa83e1e4",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C144-SCOPE.md": "e88682b9982cf19cc268f17c14043df835f40811b67263eba26bbd409e93f782",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "781c718384503d9a9742c18f3d86220a27fe82fe00df153c23a639488f08928a",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c142.test.mjs": "f330497618a6ea66022f4b26a3a358a0ceb1ab752a069858920dfeb0ad455e17",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "1d063d53c8b92b8a4a15f4beeecb7dcc2eee5eea95881ccf4e77e182b2e6e3f4",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C144-RETIRED.json": "096e9567245b991ae8a2ea34f7f1655b2f14bd61aeed5c46032fa86e6ee002f9",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C144-TEST.log": "a1ce51e49fe9a65f5da4a49335d87bdbd2a4eb3b5fa191c24092e87ae638932c",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c141.test.mjs": "714d836d2792973e765b945dfc0fc254496d5bb4462c701d5d5eccbbab8e48af",
+    "bot/src/frameworks/intent/public.js": "8472bd8908f75a49d41584a7fe67d897e023d0975d8f31750bb2c44209967a05"
+  }
+}

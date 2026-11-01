@@ -1,3 +1,4 @@
+import {connectIntentNativeOrdinaryBinding} from '../../src/framework-to-framework/daggerheart--intent/public.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -23,3 +24,5 @@ test('one original registry preserves replacement and adapter/impact identity th
  db.sourceFailure=new Error('source unavailable');assert.throws(()=>preflight(db,'g',intent,context),e=>e===db.sourceFailure);delete db.sourceFailure;
  adapters.delete('dialogue');assert.throws(()=>preflight(db,'g',intent,context),/adapter is not available/);registerIntentAdapter('dialogue',original);
 });
+
+connectIntentNativeOrdinaryBinding();

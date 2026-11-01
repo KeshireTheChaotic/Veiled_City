@@ -1,3 +1,4 @@
+import {connectIntentNativeOrdinaryBinding} from '../../src/framework-to-framework/daggerheart--intent/public.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
@@ -56,3 +57,5 @@ test('application and audit failures roll back both SQLite review and effect sta
 test('original private native helper retains causal marker order within caller transaction',()=>{
  const f=fixture();try{const result=f.db.transaction(()=>intentReviewExecution.applyNative(f.db,'g',intent(),'review','gm',{}, {apply(db){db.sql.prepare('INSERT INTO events VALUES (?)').run('private-effect');return 'original-result';}},true));assert.equal(result,'original-result');assert.deepEqual(f.events(),['marker','private-effect','retain']);}finally{f.close();}
 });
+
+connectIntentNativeOrdinaryBinding();

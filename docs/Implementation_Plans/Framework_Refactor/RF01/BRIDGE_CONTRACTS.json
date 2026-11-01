@@ -670,6 +670,11 @@
           "from": "daggerheart",
           "to": "intent",
           "contract": "Native resolved/contribution/clarification dispositions and source-pinned action receipts; no invented successful outcome."
+        },
+        {
+          "from": "intent",
+          "to": "daggerheart",
+          "contract": "C144 original assertOrdinaryBinding only, through fixed Native source and Intent consumer; same args/errors and Native source/ancestry authority. No effects or new grants."
         }
       ],
       "source_evidence": [
@@ -680,8 +685,8 @@
           "type": "import"
         }
       ],
-      "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics.",
-      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview. Native unified adjudication also adopted by state.js with explicit source/board capability; original prompt/provider composition remains in intent until later public-provider adoption.",
+      "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics. C144 proves fail-closed/repeated composition, actual Application source initialization and original guard/error forwarding.",
+      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview. Native unified adjudication also adopted by state.js with explicit source/board capability; original prompt/provider composition remains in intent until later public-provider adoption. C144 existing environment initializer binds Intent to Native fixed proof source; existing Application imports initialize original Native provider.",
       "adoption_feature": "RF03-F01",
       "consumers": [
         "bot/src/turn-orchestration.js",
@@ -717,7 +722,7 @@
         "occurrences": 114
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js",
-      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle. C130 adds the original Intent action-plan and transition functions to a fixed Native consumer used by three Native application modules; transaction and receipt authority remains at existing Native call sites.",
+      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle. C130 adds the original Intent action-plan and transition functions to a fixed Native consumer used by three Native application modules; transaction and receipt authority remains at existing Native call sites. C144 qualifies the original ordinary-binding proof via existing Native source; root provider relocation remains deferred. Dedicated test/evidence: rf05-f04-c144.test.mjs and C144-HASHES.json.",
       "typed_service_composition": {
         "feature": "RF05-F05 C94",
         "source": "bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js",

@@ -88,3 +88,4 @@ export {intentContext} from './context-reader.js';
 export {intentKnowledgeContext} from './contracts/knowledge-context.js';
 export {reviewAiIntent} from './review-action.js';
 export {registerIntentAdapter} from './adapter-registry.js';
+export {intentOrdinaryBinding} from './contracts/ordinary-binding.js';

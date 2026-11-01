@@ -1,8 +1,9 @@
 import {connectNativeWorldAuthoring} from '../../framework-to-framework/daggerheart--world/public.js';
+import {connectIntentNativeOrdinaryBinding} from '../../framework-to-framework/daggerheart--intent/public.js';
 import {connectNativeNarrativeAudience,connectNarrativeNativeEnvironment} from '../../framework-to-framework/daggerheart--narrative/public.js';
 import {connectIntentNativeEnvironmentActions,connectIntentNativePreparedPositions,connectIntentNativeErrata,connectIntentNativeFeatureCatalog,connectIntentNativeActorControl,connectIntentNativeAdversaryContext,connectIntentNativeEncounter,connectNativeArbitrationOrigin,connectNativeArbitrationOriginCreator,connectIntentNativeEnvironment,connectNativeIntentActionPlan} from '../../framework-to-framework/daggerheart--intent/public.js';
 let composed=null;
 /** Bootstrap-only fixed wiring of the Daggerheart-owned native environment engine to World, Narrative and Intent original sources. Constructs no database, provider, scene or client. */
 export function initializeEnvironmentScene(){
- return composed??=(connectIntentNativeEncounter(),connectIntentNativeAdversaryContext(),connectIntentNativeActorControl(),connectIntentNativeFeatureCatalog(),connectIntentNativeErrata(),connectIntentNativePreparedPositions(),connectNativeIntentActionPlan(),connectNativeWorldAuthoring(),connectNativeNarrativeAudience(),connectNarrativeNativeEnvironment(),connectNativeArbitrationOrigin(),connectNativeArbitrationOriginCreator(),connectIntentNativeEnvironment(),connectIntentNativeEnvironmentActions(),true);
+ return composed??=(connectIntentNativeOrdinaryBinding(),connectIntentNativeEncounter(),connectIntentNativeAdversaryContext(),connectIntentNativeActorControl(),connectIntentNativeFeatureCatalog(),connectIntentNativeErrata(),connectIntentNativePreparedPositions(),connectNativeIntentActionPlan(),connectNativeWorldAuthoring(),connectNativeNarrativeAudience(),connectNarrativeNativeEnvironment(),connectNativeArbitrationOrigin(),connectNativeArbitrationOriginCreator(),connectIntentNativeEnvironment(),connectIntentNativeEnvironmentActions(),true);
 }

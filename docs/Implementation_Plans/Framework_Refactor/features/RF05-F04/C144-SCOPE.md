@@ -1,0 +1,5 @@
+# RF05-F04 C144 — Intent consumes original Native ordinary proof through its existing pair
+
+Remove ai-intents.js's direct ordinary-effect-proof import and local proof-port binding. Expose existing Intent consumer in Intent public; existing Daggerheart–Intent pair supplies only Native public source.assertOrdinaryBinding. Existing environment-scene runtime composition connects it. Native proof implementation/provider initialization stays original; saved rules, adapters, proof policy and transaction order are unchanged.
+
+Fresh tests exercise missing composition, original source initialization on actual Application imports, repeated fixed pair/runtime binding, original refusal guards and exact error forwarding. Update affected C138/C141/C142 tests to compose the pair explicitly; run affected review/dispatch tests, syntax and RF05 gate. Archive/retire only exact obsolete Intent-to-root-proof records. Extend only existing pair metadata, preserving all other rows. No new source authority, SQL/schema, game rule, provider spend or live services.
