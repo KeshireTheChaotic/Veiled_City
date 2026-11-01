@@ -6,13 +6,14 @@ import {createGmCapabilityRules} from '../../src/frameworks/daggerheart/gm-capab
 import {nativeStore} from './af03-store.mjs';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const definitions=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-feature-definitions.json',import.meta.url),'utf8')).features;
-function fixture(){
+function fixture({featureSuffix=':flashbang',stressMax=5,stress=0}={}){
   const store=nativeStore(),{db,indexWorldEvent}=store,g='g',noop=()=>null,
-    feature=definitions.find(f=>f.feature_key.endsWith(':flashbang')),
+    feature=definitions.find(f=>f.feature_key.endsWith(featureSuffix)),
     origin={source:'input',scene:'scene',session:'session',location:'here'},
     presence={source_event:'presence',location_key:'here',data:{state:'actually_present',zone:'door'}},
     entity={state:{location_key:'here'}},profile={key:'npc'};
   db.sql.exec('CREATE TABLE npc(id TEXT PRIMARY KEY,stress INTEGER,max INTEGER);INSERT INTO npc VALUES(\'c\',0,5)');
+  db.sql.prepare('UPDATE npc SET stress=?,max=?').run(stress,stressMax);
   const combatant=()=>{const r=db.sql.prepare('SELECT * FROM npc').get();return {id:r.id,stress_current:r.stress,stress_max:r.max};};
   db.getSimulationEntity=()=>entity;db.getNpcProfile=()=>profile;db.listNpcProxies=()=>[];
   db.listNpcGoals=()=>[];db.getCurrentEncounter=()=>({id:'enc'});db.listCombatants=()=>[combatant()];
@@ -62,4 +63,26 @@ test('native group feature Stress write failure leaves no cost receipt or spotli
     assert.equal(f.combatant().stress_current,0);assert.equal(f.db.getCampaign('g').fear,6);
     assert.equal(f.db.listCityRecords('g',{kind:'gm_action_cost_receipt'}).length,0);
   }finally{f.close();}
+});
+
+for(const stressMax of [0,2])test(`Null Foam native commitment respects a ${stressMax===0?'missing':'present'} Stress track and replay`,()=>{
+  const f=fixture({featureSuffix:':null-foam',stressMax});try{
+    const receipt=f.rules.commitGmActionCost(f.db,'g','decision');
+    assert.equal(f.combatant().stress_current,stressMax===0?0:1);
+    assert.equal(receipt.data.npc_stress.after,stressMax===0?0:1);
+    assert.equal(f.db.getCampaign('g').fear,6);
+    assert.deepEqual(f.rules.commitGmActionCost(f.db,'g','decision'),receipt);
+    assert.equal(f.combatant().stress_current,stressMax===0?0:1);
+  }finally{f.close();}
+});
+
+test('Null Foam with a full Stress track and legacy mandatory Stress without a track both hold before payment',()=>{
+  for(const options of [{featureSuffix:':null-foam',stressMax:2,stress:2},{stressMax:0}]){
+    const f=fixture(options);try{
+      assert.throws(()=>f.rules.commitGmActionCost(f.db,'g','decision'));
+      assert.equal(f.combatant().stress_current,options.stress||0);assert.equal(f.db.getCampaign('g').fear,6);
+      assert.equal(f.db.listCityRecords('g',{kind:'gm_action_cost_receipt'}).length,0);
+      assert.equal(f.db.getWorldEvent('g','spotlight'),null);
+    }finally{f.close();}
+  }
 });

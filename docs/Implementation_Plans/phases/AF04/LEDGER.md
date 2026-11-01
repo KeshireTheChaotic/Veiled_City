@@ -72,3 +72,9 @@ The existing group host now admits established GM-controlled NPC profiles withou
 
 Modified: group-feature-execution-rules.js, af04-mixed-group-preparation.test.mjs, this ledger, INTERFACE_REUSE.md and PROFILE-AREA-HOST-EVIDENCE.json. Verification complete: 13 focused SQLite tests passed, 0 failed/skipped, exit 0; two syntax checks passed. Native source/area/owner/cost services are injected. Null Foam remains review-only; Spellcast classification/odds, NPC/ally release and full live recovery qualification remain open. Next exact work: AF04 source-bound Spellcast enforcement.
 
+
+## Conditional adversary Stress commitment — complete for this delta
+
+Found and corrected a production mismatch: Null Foam preflight skipped Stress without a track, while the actual GM cost writer still required it. Both now reuse groupFeatureCostPlan and the existing exact source policy. Native commitment pays 1 Stress when tracked, pays none when no track exists, and holds a full track. Other group features retain mandatory costs. The original source descriptor is unchanged; receipt, spotlight, Fear and rollback behavior remain on the existing transaction.
+
+Modified: group-feature-rules.js, group-feature-execution-rules.js, gm-capability-rules.js, af02-gm-cost-transaction.test.mjs, this ledger, INTERFACE_REUSE.md and CONDITIONAL-STRESS-EVIDENCE.json. Verification complete: 21 targeted tests passed, 0 failed/skipped, exit 0; four changed-file syntax checks passed. Rerun was justified by changed cost/preflight production code. Tests include the real native payment writer with SQLite; source/scene capabilities are injected. Deferred: Spellcast odds, NPC/ally release and full live qualification. Next exact work: AF04 source-bound Spellcast enforcement.

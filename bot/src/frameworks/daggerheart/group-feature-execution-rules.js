@@ -3,7 +3,7 @@ import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
 import {featureCostPlan} from './feature-costs.js';
 import {incomingConditionOdds,movementConditionIssue} from './native-condition-rules.js';
-import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal} from './group-feature-rules.js';
+import {LANES,FLASH,REGENT,groupFeaturePolicies as policies,isGroupFeature,groupReactionRules,groupNeedsChoice as needsChoice,groupReactionOptions,groupFeatureStakes,validateGroupFeatureProposal,groupFeatureCostPlan} from './group-feature-rules.js';
 import {groupFeatureOutcome} from './group-feature-outcomes.js';
 import {assertExactGroupCohort} from './group-target-rules.js';
 import {prepareMixedReactionCohort,rollNativeNpcReaction,inspectNativeNpcReaction} from './mixed-reaction-rules.js';
@@ -160,8 +160,7 @@ function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
         npc_targets.push({...target,combatant:combatant.id,combatant_snapshot:combatant,template_hash:hash(sourceTemplate)});
       }
     }
-    const costSource=policy.stress_when_tracked&&c.stress_max===0?{...feature,costs:feature.costs.filter(v=>v.resource!=='npc_stress')}:feature,
-      cost=featureCostPlan(costSource,{timing:'spotlight_action',fear:db.getCampaign(guild).fear,stress:c.stress_current,stressMax:c.stress_max});
+    const cost=groupFeatureCostPlan(feature,c,{timing:'spotlight_action',fear:db.getCampaign(guild).fear});
     return {operation:'commit_group_feature',feature:feature.feature_key,feature_hash:hash(feature),feature_definition:feature,template_hash:feature.template_hash,
       actor:entry.actor.key,combatant:c.id,actor_source:actor.source_event,combatant_hash:hash(c),targets,npc_targets,area,opportunity,cost};
   }

@@ -1,5 +1,6 @@
 /** Existing source-keyed Daggerheart group-feature rules; no source evidence or effects are produced here. */
 import {nativeArbitrationFailure} from './native-failure.js';
+import {featureCostPlan} from './feature-costs.js';
 
 export const LANES='adversary:traffic-saint:all-lanes-stop';
 export const FLASH='adversary:aster-vale-contractor:flashbang';
@@ -20,6 +21,13 @@ export const groupFeaturePolicies=Object.freeze({
   [REGENT]:Object.freeze({trait:'Presence',difficulty:20,range:'Melee',all:false,condition:null,expiry:null})
 });
 export const isGroupFeature=key=>Object.hasOwn(groupFeaturePolicies,key);
+/** One source-owned cost policy for both preflight and authoritative commitment. */
+export function groupFeatureCostPlan(feature,combatant,options){
+  if(!isGroupFeature(feature?.feature_key))throw nativeArbitrationFailure('group_feature_cost_source');
+  const source=groupFeaturePolicies[feature.feature_key].stress_when_tracked&&combatant?.stress_max===0
+    ?{...feature,costs:feature.costs.filter(c=>c.resource!=='npc_stress')}:feature;
+  return featureCostPlan(source,{...options,stress:combatant?.stress_current,stressMax:combatant?.stress_max});
+}
 export function groupReactionRules(key){
   const policy=groupFeaturePolicies[key];if(!policy)throw nativeArbitrationFailure('group_feature_fixed_rules');
   return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});

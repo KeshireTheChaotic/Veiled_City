@@ -2,6 +2,7 @@
 import {jsonHash as hash} from '../../kernel/json-hash.js';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
 import {featureCostPlan,commitFeatureResources} from './feature-costs.js';
+import {groupFeatureCostPlan} from './group-feature-rules.js';
 export function createGmCapabilityRules({capabilities}){
 const {buildNarrativeContext,activeCityProxy,consentAction,historicalActionSource,scenePresence,sceneAccess,conversationPrincipal,actorReferenceVisible,typedRollProof,isPvpIntent,narrativeSourceVisible,compileNativeFeatures,inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight,nativeActorControl,preRollFearOpportunity,commitPreRollFearCost,RANGE_BANDS}=capabilities||{};
 if([buildNarrativeContext,activeCityProxy,consentAction,historicalActionSource,scenePresence,sceneAccess,conversationPrincipal,actorReferenceVisible,typedRollProof,isPvpIntent,narrativeSourceVisible,compileNativeFeatures,inspectGroupFeatureChild,planNativeSpotlight,recordNativeSpotlight,nativeActorControl,preRollFearOpportunity,commitPreRollFearCost].some(fn=>typeof fn!=='function'))throw new TypeError('Complete native GM capabilities required.');
@@ -111,8 +112,9 @@ function commitGmActionCost(db,guild,decisionKey){
   const before=db.getCampaign(guild).fear;
   const combatant=descriptor&&db.listCombatants(db.getCurrentEncounter(row.data.origin.session)?.id).find(c=>c.id===n.combatant);
   if(descriptor&&(!combatant||hash(combatant)!==n.combatant_hash))throw fail('feature_cost_combatant_changed');
-  const plan=featureCostPlan(descriptor||{costs:feature?[{resource:'fear',amount:feature}]:[]},{timing:'spotlight_action',additionalSpotlight:!!spotlight,experience:!!experience,
-    fear:before,stress:combatant?.stress_current||0,stressMax:combatant?.stress_max||0});
+  const options={timing:'spotlight_action',additionalSpotlight:!!spotlight,experience:!!experience,fear:before};
+  const plan=descriptor?groupFeatureCostPlan(descriptor,combatant,options)
+    :featureCostPlan({costs:feature?[{resource:'fear',amount:feature}]:[]},{...options,stress:0,stressMax:0});
   if(!Number.isSafeInteger(before)||before<amount||before>12)throw fail('insufficient_gm_fear');
   const payment=opportunity.pre_roll_fear?{fear:{after:commitPreRollFearCost(db,guild,opportunity.pre_roll_fear,decisionKey).after},combatant:null}
     :commitFeatureResources(db,guild,combatant,plan),after=payment.fear.after,stressed=payment.combatant,

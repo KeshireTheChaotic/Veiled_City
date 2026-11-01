@@ -17,3 +17,5 @@ The existing group host now composes the mixed condition writer for both bound N
 
 Ordinary NPC area recipients now reuse getNpcProfile for immutable source binding and native_mixed_condition records for condition state. Their profiles remain unchanged; no combatant, resource track or parallel condition store is created. The group host and existing active-condition/movement readers consume these records. Spellcast odds, NPC/ally release and full Discord qualification remain incomplete.
 
+
+Group preflight and native GM cost commitment now share groupFeatureCostPlan in the existing group policy module. It applies the source-defined Stress-track rule before using featureCostPlan and commitFeatureResources; callers cannot choose a free-form cost waiver.
