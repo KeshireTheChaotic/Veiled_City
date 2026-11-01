@@ -1,4 +1,8 @@
 import {authoredTurnEnvelope} from '../../frameworks/intent/public.js';
+import {intentKnowledgeContext} from '../../frameworks/intent/public.js';
+import {ContextPlanner} from '../../frameworks/knowledge/public.js';
+function planContext(db,guild,options){return new ContextPlanner(db).plan(guild,options);}
+export function connectIntentKnowledgeContext(){return intentKnowledgeContext.bind({planContext});}
 import {knowledgeIntentAuthoredTurn} from '../../frameworks/knowledge/public.js';
 
 /** Bind the original saved reader; the adapter creates no authorization. */

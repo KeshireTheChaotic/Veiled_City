@@ -1,0 +1,41 @@
+{
+  "feature": "RF05-F04 C136",
+  "base_head": "3fe60218b5c85a3cebb17214e9547d1707ee1982",
+  "tests": {
+    "syntax_pass": 7,
+    "fail": 0,
+    "affected_pass": 5,
+    "dedicated_pass": 3
+  },
+  "architecture": {
+    "active": 0,
+    "transition_errors": 0,
+    "largest_cycle": 51,
+    "accepted": 593,
+    "imports": 4376,
+    "modules": 1078,
+    "pass": true
+  },
+  "original_function_sha256": "9ccba24c31eed3bec7c4beb46114e0dd28845dc5e5b00cfd796c88ce17defec5",
+  "notes": [
+    "Shared-worktree gate includes concurrent R77/AF04 source; no live or full release qualification.",
+    "One unused-transition gate failure preceded exact retirement; final gate passes.",
+    "Only body substitution is existing Knowledge planner call routed through pair."
+  ],
+  "sha256": {
+    "bot/src/frameworks/intent/context-reader.js": "45436b14b80faddbad8edb5e84922389431f5393fcc0955c6c9335452f452905",
+    "bot/src/frameworks/intent/public.js": "9ffd6820b501c2f363e882f84df714947f22e1b27b5457ca4da806cff6b0ffc1",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C136-ARCHITECTURE.log": "278f469dffe1edd50ea1d4c707a2751aee3dd2526866d0e93faf10c5cf76dd8c",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C136-SCOPE.md": "698c97fa044b930f7462e6dcbbe8fdb643c594af3bf55ad7772f5e3751e49ecd",
+    ".reports/RF05-C136-gate.json": "e768f6c7dd55c23d828e07d896e29ca7fd25c078a1e7e59c5ba5465007e3f47d",
+    "bot/src/framework-to-framework/intent--knowledge/public.js": "733719097b278da85e3769b1489ac06482b07b62405317fb089bbad37f5e4876",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "0cea68331f0475d3a7968d39f4c30418b19f40af5b52da12893c601d99a718a5",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c136.test.mjs": "09f8e23eada6fda1ff5c0aa8d533461f91c8ad7154c6f052b4cfc182d6a85ff5",
+    "bot/src/ai-intents.js": "ac9d4024f3b5763b2887503ec5762eea5dc775e725c17799b4d08507b5ce3076",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C136-AFFECTED-TEST.log": "ebd3228fc057a02a62f10a91c933946d5399ad5bb64eaaea16c9c22fc4939096",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C136-RETIRED.json": "4118c35ee6dc15a826d328a1ec30708fb2c99bcf8bc35e4808d4dba7fe5af6c2",
+    "bot/src/application/composition/intent-knowledge.js": "b17ea3744fb248888175a1e3a40400d0b8b1bd5c0715c3371f133344536031b1",
+    "bot/src/frameworks/intent/contracts/knowledge-context.js": "b79903c982bcee9be384c0c77ff8e92863e143ea5089f28fc1819005dbb81cb4",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C136-TEST.log": "6845d5c4795d0af5fd1f37203b120862e88ecef4466384b6ed3266dfb6f0c15e"
+  }
+}

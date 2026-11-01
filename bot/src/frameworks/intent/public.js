@@ -84,3 +84,5 @@ export {shadowEngagement} from './engagement-shadow.js';
 export {engagementKinds,bindSemanticEngagement,currentSemanticEngagement,semanticSceneOperation} from './semantic-engagement.js';
 
 export {persistMovementCandidates,currentMovementCandidate} from './movement-language.js';
+export {intentContext} from './context-reader.js';
+export {intentKnowledgeContext} from './contracts/knowledge-context.js';
