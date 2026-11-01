@@ -6,7 +6,7 @@ import {createGmCapabilityRules} from '../../src/frameworks/daggerheart/gm-capab
 import {nativeStore} from './af03-store.mjs';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const definitions=JSON.parse(fs.readFileSync(new URL('../../src/frameworks/daggerheart/native-feature-definitions.json',import.meta.url),'utf8')).features;
-function fixture({featureSuffix=':flashbang',stressMax=5,stress=0}={}){
+function fixture({featureSuffix=':flashbang',stressMax=5,stress=0,operation='commit_group_feature',additional=false}={}){
   const store=nativeStore(),{db,indexWorldEvent}=store,g='g',noop=()=>null,
     feature=definitions.find(f=>f.feature_key.endsWith(featureSuffix)),
     origin={source:'input',scene:'scene',session:'session',location:'here'},
@@ -22,14 +22,16 @@ function fixture({featureSuffix=':flashbang',stressMax=5,stress=0}={}){
     material={intent_ref:'npc-intent',actor:{type:'npc',key:'npc'},snapshot:hash([entity,profile,presence,[]]),knowledge_refs:[],objective_ref:'',dependencies:[]},
     npcSource=indexWorldEvent(db,g,{key:'npc-intent-source',kind:'native_npc_scene_intent',source_id:'native:unified-gm',details:{entry_hash:hash(material),input_source:'input'}}),
     entry={...material,source_ref:npcSource.event_key,source_hash:hash(npcSource.details)},
-    boardData={origin,entries:[{intent_ref:'look',actor:{type:'character',key:'pc'},operation:'describe_scene'},entry]},
+    boardData={origin,entries:[{intent_ref:'look',actor:{type:'character',key:'pc'},operation:'describe_scene'},
+      ...(additional?[{intent_ref:'earlier',actor:{type:'npc',key:'other-npc'}}]:[]),entry]},
     boardSource=indexWorldEvent(db,g,{key:'board-source',kind:'native_scene_intent_board',source_id:'native:unified-gm',details:{payload_hash:hash(boardData)}});
   db.saveCityRecord(g,{kind:'scene_intent_board',key:'board',source_event:boardSource.event_key,data:boardData});
   db.saveCityRecord(g,{kind:'typed_intent',key:'look',status:'resolved',source_event:'owner-source',data:{type:'other',framing:'immediate',resolution:'conversational'}});
-  const native={operation:'commit_group_feature',opportunity,feature:feature.feature_key,feature_hash:hash(feature),combatant:'c',combatant_hash:hash(combatant())},
+  const native={operation,opportunity,feature:feature.feature_key,feature_hash:hash(feature),combatant:'c',combatant_hash:hash(combatant())},
     data={board:'board',entry:entry.intent_ref,entry_hash:hash(entry),origin,scope:{mode:'party'},proposal:{},proposal_hash:hash({}),native},
     source=indexWorldEvent(db,g,{key:'decision-source',kind:'native_gm_arbitration',source_id:'native:unified-gm',details:{payload_hash:hash(data)}});
   db.saveCityRecord(g,{kind:'gm_arbitration_decision',key:'decision',status:'pending_pc_reaction',visibility:'gm',source_event:source.event_key,data});
+  if(additional)db.saveCityRecord(g,{kind:'gm_arbitration_decision',key:'earlier',status:'gm_action_ready',data:{board:'board',entry:'earlier',native:{operation:'commit_exceptional_adversary_action'}}});
   const control={failSpotlight:false,failStress:false};
   const update=db.updateCombatant;db.updateCombatant=(...args)=>{if(control.failStress)throw new Error('stress write failed');return update(...args);};
   const rules=createGmCapabilityRules({capabilities:{buildNarrativeContext:()=>({binding:origin,packet:{npcs:[{key:'npc',human_controlled:false}]}}),
@@ -85,4 +87,15 @@ test('Null Foam with a full Stress track and legacy mandatory Stress without a t
       assert.equal(f.db.getWorldEvent('g','spotlight'),null);
     }finally{f.close();}
   }
+});
+
+for(const additional of [false,true])test(`native NPC freeing action consumes ${additional?'an additional paid':'the offered'} spotlight without inventing Stress`,()=>{
+  const f=fixture({operation:'commit_npc_condition_clear',stressMax:0,additional});try{
+    f.control.failStress=true;const receipt=f.rules.commitGmActionCost(f.db,'g','decision');
+    assert.equal(receipt.data.ordinal,additional?1:0);assert.equal(receipt.data.amount,additional?1:0);
+    assert.equal(receipt.data.npc_stress,undefined);assert.equal(f.combatant().stress_current,0);
+    assert.equal(f.db.getCampaign('g').fear,additional?5:6);assert.ok(f.db.getWorldEvent('g','spotlight'));
+    assert.deepEqual(f.rules.commitGmActionCost(f.db,'g','decision'),receipt);
+    assert.equal(f.db.getCampaign('g').fear,additional?5:6);
+  }finally{f.close();}
 });

@@ -19,3 +19,5 @@ Ordinary NPC area recipients now reuse getNpcProfile for immutable source bindin
 
 
 Group preflight and native GM cost commitment now share groupFeatureCostPlan in the existing group policy module. It applies the source-defined Stress-track rule before using featureCostPlan and commitFeatureResources; callers cannot choose a free-form cost waiver.
+
+NPC self-release extends the existing mixed condition writer/reader, native GM decision, commitGmActionCost, planNativeSpotlight/recordNativeSpotlight, GM executor and activeNativeConditions. The existing scene board projects a generic prepare/self-target freeing action for one eligible NPC condition. A native_mixed_condition_clear record is an immutable release receipt, not a second state store. PC owner-action recovery remains separate. No model code, PC dice, choice, spending or profile mutation is introduced.

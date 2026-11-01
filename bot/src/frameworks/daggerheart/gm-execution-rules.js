@@ -30,6 +30,11 @@ function executeUnifiedGmActions(db,guild,decisions,{library=new EncounterLibrar
     if(committed?.data.roll)return inspectVolley(db,guild,committed.record_key).row; // Read-only committed replay, never a new permission.
     const group=db.getCityRecord(guild,'gm_group_feature_execution',`group-feature:${hash(decision.record_key)}`);
     if(group)return inspectGroupFeature(db,guild,group.record_key).execution;
+    const saved=db.getCityRecord(guild,'gm_arbitration_decision',decision.record_key),clear=saved?.data.native;
+    if(clear?.operation==='commit_npc_condition_clear'&&db.getCityRecord(guild,'native_mixed_condition',clear.condition.ref)?.status==='cleared'){
+      if(typeof capabilities.commitNativeNpcConditionClear!=='function')throw fail('npc_condition_clear_host_unavailable');
+      return capabilities.commitNativeNpcConditionClear(db,guild,decision.record_key);
+    }
     const {row,entry}=inspectNativeGmDecision(db,guild,decision.record_key),n=row.data.native;
     if(!['gm_action_ready','pending_pc_reaction'].includes(row.status))return row;
     const dependency=dependencyState(db,guild,entry),continuationKey=`gm-continuation:${hash(row.record_key)}`;
@@ -42,6 +47,10 @@ function executeUnifiedGmActions(db,guild,decisions,{library=new EncounterLibrar
     if(n.operation==='commit_group_feature')return prepareGroupFeature(db,guild,row.record_key,{library,rng});
     if(n.operation==='commit_adversary_feature')return commitFeatureChoice(db,guild,row.record_key,{library});
     if(n.operation==='commit_npc_alliance')return commitNativeNpcAlliance(db,guild,row.record_key,{library});
+    if(n.operation==='commit_npc_condition_clear'){
+      if(typeof capabilities.commitNativeNpcConditionClear!=='function')throw fail('npc_condition_clear_host_unavailable');
+      return capabilities.commitNativeNpcConditionClear(db,guild,row.record_key);
+    }
     const key=`gm-execution:${hash(row.record_key)}`,prior=db.getCityRecord(guild,'gm_native_roll_receipt',key);
     if(prior)return inspectGmRollReceipt(db,guild,prior.record_key);
     if(n.operation!=='commit_exceptional_adversary_action')throw fail('native_gm_executor_missing');

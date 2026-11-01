@@ -42,7 +42,7 @@ export function sceneIntentTargetsValid(db,guild,origin,operation,targets,option
     ||!!db.getSimulationEntity(guild,'location',key)||areas.some(area=>area.ref===key)));
 }
 
-export function createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates}){
+export function createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates,activeNativeConditions}){
 const bindings=new WeakMap();
 const deepFreeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(deepFreeze);Object.freeze(v);}return v;};
 /** Read-only pre-prompt packet; excludes NPC motives, private sheets and unentitled evidence. */
@@ -78,10 +78,18 @@ function arbitrationPromptBoard(db,guild,origin){
     feature_windows:featureWindowChoices(db,guild,o.scope),
     npc_candidates:o.eligible.map(n=>{
       const c=combatants.find(c=>c.status==='active'&&binding?.data.combatants.some(b=>b.actor===n.key&&b.id===c.id)),template=c&&library.findAdversary(c.base_name);
-      let provenance=null;
+      let provenance=null,conditions=[];
+      if(typeof activeNativeConditions==='function'){
+        try{conditions=activeNativeConditions(db,guild,n.key,{kind:'npc'});}
+        catch(error){if(error.code!=='GM_ARBITRATION')throw error;}
+      }
       if(template){try{provenance=nativeAdversaryFeatureContext(db,guild,origin,n.key,{library});}
         catch(error){if(error.code!=='GM_ARBITRATION')throw error;}}
       return {actor_key:n.key,owner_control_type:'ai_world',intent_refs:n.intents,objective_refs:n.objectives,known_source_refs:n.source_refs,
+        condition_actions:conditions.length===1&&['until_freed','until_cleared'].includes(conditions[0].data.cause?.expiry)
+          ?[{feature_ref:'srd:clear-condition',condition:conditions[0].data.cause.condition,operation:'prepare',target_refs:[n.key],
+            disposition:'npc_no_roll',stakes_kind:'native_feature',trait:null,difficulty:null,rule_basis_refs:['srd:conditions','srd:gm-moves'],
+            authority:'Describe how this NPC frees itself; native execution consumes its spotlight and validates the current condition. No other actor or state is changed.'}]:[],
         adversary_context:provenance,
         action_features:features.filter(f=>provenance&&provenance.features.some(p=>p.key===f.feature_key)
           &&(f.native_handler==='coordinated_volley'||isGroupFeature(f.feature_key))&&f.template_hash===hash(template)).map(f=>isGroupFeature(f.feature_key)?{feature_ref:f.feature_key,

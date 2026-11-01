@@ -96,10 +96,10 @@ function nativeGmOpportunity(db,guild,board){
 function commitGmActionCost(db,guild,decisionKey){
   return db.transaction(()=>{
   const {row,entry,board}=inspectNativeGmDecision(db,guild,decisionKey),n=row.data.native,opportunity=nativeGmOpportunity(db,guild,board);
-  if(!['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
+  if(!['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll','commit_npc_condition_clear'].includes(n?.operation)||hash(n.opportunity)!==hash(opportunity))throw fail('exact_spotlight_opportunity');
   const selected=new Set(db.listCityRecords(guild,{kind:'gm_arbitration_decision',includeGM:true,limit:200})
     .filter(r=>['gm_action_ready','pending_pc_reaction'].includes(r.status)&&r.data.board===board.record_key
-      &&['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll'].includes(r.data.native?.operation)).map(r=>r.data.entry));
+      &&['commit_adversary_attack','commit_adversary_volley','commit_group_feature','commit_exceptional_adversary_action','request_pc_reaction_roll','commit_npc_condition_clear'].includes(r.data.native?.operation)).map(r=>r.data.entry));
   const order=board.data.entries.filter(e=>selected.has(e.intent_ref)&&e.actor.type==='npc'),ordinal=order.findIndex(e=>e.intent_ref===entry.intent_ref);
   if(ordinal<0)throw fail('attack_spotlight_slot');
   const spotlight=opportunity.pre_roll_fear?1:ordinal===0?0:1,experience=n.experience?1:0;

@@ -3,6 +3,7 @@ const SRD_VERSION="2.0 (2026-08-25)";
 export const RULE_AUTHORITY_ORDER='applicable saved scoped GM ruling > verified explicit campaign override > verified Daggerheart SRD > compatible Veiled City house/homebrew extensions > identified provisional ruling';
 const srd=new Map([
   ["srd:gm-moves",{title:"Fiction-driven GM moves and spotlight",rollKinds:[],version:SRD_VERSION}],
+  ["srd:conditions",{title:"Standard conditions and source-defined recovery",rollKinds:[],version:SRD_VERSION}],
   ["srd:adversary-attacks",{title:"Adversary d20 attacks against Evasion",rollKinds:[],version:SRD_VERSION}],
   ["srd:adversary-reactions",{title:"Adversary d20 reaction rolls",rollKinds:[],version:SRD_VERSION}],
   ["srd:exceptional-adversary-actions",{title:"Exceptional independent adversary action rolls",rollKinds:[],version:SRD_VERSION}],

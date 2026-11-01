@@ -1,0 +1,129 @@
+{
+  "current_verified_cases": 36,
+  "syntax_checks_passed": 16,
+  "phase": "AF04",
+  "unchanged_passing_slices": {
+    "mixed_condition_writer": 6,
+    "real_gm_cost_transaction": 7
+  },
+  "limits": [
+    "Host source, owner and cost capabilities are injected in group tests; the real native cost writer is separately exercised with SQLite.",
+    "Prompt-board discovery runs in the real disposable runtime with an injected trusted condition reader.",
+    "Only a unique eligible native NPC condition is currently offered for self-clear; ambiguous conditions hold locally.",
+    "No actual full unified Null Foam cast or live self-release is qualified; Null Foam remains review-only.",
+    "Spellcast source/odds and ally freeing remain incomplete."
+  ],
+  "covered": [
+    "Bound and ordinary NPC self-release through actual GM executor and group host",
+    "Current actor/control/profile/scene snapshot preflight",
+    "Native spotlight source and cost binding",
+    "Real native cost writer offered and additional Fear-paid spotlight accounting",
+    "Condition, clear receipt, source, mutation and cost rollback",
+    "Historical replay without RNG, extra cost or current-use permission",
+    "Original group reaction/effect ancestry remains inspectable after release",
+    "Missing release receipt holds instead of resurrecting the condition",
+    "Owner-only PC recovery remains on existing authenticated action route",
+    "Source-backed condition discovery and unified branch preparation"
+  ],
+  "source": "https://www.daggerheart.com/wp-content/uploads/2026/08/DH_SRD_2_2026_08_25.pdf#page=52",
+  "status": "npc_self_release_complete_for_unique_sourced_mixed_condition",
+  "inputs": [
+    {
+      "sha256": "38e02c305531985f5e6f905a54b1191d97531ebdb5572881721b55ed50f76690",
+      "path": "bot/src/frameworks/daggerheart/mixed-condition-rules.js"
+    },
+    {
+      "sha256": "88eceb3b7a2ae6528d1e3686275bb313a28231d644bd44143c29a8cc9260a97d",
+      "path": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js"
+    },
+    {
+      "sha256": "6a96d5f1db7d459b07c0396c11bbf35e79240c18e04a9d93d1ff078f1509c6ec",
+      "path": "bot/src/frameworks/daggerheart/gm-capability-rules.js"
+    },
+    {
+      "sha256": "569af5cd3b591897174d9a0511506c7c26002bd68936427f595cc775f84735cb",
+      "path": "bot/src/frameworks/daggerheart/gm-execution-rules.js"
+    },
+    {
+      "sha256": "ec7942726dcef8af773b9c9e4e0fccfcde8d5118f6c2e1b56b98a6454a5e2492",
+      "path": "bot/src/frameworks/daggerheart/unified-adjudication.js"
+    },
+    {
+      "sha256": "a8fe679c9d5bdfb1d3183b75c5c5d5d0a4dc15224222c0be0c924197736a1868",
+      "path": "bot/src/frameworks/daggerheart/rule-reference-catalog.js"
+    },
+    {
+      "sha256": "00ec1be355a47863ae63bd9c21228c76301f3ff292b6483bf31650c19a0a4af9",
+      "path": "bot/src/native-group-features.js"
+    },
+    {
+      "sha256": "db98d9ca2e4bccbc7f2f3dafcb667a7a9cc76acd3bc681e99ad948b9d5367bc3",
+      "path": "bot/src/gm-native-rolls.js"
+    },
+    {
+      "sha256": "075c59838c3f0f5d445833f5aa86e32877be2e72eaefc16f3528779ca8366c28",
+      "path": "bot/src/gm-unified-arbitration.js"
+    },
+    {
+      "sha256": "1e505c68794ae1565b517552c2f637d8dad0ac79475f5d8bb76f2eb741988777",
+      "path": "bot/src/scene-intent-board.js"
+    },
+    {
+      "sha256": "87235710feb4ae8336fbd4f4d266a9659e255d53f3239806bb95df7f8abc22e2",
+      "path": "bot/src/frameworks/intent/scene-intent-board.js"
+    },
+    {
+      "sha256": "603b23cddae49261af16df9338f1aeaed200563739445b77e2767fff1356e913",
+      "path": "bot/src/frameworks/intent/unified-arbitration-prompt.js"
+    },
+    {
+      "sha256": "d86ce119ff63586da59051c8f167e451c61086278e33fde97a05221e49904274",
+      "path": "bot/tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs"
+    },
+    {
+      "sha256": "04582ee13b54efbc5b13d3f66ba27437ce30585f699a7a3bc0e59a6157e6c81a",
+      "path": "bot/tests/ai-gm-2026-10/af02-gm-cost-transaction.test.mjs"
+    },
+    {
+      "sha256": "1e32607fad76dc665936e73bf2ec5e93c29d8cd3b7be4227e9229ebeb63c1699",
+      "path": "bot/tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs"
+    },
+    {
+      "sha256": "da01d098d6498060a01e6f235aebc53ce23224ae696586c655065ee4add1e9e1",
+      "path": "bot/tests/ai-gm-2026-10/af04-npc-condition-discovery.test.mjs"
+    }
+  ],
+  "verification": [
+    {
+      "exit_code": 1,
+      "finding": "Clear action initially reached generic feature catalog lookup before its native branch. Corrected branch ordering; unchanged passing files were not rerun without changed inputs.",
+      "command": "node --test tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs tests/ai-gm-2026-10/af04-mixed-condition-writer.test.mjs tests/ai-gm-2026-10/af02-gm-cost-transaction.test.mjs tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs",
+      "passed": 33,
+      "failed": 2
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af04-unified-area-condition-consumers.test.mjs",
+      "passed": 5,
+      "reason": "After correcting native branch ordering.",
+      "exit_code": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af04-mixed-group-preparation.test.mjs",
+      "passed": 17,
+      "reason": "Final test fixture additionally invokes actual GM executor and historical replay branch.",
+      "exit_code": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test tests/ai-gm-2026-10/af04-npc-condition-discovery.test.mjs",
+      "passed": 1,
+      "reason": "Real disposable runtime initialization plus injected trusted condition reader verifies projection and source-local holds.",
+      "exit_code": 0,
+      "failed": 0,
+      "skipped": 0
+    }
+  ]
+}

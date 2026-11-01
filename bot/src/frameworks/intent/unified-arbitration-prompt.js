@@ -9,6 +9,7 @@ export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SA
   +"Each decision needs current rules, reason, stakes before dice, and justified Difficulty for an action/reaction. "
   +"NPC attack uses actual PC Evasion, never invented Difficulty. "
   +"Ordinary NPC fiction normally uses npc_no_roll. "
+  +"A supplied condition_actions entry permits the described NPC to attempt freeing itself: use its exact prepare/self target, srd:clear-condition, npc_no_roll, native_feature, null trait/Difficulty, srd:conditions and srd:gm-moves, and explain the freeing action. Native execution consumes that NPC's spotlight. No free action, PC choice or other state change is implied. "
   +"PC roll questions are adjudication only: player alone executes dice. "
   +"At Storm Drain Shrine, apply the exact Local Memory advantage only to the player's declared question about recent local movement after their respectful offering; the player owns the action, dice and resource choices. "
   +"For an exact owner unarmed_attack against a local native NPC, use feature_ref=unarmed_attack, request_pc_action_roll, stakes_kind=native_attack, "

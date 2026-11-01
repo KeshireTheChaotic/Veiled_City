@@ -48,6 +48,11 @@ function adjudicateSceneBoard(db,guild,origin,board,proposals,{library=new Encou
       native=prepareNativeEquippedAttack(db,guild,origin,entry,p,{library});
       status=native.disposition==='roll_pending'?'pending_pc_roll':'needs_rules_review';reason='Native exact existing equipped approval only; no acquired gear, new mapping or owner dice are invented.';
     }
+    else if(entry.actor.type==='npc'&&p.disposition==='npc_no_roll'&&p.feature_ref==='srd:clear-condition'){
+      if(typeof mechanics.planNativeNpcConditionClear!=='function')throw fail('npc_condition_clear_host_unavailable');
+      native=mechanics.planNativeNpcConditionClear(db,guild,o,entry,p,{opportunity:nativeGmOpportunity(db,guild,board)});
+      status='gm_action_ready';reason='Source-qualified NPC freeing action; consumes its native spotlight without player dice or choices.';
+    }
     else if(p.feature_ref&&p.feature_ref!=='standard_attack'&&p.feature_ref!==PROFESSIONAL_ENTRY
       &&!(entry.actor.type==='character'&&['environment:haunted-nightclub:too-loud-to-think','environment:aster-vale-predictive-lab:everything-logs','environment:storm-drain-shrine:local-memory'].includes(p.feature_ref)
         &&featureDisposition(p.feature_ref).status==='supported')){

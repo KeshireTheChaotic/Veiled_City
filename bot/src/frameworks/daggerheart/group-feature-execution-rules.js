@@ -12,7 +12,7 @@ export function createGroupFeatureExecutionRules({capabilities}){
 const {narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry,RANGE_BANDS}=capabilities||{};
 if([narrativeSourceVisible,compileNativeFeatures,inspectNativeGmDecision,inspectCommittedGmDecision,nativeReactionTarget,commitGmActionCost,currentScene,scenePresence,sceneAccess,activeCityProxy,conversationPrincipal,personalCharacter,indexWorldEvent,typedRollProof,EncounterLibrary,reserveGmArbitrationNotice,applyNativeStressPassive,inspectNativeConditionClearAncestry].some(fn=>typeof fn!=="function")||!Array.isArray(RANGE_BANDS))throw new TypeError("Complete native group-feature capabilities required.");
 const executionKey=key=>`group-feature:${hash(key)}`,effectKey=key=>`group-effect:${hash(key)}`;
-const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeConditionClearAncestry,
+const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeConditionClearAncestry,inspectClearCause:inspectNpcClearCause,
   inspectCause(db,guild,binding,target,{historical}){
     const {execution,parent}=inspectGroupFeature(db,guild,binding.execution),n=parent.data.native,policy=policies[n.feature];
     if(!policy?.area||!n.area||!execution.data.mixed)throw fail('group_mixed_condition_source_family');
@@ -32,7 +32,7 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
     return {feature:n.feature,source_hash:n.feature_definition.source_hash,template_hash:n.template_hash,scene:parent.data.origin.scene,
       session:parent.data.origin.session,condition:policy.condition,expiry:policy.expiry,spellcast_disadvantage:policy.spellcast_disadvantage===true};
   },
-  readTarget(db,guild,target){
+  readTarget(db,guild,target,{clearing=false}={}){
     if(target.kind==='character'){
       const pc=personalCharacter(db,guild,target.owner,target.key);
       if(pc.owner_user_id!==target.owner)throw fail('group_mixed_condition_current_owner');
@@ -40,7 +40,7 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
     }
     if(target.profile_hash){
       const profile=db.getNpcProfile(guild,target.key);
-      if(profile?.guild_id!==guild||profile.npc_key!==target.key||hash(profile)!==target.profile_hash)throw fail('group_mixed_condition_current_profile');
+      if(profile?.guild_id!==guild||profile.npc_key!==target.key||!clearing&&hash(profile)!==target.profile_hash)throw fail('group_mixed_condition_current_profile');
       return {conditions:activeNativeConditions(db,guild,target.key,{kind:'npc'}).map(r=>r.data.cause.condition)};
     }
     const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),c=encounter&&db.listCombatants(encounter.id).find(c=>c.id===target.combatant);
@@ -59,6 +59,65 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
     const after=db.updateCombatant(target.combatant,{conditions});
     if(hash(after.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
   }});
+function npcClearState(db,guild,actor,origin){
+  const scene=currentScene(db,guild),presence=scenePresence(db,guild,'npc',actor),profile=db.getNpcProfile(guild,actor),
+    encounter=db.getCurrentEncounter(scene.session_id),binding=encounter&&db.getCityRecord(guild,'encounter_binding',encounter.id),
+    matches=binding?.data.combatants.filter(c=>c.actor===actor)||[],
+    combatant=matches.length===1&&db.listCombatants(encounter.id).find(c=>c.id===matches[0].id);
+  if(scene.key!==origin.scene||scene.session_id!==origin.session||presence?.data.state!=='actually_present'
+    ||presence.data.scene!==scene.key||presence.data.session_id!==scene.session_id||presence.location_key!==origin.location
+    ||db.getWorldEvent(guild,presence.source_event)?.status!=='active'||activeCityProxy(db,guild,actor)
+    ||capabilities.nativeActorControl?.(db,guild,'npc',actor)?.owner_control_type!=='ai_world'
+    ||profile?.guild_id!==guild||profile.npc_key!==actor||matches.length>1
+    ||matches.length===1&&(encounter.status!=='active'||binding.status!=='active'||db.getWorldEvent(guild,binding.source_event)?.status!=='active'
+      ||combatant?.status!=='active'||combatant.hp_current<1))throw fail('npc_condition_clear_current_actor');
+  return {presence,profile,combatant:combatant||null,binding:matches.length?binding:null};
+}
+function planNativeNpcConditionClear(db,guild,origin,entry,p,{opportunity}={}){
+  if(entry.actor.type!=='npc'||entry.operation!=='prepare'||entry.target_refs.length!==1||entry.target_refs[0]!==entry.actor.key
+    ||p.disposition!=='npc_no_roll'||p.feature_ref!=='srd:clear-condition'||p.stakes_kind!=='native_feature'
+    ||p.trait!==null||p.difficulty!==null||p.advantage||p.disadvantage||p.experience_ref
+    ||!p.rule_basis_refs.includes('srd:conditions')||!p.rule_basis_refs.includes('srd:gm-moves')
+    ||typeof p.reason!=='string'||!p.reason.trim()||p.reason.length>600||!opportunity?.key)throw fail('npc_condition_clear_closed_action');
+  const state=npcClearState(db,guild,entry.actor.key,origin.binding),conditions=activeNativeConditions(db,guild,entry.actor.key,{kind:'npc'});
+  if(conditions.length!==1||!['until_freed','until_cleared'].includes(conditions[0].data.cause.expiry))throw fail('npc_condition_clear_unique_source');
+  return {operation:'commit_npc_condition_clear',actor:entry.actor.key,condition:{ref:conditions[0].record_key,hash:hash(conditions[0].data)},
+    actor_snapshot:hash(state),method:p.reason,opportunity};
+}
+function inspectNpcClearCause(db,guild,binding,target,{historical=false}={}){
+  const {row,entry}=(historical?inspectCommittedGmDecision:inspectNativeGmDecision)(db,guild,binding.decision),n=row.data.native,
+    cost=db.getCityRecord(guild,'gm_action_cost_receipt',binding.cost),spotlight=cost?.data.spotlight,
+    event=cost&&db.getWorldEvent(guild,`${cost.record_key}:spotlight`);
+  if(n?.operation!=='commit_npc_condition_clear'||entry.actor.type!=='npc'||entry.actor.key!==target.key||n.actor!==target.key
+    ||n.condition.ref!==binding.condition||n.condition.hash!==binding.condition_hash||cost?.status!=='committed'
+    ||cost.source_event!==row.source_event||cost.data.decision!==row.record_key||cost.data.opportunity!==n.opportunity.key
+    ||spotlight?.actor!==target.key||spotlight.scene!==row.data.origin.scene||spotlight.cost!==cost.record_key
+    ||!Number.isSafeInteger(spotlight.index)||spotlight.index<1||event?.status!=='active'||event.kind!=='native_gm_spotlight'
+    ||event.source_id!=='native:unified-gm'||event.visibility!=='gm'||event.details.payload_hash!==hash(spotlight)
+    ||event.details.cost_hash!==hash(cost))throw fail('npc_condition_clear_paid_spotlight_source');
+  if(!historical&&hash(npcClearState(db,guild,target.key,row.data.origin))!==n.actor_snapshot)throw fail('npc_condition_clear_actor_changed');
+  return {actor:target.key,scene:row.data.origin.scene,session:row.data.origin.session,source:row.source_event,
+    method:n.method,decision_hash:hash(row),cost_hash:hash(cost)};
+}
+function commitNativeNpcConditionClear(db,guild,decision){
+  return db.transaction(()=>{
+    const saved=db.getCityRecord(guild,'gm_arbitration_decision',decision),old=saved?.data.native,
+      ended=old?.operation==='commit_npc_condition_clear'&&db.getCityRecord(guild,'native_mixed_condition',old.condition.ref);
+    if(ended?.status==='cleared'){
+      const condition=mixedConditions.inspectMixedCondition(db,guild,ended.record_key),prior=mixedConditions.inspectMixedConditionClear(db,guild,condition);
+      if(prior.data.binding.decision!==decision)throw fail('npc_condition_clear_already_resolved');
+      return prior;
+    }
+    const {row}=inspectNativeGmDecision(db,guild,decision),n=row.data.native;
+    if(n?.operation!=='commit_npc_condition_clear')throw fail('npc_condition_clear_native_decision');
+    const condition=db.getCityRecord(guild,'native_mixed_condition',n.condition.ref);
+    // Current source/cohort and physical state are checked before consuming a new spotlight.
+    mixedConditions.inspectMixedCondition(db,guild,n.condition.ref);
+    if(hash(condition.data)!==n.condition.hash||hash(npcClearState(db,guild,n.actor,row.data.origin))!==n.actor_snapshot)throw fail('npc_condition_clear_actor_changed');
+    const cost=commitGmActionCost(db,guild,decision);
+    return mixedConditions.clearMixedCondition(db,guild,{condition:n.condition.ref,condition_hash:n.condition.hash,decision,cost:cost.record_key});
+  });
+}
 function areaOwnerReactionProof(db,guild,execution,target,{historical=false}={}){
   if(target?.kind!=='character'||!target.owner)throw fail('group_area_owner_target');
   const child=execution.data.children.find(c=>c.character===target.key),row=child&&db.getCityRecord(guild,'gm_arbitration_decision',child.decision),
@@ -268,8 +327,9 @@ function inspectGroupFeature(db,guild,key){
       const expected=mixed.reactions.filter(r=>r.kind==='npc'&&!r.receipt.result.success).map(r=>{
         const binding={execution:key,cohort_hash:mixed.cohort_hash,target:r.target,proof:r.receipt.receipt_hash,outcome:'failure'};
         const ref=`mixed-condition:${hash(binding)}`,condition=db.getCityRecord(guild,'native_mixed_condition',ref),source=condition&&db.getWorldEvent(guild,condition.source_event);
-        if(condition?.status!=='active'||hash(condition.data.binding)!==hash(binding)||source?.status!=='active'||source.kind!=='native_mixed_condition'||source.source_id!=='native:unified-gm'
+        if(!['active','cleared'].includes(condition?.status)||hash(condition.data.binding)!==hash(binding)||source?.status!=='active'||source.kind!=='native_mixed_condition'||source.source_id!=='native:unified-gm'
           ||source.visibility!=='gm'||source.details.payload_hash!==hash(condition.data))throw fail('group_terminal_npc_condition');
+        if(condition.status==='cleared')mixedConditions.inspectMixedConditionClear(db,guild,condition);
         return {ref,hash:hash(condition.data)};
       });
       if(execution.status==='resolved'&&hash(conditions)!==hash(expected))throw fail('group_terminal_npc_conditions');
@@ -632,5 +692,5 @@ function nativeAttackExpiryRevision(db,guild,character,before,after,costRef){
   return cursor===after;
 }
 
-return Object.freeze({planGroupFeature,prepareGroupFeature,inspectGroupFeature,inspectGroupFeatureChild,groupReactionState,applyGroupReactionOutcome,settleGroupFeature,groupReactionDetails,validateGroupReactionEffect,chooseGroupReactionOutcome,planNativeSpotlight,recordNativeSpotlight,validateNativeCondition,activeNativeConditions,nativeIncomingConditions,validateIncomingConditions,nativeMovementConditionIssue,nativeAttackExpiryRevision});
+return Object.freeze({planNativeNpcConditionClear,commitNativeNpcConditionClear,planGroupFeature,prepareGroupFeature,inspectGroupFeature,inspectGroupFeatureChild,groupReactionState,applyGroupReactionOutcome,settleGroupFeature,groupReactionDetails,validateGroupReactionEffect,chooseGroupReactionOutcome,planNativeSpotlight,recordNativeSpotlight,validateNativeCondition,activeNativeConditions,nativeIncomingConditions,validateIncomingConditions,nativeMovementConditionIssue,nativeAttackExpiryRevision});
 }

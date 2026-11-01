@@ -18,7 +18,7 @@ import {featureWindowChoices,inspectFeatureWindow} from './native-feature-window
 import {intentNativeFeatureCatalog} from './frameworks/intent/public.js';
 const {executableNativeFeatures,compileNativeActors}=intentNativeFeatureCatalog;
 
-import {isGroupFeature,groupFeatureStakes,groupReactionRules} from './native-group-features.js';
+import {isGroupFeature,groupFeatureStakes,groupReactionRules,activeNativeConditions} from './native-group-features.js';
 import {intentNativeActorControl} from './frameworks/intent/public.js';
 const {nativeActorControl}=intentNativeActorControl;
 import {preRollFearCandidates} from './pre-roll-fear.js';
@@ -33,7 +33,7 @@ import {intentArbitrationOrigin} from './frameworks/intent/public.js';
 import {createArbitrationOrigins} from './frameworks/intent/public.js';
 export const {createArbitrationOrigin,inspectArbitrationOrigin}=createArbitrationOrigins({nativeActorControl});
 import {createSceneIntentBoardService} from './frameworks/intent/public.js';
-export const {arbitrationPromptBoard,bindArbitrationTurn,arbitrationTurnOrigin,currentScenePlayerInputs,buildSceneIntentBoard}=createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates});
+export const {arbitrationPromptBoard,bindArbitrationTurn,arbitrationTurnOrigin,currentScenePlayerInputs,buildSceneIntentBoard}=createSceneIntentBoardService({inspectArbitrationOrigin,consentAction,historicalActionSource,featureWindowChoices,inspectFeatureWindow,executableNativeFeatures,compileNativeActors,isGroupFeature,groupFeatureStakes,groupReactionRules,nativeActorControl,preRollFearCandidates,nativeAdversaryFeatureContext,preparedPositionCandidates,activeNativeConditions});
 // Provide this module's original inspectArbitrationOrigin to the fixed port; no other authority is granted.
 intentArbitrationOrigin.bind({inspectArbitrationOrigin});
 import {intentArbitrationOriginCreator} from './frameworks/intent/public.js';
