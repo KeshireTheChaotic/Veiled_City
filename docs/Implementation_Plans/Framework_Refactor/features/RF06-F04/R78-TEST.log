@@ -1,0 +1,11 @@
+✔ caseboard preserves current owner, guild and active-status visibility through its read boundary (19.8398ms)
+✔ caseboard retains private empty fallback and the original delivery error response (6.6958ms)
+✔ caseboard store exposes only the original reader and preserves its receiver and result/error identity (0.3451ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1530.7815

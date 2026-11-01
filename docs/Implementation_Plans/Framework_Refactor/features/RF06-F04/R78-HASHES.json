@@ -1,0 +1,45 @@
+{
+  "run_id": "RF06-F04-R78-2026-10-31-01",
+  "base_sha": "b5507a6d9cfa65c98e1f782ef402dea06faf516f",
+  "frozen_at": "2026-11-01T03:11:50.152Z",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "f0ed7c603dc24ca6f56b9aac69bcb76bd7f5f906bc27d666363792fcf4b0d514"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "sha256": "1ca80d93fbafdac0effb9b9d0b523fd6fa4e4898a70d56aef7b82d4e665b613d"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "9865bb602ee964a18c6665f14a6da6969026b489687d3f1a9843570a95fcdef9"
+    },
+    {
+      "path": "bot/src/frameworks/discord/caseboard-command.js",
+      "sha256": "34cf6e5d3c58f7435331b296c19753cc9cc83333f6b4fd0f51949e8f66293b61"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/public.js",
+      "sha256": "68ae5cb4d7ef3d1fe7be69cde99cf69b8fb6687bac318d5de1c330040260c2de"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "sha256": "1913e169ce39edac290701ea036b7a4b6910fbf11a225e1cb0fe8bf5b96d6b49"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-c78.test.mjs",
+      "sha256": "02481b371c387220dd825894e9f16a7758a5b047483773e5270b02b8b31fdb6f"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-c78.test.mjs",
+    "cwd": "bot",
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 1530.7815
+  },
+  "syntax_checks_passed": 7
+}

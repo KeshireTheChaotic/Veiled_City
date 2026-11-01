@@ -55,6 +55,8 @@ export {handleGmFactListCommand,assertGmFactReadStore} from './gm-fact-list.js';
 
 export {handlePlayerFactListCommand,assertPlayerFactReadStore} from './player-fact-list.js';
 
+export {handleCaseboardCommand,assertCaseboardReadStore} from './caseboard-command.js';
+
 export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
 
 export {gmFactLine,playerFactLine} from './fact-text.js';

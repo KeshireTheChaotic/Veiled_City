@@ -27,6 +27,10 @@ import {assertPlayerFactReadStore} from '../../frameworks/discord/public.js';
 import {createPlayerFactReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordPlayerFactReads(db){return assertPlayerFactReadStore(createPlayerFactReadStore(db));}
 
+import {assertCaseboardReadStore} from '../../frameworks/discord/public.js';
+import {createCaseboardReadStore} from '../../frameworks/persistence/public.js';
+export function connectDiscordCaseboardReads(db){return assertCaseboardReadStore(createCaseboardReadStore(db));}
+
 import {assertGmNpcReadStore} from '../../frameworks/discord/public.js';
 import {createGmNpcReadStore} from '../../frameworks/persistence/public.js';
 export function connectDiscordGmNpcReads(db){return assertGmNpcReadStore(createGmNpcReadStore(db));}

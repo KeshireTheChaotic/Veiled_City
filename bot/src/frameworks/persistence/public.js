@@ -25,6 +25,8 @@ export {createGmFactReadStore} from './gm-fact-reads.js';
 
 export {createPlayerFactReadStore} from './player-fact-reads.js';
 
+export {createCaseboardReadStore} from './caseboard-reads.js';
+
 export {createGmNpcReadStore} from './gm-npc-reads.js';
 
 export {createPartyStatusStore} from './party-status.js';

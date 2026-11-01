@@ -17,7 +17,7 @@ import {connectDiscordDirectorHistory} from './framework-to-framework/discord--p
 import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
-import {gmFactLine,handlePlayerFactListCommand} from './frameworks/discord/public.js';
+import {gmFactLine,handlePlayerFactListCommand,handleCaseboardCommand} from './frameworks/discord/public.js';
 import {handleGmNpcStateCommand} from './frameworks/discord/public.js';
 import {connectDiscordGmNpcReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleGmFactListCommand} from './frameworks/discord/public.js';
@@ -30,7 +30,7 @@ import {byPrefix,handleAdministrativeReadCommand} from './frameworks/discord/pub
 import {handleDoctorCommand} from './framework-to-framework/discord--operations/public.js';
 import {handlePlayerSettingsCommand} from './frameworks/discord/public.js';
 import {handleVoiceCommand} from './frameworks/discord/public.js';
-import {connectDiscordCommandReceipts,connectDiscordPlayerSettings,connectDiscordAdministrativeReads,connectDiscordPlayerFactReads} from './framework-to-framework/discord--persistence/public.js';
+import {connectDiscordCommandReceipts,connectDiscordPlayerSettings,connectDiscordAdministrativeReads,connectDiscordPlayerFactReads,connectDiscordCaseboardReads} from './framework-to-framework/discord--persistence/public.js';
 import {translateEphemeralReplies} from './frameworks/discord/public.js';
 import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
@@ -2076,9 +2076,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       return await handlePlayerFactListCommand(interaction,{store:connectDiscordPlayerFactReads(db),characterId:a?.character_id||null});
     }
     if(group==="intel"&&sub==="caseboard"){
-      const rows=db.listVisibleActiveThreads(interaction.guildId,interaction.user.id);
-      await deliverInteractionText(interaction,rows.length?rows.map(x=>`• **${x.label}**${x.notes?`: ${x.notes}`:""}`).join("\n"):"No active recorded threads.");
-      return true;
+      return await handleCaseboardCommand(interaction,{store:connectDiscordCaseboardReads(db)});
     }
 
     if(group==="gm"){
