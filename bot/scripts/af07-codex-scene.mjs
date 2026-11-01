@@ -33,14 +33,17 @@ function blank(schema){
   return null;
 }
 
-function seed(directory){
-  const db=new VeiledDB(join(directory,'campaign.sqlite'),schema),guild='af07-disposable';
+function seed(directory,{actorName,featureKey}){
+  let db=new VeiledDB(join(directory,'campaign.sqlite'),schema);
+  const guild='af07-disposable';
   db.ensureCampaign(guild,{name:'AF07 disposable Codex qualification'});
-  db.setCityCalendar(guild,{flags:{scene_continuity:true,roll_requests:true,gm_discretion:true,narrative_authority:true,playable_narration:true,narrative_camera:true,dialogue_history:true,narrative_encounters:true}});
+  db.changeFear(guild,6);
+  db.setCityCalendar(guild,{flags:{scene_continuity:true,roll_requests:true,roll_collaboration:true,gm_discretion:true,narrative_authority:true,playable_narration:true,narrative_camera:true,dialogue_history:true,narrative_encounters:true}});
   db.upsertPlayer(guild,'owner-af07','AF07 Owner');
   db.upsertPlayer(guild,'owner-af07-b','AF07 Owner B');
-  const pc=db.createCharacter(guild,'owner-af07','AF07 PC',{location:'af07-room'});
-  const pcB=db.createCharacter(guild,'owner-af07-b','AF07 PC B',{location:'af07-room'});
+  const sheet={location:'af07-room',traits:{Agility:2,Strength:0,Finesse:1,Instinct:1,Presence:0,Knowledge:-1},resources:{hp:{current:0,max:6}}};
+  const pc=db.createCharacter(guild,'owner-af07','AF07 PC',sheet);
+  const pcB=db.createCharacter(guild,'owner-af07-b','AF07 PC B',sheet);
   db.updateCharacterData(pc.id,data=>{data.location='af07-room';});
   db.updateCharacterData(pcB.id,data=>{data.location='af07-room';});
   db.setSimulationEntity(guild,'location','af07-room',{name:'AF07 Test Room',aliases:['test room'],visibility:'party'});
@@ -48,15 +51,15 @@ function seed(directory){
   db.assignCharacter(session.id,'owner-af07',pc.id);db.setPresence(session.id,'owner-af07','present');
   db.assignCharacter(session.id,'owner-af07-b',pcB.id);db.setPresence(session.id,'owner-af07-b','present');
   const scene=currentScene(db,guild);
-  db.upsertNpcProfile(guild,{npcKey:'af07-contractor',displayName:'Aster Vale Contractor',role:'contractor',publicIdentity:'Aster Vale Contractor'});
-  db.setSimulationEntity(guild,'npc','af07-contractor',{name:'Aster Vale Contractor',location_key:'af07-room',visibility:'party',status:'active'});
+  db.upsertNpcProfile(guild,{npcKey:'af07-contractor',displayName:actorName,role:'adversary',publicIdentity:actorName});
+  db.setSimulationEntity(guild,'npc','af07-contractor',{name:actorName,location_key:'af07-room',visibility:'party',status:'active'});
   const arrival=indexWorldEvent(db,guild,{key:'af07:npc-arrival',kind:'arrival',title:'A contractor is present',source_id:'fixture',session_id:session.id,scene:scene.key,
     location_key:'af07-room',visibility:'party',truth_status:'established',details:{entity_type:'npc',entity_key:'af07-contractor',observers:[]}},'fixture');
   recordScenePresence(db,guild,{source_event:arrival.event_key,entity_type:'npc',entity_key:'af07-contractor',location_key:'af07-room',visibility:'party',state:'actually_present'},'fixture');
   recordCharacterArrival(db,guild,db.getCharacter(pc.id),'owner-af07','af07:pc-arrival');
   recordCharacterArrival(db,guild,db.getCharacter(pcB.id),'owner-af07-b','af07:pc-b-arrival');
   const library=new EncounterLibrary(contentRoot);
-  const actor=library.findAdversary('Aster Vale Contractor');
+  const actor=library.findAdversary(actorName);
   const encounter=db.createEncounter(guild,session.id,{tier:1,pc_count:2,difficulty:'standard',style:'balanced',base_bp:0,budget_bp:0,objective:'A contractor acts in the room.',environment_name:'AF07 Test Room',
     composition:[{name:actor.name,type:actor.type,quantity:1}]});
   db.setEncounterStatus(encounter.id,'active');
@@ -65,10 +68,11 @@ function seed(directory){
   const bindingSource=indexWorldEvent(db,guild,{key:'af07:encounter-source',kind:'encounter_binding',title:'AF07 encounter fixture',source_id:'fixture',session_id:session.id,scene:scene.key,
     location_key:'af07-room',visibility:'gm',truth_status:'established',details:{}},'fixture');
   db.saveCityRecord(guild,{kind:'encounter_binding',key:encounter.id,status:'active',source_event:bindingSource.event_key,visibility:'gm',data:{combatants:[{actor:'af07-contractor',id:combatants[0].id}],roster:[pc.id,pcB.id].sort()}});
-  return {db,guild,session,pc,npc:'af07-contractor',scene,close(){db.close();}};
+  return {get db(){return db;},guild,session,pc,pcB,featureKey,npc:'af07-contractor',scene,
+    reopen(){db.close();db=new VeiledDB(join(directory,'campaign.sqlite'),schema);return db;},close(){db.close();}};
 }
 
-export function createAf07MockAi({fixture,messageId,proposedFeature=feature}){
+export function createAf07MockAi({fixture,messageId,proposedFeature=fixture.featureKey}){
   let calls=0;
   return {get calls(){return calls;},responses:{async create(request){
     calls++;
@@ -77,19 +81,20 @@ export function createAf07MockAi({fixture,messageId,proposedFeature=feature}){
     const origin=createArbitrationOrigin(fixture.db,fixture.guild,{mode:'party',actorUserId:'owner-af07',actorCharacterId:pcId},worldInputKey(messageId,pcId));
     const board=arbitrationPromptBoard(fixture.db,fixture.guild,origin);
     const candidate=board.npc_candidates.find(item=>item.actor_key===actor);
+    const capability=candidate?.action_features.find(item=>item.feature_ref===fixture.featureKey);
     const intentRef=candidate?.intent_refs?.feature;
     output.respond=true;output.narration='The contractor snaps a flash charge toward the PC; the owner still controls the reaction.';
     output.authored_candidates=null;
     output.player_intents=[{type:'other',source_span:'What is happening in this room?',target_name:'',target_key:'',destination:'unspecified',operation:'current_situation',utterance:'',excluded_targets:[],framing:'immediate',resolution:'conversational',reason:'A question about the present scene.'}];
-    output.unified_arbitration={version:1,npc_intents:[{actor_key:actor,operation:'feature',target_refs:[pcId],objective_ref:'',source_refs:[],dependencies:[]}],decisions:[{
-      intent_ref:intentRef,disposition:'native_feature_resolution',rule_basis_refs:['srd:reaction-rolls'],difficulty:12,trait:'Instinct',stakes_kind:'native_feature',
+    output.unified_arbitration={version:1,npc_intents:[{actor_key:actor,operation:'feature',target_refs:capability?.target_policy==='all_in_range'?[pcId,fixture.pcB.id]:[pcId],objective_ref:'',source_refs:[],dependencies:[]}],decisions:[{
+      intent_ref:intentRef,disposition:'native_feature_resolution',rule_basis_refs:['srd:reaction-rolls'],difficulty:capability?.difficulty??12,trait:capability?.trait??'Instinct',stakes_kind:'native_feature',
       stakes:'The PC owner makes the reaction roll; no result or choice is assumed.',reason:'One source-backed Flashbang use.',difficulty_reason:'The feature sets Difficulty 12.',feature_ref:proposedFeature,experience_ref:'',advantage:false,disadvantage:false
     }]};
     return {output_text:JSON.stringify(output),output:[],usage:{}};
   }}};
 }
 
-export async function runAf07Scenario({ai,aiFactory,live=false}={}){
+export async function runAf07Scenario({ai,aiFactory,live=false,verifyCommittedScene,actorName='Aster Vale Contractor',featureKey=feature}={}){
   if(live&&process.env.AI_AUTH_MODE&&process.env.AI_AUTH_MODE!=='chatgpt')throw new Error('Live mode requires AI_AUTH_MODE=chatgpt.');
   if(live&&String(process.env.OPENAI_API_KEY||'').trim())throw new Error('Refusing API-key mode; this runner permits Codex sign-in only.');
   if(!live&&!ai&&!aiFactory)throw new Error('A mocked AI client is required unless --live-codex is explicitly supplied.');
@@ -102,7 +107,7 @@ export async function runAf07Scenario({ai,aiFactory,live=false}={}){
   let fixture;
   try{
     initializeRuntimeFrameworks();
-    fixture=seed(directory);
+    fixture=seed(directory,{actorName,featureKey});
     const messageId='af07:gm-input',message='What is happening in this room?';
     captureWorldInput(fixture.db,fixture.guild,'owner-af07',fixture.pc.id,messageId,message);
     const client=ai||aiFactory?.({fixture,messageId})||(await import('../src/frameworks/ai-provider/public.js')).createChatGptClient();
@@ -115,10 +120,12 @@ export async function runAf07Scenario({ai,aiFactory,live=false}={}){
       speaker:'af07-qualification',label:'AF07 disposable Codex qualification',meta:{messageId,triggerText:message},content:{root:contentRoot}});
     const executions=fixture.db.listCityRecords(fixture.guild,{kind:'gm_group_feature_execution',includeGM:true,limit:20});
     const invitations=fixture.db.listCityRecords(fixture.guild,{kind:'gm_arbitration_decision',status:'pending_pc_reaction',includeGM:true,limit:20});
+    const verification=verifyCommittedScene?await verifyCommittedScene({fixture,mutation,executions,invitations}):undefined;
     return {ok:true,live,turnCommitted:true,gmNativeActions:mutation.gmNativeActions?.length||0,
       gmNativeActionKinds:(mutation.gmNativeActions||[]).map(row=>({kind:row.kind||null,status:row.status||null,operation:row.data?.native?.operation||row.operation||null})),
       unifiedDecisions:mutation.unifiedArbitration?.length||0,groupFeatureExecutions:executions.length,
       ownerReactionInvitations:invitations.length,
+      ...(verification===undefined?{}:{verification}),
       databaseWasTemporary:true,developmentDatabaseReadOnly:live?liveContext.database:null,
       discordConnected:!!discordClient,discordMessageIntents:false,discordMessagesProcessed:false};
   }finally{
