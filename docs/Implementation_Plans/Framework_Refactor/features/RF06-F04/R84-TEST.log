@@ -1,0 +1,13 @@
+✔ delivery diagnostic text preserves original empty, ordinal, clipping and held-source wording without mutation (0.9019ms)
+✔ actual GM diagnostic preserves ordered reads, limit/private chunks and untouched saved outbox rows (16.5861ms)
+✔ non-GM guard remains before limit, materialization and diagnostic readers (6.3122ms)
+✔ pending formatting failure remains before the held-notice query (6.0837ms)
+✔ private diagnostic reply failure stays in command catch without repeating original reads (6.2683ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1631.8367

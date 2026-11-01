@@ -1,0 +1,8 @@
+{
+  "base_sha": "c39c540066b6efa54da2acba385736d8c9134c8d",
+  "materialize_pending_and_held_reader_asts_equal": true,
+  "pending_text_and_held_map_asts_equal": true,
+  "chunker_input_ast_equal": true,
+  "all_other_command_body_import_asts_equal": true,
+  "original_private_chunk_helper_and_native_materializer_source_unchanged": true
+}

@@ -61,6 +61,8 @@ export {replyWithSessionBrief} from './session-brief-command.js';
 
 export {replyWithSessionRecap} from './session-recap-command.js';
 
+export {pendingDeliveryLines,heldNativeNoticeLines} from './delivery-status-text.js';
+
 export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
 
 export {gmFactLine,playerFactLine} from './fact-text.js';

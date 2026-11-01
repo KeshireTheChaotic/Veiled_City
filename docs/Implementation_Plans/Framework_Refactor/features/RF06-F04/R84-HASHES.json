@@ -1,0 +1,31 @@
+{
+  "run_id": "RF06-F04-R84-2026-11-01-01",
+  "base_sha": "aeb00b7f692430766c9255dfed846e29c3e2d38b",
+  "frozen_at": "2026-11-01T23:49:57.647Z",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "7f497f9af3158cb17a205765355fadee0b7ee858fce616642961e8a6e83e593e"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "a83d1cc11847b1839d255abe6b2414b55f4b716bb374af2cc26d9968e87150d2"
+    },
+    {
+      "path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "sha256": "e5b2c4780ae26de392fffc761cbfa3fead8e495f3d65808600dc7d026138b9ae"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-c84.test.mjs",
+      "sha256": "497ac730fa76140813c9239cc583fc047f8e13b92f15a975d11bf1be81fa4a43"
+    }
+  ],
+  "result": {
+    "exit_code": 0,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 1631.8367,
+    "syntax_checks_passed": 4
+  }
+}

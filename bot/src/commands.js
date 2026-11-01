@@ -16,6 +16,7 @@ import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorHistory} from './framework-to-framework/discord--persistence/public.js';
 import {handleSessionRosterCommand,handleSessionBriefCommand} from './framework-to-framework/discord--session/public.js';
 import {handleSessionRecapCommand} from './framework-to-framework/discord--publication/public.js';
+import {pendingDeliveryLines,heldNativeNoticeLines,replyWithPrivateChunks} from './frameworks/discord/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
 import {gmFactLine,handlePlayerFactListCommand,handleCaseboardCommand} from './frameworks/discord/public.js';
@@ -2090,11 +2091,9 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(sub==="delivery-status"){
         materializeNativeNotices(db,interaction.guildId);
         const rows=db.listPendingPublications(interaction.guildId,{limit:interaction.options.getInteger("limit")||30});
-        const lines=rows.length?["**Pending/uncertain turn delivery**",...rows.map(row=>
-          `• turn \`${row.turn_id.slice(0,8)}\` part \`${row.id}\` (${row.ordinal+1}) · ${row.surface} · **${row.status}** · attempts ${row.attempt_count}${row.last_failure?` · ${row.last_failure.slice(0,160)}`:""}`)]:["No pending turn delivery rows."];
-        lines.push(...db.heldNativeNotices(interaction.guildId).map(r=>`Native notice ${r.kind} \`${r.record_key}\`: **${r.status}**; no send performed. Current source/audience proof required.`));
-        const chunks=chunkTextLines(lines);await interaction.reply({content:chunks[0],ephemeral:true});
-        for(const chunk of chunks.slice(1))await interaction.followUp({content:chunk,ephemeral:true});return true;
+        const lines=pendingDeliveryLines(rows);
+        lines.push(...heldNativeNoticeLines(db.heldNativeNotices(interaction.guildId)));
+        return await replyWithPrivateChunks(interaction,chunkTextLines(lines));
       }
       if(sub==="delivery-resync"){
         const r=resyncNativeNotice(db,interaction.guildId,interaction.options.getString("kind",true),interaction.options.getString("notice",true),{gm:isGM(db,interaction),actor:interaction.user.id});

@@ -1,0 +1,5 @@
+# RF06-F04 R84 — Delivery-status display text
+
+Basec39c540066b6efa54da2acba385736d8c9134c8d. B announced exclusive commands.js/Discord public.js/new delivery-status-text.js ownership to active C and paused A; no Native/Intent/Persistence overlap. Extract only original pending-delivery and held-notice text into Discord and use existing identical replyWithPrivateChunks. Preserve original GM guard, materializeNativeNotices call, limit option/default, pending reader, pending formatting, held reader, held formatting, chunking and reply order. No materialization/claim/retry/reconciliation/receipt/SQL/transaction migration.
+
+Fresh c84 tests will use synthetic disposable saved outbox/held rows for read-only diagnostic display, confirm GM-before-options/read authorization, private chunks/exact text/clipping, original formatting failure ordering and awaited reply failure. These fixtures do not qualify actual Native notice production, uncertain-delivery reconciliation or live Discord sending. No shared architecture metadata edits are required for these single-owner text functions; index use remains exclusive and coordinated with C.
