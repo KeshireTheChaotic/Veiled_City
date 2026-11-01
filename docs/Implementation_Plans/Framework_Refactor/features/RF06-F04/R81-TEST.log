@@ -1,0 +1,30 @@
+✔ ordinary recap retains private empty fallback and never falls back to raw session recap prose (13.7228ms)
+✖ actual recap route preserves private long output and rejection using synthetic archive reader inputs (6.9277ms)
+✔ existing public recap source retains reader errors inside the command error response (6.5633ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1555.149
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf06-f04-c81.test.mjs:42:1
+✖ actual recap route preserves private long output and rejection using synthetic archive reader inputs (6.9277ms)
+  Error: FOREIGN KEY constraint failed
+      at VeiledDB.saveCityRecord (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/persistence/database.js:395:8)
+      at add (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f04-c81.test.mjs:54:10)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf06-f04-c81.test.mjs:58:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'ERR_SQLITE_ERROR',
+    errcode: 787,
+    errstr: 'constraint failed'
+  }

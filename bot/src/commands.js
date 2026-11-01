@@ -104,8 +104,8 @@ import { captureAuthoredTurnEnvelope } from "./frameworks/intent/public.js";
 import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./frameworks/character/public.js";
 import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./frameworks/daggerheart/public.js";
-import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap, scopedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
-import {lifecycleHash} from './frameworks/publication/public.js';
+import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
+import {lifecycleHash,publicationSessionRecapSource} from './frameworks/publication/public.js';
 import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
 import {turnLatency} from './turn-latency.js';
 import { pendingPvpFear } from "./pvp-fear-gate.js";
@@ -2062,7 +2062,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);
-      await deliverInteractionText(interaction,scopedSessionRecap(db,interaction.guildId,row)||"No completed-session recap yet.",{ephemeral:true});
+      await deliverInteractionText(interaction,publicationSessionRecapSource.scopedSessionRecap(db,interaction.guildId,row)||"No completed-session recap yet.",{ephemeral:true});
       return true;
     }
     if(group==="intel"&&sub==="clues"){

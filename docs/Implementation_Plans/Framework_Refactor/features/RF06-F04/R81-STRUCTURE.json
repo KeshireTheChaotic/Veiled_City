@@ -1,0 +1,8 @@
+{
+  "base_sha": "1bf24d30f7c1ea366eb51eed8c8c81c403366b76",
+  "command_bodies_ast_equal_after_public_call_substitution": true,
+  "other_import_asts_equal": true,
+  "public_source_import_present": true,
+  "before_source_sha256": "f0ed7c603dc24ca6f56b9aac69bcb76bd7f5f906bc27d666363792fcf4b0d514",
+  "after_source_sha256": "a17292c6d335ae9e8e4b2d64b9df2d48b4c3b8cdffd2585d7c7d9cf24a436f0e"
+}
