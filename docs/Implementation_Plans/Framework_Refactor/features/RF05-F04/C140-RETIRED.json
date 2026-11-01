@@ -1,0 +1,27 @@
+[
+  {
+    "id": "4cbc0d1f5558f83502a21f4905b3a84983c18c478f00020fab16b3a8acc81ccd",
+    "code": "LEGACY_MODULE_LOCATION",
+    "from": "bot/src/ai-review.js",
+    "owner": "operations",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF05-F05",
+    "expires_after": "RF05",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+  },
+  {
+    "id": "9008ce7ea4b56b34259d4e762385e6ddef60c0592b5d85c47cb5dc629d9cdbda",
+    "code": "IMPORTS_PRIVATE_API",
+    "from": "bot/src/story-commands.js",
+    "to": "bot/src/ai-review.js",
+    "kind": "static",
+    "specifier": "./ai-review.js",
+    "owner": "application",
+    "max_occurrences": 1,
+    "remove_in_feature": "RF06-F04",
+    "expires_after": "RF06",
+    "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+    "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+  }
+]

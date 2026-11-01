@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
 import {readFile} from 'node:fs/promises';
 import '../../src/ai-intents.js';
-import {reviewWorkflow} from '../../src/ai-review.js';
+import {reviewWorkflow} from '../../src/frameworks/operations/public.js';
 import {operationsIntentReview} from '../../src/frameworks/operations/public.js';
 import {connectOperationsIntentReview} from '../../src/framework-to-framework/intent--operations/public.js';
 import {intentWorldPrimitives} from '../../src/frameworks/intent/public.js';
@@ -42,6 +42,6 @@ test('actual Operations workflow preserves GM review decisions, revisions and SQ
 test('production Application still initializes original Intent adapters before review commands',async()=>{
  const source=await readFile(new URL('../../src/story-commands.js',import.meta.url),'utf8');
  assert.match(source,/import\s*\{[^}]*delegationOperation[^}]*\}\s*from\s*["']\.\/ai-intents\.js["']/);
- const operations=await readFile(new URL('../../src/ai-review.js',import.meta.url),'utf8');
+ const operations=await readFile(new URL('../../src/frameworks/operations/ai-review.js',import.meta.url),'utf8');
  assert.doesNotMatch(operations,/from\s*["']\.\/ai-intents\.js["']/);
 });

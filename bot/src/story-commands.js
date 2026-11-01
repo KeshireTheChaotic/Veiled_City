@@ -19,7 +19,7 @@ import { proposeArcBeat } from "./frameworks/knowledge/public.js";
 import { manageMemoryCluster } from "./frameworks/knowledge/public.js";
 import { expansionStatus } from "./expansion-contracts.js";
 import { delegationOperation, stateRevision, projectPrivateEffect } from "./ai-intents.js";
-import { reviewInbox, reviewWorkflow } from "./ai-review.js";
+import { reviewInbox, reviewWorkflow } from "./frameworks/operations/public.js";
 import {FEATURE_FLAGS} from './frameworks/intent/public.js';
 import { reconcileHistory } from "./frameworks/knowledge/public.js";
 import { publishRollRequests } from "./roll-requests.js";

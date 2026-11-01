@@ -34,3 +34,4 @@ export {operationalReport} from './health.js';
 export {operationsIntentPolicy} from './contracts/intent-policy.js';
 export {operationsIntentContext} from './contracts/intent-context.js';
 export {operationsIntentReview} from './contracts/intent-review.js';
+export {reviewInbox,reviewWorkflow} from './ai-review.js';

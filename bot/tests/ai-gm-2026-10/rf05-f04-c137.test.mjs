@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {reviewInbox} from '../../src/ai-review.js';
+import {reviewInbox} from '../../src/frameworks/operations/public.js';
 import {operationsIntentContext} from '../../src/frameworks/operations/public.js';
 import {connectOperationsIntentPolicy,connectOperationsIntentContext} from '../../src/framework-to-framework/intent--operations/public.js';
 import {intentContext,intentWorldOperations,intentNativeEncounter,intentKnowledgeMaintenance} from '../../src/frameworks/intent/public.js';

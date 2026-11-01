@@ -1,0 +1,16 @@
+✔ application supplies Intent public feature catalog to Operations review (3.1457ms)
+✔ Operations review consumes the neutral kernel revision primitive directly (2.8757ms)
+✔ Operations review uses the current public Intent context with GM-only queries and no widened capabilities (2.2237ms)
+✔ Operations fixed review port fails closed and composes only the original review action (1.1834ms)
+✔ actual Operations workflow preserves GM review decisions, revisions and SQLite rollback (1.7375ms)
+✔ production Application still initializes original Intent adapters before review commands (3.2848ms)
+✔ Operations public retains original review implementation and bodies after physical move (6.4256ms)
+✔ actual GM story review uses relocated Operations and delivers the original private attachment (1.4046ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1407.7736

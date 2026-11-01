@@ -1,22 +1,22 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
-import {operationsIntentReview} from './frameworks/operations/public.js';
+import {operationsIntentReview} from './contracts/intent-review.js';
 const {reviewAiIntent}=operationsIntentReview;
-import {operationsIntentContext} from './frameworks/operations/public.js';
+import {operationsIntentContext} from './contracts/intent-context.js';
 const {intentContext}=operationsIntentContext;
-import {operationsIntentPolicy} from './frameworks/operations/public.js';
+import {operationsIntentPolicy} from './contracts/intent-policy.js';
 const {delegationPolicy}=operationsIntentPolicy;
-import {stateRevision} from "./kernel/state-revision.js";
-import {operationsWorldSeedDrafts} from './frameworks/operations/public.js';
+import {stateRevision} from "../../kernel/state-revision.js";
+import {operationsWorldSeedDrafts} from './contracts/world-seed-drafts.js';
 const {reviewSeedDraft}=operationsWorldSeedDrafts;
-import {operationsNpcReview} from "./frameworks/operations/public.js";
+import {operationsNpcReview} from './contracts/npc-review.js';
 const {reviewGoalTransition,manageStrategy}=operationsNpcReview;
-import {operationsWorldConsequence} from './frameworks/operations/public.js';
+import {operationsWorldConsequence} from './contracts/world-consequence.js';
 const {reviewConsequence}=operationsWorldConsequence;
-import {operationsWorldGroups} from './frameworks/operations/public.js';
+import {operationsWorldGroups} from './contracts/world-groups.js';
 const {manageGroup}=operationsWorldGroups;
-import {operationsWorldAudit} from './frameworks/operations/public.js';
+import {operationsWorldAudit} from './contracts/world-audit.js';
 const {cityAudit}=operationsWorldAudit;
-import {operationsKnowledgeOrganizationReview} from './frameworks/operations/public.js';
+import {operationsKnowledgeOrganizationReview} from './contracts/knowledge-organization-review.js';
 const {reviewOrganization}=operationsKnowledgeOrganizationReview;
 const REVIEW_KINDS=["ai_intent","goal_transition","consequence","group_transition","strategy","seed_draft","organization_request"];
 function reviewPreview(row){
