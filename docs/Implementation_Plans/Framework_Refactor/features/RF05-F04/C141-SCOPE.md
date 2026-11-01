@@ -1,0 +1,5 @@
+# RF05-F04 C141 — Intent delegation decision and receipt persistence
+
+Extract the original decision and saveReceipt function bodies from mixed ai-intents.js to Intent delegation-receipts.js. Preserve decision precedence, explicit policy/feature permission/expiry/budgets, receipt source selection, deterministic rejection-source key, scope/ordinary-effect metadata, save/audit order and exception identity. Reuse the existing neutral jsonHash implementation with byte-identical JSON hashing and existing Intent World primitive consumer. No new pair/public interface or alternate execution policy.
+
+Fresh coverage must pin original function-body hashes, exercise policy decision branches and receipt source/fallback handling, actual SQLite dispatcher commit/replay and rollback/error behavior with a synthetic adapter. This qualifies receipt orchestration rather than actual game effects. Run affected extraction/review tests, changed syntax and RF05 ratchet. No schema, gameplay, audience, SQL or external-service change. Leave adapters/preflight/native execution in the original dispatcher for subsequent decomposition.
