@@ -17,7 +17,7 @@ import {connectDiscordDirectorHistory} from './framework-to-framework/discord--p
 import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
-import {gmFactLine,playerFactLine} from './frameworks/discord/public.js';
+import {gmFactLine,handlePlayerFactListCommand} from './frameworks/discord/public.js';
 import {handleGmNpcStateCommand} from './frameworks/discord/public.js';
 import {connectDiscordGmNpcReads} from './framework-to-framework/discord--persistence/public.js';
 import {handleGmFactListCommand} from './frameworks/discord/public.js';
@@ -30,7 +30,7 @@ import {byPrefix,handleAdministrativeReadCommand} from './frameworks/discord/pub
 import {handleDoctorCommand} from './framework-to-framework/discord--operations/public.js';
 import {handlePlayerSettingsCommand} from './frameworks/discord/public.js';
 import {handleVoiceCommand} from './frameworks/discord/public.js';
-import {connectDiscordCommandReceipts,connectDiscordPlayerSettings,connectDiscordAdministrativeReads} from './framework-to-framework/discord--persistence/public.js';
+import {connectDiscordCommandReceipts,connectDiscordPlayerSettings,connectDiscordAdministrativeReads,connectDiscordPlayerFactReads} from './framework-to-framework/discord--persistence/public.js';
 import {translateEphemeralReplies} from './frameworks/discord/public.js';
 import {formatSheet,encounterSummary} from './frameworks/discord/public.js';
 import {resolveCommandRoute} from './frameworks/discord/public.js';
@@ -2068,20 +2068,12 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     if(group==="intel"&&sub==="clues"){
       const s=db.getActiveSession(interaction.guildId);
       const a=s?db.controlledAssignment(s.id,interaction.user.id):null;
-      const rows=db.playerFactsFor(interaction.guildId,interaction.user.id,{characterId:a?.character_id||null,category:"clue",limit:80});
-      const chunks=chunkTextLines(rows.length?["**Clues Available to You**",...rows.map(playerFactLine)]:["No recorded clues are available to you."]);
-      await interaction.reply({content:chunks[0],ephemeral:true});
-      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
-      return true;
+      return await handlePlayerFactListCommand(interaction,{store:connectDiscordPlayerFactReads(db),characterId:a?.character_id||null});
     }
     if(group==="intel"&&sub==="facts"){
       const s=db.getActiveSession(interaction.guildId);
       const a=s?db.controlledAssignment(s.id,interaction.user.id):null;
-      const rows=db.playerFactsFor(interaction.guildId,interaction.user.id,{characterId:a?.character_id||null,category:"fact",limit:80});
-      const chunks=chunkTextLines(rows.length?["**Facts Available to You**",...rows.map(playerFactLine)]:["No recorded facts are available to you."]);
-      await interaction.reply({content:chunks[0],ephemeral:true});
-      for(const chunk of chunks.slice(1)) await interaction.followUp({content:chunk,ephemeral:true});
-      return true;
+      return await handlePlayerFactListCommand(interaction,{store:connectDiscordPlayerFactReads(db),characterId:a?.character_id||null});
     }
     if(group==="intel"&&sub==="caseboard"){
       const rows=db.listVisibleActiveThreads(interaction.guildId,interaction.user.id);

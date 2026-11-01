@@ -1,0 +1,10 @@
+✔ facts and clues commands preserve owner scope through the Discord-Persistence read contract (59.2291ms)
+✔ facts and clues delivery failures retain the original command error response (6.851ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28614.2594
