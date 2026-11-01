@@ -1,0 +1,9 @@
+{
+  "feature": "RF06-F02 R80",
+  "base_sha": "7633b88f3e861ca08962192b031b289f9de095e0",
+  "source_sha256": "b7430e45c655b3ef2fb094e3c4b969800f10b6ffb0187d61cfe972f6dc4baeb6",
+  "schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+  "method_count": 319,
+  "other_methods_ast_sha256": "f85b8cf1104b833493113a71e288d6eadef59b224856c2ed0605e76249877d43",
+  "original_method": "listVisibleActiveThreads(guildId,userId) {\r\n    return this.db.prepare(`\r\n      SELECT * FROM threads WHERE guild_id=? AND status='active'\r\n        AND (visibility IN ('public','party') OR (visibility='player' AND subject_user_id=?))\r\n      ORDER BY updated_at DESC\r\n    `).all(guildId,userId);\r\n  }"
+}

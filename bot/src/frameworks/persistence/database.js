@@ -4,6 +4,7 @@ import * as npcProfileReads from './npc-profile-read-repository.js';
 import * as npcCognitionReads from './npc-cognition-read-repository.js';
 import * as gmFactReads from './gm-fact-repository.js';
 import * as playerFactReads from './player-fact-repository.js';
+import * as caseboardReads from './caseboard-repository.js';
 import * as rulingReads from './rules-ruling-repository.js';
 import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
 import * as administrativeReads from './administrative-read-repository.js';
@@ -1578,11 +1579,7 @@ export class VeiledDB {
   }
 
   listVisibleActiveThreads(guildId,userId) {
-    return this.db.prepare(`
-      SELECT * FROM threads WHERE guild_id=? AND status='active'
-        AND (visibility IN ('public','party') OR (visibility='player' AND subject_user_id=?))
-      ORDER BY updated_at DESC
-    `).all(guildId,userId);
+    return caseboardReads.listVisibleActiveThreads(this.db,guildId,userId);
   }
 
   listPublicPartyThreads(guildId) {

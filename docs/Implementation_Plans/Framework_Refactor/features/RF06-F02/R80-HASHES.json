@@ -1,0 +1,32 @@
+{
+  "run_id": "RF06-F02-R80-2026-11-01-01",
+  "base_sha": "f321671eb8b597e6b678f1c1c789609fb2822e2d",
+  "frozen_at": "2026-11-01T17:25:17.019Z",
+  "files": [
+    {
+      "path": "bot/src/frameworks/persistence/database.js",
+      "sha256": "ce15f96a72ee45908ebcc73fc7d3637cc84d3f7ff5ba664d73d71767d5ee94c1"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "sha256": "94473fa13e69e4163e9775c8303973869581cc5832246ab5daafc86bcf17cdc8"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f02-c80.test.mjs",
+      "sha256": "8e0696d59a5096f8167c17ea7986df3093e52150f11f6c9bf7badab605db4926"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-c78.test.mjs",
+      "sha256": "02481b371c387220dd825894e9f16a7758a5b047483773e5270b02b8b31fdb6f"
+    }
+  ],
+  "result": {
+    "exit_code": 0,
+    "new_passed": 4,
+    "affected_passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 1599.9574,
+    "syntax_checks_passed": 3
+  }
+}
