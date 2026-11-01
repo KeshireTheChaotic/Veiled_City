@@ -35,7 +35,7 @@ The executable source is [RF01/BRIDGE_CONTRACTS.json](RF01/BRIDGE_CONTRACTS.json
 | intent--knowledge | ADOPTED | intent → knowledge (existing authored-turn API; C180/C181 fixed actions; C182–C184 scoped memory reference resolver) ; knowledge → intent (observed, unqualified) | 2 / 4 | RF04-F03 |
 | intent--narrative | PROPOSED_NO_API | intent → narrative; narrative → intent | 0 / 0 | RF05 |
 | intent--npc | ADOPTED | npc → intent; intent → npc | 1 / 3 | RF04-F05 |
-| intent--operations | ADOPTED | operations → intent (delegation policy read only) | 1 / 1 | RF05-F04 C135 |
+| intent--operations | ADOPTED | operations → intent (delegation policy and GM context reads) | 1 / 1 plus C137 evidence | RF05-F04 C135, C137 |
 | intent--persistence | PROPOSED_NO_API | intent → persistence | 0 / 0 | RF05 |
 | intent--publication | PROPOSED_NO_API | intent → publication; publication → intent | 0 / 0 | RF05 |
 | intent--session | PROPOSED_NO_API | session → intent; intent → session | 0 / 0 | RF05 |
@@ -83,3 +83,5 @@ R12 adopts discord--persistence for the exact five-method command receipt view. 
 R13 adopts operations--publication for original metric/trace/native measurement/latency/failure callbacks. Whole timing/failure implementations moved unchanged; original singleton stores and root exports remain shared. Each legacy Publication hub retains one original compatibility-source import until standalone/hub migration, so this is scoped adoption rather than complete decoupling. Five other direct edges retired; exact metadata/test lifecycle in RF01/BRIDGE_CONTRACTS.json.
 
 C135 adopts Intent–Operations for the original delegationPolicy reader through an Operations-owned fixed function port and existing runtime composition. Other Intent review/context capabilities remain unqualified. The executable pair record and C135 evidence define the exact boundary.
+
+C137 extends the same pair with the original public Intent context reader for GM-only Operations review. Review execution remains outside this qualified read contract; dedicated context evidence is in C137-HASHES.json.

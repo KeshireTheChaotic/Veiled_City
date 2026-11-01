@@ -2120,7 +2120,7 @@
         {
           "from": "operations",
           "to": "intent",
-          "contract": "Original delegationPolicy reader only; same caller database, guild, saved policy identity, defaults and exceptions. No configuration or execution authority."
+          "contract": "Original delegationPolicy and GM-only intentContext readers; same caller database/guild, saved policy identity, current context projection, defaults and exceptions. No configuration, review or execution authority."
         }
       ],
       "source_evidence": [
@@ -2131,9 +2131,9 @@
           "type": "import"
         }
       ],
-      "validation": "Fresh C135 tests qualify fixed composition, saved identity/defaults, exact receiver/arguments, error propagation and replacement refusal.",
+      "validation": "Fresh C135 and C137 tests qualify fixed composition, saved identity/defaults, actual GM review context, current source refresh, exact receiver/arguments, error propagation and replacement refusal; C137-HASHES.json records additional context test evidence.",
       "lifecycle": "Runtime initializer binds once before review commands; repeated identical binding is allowed and replacement forbidden.",
-      "adoption_feature": "RF05-F04 C135",
+      "adoption_feature": "RF05-F04 C135, C137",
       "consumers": [
         "bot/src/application/composition/runtime-initializers.js"
       ],
@@ -2155,7 +2155,7 @@
         "occurrences": 2
       },
       "public_api": "bot/src/framework-to-framework/intent--operations/public.js",
-      "scope": "Delegation policy read only. intentContext and reviewAiIntent compatibility imports remain unqualified."
+      "scope": "Delegation policy and GM-only Intent context projection reads. reviewAiIntent compatibility import remains unqualified. Additional focused context test: bot/tests/ai-gm-2026-10/rf05-f04-c137.test.mjs; recorded in C137-HASHES.json."
     },
     {
       "pair": "intent--persistence",

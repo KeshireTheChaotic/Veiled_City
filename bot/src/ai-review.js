@@ -1,5 +1,7 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
-import { intentContext, reviewAiIntent } from "./ai-intents.js";
+import { reviewAiIntent } from "./ai-intents.js";
+import {operationsIntentContext} from './frameworks/operations/public.js';
+const {intentContext}=operationsIntentContext;
 import {operationsIntentPolicy} from './frameworks/operations/public.js';
 const {delegationPolicy}=operationsIntentPolicy;
 import {stateRevision} from "./kernel/state-revision.js";
