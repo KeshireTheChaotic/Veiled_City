@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {createGroupFeatureExecutionRules} from '../../src/frameworks/daggerheart/group-feature-execution-rules.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 
-function fixture({area=true}={}){
+function fixture({area=true,ordinary=false}={}){
   const sql=new DatabaseSync(':memory:');sql.exec('CREATE TABLE records(kind TEXT,key TEXT,body TEXT,PRIMARY KEY(kind,key));');
   const put=(kind,key,v)=>{sql.prepare('INSERT OR REPLACE INTO records VALUES(?,?,?)').run(kind,key,JSON.stringify(v));return v;},
     get=(kind,key)=>{const r=sql.prepare('SELECT body FROM records WHERE kind=? AND key=?').get(kind,key);return r?JSON.parse(r.body):null;};
@@ -16,10 +16,12 @@ function fixture({area=true}={}){
     feature={feature_key:'adversary:ritual-enforcement-team:null-foam',source_hash:'exact-feature-source',template_hash:hash(template),costs:[{resource:'npc_stress',amount:1}]},library={findAdversary:()=>template};
   put('combatant','npc',{id:'npc',base_name:template.name,status:'active',hp_current:3,stress_current:0,stress_max:2});
   put('character','pc',pc);
+  if(ordinary)put('profile','bystander',{guild_id:'guild',npc_key:'bystander',name:'Bystander',data:{capabilities:['agile +99']}});
   let nesting=0,fail=false,rolls=0,mutationId=0,conditionFail=false,pcEffectFail=false;
   const db={transaction:fn=>{const id=`t${++nesting}`;sql.exec(`SAVEPOINT ${id}`);try{const r=fn();sql.exec(`RELEASE ${id}`);return r;}catch(e){sql.exec(`ROLLBACK TO ${id}; RELEASE ${id}`);throw e;}},
     getCityRecord:(_g,kind,key)=>kind==='encounter_binding'?{source_event:'binding-source',data:{combatants:[{actor:'caster',id:'npc'}]}}:get(kind,key),
     getMutation:(_g,id)=>get('mutation',id),
+    getNpcProfile:(_g,key)=>get('profile',key),
     saveCityRecord:(_g,r)=>{if(fail&&r.kind==='gm_group_feature_execution')throw Error('injected execution storage failure');
       if(pcEffectFail&&r.kind==='gm_group_feature_effect')throw Error('injected owner effect failure');
       if(conditionFail&&r.kind==='native_mixed_condition')throw Error('injected condition storage failure');return put(r.kind,r.key,{...r,record_key:r.key});},
@@ -45,7 +47,8 @@ function fixture({area=true}={}){
     commitGmActionCost:()=>{const c=get('combatant','npc');c.stress_current++;put('combatant','npc',c);return put('gm_action_cost_receipt','cost',
       {record_key:'cost',status:'committed',source_event:'parent-source',data:{decision:'decision'}});},
     planNativeAreaCohort:()=>({area_hash:'area-hash',targets:[{kind:'character',key:'pc',owner:'owner',presence_hash:hash(presence)},
-      {kind:'npc',key:'caster',presence_hash:hash(actor),control_hash:'gm-control'}]}),
+      {kind:'npc',key:'caster',presence_hash:hash(actor),control_hash:'gm-control'},
+      ...(ordinary?[{kind:'npc',key:'bystander',presence_hash:'bystander-presence',control_hash:'bystander-control'}]:[])]}),
     indexWorldEvent:(_d,_g,event)=>put('event',event.key,{...event,event_key:event.key,status:'active'}),
     RANGE_BANDS:['Melee','Very Close','Close','Far','Very Far']});
   if(!area){feature.feature_key='adversary:aster-vale-contractor:flashbang';proposal.trait='Instinct';proposal.difficulty=12;entry.target_refs=['pc'];}
@@ -146,5 +149,41 @@ test('owner effect storage failure rolls back its condition, and wrong owner pro
     const bad=JSON.parse(terminal.body);bad.data.owner='other';f.put('gm_reaction_submission',bad.record_key,bad);
     assert.throws(()=>f.rules.applyGroupReactionOutcome(f.db,'guild',child,request));
     assert.equal(f.get('character','pc').data.conditions,undefined);
+  }finally{f.close();}
+});
+
+test('ordinary profile NPC uses native d20 at zero and persisted conditions without inventing a combatant or editing the profile',()=>{
+  const f=fixture({ordinary:true});try{
+    const profile=f.get('profile','bystander'),parent=f.prepare(),reaction=parent.data.mixed.reactions[2].receipt;
+    assert.equal(reaction.version,2);assert.equal(reaction.result.modifier,0);assert.equal(reaction.result.total,2);
+    assert.equal(reaction.combatant_hash,null);assert.deepEqual(reaction.profile,{key:'bystander',hash:hash(profile)});
+    assert.equal(f.sql.prepare("SELECT COUNT(*) n FROM records WHERE kind='combatant'").get().n,1);
+    assert.deepEqual(f.get('profile','bystander'),profile);
+    const conditions=f.rules.activeNativeConditions(f.db,'guild','bystander',{kind:'npc'});
+    assert.equal(conditions.length,1);assert.equal(conditions[0].data.cause.condition,'Restrained');
+    assert.equal(f.rules.nativeMovementConditionIssue(f.db,'guild','bystander',{kind:'npc',range:'Melee'}),'NATIVE_MOVEMENT_RESTRAINED');
+    assert.deepEqual(f.prepare(),parent);assert.equal(f.rolls(),2);assert.equal(f.get('combatant','npc').stress_current,1);
+    // A later profile edit cannot invalidate already committed immutable history.
+    f.put('profile','bystander',{...profile,name:'Renamed bystander'});
+    assert.deepEqual(f.prepare(),parent);assert.equal(f.rolls(),2);
+    assert.equal(f.rules.activeNativeConditions(f.db,'guild','bystander',{kind:'npc'}).length,1);
+  }finally{f.close();}
+});
+
+for(const change of ['drift','wrong-guild','missing'])test(`ordinary profile ${change} before preparation blocks before cost or dice`,()=>{
+  const f=fixture({ordinary:true});try{
+    const profile=f.get('profile','bystander');
+    if(change==='missing')f.sql.exec("DELETE FROM records WHERE kind='profile'");
+    else f.put('profile','bystander',{...profile,...(change==='wrong-guild'?{guild_id:'other'}:{name:'Changed'})});
+    assert.throws(f.prepare);assert.equal(f.rolls(),0);assert.equal(f.get('combatant','npc').stress_current,0);
+    assert.equal(f.sql.prepare("SELECT COUNT(*) n FROM records WHERE kind='native_mixed_condition'").get().n,0);
+  }finally{f.close();}
+});
+
+test('dead bound NPC never falls back to an ordinary profile',()=>{
+  const f=fixture();try{
+    f.put('profile','caster',{guild_id:'guild',npc_key:'caster'});
+    f.put('combatant','npc',{...f.get('combatant','npc'),hp_current:0});
+    assert.throws(f.prepare);assert.equal(f.rolls(),0);assert.equal(f.get('combatant','npc').stress_current,0);
   }finally{f.close();}
 });

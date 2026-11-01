@@ -38,6 +38,11 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
       if(pc.owner_user_id!==target.owner)throw fail('group_mixed_condition_current_owner');
       return {...pc.data,id:pc.id};
     }
+    if(target.profile_hash){
+      const profile=db.getNpcProfile(guild,target.key);
+      if(profile?.guild_id!==guild||profile.npc_key!==target.key||hash(profile)!==target.profile_hash)throw fail('group_mixed_condition_current_profile');
+      return {conditions:activeNativeConditions(db,guild,target.key,{kind:'npc'}).map(r=>r.data.cause.condition)};
+    }
     const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),c=encounter&&db.listCombatants(encounter.id).find(c=>c.id===target.combatant);
     if(target.kind!=='npc'||c?.status!=='active'||c.hp_current<=0||c.base_name!==target.combatant_snapshot.base_name)throw fail('group_mixed_condition_current_npc');
     return c;
@@ -48,6 +53,9 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
       if(hash(db.getCharacter(target.key).data.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
       return;
     }
+    // Ordinary NPCs have no combatant sheet. The native condition record itself is
+    // their condition state; the generic writer persists it in this transaction.
+    if(target.profile_hash)return;
     const after=db.updateCombatant(target.combatant,{conditions});
     if(hash(after.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
   }});
@@ -139,7 +147,14 @@ function planGroupFeature(db,guild,o,entry,p,feature,{library,opportunity}={}){
         targets.push({character:pc.id,owner:target.owner,principal:principal.revision,
           target_snapshot:{target:target.presence_hash,principal:principal.revision,area:area.area_hash},resources_hash:hash(pc.data.resources)});
       }else{
-        const matches=binding.data.combatants.filter(b=>b.actor===target.key),combatant=matches.length===1&&db.listCombatants(encounter.id).find(v=>v.id===matches[0].id),
+        const matches=binding.data.combatants.filter(b=>b.actor===target.key);
+        if(matches.length===0){
+          const profile=db.getNpcProfile(guild,target.key);
+          if(profile?.guild_id!==guild||profile.npc_key!==target.key)throw fail('group_feature_area_profile_source');
+          npc_targets.push({...target,combatant:null,combatant_snapshot:null,profile_snapshot:profile,profile_hash:hash(profile),template_hash:hash(profile)});
+          continue;
+        }
+        const combatant=matches.length===1&&db.listCombatants(encounter.id).find(v=>v.id===matches[0].id),
           sourceTemplate=combatant&&library.findAdversary(combatant.base_name);
         if(!combatant||combatant.status!=='active'||combatant.hp_current<=0||!sourceTemplate)throw fail('group_feature_area_npc_source');
         npc_targets.push({...target,combatant:combatant.id,combatant_snapshot:combatant,template_hash:hash(sourceTemplate)});
@@ -199,8 +214,8 @@ function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../cont
         createPcInvitation:target=>{const child=createChild(n.targets.find(t=>t.character===target.key));
           children.push({decision:child.record_key,character:target.key,hash:hash(child.data)});return child;},
         inspectPcInvitation:k=>db.getCityRecord(guild,'gm_arbitration_decision',k),
-        resolveNpcReaction:target=>rollNativeNpcReaction({target,combatant:target.combatant_snapshot,
-          template:library.findAdversary(target.combatant_snapshot.base_name),difficulty:policies[n.feature].difficulty,rng}),
+        resolveNpcReaction:target=>rollNativeNpcReaction({target,...(target.profile_hash?{profile:target.profile_snapshot}
+          :{combatant:target.combatant_snapshot,template:library.findAdversary(target.combatant_snapshot.base_name)}),difficulty:policies[n.feature].difficulty,rng}),
         writeNpcReceipt:(target,receipt)=>{
           const reactionKey=`group-npc-reaction:${hash([key,target.key])}`,event=indexWorldEvent(db,guild,{key:`${reactionKey}:source`,
             kind:'native_npc_reaction',source_id:'native:unified-gm',title:'Native area reaction',session_id:row.data.origin.session,
@@ -244,7 +259,9 @@ function inspectGroupFeature(db,guild,key){
           ||source.session_id!==parent.row.data.origin.session||source.scene!==parent.row.data.origin.scene
           ||source.details.execution!==key||source.details.payload_hash!==hash(receipt)||receipt.target.key!==target.key
           ||receipt.target.presence_hash!==target.presence_hash||receipt.target.control_hash!==target.control_hash
-          ||receipt.target.template_hash!==target.template_hash||receipt.combatant_hash!==hash(target.combatant_snapshot))throw fail('group_mixed_npc_receipt');
+          ||receipt.target.template_hash!==target.template_hash||(target.profile_hash
+            ?receipt.version!==2||receipt.profile?.hash!==target.profile_hash||receipt.combatant_hash!==null
+            :receipt.version!==1||receipt.combatant_hash!==hash(target.combatant_snapshot)))throw fail('group_mixed_npc_receipt');
       }
     }
     if(execution.status!=='preparing_effects'){
