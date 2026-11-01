@@ -17,9 +17,14 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
     const {execution,parent}=inspectGroupFeature(db,guild,binding.execution),n=parent.data.native,policy=policies[n.feature];
     if(!policy?.area||!n.area||!execution.data.mixed)throw fail('group_mixed_condition_source_family');
     const index=mixedTargets(n).findIndex(t=>t.kind===target.kind&&t.key===target.key),reaction=execution.data.mixed.reactions[index];
-    if(!policy.area||target.kind!=='npc'||index<0||hash(mixedTargets(n)[index])!==hash(target)
-      ||binding.cohort_hash!==execution.data.mixed.cohort_hash||binding.target!==`npc:${target.key}`||binding.outcome!=='failure'
-      ||reaction?.receipt?.result.success!==false||binding.proof!==reaction.receipt.receipt_hash)throw fail('group_mixed_condition_cause');
+    if(index<0||hash(mixedTargets(n)[index])!==hash(target)||binding.cohort_hash!==execution.data.mixed.cohort_hash
+      ||binding.target!==`${target.kind}:${target.key}`||binding.outcome!=='failure')throw fail('group_mixed_condition_cause');
+    if(target.kind==='npc'){
+      if(reaction?.receipt?.result.success!==false||binding.proof!==reaction.receipt.receipt_hash)throw fail('group_mixed_condition_cause');
+    }else{
+      const proof=areaOwnerReactionProof(db,guild,execution,target,{historical});
+      if(proof.outcome!=='failure'||proof.receipt_hash!==binding.proof)throw fail('group_mixed_condition_owner_cause');
+    }
     if(!historical){
       const current=capabilities.planNativeAreaCohort(db,guild,{binding:parent.data.origin,scope:parent.data.scope},n.actor,n.area.area);
       if(hash(current)!==hash(n.area))throw fail('group_mixed_condition_current_cohort');
@@ -28,14 +33,81 @@ const mixedConditions=createMixedConditionRules({indexWorldEvent,inspectNativeCo
       session:parent.data.origin.session,condition:policy.condition,expiry:policy.expiry,spellcast_disadvantage:policy.spellcast_disadvantage===true};
   },
   readTarget(db,guild,target){
+    if(target.kind==='character'){
+      const pc=personalCharacter(db,guild,target.owner,target.key);
+      if(pc.owner_user_id!==target.owner)throw fail('group_mixed_condition_current_owner');
+      return {...pc.data,id:pc.id};
+    }
     const scene=currentScene(db,guild),encounter=db.getCurrentEncounter(scene.session_id),c=encounter&&db.listCombatants(encounter.id).find(c=>c.id===target.combatant);
     if(target.kind!=='npc'||c?.status!=='active'||c.hp_current<=0||c.base_name!==target.combatant_snapshot.base_name)throw fail('group_mixed_condition_current_npc');
     return c;
   },
   writeTarget(db,guild,target,before,conditions){
+    if(target.kind==='character'){
+      db.updateCharacterData(target.key,data=>{data.conditions=conditions;});
+      if(hash(db.getCharacter(target.key).data.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
+      return;
+    }
     const after=db.updateCombatant(target.combatant,{conditions});
     if(hash(after.conditions)!==hash(conditions))throw fail('group_mixed_condition_writer');
   }});
+function areaOwnerReactionProof(db,guild,execution,target,{historical=false}={}){
+  if(target?.kind!=='character'||!target.owner)throw fail('group_area_owner_target');
+  const child=execution.data.children.find(c=>c.character===target.key),row=child&&db.getCityRecord(guild,'gm_arbitration_decision',child.decision),
+    n=row?.data.native,terminal=row&&db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,target.owner])}`),
+    source=terminal&&db.getWorldEvent(guild,terminal.source_event),request=terminal&&db.getCityRecord(guild,'roll_request',terminal.data.request),
+    roll=request&&db.getSavedRoll(guild,request.data.roll_id),requestSource=request&&db.getWorldEvent(guild,request.source_event),policy=n&&policies[n.feature];
+  if(!row||n.owner!==target.owner||n.character!==target.key||terminal?.status!=='resolved'||terminal.visibility!=='character'||terminal.subject_key!==target.key
+    ||terminal.data.owner!==target.owner||terminal.data.invitation!==row.record_key||terminal.data.invitation_hash!==hash(row.data)
+    ||source?.status!=='active'||!db.ownerAuthoredSource(guild,source.event_key,target.owner)||requestSource?.status!=='active'
+    ||!roll||request?.status!=='resolved'||request.data.kind!=='reaction'||request.data.input.gm_invitation!==row.record_key
+    ||request.subject_key!==target.key||request.data.owner_user_id!==target.owner||request.data.breakdown.trait!==policy.trait
+    ||request.data.breakdown.difficulty!==policy.difficulty||!Number.isSafeInteger(request.data.result?.total))throw fail('group_area_actual_owner_reaction');
+  const proof=historical?{difficulty:policy.difficulty,outcome:request.data.result.duality==='Critical'||request.data.result.total>=policy.difficulty?'success':'failure'}:typedRollProof(db,guild,request);
+  if(proof.difficulty!==policy.difficulty||!['success','failure'].includes(proof.outcome))throw fail('group_area_native_owner_outcome');
+  return {outcome:proof.outcome,receipt_hash:hash({request:hash(request),roll:hash(roll),terminal:hash(terminal),source:hash(source),request_source:hash(requestSource)}),request};
+}
+function areaPcBinding(execution,target,proof){return {execution:execution.record_key,cohort_hash:execution.data.mixed.cohort_hash,
+  target:`character:${target.key}`,proof:proof.receipt_hash,outcome:proof.outcome};}
+function applyAreaGroupReactionOutcome(db,guild,row,request){
+  return db.transaction(()=>{
+    const {execution}=inspectGroupFeatureChild(db,guild,row),{parent}=inspectGroupFeature(db,guild,execution.record_key),
+      target=mixedTargets(parent.data.native).find(t=>t.kind==='character'&&t.key===row.data.native.character),
+      proof=areaOwnerReactionProof(db,guild,execution,target),binding=areaPcBinding(execution,target,proof),key=effectKey(row.record_key),
+      prior=db.getCityRecord(guild,'gm_group_feature_effect',key);
+    if(hash(request)!==hash(proof.request))throw fail('group_area_exact_saved_request');
+    if(prior)return validateGroupReactionEffect(db,guild,key);
+    const condition=proof.outcome==='failure'?mixedConditions.applyMixedCondition(db,guild,binding,target).record_key:null;
+    const data={version:4,decision:row.record_key,parent:row.data.native.parent,feature:row.data.native.feature,feature_hash:row.data.native.feature_hash,
+      character:target.key,owner:target.owner,request:request.record_key,request_hash:hash(request),roll:request.data.roll_id,
+      roll_hash:hash(db.getSavedRoll(guild,request.data.roll_id)),success:proof.outcome==='success',proof_hash:proof.receipt_hash,
+      condition,condition_reused:false,stress:0};
+    const source=indexWorldEvent(db,guild,{key:`${key}:source`,kind:'native_group_feature_effect',source_id:'native:unified-gm',title:'Native owner-specific area consequence',
+      session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'character',subject_key:target.key,
+      details:{payload_hash:hash(data),owner_source:request.source_event}},'native:unified-gm');
+    const saved=db.saveCityRecord(guild,{kind:'gm_group_feature_effect',key,status:'resolved',source_event:source.event_key,visibility:'character',subject_key:target.key,data});
+    settleGroupFeature(db,guild,execution.record_key);
+    reserveGmArbitrationNotice(db,guild,row.record_key);return saved;
+  });
+}
+function validateAreaGroupReactionEffect(db,guild,row,decision,{historical=false}={}){
+  const v=row.data,n=decision.data.native,{execution,parent}=inspectGroupFeature(db,guild,n.execution),
+    target=mixedTargets(parent.data.native).find(t=>t.kind==='character'&&t.key===v.character),
+    proof=areaOwnerReactionProof(db,guild,execution,target,{historical}),event=db.getWorldEvent(guild,row.source_event),binding=areaPcBinding(execution,target,proof);
+  if(!historical)inspectGroupFeatureChild(db,guild,decision);
+  if(v.feature!==n.feature||v.feature_hash!==n.feature_hash||v.parent!==n.parent||v.owner!==target.owner||v.decision!==decision.record_key
+    ||row.record_key!==effectKey(decision.record_key)||v.request!==proof.request.record_key||v.request_hash!==hash(proof.request)
+    ||v.roll!==proof.request.data.roll_id||v.roll_hash!==hash(db.getSavedRoll(guild,v.roll))||v.proof_hash!==proof.receipt_hash
+    ||v.success!==(proof.outcome==='success')||v.stress!==0||v.condition_reused!==false||event?.status!=='active'
+    ||event.kind!=='native_group_feature_effect'||event.source_id!=='native:unified-gm'||event.details.payload_hash!==hash(v)
+    ||event.visibility!=='character'||event.subject_key!==target.key||event.details.owner_source!==proof.request.source_event)
+    throw fail('group_area_owner_effect_source');
+  if(proof.outcome==='failure'){
+    if(v.condition!==`mixed-condition:${hash(binding)}`)throw fail('group_area_owner_condition_source');
+    mixedConditions.inspectMixedCondition(db,guild,v.condition);
+  }else if(v.condition!==null)throw fail('group_area_success_has_condition');
+  return row;
+}
 function settleAreaNpcConditions(db,guild,execution,{replay=false}={}){
   const {parent}=inspectGroupFeature(db,guild,execution.record_key),n=parent.data.native,targets=mixedTargets(n);
   for(const [i,reaction] of execution.data.mixed.reactions.entries()){
@@ -118,7 +190,7 @@ function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../cont
     const data={version:1,decision:key,feature:n.feature,feature_hash:n.feature_hash,cost:cost.record_key,cost_hash:hash(cost),children,...(mixed?{mixed}:{})};
     const source=indexWorldEvent(db,guild,{key:`${executionKey(key)}:source`,kind:'native_group_feature',source_id:'native:unified-gm',title:'Committed native multi-owner feature',
       session_id:row.data.origin.session,scene:row.data.origin.scene,visibility:'gm',details:{payload_hash:hash(data),input_source:row.source_event}},'native:unified-gm');
-    return db.saveCityRecord(guild,{kind:'gm_group_feature_execution',key:executionKey(key),status:'awaiting_owners',source_event:source.event_key,visibility:'gm',data});
+    return db.saveCityRecord(guild,{kind:'gm_group_feature_execution',key:executionKey(key),status:n.area?'preparing_effects':'awaiting_owners',source_event:source.event_key,visibility:'gm',data});
     };
     if(n.area){
       const children=[];
@@ -136,7 +208,8 @@ function prepareGroupFeature(db,guild,key,{library=new EncounterLibrary('../cont
           return db.saveCityRecord(guild,{kind:'native_npc_reaction',key:reactionKey,status:'resolved',actor_key:target.key,
             visibility:'gm',source_event:event.event_key,data:receipt});
         },writeExecution:mixed=>saveExecution(children,mixed).data.mixed});
-      return settleAreaNpcConditions(db,guild,db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key)));
+      const execution=settleAreaNpcConditions(db,guild,db.getCityRecord(guild,'gm_group_feature_execution',executionKey(key)));
+      return settleGroupFeature(db,guild,execution.record_key);
     }
     return saveExecution(n.targets.map(target=>{const child=createChild(target);return {decision:child.record_key,character:target.character,hash:hash(child.data)};}));
   });
@@ -174,7 +247,17 @@ function inspectGroupFeature(db,guild,key){
           ||receipt.target.template_hash!==target.template_hash||receipt.combatant_hash!==hash(target.combatant_snapshot))throw fail('group_mixed_npc_receipt');
       }
     }
-    if(execution.status==='resolved')throw fail('group_area_settlement_not_qualified');
+    if(execution.status!=='preparing_effects'){
+      const progress=db.getCityRecord(guild,'gm_group_feature_progress',key),conditions=progress?.data.npc_conditions;
+      const expected=mixed.reactions.filter(r=>r.kind==='npc'&&!r.receipt.result.success).map(r=>{
+        const binding={execution:key,cohort_hash:mixed.cohort_hash,target:r.target,proof:r.receipt.receipt_hash,outcome:'failure'};
+        const ref=`mixed-condition:${hash(binding)}`,condition=db.getCityRecord(guild,'native_mixed_condition',ref),source=condition&&db.getWorldEvent(guild,condition.source_event);
+        if(condition?.status!=='active'||hash(condition.data.binding)!==hash(binding)||source?.status!=='active'||source.kind!=='native_mixed_condition'||source.source_id!=='native:unified-gm'
+          ||source.visibility!=='gm'||source.details.payload_hash!==hash(condition.data))throw fail('group_terminal_npc_condition');
+        return {ref,hash:hash(condition.data)};
+      });
+      if(execution.status==='resolved'&&hash(conditions)!==hash(expected))throw fail('group_terminal_npc_conditions');
+    }
   }
   if(execution.status==='resolved'){
     const progress=db.getCityRecord(guild,'gm_group_feature_progress',key),source=progress&&db.getWorldEvent(guild,progress.source_event);
@@ -236,7 +319,7 @@ function groupReactionState(db,guild,row,terminal){
   return terminal?.status||'pending';
 }
 function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null,choice=null){
-  if(policies[row.data.native.feature]?.area)throw fail('group_area_condition_settlement_not_qualified');
+  if(policies[row.data.native.feature]?.area)return applyAreaGroupReactionOutcome(db,guild,row,request);
   const result=db.transaction(()=>{
   const result=db.transaction(()=>{
     const n=row.data.native,{pc,cost}= {...inspectGroupFeatureChild(db,guild,row),...inspectGroupFeature(db,guild,n.execution)},key=effectKey(row.record_key),
@@ -304,7 +387,6 @@ function applyGroupReactionOutcome(db,guild,row,request,choiceSource=null,choice
 }
 /** Per-target progress only; no inferred failure, consent, public disclosure or mechanical execution. */
 function settleGroupFeature(db,guild,key){
-  if(inspectGroupFeature(db,guild,key).parent.data.native.area)throw fail('group_area_condition_settlement_not_qualified');
   const {execution,parent}=inspectGroupFeature(db,guild,key),children=execution.data.children.map(c=>{
     const row=db.getCityRecord(guild,'gm_arbitration_decision',c.decision),n=row.data.native,
       terminal=db.getCityRecord(guild,'gm_reaction_submission',`gm-reaction-submit:${hash([row.record_key,n.owner])}`);
@@ -333,8 +415,17 @@ function settleGroupFeature(db,guild,key){
     }catch(error){if(!['GM_ARBITRATION','TYPED_ROLL_PROOF','SCENE_ACTION_WINDOW'].includes(error.code))throw error;status='needs_review';}
     return {decision:c.decision,character:c.character,status,proof};
   });
+  let npc_conditions;
+  if(parent.data.native.area){
+    settleAreaNpcConditions(db,guild,execution,{replay:true});
+    npc_conditions=execution.data.mixed.reactions.filter(r=>r.kind==='npc'&&!r.receipt.result.success).map(r=>{
+      const binding={execution:key,cohort_hash:execution.data.mixed.cohort_hash,target:r.target,proof:r.receipt.receipt_hash,outcome:'failure'},
+        ref=`mixed-condition:${hash(binding)}`;
+      return {ref,hash:hash(db.getCityRecord(guild,'native_mixed_condition',ref).data)};
+    });
+  }
   const status=children.every(c=>['resolved','withdrawn'].includes(c.status))?'resolved':'awaiting_owners',
-    data={version:1,execution:key,execution_hash:hash(execution.data),children},
+    data={version:1,execution:key,execution_hash:hash(execution.data),children,...(npc_conditions?{npc_conditions}:{})},
     source=indexWorldEvent(db,guild,{key:`group-progress:${hash(data)}`,kind:'native_group_progress',source_id:'native:unified-gm',
       title:'Verified per-owner group disposition',session_id:parent.data.origin.session,scene:parent.data.origin.scene,
       visibility:'gm',details:{payload_hash:hash(data)}},'native:unified-gm');
@@ -352,6 +443,7 @@ function validateGroupReactionEffect(db,guild,key,{historical=false}={}){
   const row=db.getCityRecord(guild,'gm_group_feature_effect',key),v=row?.data,event=row&&db.getWorldEvent(guild,row.source_event),
     decision=v&&db.getCityRecord(guild,'gm_arbitration_decision',v.decision),n=decision?.data.native,policy=n&&policies[n.feature];
   if(!v||row.status!=='resolved'||row.visibility!=='character'||row.subject_key!==v.character||!decision||!policy)throw fail('group_effect_identity');
+  if(v.version===4&&policy.area)return validateAreaGroupReactionEffect(db,guild,row,decision,{historical});
   if(historical)inspectGroupFeature(db,guild,n.execution);else inspectGroupFeatureChild(db,guild,decision);
   const request=db.getCityRecord(guild,'roll_request',v.request),
     requestSource=request&&db.getWorldEvent(guild,request.source_event),roll=request&&db.getSavedRoll(guild,request.data.roll_id);
@@ -456,8 +548,7 @@ function recordNativeSpotlight(db,guild,cost){
 function validateNativeCondition(db,guild,key){
   const candidate=db.getCityRecord(guild,'pc_native_condition',key);
   if(candidate?.data.version===2){
-    if(typeof capabilities.inspectMixedCondition!=='function')throw fail('native_condition_mixed_host_unavailable');
-    const inspected=capabilities.inspectMixedCondition(db,guild,key);
+    const inspected=(capabilities.inspectMixedCondition||mixedConditions.inspectMixedCondition)(db,guild,key);
     if(inspected?.kind!=='pc_native_condition'||hash(inspected)!==hash(candidate))throw fail('native_condition_mixed_reader_source');
     return inspected;
   }

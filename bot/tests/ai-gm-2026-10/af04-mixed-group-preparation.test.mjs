@@ -15,24 +15,31 @@ function fixture({area=true}={}){
     proposal={disposition:'native_feature_resolution',stakes_kind:'native_feature',trait:'Agility',difficulty:14,rule_basis_refs:['srd:reaction-rolls']},
     feature={feature_key:'adversary:ritual-enforcement-team:null-foam',source_hash:'exact-feature-source',template_hash:hash(template),costs:[{resource:'npc_stress',amount:1}]},library={findAdversary:()=>template};
   put('combatant','npc',{id:'npc',base_name:template.name,status:'active',hp_current:3,stress_current:0,stress_max:2});
-  let nesting=0,fail=false,rolls=0,mutationId=0,conditionFail=false;
+  put('character','pc',pc);
+  let nesting=0,fail=false,rolls=0,mutationId=0,conditionFail=false,pcEffectFail=false;
   const db={transaction:fn=>{const id=`t${++nesting}`;sql.exec(`SAVEPOINT ${id}`);try{const r=fn();sql.exec(`RELEASE ${id}`);return r;}catch(e){sql.exec(`ROLLBACK TO ${id}; RELEASE ${id}`);throw e;}},
     getCityRecord:(_g,kind,key)=>kind==='encounter_binding'?{source_event:'binding-source',data:{combatants:[{actor:'caster',id:'npc'}]}}:get(kind,key),
     getMutation:(_g,id)=>get('mutation',id),
     saveCityRecord:(_g,r)=>{if(fail&&r.kind==='gm_group_feature_execution')throw Error('injected execution storage failure');
+      if(pcEffectFail&&r.kind==='gm_group_feature_effect')throw Error('injected owner effect failure');
       if(conditionFail&&r.kind==='native_mixed_condition')throw Error('injected condition storage failure');return put(r.kind,r.key,{...r,record_key:r.key});},
     listCityRecords:(_g,{kind,actor,limit,offset})=>sql.prepare('SELECT body FROM records WHERE kind=? LIMIT ? OFFSET ?').all(kind,limit,offset).map(r=>JSON.parse(r.body)).filter(r=>r.actor_key===actor),
     updateCombatant:(_id,patch)=>put('combatant','npc',{...get('combatant','npc'),...patch}),
     recordMutation:(_g,v)=>{const id=`mutation-${++mutationId}`;return put('mutation',id,{id,actor_type:v.actorType,actor_id:v.actorId,source_layer:v.sourceLayer,
       mutation_type:v.mutationType,entity_key:v.entityKey,session_id:v.sessionId,visibility:v.visibility,before_json:JSON.stringify(v.before),after_json:JSON.stringify(v.after)});},
     getCurrentEncounter:()=>({id:'encounter',status:'active'}),listCombatants:()=>[get('combatant','npc')],getCampaign:()=>({fear:2}),
-    getWorldEvent:(_g,key)=>get('event',key)||{event_key:key,status:'active'},getCharacter:()=>pc,roster:()=>[{character_id:'pc',presence:'present'}]};
+    getWorldEvent:(_g,key)=>get('event',key)||{event_key:key,status:'active'},getCharacter:()=>get('character','pc'),
+    updateCharacterData:(_key,fn)=>{const c=get('character','pc');fn(c.data);put('character','pc',c);},
+    getSavedRoll:(_g,key)=>get('saved_roll',key),ownerAuthoredSource:(_g,key,user)=>get('event',key)?.source_id===`player:${user}`,
+    roster:()=>[{character_id:'pc',presence:'present'}]};
   const names=['narrativeSourceVisible','compileNativeFeatures','inspectNativeGmDecision','inspectCommittedGmDecision','nativeReactionTarget','commitGmActionCost',
     'currentScene','scenePresence','sceneAccess','activeCityProxy','conversationPrincipal','personalCharacter','indexWorldEvent','typedRollProof','EncounterLibrary',
     'reserveGmArbitrationNotice','applyNativeStressPassive','inspectNativeConditionClearAncestry'];
   const caps=Object.fromEntries(names.map(n=>[n,()=>{throw Error(`unexpected ${n}`);} ]));
-  Object.assign(caps,{currentScene:()=>({session_id:'session'}),scenePresence:(_d,_g,kind)=>kind==='npc'?actor:presence,activeCityProxy:()=>false,
-    personalCharacter:()=>pc,conversationPrincipal:()=>({kind:'owner',revision:'principal'}),compileNativeFeatures:()=>[feature],
+  Object.assign(caps,{currentScene:()=>({session_id:'session',key:'scene'}),scenePresence:(_d,_g,kind)=>kind==='npc'?actor:presence,activeCityProxy:()=>false,
+    personalCharacter:()=>get('character','pc'),conversationPrincipal:()=>({kind:'owner',revision:'principal'}),compileNativeFeatures:()=>[feature],
+    typedRollProof:(_d,_g,request)=>({difficulty:request.data.breakdown.difficulty,outcome:request.data.result.total>=request.data.breakdown.difficulty?'success':'failure'}),
+    reserveGmArbitrationNotice:()=>{},
     narrativeSourceVisible:()=>true,sceneAccess:()=>true,nativeReactionTarget:()=>({principal:'principal',target:hash(presence)}),
     inspectNativeGmDecision:()=>({row:get('decision','decision'),entry}),inspectCommittedGmDecision:()=>({row:get('decision','decision'),entry}),
     commitGmActionCost:()=>{const c=get('combatant','npc');c.stress_current++;put('combatant','npc',c);return put('gm_action_cost_receipt','cost',
@@ -44,8 +51,19 @@ function fixture({area=true}={}){
   if(!area){feature.feature_key='adversary:aster-vale-contractor:flashbang';proposal.trait='Instinct';proposal.difficulty=12;entry.target_refs=['pc'];}
   const rules=createGroupFeatureExecutionRules({capabilities:caps}),native=rules.planGroupFeature(db,'guild',{binding:origin,scope},entry,proposal,feature,{library});
   put('decision','decision',{record_key:'decision',source_event:'parent-source',data:{native,origin,scope,proposal,board:'board'}});
+  function ownerRequest(execution,total){
+    const child=get('gm_arbitration_decision',execution.data.children[0].decision),source_event='owner-roll-source';
+    put('event',source_event,{event_key:source_event,status:'active',source_id:'player:owner',details:{author:'owner'}});
+    put('saved_roll','owner-roll',{id:'owner-roll',total});
+    const request=put('roll_request','owner-request',{kind:'roll_request',record_key:'owner-request',status:'resolved',subject_key:'pc',source_event,
+      data:{kind:'reaction',owner_user_id:'owner',roll_id:'owner-roll',input:{gm_invitation:child.record_key},breakdown:{trait:'Agility',difficulty:14},result:{total,duality:'Hope'}}});
+    const key=`gm-reaction-submit:${hash([child.record_key,'owner'])}`;
+    put('gm_reaction_submission',key,{record_key:key,status:'resolved',visibility:'character',subject_key:'pc',source_event,
+      data:{owner:'owner',invitation:child.record_key,invitation_hash:hash(child.data),request:request.record_key}});
+    return {child,request};
+  }
   return {sql,db,rules,get,put,prepare:()=>rules.prepareGroupFeature(db,'guild','decision',{library,rng:()=>{rolls++;return 2;}}),
-    setFailure:v=>fail=v,setConditionFailure:v=>conditionFail=v,rolls:()=>rolls,close:()=>sql.close()};
+    ownerRequest,setOwnerEffectFailure:v=>pcEffectFail=v,setFailure:v=>fail=v,setConditionFailure:v=>conditionFail=v,rolls:()=>rolls,close:()=>sql.close()};
 }
 
 test('existing group transaction pays once, retains owner dice pending and saves native NPC reactions with replay ancestry',()=>{
@@ -60,7 +78,7 @@ test('existing group transaction pays once, retains owner dice pending and saves
     const invitation=f.get('gm_arbitration_decision',first.data.children[0].decision);assert.equal(invitation.status,'pending_pc_reaction');
     assert.equal(invitation.data.native.owner,'owner');assert.equal(invitation.data.result,undefined);
     assert.deepEqual(f.prepare(),first);assert.equal(f.get('combatant','npc').stress_current,1);assert.equal(f.rolls(),1);
-    assert.throws(()=>f.rules.settleGroupFeature(f.db,'guild',first.record_key),/condition_settlement_not_qualified/);
+    assert.equal(f.rules.settleGroupFeature(f.db,'guild',first.record_key).status,'awaiting_owners');
   }finally{f.close();}
 });
 
@@ -97,8 +115,36 @@ test('NPC condition storage failure rolls back the parent, dice receipts and cos
     f.setConditionFailure(true);assert.throws(f.prepare,/injected condition storage failure/);
     assert.equal(f.get('combatant','npc').stress_current,0);assert.equal(f.get('combatant','npc').conditions,undefined);
     assert.equal(f.sql.prepare("SELECT COUNT(*) n FROM records WHERE kind IN ('gm_group_feature_execution','native_npc_reaction','native_mixed_condition')").get().n,0);
-    f.setConditionFailure(false);f.prepare();const priorRolls=f.rolls();
+    f.setConditionFailure(false);const saved=f.prepare(),priorRolls=f.rolls();
     f.sql.exec("DELETE FROM records WHERE kind='native_mixed_condition'");assert.throws(f.prepare);
+    assert.throws(()=>f.rules.inspectGroupFeature(f.db,'guild',saved.record_key));
     assert.equal(f.rolls(),priorRolls);assert.equal(f.get('combatant','npc').stress_current,1);
+  }finally{f.close();}
+});
+
+for(const total of [8,18])test(`actual inspected owner ${total<14?'failure':'success'} settles its own effect and terminal mixed progress`,()=>{
+  const f=fixture();try{
+    const parent=f.prepare(),{child,request}=f.ownerRequest(parent,total);
+    const effect=f.rules.applyGroupReactionOutcome(f.db,'guild',child,request);
+    assert.equal(effect.data.version,4);assert.equal(effect.data.success,total>=14);
+    assert.equal(f.get('gm_group_feature_execution',parent.record_key).status,'resolved');
+    assert.equal(f.rules.activeNativeConditions(f.db,'guild','pc').length,total<14?1:0);
+    assert.equal(f.rules.nativeMovementConditionIssue(f.db,'guild','pc',{range:'Melee'}),total<14?'NATIVE_MOVEMENT_RESTRAINED':null);
+    assert.deepEqual(f.rules.validateGroupReactionEffect(f.db,'guild',effect.record_key,{historical:true}),effect);
+    assert.deepEqual(f.rules.applyGroupReactionOutcome(f.db,'guild',child,request),effect);
+    assert.equal(f.rolls(),1);assert.equal(f.get('combatant','npc').stress_current,1);
+  }finally{f.close();}
+});
+
+test('owner effect storage failure rolls back its condition, and wrong owner proof cannot mutate PC state',()=>{
+  const f=fixture();try{
+    const parent=f.prepare(),{child,request}=f.ownerRequest(parent,8);
+    f.setOwnerEffectFailure(true);assert.throws(()=>f.rules.applyGroupReactionOutcome(f.db,'guild',child,request),/injected owner effect failure/);
+    assert.equal(f.get('character','pc').data.conditions,undefined);
+    assert.equal(f.sql.prepare("SELECT COUNT(*) n FROM records WHERE kind='pc_native_condition'").get().n,0);
+    f.setOwnerEffectFailure(false);const terminal=f.sql.prepare("SELECT body FROM records WHERE kind='gm_reaction_submission'").get();
+    const bad=JSON.parse(terminal.body);bad.data.owner='other';f.put('gm_reaction_submission',bad.record_key,bad);
+    assert.throws(()=>f.rules.applyGroupReactionOutcome(f.db,'guild',child,request));
+    assert.equal(f.get('character','pc').data.conditions,undefined);
   }finally{f.close();}
 });

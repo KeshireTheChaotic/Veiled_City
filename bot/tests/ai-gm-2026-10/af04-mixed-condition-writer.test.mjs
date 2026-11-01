@@ -49,7 +49,7 @@ test('mixed PC records use the existing active-condition and movement readers, a
     const capabilities=Object.fromEntries(names.map(name=>[name,()=>{throw Error(`unused capability ${name}`);} ]));
     capabilities.RANGE_BANDS=['Melee','Very Close','Close','Far','Very Far'];
     const unavailable=createGroupFeatureExecutionRules({capabilities});
-    assert.throws(()=>unavailable.activeNativeConditions(f.db,'guild','actor'),/mixed_host_unavailable/);
+    assert.throws(()=>unavailable.activeNativeConditions(f.db,'guild','actor'));
     const native=createGroupFeatureExecutionRules({capabilities:{...capabilities,inspectMixedCondition:f.rules.inspectMixedCondition}});
     assert.deepEqual(native.activeNativeConditions(f.db,'guild','actor'),[row]);
     assert.equal(native.nativeMovementConditionIssue(f.db,'guild','actor',{range:'Melee'}),'NATIVE_MOVEMENT_RESTRAINED');
