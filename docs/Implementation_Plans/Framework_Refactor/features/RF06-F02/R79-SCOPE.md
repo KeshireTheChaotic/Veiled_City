@@ -1,0 +1,7 @@
+# RF06-F02 R79 — Original player-safe fact SQL reader
+
+Agent A granted exclusive source ownership of `bot/src/frameworks/persistence/database.js` (only the playerFactsFor method body and repository import) and new `bot/src/frameworks/persistence/player-fact-repository.js`. Move the original SQL/normalization/cap code unchanged onto the same caller SQLite connection. Retain the original VeiledDB public method name, destructured defaults, synchronous results/errors and historical facade. No schema, write, transaction coordinator, public entrypoint, bridge or caller changes.
+
+Current callers: the R77 Discord read view uses category and limit 80; character-export uses owner/character and limit 200; GM actor context uses user/context character and limit 60; GM recap uses blank user and limit 120 followed by its existing public/party filter. These callers retain their original policy and options. The read-only query has no independently committed effects. Transaction-sensitive repositories remain held for their specific RF05 contracts.
+
+R79-BASELINE.json captures the pre-edit source/schema hashes, all 319 class members as a combined unaffected-member AST hash, and the original method source. Fresh c79 behavior tests will cover visibility/category filtering before limits, caller-shaped caps, archived/guild exclusion, same-connection uncommitted reads and rollback, and read-only results. Run the changed R79 tests with affected c77 command tests once after freeze; no inherited suites or live services.

@@ -3,6 +3,7 @@ import * as characterLists from './character-list-repository.js';
 import * as npcProfileReads from './npc-profile-read-repository.js';
 import * as npcCognitionReads from './npc-cognition-read-repository.js';
 import * as gmFactReads from './gm-fact-repository.js';
+import * as playerFactReads from './player-fact-repository.js';
 import * as rulingReads from './rules-ruling-repository.js';
 import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
 import * as administrativeReads from './administrative-read-repository.js';
@@ -1238,18 +1239,7 @@ export class VeiledDB {
   // Hard player-safe fact boundary. This method intentionally has no includeGM
   // switch so player-facing commands cannot accidentally expose visibility='gm'.
   playerFactsFor(guildId,userId,{characterId=null,category="",limit=80}={}) {
-    const capped=Math.max(1,Math.min(200,Number(limit)||80));
-    const wanted=String(category||"").trim().toLowerCase();
-    return this.db.prepare(`
-      SELECT * FROM facts WHERE guild_id=? AND archived=0
-       AND (
-         visibility IN ('public','party')
-         OR (visibility='player' AND subject_user_id=?)
-         OR (visibility='character' AND subject_character_id=?)
-       )
-       AND (?='' OR lower(category)=?)
-       ORDER BY created_at DESC LIMIT ?
-    `).all(guildId,userId,characterId||"",wanted,wanted,capped);
+    return playerFactReads.playerFactsFor(this.db,guildId,userId,{characterId,category,limit});
   }
 
   /** List GM-visible facts with filtering performed before LIMIT in SQLite. */

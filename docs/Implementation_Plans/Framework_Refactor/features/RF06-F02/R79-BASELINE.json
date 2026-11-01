@@ -1,0 +1,9 @@
+{
+  "feature": "RF06-F02 R79",
+  "base_sha": "33e28cd0bec6bd84c23096961b7941ec688eda17",
+  "source_sha256": "44265017c29d08aa2e3f335c4c4b77b221d93581373ea198f11834d61ff218d9",
+  "schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+  "method_count": 319,
+  "other_methods_ast_sha256": "c1645d7bcae36bb1a06510ae8ebc5c1b78c5beec511056cf70561a496865dc07",
+  "original_method": "playerFactsFor(guildId,userId,{characterId=null,category=\"\",limit=80}={}) {\r\n    const capped=Math.max(1,Math.min(200,Number(limit)||80));\r\n    const wanted=String(category||\"\").trim().toLowerCase();\r\n    return this.db.prepare(`\r\n      SELECT * FROM facts WHERE guild_id=? AND archived=0\r\n       AND (\r\n         visibility IN ('public','party')\r\n         OR (visibility='player' AND subject_user_id=?)\r\n         OR (visibility='character' AND subject_character_id=?)\r\n       )\r\n       AND (?='' OR lower(category)=?)\r\n       ORDER BY created_at DESC LIMIT ?\r\n    `).all(guildId,userId,characterId||\"\",wanted,wanted,capped);\r\n  }"
+}
