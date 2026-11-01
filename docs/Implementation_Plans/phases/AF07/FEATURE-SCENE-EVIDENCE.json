@@ -1,0 +1,86 @@
+{
+  "passed": 2,
+  "inputs": [
+    {
+      "path": "bot/scripts/af07-codex-feature-scene.mjs",
+      "sha256": "6d21f32c214cc06aa64941763b6ee843e4d60bec901e55c2f25ba730b5e0d2c3"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af07-feature-scene.test.mjs",
+      "sha256": "541aaf6e6dde6835b326df50144a5f0abae498418bed0bcf665486320a2acdc5"
+    },
+    {
+      "path": "bot/src/frameworks/intent/unified-arbitration-prompt.js",
+      "sha256": "c4a42740edf625ba00cd660a4a460d143768f0c8a41f6b4479024fc7baf91e34"
+    }
+  ],
+  "syntax_checks_passed": 3,
+  "live_boundaries": {
+    "development_database": {
+      "read_only": true,
+      "mutated": false,
+      "campaigns": 1,
+      "active_sessions": 1
+    },
+    "auth": "ChatGPT Codex sign-in only; no billed API calls",
+    "credentials_and_guild_identifiers_emitted": false,
+    "gameplay_database": "disposable SQLite",
+    "discord": {
+      "messages_sent": 0,
+      "intents": "Guilds only",
+      "connected": true,
+      "messages_read": 0
+    }
+  },
+  "release_qualified": false,
+  "failed": 0,
+  "status": "purposeful_scene_harness_complete_live_selection_unproven",
+  "offline_limits": [
+    "Mock AI; real native goal/source/feature commit validation.",
+    "Earlier instrumentation test incorrectly assumed exactly one provider response; final test accepts the real multi-stage call path and inspects eligible selection."
+  ],
+  "commands": [
+    "node --check scripts/af07-codex-feature-scene.mjs",
+    "node --check src/frameworks/intent/unified-arbitration-prompt.js",
+    "node --check tests/ai-gm-2026-10/af07-feature-scene.test.mjs",
+    "node --test tests/ai-gm-2026-10/af07-feature-scene.test.mjs"
+  ],
+  "exit_code": 0,
+  "phase": "AF07",
+  "remaining": [
+    "Actual model did not propose any native action; feature selection and reselection remain unproven.",
+    "AF04 Spellcast odds and verified NPC/ally release remain incomplete.",
+    "Complete AF07 source/recovery matrix remains incomplete."
+  ],
+  "skipped": 0,
+  "live_runs": [
+    {
+      "eligible_features": 1,
+      "feature_selection_proven": false,
+      "owner_invitations": 0,
+      "exit_code": 0,
+      "narrative_correction": "actor_status claim used an unsupported pose",
+      "command": "node scripts/af07-codex-feature-scene.mjs --live-codex",
+      "stage": "source_backed_goal_before_lifecycle_prompt_clarification",
+      "group_feature_executions": 0,
+      "goal_available": true,
+      "committed_native_actions": 0,
+      "turn_committed": true
+    },
+    {
+      "owner_invitations": 0,
+      "group_feature_executions": 0,
+      "provider_responses": 2,
+      "eligible_features": 1,
+      "feature_selection_proven": false,
+      "turn_committed": true,
+      "command": "node scripts/af07-codex-feature-scene.mjs --live-codex",
+      "eligible_feature_selections": 0,
+      "exit_code": 0,
+      "stage": "source_backed_goal_with_lifecycle_prompt_and_safe_response_counts",
+      "committed_native_actions": 0,
+      "goal_available": true,
+      "proposed_decisions": 0
+    }
+  ]
+}

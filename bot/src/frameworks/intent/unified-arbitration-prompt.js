@@ -1,5 +1,6 @@
 export const UNIFIED_ARBITRATION_PROMPT="Evaluate unified_arbitration in this SAME GM call. "
   +"Accepted typed intents are canonical adjudication inputs; human declarations own intent; native receipts own outcomes. "
+  +"A narrative status claim names the actor's exact saved lifecycle state, not a pose or equipment description. Keep independent valid intents when correcting a rejected narrative claim. "
   +"Select player:<original player_intents index> or exact shared/NPC intent_ref. "
   +"NPC proposals select native local actor and native knowledge refs; no PC declaration or secret disclosure may be invented. "
   +"Use the supplied current actor/template rule contexts and capability limitations. Rule context and fiction_only descriptions do not authorize mechanical effects. "
