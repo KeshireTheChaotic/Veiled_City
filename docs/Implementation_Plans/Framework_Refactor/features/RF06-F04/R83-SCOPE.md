@@ -1,0 +1,5 @@
+# RF06-F04 R83 — Ordinary recap adapter
+
+Basec3a4dfb47013f4ce1c2a3714cb7b4ed8d4c1d40c. B announced exclusive ownership to active C and paused A of commands.js (ordinary recap branch/imports), Discord public.js/new session-recap-command.js and existing discord--publication/public.js; C confirmed no RF06 source overlap. Application retains latestEndedSession and original routing/catch/finally. The existing pair calls the R81-qualified Publication public recap source, then Discord delivers identical private fallback/text/chunks/mentions. Publication certification and original root binding remain unchanged; no SQL, storage, producer/archive, bootstrap or native authority changes.
+
+Fresh c83 source/delivery error and fallback contracts plus affected c81 actual archive-reader command cases will run once after freeze. c81's positive archives remain explicit synthetic reader inputs, not capture/transport qualification. A separate exclusive BRIDGE_CONTRACTS window will add this contract, test and new commands.js consumer to only the existing Discord–Publication row. Index ownership is coordinated with active C while RF05 is paused.

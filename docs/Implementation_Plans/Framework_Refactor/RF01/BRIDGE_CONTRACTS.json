@@ -1724,6 +1724,11 @@
           "from": "publication",
           "to": "discord",
           "contract": "Stateless original attachment constructor forwarding; same buffers/options/errors, no source/audience/send/retry authority."
+        },
+        {
+          "from": "discord",
+          "to": "publication",
+          "contract": "Original public scopedSessionRecap source receives the same database/guild/ended-session; Publication retains archive certification and rejection. Discord receives only text for original private fallback/chunk/mention delivery."
         }
       ],
       "source_evidence": [
@@ -1768,22 +1773,37 @@
           "to": "bot/src/frameworks/publication/public.js",
           "line": 21,
           "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/publication/public.js",
+          "line": 24,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/discord--publication/public.js",
+          "to": "bot/src/frameworks/discord/public.js",
+          "line": 25,
+          "type": "import"
         }
       ],
-      "validation": "R04 adopts the exact original textChannel/assertGmOnlyChannel/assertPlayerPrivateChannel through one fixed Publication consumer; missing composition/replacement denied. Source/payload and recovery authority remain in Publication. Existing committed-row transport preserves receipt/errors without retries. R14 text port binds original splitter once; no splitter algorithm or channel-port shape change. R53 fixed one-function consumer binds the exact existing Discord constructor in existing startup composition; original handout file mapping and all recovery/authority statements unchanged.",
-      "lifecycle": "R04 original channel consumer and R14 separate text consumer bind in existing startup initializer; original channel-port return/API preserved. Legacy hubs retain original splitter source imports/bindings to preserve standalone behavior pending hub migration. General outbox transport adoption separately accountable. R53 attachment consumer binds before original text/channel calls; initializer return/channel API unchanged.",
+      "validation": "R04 adopts the exact original textChannel/assertGmOnlyChannel/assertPlayerPrivateChannel through one fixed Publication consumer; missing composition/replacement denied. Source/payload and recovery authority remain in Publication. Existing committed-row transport preserves receipt/errors without retries. R14 text port binds original splitter once; no splitter algorithm or channel-port shape change. R53 fixed one-function consumer binds the exact existing Discord constructor in existing startup composition; original handout file mapping and all recovery/authority statements unchanged. R83 first-run6/6 (3new+3affected R81),5syntax; actual private ordinary recap fallback/long reader output/rejection/errors and direct lazy/deferred/source-delivery error identity. Positive certificate inputs are synthetic reader fixtures, not native archive capture/producer qualification.",
+      "lifecycle": "R04 original channel consumer and R14 separate text consumer bind in existing startup initializer; original channel-port return/API preserved. Legacy hubs retain original splitter source imports/bindings to preserve standalone behavior pending hub migration. General outbox transport adoption separately accountable. R53 attachment consumer binds before original text/channel calls; initializer return/channel API unchanged. R83 Application retains latestEndedSession lookup and awaits the pair inside original command catch/finally. Pair calls the original fixed Publication public source before Discord text delivery. No new binding, source policy, archive write, retry or audience selection.",
       "adoption_feature": "RF06-F03",
       "public_api": "bot/src/framework-to-framework/discord--publication/public.js",
       "consumers": [
         "bot/src/application/composition/create-opening-services.js",
-        "bot/src/application/composition/publication-discord.js"
+        "bot/src/application/composition/publication-discord.js",
+        "bot/src/commands.js"
       ],
       "tests": [
         "bot/tests/ai-gm-2026-10/rf01-f02.test.mjs",
         "bot/tests/ai-gm-2026-10/rf01-f03.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f03-c04.test.mjs",
         "bot/tests/ai-gm-2026-10/rf06-f03-c14.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf06-f03-c53.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf06-f03-c53.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c81.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf06-f04-c83.test.mjs"
       ],
       "observed_directions": [
         {
@@ -1805,7 +1825,7 @@
         "graph_sha256": "1caa7f33db8af9cbe17685493f4f23e46deb1c80ac2cd01c34ef3f8f7517bfe2",
         "occurrences": 6
       },
-      "scope": "Qualified channel/privacy and original text-splitting consumers only; legacy source bindings remain and full outbox isolation/live delivery are unqualified. R53 additionally qualifies stateless SDK attachment construction only; no handout lifecycle or correlated persistence migration."
+      "scope": "Qualified channel/privacy and original text-splitting consumers only; legacy source bindings remain and full outbox isolation/live delivery are unqualified. R53 additionally qualifies stateless SDK attachment construction only; no handout lifecycle or correlated persistence migration. R83 ordinary recap command adapter only; certified source logic remains unchanged in Publication and private text behavior remains unchanged in Discord."
     },
     {
       "pair": "discord--session",

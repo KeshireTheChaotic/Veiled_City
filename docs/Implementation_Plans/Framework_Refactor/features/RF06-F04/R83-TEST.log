@@ -1,0 +1,14 @@
+✔ ordinary recap retains private empty fallback and never falls back to raw session recap prose (14.3239ms)
+✔ actual recap route preserves private long output and rejection using synthetic archive reader inputs (8.4632ms)
+✔ existing public recap source retains reader errors inside the command error response (6.8582ms)
+✔ recap pair retains lazy missing-session fallback and original deferred/private delivery (1.2893ms)
+✔ recap pair preserves exact source and Discord rejection identities without additional responses (0.4034ms)
+✔ ordinary recap command awaits delivery rejection inside its existing private error response (14.2912ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1636.4348

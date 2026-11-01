@@ -15,6 +15,7 @@ import {connectDiscordDirectorStatus} from './framework-to-framework/discord--pe
 import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorHistory} from './framework-to-framework/discord--persistence/public.js';
 import {handleSessionRosterCommand,handleSessionBriefCommand} from './framework-to-framework/discord--session/public.js';
+import {handleSessionRecapCommand} from './framework-to-framework/discord--publication/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
 import {gmFactLine,handlePlayerFactListCommand,handleCaseboardCommand} from './frameworks/discord/public.js';
@@ -104,7 +105,7 @@ import { saveVisibleCharacterFacts,saveCharacterSelfDescription } from "./framew
 import { establishWorldDescription } from './frameworks/world/public.js';
 import { fearInbox, establishFearContext, selectFearMove, applyFearMove, reconcileFearMove, resumeAutonomousPvpFear } from "./frameworks/daggerheart/public.js";
 import { archivePvpHistory, quarantineSessionRecap, certifiedSessionRecap,revalidateOutputPublication,prepareLifecycleOutput,prepareAftermathOutput } from "./pvp-output.js";
-import {lifecycleHash,publicationSessionRecapSource} from './frameworks/publication/public.js';
+import {lifecycleHash} from './frameworks/publication/public.js';
 import {currentTurnTrace,withTurnTrace} from './turn-trace-context.js';
 import {turnLatency} from './turn-latency.js';
 import { pendingPvpFear } from "./pvp-fear-gate.js";
@@ -2059,8 +2060,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);
-      await deliverInteractionText(interaction,publicationSessionRecapSource.scopedSessionRecap(db,interaction.guildId,row)||"No completed-session recap yet.",{ephemeral:true});
-      return true;
+      return await handleSessionRecapCommand(interaction,{db,session:row});
     }
     if(group==="intel"&&sub==="clues"){
       const s=db.getActiveSession(interaction.guildId);

@@ -59,6 +59,8 @@ export {handleCaseboardCommand,assertCaseboardReadStore} from './caseboard-comma
 
 export {replyWithSessionBrief} from './session-brief-command.js';
 
+export {replyWithSessionRecap} from './session-recap-command.js';
+
 export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
 
 export {gmFactLine,playerFactLine} from './fact-text.js';

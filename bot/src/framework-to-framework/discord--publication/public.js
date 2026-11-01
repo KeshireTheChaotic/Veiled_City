@@ -20,3 +20,11 @@ export function connectPublicationDiscordText(){return publicationDiscordText.bi
 import {createAttachment} from '../../frameworks/discord/public.js';
 import {publicationDiscordAttachments} from '../../frameworks/publication/public.js';
 export function connectPublicationDiscordAttachments(){return publicationDiscordAttachments.bind({createAttachment});}
+
+import {publicationSessionRecapSource} from '../../frameworks/publication/public.js';
+import {replyWithSessionRecap} from '../../frameworks/discord/public.js';
+/** Application supplies its original ended-session lookup; certification stays with Publication. */
+export async function handleSessionRecapCommand(interaction,{db,session}){
+  const text=publicationSessionRecapSource.scopedSessionRecap(db,interaction.guildId,session);
+  return replyWithSessionRecap(interaction,text);
+}

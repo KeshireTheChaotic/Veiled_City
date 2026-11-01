@@ -1,0 +1,7 @@
+{
+  "base_sha": "c3a4dfb47013f4ce1c2a3714cb7b4ed8d4c1d40c",
+  "guard_and_session_lookup_ast_equal": true,
+  "original_source_call_after_parameter_mapping": true,
+  "original_fallback_and_delivery_args_after_text_substitution": true,
+  "other_command_body_and_import_asts_equal": true
+}
