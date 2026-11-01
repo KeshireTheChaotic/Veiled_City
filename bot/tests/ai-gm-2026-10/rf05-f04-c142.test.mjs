@@ -1,0 +1,25 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {registerIntentAdapter as rootRegister} from '../../src/ai-intents.js';
+import {registerIntentAdapter,intentWorldPrimitives,intentWorldOperations} from '../../src/frameworks/intent/public.js';
+import {adapters} from '../../src/frameworks/intent/adapter-registry.js';
+import {preflight} from '../../src/frameworks/intent/native-preflight.js';
+import {stateRevision} from '../../src/kernel/state-revision.js';
+const methods=Object.fromEntries(Object.keys(intentWorldOperations).filter(k=>k!=='bind').map(k=>[k,()=>false]));intentWorldOperations.bind(methods);
+intentWorldPrimitives.bind({cityObject(){},cityInteger(){},cityAudit(){},indexWorldEvent(){},requireCitySource(db,guild,key){db.calls.push(['source',guild,key]);if(db.sourceFailure)throw db.sourceFailure;return {details:db.owner};}});
+const proposal=()=>({version:1,feature:'dialogue',target_key:'target',expected_revision:'absent',policy_revision:2,source_prerequisites:['source','other'],payload:{source_event:'source',op:'interpret',npc_key:'npc',topic:'offer',interpretation:'subjective offer',confidence:40}});
+test('native preflight and application bodies remain identical after ownership move',async()=>{const s=await readFile(new URL('../../src/frameworks/intent/native-preflight.js',import.meta.url),'utf8');const body=s.slice(s.indexOf('function preflight'),s.indexOf('export {preflight,applyNative}')).replace(/\r\n/g,'\n');assert.equal(createHash('sha256').update(body).digest('hex'),'b92d0f590e20e2e0ab302ad7179aa1f11f1b39342ab001cc2672993f58914097');});
+test('one original registry preserves replacement and adapter/impact identity through original preflight',()=>{
+ assert.equal(rootRegister,registerIntentAdapter);const impact={cost:1};const first={current(){},impact(){}};assert.equal(registerIntentAdapter('dialogue',first),undefined);assert.equal(adapters.get('dialogue'),first);
+ const currentCalls=[];const original={current(...args){currentCalls.push(args);return args[0].target;},impact:()=>impact};rootRegister('dialogue',original);
+ const db={calls:[],target:null,owner:{author:'owner',character_id:'pc'},enabled:true,paused:false,getCityCalendar(){this.calls.push(['flags']);return {flags:{dialogue_history:this.enabled}};},isDirectorPaused(){this.calls.push(['paused']);return this.paused;}};
+ const intent=proposal(),context={scope:{mode:'gm'}};const result=preflight(db,'g',intent,context);assert.equal(result.adapter,original);assert.equal(result.impact,impact);assert.equal(result.before,null);assert.equal(result.privateWorld,false);assert.deepEqual(currentCalls,[[db,'g',intent]]);assert.deepEqual(db.calls,[['flags'],['paused'],['source','g','source'],['source','g','other']]);
+ assert.throws(()=>preflight({},'g',{},{}),/Invalid closed/);
+ db.enabled=false;assert.throws(()=>preflight(db,'g',intent,context),/disabled/);db.enabled=true;db.paused=true;assert.throws(()=>preflight(db,'g',intent,context),/paused/);db.paused=false;
+ db.target={visibility:'gm',data:{revision:3}};assert.throws(()=>preflight(db,'g',intent,context),/Stale target/);intent.expected_revision=stateRevision(db.target);assert.equal(preflight(db,'g',intent,context).before,db.target);
+ const privateContext={scope:{mode:'private',actorUserId:'owner',actorCharacterId:'pc'}};db.owner.author='other';assert.throws(()=>preflight(db,'g',intent,privateContext),/authenticated character/);db.owner.author='owner';assert.equal(preflight(db,'g',intent,privateContext).adapter,original);
+ db.sourceFailure=new Error('source unavailable');assert.throws(()=>preflight(db,'g',intent,context),e=>e===db.sourceFailure);delete db.sourceFailure;
+ adapters.delete('dialogue');assert.throws(()=>preflight(db,'g',intent,context),/adapter is not available/);registerIntentAdapter('dialogue',original);
+});

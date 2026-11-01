@@ -87,3 +87,4 @@ export {persistMovementCandidates,currentMovementCandidate} from './movement-lan
 export {intentContext} from './context-reader.js';
 export {intentKnowledgeContext} from './contracts/knowledge-context.js';
 export {reviewAiIntent} from './review-action.js';
+export {registerIntentAdapter} from './adapter-registry.js';

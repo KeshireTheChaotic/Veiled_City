@@ -1,0 +1,37 @@
+{
+  "feature": "RF05-F04 C142",
+  "starting_head": "1bf24d30f7c1ea366eb51eed8c8c81c403366b76",
+  "tests": {
+    "pass": 16,
+    "duration_ms": 1532.4243,
+    "syntax_pass": 6,
+    "fail": 0,
+    "skipped": 0
+  },
+  "architecture": {
+    "transition_errors": 0,
+    "active": 0,
+    "largest_cycle": 51,
+    "accepted": 590,
+    "modules": 1090,
+    "pass": true,
+    "imports": 4425
+  },
+  "notes": [
+    "Shared-worktree gate includes concurrent R81/AF04 source; no full release qualification.",
+    "Original Native proof source still bound by root, not claimed fully decoupled.",
+    "Synthetic adapter/SQLite tests qualify orchestration not native-game effects."
+  ],
+  "sha256": {
+    "bot/src/frameworks/intent/public.js": "0d058b2aecb76bc82ffbf76322d4bbf6ed0060a7b8918b44599c358a04f08bd2",
+    "bot/src/ai-intents.js": "291aec3f216dde9fde1c2640aa8a85324b8dfbd50e57b022a5d25792ee0614fc",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C142-ARCHITECTURE.log": "1c984381cad3394839e3a792228a4b6b8af7d73912933d716e523f0831190e41",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c142.test.mjs": "9b27a5e5cc426878d8dc3ba426879bf9d36a62209976a0a4b8082edffea0f3a5",
+    "bot/src/frameworks/intent/native-preflight.js": "b7e0d7bea5e9496e111f236bcf0600229d9695b4855c1dec176fd071e0dbe53f",
+    ".reports/RF05-C142-gate.json": "d48ca396680afb13b3eeb212b7e3fb0e6d6eb63bdfba992784979a1c571061dd",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C142-SCOPE.md": "63f0acd98a64dedc749c3356ced43efad3dbeb8f8844e6c6344e51a2fd68ae0e",
+    "bot/src/frameworks/intent/adapter-registry.js": "07670b85e9999a24556997e53f3472315748397ae2989923988cf5d24d0027fe",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C142-TEST.log": "ae6bde0a32f0c9912de6a4ffdb8ae6b629be67b1de9538118c91a0e2db92f7d1",
+    "bot/src/frameworks/intent/contracts/ordinary-binding.js": "0c7f846c5a550eb6cbf017c98b10e98e020f95f94eba1fa5d57c2b3c9f412846"
+  }
+}

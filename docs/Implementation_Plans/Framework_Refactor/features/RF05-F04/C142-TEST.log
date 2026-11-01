@@ -1,0 +1,24 @@
+✔ review action body and public compatibility identity remain original (9.7106ms)
+✔ defer, reject and modify preserve revision gates, bounded history and ordinary-effect refusal (2.3703ms)
+✔ approval runs original preflight and native callback in one SQLite transaction with policy freshness (1.1701ms)
+✔ application and audit failures roll back both SQLite review and effect state (0.8172ms)
+✔ original private native helper retains causal marker order within caller transaction (0.3215ms)
+✔ Operations fixed review port fails closed and composes only the original review action (1.1475ms)
+✔ actual Operations workflow preserves GM review decisions, revisions and SQLite rollback (1.4484ms)
+✔ production Application still initializes original Intent adapters before review commands (9.2789ms)
+✔ Operations public retains original review implementation and bodies after physical move (2.9088ms)
+✔ actual GM story review uses relocated Operations and delivers the original private attachment (1.4344ms)
+✔ extracted policy and receipt bodies match original (10.3023ms)
+✔ delegation decision preserves precedence, human review, expiry and inclusive budgets (0.5824ms)
+✔ receipt source, private metadata and deterministic rejected-source key persist unchanged (0.9133ms)
+✔ actual dispatcher commits once, replays without effect/budget duplication and rolls back failed effect (1.1653ms)
+✔ native preflight and application bodies remain identical after ownership move (14.5159ms)
+✔ one original registry preserves replacement and adapter/impact identity through original preflight (1.4048ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1532.4243

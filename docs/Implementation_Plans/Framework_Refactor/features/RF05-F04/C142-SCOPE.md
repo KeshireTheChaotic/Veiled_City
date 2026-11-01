@@ -1,0 +1,5 @@
+# RF05-F04 C142 — Intent adapter registry and native preflight ownership
+
+Move the original shared adapters Map/registerIntentAdapter and unchanged preflight/applyNative bodies into Intent modules. Preserve one Map across root/public registration, default registrations and replay/availability reads. Private proof consumer binds the exact original assertOrdinaryBinding still imported by root compatibility composition; that cross-owner source obligation remains explicit for subsequent pair migration. Native ownership/validation is unchanged.
+
+Preflight uses only existing Intent-owned consumers, validation/policy and neutral revision helper. Root imports original extracted functions and continues fixed review-execution binding and adapter initialization. Public registration keeps the same function identity. Fresh tests pin original bodies, exercise validation order, feature/pause/source/revision/owner guards, adapter identity and original result/error forwarding; run affected dispatch/review tests, syntax and RF05 ratchet. No schema, SQL, rules, authority or new pair interface. Do not count remaining root proof binding as fully decoupled.
