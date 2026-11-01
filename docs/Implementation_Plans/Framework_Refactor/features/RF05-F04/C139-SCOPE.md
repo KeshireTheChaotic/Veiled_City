@@ -1,0 +1,5 @@
+# RF05-F04 C139 — Operations delegates original Intent review through the existing pair
+
+Replace the final Operations-to-root-Intent import with an Operations-owned fixed reviewAiIntent consumer, provided by Intent public through the existing pair/runtime initializer. Preserve workflow branch selection, arguments, result/error identity and Intent-owned authenticated validation/transaction/native authority.
+
+Existing Application story-commands still directly imports ai-intents.js for delegationOperation and related functions, initializing its original private execution bindings before review calls. The pair does not import that mixed root module or replace native adapters; standalone consumers must compose providers. Verify actual SQLite reviewWorkflow defer/reject/current revision/rollback behavior through the real public action, fixed composition, and the unchanged Application root initialization dependency. Run affected review tests, syntax and RF05 ratchet; archive and retire only the removed ai-review→ai-intents transition. Preserve unrelated metadata and other agents' source. No schema, SQL, rule, audience or native authority changes.

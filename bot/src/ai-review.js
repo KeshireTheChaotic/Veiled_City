@@ -1,5 +1,6 @@
 /** Unified GM-private projections and native review adapters; player consent remains exclusively owner-authenticated. */
-import { reviewAiIntent } from "./ai-intents.js";
+import {operationsIntentReview} from './frameworks/operations/public.js';
+const {reviewAiIntent}=operationsIntentReview;
 import {operationsIntentContext} from './frameworks/operations/public.js';
 const {intentContext}=operationsIntentContext;
 import {operationsIntentPolicy} from './frameworks/operations/public.js';

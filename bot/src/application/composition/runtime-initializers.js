@@ -41,7 +41,7 @@ import {initializeCharacterSession} from './character-session.js';
 import {initializePersonalContinuity} from './personal-continuity.js';
 import {initializeSessionIntent} from './session-intent.js';
 import {initializeOperationsWorldOverview} from './operations-world-overview.js';
-import {connectOperationsIntentPolicy,connectOperationsIntentContext} from '../../framework-to-framework/intent--operations/public.js';
+import {connectOperationsIntentPolicy,connectOperationsIntentContext,connectOperationsIntentReview} from '../../framework-to-framework/intent--operations/public.js';
 import {initializeWorldNativeEncounter} from './world-native-encounter.js';
 import {initializePersistenceKnowledge} from './persistence-knowledge.js';
 import {initializeIntentKnowledge} from './intent-knowledge.js';
@@ -99,6 +99,7 @@ export function initializeRuntimeFrameworks(){
   initializeOperationsWorldOverview();
   connectOperationsIntentPolicy();
   connectOperationsIntentContext();
+  connectOperationsIntentReview();
   initializeWorldNativeEncounter();
   initializePersistenceKnowledge();
   initializeIntentKnowledge();

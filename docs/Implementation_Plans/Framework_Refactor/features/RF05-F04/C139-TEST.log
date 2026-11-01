@@ -1,0 +1,20 @@
+✔ application supplies Intent public feature catalog to Operations review (2.9433ms)
+✔ Operations review consumes the neutral kernel revision primitive directly (2.7739ms)
+✔ Operations review uses the current public Intent context with GM-only queries and no widened capabilities (2.079ms)
+✔ review action body and public compatibility identity remain original (2.8422ms)
+✔ defer, reject and modify preserve revision gates, bounded history and ordinary-effect refusal (2.0955ms)
+✔ approval runs original preflight and native callback in one SQLite transaction with policy freshness (0.9848ms)
+✔ application and audit failures roll back both SQLite review and effect state (0.676ms)
+✔ original private native helper retains causal marker order within caller transaction (0.2984ms)
+✔ Operations fixed review port fails closed and composes only the original review action (1.137ms)
+✔ actual Operations workflow preserves GM review decisions, revisions and SQLite rollback (1.7332ms)
+✔ production Application still initializes original Intent adapters before review commands (2.9211ms)
+✔ Operations receives only the unchanged Intent policy reader through fixed composition (1.158ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1125.371
