@@ -14,7 +14,7 @@ import {handleDirectorStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorStatus} from './framework-to-framework/discord--persistence/public.js';
 import {handleDirectorHistoryCommand} from './frameworks/discord/public.js';
 import {connectDiscordDirectorHistory} from './framework-to-framework/discord--persistence/public.js';
-import {handleSessionRosterCommand} from './framework-to-framework/discord--session/public.js';
+import {handleSessionRosterCommand,handleSessionBriefCommand} from './framework-to-framework/discord--session/public.js';
 import {handlePartyStatusCommand} from './frameworks/discord/public.js';
 import {connectDiscordPartyStatus} from './framework-to-framework/discord--persistence/public.js';
 import {gmFactLine,handlePlayerFactListCommand,handleCaseboardCommand} from './frameworks/discord/public.js';
@@ -88,7 +88,6 @@ import { handleStoryCommand } from "./story-commands.js";
 import { recordCharacterArrival,scenePresence } from "./frameworks/session/public.js";
 import { personalContinuityCharacter as personalCharacter, personalArc, discoverPersonal, personalInbox } from "./frameworks/knowledge/public.js";
 import { consentOffers } from "./consent-native.js";
-import { sessionBrief, formatSessionBrief } from './frameworks/session/public.js';
 import { formatDiscovery,discoveryDeliveryProof } from "./discovery-delivery.js";
 import { manageLongProject, projectPhaseRevision } from "./frameworks/world/public.js";
 import { stateRevision } from "./ai-intents.js";
@@ -2056,9 +2055,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
     }
 
     if(group==="intel"&&(sub==="brief"||sub==="recap"&&db.getCityCalendar(interaction.guildId).flags.session_briefs===true)){
-      const packet=sessionBrief(db,interaction.guildId,{mode:sub==="brief"?"character":"shared",user:interaction.user.id});
-      await interaction.reply({content:formatSessionBrief(packet),ephemeral:true,allowedMentions:{parse:[]},
-        files:[createAttachment(Buffer.from(JSON.stringify(packet,null,2)),{name:"scoped-session-brief.json"})]});return true;
+      return await handleSessionBriefCommand(interaction,{db,mode:sub==="brief"?"character":"shared"});
     }
     if(group==="intel"&&sub==="recap"){
       const row=db.latestEndedSession(interaction.guildId);

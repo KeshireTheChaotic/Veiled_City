@@ -1,0 +1,35 @@
+{
+  "run_id": "RF06-F04-R82-2026-11-01-01",
+  "base_sha": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "recorded_at": "2026-11-01T23:33:07.995Z",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "17a6f1209356b9613e5bc29580185516c68d5036ee3ff11093be05016d980b68"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--session/public.js",
+      "sha256": "5ffae6d6931c01740621f05df68ecc1ed81e5bab285b719d4cff6b89045b8e96"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "8b95e7a1c4a4cce732051825d0dcb741751cccd3d0dc937e18c484498e8c9319"
+    },
+    {
+      "path": "bot/src/frameworks/discord/session-brief-command.js",
+      "sha256": "60ade07e159d7b1bb71396eadc29960c23f97ea5460f33e32ea356e1ed41a4d6"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-c82.test.mjs",
+      "sha256": "fb90e984e2ccd3abe5a8d098eb9370c4cecc112d716e73698278e13020f95c4b"
+    }
+  ],
+  "result": {
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "duration_ms": 1606.5729,
+    "syntax_checks_passed": 5
+  }
+}

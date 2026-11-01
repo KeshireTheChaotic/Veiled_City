@@ -1,0 +1,11 @@
+✔ brief pair preserves original two-owner and shared packets, private text and attachment bytes (24.3713ms)
+✔ opt-in guard and current owned-character prerequisite remain ahead of private brief delivery (8.7524ms)
+✔ extracted brief reply remains awaited by the original command error response (8.1079ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1606.5729

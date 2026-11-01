@@ -1,0 +1,9 @@
+{
+  "base_sha": "6d7b269b71f45a88e61dcfaa492687d08c70e2eb",
+  "route_guard_ast_equal": true,
+  "all_other_command_body_asts_equal": true,
+  "other_import_asts_equal": true,
+  "reply_payload_ast_equal_after_content_parameter_and_shorthand_substitution": true,
+  "session_implementation_unchanged": true,
+  "session_source_sha256": "184444d71a0e24237564836e8d359d8974a1fb128230438af1c52fe94c4d560e"
+}

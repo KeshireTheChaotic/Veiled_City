@@ -16,3 +16,11 @@ export async function handleSessionRosterCommand(interaction,db,session){
   const chunks=chunkRosterReport(lines);
   return replyWithPrivateChunks(interaction,chunks);
 }
+
+import {sessionBrief,formatSessionBrief} from '../../frameworks/session/public.js';
+import {replyWithSessionBrief} from '../../frameworks/discord/public.js';
+/** Original opt-in scoped packet and formatting; Application retains route flag/mode and receipt lifecycle. */
+export async function handleSessionBriefCommand(interaction,{db,mode}){
+  const packet=sessionBrief(db,interaction.guildId,{mode,user:interaction.user.id});
+  return replyWithSessionBrief(interaction,packet,formatSessionBrief(packet));
+}

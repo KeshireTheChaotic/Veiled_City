@@ -57,6 +57,8 @@ export {handlePlayerFactListCommand,assertPlayerFactReadStore} from './player-fa
 
 export {handleCaseboardCommand,assertCaseboardReadStore} from './caseboard-command.js';
 
+export {replyWithSessionBrief} from './session-brief-command.js';
+
 export {handleGmNpcStateCommand,assertGmNpcReadStore} from './gm-npc-state.js';
 
 export {gmFactLine,playerFactLine} from './fact-text.js';
