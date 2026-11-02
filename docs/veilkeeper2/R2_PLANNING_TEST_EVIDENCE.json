@@ -1,0 +1,6 @@
+{
+  "finishedUtc": "2026-11-02T14:06:22.9500133Z",
+  "exitCode": 0,
+  "command": "node --test tests/veilkeeper2/r2-private-planner.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs",
+  "startedUtc": "2026-11-02T14:06:22.7978286Z"
+}

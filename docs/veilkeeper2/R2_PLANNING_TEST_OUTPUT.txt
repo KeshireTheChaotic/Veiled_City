@@ -1,0 +1,23 @@
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (3.8181ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3506ms)
+✔ audience revocation during inference prevents queueing and later inspection (0.9332ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.738ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.641ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (0.8525ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (3.1847ms)
+✔ native weighted recall composes before one inference and retirement does not delete records (1.4345ms)
+✔ optional private planning stays separate and is not invoked for ordinary audience response (1.6391ms)
+✔ private planning uses explicit native scope and returns a frozen non-publishable proposal (2.2017ms)
+✔ wrong native principal/campaign/source grants fail before bodies or inference (0.3282ms)
+✔ private closure must explicitly authorize every ancestor and excludes pending canon proposals (0.2311ms)
+✔ body substitution, changed scope during inference and later correction invalidate private plans (0.4765ms)
+✔ private plan handles cannot enter the audience gateway or publication queue (1.0576ms)
+✔ aborted planning makes zero calls and source revocation prevents later private inspection (0.2702ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75.477

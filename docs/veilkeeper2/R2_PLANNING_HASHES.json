@@ -1,0 +1,37 @@
+{
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "files": [
+    {
+      "sha256": "f13e8980816528b40900a7a9ae16820e65978557084d9a6642fc84063551c15d",
+      "path": "bot/src/v2/private-planner.js"
+    },
+    {
+      "sha256": "3c5bdcd65f03afc9ff94b728ee7997347fd56cf6b5a2b5af5bf21eda0ee072d5",
+      "path": "bot/src/v2/rehearsal.js"
+    },
+    {
+      "sha256": "4d46fb01bd9c7cb649def7e2b2ec88790e5741183ffa960e15e6e58fecddaf0b",
+      "path": "bot/tests/veilkeeper2/r2-private-planner.test.mjs"
+    },
+    {
+      "sha256": "869d15bcc4545459892df8f9e7d38b2f75d55dc3f3ca8a8f33563788f0187320",
+      "path": "bot/tests/veilkeeper2/r1-rehearsal.test.mjs"
+    },
+    {
+      "sha256": "bc0d75d0875041eca86d6c2ba4142e16c260daef6fd6b2682005f9e206c8ee0f",
+      "path": "docs/veilkeeper2/LEDGER.md"
+    },
+    {
+      "sha256": "9ffe15b44364189f5d34ca0d575798575d917d7b48097225ab772121dd1d1fe8",
+      "path": "docs/veilkeeper2/R2_PLANNING_REPORT.md"
+    },
+    {
+      "sha256": "32bcda067631541ce316d87be77c8d971c4cade1c535365dd6ea16a29cec7d76",
+      "path": "docs/veilkeeper2/R2_PLANNING_TEST_OUTPUT.txt"
+    },
+    {
+      "sha256": "8058e2ab8b23b96faa2b52408148f5a26c560fd84557240bb9b6c940dd449fe7",
+      "path": "docs/veilkeeper2/R2_PLANNING_TEST_EVIDENCE.json"
+    }
+  ]
+}
