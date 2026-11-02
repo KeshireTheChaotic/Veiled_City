@@ -1,0 +1,28 @@
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (3.1131ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3445ms)
+✔ audience revocation during inference prevents queueing and later inspection (1.1174ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.8251ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.765ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (1.1001ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (3.496ms)
+✔ native weighted recall composes before one inference and retirement does not delete records (1.8254ms)
+✔ GM, cross-PC, other campaign/scene and pending disclosures never have their body read (1.6806ms)
+✔ an apparently shared paraphrase with a private source ancestor is excluded before inference (0.1705ms)
+✔ source closure accepts shared ancestry but rejects cycles and missing ancestors (0.2995ms)
+✔ NPC knowledge intersects audience entitlement, and human proxy portrayal is refused (0.8347ms)
+✔ revoked source, changed ancestors and changed actor control invalidate issued packets (0.2205ms)
+✔ testimony stays testimony and forged or edited capabilities cannot supply model context (0.2382ms)
+✔ stale or substituted body under a current revision cannot enter a prompt packet (0.132ms)
+✔ fictional decay preserves established six-tick cadence and rejects invalid time (0.8168ms)
+✔ canonical causes are deduplicated and model echoes cannot outweigh independent interaction (1.8288ms)
+✔ private sources, hidden ancestors and actor-unknown records cannot affect scoped recall (0.308ms)
+✔ retirement is reversible through entitled focus or active native pin and never deletes history (0.3222ms)
+✔ revocation and malformed native snapshots fail closed; ranking does not read bodies (0.1935ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.0334

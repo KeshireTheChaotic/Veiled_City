@@ -68,5 +68,10 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   }
   // A model-selected reference is only a lookup candidate, never an entitlement.
   function read(source,reference){return inspect(issue(source,[reference]));}
-  return Object.freeze({issue,inspect,audience,read});
+  function entitled(source,reference,{actorId=null}={}){
+    if(!sourceAuthority.revalidate(source))fail();
+    actorProof(source,actorId);
+    return closure(reference,source,actorId,new Map());
+  }
+  return Object.freeze({issue,inspect,audience,read,entitled});
 }

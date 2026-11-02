@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "sha256": "b4380cc3a89f8bddea11e29b04c8552d13b32fbae023d3d79e8bc4caba7e5195",
+      "path": "bot/src/v2/context-authority.js"
+    },
+    {
+      "sha256": "33786b3967ece0addb81230cdd064991e115163d078c8be6e9a7963e00bffc21",
+      "path": "bot/src/v2/recall-planner.js"
+    },
+    {
+      "sha256": "630aeeddc5741df1795be2ce37abcc876f8e0baf621f1ba4c98615d91303cb2d",
+      "path": "bot/src/v2/rehearsal.js"
+    },
+    {
+      "sha256": "b7a572b7736476b7cbbe5fe13321b82e94cc9372bb4122386ce3c293eb03717f",
+      "path": "bot/tests/veilkeeper2/r2-recall.test.mjs"
+    },
+    {
+      "sha256": "bb13eafaabf4b0b0cc091a6768cac3107ef2a151bf66ae0799e67c8b7ebfe93a",
+      "path": "bot/tests/veilkeeper2/r2-context-authority.test.mjs"
+    },
+    {
+      "sha256": "b77ae023ffb3c8c6be8cf6be0fe8365fb693e9e589cf83c89f49cd2738395506",
+      "path": "bot/tests/veilkeeper2/r1-rehearsal.test.mjs"
+    },
+    {
+      "sha256": "45033671ddbe64528317215681a93c55fea807029012a0d36dabbd2b836ace6c",
+      "path": "docs/veilkeeper2/LEDGER.md"
+    },
+    {
+      "sha256": "b86f05b94b73896fca4582d4e8fa096f2d654e1497f793abb8519afc132d9205",
+      "path": "docs/veilkeeper2/R2_RECALL_REPORT.md"
+    },
+    {
+      "sha256": "c9e7d1fecfa2bcfbb6bc99e2a0769987b3ef816e9e7b5ca8c99eba91ab0c1a1b",
+      "path": "docs/veilkeeper2/R2_RECALL_TEST_OUTPUT.txt"
+    },
+    {
+      "sha256": "2478e0ee9300458a3d5828292a44175b304452447acbee9f05fbebf39c9150ef",
+      "path": "docs/veilkeeper2/R2_RECALL_TEST_EVIDENCE.json"
+    },
+    {
+      "sha256": "9647072899e2d79a4c616575e5d6fb03848a9733cfc1e43986094da38781ed35",
+      "path": "bot/src/frameworks/narrative/narrative-salience.js"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}

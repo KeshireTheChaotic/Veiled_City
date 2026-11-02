@@ -5,7 +5,7 @@ import {createRehearsal} from '../../src/v2/rehearsal.js';
 import {openKnowledgeStore} from '../../src/v2/knowledge-store.js';
 import {createKnowledgeAuthority} from '../../src/v2/knowledge-authority.js';
 
-function fixture({failSelection=false,providerResult,knowledgeStore}={}){
+function fixture({failSelection=false,providerResult,knowledgeStore,recall}={}){
   const event={campaignId:'c',messageId:'m',userId:'u',actorId:'pc'};
   const message={id:'m',campaignId:'c',userId:'u',channelId:'ch',revision:'1',deleted:false,text:'Interesting.'};
   const channel={id:'ch',campaignId:'c',sceneId:'scene',revision:'1',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']};
@@ -16,7 +16,7 @@ function fixture({failSelection=false,providerResult,knowledgeStore}={}){
     readScene:()=>({id:'scene',campaignId:'c',sessionId:'session',revision:'1',status:'active',participants:[{userId:'u',actorId:'pc',presence:'present'}]}),
     readSession:()=>({id:'session',campaignId:'c',revision:'1',status:'active'})},
     records:knowledgeStore?undefined:{metadata:(_c,ref)=>sources.get(ref),readText:(_c,ref,revision)=>{textReads.push(ref);return {revision,text:ref==='secret'?'GM-only culprit':'The clerk claims a tunnel exists.'};}},
-    knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,
+    knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,recall,
     selectContext:()=>{if(failSelection)throw new Error('Optional memory unavailable');return ['rumor','secret'];},
     provider:{generate:async request=>{requests.push(request);return providerResult?providerResult():{text:'“Mercer, interesting usually means trouble,” the clerk says.',usage:{inputTokens:42,outputTokens:12}};}}});
   return {app,event,channel,actor,sources,requests,textReads};
@@ -79,4 +79,12 @@ test('persisted knowledge feeds scoped rehearsal while proposals remain separate
   event.id='e3';event.record.status='retracted';native.establish('c','e3','2');
   assert.deepEqual(tools.context_read({topic:'knowledge',focus:'rumor'}).records,[]);
   assert.equal(f.requests.length,1);
+});
+
+test('native weighted recall composes before one inference and retirement does not delete records',async()=>{
+  let tick=0;
+  const recall={readClock:()=>tick,readCandidates:()=>['rumor','secret'],readPins:()=>[],readCauses:()=>[{id:'cause',campaignId:'c',status:'committed',authority:'native_recall',kind:'mention',tick:0,targetRefs:['rumor'],sourceRefs:['rumor'],independentlyAuthenticated:true}]};
+  const f=fixture({recall});await f.app.respond(f.event);assert.equal(f.requests[0].context.records.length,1);
+  tick=12;await f.app.respond(f.event);assert.deepEqual(f.requests[1].context.records,[]);
+  assert.equal(f.sources.has('rumor'),true);assert.deepEqual(f.textReads,['rumor']);assert.equal(f.requests.length,2);
 });

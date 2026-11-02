@@ -15,4 +15,6 @@ Production entrypoint/configuration, legacy source/schema/content and all legacy
 
 Generic scoped reference lookup and persistent proposal composition are now implemented; [integration report](R2_INTEGRATION_REPORT.md) records 23/23 passing changed-module checks. R2_INTEGRATION_HASHES.json is the latest manifest for the changed kernel/context/rehearsal files; prior manifests remain historical.
 
-**Next exact work:** R2 weighted recall and import/export qualification; then remaining provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.
+Weighted recall policy and rehearsal composition are implemented with 20/20 focused checks; see [recall report](R2_RECALL_REPORT.md). R2_RECALL_HASHES.json is the latest context/rehearsal/recall manifest. Native cause/pin adapters and full ranking/migration parity remain open.
+
+**Next exact work:** R2 private-hook/player-export boundaries and native recall evidence adapters; then remaining provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.
