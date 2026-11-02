@@ -1,0 +1,8 @@
+RF06-F04 R94 static boundary note
+
+New source: bot/src/frameworks/discord/campaign-rollback-confirmation.js
+Public Discord export: campaignRollbackConfirmationText
+Application caller: GM-only admin rollback command in bot/src/commands.js
+The formatter returns only the existing private confirmation text. It receives the already-selected snapshot row and has no Persistence, authorization, publication-cleanup, synchronization, logging, Discord transport, or authority capability.
+
+Architecture ratchet not run in this turn. No full-phase or runtime qualification is claimed.

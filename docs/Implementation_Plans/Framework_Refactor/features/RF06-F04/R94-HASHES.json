@@ -1,0 +1,31 @@
+{
+  "feature": "RF06-F04-R94",
+  "base_commit": "bf8af193",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "d4e680a5f02b1a37e6c0b72f9bce36063bddc81e524a014b400551a39dd86090"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "294bae0b3464c31e2fad053c48e3fa59fac74f19f1f1bbeb001c36694aedd3bd"
+    },
+    {
+      "path": "bot/src/frameworks/discord/campaign-rollback-confirmation.js",
+      "sha256": "0b9b4187dc856fd40b3e98309dbfb6e6ef0286b3f6466d252b1001d1e17ec6f6"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-r94-campaign-rollback-confirmation.test.mjs",
+      "sha256": "472110a3b44b9e4079755d69162a86ef27f37304ae0bf83d97bd74fbd5fb84fe"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-r94-campaign-rollback-confirmation.test.mjs",
+    "exit_code": 0,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax_checks_passed": 4,
+  "architecture_ratchet_run": false
+}

@@ -1,0 +1,5 @@
+From `bot/`:
+
+`node --test tests/ai-gm-2026-10/rf06-f04-r94-campaign-rollback-confirmation.test.mjs` — exit 0; 2 passed, 0 failed/skipped/cancelled.
+
+Syntax checks passed for `src/commands.js`, `src/frameworks/discord/public.js`, `src/frameworks/discord/campaign-rollback-confirmation.js`, and the focused test. No command execution, database restore, Discord delivery, or full-phase ratchet is represented by this evidence.
