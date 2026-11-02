@@ -7,6 +7,7 @@ import {initializeWorldExecution} from './world-execution.js';
 import {initializeWorldOwnerConsent} from './world-owner-consent.js';
 import {initializeNativeSessionMovement} from './native-session-movement.js';
 import {initializeEnvironmentScene} from './environment-scene.js';
+import {initializeIntentNativeRolls} from './intent-native-rolls.js';
 import {initializePvpAgreements} from './pvp-agreements.js';
 import {initializeNativeOutcomes} from './native-outcomes.js';
 import {initializePublicationNarrative} from './publication-narrative.js';
@@ -63,6 +64,7 @@ export function initializeRuntimeFrameworks(){
   initializeWorldOwnerConsent();
   initializeNativeSessionMovement();
   initializeEnvironmentScene();
+  initializeIntentNativeRolls();
   initializePvpAgreements();
   initializeNativeOutcomes();
   initializePublicationNarrative();

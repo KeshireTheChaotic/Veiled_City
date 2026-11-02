@@ -1,0 +1,11 @@
+✔ Intent roll operations and Native source fail closed before runtime composition (0.7917ms)
+✔ Application connects the original captured-owner review operation through the existing pair (769.7542ms)
+✔ Application owns the pair connection and Intent adapter invokes only its fixed port (4.3342ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1255.2682

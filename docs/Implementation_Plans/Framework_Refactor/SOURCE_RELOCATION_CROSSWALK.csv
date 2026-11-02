@@ -358,3 +358,6 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/world-simulation-receipts.js","bot/src/frameworks/world/world-simulation-receipts.js","world","RF04","DECOMPOSE_BEFORE_MOVE","5","5"
 "bot/tooling/architecture/inventory.mjs","bot/tooling/architecture/inventory.mjs","tooling","RF00","PILOT_MOVE_CANDIDATE","0","0"
 "bot/tooling/architecture/source-graph.mjs","bot/tooling/architecture/source-graph.mjs","tooling","RF00","PILOT_MOVE_CANDIDATE","1","0"
+"bot/src/application/composition/intent-native-rolls.js","bot/src/application/composition/intent-native-rolls.js","application","RF05","NEW_SOURCE","1","1"
+"bot/src/frameworks/daggerheart/contracts/intent-roll-review.js","bot/src/frameworks/daggerheart/contracts/intent-roll-review.js","daggerheart","RF05","NEW_SOURCE","1","0"
+"bot/src/frameworks/intent/contracts/native-roll-review.js","bot/src/frameworks/intent/contracts/native-roll-review.js","intent","RF05","NEW_SOURCE","1","0"

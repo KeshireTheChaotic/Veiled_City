@@ -675,6 +675,11 @@
           "from": "intent",
           "to": "daggerheart",
           "contract": "C144 original assertOrdinaryBinding only, through fixed Native source and Intent consumer; same args/errors and Native source/ancestry authority. No effects or new grants."
+        },
+        {
+          "from": "intent",
+          "to": "daggerheart",
+          "contract": "C145 original reviewRollDeclaration only, through a fixed Native source and Intent consumer. The Native-owned legacy provider binds its unchanged function; Application connects the pair before dispatch. Same arguments, result and thrown errors; no rules, dice or effect authority added. Roll preparation remains on its existing legacy path."
         }
       ],
       "source_evidence": [
@@ -683,15 +688,58 @@
           "to": "bot/src/application-authority.js",
           "line": 16,
           "type": "import"
+        },
+        {
+          "from": "bot/src/ai-intents.js",
+          "to": "bot/src/roll-declaration-review.js",
+          "line": 35,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/roll-declaration-review.js",
+          "to": "bot/src/frameworks/daggerheart/public.js",
+          "line": 8,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/application/composition/intent-native-rolls.js",
+          "to": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 63,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/daggerheart--intent/public.js",
+          "to": "bot/src/frameworks/daggerheart/public.js",
+          "line": 64,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/intent/contracts/native-roll-review.js",
+          "to": "bot/src/kernel/function-port.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/daggerheart/contracts/intent-roll-review.js",
+          "to": "bot/src/kernel/function-port.js",
+          "line": 1,
+          "type": "import"
         }
       ],
-      "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics. C144 proves fail-closed/repeated composition, actual Application source initialization and original guard/error forwarding.",
-      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview. Native unified adjudication also adopted by state.js with explicit source/board capability; original prompt/provider composition remains in intent until later public-provider adoption. C144 existing environment initializer binds Intent to Native fixed proof source; existing Application imports initialize original Native provider.",
+      "validation": "Native resolver independently verifies exact accepted source/owner/scope, current selection and immutable replay receipts. Intent supplies authored-envelope reader only; adapter copies no mechanics. C144 proves fail-closed/repeated composition, actual Application source initialization and original guard/error forwarding. C145 proves the review ports fail closed before composition, the unchanged Native owner-review provider is bound once, exact thrown errors are forwarded, and replacement is refused.",
+      "lifecycle": "Actual commitGmTurn injects connector while existing provider wiring remains in legacy typed-mechanics pending RF05-F05 composition/public-provider adoption. No execution in preview. Native unified adjudication also adopted by state.js with explicit source/board capability; original prompt/provider composition remains in intent until later public-provider adoption. C144 existing environment initializer binds Intent to Native fixed proof source; existing Application imports initialize original Native provider. C145 loads the Native-owned legacy review provider from the existing Intent compatibility dispatcher and connects the fixed review consumer from initializeIntentNativeRolls in the runtime initializer sequence before dispatch; neither binding reads or writes campaign state.",
       "adoption_feature": "RF03-F01",
       "consumers": [
         "bot/src/turn-orchestration.js",
         "bot/src/state.js",
         "bot/src/application/composition/environment-scene.js",
+        "bot/src/application/composition/intent-native-rolls.js",
         "bot/src/gm.js"
       ],
       "tests": [
@@ -699,7 +747,8 @@
         "bot/tests/ai-gm-2026-10/rf03-f01-c05.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f05-c65.test.mjs",
         "bot/tests/ai-gm-2026-10/rf04-f04-c29.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f05-c94.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f05-c94.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c78.test.mjs"
       ],
       "observed_directions": [
         {
@@ -722,7 +771,7 @@
         "occurrences": 114
       },
       "public_api": "bot/src/framework-to-framework/daggerheart--intent/public.js",
-      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle. C130 adds the original Intent action-plan and transition functions to a fixed Native consumer used by three Native application modules; transaction and receipt authority remains at existing Native call sites. C144 qualifies the original ordinary-binding proof via existing Native source; root provider relocation remains deferred. Dedicated test/evidence: rf05-f04-c144.test.mjs and C144-HASHES.json.",
+      "scope": "undefined C229 fixed Intent encounter/environment functions plus getter returning original EncounterLibrary class; native owns all proposal/activation/template/delegation rules; own management source removes ESM cycle. C130 adds the original Intent action-plan and transitionAction functions to a fixed Native consumer used by three Native application modules; transaction and receipt authority remains at existing Native call sites. C144 qualifies the original ordinary-binding proof via existing Native source; root provider relocation remains deferred. C145 adds only the original captured-owner roll review operation through a fixed Native source and Intent consumer; Application connects the pair before dispatch, while the Native provider stays in its root compatibility module. Roll preparation and provider decomposition remain deferred. Dedicated evidence: C144-HASHES.json and C145-HASHES.json.",
       "typed_service_composition": {
         "feature": "RF05-F05 C94",
         "source": "bot/src/framework-to-framework/daggerheart--intent/typed-intent-service.js",

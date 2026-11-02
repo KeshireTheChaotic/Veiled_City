@@ -89,3 +89,5 @@ C137 extends the same pair with the original public Intent context reader for GM
 C139 adds the unchanged authenticated Intent review action through a fixed Operations consumer. Intent retains native validation/commit authority; the last Operations root Intent import is retired. Actual workflow SQLite and fixed-composition evidence is in C139-HASHES.json.
 
 C144 extends Daggerheart–Intent with the original ordinary-binding proof only. Existing Native provider authority and initialization remain; Intent has no direct root proof import. Qualification is recorded in C144-HASHES.json.
+
+C145 adds the original captured-owner roll review operation through fixed Native and Intent ports. The Native-owned legacy provider binds its unchanged function, while Application composition connects the pair before runtime dispatch. Roll preparation and provider relocation remain deferred; qualification is recorded in C145-HASHES.json.

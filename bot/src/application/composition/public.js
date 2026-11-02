@@ -1,6 +1,7 @@
 export {composeServices} from './compose-services.js';
 export {createOpeningServices} from './create-opening-services.js';
 export {initializeEnvironmentScene} from './environment-scene.js';
+export {initializeIntentNativeRolls} from './intent-native-rolls.js';
 export {initializePvpAgreements} from './pvp-agreements.js';
 
 export {initializeNativeOutcomes} from './native-outcomes.js';

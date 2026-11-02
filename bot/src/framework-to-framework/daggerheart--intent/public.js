@@ -59,3 +59,10 @@ import {intentOrdinaryBinding} from '../../frameworks/intent/public.js';
 import {nativeOrdinaryProofSource} from '../../frameworks/daggerheart/public.js';
 /** Original Native proof only; Intent does not create source or effect authority. */
 export function connectIntentNativeOrdinaryBinding(){return intentOrdinaryBinding.bind({assertOrdinaryBinding:nativeOrdinaryProofSource.assertOrdinaryBinding});}
+
+import {intentNativeRollReview} from '../../frameworks/intent/public.js';
+import {nativeIntentRollReview} from '../../frameworks/daggerheart/public.js';
+/** Original captured-owner roll review only; Intent remains a proposal dispatcher. */
+export function connectIntentNativeRollReview(){return intentNativeRollReview.bind({
+  reviewRollDeclaration:nativeIntentRollReview.reviewRollDeclaration
+});}

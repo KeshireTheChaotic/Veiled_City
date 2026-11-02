@@ -30,8 +30,9 @@ const {manageEvidence,inviteOrganization}=intentKnowledgeActions;
 import {intentSessionStory} from "./frameworks/intent/public.js";
 function suggestSetupPayoff(...args){return intentSessionStory.suggestSetupPayoff(...args);}
 function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHistory(...args);}
-import { prepareRollRequest } from "./roll-requests.js";
-import { reviewRollDeclaration } from "./roll-declaration-review.js";
+import {intentNativeRollReview} from './frameworks/intent/public.js';
+import {prepareRollRequest} from './roll-requests.js';
+import {reviewRollDeclaration} from './roll-declaration-review.js';
 import {intentSessionEntry} from "./frameworks/intent/public.js";
 function mundaneEntryImpact(...args){return intentSessionEntry.mundaneEntryImpact(...args);}
 function resolveMundaneEntry(...args){return intentSessionEntry.resolveMundaneEntry(...args);}
@@ -180,7 +181,7 @@ registerIntentAdapter("roll",{
   impact:(db,guild,intent)=>({cost:0,review:intent.payload.op==="adjudicate",reason:intent.payload.op==="adjudicate"
     ?"Human feasibility/rules review of a captured exact owner preauthorization; no AI-supplied assent or auto spending."
     :"Private sheet-derived pending request only; never dice, PC spending or outcome."}),
-  apply:(db,guild,intent,key,actor,context)=>intent.payload.op==="adjudicate"?reviewRollDeclaration(db,guild,intent.payload,actor,context)
+  apply:(db,guild,intent,key,actor,context)=>intent.payload.op==="adjudicate"?intentNativeRollReview.reviewRollDeclaration(db,guild,intent.payload,actor,context)
     :prepareRollRequest(db,guild,intent.payload,actor,context)
 });
 registerIntentAdapter("setup",{
