@@ -70,7 +70,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/errors.js","bot/src/frameworks/operations/errors.js","operations","RF02","DECOMPOSE_BEFORE_MOVE","34","0"
 "bot/src/evaluation-harness.js","bot/src/frameworks/operations/evaluation-harness.js","operations","RF02","EXTRACT_PORTS_BEFORE_MOVE","0","1"
 "bot/src/evidence-custody.js","bot/src/frameworks/knowledge/evidence-custody.js","knowledge","RF04","DECOMPOSE_BEFORE_MOVE","4","5"
-"bot/src/expansion-contracts.js","bot/src/frameworks/narrative/expansion-contracts.js","narrative","RF05","PILOT_MOVE_CANDIDATE","2","0"
+"bot/src/expansion-contracts.js","bot/src/application/workflows/expansion-status.js","application","RF05","MOVED_COMPLETE","1","0"
 "bot/src/failure-trace.js","bot/src/frameworks/operations/failure-trace.js","operations","RF02","IMPLEMENTATION_MOVED_ROOT_COMPAT_R13","1","0"
 "bot/src/fear-reservations.js","bot/src/frameworks/daggerheart/fear-reservations.js","daggerheart","RF03","EXTRACT_PORTS_BEFORE_MOVE","7","1"
 "bot/src/fresh-npc-authoring.js","bot/src/frameworks/narrative/fresh-npc-authoring.js","narrative","RF05","EXTRACT_PORTS_BEFORE_MOVE","8","2"

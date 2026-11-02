@@ -1,0 +1,56 @@
+Command: node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/RF05-C147-gate.json (from bot/)
+Current shared source snapshot: after Agent C commit `19805e90`
+Exit code: 1
+
+{
+  "mode": "ratchet",
+  "phase": "RF05",
+  "sourceModules": 1108,
+  "unowned": 1,
+  "importOccurrences": 4486,
+  "internalImportOccurrences": 4283,
+  "cycleComponents": 1,
+  "largestCycle": 51,
+  "rawViolationOccurrences": 591,
+  "acceptedLegacyOccurrences": 584,
+  "activeViolationGroups": 7,
+  "transitionErrors": 0,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "UNOWNED_MODULE",
+      "from": "bot/src/native-roll-conditions.js"
+    },
+    {
+      "code": "IMPORT_TARGET_UNOWNED",
+      "from": "bot/src/native-roll-conditions.js",
+      "to": "bot/src/frameworks/daggerheart/public.js",
+      "line": 2
+    },
+    {
+      "code": "IMPORT_TARGET_UNOWNED",
+      "from": "bot/src/native-roll-conditions.js",
+      "to": "bot/src/frameworks/daggerheart/feature-roll-source-rules.js",
+      "line": 3
+    },
+    {
+      "code": "IMPORT_TARGET_UNOWNED",
+      "from": "bot/src/roll-collaboration.js",
+      "to": "bot/src/native-roll-conditions.js",
+      "owner": "daggerheart",
+      "line": 11
+    },
+    {
+      "code": "IMPORT_TARGET_UNOWNED",
+      "from": "bot/src/roll-requests.js",
+      "to": "bot/src/native-roll-conditions.js",
+      "owner": "daggerheart",
+      "line": 34
+    }
+  ]
+}
+
+The two roll-request cycle edges reported before Agent C's `19805e90` commit
+are absent from this snapshot. The remaining Native ownership findings are
+outside C147's changed paths. The current ratchet also includes the live B/C
+source drafts and does not qualify full RF05 completion.

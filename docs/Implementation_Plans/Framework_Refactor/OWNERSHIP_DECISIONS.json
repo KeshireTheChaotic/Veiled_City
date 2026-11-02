@@ -84,7 +84,7 @@
       "owner": "narrative",
       "phase": "RF05",
       "rationale": "Audience-scoped fiction authoring, portrayal, narrative validation and provisional fiction; all native effects and external source translation remain separately owned.",
-      "files": "audience-first-capability.js audience-native-v9.js concept-context.js frameworks/narrative/delegation-catalog.js expansion-contracts.js fresh-npc-authoring.js fresh-scene-authoring.js gm-fiction-composition.js gm-fiction-schema.js gm-hook-import.js gm-world-narrative.js gm-world-scope.js narrative-acts-v9.js narrative-artifacts.js narrative-authority-context.js narrative-authority.js narrative-clauses-v9.js narrative-completeness.js narrative-context.js narrative-delegation.js narrative-director-source.js narrative-integrity.js narrative-opportunity-guidance.js narrative-opportunity-policy.js narrative-pvp.js narrative-relevance.js narrative-salience.js narrative-speakers.js narrative-tasks-v9.js narrative-tasks.js narrative-writer-v9.js nonmaterial-grammar.js portrayal.js scene-description.js scene-fiction-authority.js scene-fiction-context.js scene-observation-route.js"
+      "files": "audience-first-capability.js audience-native-v9.js concept-context.js frameworks/narrative/delegation-catalog.js fresh-npc-authoring.js fresh-scene-authoring.js gm-fiction-composition.js gm-fiction-schema.js gm-hook-import.js gm-world-narrative.js gm-world-scope.js narrative-acts-v9.js narrative-artifacts.js narrative-authority-context.js narrative-authority.js narrative-clauses-v9.js narrative-completeness.js narrative-context.js narrative-delegation.js narrative-director-source.js narrative-integrity.js narrative-opportunity-guidance.js narrative-opportunity-policy.js narrative-pvp.js narrative-relevance.js narrative-salience.js narrative-speakers.js narrative-tasks-v9.js narrative-tasks.js narrative-writer-v9.js nonmaterial-grammar.js portrayal.js scene-description.js scene-fiction-authority.js scene-fiction-context.js scene-observation-route.js"
     },
     {
       "owner": "publication",
@@ -114,7 +114,7 @@
       "owner": "application",
       "phase": "RF06",
       "rationale": "Current multi-framework coordinators/facades: decompose domain implementations into owners and pair adapters before retaining thin use-case workflows.",
-      "files": "commands.js city-commands.js context-planner.js continuity-routing.js gm.js opening-flow.js opening-cohort-runner.js opening-entry.js assembly-delivery.js assembly-planning.js assembly-publications.js pvp-safety-commands.js seed-commands.js session-opening-recovery.js session-opening-runner.js simulation-commands.js state.js story-commands.js turn-attempts.js turn-orchestration.js turn-pipeline.js turn-recovery.js voice.js"
+      "files": "commands.js city-commands.js context-planner.js continuity-routing.js gm.js opening-flow.js opening-cohort-runner.js opening-entry.js assembly-delivery.js assembly-planning.js assembly-publications.js pvp-safety-commands.js seed-commands.js session-opening-recovery.js session-opening-runner.js simulation-commands.js state.js story-commands.js application/workflows/expansion-status.js turn-attempts.js turn-orchestration.js turn-pipeline.js turn-recovery.js voice.js"
     },
     {
       "owner": "discord--persistence",

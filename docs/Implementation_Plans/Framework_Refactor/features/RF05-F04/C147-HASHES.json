@@ -1,0 +1,82 @@
+{
+  "feature": "RF05-F04 C147",
+  "source_commit": "1eb315c0c529085751d74d9d27b1c03bbbeeee8f",
+  "source_commit_parent": "19805e9006bebc4fd053fc08c57e217bbece2159",
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f04-c80.test.mjs (from bot/)",
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_ms": 160.9406
+  },
+  "syntax": {
+    "command": "node --check src/story-commands.js; node --check src/application/workflows/expansion-status.js; node --check tests/ai-gm-2026-10/rf05-f04-c80.test.mjs (from bot/)",
+    "passed": 3,
+    "total": 3,
+    "exit_code": 0
+  },
+  "extraction": {
+    "function_body_byte_identical": true,
+    "body_sha256": "4293b33a8759c450dbb1256bf0f9183bb85b48990a5ba90769c384ac30bee2b0",
+    "removed_module_sha256": "e772613c524c909bd0d55c435ca76466373beb40e817f3fe1582d2e3d7d1fb50"
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/RF05-C147-gate.json (from bot/)",
+    "pass": false,
+    "exit_code": 1,
+    "source_modules": 1108,
+    "unowned": 1,
+    "imports": 4486,
+    "internal_imports": 4283,
+    "cycle_components": 1,
+    "largest_cycle": 51,
+    "raw_violation_occurrences": 591,
+    "accepted_legacy_occurrences": 584,
+    "active_violation_groups": 7,
+    "transition_errors": 0,
+    "first_error_owner": "bot/src/native-roll-conditions.js",
+    "note": "The first five reported findings concern Agent C Native condition host references; no finding points to C147 paths. Full RF05 completion is not claimed."
+  },
+  "retired_transition_ids": [
+    "fc6a57a7423697daeca69a6b4bbf75a873bc375e46e93836af51ac05c55e9840",
+    "b91efae551c7c8b80de96c9cf2c1c73316cef251d4c2e883297780d6fce5a017"
+  ],
+  "owner_row": {
+    "path": "bot/src/application/workflows/expansion-status.js",
+    "owner": "application",
+    "reverse_dependents": 1,
+    "import_obligations": 0
+  },
+  "source_sha256": {
+    "bot/src/application/workflows/expansion-status.js": "e36f7d465f3d9544b3b899686c9a261061dd48350a01d920b39c6f7d903a7423",
+    "bot/src/story-commands.js": "3bd72ae8b68c07a83dc4d96c3726ce8729ca7bf25923b5a32db4630891893aad",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c80.test.mjs": "997236a190c0043fe0bb949d3ca913dee3ebbed1047b5dd8039bbc8ff1de8639",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-SCOPE.md": "d6bdcbe4a835a1b8f32936ba5b4a2c88ab6608b6bd501966ea03d66cdb342db9"
+  },
+  "evidence_sha256": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-TEST.log": "fd65751f0c993c785ec37542d4859508bbbb3ad14797abb851dca51cfa1f5cd2",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-SYNTAX.log": "9bf2273b1b10eac05edbba148e33ea517c3b88f6438273354c772c3303783d71",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-ARCHITECTURE.log": "570e4bdf6f40865e316f4914692c7dbe340cdce76b6f6c460bda739ad09adf77",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-LEDGER.md": "b700e27e9f16cb7117643350ed9c9d11e47a2a41c97a80c40cdbf3186afa1f44",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C147-RETIRED.json": "fbd1727637c40b2dc950453c73b99a965d8035d7e3faa121b708c9d5206c8032",
+    "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv": "b5826be9bd693c68334dc86cf01c68aee5757f22bd34317a1b3f54bb5267d71d",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "293232e5595bd44f3a2d7287cdd2116ca5c69111c2d8a2471f767120f1f25902",
+    "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json": "52d690ff21bdd7cb15a6e3a9b3b4611c3f780cacbb4758acff99c6064e71642c",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "f7ac94f9c995155637cc01969356bc41d8e69aa5c4449ccd12735a00c0456017",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF05/LEDGER.md": "0c94fd635b85633814b0c638425fe1577284a200066b7ab21048f23fd9f89a4d"
+  },
+  "behavior": {
+    "database_reads": 3,
+    "database_schema_changed": false,
+    "provider_calls": 0,
+    "live_discord_calls": 0,
+    "production_database": false,
+    "release_qualified": false
+  },
+  "deferred": [
+    "Historical DEPENDENCY_GRAPH.json was not regenerated in the shared checkout.",
+    "Agent C Native ownership findings remain in the current gate snapshot.",
+    "RF05 and release qualification remain incomplete."
+  ]
+}

@@ -222,17 +222,7 @@
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
-    {
-      "id": "fc6a57a7423697daeca69a6b4bbf75a873bc375e46e93836af51ac05c55e9840",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/expansion-contracts.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
+
     {
       "id": "b57f8494c113e606e0bbe57cf9e16939f8825e9ab1741656123cb15f3a7b337d",
       "code": "LEGACY_MODULE_LOCATION",
@@ -4089,20 +4079,7 @@
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
-    {
-      "id": "b91efae551c7c8b80de96c9cf2c1c73316cef251d4c2e883297780d6fce5a017",
-      "code": "IMPORTS_PRIVATE_API",
-      "from": "bot/src/story-commands.js",
-      "to": "bot/src/expansion-contracts.js",
-      "kind": "static",
-      "specifier": "./expansion-contracts.js",
-      "owner": "application",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF06-F04",
-      "expires_after": "RF06",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
+
     {
       "id": "60ea1e3650bd6d12af06fcf036af67fcede10cd5f33d1012fcd27cdeed9cc53d",
       "code": "IMPORTS_PRIVATE_API",

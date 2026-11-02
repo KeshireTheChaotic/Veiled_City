@@ -1,0 +1,34 @@
+{
+  "feature": "RF05-F04 C147",
+  "retired_transition_ids": [
+    "fc6a57a7423697daeca69a6b4bbf75a873bc375e46e93836af51ac05c55e9840",
+    "b91efae551c7c8b80de96c9cf2c1c73316cef251d4c2e883297780d6fce5a017"
+  ],
+  "records": [
+    {
+      "id": "fc6a57a7423697daeca69a6b4bbf75a873bc375e46e93836af51ac05c55e9840",
+      "code": "LEGACY_MODULE_LOCATION",
+      "from": "bot/src/expansion-contracts.js",
+      "owner": "narrative",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF05-F03",
+      "expires_after": "RF05",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
+    },
+    {
+      "id": "b91efae551c7c8b80de96c9cf2c1c73316cef251d4c2e883297780d6fce5a017",
+      "code": "IMPORTS_PRIVATE_API",
+      "from": "bot/src/story-commands.js",
+      "to": "bot/src/expansion-contracts.js",
+      "kind": "static",
+      "specifier": "./expansion-contracts.js",
+      "owner": "application",
+      "max_occurrences": 1,
+      "remove_in_feature": "RF06-F04",
+      "expires_after": "RF06",
+      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
+      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
+    }
+  ]
+}

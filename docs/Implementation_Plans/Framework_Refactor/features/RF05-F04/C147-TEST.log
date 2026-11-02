@@ -1,0 +1,7 @@
+Command: node --test tests/ai-gm-2026-10/rf05-f04-c80.test.mjs (from bot/)
+Exit code: 0
+Tests: 3 passed, 0 failed, 0 skipped; duration 160.9406 ms.
+
+The tests verify the exact Narrative feature projection, strict boolean flags,
+database read allowlist and order, database error identity, and the existing
+story-command GM guard and ephemeral response around the Application workflow.
