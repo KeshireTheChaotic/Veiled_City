@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/discord-audience-reader.js",
+    "sha256": "c7a11ec0344841679859564eb039ca23f7204b88078f83dbd8fdd44adc51757c"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-discord-audience-reader.test.mjs",
+    "sha256": "bfff04d408138f45306b0206b197ee412e7b00b216db35301a3fa7b096522146"
+  },
+  {
+    "path": "docs/veilkeeper2/R1_DISCORD_REFRESH_REPORT.md",
+    "sha256": "b0bd0d6f9e3e9eea2a5e2be629c5fc9f194b3605220f6aac6cbfb6fcb677221e"
+  }
+]
