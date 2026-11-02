@@ -21,12 +21,13 @@ export function createModelGateway({contextAuthority,provider,clock=()=>performa
     if(typeof validateContext!=='function'||capabilities!==null&&(Object.keys(capabilities).sort().join(',')!==GENERIC_TOOL_CONTRACTS.map(t=>t.name).sort().join(',')||Object.values(capabilities).some(f=>typeof f!=='function')))throw new TypeError('Exactly four native capabilities required');
     const packet=contextAuthority.inspect(grant),started=clock();
     const validate=()=>{signal?.throwIfAborted();contextAuthority.inspect(grant);validateContext();};
-    let result,modelCalls=0,toolCalls=0;const usage={},history=[],completed=new Map();
+    let result,continuation,modelCalls=0,toolCalls=0;const usage={},history=[],completed=new Map();
     while(modelCalls<6){
       validate();
-      try{result=await provider.generate({instructions:INSTRUCTIONS,context:packet,signal,
+      try{result=await provider.generate({instructions:INSTRUCTIONS,context:packet,signal,...(continuation?{continuation}:{}),
         ...(capabilities?{tools:GENERIC_TOOL_CONTRACTS,history:structuredClone(history)}:{})});modelCalls++;}
       catch{throw fail(signal?.aborted?'generation_aborted':'generation_failed');}
+      continuation=result?.continuation;
       validate();
       for(const key of ['inputTokens','outputTokens','cost'])if(Number.isFinite(result?.usage?.[key])&&result.usage[key]>=0)usage[key]=(usage[key]??0)+result.usage[key];
       if(result?.toolCalls===undefined||Array.isArray(result.toolCalls)&&result.toolCalls.length===0)break;

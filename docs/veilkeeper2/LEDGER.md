@@ -29,6 +29,7 @@ Completed scoped checks are recorded in their reports; no offline result establi
 | Private planning and current rehearsal | [Planning report](R2_PLANNING_REPORT.md), 15/15; R2_PLANNING_HASHES.json |
 | Durable private records into planning | [Storage adapter report](R2_PLANNING_STORAGE_REPORT.md), 22/22; R2_PLANNING_STORAGE_HASHES.json supersedes the private-store hash |
 | Generic tool-loop and source-bound continuation | [Tool-loop report](R2_TOOLS_REPORT.md); R2_TOOLS_HASHES.json supersedes kernel/gateway/rehearsal hashes |
+| OpenAI Responses adapter | [Provider report](R1_PROVIDER_REPORT.md), 28/28; R1_PROVIDER_HASHES.json supersedes the gateway hash |
 
 Hash manifests are checkpoint-specific. Newer manifests supersede hashes of changed files; older evidence remains historical. Initial failures and their fixes remain in the relevant reports.
 
@@ -36,4 +37,4 @@ Hash manifests are checkpoint-specific. Newer manifests supersede hashes of chan
 
 Production entrypoint/configuration and legacy runtime source/schema/content remain unchanged. No production database, live model, Discord send, deployment or push has been used. Dedicated v2 databases and in-memory rehearsal remain opt-in; no production migration needs rollback. The user separately authorized and committed documentation cleanup in `3ca9db9d`; governing specs now reside under `docs/`, with removed source documentation recoverable from the pinned Git revision. Documentation deletion does not satisfy runtime retirement gates.
 
-Imported directional GM-private relationships, durable private planning records and the bounded generic tool loop are implemented. Production target resolution, full relationship dimensions, scene authorization, recall and vendor-provider adapters remain open. **Next exact work:** native scene/context and recall adapters plus a concrete provider adapter, then R3 deterministic rules behind the generic dispatcher. Preserve all R0–R8 requirements and separate deployment approval. Never retire unresolved legacy runtime paths.
+Imported directional GM-private relationships, durable private planning records, bounded generic tool calling and an offline-tested Responses adapter are implemented. Production target resolution, full relationship dimensions, scene authorization, recall adapters and live provider qualification remain open. **Next exact work:** native scene/context and recall adapters, then R3 deterministic rules behind the generic dispatcher. Preserve all R0–R8 requirements and separate deployment approval. Never retire unresolved legacy runtime paths.

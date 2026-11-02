@@ -1,0 +1,36 @@
+✔ installed SDK emits the exact scoped Responses request without storage or implicit tool inventory (67.7176ms)
+✔ tool continuation replays reasoning and exact call outputs through the installed SDK (1.231ms)
+✔ continuations cannot cross context, native instructions, or forged call results (1.0629ms)
+✔ truncation, refusal and malformed tool arguments cannot become prose or executable calls (1.8425ms)
+✔ transport errors are sanitized, bounded request options disable retries, and abort skips dispatch (0.2925ms)
+✔ real gateway passes opaque provider continuation without exposing it to tools or the final draft (1.3902ms)
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (3.6962ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3899ms)
+✔ audience revocation during inference prevents queueing and later inspection (1.1286ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (1.3381ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.8642ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (1.0036ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (4.011ms)
+✔ native weighted recall composes before one inference and retirement does not delete records (1.2725ms)
+✔ optional private planning stays separate and is not invoked for ordinary audience response (1.3335ms)
+✔ provider retrieval retains extra source grants through queued publication inspection (0.6516ms)
+✔ extra lookup is revalidated after tool continuation and never grants hidden context (0.5758ms)
+✔ private planning uses explicit native scope and returns a frozen non-publishable proposal (2.0416ms)
+✔ wrong native principal/campaign/source grants fail before bodies or inference (0.3457ms)
+✔ private closure must explicitly authorize every ancestor and excludes pending canon proposals (0.239ms)
+✔ body substitution, changed scope during inference and later correction invalidate private plans (0.4548ms)
+✔ private plan handles cannot enter the audience gateway or publication queue (1.2202ms)
+✔ aborted planning makes zero calls and source revocation prevents later private inspection (0.2779ms)
+✔ ordinary response remains one call while advertising exactly four generic contracts (1.5265ms)
+✔ optional tool results continue the conversation, retain call IDs and accumulate usage (0.2551ms)
+✔ duplicate call IDs replay once and altered arguments under one ID abort (0.5106ms)
+✔ unknown capabilities are rejected without invoking native code; unbounded tool requests terminate (0.3675ms)
+✔ native exceptions are bounded and context is revalidated before continuing or inspecting (0.264ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 832.115

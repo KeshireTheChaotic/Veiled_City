@@ -1,0 +1,6 @@
+{
+  "startedUtc": "2026-11-02T18:43:35.5892517Z",
+  "command": "node --test tests/veilkeeper2/r1-openai-provider.test.mjs tests/veilkeeper2/r2-tool-loop.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs tests/veilkeeper2/r2-private-planner.test.mjs",
+  "exitCode": 0,
+  "finishedUtc": "2026-11-02T18:43:36.5001974Z"
+}
