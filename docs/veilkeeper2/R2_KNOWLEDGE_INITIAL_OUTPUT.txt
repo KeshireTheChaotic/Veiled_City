@@ -1,0 +1,65 @@
+✔ offline app boots with exactly four tools and no game handlers or transport (1.3151ms)
+✔ model capability cannot mint or substitute an authenticated source handle (0.5939ms)
+✔ unknown actions, altered sources, other actors and stale revisions fail before native preparation (0.7777ms)
+✔ native validation, pending receipt and replay preserve trace without rerunning preparation (0.6617ms)
+✔ revocation during preparation prevents receipt creation and later context access (0.1836ms)
+✔ receipt inspection is source-bound and cannot expose another conversation (0.2097ms)
+✔ intake snapshots are immutable and a reused message cannot silently change authorship or content (0.3117ms)
+✔ preparation cannot claim committed effects or register duplicate rule names (0.2609ms)
+✔ invalid JSON objects, oversized requests and asynchronous native preparation are rejected (0.3273ms)
+✖ native revisions survive reopening and replay cannot roll back a correction or retraction (42.2365ms)
+✖ competing stores enforce revision comparison and immutable native evidence (30.6939ms)
+✔ a legacy database is refused without creating v2 tables (16.1143ms)
+✔ generic model proposals persist separately and never establish truth or expose native acceptance (1.2464ms)
+✔ canon suggestions require exact private owner authorship and acceptance requires separate human review (0.6691ms)
+✔ identity, disclosure acknowledgement and native evidence authority fail closed (0.5855ms)
+✔ corrections cannot promote testimony, broaden its audience or revive retracted claims (0.8232ms)
+✔ evidence changing between validation and append leaves no accepted record (0.4686ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 15
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 158.7444
+
+✖ failing tests:
+
+test at tests\veilkeeper2\r2-knowledge.test.mjs:22:1
+✖ native revisions survive reopening and replay cannot roll back a correction or retraction (42.2365ms)
+  Error: EPERM, Permission denied: \\?\C:\Users\Keshi\AppData\Local\Packages\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\AC\Temp\vk2-knowledge-h1k5dG '\\?\C:\Users\Keshi\AppData\Local\Packages\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\AC\Temp\vk2-knowledge-h1k5dG'
+      at rmSync (node:fs:1283:18)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-knowledge.test.mjs:20:85)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1382:25)
+      at TestHook.run (node:internal/test_runner/test:1726:18)
+      at TestHook.run (node:internal/util:581:20)
+      at Test.runHook (node:internal/test_runner/test:1269:20)
+      at after (node:internal/test_runner/test:1322:20)
+      at Test.run (node:internal/test_runner/test:1408:13)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: 1,
+    code: 'EPERM',
+    path: '\\\\?\\C:\\Users\\Keshi\\AppData\\Local\\Packages\\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\\AC\\Temp\\vk2-knowledge-h1k5dG',
+    syscall: 'rm'
+  }
+
+test at tests\veilkeeper2\r2-knowledge.test.mjs:34:1
+✖ competing stores enforce revision comparison and immutable native evidence (30.6939ms)
+  Error: EPERM, Permission denied: \\?\C:\Users\Keshi\AppData\Local\Packages\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\AC\Temp\vk2-knowledge-4ngRjp '\\?\C:\Users\Keshi\AppData\Local\Packages\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\AC\Temp\vk2-knowledge-4ngRjp'
+      at rmSync (node:fs:1283:18)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-knowledge.test.mjs:20:85)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1382:25)
+      at TestHook.run (node:internal/test_runner/test:1726:18)
+      at TestHook.run (node:internal/util:581:20)
+      at Test.runHook (node:internal/test_runner/test:1269:20)
+      at after (node:internal/test_runner/test:1322:20)
+      at Test.run (node:internal/test_runner/test:1408:13)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: 1,
+    code: 'EPERM',
+    path: '\\\\?\\C:\\Users\\Keshi\\AppData\\Local\\Packages\\sandbox.{fae52dbc-2bac-4452-93da-06a4751d5717}\\AC\\Temp\\vk2-knowledge-4ngRjp',
+    syscall: 'rm'
+  }

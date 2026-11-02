@@ -1,0 +1,6 @@
+{
+  "finishedUtc": "2026-11-02T13:41:01.2904209Z",
+  "startedUtc": "2026-11-02T13:41:01.0477401Z",
+  "command": "node --test tests/veilkeeper2/r1-kernel.test.mjs tests/veilkeeper2/r2-knowledge.test.mjs",
+  "exitCode": 1
+}

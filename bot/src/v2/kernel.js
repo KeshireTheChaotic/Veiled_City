@@ -60,9 +60,10 @@ export function createMemoryJournal(){
  * are supplied by the trusted application, never by model arguments. No effect,
  * dice, publication, database patch or protected knowledge commit exists here.
  */
-export function createKernel({authority,journal,rules=createRulesetRegistry()}){
+export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null}){
   if(typeof authority?.authenticate!=='function'||typeof authority?.revalidate!=='function')throw new TypeError('Native authentication and revalidation required');
   if(!['source','recordSource','receipt','recordReceipt'].every(k=>typeof journal?.[k]==='function'))throw new TypeError('Source and receipt repository required');
+  if(knowledge!==null&&typeof knowledge.propose!=='function')throw new TypeError('Native knowledge proposal authority required');
   const handles=new WeakMap();
   function intake(event){
     const proof=authority.authenticate(event);
@@ -127,7 +128,8 @@ export function createKernel({authority,journal,rules=createRulesetRegistry()}){
       knowledge_propose:check(input=>{
         if(!closed(input,['source_ref','kind','claim'],['subject_ref','evidence_refs'])||input.source_ref!==source.id||!['testimony','observation','identity','memory','fact','canon_proposal'].includes(input.kind)||!text(input.claim,8000)
           ||('subject_ref'in input&&!text(input.subject_ref))||('evidence_refs'in input&&(!Array.isArray(input.evidence_refs)||input.evidence_refs.length>32||input.evidence_refs.some(r=>!text(r)))))return blocked('invalid_knowledge_proposal');
-        return blocked('knowledge_authority_not_installed');
+        if(!knowledge)return blocked('knowledge_authority_not_installed');
+        try{return snapshot(knowledge.propose(source,input));}catch{return blocked('knowledge_proposal_failed');}
       })
     });
   }

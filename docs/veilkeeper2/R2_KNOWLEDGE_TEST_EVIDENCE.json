@@ -1,0 +1,6 @@
+{
+  "command": "node --test tests/veilkeeper2/r2-knowledge.test.mjs",
+  "startedUtc": "2026-11-02T13:41:23.1062147Z",
+  "finishedUtc": "2026-11-02T13:41:23.3391680Z",
+  "exitCode": 0
+}

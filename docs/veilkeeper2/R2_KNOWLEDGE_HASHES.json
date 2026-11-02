@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "sha256": "0faaae9e0dfc785b685519de009f23179aae1fcdbf0f0cfbd1850714a02c818e",
+      "path": "bot/src/v2/kernel.js"
+    },
+    {
+      "sha256": "e04a7e34d21c6d7a6dc0781f5c40ecc40f4d7e7dc406b547e5b13e8e7c212ee0",
+      "path": "bot/src/v2/knowledge-authority.js"
+    },
+    {
+      "sha256": "c87791a5c3e0dac76330cd53deb10f01314bf4831df79a1bc2eea1ae72ed521b",
+      "path": "bot/src/v2/knowledge-store.js"
+    },
+    {
+      "sha256": "496ced2034065431c061afdb9cb0369470002e5aa7b0fc18dd2ae0be3d30a42f",
+      "path": "bot/tests/veilkeeper2/r1-kernel.test.mjs"
+    },
+    {
+      "sha256": "ec3dee2b9f0a9a38257c40aadfa4f0441d2b16e5201ce988f9f6f0094ec7adac",
+      "path": "bot/tests/veilkeeper2/r2-knowledge.test.mjs"
+    },
+    {
+      "sha256": "a4032f925914d58df15c43159345af15e2ef5547027c739073553c0eb960dee1",
+      "path": "docs/veilkeeper2/LEDGER.md"
+    },
+    {
+      "sha256": "5804ce86333b52306690687f702291b2a4a0da8dec0f9b1e9b7ed8102c2aefb5",
+      "path": "docs/veilkeeper2/R2_KNOWLEDGE_REPORT.md"
+    },
+    {
+      "sha256": "c4f14ef2420b52947291ba635b6974e4b26edd9bd5363ef465f041b9e35c9f62",
+      "path": "docs/veilkeeper2/R2_KNOWLEDGE_INITIAL_OUTPUT.txt"
+    },
+    {
+      "sha256": "304a2e484bab7e341fa3f6202e9b5ca04ae44fafb10f1238a6f5efd4cf67bb4b",
+      "path": "docs/veilkeeper2/R2_KNOWLEDGE_INITIAL_EVIDENCE.json"
+    },
+    {
+      "sha256": "f9dcd0186a7f4ef8b69bb18db9ac86ec257f971a6847724529a1c613f05c1290",
+      "path": "docs/veilkeeper2/R2_KNOWLEDGE_TEST_OUTPUT.txt"
+    },
+    {
+      "sha256": "176202ce3e1f4873c9237a491fb0f084956bd71bfe6a142c4294ab6fe0053ffb",
+      "path": "docs/veilkeeper2/R2_KNOWLEDGE_TEST_EVIDENCE.json"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}

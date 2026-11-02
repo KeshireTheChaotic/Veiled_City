@@ -1,0 +1,16 @@
+✔ native revisions survive reopening and replay cannot roll back a correction or retraction (42.5178ms)
+✔ competing stores enforce revision comparison and immutable native evidence (32.292ms)
+✔ a legacy database is refused without creating v2 tables (14.8479ms)
+✔ generic model proposals persist separately and never establish truth or expose native acceptance (1.4607ms)
+✔ canon suggestions require exact private owner authorship and acceptance requires separate human review (0.5834ms)
+✔ identity, disclosure acknowledgement and native evidence authority fail closed (0.5648ms)
+✔ corrections cannot promote testimony, broaden its audience or revive retracted claims (0.8357ms)
+✔ evidence changing between validation and append leaves no accepted record (0.4358ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.2497
