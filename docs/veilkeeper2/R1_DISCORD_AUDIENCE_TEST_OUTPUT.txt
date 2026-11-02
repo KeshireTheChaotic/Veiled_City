@@ -1,0 +1,13 @@
+✔ owner-private projection distinguishes privileged observers from the recipient and writer (32.9957ms)
+✔ ordinary member access, including other bots, prevents private-channel qualification (0.3673ms)
+✔ party audience includes actual ordinary readers, separately tracks writers and includes GM participants (0.1666ms)
+✔ incomplete membership, unresolved permissions, missing owner and unqualified channel types fail closed (0.1795ms)
+✔ bot access and configured GM role must be available; role changes alter proof (0.3377ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5801.8552

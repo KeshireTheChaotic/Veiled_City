@@ -1,0 +1,6 @@
+{
+  "exitCode": 0,
+  "finishedUtc": "2026-11-02T18:49:10.8072154Z",
+  "startedUtc": "2026-11-02T18:49:04.9297592Z",
+  "command": "node --test tests/veilkeeper2/r1-discord-audience.test.mjs"
+}

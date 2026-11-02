@@ -1,0 +1,33 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/discord-audience.js",
+      "sha256": "0c37f7083d5a50bc9b07a2fa2ff0b494a012c75c31909c0e8c19f259214629f2"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-discord-audience.test.mjs",
+      "sha256": "47d77606741a6efaa8516a9e9b13b9babb1040dea363205bc0de1a2b3cd47052"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_DISCORD_AUDIENCE_REPORT.md",
+      "sha256": "9b0d187a6c7a813d6c3c258d677ed17658f0ee3c47840441fa03515ebccb96b8"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_DISCORD_AUDIENCE_TEST_OUTPUT.txt",
+      "sha256": "c5f429ee3c5c9b5f7b57e55b95ab05ae39cf239f1a6b63c1c2579f83858c20ec"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_DISCORD_AUDIENCE_TEST_EVIDENCE.json",
+      "sha256": "f46043c8f611b1c4431407dfcff885a1c935c6ebb6729244c9095ecef958a68c"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "574b042ffa6d9d41528da58ec0f39f6c1253e58d3a5ffc5c515a1b840bf730be"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "8c7fb77edf8f58facad36fcf35876e332c06c26e0ebd1784dc09db7b9464ee4f"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}
