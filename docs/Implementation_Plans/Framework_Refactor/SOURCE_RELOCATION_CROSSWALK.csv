@@ -462,3 +462,4 @@ bot/src/frameworks/persistence/publication-diagnostic-repository.js,bot/src/fram
 "bot/src/frameworks/intent/contracts/narrative-delegation-source.js","bot/src/frameworks/intent/contracts/narrative-delegation-source.js","intent","RF05","NEW_SOURCE","2","0"
 "bot/src/frameworks/intent/contracts/narrative-delegation-catalog.js","bot/src/frameworks/intent/contracts/narrative-delegation-catalog.js","intent","RF05","NEW_SOURCE","1","0"
 "bot/src/frameworks/narrative/contracts/intent-delegation-source.js","bot/src/frameworks/narrative/contracts/intent-delegation-source.js","narrative","RF05","NEW_SOURCE","2","0"
+"bot/src/frameworks/discord/canon-proposal-text.js","bot/src/frameworks/discord/canon-proposal-text.js","discord","RF06","NEW_SOURCE","1","0"

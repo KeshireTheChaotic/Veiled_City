@@ -1,4 +1,5 @@
 import {createLevelupDraftFormatter} from './frameworks/discord/public.js';
+import {canonProposalsText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {npcControlLabel,formatNpcProxyPacket} from './frameworks/discord/public.js';
@@ -1946,16 +1947,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         characterId=c.id;
       }
       const rows=db.listCanonProposals(interaction.guildId,{status,characterId,limit:30});
-      const body=rows.map(r=>{
-        const state=r.status.toUpperCase();
-        const current=r.current_value!=null?`\n  current: ${r.current_value}`:"";
-        const reason=r.reason?`\n  why: ${r.reason}`:"";
-        const source=r.source==="player_private_scene"
-          ?`player/private${r.proposed_by_user_id?` by <@${r.proposed_by_user_id}>`:""}`
-          :`import/${r.source||"character-hook"}`;
-        return `• \`${r.id.slice(0,8)}\` **${r.character_name}** • ${state} • ${source}\n  \`${r.canon_key}\` → ${r.proposed_value}${current}${reason}`;
-      }).join("\n");
-      await interaction.reply({content:rows.length?`**Canon Proposals — ${status}**\n${body}`.slice(0,1950):`No ${status} canon proposals found.`,ephemeral:true});
+      await interaction.reply({content:canonProposalsText(rows,status),ephemeral:true});
       return true;
     }
     if(group==="canon"&&sub==="proposal-resolve"){

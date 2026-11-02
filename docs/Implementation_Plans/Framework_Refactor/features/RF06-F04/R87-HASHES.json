@@ -1,0 +1,30 @@
+{
+  "feature": "RF06-F04-R87",
+  "base_commit": "c345e467",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "bb0f2619060ba6356ed71be8b70e1290fe2a09f02cc862f2ad9f6d303641749b"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "e5c45d70148003b09eb47d3940ebed326850e99fc318a80ae6602cecb7f7b03a"
+    },
+    {
+      "path": "bot/src/frameworks/discord/canon-proposal-text.js",
+      "sha256": "5c3d627f3240d3920c2186065f0ae984b9ec49aac8cb92a805e1047c2137c317"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-r87-canon-proposal-text.test.mjs",
+      "sha256": "8a002e1bf506ca14aaafb97dd351901819bb2a4b2647ad030119a6e6487a6762"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-r87-canon-proposal-text.test.mjs",
+    "exit_code": 0,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax_checks_passed": 3
+}
