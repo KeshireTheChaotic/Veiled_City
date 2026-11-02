@@ -1,0 +1,39 @@
+Command: node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/RF05-C146-gate.json (from bot/)
+Final exit code: 1
+
+{
+  "mode": "ratchet",
+  "phase": "RF05",
+  "sourceModules": 1105,
+  "unowned": 0,
+  "importOccurrences": 4478,
+  "internalImportOccurrences": 4275,
+  "cycleComponents": 1,
+  "largestCycle": 51,
+  "rawViolationOccurrences": 588,
+  "acceptedLegacyOccurrences": 586,
+  "activeViolationGroups": 2,
+  "transitionErrors": 0,
+  "pass": false,
+  "firstErrors": [
+    {
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/roll-requests.js",
+      "to": "bot/src/native-group-features.js",
+      "owner": "daggerheart",
+      "line": 35
+    },
+    {
+      "code": "CYCLIC_IMPORT_EDGE",
+      "from": "bot/src/typed-roll-proof.js",
+      "to": "bot/src/roll-requests.js",
+      "owner": "daggerheart",
+      "line": 11
+    }
+  ]
+}
+
+The first run additionally found two invalid consumers recorded in the
+`intent--narrative` bridge row. The registry accepts only Application/bootstrap
+composition consumers. Those source-module entries were removed; the final
+run above retains only the two concurrent roll-work cycles.

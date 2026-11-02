@@ -91,3 +91,5 @@ C139 adds the unchanged authenticated Intent review action through a fixed Opera
 C144 extends Daggerheart–Intent with the original ordinary-binding proof only. Existing Native provider authority and initialization remain; Intent has no direct root proof import. Qualification is recorded in C144-HASHES.json.
 
 C145 adds the original captured-owner roll review operation through fixed Native and Intent ports. The Native-owned legacy provider binds its unchanged function, while Application composition connects the pair before runtime dispatch. Roll preparation and provider relocation remain deferred; qualification is recorded in C145-HASHES.json.
+
+C146 moves the Narrative-owned delegation catalog into Narrative and connects its closed Intent feature/operation readers and its read-only catalog consumer through the existing Intent–Narrative pair. The existing Application initializer binds both directions before dispatch; catalog eligibility, configuration and native authorization remain unchanged. Qualification is recorded in C146-HASHES.json.

@@ -2101,13 +2101,23 @@
           "from": "intent",
           "to": "narrative",
           "contract": "Only original shared Narrative build-context source and recursive visibility query. No copied policy, grant store, intent, consent or native effect."
+        },
+        {
+          "from": "intent",
+          "to": "narrative",
+          "contract": "C146 supplies only the original Intent feature-key and operation-list functions through fixed ports so Narrative can derive its eligibility catalog; no schema copy, dispatch or execution authority."
+        },
+        {
+          "from": "narrative",
+          "to": "intent",
+          "contract": "C146 supplies only the original sorted delegation eligibility catalog through a fixed Intent consumer; the catalog grants no permission, consent or native effect."
         }
       ],
       "source_evidence": [
         {
           "from": "bot/src/ai-intents.js",
-          "to": "bot/src/delegation-catalog.js",
-          "line": 33,
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 36,
           "type": "import"
         },
         {
@@ -2115,10 +2125,34 @@
           "to": "bot/src/framework-to-framework/intent--narrative/public.js",
           "line": 1,
           "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/intent/ai-intent-contracts.js",
+          "to": "bot/src/frameworks/intent/contracts/narrative-delegation-source.js",
+          "line": 2,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/frameworks/narrative/delegation-catalog.js",
+          "to": "bot/src/frameworks/narrative/contracts/intent-delegation-source.js",
+          "line": 1,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--narrative/public.js",
+          "to": "bot/src/frameworks/intent/public.js",
+          "line": 14,
+          "type": "import"
+        },
+        {
+          "from": "bot/src/framework-to-framework/intent--narrative/public.js",
+          "to": "bot/src/frameworks/narrative/public.js",
+          "line": 15,
+          "type": "import"
         }
       ],
-      "validation": "Fresh actual source/pair and moved context qualification; original consumer/context bodies preserved.",
-      "lifecycle": "Pure App initializer before GM, original root authority-context provider independently loaded by GM.",
+      "validation": "Fresh actual source/pair and moved context qualification; original consumer/context bodies preserved. C146 verifies fail-closed/repeated pair composition, exact source-derived catalog results, actual dispatcher filter/page behavior, no database reads, and replacement refusal.",
+      "lifecycle": "Application initializes the fixed pair before GM dispatch. Intent binds its original closed-schema readers at module load; the existing Intent–Narrative initializer connects those readers and Narrative's original catalog before Intent uses it. The original root authority-context provider remains independently loaded by GM.",
       "adoption_feature": "RF05-F04",
       "consumers": [
         "bot/src/application/composition/intent-narrative.js",
@@ -2128,7 +2162,8 @@
         "bot/tests/ai-gm-2026-10/rf05-f04-c63.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c72.test.mjs",
         "bot/tests/ai-gm-2026-10/rf05-f04-c75.test.mjs",
-        "bot/tests/ai-gm-2026-10/rf05-f05-c98.test.mjs"
+        "bot/tests/ai-gm-2026-10/rf05-f05-c98.test.mjs",
+        "bot/tests/ai-gm-2026-10/rf05-f04-c79.test.mjs"
       ],
       "observed_directions": [
         {
@@ -2151,7 +2186,7 @@
         "occurrences": 10
       },
       "public_api": "bot/src/framework-to-framework/intent--narrative/public.js",
-      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects. C75 original Intent characterSourceRanges read by Narrative salience through own fixed consumer and original source proxy, formatting/quote rules and non-authorizing semantics unchanged.",
+      "scope": "C63 only shared buildNarrativeContext source and original narrativeSourceVisible. Existing scene-intent WeakMaps remain in original consumer; remaining pair dependencies stay open. C72 original task/delegation moved Narrative; original Intent engagement source forwarded through fixed reader and Publication scoped task reader uses exact moved function, no task grants effects. C75 original Intent characterSourceRanges read by Narrative salience through own fixed consumer and original source proxy, formatting/quote rules and non-authorizing semantics unchanged. C146 moves the Narrative-owned delegation catalog into Narrative and routes the closed Intent feature/operation readers and catalog consumer through fixed pair ports; the existing catalog result and Intent configuration behavior remain unchanged.",
       "authored_candidate_composition": {
         "feature": "RF05-F05 C98",
         "source": "bot/src/framework-to-framework/intent--narrative/authored-candidates.js",

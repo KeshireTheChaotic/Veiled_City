@@ -1,0 +1,10 @@
+Initial command: `node --test tests/ai-gm-2026-10/rf05-f04-c79.test.mjs` (run from `bot/`)
+Exit code: 1; 0 passed, 1 failed.
+
+The first fixture invoked `delegationOperation` without composing the existing
+Native World primitive source. Its input validator stopped with
+`INTENT_WORLD_NATIVE_COMPOSITION` before the catalog was read. This was a
+missing fixture dependency, not a catalog behavior failure. The fixture now
+connects the existing `intent--world` Native source before initializing the
+Intent–Narrative pair. After that test-only correction, the final batch passed
+1/1; the production behavior is unchanged.

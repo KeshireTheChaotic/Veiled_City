@@ -179,17 +179,6 @@
       "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
     },
     {
-      "id": "34da871782dcb371241258c698bd8ceea4d3790c614d94d4531b5f1f4cba232f",
-      "code": "LEGACY_MODULE_LOCATION",
-      "from": "bot/src/delegation-catalog.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Original runtime path retained until accountable physical migration, separately from behavior decomposition."
-    },
-    {
       "id": "285df2d4717cf61c87af2939d09943e3d696e516a1cf65767b25c47290601812",
       "code": "LEGACY_MODULE_LOCATION",
       "from": "bot/src/discord/chunking.js",
@@ -1346,20 +1335,6 @@
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
     },
     {
-      "id": "22d0a0a461d123b5e9f0c001f9aa1383ef6ceffe91115f045d3b6a3e03868a7c",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/ai-intents.js",
-      "to": "bot/src/delegation-catalog.js",
-      "kind": "static",
-      "specifier": "./delegation-catalog.js",
-      "owner": "intent",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F02",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
       "id": "e32f243b019c4aab3706fbd2d641f91a1b37b8672ae9dd96b3c47d76c66471e2",
       "code": "EXTERNAL_CAPABILITY_OWNER",
       "from": "bot/src/city-commands.js",
@@ -1970,20 +1945,6 @@
       "owner": "application",
       "max_occurrences": 1,
       "remove_in_feature": "RF05-F05",
-      "expires_after": "RF05",
-      "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
-      "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."
-    },
-    {
-      "id": "21c52aeed02fc71d2b85b3c81f1a9be28071b4a55608fa53c745669274683ea2",
-      "code": "DIRECT_CROSS_FRAMEWORK_IMPORT",
-      "from": "bot/src/delegation-catalog.js",
-      "to": "bot/src/ai-intent-contracts.js",
-      "kind": "static",
-      "specifier": "./ai-intent-contracts.js",
-      "owner": "narrative",
-      "max_occurrences": 1,
-      "remove_in_feature": "RF05-F03",
       "expires_after": "RF05",
       "reviewed_base_sha": "0abf4be1d45e87abb2df4416f0e0f546b90cce72",
       "reason": "Exact pre-existing ownership/public/initialization obligation; resolve in accountable migration; no new paths or occurrences permitted."

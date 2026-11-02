@@ -1,0 +1,88 @@
+{
+  "feature": "RF05-F04 C146",
+  "source_commit": "61a6fef2",
+  "source_commit_parent": "75aff9729731b2f4374f47a5f94203e94619f134",
+  "tests": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f04-c79.test.mjs (from bot/)",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_ms": 1226.6827,
+    "test_sha256": "72553a6c43ddb2641d727f971584ec075af568940b788403bc1bd15703efea79",
+    "result_log": "C146-TEST.log",
+    "rejected_fixture_log": "C146-TEST-REJECTED-HARNESS.log"
+  },
+  "changed_js_mjs_syntax": {
+    "passed": 11,
+    "total": 11,
+    "exit_code": 0
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/RF05-C146-gate.json (from bot/)",
+    "pass": false,
+    "exit_code": 1,
+    "source_modules": 1105,
+    "unowned": 0,
+    "imports": 4478,
+    "internal_imports": 4275,
+    "cycle_components": 1,
+    "largest_cycle": 51,
+    "raw_violation_occurrences": 588,
+    "accepted_legacy_occurrences": 586,
+    "active_violation_groups": 2,
+    "transition_errors": 0,
+    "remaining_cycles": [
+      "bot/src/roll-requests.js:35 -> bot/src/native-group-features.js",
+      "bot/src/typed-roll-proof.js:11 -> bot/src/roll-requests.js"
+    ],
+    "log": "C146-ARCHITECTURE.log"
+  },
+  "retired_transition_ids": [
+    "34da871782dcb371241258c698bd8ceea4d3790c614d94d4531b5f1f4cba232f",
+    "22d0a0a461d123b5e9f0c001f9aa1383ef6ceffe91115f045d3b6a3e03868a7c",
+    "21c52aeed02fc71d2b85b3c81f1a9be28071b4a55608fa53c745669274683ea2"
+  ],
+  "moved_source_original_sha256": "e47b8a2b9fa5b713304190c990f0a37d448ee4ebc65f8c063a16dbef053aabac",
+  "source_sha256": {
+    "bot/src/ai-intents.js": "730efd890e988d50b3a1a038d10e9703003203a7ea679ae2939642dbd1b5d285",
+    "bot/src/application/composition/intent-narrative.js": "0be67901bb1c8becdcf1e52300bb53cb2f22264a160727f726a08b7a815a2daa",
+    "bot/src/framework-to-framework/intent--narrative/public.js": "c1e4dc33c07c57321437b8dc386ca50c7f96d6d02de645d1853d5dfcce01927e",
+    "bot/src/frameworks/intent/ai-intent-contracts.js": "a13f43941a4a67a2f051e75070bd76fdca381fa2d851d6dd017312705ea9905f",
+    "bot/src/frameworks/intent/contracts/narrative-delegation-source.js": "bc02ebf4db971ffa63affda84800fbc2ced807c4491340911906c48ff88ad1c8",
+    "bot/src/frameworks/intent/contracts/narrative-delegation-catalog.js": "754672f8d8f0aa361e6483b9b25655bd1c1a350b8fb99ebcc1951f9dc044f837",
+    "bot/src/frameworks/intent/public.js": "d5753b5cfb124e107d747d7a9d0cd98b3b6e4cbc23d1f72f191817a01316cae8",
+    "bot/src/frameworks/narrative/contracts/intent-delegation-source.js": "3f6143c59e45bb14ba310594c08aa13cc6027199c5a4ab026956c384278857be",
+    "bot/src/frameworks/narrative/delegation-catalog.js": "1e83996eb7f7c7ff312a3eee6d0bd3f79b21cfcc22f340de7ba00db0583816df",
+    "bot/src/frameworks/narrative/public.js": "07f32aaddde362ebe8fd088ab0c623fd2d561c85db238cd7538cd78a4f2c064d",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c79.test.mjs": "72553a6c43ddb2641d727f971584ec075af568940b788403bc1bd15703efea79",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C146-SCOPE.md": "f1e3c8bd3668b4cfb23d45c4874adcecf8e3a112c50df90e34a5dd4a07514410"
+  },
+  "behavior": {
+    "catalog_result_preserved": true,
+    "configuration_and_pagination_preserved": true,
+    "database_schema_changed": false,
+    "provider_calls": 0,
+    "live_discord_calls": 0,
+    "production_database": false,
+    "release_qualified": false
+  },
+  "deferred": [
+    "Historical DEPENDENCY_GRAPH.json was not regenerated in the shared checkout.",
+    "Frozen RF05-F03 LOCAL_HOLDS.json was not rebased.",
+    "RF05 remains incomplete; unrelated cycle findings remain open."
+  ],
+  "evidence_sha256": {
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C146-TEST.log": "f64b99ee5837c8a7c7ffe46fa9c1ec57b2b72391d3e8427233b145c1e5a7ae27",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C146-TEST-REJECTED-HARNESS.log": "d4976fdacb9935bb8ae915d165d9ddb02ab14a7c1f9730c98817e7945597161d",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C146-ARCHITECTURE.log": "9538d1bfd2f218205658f20e71ebb7ee755ce9949f239395781a29de1b381043",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C146-LEDGER.md": "6a31a65052a52670c6ff5daf4f5fea5e36e1998ba227482c7ffa1a4bf01c6ef7",
+    "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv": "02f1c0b8426dc8d0d080eaec40a8ee3e606004256fd2f36d469870d0abc35baf",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "17dd22d75da323332e420e47d226a1f58be00957022cbce56e7831ac6af8a4d8",
+    "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json": "804dead24cfaa3e72a3f216aa273cf7a64a3d46d43da588f49f491654c870981",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "8f5f5e6b8a0a766023dafd8119f3865eb60a3b54204989a5975161f375a86db9",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json": "84128f23c110081492e0176cf4a211dfeeb52a2b095b88152142de2e27251e39",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "afc97b81eb8d26a85f0b266482225bb50cc3d1de5246a83b131a0b1fd5b113d0",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF05/LEDGER.md": "a137ed198a60dff7191556c8debaa4f34f6a0b3eca44cbebcb5b1e2c79083723"
+  }
+}

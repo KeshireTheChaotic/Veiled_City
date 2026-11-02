@@ -1,0 +1,9 @@
+Command: `node --test tests/ai-gm-2026-10/rf05-f04-c79.test.mjs` (run from `bot/`)
+Exit code: 0
+Tests: 1 passed, 0 failed, 0 skipped; duration 1226.6827 ms.
+
+The test verifies fail-closed source/consumer ports, repeated Application pair
+composition, original Intent feature keys and operation lists, exact sorted
+catalog/private eligibility, actual dispatcher filtering and pagination,
+absence of database access, replacement refusal, and removal of the direct
+legacy import.
