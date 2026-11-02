@@ -9,6 +9,7 @@ import * as rulingReads from './rules-ruling-repository.js';
 import {getCampaign as readCampaign} from './campaign-configuration-repository.js';
 import * as administrativeReads from './administrative-read-repository.js';
 import * as playerPreferences from './player-preferences-repository.js';
+import * as publicationDiagnostics from './publication-diagnostic-repository.js';
 /** Original SQLite repository implementation; domain capabilities are fixed before construction. */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1357,9 +1358,7 @@ export class VeiledDB {
     return row?{...row,data:JSON.parse(row.data_json)}:null;
   }
   heldNativeNotices(guildId){
-    return this.db.prepare(`SELECT kind,record_key,status FROM city_records WHERE guild_id=?
-      AND kind IN ('roll_publication','roll_party_publication','pvp_status_publication','pvp_projection_publication','pvp_fear_publication','gm_arbitration_publication')
-      AND status!='delivered' AND json_extract(data_json,'$.turn_id') IS NULL ORDER BY rowid LIMIT 100`).all(guildId);
+    return publicationDiagnostics.heldNativeNotices(this.db,guildId);
   }
   latestPcHpEffect(guildId,characterId){
     const row=this.db.prepare(`SELECT * FROM city_records WHERE guild_id=? AND kind='pc_effect_receipt'
@@ -1373,9 +1372,7 @@ export class VeiledDB {
       .map(row=>({...row,data:JSON.parse(row.data_json)}));
   }
   listPendingPublications(guildId,{limit=50}={}){
-    return this.db.prepare(`SELECT id,guild_id,turn_id,surface,ordinal,visibility,target_user_id,target_character_id,channel_id,
-      payload_hash,status,discord_message_id,attempt_count,last_failure,created_at,updated_at FROM publication_outbox
-      WHERE guild_id=? AND status!='delivered' ORDER BY created_at,ordinal LIMIT ?`).all(guildId,Math.max(1,Math.min(100,Number(limit)||50)));
+    return publicationDiagnostics.listPendingPublications(this.db,guildId,{limit});
   }
   /** Bounded GM archival proof inventory; raw rows never leave the administrative service. */
   hasHistoricalArchives(guildId){
