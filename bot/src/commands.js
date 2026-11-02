@@ -2,6 +2,7 @@ import {createLevelupDraftFormatter} from './frameworks/discord/public.js';
 import {canonProposalsText,npcProxyAssignmentsText} from './frameworks/discord/public.js';
 import {handoutListText} from './frameworks/discord/public.js';
 import {relationshipListText} from './frameworks/discord/public.js';
+import {encounterCombatStateText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {formatNpcProxyPacket} from './frameworks/discord/public.js';
@@ -1501,7 +1502,8 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
         const roster=db.roster(session.id); const counts=e.combat_state?.spotlight?.counts||{};
         const spotlight=roster.filter(r=>r.character_id&&["present","guest","late"].includes(r.presence)).map(r=>`${r.name}: ${counts[r.character_id]||0}`).join(" • ")||"none";
         const body=rows.length?rows.map(combatantLine).join("\n"):"No adversary combatants initialized.";
-        await interaction.reply({content:`**Encounter #${e.encounter_number} Combat State**\nFear: **${db.getCampaign(interaction.guildId)?.fear||0}/12**\nSpotlight actions: ${spotlight}\n\n${body}`.slice(0,1950),ephemeral:true});
+        const fear=db.getCampaign(interaction.guildId)?.fear||0;
+        await interaction.reply({content:encounterCombatStateText({encounterNumber:e.encounter_number,fear,spotlight,body}),ephemeral:true});
         return true;
       }
       if(["damage","heal","stress","condition","combatant-status"].includes(sub)){

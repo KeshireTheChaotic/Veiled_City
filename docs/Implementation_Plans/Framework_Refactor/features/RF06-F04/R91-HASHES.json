@@ -1,0 +1,30 @@
+{
+  "feature": "RF06-F04-R91",
+  "base_commit": "d0efe31d",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "b1dc0342ab9c766dd91265447075851551f1f878a02164c3888b65593253233e"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "6bac227015758473ac795d68b046f69ea22d26f1f857d925fad27553ce3afaf3"
+    },
+    {
+      "path": "bot/src/frameworks/discord/encounter-combat-state-text.js",
+      "sha256": "65d6030eac03e4df1f9da4e48549b2b51fdb86003acd2ca67c645393d7ddaa44"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-r91-encounter-combat-state-text.test.mjs",
+      "sha256": "c2dd70cf76cc8074b199bdc75617e3f3ccb50e5345e757e7cf5538cc856c7cad"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-r91-encounter-combat-state-text.test.mjs",
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax_checks_passed": 4
+}

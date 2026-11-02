@@ -1,0 +1,3 @@
+Initial run: exit 1; 2/3 passed. The GM test omitted the existing `requireSession` call to `getCampaign` before encounter lookup. Source review confirmed the command then reads combatants, roster, and campaign Fear. The expected order was corrected without changing production code.
+
+Final run from `bot/`: `node --test tests/ai-gm-2026-10/rf06-f04-r91-encounter-combat-state-text.test.mjs` — exit 0; 3/3 passed; 0 failed, skipped, cancelled or todo.
