@@ -1,0 +1,45 @@
+{
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "files": [
+    {
+      "sha256": "6d6d947ba2887369962b3145fa48396430ea37e132e160a6b680e04f1042041c",
+      "path": "bot/src/v2/private-hook-store.js"
+    },
+    {
+      "sha256": "0865eb78aa7db3a9539b645d54b8f47992fc168122ddd58b2a6bd1e4292c00c5",
+      "path": "bot/src/v2/character-package-service.js"
+    },
+    {
+      "sha256": "ad1a681b8e63bf73b3dcd1ede57362929bb64c781de2a084d3a44f1a51cc3a57",
+      "path": "bot/tests/veilkeeper2/r2-private-hooks.test.mjs"
+    },
+    {
+      "sha256": "379897479dcf56590cbff8e7272a1bd3f74151ea0ededaa1d13368f73988f0e4",
+      "path": "bot/tests/veilkeeper2/r2-character-packages.test.mjs"
+    },
+    {
+      "sha256": "a75ab1031d0f1f4e1289ba6433a1fe8d77672759ca758600fef7c6213e292268",
+      "path": "docs/veilkeeper2/LEDGER.md"
+    },
+    {
+      "sha256": "5a99d0601a5e946ec992798ec8b542c0b5cd66dc008bb85371dd9441dfe0d3ba",
+      "path": "docs/veilkeeper2/R2_HOOKS_REPORT.md"
+    },
+    {
+      "sha256": "cd5b404a2c475a716ad2732b7eb52d67833e9b6514dc0cf81e055c394fd1b3d7",
+      "path": "docs/veilkeeper2/R2_HOOKS_TEST_OUTPUT.txt"
+    },
+    {
+      "sha256": "648527e757753a7c1547a6f9ce7a63dd110b0166be76ad3ebe7781ef1c14a8be",
+      "path": "docs/veilkeeper2/R2_HOOKS_TEST_EVIDENCE.json"
+    },
+    {
+      "sha256": "1c3e211d3489784aa377510757d48ee5e90203a346bdb911ef0aefe6950fe9c0",
+      "path": "docs/veilkeeper2/R2_HOOKS_INITIAL_OUTPUT.txt"
+    },
+    {
+      "sha256": "9697ca84b27a0b8b64805fc2ab4d620a9acfdbbee0919899d27995133915f71a",
+      "path": "docs/veilkeeper2/R2_HOOKS_INITIAL_EVIDENCE.json"
+    }
+  ]
+}

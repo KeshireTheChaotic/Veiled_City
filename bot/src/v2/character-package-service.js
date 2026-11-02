@@ -9,7 +9,7 @@ const scopes=['player','hooks','private','canon'];
 /** Native command boundary, never an AI capability. The repository supplies scoped
  * legacy-compatible readers; its revision must cover every export input.
  */
-export function createCharacterPackageService({authenticate,readCharacter,readRevision,repository}){
+export function createCharacterPackageService({authenticate,readCharacter,readRevision,repository,hookStore=null}){
   if([authenticate,readCharacter,readRevision].some(fn=>typeof fn!=='function')||!repository)throw new TypeError('Native character package dependencies required');
   function authorize(event,characterId,scope,operation){
     const proof=authenticate(event);
@@ -53,5 +53,11 @@ export function createCharacterPackageService({authenticate,readCharacter,readRe
       executionAuthority:false,publicationAuthority:false,canonAuthority:false};
     result.id=`character-import:${hash(result)}`;access.check();return result;
   }
-  return Object.freeze({exportPackage,prepareImport});
+  function importHooks(event,{characterId,payload}){
+    if(typeof hookStore?.commitImport!=='function')throw new Error('Private hook storage not installed');
+    const access=authorize(event,characterId,'hooks','import');
+    const prepared=prepareImport(event,{characterId,scope:'hooks',payload});
+    return hookStore.commitImport(prepared,{check:access.check});
+  }
+  return Object.freeze({exportPackage,prepareImport,importHooks});
 }

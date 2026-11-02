@@ -19,4 +19,6 @@ Weighted recall policy and rehearsal composition are implemented with 20/20 focu
 
 Character JSON serializers, native export authorization and separate import preparation now have 7/7 fresh checks; see [package report](R2_PACKAGES_REPORT.md). Full transactional import, other file formats and real reader adapters remain open; JSON preparation grants no effects.
 
-**Next exact work:** R2 native recall/import repository adapters and durable private-hook ingestion with separate canon review; then remaining provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.
+Durable private-hook ingestion now preserves revisions, pending canon suggestions and atomic replay receipts; [hook report](R2_HOOKS_REPORT.md) records 13/13 current focused checks including the corrected JSON replay mismatch. R2_HOOKS_HASHES.json is the latest package-service/store manifest. Relationship application and canon approval remain pending.
+
+**Next exact work:** native imported-hook relationship/canon-review adapters and private planning grants; then remaining recall/provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.

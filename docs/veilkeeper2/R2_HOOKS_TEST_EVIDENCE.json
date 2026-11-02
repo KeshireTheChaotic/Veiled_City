@@ -1,0 +1,6 @@
+{
+  "startedUtc": "2026-11-02T13:57:32.1216100Z",
+  "command": "node --test tests/veilkeeper2/r2-private-hooks.test.mjs",
+  "finishedUtc": "2026-11-02T13:57:32.2964560Z",
+  "exitCode": 0
+}

@@ -1,0 +1,14 @@
+✔ private hooks and pending canon survive reopening and identical command replay adds nothing (33.704ms)
+✔ altered command replay conflicts while a new authorized import keeps immutable prior versions (1.3936ms)
+✔ bad final canon suggestion rolls back hooks, proposals and receipt together (0.6614ms)
+✔ role revocation at final transaction check rolls back every private write (0.5574ms)
+✔ players cannot import private hooks and canon suggestions are excluded from default seed reads (1.7239ms)
+✔ colliding normalized keys abort rather than silently overwrite distinct imported hooks (0.5078ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 97.1338

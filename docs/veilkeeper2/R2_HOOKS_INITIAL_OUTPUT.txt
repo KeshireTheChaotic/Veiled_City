@@ -1,0 +1,56 @@
+✔ player package preserves sheet and entitled semantic fields without reading GM repositories (2.4202ms)
+✔ GM hook/private/canon packages retain their distinct versioned fields and review state (1.2182ms)
+✔ cross-owner/campaign and player requests for GM artifacts fail before private reads (0.3326ms)
+✔ owner or repository revision changes during assembly prevent release (0.306ms)
+✔ all legacy GM-hook import schema versions normalize as private proposals without truth authority (0.4948ms)
+✔ exported JSON artifacts round-trip through separate preparers and cannot cross into player imports (0.6802ms)
+✔ metadata cannot authorize private imports; player import strips nested GM infrastructure (0.2804ms)
+✖ private hooks and pending canon survive reopening and identical command replay adds nothing (32.7093ms)
+✔ altered command replay conflicts while a new authorized import keeps immutable prior versions (1.357ms)
+✔ bad final canon suggestion rolls back hooks, proposals and receipt together (0.5662ms)
+✔ role revocation at final transaction check rolls back every private write (0.5654ms)
+✔ players cannot import private hooks and canon suggestions are excluded from default seed reads (1.7194ms)
+✔ colliding normalized keys abort rather than silently overwrite distinct imported hooks (0.54ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.4223
+
+✖ failing tests:
+
+test at tests\veilkeeper2\r2-private-hooks.test.mjs:17:1
+✖ private hooks and pending canon survive reopening and identical command replay adds nothing (32.7093ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    {
+      campaignId: 'c',
+      canonAuthority: false,
+      canonSuggestions: 1,
+      characterId: 'pc',
+  ...
+          ],
+  -       character_name: undefined,
+          hooks: [
+            {
+              key: 'contact',
+              premise: 'A former friend watches the docks.',
+              targets: [
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-private-hooks.test.mjs:20:55)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { id: 'character-import:65dd77b505d59621039b6fceec1a9aaa880b1dc3cbc1b86c8a6b51b7cc9d1d72', campaignId: 'c', characterId: 'pc', sourceRef: 'command-1', fingerprint: 'd9d2791ca50f38daad2673ef9348bbee2861807af23aa61971a5ceb1ea5bcea9', status: 'imported_private', hooks: 1, canonSuggestions: 1, relationshipsApplied: 0, executionAuthority: false, publicationAuthority: false, canonAuthority: false, prepared: { version: 1, campaignId: 'c', characterId: 'pc', sourceRef: 'command-1', sourceRevision: '1', importedBy: 'gm', scope: 'hooks', visibility: 'gm', status: 'awaiting_native_validation', content: [Object], executionAuthority: false, publicationAuthority: false, canonAuthority: false, id: 'character-import:65dd77b505d59621039b6fceec1a9aaa880b1dc3cbc1b86c8a6b51b7cc9d1d72' } },
+    expected: { id: 'character-import:65dd77b505d59621039b6fceec1a9aaa880b1dc3cbc1b86c8a6b51b7cc9d1d72', campaignId: 'c', characterId: 'pc', sourceRef: 'command-1', fingerprint: 'd9d2791ca50f38daad2673ef9348bbee2861807af23aa61971a5ceb1ea5bcea9', status: 'imported_private', hooks: 1, canonSuggestions: 1, relationshipsApplied: 0, executionAuthority: false, publicationAuthority: false, canonAuthority: false, prepared: { version: 1, campaignId: 'c', characterId: 'pc', sourceRef: 'command-1', sourceRevision: '1', importedBy: 'gm', scope: 'hooks', visibility: 'gm', status: 'awaiting_native_validation', content: [Object], executionAuthority: false, publicationAuthority: false, canonAuthority: false, id: 'character-import:65dd77b505d59621039b6fceec1a9aaa880b1dc3cbc1b86c8a6b51b7cc9d1d72' } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
