@@ -1,7 +1,0 @@
-# AF04 ordinary NPC reaction extension
-
-Complete for the reaction primitive: the existing `rollNativeNpcReaction` accepts either its existing bound combatant/statblock source, or an exact native NPC profile at modifier 0. The ordinary route requires matching profile key/hash plus existing native presence/control proofs, rejects a player owner and cannot invoke an Experience from profile prose. Version 1 statblock receipts retain their shape and source-backed Experience behavior. Version 2 profile receipts pin the profile identity/hash and validate d20 arithmetic; source authority remains the native host's responsibility.
-
-Modified files: `bot/src/frameworks/daggerheart/mixed-reaction-rules.js`, fresh `bot/tests/ai-gm-2026-10/af04-profile-npc-reaction.test.mjs`, this report and PROFILE-NPC-REACTION-EVIDENCE.json. Two syntax checks passed; **4 tests passed, 0 failed/skipped, exit 0**. These are pure native dice/source-shape tests with injected dice, no database/provider/Discord access. Existing statblock version 1 behavior was included in the fresh tests.
-
-Known/deferred: the area host still requires bound statblocks, and ordinary NPC condition state/consumers remain unconnected. This primitive does not itself qualify actor control or establish a profile/presence. No feature is activated. Next exact work: AF04 production mixed settlement and ordinary NPC host/state integration. The original mixed-preparation source set remains separately frozen for the coordinated commit.

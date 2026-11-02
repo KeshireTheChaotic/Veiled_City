@@ -1,7 +1,0 @@
-# RF04 acceptance — Complete for scoped boundaries
-
-See EXIT.md for requirement-by-requirement F01–F07 acceptance, C243-EXIT-EVIDENCE.json for current source/owner/test identities, and C237–C242 feature SCOPE records for actual terminal outcomes and limits. Twenty current public-service cases pass; no unchanged passing batch was rerun. Every one of933 source hashes matches the passing RF04/RF05 intake gate. The246 modules owned by World/NPC/Knowledge/Session have zero legacy locations, originating violations or cycle membership; no RF04 deadline remains. Production schema is byte-identical to RF04 entry.
-
-Earlier acceptance matrices and the C236/C237–C238 intake maps were incomplete checkpoints, not current completion claims. The stale312-file local historical test collection was not used as a passing union. Current acceptance uses freshly authored cases tied to actual moved services; RF07's permitted final qualification remains required.
-
-Deferred to RF05/RF06:897 transition records/906 accepted legacy occurrences and one76-module cycle outside RF04 owners. Deferred to RF07:final strict gate, permitted qualification union and technical handoff. Local tests are absent from clean checkout under the established phase boundary. No all-path native mechanics/historical-save/concurrency, live provider/Discord, deployment or release proof is claimed. Costs UNMEASURED. Next exact phase:RF05 source/transition intake, preserving existing partial provider/workflow implementations.

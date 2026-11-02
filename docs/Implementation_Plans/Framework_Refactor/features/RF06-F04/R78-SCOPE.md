@@ -1,7 +1,0 @@
-# RF06-F04 R78 — Caseboard read and display boundary
-
-Base: `b5507a6d9cfa65c98e1f782ef402dea06faf516f` (R77). Extract only the existing `/vc intel caseboard` display branch into Discord and compose its original `listVisibleActiveThreads(guildId,userId)` reader through the existing adopted Discord–Persistence pair. The current SQL remains in Persistence and continues to select active threads for the current guild with public, party or matching player visibility. Keep the existing private text delivery defaults, mention suppression, long-text splitting, native acknowledgement and command catch/finally behavior.
-
-Agent A granted exclusive ownership of these six source paths: `bot/src/commands.js`, `bot/src/frameworks/discord/public.js`, new `bot/src/frameworks/discord/caseboard-command.js`, `bot/src/frameworks/persistence/public.js`, new `bot/src/frameworks/persistence/caseboard-reads.js`, and `bot/src/framework-to-framework/discord--persistence/public.js`. No SQL/repository, schema, transaction, thread write/lifecycle, visibility policy, command-definition, bootstrap or transition changes. Shared bridge metadata and index use are separately coordinated with Agent A.
-
-Fresh test: `bot/tests/ai-gm-2026-10/rf06-f04-c78.test.mjs`, using disposable in-memory SQLite and fake Discord interactions. Qualify the actual command route, current owner/guild/status filtering, private acknowledgement/delivery, long follow-ups, empty fallback and delivery rejection handling. No inherited tests or live service use.

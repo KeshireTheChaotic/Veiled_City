@@ -2,13 +2,11 @@
 
 ## High-priority project direction
 
-Before making any major change to Veilkeeper behavior, architecture, mechanics, persistence, or multiplayer, read [Audience-First Specification](docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md). Treat it as high-priority project context across agents and future work. For AI-GM implementation, also read the detailed [owner behavior specification](docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md) as directed by the active phase instructions.
-
 These four specifications are the core values of the project and override any other documentation when there are conflicts.
-Before any major change, read the high-priority [Audience-First Specification](AUDIENCE_FIRST_SPEC.md). 
-Before any major change, read the [Creative-First Specification](CREATIVE_FIRST_SPEC.md).
-Before any major change, read the [Agency-Preserving Specification](AGENCY_PRESERVING_SPEC.md).
-Before any major change, read the [Weighted-Lore Specification](WEIGHTED_LORE_FRAMEWORK.md).
+[Audience-First Specification](AUDIENCE_FIRST_SPEC.md). 
+[Creative-First Specification](CREATIVE_FIRST_SPEC.md).
+[Agency-Preserving Specification](AGENCY_PRESERVING_SPEC.md).
+[Weighted-Lore Specification](WEIGHTED_LORE_FRAMEWORK.md).
 
 
 

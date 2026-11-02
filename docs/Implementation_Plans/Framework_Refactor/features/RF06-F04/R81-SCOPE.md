@@ -1,5 +1,0 @@
-# RF06-F04 R81 — Ordinary recap uses Publication public source
-
-Base1bf24d30f7c1ea366eb51eed8c8c81c403366b76. Agent A approved exclusive commands.js ownership only for removing its named scopedSessionRecap legacy import and using existing publicationSessionRecapSource.scopedSessionRecap at the ordinary intel recap call. Other root capabilities still load pvp-output.js and its original fixed source binding. No certification, storage, audience, command dispatch, other branch, public API, bootstrap or registry change.
-
-Fresh c81 actual-command cases will cover empty/raw-session fallback, private long certified response with mention suppression, tampered/nonparty/non-delivered archive rejection, and original source-error handling. Positive archive inputs are newly constructed synthetic read fixtures for the unchanged certifier; they do not qualify native receipt capture, durable archive creation or Discord transport. Static AST comparison must show all command bodies unchanged after substituting the public port call back to the original identifier.

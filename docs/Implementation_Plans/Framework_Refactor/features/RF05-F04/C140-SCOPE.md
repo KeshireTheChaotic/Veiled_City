@@ -1,5 +1,0 @@
-# RF05-F04 C140 — Relocate Operations review and expose its existing API
-
-After C139 removed the last cross-owner implementation import, move ai-review.js into frameworks/operations/ai-review.js. Rewrite only imports to direct Operations contract modules and neutral kernel; keep the complete REVIEW_KINDS/helper/function body unchanged. Operations public exports reviewInbox/reviewWorkflow; the sole production caller, story-commands.js, imports that public surface. No executable entrypoint, persistence reader or external compatibility contract uses the old module path; remove it rather than add a new shim.
-
-Update affected fresh C133/C134/C137/C139 tests to final public/read-source paths and add fresh public identity/body equality plus actual GM story command/private reply qualification. Run affected tests, changed syntax, RF05 ratchet; archive and retire only old source-location and Application private-import transitions. Update relocation crosswalk. Preserve all other dirty changes. No rule, SQL/schema, audience, callback or transaction change.

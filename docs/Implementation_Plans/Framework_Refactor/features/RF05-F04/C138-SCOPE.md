@@ -1,5 +1,0 @@
-# RF05-F04 C138 — Intent-owned review action
-
-Move the original reviewAiIntent function unchanged into Intent review-action.js. Preserve its declaration/public/root function identity, authenticated decisions, row revision/status validation, history cap, ordinary-effect substitution refusal, policy freshness, transaction boundary, native callback order and audit writes. Bind the original root preflight/applyNative declarations to a private fixed Intent consumer at root initialization; no alternative policy or executor implementation is introduced.
-
-Fresh focused SQLite tests cover review decisions, revisions, history, real original preflight with a synthetic domain adapter, approval/policy rejection, private causal marking and rollback on audit/application failure. This verifies review orchestration, not game-effect correctness or production receipts. Record exact original-function hash, changed syntax, affected tests and RF05 architecture gate. No external services, production DB, schema or gameplay changes. Operations' remaining root review import is deferred to C139 after this extraction is qualified.

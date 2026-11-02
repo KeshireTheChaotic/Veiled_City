@@ -1,5 +1,0 @@
-# RF05-F04 C135 — Operations reads Intent delegation policy through the existing port pattern
-
-Replace only Operations review's delegationPolicy root import with an Operations-owned fixed function port, connected to the existing Intent public reader by the proposed Intent–Operations pair. Bind in the existing runtime initializer. Preserve the original reader, arguments, return identity, missing-policy defaults, exceptions and synchronous call order. Keep intentContext and reviewAiIntent imports pending their own decomposition.
-
-The executable RF01 bridge record assigns exact design to the owning RF05 migration. C134's assertion that separate RF01 approval was required was too broad; this authorized slice resolves that local hold. Reuse createFunctionPort; expose no configuration, review, execution or raw database capability. Fresh focused tests cover fail-closed composition, original saved policy identity, default policy, exact database receiver/arguments, error propagation, repeat binding and replacement refusal. Run changed-file syntax and the RF05 architecture ratchet. No live service or production database use.

@@ -1,5 +1,0 @@
-# RF04 handoff — Complete
-
-Active checkout D:\Library\Development\Veiled_City, branch codex/clean-ai-gm-2026-10. RF04 scoped exit is verified by EXIT.md and C243-EXIT-EVIDENCE.json at source base7e5a3c84. All933 source hashes match passing RF04/RF05 intake graph; no remaining legacy location, originating violation or cycle member belongs to World/NPC/Knowledge/Session. No RF04 deadline survives. Current public-service qualification C237–C242:20 cases individually pass; exact fixture corrections and limits are in feature SCOPE files. Schema unchanged from RF04 entry.
-
-The full refactor remains active. Next RF05: reconcile its existing partial work against current source and 897 remaining RF05/RF06 transition records; proceed through owned Intent/Narrative boundaries and GM/state/turn decomposition, then RF06/RF07. Preserve unrelated dirty work and local test files. No unchanged passing reruns, inherited fixtures, provider calls, production DB/services, remote Git, CI, deployment or restart. Tests remain local; no release or full live-runtime claim. Detailed checkpoint evidence stays in feature records rather than this handoff.

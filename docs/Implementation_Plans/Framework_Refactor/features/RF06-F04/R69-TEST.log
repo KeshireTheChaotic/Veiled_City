@@ -1,3 +1,0 @@
-Initial focused attempt: node --test tests/ai-gm-2026-10/rf06-f04-r69.test.mjs — exit 1, 2 passed / 1 failed. The fixture used `details`, but the original visible summary reads `drafts` or record/package identifiers; this was a fixture error, not a source failure.
-Final focused run: node --test tests/ai-gm-2026-10/rf06-f04-r69.test.mjs — exit 0, 3 passed / 0 failed, duration 742.2149 ms.
-Changed-source syntax: node --check src/seed-commands.js; node --check src/frameworks/discord/seed-command-output.js; node --check src/frameworks/discord/public.js; node --check tests/ai-gm-2026-10/rf06-f04-r69.test.mjs — all exit 0.

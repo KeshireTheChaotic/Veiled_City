@@ -1,8 +1,0 @@
-Final run complete.
-Command: node --test tests/ai-gm-2026-10/rf06-f04-r77.test.mjs
-Working directory: bot/
-Exit code: 0
-Tests: 1 passed, 0 failed, 0 skipped, 0 cancelled
-Duration: 1598.2104 ms
-Test SHA-256: 589348e00a9fb97594daee5105faf514a211add0e236d3ffce17a37c58a6d116
-Three earlier attempts failed on a test helper argument-order mistake (interaction ID used as Discord user ID); corrected fixture asserts the exact read arguments. The final run passed.
