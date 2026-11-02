@@ -470,3 +470,4 @@ bot/src/frameworks/persistence/publication-diagnostic-repository.js,bot/src/fram
 "bot/src/frameworks/discord/relationship-list-text.js","bot/src/frameworks/discord/relationship-list-text.js","discord","RF06","NEW_SOURCE","1","0"
 "bot/src/frameworks/discord/encounter-combat-state-text.js","bot/src/frameworks/discord/encounter-combat-state-text.js","discord","RF06","NEW_SOURCE","1","0"
 "bot/src/frameworks/discord/content-seed-summary-text.js","bot/src/frameworks/discord/content-seed-summary-text.js","discord","RF06","NEW_SOURCE","1","0"
+"bot/src/frameworks/discord/backup-restore-confirmation.js","bot/src/frameworks/discord/backup-restore-confirmation.js","discord","RF06","NEW_SOURCE","1","0"

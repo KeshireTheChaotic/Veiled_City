@@ -97,6 +97,7 @@ export {handoutListText} from './handout-list-text.js';
 export {relationshipListText} from './relationship-list-text.js';
 export {encounterCombatStateText} from './encounter-combat-state-text.js';
 export {contentSeedSummaryText} from './content-seed-summary-text.js';
+export {backupRestoreConfirmationText} from './backup-restore-confirmation.js';
 
 export {createLevelupDraftFormatter} from './levelup-draft-text.js';
 

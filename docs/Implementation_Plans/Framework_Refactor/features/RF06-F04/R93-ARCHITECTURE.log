@@ -1,0 +1,8 @@
+RF06-F04 R93 static boundary note
+
+New source: bot/src/frameworks/discord/backup-restore-confirmation.js
+Public Discord export: backupRestoreConfirmationText
+Application caller: GM-only admin restore command in bot/src/commands.js
+The formatter returns the existing private confirmation text only. It receives the already-selected backup row and has no persistence, permission, synchronization, logging, Discord transport, or authority capability.
+
+Architecture ratchet not run in this turn. No full-phase or runtime qualification is claimed.

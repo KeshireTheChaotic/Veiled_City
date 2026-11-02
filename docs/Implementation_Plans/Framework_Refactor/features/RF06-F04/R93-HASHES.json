@@ -1,0 +1,21 @@
+{
+  "feature": "RF06-F04-R93",
+  "base_commit": "95d4f6f9",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "95a74dd9828836087b2558f896fd75f42620df9d315feefe77b8dcdeead7b601"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "2a1daabfb4b7ea5408bc84c41fe42e20ed25319c71757e69789a8f9e0a939280"
+    },
+    {
+      "path": "bot/src/frameworks/discord/backup-restore-confirmation.js",
+      "sha256": "676788821e1088d7ca342b530d331fa5374f667fded4cdea7a5efe86a3d44e17"
+    }
+  ],
+  "tests_run": false,
+  "syntax_checks_run": false,
+  "architecture_ratchet_run": false
+}

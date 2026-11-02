@@ -4,6 +4,7 @@ import {handoutListText} from './frameworks/discord/public.js';
 import {relationshipListText} from './frameworks/discord/public.js';
 import {encounterCombatStateText} from './frameworks/discord/public.js';
 import {contentSeedSummaryText} from './frameworks/discord/public.js';
+import {backupRestoreConfirmationText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {formatNpcProxyPacket} from './frameworks/discord/public.js';
@@ -2001,7 +2002,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         db.restoreBackup(interaction.guildId,row.id,{actorId:interaction.user.id});
         await syncConfiguredSurfaces({db,guild:interaction.guild});
         await postGmLog({db,guild:interaction.guild,title:"Campaign backup restored",details:`Restored backup ${row.id.slice(0,8)} — ${row.label}. A safety snapshot was created first.`});
-        await interaction.editReply(`Restored backup \`${row.id.slice(0,8)}\` **${row.label}**. A pre-restore safety snapshot was created automatically.`); return true;
+        await interaction.editReply(backupRestoreConfirmationText(row)); return true;
       }
       if(sub==="seed-data"){
         await interaction.deferReply({ephemeral:true});
