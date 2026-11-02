@@ -24,7 +24,7 @@ old_path,new_path,owner,move_phase,action,reverse_dependents,import_obligations
 "bot/src/authority-projection.js","bot/src/frameworks/knowledge/authority-projection.js","knowledge","RF04","LEAF_ISOLATED_OLD_READER_RF04_F05","2","0"
 "bot/src/autonomous-world.js","bot/src/frameworks/world/identity-rules.js;owning PC action/source adapters pending","world","RF04","ORDINARY_WORLD_IDENTITY_EXTRACTED_PLAYER_SOURCE_MOVEMENT_NATIVE_ADJUDICATION_COMPOSITION_REMAINS","14","14"
 "bot/src/character-export.js","bot/src/frameworks/character/character-export.js","character","RF02","PILOT_MOVE_CANDIDATE","4","0"
-"bot/src/character-narrative.js","bot/src/frameworks/character/character-narrative.js","character","RF02","PILOT_MOVE_CANDIDATE","2","0"
+"bot/src/character-narrative.js","bot/src/frameworks/character/character-narrative.js","character","RF05","MOVED_COMPLETE","2","0"
 "bot/src/character-observation.js","bot/src/frameworks/character/character-observation.js","character","RF02","EXTRACT_PORTS_BEFORE_MOVE","5","5"
 "bot/src/character-system.js","bot/src/frameworks/character/character-system.js","character","RF06","NATIVE_EXTRACTED_QUALIFIED_SOURCE_ADOPTION_DEFERRED:RF06-F07","4","0"
 "bot/src/city-calendar.js","bot/src/frameworks/world/city-calendar.js","world","RF04","IMPLEMENTATION_MOVED_RF04_F01_C02_ORIGINAL_READER_REMOVE_RF04_F05","121","0"

@@ -1,0 +1,10 @@
+Command: `node --test tests/ai-gm-2026-10/rf05-f04-c148-character-narrative.test.mjs`
+Working directory: `bot`
+Date: 2026-11-01
+Exit code: 0
+Outcome: 3 passed, 0 failed, 0 skipped (67.7168 ms)
+
+Passing cases:
+- Character public exports and root compatibility exports are identical function objects.
+- Player and GM-private archive paths, order, stored content, and ZIP signature are preserved.
+- Reader scaffolds, empty-read behavior, context filtering, injected database arguments, and truncation are preserved.
