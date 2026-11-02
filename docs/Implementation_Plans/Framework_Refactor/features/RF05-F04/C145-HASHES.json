@@ -1,0 +1,79 @@
+{
+  "feature": "RF05-F04 C145",
+  "starting_head": "305641096caf2dc38cf05e80262fae22e4fe751d",
+  "resulting_head": "10df9b6e2dd9b2ed6fe7323a16ffd7059069c214",
+  "tests": {
+    "command": "node --test tests/ai-gm-2026-10/rf05-f04-c78.test.mjs",
+    "pass": 3,
+    "fail": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_ms": 1255.2684,
+    "changed_source_syntax": "11/11 passed",
+    "rejected_harness": "Broad runtime initializer test stopped at missing NPC strategy source; final feature test used only C145 and World source initializers."
+  },
+  "architecture": {
+    "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05 --json .reports/RF05-C145-gate.json",
+    "pass": false,
+    "exit_code": 1,
+    "modules": 1099,
+    "unowned": 0,
+    "imports": 4466,
+    "accepted_legacy": 589,
+    "active_violations": 2,
+    "transition_errors": 0,
+    "unrelated_cycles": [
+      "bot/src/roll-requests.js -> bot/src/native-group-features.js",
+      "bot/src/typed-roll-proof.js -> bot/src/roll-requests.js"
+    ]
+  },
+  "provider_semantics": "Original captured-owner review function unchanged; binding only",
+  "schema_changed": false,
+  "provider_calls": 0,
+  "live_discord_calls": 0,
+  "production_database": false,
+  "unrelated_dirty_owner": "Agent C",
+  "unrelated_dirty_files": [
+    "bot/src/frameworks/daggerheart/feature-roll-source-rules.js",
+    "bot/src/frameworks/daggerheart/roll-collaboration-rules.js",
+    "bot/src/frameworks/daggerheart/roll-request-rules.js",
+    "bot/src/frameworks/daggerheart/typed-roll-proof.js",
+    "bot/src/roll-collaboration.js",
+    "bot/src/roll-requests.js",
+    "bot/src/typed-roll-proof.js"
+  ],
+  "unrelated_dirty_sha256": {
+    "bot/src/frameworks/daggerheart/feature-roll-source-rules.js": "de1fd5ae21cdc87cacf4af8ab2c9e314478c81296ee971b2a55a8c809abd7162",
+    "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": "2322c1a85bed8f9409f1aa08d2732e095f092d50c6fbee04f742586f0d5f5d66",
+    "bot/src/frameworks/daggerheart/roll-request-rules.js": "b21579b5db54c598a71b9d8fe81d30a68d115c06e960e0ad2daca58ba1a4c9d6",
+    "bot/src/frameworks/daggerheart/typed-roll-proof.js": "24cbd9b0b50f0f0adeba9d916cd9eb8f248c68982d8eb598823cfa11a634f13c",
+    "bot/src/roll-collaboration.js": "e4eb3f7686676ea634f7e7ca6c6eb7e23ad9d450b13954c7e85c63c30cd8a570",
+    "bot/src/roll-requests.js": "0bbf28908f1b480e914776a71f8c21e89a0c539f0ec5c8f3b75713c186c57d0b",
+    "bot/src/typed-roll-proof.js": "4f7def2c8b0486583bd06da32acbdc16279d388cc91c8ca4344c9da0933317af"
+  },
+  "sha256": {
+    "bot/src/ai-intents.js": "48dc01c10f2f22644619c9c8ce2c74482a25e6fdc32a6fd2bbfb6c9096da2dec",
+    "bot/src/roll-declaration-review.js": "48060badda807903cd0621d9513a47f6294ae45f9870b02e1b6851970a4e91d7",
+    "bot/src/application/composition/intent-native-rolls.js": "295be03f571e31f20cf1cbe6da44b47845e52a56b4e0016ff0beb78bdbc08606",
+    "bot/src/application/composition/runtime-initializers.js": "37f5f7eec928fe4c15628d08c86bb714d0542173289f935e8e46d7fbef64c378",
+    "bot/src/application/composition/public.js": "4e1c9a246be6cf824de7f2f1a647306476719f671414bf5048b32a878b492edb",
+    "bot/src/frameworks/daggerheart/contracts/intent-roll-review.js": "b93e4c7a58b4091c9746d8aa034c49678070db9481c2a985fc07bd4f8e28085b",
+    "bot/src/frameworks/daggerheart/public.js": "e98260b7ec8071eb36c337ad19ec2c1774f18437865062736aedfcb55a6fc45f",
+    "bot/src/frameworks/intent/contracts/native-roll-review.js": "07b3a30f2e911bafadde5a925912415b94d2397d4d573cfc776524e0ea7610df",
+    "bot/src/frameworks/intent/public.js": "63a2996318155c77e135e10fc2895e6104fcbaaf30763f0b2facf1f21cdca08a",
+    "bot/src/framework-to-framework/daggerheart--intent/public.js": "6dbfa216a18f2190778499795772bb7369b579c4b4de870c5164939e83ef7a75",
+    "bot/tests/ai-gm-2026-10/rf05-f04-c78.test.mjs": "23790fbaca1dec3067fb9deb6caf2bdebd2525cb7d0de425366785b93a281f1b",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-SCOPE.md": "b3dc28050b8afa45860dac06e8eb4859d3da265ede96b4c230f349d8daa5828b",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-LEDGER.md": "e4187189912d2b690392149b937ec1d4354dabcb3d99fdec7f2ad4312783f889",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-TEST.log": "da82ae75d66c111ef4bbe8bd6b114de919a0ddaf5d50afaa274036001f69d346",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-TEST-REJECTED-HARNESS.log": "3aeec86305e5d7d38ba84a89e45b2454f9eab07b38ea82506a69ab68bc909818",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-ARCHITECTURE.log": "32bcde228f4724d583b77ad0abbd392e4a3617bfb087694bb9b74054f9cae4c9",
+    "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C145-ARCHITECTURE-REJECTED-DRAFT.log": "de4e5074e3fc2610c0a6fad1e764515f09e5e0dac69edde497d7e2b4d6d815d1",
+    "docs/Implementation_Plans/Framework_Refactor/phases/RF05/LEDGER.md": "cf1fd1f94a63901216aea415c50096a2af6484377da58ce5f8d4e3f45d14b68c",
+    "docs/Implementation_Plans/Framework_Refactor/RF01/BRIDGE_CONTRACTS.json": "128d9296e2c27fa04a8733943dbd6100a822bd6a8465592ffcdaa2c9d0c57ff5",
+    "docs/Implementation_Plans/Framework_Refactor/BRIDGE_REGISTRY.md": "2966448e239e96019c41538540871a523e089ecfca407f2375ec9204f4ddd268",
+    ".reports/RF05-C145-gate.json": "9748ddfb5f320963cc62022341b92d7ce8b10da71631e4fa0bf9f4dcea4fb635",
+    "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv": "97b0a6dcaf4c5fa9749aaa0aa7eca0b2afc0d6da56226c253b4a8e5ff8968214",
+    "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv": "a70a5276589b5e3ed03ddc046cb45e7fa32139f184d7956d8f9812bb72a240ae"
+  }
+}

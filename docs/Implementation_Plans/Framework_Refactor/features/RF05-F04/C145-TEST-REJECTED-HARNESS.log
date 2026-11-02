@@ -1,0 +1,29 @@
+✔ Intent roll operations and Native source fail closed before runtime composition (0.7623ms)
+✖ Application startup wires only the original prepare and captured-owner review operations through the existing pair (1.6527ms)
+✔ Intent dispatcher uses its fixed port and Application owns legacy provider imports (5.3978ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1473.8995
+
+✖ failing tests:
+
+test at tests\ai-gm-2026-10\rf05-f04-c145.test.mjs:14:1
+✖ Application startup wires only the original prepare and captured-owner review operations through the existing pair (1.6527ms)
+  Error: Native strategy delegate source has not been provided.
+      at Object.delegateFunction (file:///D:/Library/Development/Veiled_City/bot/src/frameworks/intent/contracts/strategy-delegate-source.js:2:382)
+      at connectNpcIntentStrategy (file:///D:/Library/Development/Veiled_City/bot/src/framework-to-framework/intent--npc/public.js:3:103)
+      at initializeNpcStrategy (file:///D:/Library/Development/Veiled_City/bot/src/application/composition/npc-strategy.js:3:126)
+      at initializeRuntimeFrameworks (file:///D:/Library/Development/Veiled_City/bot/src/application/composition/runtime-initializers.js:76:3)
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City/bot/tests/ai-gm-2026-10/rf05-f04-c145.test.mjs:15:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    code: 'NATIVE_STRATEGY_DELEGATE_COMPOSITION'
+  }
