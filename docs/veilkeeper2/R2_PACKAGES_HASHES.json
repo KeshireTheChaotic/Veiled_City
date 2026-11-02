@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/character-packages.js",
+      "sha256": "bf53a18dd9f98b2530fb71d9979fa302771d09b63bb22de10938ff9c6ea74a31"
+    },
+    {
+      "path": "bot/src/v2/gm-hook-package.js",
+      "sha256": "202f5db9fd1921ea447411281c2b5a9a27be33ec3377cf0ef29b4b5f05722712"
+    },
+    {
+      "path": "bot/src/v2/character-package-service.js",
+      "sha256": "be9f0a2ee148bdd84865712b50183f53acc33f851d036b200ef0b366acb54d75"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-character-packages.test.mjs",
+      "sha256": "379897479dcf56590cbff8e7272a1bd3f74151ea0ededaa1d13368f73988f0e4"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "e1d2be68be7e017bf63cdc372b81a5a20fb6628d276811d0154d7bcef0bc1a8a"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PACKAGES_REPORT.md",
+      "sha256": "1a9200d78ab4eb128ebbad9a9c5e04d138c274bdaa24cfe9b0d0413ca75afbfb"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PACKAGES_TEST_OUTPUT.txt",
+      "sha256": "39b109e16010ed3defa4c9eedb9f835830c31b50c9bcbaa004fbd3543d145bf8"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PACKAGES_TEST_EVIDENCE.json",
+      "sha256": "72b3d0f70650b2d2b89390d8281389fb0e2f6400a738e87531a9982770e88e56"
+    },
+    {
+      "path": "bot/src/character-export.js",
+      "sha256": "6aedfae47305f97ff260f4428f9b7dc2c00567484f8e5af7571d29465526923f"
+    },
+    {
+      "path": "bot/src/frameworks/character/file-names.js",
+      "sha256": "1b3345729c00cb291724077cd41617e5c86ff0a55d25fdf2c93aed9ec8e9e262"
+    },
+    {
+      "path": "bot/src/frameworks/narrative/gm-hook-import.js",
+      "sha256": "202f5db9fd1921ea447411281c2b5a9a27be33ec3377cf0ef29b4b5f05722712"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}

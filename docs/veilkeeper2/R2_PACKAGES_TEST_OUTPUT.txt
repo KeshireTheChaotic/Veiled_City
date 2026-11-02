@@ -1,0 +1,15 @@
+✔ player package preserves sheet and entitled semantic fields without reading GM repositories (2.425ms)
+✔ GM hook/private/canon packages retain their distinct versioned fields and review state (1.2536ms)
+✔ cross-owner/campaign and player requests for GM artifacts fail before private reads (0.3303ms)
+✔ owner or repository revision changes during assembly prevent release (0.3036ms)
+✔ all legacy GM-hook import schema versions normalize as private proposals without truth authority (0.4876ms)
+✔ exported JSON artifacts round-trip through separate preparers and cannot cross into player imports (0.6443ms)
+✔ metadata cannot authorize private imports; player import strips nested GM infrastructure (0.2804ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62.0555

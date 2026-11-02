@@ -17,4 +17,6 @@ Generic scoped reference lookup and persistent proposal composition are now impl
 
 Weighted recall policy and rehearsal composition are implemented with 20/20 focused checks; see [recall report](R2_RECALL_REPORT.md). R2_RECALL_HASHES.json is the latest context/rehearsal/recall manifest. Native cause/pin adapters and full ranking/migration parity remain open.
 
-**Next exact work:** R2 private-hook/player-export boundaries and native recall evidence adapters; then remaining provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.
+Character JSON serializers, native export authorization and separate import preparation now have 7/7 fresh checks; see [package report](R2_PACKAGES_REPORT.md). Full transactional import, other file formats and real reader adapters remain open; JSON preparation grants no effects.
+
+**Next exact work:** R2 native recall/import repository adapters and durable private-hook ingestion with separate canon review; then remaining provider/native adapters and R3 authoritative rules. Provider-side tool invocation and pagination remain open. Carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.
