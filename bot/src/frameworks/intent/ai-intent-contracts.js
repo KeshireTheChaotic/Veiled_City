@@ -1,4 +1,6 @@
 /** Versioned, closed model intent contracts. Authority, receipts and derived impact are application-owned. */
+import {intentNarrativeDelegationSource} from './contracts/narrative-delegation-source.js';
+
 export const FEATURE_FLAGS={institution:'institutions',roll:"roll_requests",setup:"narrative_setups",organization:"player_organizations",influence:"audience_influence",evidence:"evidence_custody",dialogue:"dialogue_history",encounter:"encounter_intelligence",goal:"emergent_goals",consequence:"consequences",scene:"scene_continuity",group:"emergent_groups",
   strategy:"strategies",arc:"personal_arcs",discovery:"discovery",project:"long_projects",mediation:"conflict_mediation",
   memory:"memory_consolidation",density:"activity_density"};
@@ -104,3 +106,8 @@ Dialogue interpretations require an existing authored_speech source and an actua
 keep claims unverified, and never convert a spoken promise, refusal or apology into consent, canon or a future decision.
 Use [] when no valid opportunity exists. Feature flags do not authorize execution. Pending/blocked/rejected receipts
 are not accomplished events; describe invitations and plans as proposals. No extra calls per actor are required.`;
+
+intentNarrativeDelegationSource.bind({
+  delegationFeatureKeys:()=>Object.keys(INTENT_PAYLOADS),
+  delegationOperations:intentOperations
+});

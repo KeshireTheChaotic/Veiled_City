@@ -11,4 +11,15 @@ import {intentCommunicationSource} from '../../frameworks/intent/public.js';
 import {narrativeIntentCommunication} from '../../frameworks/narrative/public.js';
 export function connectNarrativeIntentCommunication(){return narrativeIntentCommunication.bind({characterSourceRanges:intentCommunicationSource.characterSourceRanges});}
 
+import {intentNarrativeDelegationSource,intentNarrativeDelegationCatalog} from '../../frameworks/intent/public.js';
+import {narrativeIntentDelegationSource,delegationCatalog} from '../../frameworks/narrative/public.js';
+/** Exchange only the closed operation vocabulary and Narrative's read-only permission catalog. */
+export function connectIntentNarrativeDelegationCatalog(){
+  narrativeIntentDelegationSource.bind({
+    delegationFeatureKeys:intentNarrativeDelegationSource.delegationFeatureKeys,
+    delegationOperations:intentNarrativeDelegationSource.delegationOperations
+  });
+  return intentNarrativeDelegationCatalog.bind({delegationCatalog});
+}
+
 export {persistAuthoredCandidates} from './authored-candidates.js';

@@ -30,6 +30,8 @@ export {createNarrativeNpcVisibilityConsumer,narrativeNpcVisibility} from './con
 export {narrativeAudienceSource,narrativeNativeEnvironment} from './contracts/environment-sources.js';
 export {rankWorldNarrativeOpportunities,WORLD_NARRATIVE_OPPORTUNITY_ORDER} from './narrative-opportunity-policy.js';
 export {narrativeSalienceSource,narrativeAuthorityContextSource,narrativePortrayalSource,narrativeRelevanceSource} from './contracts/root-sources.js';
+export {narrativeIntentDelegationSource} from './contracts/intent-delegation-source.js';
+export {PRIVATE_DELEGATION_FAMILIES,delegationCatalog} from './delegation-catalog.js';
 export {normalizeGmHookImport} from './gm-hook-import.js';
 
 export {narrativeBridgeSessionSources,narrativeBridgeNativeSources} from './contracts/bridge-sources.js';

@@ -33,14 +33,14 @@ function reconcileHistory(...args){return intentKnowledgeMaintenance.reconcileHi
 import {intentNativeRollReview} from './frameworks/intent/public.js';
 import {prepareRollRequest} from './roll-requests.js';
 import {reviewRollDeclaration} from './roll-declaration-review.js';
-import {intentSessionEntry} from "./frameworks/intent/public.js";
+import {intentSessionEntry,intentNarrativeDelegationCatalog} from "./frameworks/intent/public.js";
 function mundaneEntryImpact(...args){return intentSessionEntry.mundaneEntryImpact(...args);}
 function resolveMundaneEntry(...args){return intentSessionEntry.resolveMundaneEntry(...args);}
 import {intentKnowledgeSemanticProof} from './frameworks/intent/public.js';
 function assertSemanticCandidateProof(...args){return intentKnowledgeSemanticProof.assertSemanticCandidateProof(...args);}
 import {intentSessionPrincipal} from './frameworks/intent/public.js';
 function conversationPrincipal(...args){return intentSessionPrincipal.conversationPrincipal(...args);}
-import {delegationCatalog} from './delegation-catalog.js';
+function delegationCatalog(...args){return intentNarrativeDelegationCatalog.delegationCatalog(...args);}
 
 import {intentWorldOperations} from './frameworks/intent/public.js';
 function prepareNativeWorldOperation(...args){return intentWorldOperations.prepareNativeWorldOperation(...args);}function nativeWorldOperationAllows(...args){return intentWorldOperations.nativeWorldOperationAllows(...args);}function nativeWorldOperationOrigin(...args){return intentWorldOperations.nativeWorldOperationOrigin(...args);}function inspectNativeWorldOperationReceipt(...args){return intentWorldOperations.inspectNativeWorldOperationReceipt(...args);}function nativeWorldOperationCatalog(...args){return intentWorldOperations.nativeWorldOperationCatalog(...args);}function nativeWorldStrategyScope(...args){return intentWorldOperations.nativeWorldStrategyScope(...args);}function attemptCityInfluence(...args){return intentWorldOperations.attemptCityInfluence(...args);}
