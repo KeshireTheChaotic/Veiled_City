@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {buildPlayerExport,buildGmHooksExport,buildGmPrivateExport,buildGmCanonExport,playerCharacterProjection} from './character-packages.js';
 import {normalizeGmHookImport} from './gm-hook-package.js';
+import {prepareImportedRelationships} from './relationship-import.js';
 
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
@@ -9,7 +10,7 @@ const scopes=['player','hooks','private','canon'];
 /** Native command boundary, never an AI capability. The repository supplies scoped
  * legacy-compatible readers; its revision must cover every export input.
  */
-export function createCharacterPackageService({authenticate,readCharacter,readRevision,repository,hookStore=null}){
+export function createCharacterPackageService({authenticate,readCharacter,readRevision,repository,hookStore=null,resolveRelationshipTarget=null}){
   if([authenticate,readCharacter,readRevision].some(fn=>typeof fn!=='function')||!repository)throw new TypeError('Native character package dependencies required');
   function authorize(event,characterId,scope,operation){
     const proof=authenticate(event);
@@ -57,7 +58,8 @@ export function createCharacterPackageService({authenticate,readCharacter,readRe
     if(typeof hookStore?.commitImport!=='function')throw new Error('Private hook storage not installed');
     const access=authorize(event,characterId,'hooks','import');
     const prepared=prepareImport(event,{characterId,scope:'hooks',payload});
-    return hookStore.commitImport(prepared,{check:access.check});
+    const relationships=prepareImportedRelationships(prepared,access.character,resolveRelationshipTarget);
+    return hookStore.commitImport(prepared,{relationships:relationships.rows,relationshipHolds:relationships.holds,check(){access.check();relationships.check();}});
   }
   function reviewCanon(event,input){
     if(!input||Object.keys(input).some(k=>!['characterId','proposalId','resolution','visibility','expectedRevision','replaceExisting','customValue','note'].includes(k)))throw new Error('Closed canon review request required');

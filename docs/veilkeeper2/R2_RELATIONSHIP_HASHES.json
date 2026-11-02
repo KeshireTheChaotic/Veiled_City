@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/relationship-import.js",
+      "sha256": "08c4b40c91fdd32c21d07e8d02bb96acde05de697b05cdb35b333365c244ae7c"
+    },
+    {
+      "path": "bot/src/v2/private-hook-store.js",
+      "sha256": "f3a42725a53dedf6b202476ba21204231b6767380e6707df4d533fd5f1a5a6c4"
+    },
+    {
+      "path": "bot/src/v2/character-package-service.js",
+      "sha256": "9b1afb399336fa9ef08415d0ebb29ff94caea472c1bbd1cf7f32427b49c682b6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-relationship-import.test.mjs",
+      "sha256": "99594cdef17fdaa78b2c87065cdf34d1c7d4a97a4caaba247921edcceb511358"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-canon-review.test.mjs",
+      "sha256": "cf209c1ba16a2e0e75592ef170b8b7c3f9bb2b33bfab8f35d5c22a3ebea24204"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-private-hooks.test.mjs",
+      "sha256": "ad1a681b8e63bf73b3dcd1ede57362929bb64c781de2a084d3a44f1a51cc3a57"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-character-packages.test.mjs",
+      "sha256": "379897479dcf56590cbff8e7272a1bd3f74151ea0ededaa1d13368f73988f0e4"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "67c5b1bb1a7eb19a99634469f7ff9d84fac8c701a8cb47189852e31608b0063d"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RELATIONSHIP_REPORT.md",
+      "sha256": "fc0c6e73f3af91240b332218c2767f715ed1d5c1f5fa53d95d0386825eefb4b6"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RELATIONSHIP_TEST_OUTPUT.txt",
+      "sha256": "7711fd65716adebdb3d3e06eaf96ce7d8c4e8cbffb2837373d7e35efd6c09f90"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RELATIONSHIP_TEST_EVIDENCE.json",
+      "sha256": "c98564895a3afa352598d42ed9240f249e250533e7d348dd5834df23f10d68f1"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}

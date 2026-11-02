@@ -1,0 +1,33 @@
+✔ only a separate human-GM command can accept an imported proposal; approval grants no delivery (31.8012ms)
+✔ conflicting value or broader visibility requires explicit replacement against the current revision (2.4188ms)
+✔ stale review and altered replay cannot update canon; exact replay preserves original receipt (1.4591ms)
+✔ reject and custom resolution preserve source proposal and synchronized review state (1.0832ms)
+✔ revoked authority at transaction completion rolls back ledger, proposal state and review receipt (0.8343ms)
+✔ closed review arguments and target campaign/character bindings reject forged escalation (0.7865ms)
+✔ player package preserves sheet and entitled semantic fields without reading GM repositories (38.3186ms)
+✔ GM hook/private/canon packages retain their distinct versioned fields and review state (3.8808ms)
+✔ cross-owner/campaign and player requests for GM artifacts fail before private reads (0.4145ms)
+✔ owner or repository revision changes during assembly prevent release (0.3553ms)
+✔ all legacy GM-hook import schema versions normalize as private proposals without truth authority (0.5183ms)
+✔ exported JSON artifacts round-trip through separate preparers and cannot cross into player imports (0.7065ms)
+✔ metadata cannot authorize private imports; player import strips nested GM infrastructure (0.2994ms)
+✔ private hooks and pending canon survive reopening and identical command replay adds nothing (97.0531ms)
+✔ altered command replay conflicts while a new authorized import keeps immutable prior versions (1.4361ms)
+✔ bad final canon suggestion rolls back hooks, proposals and receipt together (0.9858ms)
+✔ role revocation at final transaction check rolls back every private write (0.8359ms)
+✔ players cannot import private hooks and canon suggestions are excluded from default seed reads (2.2169ms)
+✔ colliding normalized keys abort rather than silently overwrite distinct imported hooks (0.6988ms)
+✔ authorized target creates one directional GM-private connection with bounded score and no PC authority (34.182ms)
+✔ same command replay is inert; later authorized update preserves connection history (1.3866ms)
+✔ unresolved and canon-suggestion targets are preserved as holds without invented entities or relationships (0.84ms)
+✔ wrong campaign or changed target at transaction completion leaves no import or partial relationship (1.7775ms)
+✔ invalid relationship targets abort atomically and duplicates use the final supplied connection without duplicate rows (0.7621ms)
+✔ player cannot import a private relationship even when it names their own PC (0.5233ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 230.5633
