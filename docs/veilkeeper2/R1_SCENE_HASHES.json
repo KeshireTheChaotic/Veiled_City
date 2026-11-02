@@ -1,0 +1,29 @@
+{
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "files": [
+    {
+      "sha256": "1aa743dc5f88608c7f31d32748ae44c06b2ac74385264455c28821b72d784b6d",
+      "path": "bot/src/v2/scene-store.js"
+    },
+    {
+      "sha256": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c",
+      "path": "bot/tests/veilkeeper2/r1-scene-store.test.mjs"
+    },
+    {
+      "sha256": "8f1865a70f23f2c1e092f5eedeca6814a9966889e8c92841307e40f5a7a5ac1d",
+      "path": "docs/veilkeeper2/LEDGER.md"
+    },
+    {
+      "sha256": "71d6d251885722fcf6439226c9b6e960b976ca1c36455719cc87d2c232b1d10e",
+      "path": "docs/veilkeeper2/R1_SCENE_REPORT.md"
+    },
+    {
+      "sha256": "430cbc468f3ab2e2dbaa5b27d9d432e30cf8a3c724164790f88ebe3884231d3c",
+      "path": "docs/veilkeeper2/R1_SCENE_TEST_OUTPUT.txt"
+    },
+    {
+      "sha256": "dc980163be3b340f2582b7e364ac7473aa1c545f640fb5435609357b1d0e86fc",
+      "path": "docs/veilkeeper2/R1_SCENE_TEST_EVIDENCE.json"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "finishedUtc": "2026-11-02T18:45:59.0753429Z",
+  "command": "node --test tests/veilkeeper2/r1-scene-store.test.mjs",
+  "exitCode": 0,
+  "startedUtc": "2026-11-02T18:45:58.8974549Z"
+}

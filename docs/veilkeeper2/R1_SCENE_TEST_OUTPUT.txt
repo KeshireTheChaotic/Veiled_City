@@ -1,0 +1,14 @@
+✔ persisted native records authenticate a late arrival after database reopening (28.94ms)
+✔ source invalidation follows durable ownership, attendance, message and permission revisions (3.3187ms)
+✔ identical replay does not replace later records; altered replay and stale writers fail (1.2027ms)
+✔ multi-record updates and final authorization failure roll back atomically (1.1836ms)
+✔ native snapshot schema rejects gameplay patches, cross-campaign records and supplied revisions (0.8479ms)
+✔ durable readers compose into rehearsal without exposing a mutation capability (3.5728ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.1291
