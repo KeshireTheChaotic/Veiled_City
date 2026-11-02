@@ -12,6 +12,15 @@ function typedRollProof(db,guild,request){
   if(!a||!["resolved","accepted_for_adjudication"].includes(a.status))fail();
   historicalActionSource(db,guild,a.record_key,{resolved:a.status==="resolved"});
   const d=q.data,s=db.getSavedRoll(guild,d.roll_id),v=d.result;
+  if(typeof verifiers.inspectSavedRollConditionContext==='function'){
+    verifiers.inspectSavedRollConditionContext(db,guild,q);
+    for(const participant of d.tag?.participants||[]){
+      if(!participant.input||participant.request===q.record_key)continue;
+      const original=db.getCityRecord(guild,'roll_request',participant.request);
+      if(!original)fail();
+      verifiers.inspectSavedRollConditionContext(db,guild,{...original,data:{...original.data,input:participant.input,breakdown:participant.breakdown}});
+    }
+  }else if(d.breakdown?.feature_roll_source||d.breakdown?.native_condition_odds)fail();
   const modifierKeys=d.input.modifier_keys||[],savedModifiers=d.breakdown?.modifiers||[];
   if(modifierKeys.length!==savedModifiers.length||new Set(modifierKeys).size!==modifierKeys.length
     ||savedModifiers.some(m=>!modifierKeys.includes(m.source)))fail();

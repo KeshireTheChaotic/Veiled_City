@@ -27,6 +27,8 @@ function live(db,guild,row){
   if(!session||row.data.session_id!==session.id||row.data.scene!==currentScene(db,guild).key) fail("Request belongs to another session or scene.");
   requireCitySource(db,guild,row.source_event);
   const pc=personalCharacter(db,guild,row.data.owner_user_id,row.subject_key);
+  if(typeof mechanics.inspectSavedRollConditionContext==='function')mechanics.inspectSavedRollConditionContext(db,guild,row);
+  else if(row.data.breakdown?.feature_roll_source||row.data.breakdown?.native_condition_odds)fail('Native feature roll-condition proof is unavailable.');
   if(row.data.input?.accepted_intent){
     const a=db.getCityRecord(guild,"typed_intent",row.data.input.accepted_intent);
     if(row.status==="resolved")historicalActionSource(db,guild,a?.record_key,{resolved:a?.status==="resolved"});

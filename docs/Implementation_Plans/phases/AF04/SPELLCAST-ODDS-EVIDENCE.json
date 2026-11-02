@@ -1,0 +1,91 @@
+{
+  "phase": "AF04",
+  "covered": [
+    "Existing reviewed difficulty/attack sources carry exact feature_roll_source locators.",
+    "Actual packaged source and subclass trait qualify Spellcast identity.",
+    "A source-validated active condition adds compulsory disadvantage; the same trait alone changes nothing.",
+    "Native Duality Dice arithmetic includes disadvantage and source-backed cancellation.",
+    "Immutable owner-private preparation proof binds classification and condition ancestry.",
+    "Live contribution and saved typed-roll readers validate the proof; old unmarked rolls retain their path.",
+    "Later condition release or inactive loadout cannot rewrite committed roll history.",
+    "Storage failure rolls back preparation; omitted odds/missing receipt/wrong scope/trait are held."
+  ],
+  "inputs": [
+    {
+      "sha256": "de1fd5ae21cdc87cacf4af8ab2c9e314478c81296ee971b2a55a8c809abd7162",
+      "path": "bot/src/frameworks/daggerheart/feature-roll-source-rules.js"
+    },
+    {
+      "sha256": "b21579b5db54c598a71b9d8fe81d30a68d115c06e960e0ad2daca58ba1a4c9d6",
+      "path": "bot/src/frameworks/daggerheart/roll-request-rules.js"
+    },
+    {
+      "sha256": "2322c1a85bed8f9409f1aa08d2732e095f092d50c6fbee04f742586f0d5f5d66",
+      "path": "bot/src/frameworks/daggerheart/roll-collaboration-rules.js"
+    },
+    {
+      "sha256": "24cbd9b0b50f0f0adeba9d916cd9eb8f248c68982d8eb598823cfa11a634f13c",
+      "path": "bot/src/frameworks/daggerheart/typed-roll-proof.js"
+    },
+    {
+      "sha256": "0bbf28908f1b480e914776a71f8c21e89a0c539f0ec5c8f3b75713c186c57d0b",
+      "path": "bot/src/roll-requests.js"
+    },
+    {
+      "sha256": "e4eb3f7686676ea634f7e7ca6c6eb7e23ad9d450b13954c7e85c63c30cd8a570",
+      "path": "bot/src/roll-collaboration.js"
+    },
+    {
+      "sha256": "4f7def2c8b0486583bd06da32acbdc16279d388cc91c8ca4344c9da0933317af",
+      "path": "bot/src/typed-roll-proof.js"
+    },
+    {
+      "sha256": "ee8e358cfdf07f5a3428c4298e1c668bf883b1727411ffa462a89d0cb4b37ba7",
+      "path": "bot/tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs"
+    },
+    {
+      "sha256": "e6a8fb95d7c395da9e264c78ad0c0ede4313b050478eed2f97cf76e27752f196",
+      "path": "bot/tests/ai-gm-2026-10/af04-spellcast-source.test.mjs"
+    },
+    {
+      "sha256": "126f0690087b169ba20136226267eff913bcd09984c8fbe6156130e53227e1ef",
+      "path": "bot/tests/ai-gm-2026-10/af07-codex-scene.test.mjs"
+    }
+  ],
+  "status": "sourced_spellcast_condition_odds_and_saved_proof_complete_bounded",
+  "limits": [
+    "Native source/owner/condition services are injected in focused odds tests; actual native preparation, dice arithmetic and typed saved-proof factories execute.",
+    "Actual runtime owner tests cover existing unmarked reaction paths, not a full Null Foam cast.",
+    "Current metadata producer is the existing human-reviewed roll-source workflow; no additional approval queue was created and no automated spell activation is granted.",
+    "Other feature sources, autonomous Spellcast metadata production, pending-request condition-odds amendment, and ally freeing remain open.",
+    "Null Foam remains review-only; full phase AF04 and AF00-AF07 are not complete."
+  ],
+  "syntax_checks_passed": 8,
+  "current_verified_cases": 16,
+  "verification": [
+    {
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "passed": 10,
+      "scope": "Initial6 odds cases plus4 existing source cases after production code changed.",
+      "command": "node --test tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs tests/ai-gm-2026-10/af04-spellcast-source.test.mjs"
+    },
+    {
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "passed": 8,
+      "scope": "Final focused test fixture additionally covers cancellation and damaging Spellcast attack provenance; production source unchanged.",
+      "command": "node --test tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs"
+    },
+    {
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "passed": 4,
+      "scope": "Actual production runtime owner paths after changed root composition; no billed provider or Discord calls.",
+      "command": "node --test --test-name-pattern=\"actual owner submission|ordinary success|two owners|Critical\" tests/ai-gm-2026-10/af07-codex-scene.test.mjs"
+    }
+  ]
+}

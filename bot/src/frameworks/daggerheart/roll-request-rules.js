@@ -37,6 +37,10 @@ function rollTraitBreakdown(db,guild,input,pc){
   if(!Array.isArray(input.modifier_keys)||input.modifier_keys.length>20||new Set(input.modifier_keys).size!==input.modifier_keys.length)
     throw new UserInputError("A unique bounded modifier-source list is required.");
   const declaration=input.source_event?db.getWorldEvent(guild,input.source_event):null;
+  const conditionContext=typeof mechanics.rollConditionContext==='function'?mechanics.rollConditionContext(db,guild,input,pc):null;
+  if(!conditionContext&&[input.difficulty_source,input.attack_source].filter(Boolean).some(ref=>{
+    const e=db.getWorldEvent(guild,ref);return e?.details?.roll_difficulty?.feature_roll_source||e?.details?.roll_attack?.feature_roll_source;
+  }))throw new StateConflictError('Source-qualified feature roll context is required before preparation.');
   const applicable=db.rollModifierSources(guild,pc.id,input.trait,input.kind,input.accepted_intent,
     {sessionId:declaration?.session_id||null,sceneKey:declaration?.scene||null});
   if(applicable.length>20||applicable.some(row=>!input.modifier_keys.includes(row.event_key)))
@@ -61,7 +65,8 @@ function rollTraitBreakdown(db,guild,input,pc){
   const flat=modifiers.filter(row=>row.kind==="flat").reduce((sum,row)=>sum+row.amount,0);
   return {trait:input.trait,trait_bonus:trait,modifiers,subtotal:trait===null?null:trait+flat,
     advantage:modifiers.filter(row=>row.kind==="advantage").length,
-    disadvantage:modifiers.filter(row=>row.kind==="disadvantage").length,
+    disadvantage:modifiers.filter(row=>row.kind==="disadvantage").length+(conditionContext?.native_condition_odds.disadvantage||0),
+    ...(conditionContext||{}),
     unresolved:trait===null?["Relevant trait is missing from the sheet."]:[]};
 }
 function rollBreakdown(db,guild,input,pc){
@@ -135,6 +140,10 @@ function prepareRollRequest(db,guild,input,actor,context={}){
         sheet_fingerprint:hash(pc.data),revision:1,history:[],authority:"Pending only; no dice, expenditure or outcome."}});
     persistNativeDefenseAura(db,guild,after);
     persistNativeFormationDefense(db,guild,after);
+    if(values.feature_roll_source||values.native_condition_odds){
+      if(typeof mechanics.persistRollConditionContext!=='function')throw new StateConflictError('Native roll-condition receipt writer required.');
+      mechanics.persistRollConditionContext(db,guild,after);
+    }
     captureAdvantageFeatureOpportunities(db,guild,after);
     cityAudit(db,guild,"roll_request_prepared",key,null,after,actor);reserveRollAmendment(db,guild,after);return after;
   });
