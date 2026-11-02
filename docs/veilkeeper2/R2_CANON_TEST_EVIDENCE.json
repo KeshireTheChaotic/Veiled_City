@@ -1,0 +1,6 @@
+{
+  "startedUtc": "2026-11-02T14:01:35.3814680Z",
+  "finishedUtc": "2026-11-02T14:01:35.5786320Z",
+  "exitCode": 0,
+  "command": "node --test tests/veilkeeper2/r2-canon-review.test.mjs tests/veilkeeper2/r2-private-hooks.test.mjs tests/veilkeeper2/r2-character-packages.test.mjs"
+}

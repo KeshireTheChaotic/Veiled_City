@@ -4,17 +4,20 @@ const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
 const decode=row=>row?JSON.parse(row.data):null;
 const key=(h,i)=>String(h.key||h.title||`imported-${i}`).trim().toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'')||`imported-${i}`;
 
-/** Dedicated GM-private storage. Native code only; no audience or canon grant. */
+/** Dedicated private imports and human-reviewed canon. Native code only; no publication grant. */
 export function openPrivateHookStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
   try{
-    const allowed=['vk2_hook_imports','vk2_hook_history','vk2_hook_heads','vk2_hook_canon'];
+    const allowed=['vk2_hook_imports','vk2_hook_history','vk2_hook_heads','vk2_hook_canon','vk2_canon_history','vk2_canon_heads','vk2_canon_reviews'];
     if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!allowed.includes(r.name)))throw new Error('Dedicated private hook database required');
     db.exec(`PRAGMA busy_timeout=5000;
       CREATE TABLE IF NOT EXISTS vk2_hook_imports(campaign TEXT,source TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,source));
       CREATE TABLE IF NOT EXISTS vk2_hook_history(campaign TEXT,character TEXT,key TEXT,revision INTEGER,data TEXT NOT NULL,PRIMARY KEY(campaign,character,key,revision));
       CREATE TABLE IF NOT EXISTS vk2_hook_heads(campaign TEXT,character TEXT,key TEXT,revision INTEGER,PRIMARY KEY(campaign,character,key));
-      CREATE TABLE IF NOT EXISTS vk2_hook_canon(campaign TEXT,character TEXT,id TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,character,id));`);
+      CREATE TABLE IF NOT EXISTS vk2_hook_canon(campaign TEXT,character TEXT,id TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,character,id));
+      CREATE TABLE IF NOT EXISTS vk2_canon_history(campaign TEXT,key TEXT,revision INTEGER,data TEXT NOT NULL,PRIMARY KEY(campaign,key,revision));
+      CREATE TABLE IF NOT EXISTS vk2_canon_heads(campaign TEXT,key TEXT,revision INTEGER,PRIMARY KEY(campaign,key));
+      CREATE TABLE IF NOT EXISTS vk2_canon_reviews(campaign TEXT,source TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,source));`);
   }catch(error){db.close();throw error;}
   function commitImport(prepared,{check}){
     if(typeof check!=='function'||prepared.scope!=='hooks'||prepared.visibility!=='gm'||prepared.status!=='awaiting_native_validation'
@@ -58,7 +61,47 @@ export function openPrivateHookStore(filename=':memory:'){
     return db.prepare('SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND r.character=? ORDER BY r.key').all(campaign,character).map(decode)
       .filter(r=>(includeResolved||r.status==='active')&&(includeCanonSuggestions||r.hook_type!=='canon_suggestion'));
   }
-  return Object.freeze({commitImport,listCharacterGmHooks,
+  function currentCanon(campaign,key){return decode(db.prepare('SELECT r.data FROM vk2_canon_history r JOIN vk2_canon_heads h USING(campaign,key,revision) WHERE r.campaign=? AND r.key=?').get(campaign,key));}
+  function reviewCanon(request,{check}){
+    const r=JSON.parse(JSON.stringify(request)),fingerprint=hash(r);
+    if(typeof check!=='function'||!['accept','reject','custom'].includes(r.resolution)||!['public','party','gm'].includes(r.visibility)
+      ||![r.campaignId,r.characterId,r.proposalId,r.sourceRef,r.sourceRevision,r.principal].every(v=>typeof v==='string'&&v.length>0)
+      ||r.expectedRevision!==null&&(!Number.isSafeInteger(r.expectedRevision)||r.expectedRevision<1)
+      ||typeof r.replaceExisting!=='boolean'||typeof r.note!=='string'||r.note.length>4000
+      ||typeof r.customValue!=='string'||r.customValue.length>16000||r.resolution==='custom'&&!r.customValue.trim())throw new Error('Explicit native canon review required');
+    db.exec('BEGIN IMMEDIATE');
+    try{
+      check();
+      const replay=decode(db.prepare('SELECT data FROM vk2_canon_reviews WHERE campaign=? AND source=?').get(r.campaignId,r.sourceRef));
+      if(replay){if(replay.fingerprint!==fingerprint)throw new Error('Canon review replay conflict');check();db.exec('COMMIT');return replay;}
+      if(db.prepare('SELECT 1 FROM vk2_hook_imports WHERE campaign=? AND source=?').get(r.campaignId,r.sourceRef))throw new Error('Separate human review source required');
+      const proposal=decode(db.prepare('SELECT data FROM vk2_hook_canon WHERE campaign=? AND character=? AND id=?').get(r.campaignId,r.characterId,r.proposalId));
+      if(!proposal||!['pending','conflict'].includes(proposal.status))throw new Error('Pending character canon proposal required');
+      const current=currentCanon(r.campaignId,proposal.canon_key);
+      if((current?.revision??null)!==r.expectedRevision)throw new Error('Canon revision conflict');
+      const value=r.resolution==='custom'?r.customValue.trim():proposal.proposed_value;
+      let status=r.resolution==='reject'?'rejected':'accepted',entry=current;
+      if(status==='accepted'&&current&&(current.value!==value||current.visibility!==r.visibility)&&!r.replaceExisting)status='conflict';
+      if(status==='accepted'&&(!current||current.value!==value||current.visibility!==r.visibility)){
+        const revision=(current?.revision??0)+1;
+        entry={id:`canon:${hash([r.campaignId,proposal.canon_key,revision])}`,canon_key:proposal.canon_key,value,visibility:r.visibility,status:'current',revision,
+          source_type:'human_gm',source_id:r.principal,proposal_id:r.proposalId,character_id:r.characterId,source_ref:r.sourceRef,source_revision:r.sourceRevision,
+          provenance:{import_source:proposal.source_ref,review_source:r.sourceRef,reviewed_by:r.principal,note:r.note},supersedes_id:current?.id??null};
+        db.prepare('INSERT INTO vk2_canon_history VALUES(?,?,?,?)').run(r.campaignId,proposal.canon_key,revision,JSON.stringify(entry));
+        db.prepare('INSERT INTO vk2_canon_heads VALUES(?,?,?) ON CONFLICT(campaign,key) DO UPDATE SET revision=excluded.revision').run(r.campaignId,proposal.canon_key,revision);
+      }
+      const receipt={id:`canon-review:${hash([r.campaignId,r.sourceRef])}`,fingerprint,status,request:r,proposalId:r.proposalId,
+        existing:current,entry:status==='accepted'?entry:null,publicationAuthority:false,knowledgeAcknowledged:false};
+      const updated={...proposal,status,current_value:entry?.value??null,canon_event_id:status==='accepted'?entry.id:null,
+        resolution_value:status==='accepted'?entry.value:status==='rejected'?current?.value??'':'',resolution_note:r.note,review_ref:receipt.id};
+      db.prepare('UPDATE vk2_hook_canon SET data=? WHERE campaign=? AND character=? AND id=?').run(JSON.stringify(updated),r.campaignId,r.characterId,r.proposalId);
+      db.prepare('INSERT INTO vk2_canon_reviews VALUES(?,?,?)').run(r.campaignId,r.sourceRef,JSON.stringify(receipt));
+      check();db.exec('COMMIT');return receipt;
+    }catch(error){db.exec('ROLLBACK');throw error;}
+  }
+  return Object.freeze({commitImport,listCharacterGmHooks,reviewCanon,currentCanon,
+    canonHistory:(campaign,key)=>db.prepare('SELECT data FROM vk2_canon_history WHERE campaign=? AND key=? ORDER BY revision').all(campaign,key).map(decode),
+    canonReview:(campaign,source)=>decode(db.prepare('SELECT data FROM vk2_canon_reviews WHERE campaign=? AND source=?').get(campaign,source)),
     history:(campaign,character,key)=>db.prepare('SELECT data FROM vk2_hook_history WHERE campaign=? AND character=? AND key=? ORDER BY revision').all(campaign,character,key).map(decode),
     proposals:(campaign,character)=>db.prepare('SELECT data FROM vk2_hook_canon WHERE campaign=? AND character=? ORDER BY id').all(campaign,character).map(decode),
     receipt:(campaign,source)=>decode(db.prepare('SELECT data FROM vk2_hook_imports WHERE campaign=? AND source=?').get(campaign,source)),

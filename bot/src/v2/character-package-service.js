@@ -59,5 +59,14 @@ export function createCharacterPackageService({authenticate,readCharacter,readRe
     const prepared=prepareImport(event,{characterId,scope:'hooks',payload});
     return hookStore.commitImport(prepared,{check:access.check});
   }
-  return Object.freeze({exportPackage,prepareImport,importHooks});
+  function reviewCanon(event,input){
+    if(!input||Object.keys(input).some(k=>!['characterId','proposalId','resolution','visibility','expectedRevision','replaceExisting','customValue','note'].includes(k)))throw new Error('Closed canon review request required');
+    if(typeof hookStore?.reviewCanon!=='function')throw new Error('Canon review storage not installed');
+    const access=authorize(event,input.characterId,'canon','review');
+    return hookStore.reviewCanon({campaignId:access.proof.campaign,characterId:input.characterId,proposalId:input.proposalId,
+      principal:access.proof.principal,sourceRef:access.proof.sourceRef,sourceRevision:access.proof.revision,
+      resolution:input.resolution,visibility:input.visibility,expectedRevision:input.expectedRevision,
+      replaceExisting:input.replaceExisting??false,customValue:input.customValue??'',note:input.note??''},{check:access.check});
+  }
+  return Object.freeze({exportPackage,prepareImport,importHooks,reviewCanon});
 }
