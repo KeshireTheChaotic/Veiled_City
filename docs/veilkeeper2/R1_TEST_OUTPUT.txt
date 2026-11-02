@@ -1,0 +1,17 @@
+✔ offline app boots with exactly four tools and no game handlers or transport (1.2665ms)
+✔ model capability cannot mint or substitute an authenticated source handle (0.5871ms)
+✔ unknown actions, altered sources, other actors and stale revisions fail before native preparation (0.7701ms)
+✔ native validation, pending receipt and replay preserve trace without rerunning preparation (0.6076ms)
+✔ revocation during preparation prevents receipt creation and later context access (0.1815ms)
+✔ receipt inspection is source-bound and cannot expose another conversation (0.1976ms)
+✔ intake snapshots are immutable and a reused message cannot silently change authorship or content (0.3165ms)
+✔ preparation cannot claim committed effects or register duplicate rule names (0.2565ms)
+✔ invalid JSON objects, oversized requests and asynchronous native preparation are rejected (0.3159ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61.0235

@@ -1,0 +1,12 @@
+{
+  "mode": "offline",
+  "effectExecution": false,
+  "publication": false,
+  "tools": [
+    "context_read",
+    "action_propose",
+    "state_inspect",
+    "knowledge_propose"
+  ],
+  "rules": []
+}

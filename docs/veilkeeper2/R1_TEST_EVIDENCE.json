@@ -1,0 +1,20 @@
+{
+  "started": "2026-11-02T08:29:53.5618462Z",
+  "exitCode": 0,
+  "ended": "2026-11-02T08:29:53.7925825Z",
+  "command": "node --test tests/veilkeeper2/r1-kernel.test.mjs",
+  "inputs": [
+    {
+      "path": "src/v2/kernel.js",
+      "sha256": "e6888cc004b900e548a5aad2ae193872b4e35c6d9e7a1252771dd407c3c9379e"
+    },
+    {
+      "path": "src/v2/index.js",
+      "sha256": "3329bec194e7d0aa050850a2556a1971fc4a77b7b08634103850dd37fd85991a"
+    },
+    {
+      "path": "tests/veilkeeper2/r1-kernel.test.mjs",
+      "sha256": "496ced2034065431c061afdb9cb0369470002e5aa7b0fc18dd2ae0be3d30a42f"
+    }
+  ]
+}
