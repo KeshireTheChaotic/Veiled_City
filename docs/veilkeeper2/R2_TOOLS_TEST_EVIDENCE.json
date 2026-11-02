@@ -1,0 +1,6 @@
+{
+  "startedUtc": "2026-11-02T18:40:27.8910984Z",
+  "command": "node --test tests/veilkeeper2/r2-tool-loop.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs tests/veilkeeper2/r1-kernel.test.mjs",
+  "finishedUtc": "2026-11-02T18:40:28.0781321Z",
+  "exitCode": 0
+}

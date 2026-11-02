@@ -18,7 +18,7 @@ function fixture({failSelection=false,providerResult,knowledgeStore,recall,plann
     records:knowledgeStore?undefined:{metadata:(_c,ref)=>sources.get(ref),readText:(_c,ref,revision)=>{textReads.push(ref);return {revision,text:ref==='secret'?'GM-only culprit':'The clerk claims a tunnel exists.'};}},
     knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,recall,planning,
     selectContext:()=>{if(failSelection)throw new Error('Optional memory unavailable');return ['rumor','secret'];},
-    provider:{generate:async request=>{requests.push(request);return providerResult?providerResult():{text:'“Mercer, interesting usually means trouble,” the clerk says.',usage:{inputTokens:42,outputTokens:12}};}}});
+    provider:{generate:async request=>{requests.push(request);return providerResult?providerResult(request):{text:'“Mercer, interesting usually means trouble,” the clerk says.',usage:{inputTokens:42,outputTokens:12}};}}});
   return {app,event,channel,actor,sources,requests,textReads};
 }
 test('ordinary conversation reaches one scoped inference with no typed intent or action receipt',async()=>{
@@ -98,4 +98,19 @@ test('optional private planning stays separate and is not invoked for ordinary a
   const plan=await f.app.plan(f.event);assert.equal(f.app.inspectPlan(plan).status,'private_proposal');assert.equal(privateRequests.length,1);
   await f.app.respond(f.event);assert.equal(f.requests.length,2);assert.equal(JSON.stringify(f.requests).includes('official'),false);
   assert.throws(()=>f.app.inspectPublication(plan),/not available/);
+});
+
+test('provider retrieval retains extra source grants through queued publication inspection',async()=>{
+  let f;f=fixture({failSelection:true,providerResult:request=>request.history.length===0?{toolCalls:[{id:'lookup',name:'context_read',arguments:{topic:'knowledge',focus:'rumor'}}]}:{text:'The clerk repeats the rumor.'}});
+  const result=await f.app.respond(f.event);assert.equal(result.metrics.modelCalls,2);assert.equal(result.metrics.toolCalls,1);
+  assert.equal(f.requests[1].history[0].toolResults[0].result.records[0].kind,'testimony');assert.deepEqual(f.requests[0].context.records,[]);
+  f.sources.get('rumor').revision='2';assert.throws(()=>f.app.inspectPublication(result.publication.id),/authority/);
+});
+
+test('extra lookup is revalidated after tool continuation and never grants hidden context',async()=>{
+  let f;f=fixture({failSelection:true,providerResult:request=>{
+    if(!request.history.length)return {toolCalls:[{id:'secret',name:'context_read',arguments:{topic:'knowledge',focus:'secret'}},{id:'rumor',name:'context_read',arguments:{topic:'knowledge',focus:'rumor'}}]};
+    assert.deepEqual(request.history[0].toolResults[0].result.records,[]);f.sources.get('rumor').revision='2';return {text:'Stale draft'};
+  }});
+  await assert.rejects(f.app.respond(f.event),/authority/);assert.deepEqual(f.textReads,['rumor']);
 });

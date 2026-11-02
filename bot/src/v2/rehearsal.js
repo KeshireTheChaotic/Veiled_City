@@ -28,10 +28,14 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
     let references;
     try{references=recall?recall.select(source):await selectContext(source);}catch{references=[];}
     const grant=context.issue(source,references);
-    const draft=await gateway.generate(grant,{signal});
+    const extraGrants=[];
+    const capabilities=kernel.bind(handle,{contextReader:{read(nativeSource,ref){
+      const extra=context.issue(nativeSource,[ref]);extraGrants.push(extra);return context.inspect(extra);
+    }}});
+    const draft=await gateway.generate(grant,{signal,capabilities,validateContext:()=>{for(const extra of extraGrants)context.inspect(extra);}});
     const publication=publications.queue(draft);
-    const {traceId,modelCalls,elapsedMs,usage}=gateway.inspect(draft);
-    return Object.freeze({publication,sourceHandle:handle,metrics:Object.freeze({traceId,modelCalls,elapsedMs,usage})});
+    const {traceId,modelCalls,toolCalls,elapsedMs,usage}=gateway.inspect(draft);
+    return Object.freeze({publication,sourceHandle:handle,metrics:Object.freeze({traceId,modelCalls,toolCalls,elapsedMs,usage})});
   }
   return Object.freeze({respond,plan,inspectPlan:handle=>{if(!planner)throw new Error('Private planner not installed');return planner.inspect(handle);},
     inspectPublication:publications.inspect,capabilities:kernel.bind,describe:kernel.describe});

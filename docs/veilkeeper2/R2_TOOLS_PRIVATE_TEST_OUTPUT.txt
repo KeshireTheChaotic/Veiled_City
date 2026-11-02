@@ -1,0 +1,14 @@
+✔ private planning uses explicit native scope and returns a frozen non-publishable proposal (1.9098ms)
+✔ wrong native principal/campaign/source grants fail before bodies or inference (0.3571ms)
+✔ private closure must explicitly authorize every ancestor and excludes pending canon proposals (0.2496ms)
+✔ body substitution, changed scope during inference and later correction invalidate private plans (0.4442ms)
+✔ private plan handles cannot enter the audience gateway or publication queue (1.1279ms)
+✔ aborted planning makes zero calls and source revocation prevents later private inspection (0.268ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.0823

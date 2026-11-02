@@ -1,0 +1,33 @@
+✔ offline app boots with exactly four tools and no game handlers or transport (1.3972ms)
+✔ model capability cannot mint or substitute an authenticated source handle (0.638ms)
+✔ unknown actions, altered sources, other actors and stale revisions fail before native preparation (0.7666ms)
+✔ native validation, pending receipt and replay preserve trace without rerunning preparation (0.6087ms)
+✔ revocation during preparation prevents receipt creation and later context access (0.183ms)
+✔ receipt inspection is source-bound and cannot expose another conversation (0.2009ms)
+✔ intake snapshots are immutable and a reused message cannot silently change authorship or content (0.8548ms)
+✔ preparation cannot claim committed effects or register duplicate rule names (0.2646ms)
+✔ invalid JSON objects, oversized requests and asynchronous native preparation are rejected (0.3111ms)
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (6.0711ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3893ms)
+✔ audience revocation during inference prevents queueing and later inspection (0.9853ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.7172ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.7786ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (0.8258ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (5.1086ms)
+✔ native weighted recall composes before one inference and retirement does not delete records (1.2534ms)
+✔ optional private planning stays separate and is not invoked for ordinary audience response (1.3447ms)
+✔ provider retrieval retains extra source grants through queued publication inspection (0.6548ms)
+✔ extra lookup is revalidated after tool continuation and never grants hidden context (0.6119ms)
+✔ ordinary response remains one call while advertising exactly four generic contracts (1.6454ms)
+✔ optional tool results continue the conversation, retain call IDs and accumulate usage (0.3143ms)
+✔ duplicate call IDs replay once and altered arguments under one ID abort (0.529ms)
+✔ unknown capabilities are rejected without invoking native code; unbounded tool requests terminate (0.3814ms)
+✔ native exceptions are bounded and context is revalidated before continuing or inspecting (0.2734ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.7787

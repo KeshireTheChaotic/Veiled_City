@@ -76,7 +76,8 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
     const source=journal.recordSource({...proof,traceId:existing?.traceId??randomUUID()});
     const handle=Object.freeze(Object.create(null));handles.set(handle,source);return handle;
   }
-  function bind(handle){
+  function bind(handle,{contextReader=context}={}){
+    if(contextReader!==null&&typeof contextReader.read!=='function')throw new TypeError('Native scoped context reader required');
     const source=handles.get(handle);
     if(!source)throw new Error('Native source handle required');
     const current=()=>{try{return authority.revalidate(source)===true;}catch{return false;}};
@@ -90,9 +91,9 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
       context_read:check(input=>{
         if(!closed(input,['topic'],['focus','cursor'])||!text(input.topic)||('focus'in input&&!text(input.focus))||('cursor'in input&&!text(input.cursor)))return blocked('invalid_context_query');
         if(input.cursor)return blocked('context_not_available');
-        if(input.topic==='knowledge'&&context){
+        if(input.topic==='knowledge'&&contextReader){
           if(!input.focus)return blocked('invalid_context_query');
-          try{return snapshot(context.read(source,input.focus));}catch{return blocked('context_not_available');}
+          try{return snapshot(contextReader.read(source,input.focus));}catch{return blocked('context_not_available');}
         }
         if(input.topic!=='conversation')return blocked('context_not_available');
         return snapshot({source_ref:source.id,text:source.text,trace_id:source.traceId});
