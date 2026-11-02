@@ -1,0 +1,30 @@
+✔ only a separate human-GM command can accept an imported proposal; approval grants no delivery (3.7143ms)
+✔ conflicting value or broader visibility requires explicit replacement against the current revision (1.7016ms)
+✔ stale review and altered replay cannot update canon; exact replay preserves original receipt (1.3585ms)
+✔ reject and custom resolution preserve source proposal and synchronized review state (1.0671ms)
+✔ revoked authority at transaction completion rolls back ledger, proposal state and review receipt (0.8374ms)
+✔ closed review arguments and target campaign/character bindings reject forged escalation (0.9993ms)
+✔ stored hooks feed private planning as optional seeds, without raw imported payload or pending canon (48.3204ms)
+✔ human-reviewed canon and native connections retain kind but never become audience-entitled via this adapter (3.539ms)
+✔ changed or resolved stored hook invalidates a previously generated private plan (3.3048ms)
+✔ superseded canon cannot be read as current private planning evidence (1.2547ms)
+✔ private hooks and pending canon survive reopening and identical command replay adds nothing (102.6064ms)
+✔ altered command replay conflicts while a new authorized import keeps immutable prior versions (1.3765ms)
+✔ bad final canon suggestion rolls back hooks, proposals and receipt together (0.648ms)
+✔ role revocation at final transaction check rolls back every private write (0.6339ms)
+✔ players cannot import private hooks and canon suggestions are excluded from default seed reads (1.8707ms)
+✔ colliding normalized keys abort rather than silently overwrite distinct imported hooks (0.576ms)
+✔ authorized target creates one directional GM-private connection with bounded score and no PC authority (3.4311ms)
+✔ same command replay is inert; later authorized update preserves connection history (1.399ms)
+✔ unresolved and canon-suggestion targets are preserved as holds without invented entities or relationships (0.8581ms)
+✔ wrong campaign or changed target at transaction completion leaves no import or partial relationship (1.0205ms)
+✔ invalid relationship targets abort atomically and duplicates use the final supplied connection without duplicate rows (0.758ms)
+✔ player cannot import a private relationship even when it names their own PC (0.4827ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 178.132

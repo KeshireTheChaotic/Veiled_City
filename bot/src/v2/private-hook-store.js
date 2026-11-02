@@ -113,6 +113,19 @@ export function openPrivateHookStore(filename=':memory:'){
     }catch(error){db.exec('ROLLBACK');throw error;}
   }
   return Object.freeze({commitImport,listCharacterGmHooks,reviewCanon,currentCanon,
+    readPlanningRecord(campaign,ref){
+      // Only current committed rows. Proposals and historical versions are excluded.
+      const hook=decode(db.prepare("SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND json_extract(r.data,'$.id')=?").get(campaign,ref));
+      if(hook){
+        if(hook.status!=='active'||hook.hook_type==='canon_suggestion')return null;
+        return {kind:'hook',revision:hook.revision,value:{title:hook.title,premise:hook.premise,permission:hook.permission,suggested_entry:hook.suggested_entry,
+          character_id:hook.character_id,source_ref:hook.source_ref,authority:'optional_private_seed',execution_authority:false,publication_authority:false}};
+      }
+      const canon=decode(db.prepare("SELECT r.data FROM vk2_canon_history r JOIN vk2_canon_heads h USING(campaign,key,revision) WHERE r.campaign=? AND json_extract(r.data,'$.id')=?").get(campaign,ref));
+      if(canon)return {kind:'canon',revision:canon.revision,value:{key:canon.canon_key,value:canon.value,provenance:canon.provenance,authority:'human_reviewed_canon',publication_authority:false}};
+      const relationship=decode(db.prepare('SELECT r.data FROM vk2_relationship_history r JOIN vk2_relationship_heads h USING(campaign,id,revision) WHERE r.campaign=? AND r.id=?').get(campaign,ref));
+      return relationship?{kind:'relationship',revision:relationship.revision,value:relationship}:null;
+    },
     listRelationships(campaign,{includeGM=false,characterId=null}={}){
       if(!includeGM)return [];
       return db.prepare('SELECT r.data FROM vk2_relationship_history r JOIN vk2_relationship_heads h USING(campaign,id,revision) WHERE r.campaign=?').all(campaign).map(decode)

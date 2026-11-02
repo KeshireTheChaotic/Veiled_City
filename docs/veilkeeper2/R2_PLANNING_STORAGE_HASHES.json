@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/private-planning-repository.js",
+      "sha256": "99e79eba228ac0b760264103949c40d880acd50880a612d8e2fb5bd012684de5"
+    },
+    {
+      "path": "bot/src/v2/private-hook-store.js",
+      "sha256": "ac46c5369574eee757c6394246e163c8663f089f2b8d61361cb01a4d60ac48b5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-planning-repository.test.mjs",
+      "sha256": "7010c212c84f7db66b62f3c79005d4bc5d77f4afc09134445d572df64fa00fe0"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-relationship-import.test.mjs",
+      "sha256": "99594cdef17fdaa78b2c87065cdf34d1c7d4a97a4caaba247921edcceb511358"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-canon-review.test.mjs",
+      "sha256": "cf209c1ba16a2e0e75592ef170b8b7c3f9bb2b33bfab8f35d5c22a3ebea24204"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-private-hooks.test.mjs",
+      "sha256": "ad1a681b8e63bf73b3dcd1ede57362929bb64c781de2a084d3a44f1a51cc3a57"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "d452b4aa7552e75725b9ad6bb2fbf267dfe76beecf0856aa9b5820f5e5997c35"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PLANNING_STORAGE_REPORT.md",
+      "sha256": "b3761ff58553795d5e4e6f9820a2b1d85748e87e49d83cbd7641b9c0de051bc7"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PLANNING_STORAGE_TEST_OUTPUT.txt",
+      "sha256": "8bd97fa0a4165e7d80dfe1f4282283f62ca811cc1d10efd851b1da1e9b64788d"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_PLANNING_STORAGE_TEST_EVIDENCE.json",
+      "sha256": "ce29cab08932471fd8fd755f30f386c54ba07086b89bd202ff2e86d440b83349"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}
