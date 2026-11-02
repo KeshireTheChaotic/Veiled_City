@@ -1,6 +1,8 @@
 export {safeText,safeStem} from './file-names.js';
 export {normalizeNarrativeMarkdown,narrativeRelativePath} from './narrative-text.js';
 export {createNarrativeExportPackage,getNarrativeMarkdown,narrativeContext} from './character-narrative.js';
+export {buildGmCanonExport,buildGmHooksExport,buildGmPrivateExport,buildPlayerExport,createGmExportFiles,createPlayerExportFiles,
+  gmCanonMarkdown,gmHooksMarkdown,gmPrivateMarkdown,markdownToDocx,playerCharacterProjection,playerMarkdown} from './character-export.js';
 export {createCharacterAdvancementPort} from './contracts/advancement.js';
 
 export {createCharacterCreationConsumer,characterCreationConsumer} from './contracts/creation.js';

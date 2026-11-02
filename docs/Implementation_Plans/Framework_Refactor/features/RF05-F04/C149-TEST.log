@@ -1,0 +1,9 @@
+Command: `node --test tests/ai-gm-2026-10/rf05-f04-c149-character-export.test.mjs`
+Working directory: `bot`
+Date: 2026-11-01
+Exit code: 0
+Outcome: 2 passed, 0 failed, 0 skipped (68.9484 ms)
+
+Passing cases:
+- Character public and root compatibility exports are identical function objects.
+- Player files omit GM-private source, preserve player material and database read arguments, and produce JSON, Markdown and DOCX output; the separate GM hooks projection retains its private content.
