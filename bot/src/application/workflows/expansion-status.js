@@ -1,6 +1,6 @@
-/** Shared release feature contract and read-only GM diagnostics; absent flags are disabled and records never imply PC authority. */
-import {EXPANSION_FEATURES} from './frameworks/narrative/public.js';
-export {EXPANSION_FEATURES} from './frameworks/narrative/public.js';
+/** GM-only read-only assembly of Narrative feature definitions and campaign status. */
+import {EXPANSION_FEATURES} from '../../frameworks/narrative/public.js';
+
 export function expansionStatus(db,guild){
   const flags=db.getCityCalendar(guild).flags;
   return {visibility:"gm",schema_version:db.schemaVersion(),features:Object.entries(EXPANSION_FEATURES).map(([flag,contract])=>({flag,
