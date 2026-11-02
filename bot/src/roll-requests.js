@@ -31,19 +31,13 @@ import {inspectNativeUnarmedAttack} from './native-unarmed-attacks.js';
 import {publishPreRollFearNotice} from './pre-roll-fear-notice.js';
 import {inspectOrdinaryRollModifier} from './native-roll-modifiers.js';
 import {inspectNativeEquippedAttack} from './native-equipped-attacks.js';
-import {EncounterLibrary} from './frameworks/daggerheart/public.js';
-import {activeNativeConditions,validateNativeCondition} from './native-group-features.js';
-import {createFeatureRollConditionRules,featureRollSource} from './frameworks/daggerheart/feature-roll-source-rules.js';
+import {rollConditionContext,persistRollConditionContext} from './native-roll-conditions.js';
+export {inspectSavedRollConditionContext,persistRollConditionContext} from './native-roll-conditions.js';
 const hash=value=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const signed=value=>`${value>=0?"+":""}${value}`;
 export const rollRevision=hash;
 let nativeRequests;
 let nativeFeatureOpportunities;
-let featureRollConditions,featureRollLibrary;
-function conditionRules(){return featureRollConditions??=createFeatureRollConditionRules({
-  resolveFeatureRollSource:(pc,input)=>featureRollSource(featureRollLibrary??=new EncounterLibrary(process.env.CONTENT_ROOT||'../content'),pc,input),
-  activeNativeConditions,validateNativeCondition,indexWorldEvent:(...args)=>nativeWorldEvents.indexWorldEvent(...args)});}
-export function inspectSavedRollConditionContext(...args){return conditionRules().inspectSavedRollConditionContext(...args);}
 export function captureAdvantageFeatureOpportunities(db,guild,request){
   if(!nativeFeatureOpportunities){
     const source=createAdvantageOpportunitySource({currentScene,nativeEncounterActor,nativeActorControl,
@@ -56,7 +50,7 @@ export function captureAdvantageFeatureOpportunities(db,guild,request){
 function nativeRollRequests(){
   return nativeRequests??=createRollRequestRules({traits:TRAITS,
     sources:{personalCharacter:(...args)=>personalCharacter(...args),currentScene:(...args)=>currentScene(...args),requireCitySource:(...args)=>requireCitySource(...args),cityAudit:(...args)=>cityAudit(...args),cityKey:(...args)=>cityKey(...args),overlapsOwnerActionTerminal:(...args)=>overlapsOwnerActionTerminal(...args)},
-    mechanics:{rollConditionContext:(...args)=>conditionRules().rollConditionContext(...args),persistRollConditionContext:(...args)=>conditionRules().persistRollConditionContext(...args),captureAdvantageFeatureOpportunities:(...args)=>captureAdvantageFeatureOpportunities(...args),isPvpIntent:(...args)=>isPvpIntent(...args),assertNonPvpCombatant:(...args)=>assertNonPvpCombatant(...args),assertPcCanAct:(...args)=>assertPcCanAct(...args),blazeActionAuthorization:(...args)=>blazeActionAuthorization(...args),nativeDefenseAura:(...args)=>nativeDefenseAura(...args),persistNativeDefenseAura:(...args)=>persistNativeDefenseAura(...args),nativeFormationDefense:(...args)=>nativeFormationDefense(...args),persistNativeFormationDefense:(...args)=>persistNativeFormationDefense(...args),nativeVeilExposureDefense:(...args)=>nativeVeilExposureDefense(...args),inspectNativeUnarmedAttack:(...args)=>inspectNativeUnarmedAttack(...args),inspectOrdinaryRollModifier:(...args)=>inspectOrdinaryRollModifier(...args),inspectNativeEquippedAttack:(...args)=>inspectNativeEquippedAttack(...args)},
+    mechanics:{rollConditionContext:(...args)=>rollConditionContext(...args),persistRollConditionContext:(...args)=>persistRollConditionContext(...args),captureAdvantageFeatureOpportunities:(...args)=>captureAdvantageFeatureOpportunities(...args),isPvpIntent:(...args)=>isPvpIntent(...args),assertNonPvpCombatant:(...args)=>assertNonPvpCombatant(...args),assertPcCanAct:(...args)=>assertPcCanAct(...args),blazeActionAuthorization:(...args)=>blazeActionAuthorization(...args),nativeDefenseAura:(...args)=>nativeDefenseAura(...args),persistNativeDefenseAura:(...args)=>persistNativeDefenseAura(...args),nativeFormationDefense:(...args)=>nativeFormationDefense(...args),persistNativeFormationDefense:(...args)=>persistNativeFormationDefense(...args),nativeVeilExposureDefense:(...args)=>nativeVeilExposureDefense(...args),inspectNativeUnarmedAttack:(...args)=>inspectNativeUnarmedAttack(...args),inspectOrdinaryRollModifier:(...args)=>inspectOrdinaryRollModifier(...args),inspectNativeEquippedAttack:(...args)=>inspectNativeEquippedAttack(...args)},
     reserveRollAmendment:(...args)=>reserveRollAmendment(...args)});
 }
 export function rollTraitBreakdown(...args){return nativeRollRequests().rollTraitBreakdown(...args);}
@@ -81,6 +75,7 @@ export function formatRollRequest(row,{user=null,db=null,guild=null}={}){
   const review=row.status==="needs_review"||outcomeReview;
   return [`[${review?"Review required":"Pending"} Daggerheart ${data.kind} roll — ${row.record_key}]`,
     `Actor: ${participant?.name||data.character_name} (<@${user||data.owner_user_id}>)`,
+    ...(row.status==='pending'&&data.native_condition_amendment?['Conditions changed before rolling. No dice were rolled or resources spent by that submission. Review these odds, then use /vc-roll menu to roll.']:[]),
     `Attempt: ${participant?.attempt||(participant?.input?"Owner-authored linked contribution; original declaration retained":data.attempt)}`,
     `Trait: ${b.trait} ${b.trait_bonus===null?"PENDING":signed(b.trait_bonus)} [recorded character sheet at preparation]`,
     ...b.modifiers.map(mod=>`${mod.name}: ${mod.kind==="flat"?signed(mod.amount):mod.kind} [${mod.ruling_key?`saved ruling ${mod.ruling_key}`:'native contextual odds'}; ${mod.source}; included]`),

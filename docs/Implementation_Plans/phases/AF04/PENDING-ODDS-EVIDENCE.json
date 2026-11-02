@@ -1,0 +1,87 @@
+{
+  "phase": "AF04",
+  "status": "single_pc_pending_native_condition_odds_amendment_complete_bounded",
+  "inputs": [
+    {
+      "path": "bot/src/frameworks/daggerheart/feature-roll-source-rules.js",
+      "sha256": "d6bdc0722b9cb298d113526149bee480ca4692a81641d0bada191e9273e72e60"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/roll-collaboration-rules.js",
+      "sha256": "4fd431b9a20436377fdd49d2f602afb20650d544ae0e84f1bc93b15efc5b02c3"
+    },
+    {
+      "path": "bot/src/roll-requests.js",
+      "sha256": "7588552fcf554c1161be59ea8499924687a7052e627d759e8a081915b760064d"
+    },
+    {
+      "path": "bot/src/roll-collaboration.js",
+      "sha256": "144d41392eadbf4fc9dc7a4f1d7a8c67959896ae45065977da5593e14922b14e"
+    },
+    {
+      "path": "bot/src/typed-roll-proof.js",
+      "sha256": "99329624c850b1bb1f6aeb3c72a8ef8bddeeba6895a16588e3e2cffda60b8bf8"
+    },
+    {
+      "path": "bot/src/native-roll-conditions.js",
+      "sha256": "6390b75a3ab257949be6604f8226a97f5bb278d77d8b8f71122e3ac6bac68f81"
+    },
+    {
+      "path": "bot/src/native-group-features.js",
+      "sha256": "fa85b2f868d614c51fd61ac48d50809f28968f64666f71274f379275b9cd0999"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/condition-source.js",
+      "sha256": "2948d746f0ca284cc11d5e6bb9187d3d8aecde7058793b2a97b6f19d194fd325"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/public.js",
+      "sha256": "8f65b419a7734eab2912a40a903a479ba0645156d43cf7e86ae0c903a92b2942"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs",
+      "sha256": "3b1890bee6312da2f3ad041a490053e86e1fd75ea8031d9f27e386d956ff7191"
+    }
+  ],
+  "verification": [
+    {
+      "failed": 2,
+      "finding": "Two fixture comparisons differed only by omitted undefined character_name.",
+      "passed": 10,
+      "skipped": 0,
+      "command": "node --test tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs",
+      "exit": 1
+    },
+    {
+      "command": "node --test --test-name-pattern=\"never waives|proof failure rolls back\" tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs",
+      "exit": 0,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "failed": 0,
+      "passed": 1,
+      "preceding_failure": "Fixture omitted default active record status required by actual paid-choice proof.",
+      "skipped": 0,
+      "command": "node --test --test-name-pattern=\"owner-paid Experience\" tests/ai-gm-2026-10/af04-spellcast-condition-odds.test.mjs",
+      "exit": 0
+    },
+    {
+      "command": "node --test --test-name-pattern=\"actual owner submission|ordinary success|two owners|Critical\" tests/ai-gm-2026-10/af07-codex-scene.test.mjs",
+      "exit": 0,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "distinct_odds_cases_verified": 13,
+  "syntax_checks_before_extraction": 5,
+  "syntax_checks_after_extraction": 7,
+  "limits": [
+    "Single-PC native condition odds only; Tag Team and paid Help reconciliation remain open.",
+    "Reviewed packaged source metadata only; no autonomous feature activation or card effects.",
+    "Two source ownership rows appended under the released registry window; full architecture-gate qualification remains separate.",
+    "No live Discord/provider test; AF04-AF07 incomplete."
+  ]
+}

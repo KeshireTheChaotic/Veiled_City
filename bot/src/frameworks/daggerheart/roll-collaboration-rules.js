@@ -22,7 +22,7 @@ function adjudicateRollSource(db,guild,input,reviewer){
     session_id:session.id,scene:currentScene(db,guild).key,visibility:"character",subject_key:pc.id,
     details:{human_reviewed:true,reviewed_by:reviewer,ruling_key:input.ruling_key,[field]:{...cityObject(input.data),ruling_key:input.ruling_key}}},reviewer);
 }
-function live(db,guild,row){
+function live(db,guild,row,{amendConditionOdds=false}={}){
   const session=db.getActiveSession(guild);
   if(!session||row.data.session_id!==session.id||row.data.scene!==currentScene(db,guild).key) fail("Request belongs to another session or scene.");
   requireCitySource(db,guild,row.source_event);
@@ -51,7 +51,18 @@ function live(db,guild,row){
   };
   checkResources(pc);
   const actual=reconcileNativeFormationBreakdown(db,guild,row,rollBreakdown(db,guild,row.data.input,pc));
-  if(JSON.stringify(actual)!==JSON.stringify(row.data.breakdown)||actual.unresolved.length) fail("Sheet or authority changed, or mechanics need review; no dice or spending.");
+  let conditionAmendment=null;
+  if(JSON.stringify(actual)!==JSON.stringify(row.data.breakdown)){
+    const {native_condition_odds:oldOdds,disadvantage:oldDis,...oldBase}=row.data.breakdown,
+      {native_condition_odds:newOdds,disadvantage:newDis,...newBase}=actual;
+    if(!amendConditionOdds||row.status!=='pending'||row.data.tag||row.data.result||row.data.roll_id
+      ||!oldOdds||!newOdds||!oldBase.feature_roll_source||JSON.stringify(oldBase)!==JSON.stringify(newBase)
+      ||JSON.stringify(oldOdds)===JSON.stringify(newOdds)||oldDis-oldOdds.disadvantage!==newDis-newOdds.disadvantage
+      ||typeof mechanics.persistRollConditionContext!=='function')
+      fail("Sheet or authority changed, or mechanics need review; no dice or spending.");
+    conditionAmendment=actual;
+  }
+  if(actual.unresolved.length)fail("Sheet or authority changed, or mechanics need review; no dice or spending.");
   if(row.data.tag){
     requireCitySource(db,guild,row.data.tag.proof);
     for(const participant of row.data.tag.participants){
@@ -73,7 +84,7 @@ function live(db,guild,row){
     if(!sceneAccess(db,guild,{observer_type:"character",observer_key:helper.character,target_type:"character",target_key:pc.id,sense:"sound"}))
       fail("Confirmed helper no longer has scene access; human correction required without reroll/refund.");
   }
-  return pc;
+  return amendConditionOdds?{pc,conditionAmendment}:pc;
 }
 /** Read-only current unrolled request eligibility shared by the existing Fear coordinator. */
 function inspectUnrolledInterruptRequest(db,guild,row){
@@ -227,12 +238,18 @@ function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
     if(row.status==='pending')assertPreRollFearRollAllowed(db,guild,row);
     if(["resolved","superseded","cancelled"].includes(row.status)&&input.op!=="share")
       fail("Committed/closed rolls cannot be reopened; use human saved-result review.");
-    live(db,guild,row);
+    const checked=live(db,guild,row,{amendConditionOdds:input.op==='roll'&&pc.id===row.subject_key}),
+      conditionAmendment=checked?.conditionAmendment;
     const affected=[...new Set([pc.id,row.subject_key,...(row.data.tag?.participants||[]).map(item=>item.character)])];
     const beforeResources=new Map(affected.map(id=>[id,structuredClone(db.getCharacter(id).data.resources)]));
     let data=structuredClone(row.data),status=row.status;
     const mine=pc.id===row.subject_key;
-    if(input.op==="share"){
+    if(conditionAmendment){
+      // The old Roll authorization did not approve these odds. Return the existing
+      // pending controls at a new revision; no dice or optional spending occurs.
+      data.breakdown=conditionAmendment;
+      data.native_condition_amendment={previous_revision:rollRevision(row)};
+    }else if(input.op==="share"){
       if(!mine||input.scope!=="party"||input.confirm!==true||!data.result||!["resolved","awaiting_damage","awaiting_damage_type"].includes(row.status))
         fail("Only the acting owner may affirmatively share an actual saved result with the party.");
       const preview=input.preview?validateRollSharePreview(db,guild,row,input.preview):null;
@@ -428,6 +445,7 @@ function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
       }
     }else throw new UserInputError("Unsupported mechanical contribution. Describe your intent freely; no narrative response menu is required.");
     const after=save(db,guild,row,data,status,user);
+    if(conditionAmendment)mechanics.persistRollConditionContext(db,guild,after);
     if(after.status==="resolved"&&after.data.input?.accepted_intent)finalizeTypedRollAction(db,guild,after);
     if(after.status==="resolved"&&after.data.result?.auto_critical)completeBlazeAction(db,guild,pc.id,after.data.input.accepted_intent,{request:after.record_key,roll:after.data.roll_id});
     recordObservedAttack(db,guild,after);
@@ -437,7 +455,8 @@ function contributeRoll(db,guild,user,input,{rng=d,gmRng=d}={}){
         stress:{before:before.stress.current,after:current.stress.current,delta:current.stress.current-before.stress.current}};
     });
     db.saveCityRecord(guild,{kind:"roll_operation",key:receiptKey,visibility:"character",subject_key:pc.id,source_event:row.source_event,
-      data:{user,request:key,op:input.op,authorization:input,resource_deltas,result:after}});
+      data:{user,request:key,op:conditionAmendment?'condition-odds-amendment':input.op,authorization:input,resource_deltas,result:after,
+        ...(conditionAmendment?{native_condition_amendment:true}:{} )}});
     captureAdvantageFeatureOpportunities(db,guild,after);
     reserveRollAmendment(db,guild,after);
     if(input.op==="share")reserveRollPartyDisclosure(db,guild,after);

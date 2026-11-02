@@ -62,3 +62,5 @@ nativeMovementReaderSource.provideSource(provideNativeMovementReader);
 import {nativeMovementCondition} from './frameworks/daggerheart/public.js';
 // Provide this module's original movement condition check to the fixed native slot; no other authority is granted.
 nativeMovementCondition.bind({nativeMovementConditionIssue});
+import {nativeConditionSource} from './frameworks/daggerheart/public.js';
+nativeConditionSource.bind({activeNativeConditions,validateNativeCondition});

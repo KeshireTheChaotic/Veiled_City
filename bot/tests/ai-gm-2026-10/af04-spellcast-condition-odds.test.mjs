@@ -2,14 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {EncounterLibrary} from '../../src/frameworks/daggerheart/encounter-library.js';
 import {createFeatureRollConditionRules,featureRollSource} from '../../src/frameworks/daggerheart/feature-roll-source-rules.js';
-import {createRollRequestRules} from '../../src/frameworks/daggerheart/roll-request-rules.js';
+import {createRollRequestRules,rollRevision} from '../../src/frameworks/daggerheart/roll-request-rules.js';
+import {createRollCollaborationRules} from '../../src/frameworks/daggerheart/roll-collaboration-rules.js';
 import {createTypedRollProof} from '../../src/frameworks/daggerheart/typed-roll-proof.js';
 import {dualityRoll} from '../../src/frameworks/daggerheart/dice.js';
 import {nativeStore} from './af03-store.mjs';
 
 function fixture({marked=true,advantage=false,kind='action',feature='domain:hex:jinx'}={}){
   const store=nativeStore(),{db,indexWorldEvent}=store,noop=()=>null,library=new EncounterLibrary('../content'),
-    card=library.findDomainCard(feature),pc={id:'pc',owner_user_id:'owner',data:{level:card.card.level,class:'Witch',subclass:'Hedge',domains:[card.domain,'Sage'],
+    card=library.findDomainCard(feature),pc={id:'pc',name:'Witch',owner_user_id:'owner',data:{level:card.card.level,class:'Witch',subclass:'Hedge',domains:[card.domain,'Sage'],
       domain_cards:[{name:card.card.name,active:true}],traits:{Knowledge:2},inventory:[{name:'Focus',equipped:true}],resources:{hope:2,stress:{current:0,max:6}}}};
   const condition=db.saveCityRecord('g',{kind:'pc_native_condition',key:'foam',status:'active',actor_key:'pc',visibility:'character',subject_key:'pc',
     data:{cause:{feature:'adversary:ritual-enforcement-team:null-foam',condition:'Restrained',expiry:'until_freed',spellcast_disadvantage:true}}});
@@ -52,6 +53,103 @@ function fixture({marked=true,advantage=false,kind='action',feature='domain:hex:
   const prove=createTypedRollProof({historicalActionSource:noop,inspectSavedRollConditionContext:conditionRules.inspectSavedRollConditionContext});
   return {...store,pc,input,condition,conditionRules,rules,prepare:()=>rules.prepareRollRequest(db,'g',input,'reviewer'),sealRoll,prove,failReceipt:()=>failReceipt=true};
 }
+
+function collaboration(f){
+  const {db,pc,rules}=f,noop=()=>null;let notices=0;
+  const save=db.saveCityRecord;db.saveCityRecord=(guild,input)=>save(guild,{status:'active',...input});
+  pc.guild_id='g';db.getCityCalendar=()=>({flags:{roll_requests:true,roll_collaboration:true}});
+  db.updateCharacterData=(_id,fn)=>{fn(pc.data);return pc;};db.recordSpotlight=noop;
+  db.savedRollsForResult=(_g,id)=>db.listCityRecords('g',{kind:'saved_roll'}).filter(r=>r.payload.id===id);
+  db.addRoll=(_g,session,user,character,type,payload)=>{
+    db.saveCityRecord('g',{kind:'saved_roll',key:payload.id,id:payload.id,session_id:session,discord_user_id:user,character_id:character,roll_type:type,payload});return payload.id;
+  };
+  const requireSource=(_db,_g,key)=>{const s=db.getWorldEvent('g',key);assert.equal(s?.status,'active');return s;},
+    sources={personalCharacter:(_db,_g,user)=>{assert.equal(user,'owner');return pc;},currentScene:()=>({key:'scene'}),sceneAccess:()=>true,
+      requireCitySource:requireSource,cityAudit:noop,cityKey:s=>s,cityObject:v=>v,indexWorldEvent:f.indexWorldEvent,
+      validateRollSharePreview:noop,sourceConfirmedRollAttempt:noop},
+    outcomes={recordObservedAttack:noop,finalizeTypedRollAction:noop,resumePendingGmActions:noop,reserveRollAmendment:()=>notices++,
+      reserveRollPartyDisclosure:noop,captureAdvantageFeatureOpportunities:noop},
+    mechanics=Object.fromEntries(['assertNonPvpCombatant','validatePvpAttackRoll','validatePvpDamageRoll','validatePcDeathOutcome',
+      'blazeActionAuthorization','blazeCriticalResult','completeBlazeAction','validateBlazeSavedRoll','assertPcCanAct','consentAction','historicalActionSource',
+      'assertGmRulingRequest','assertGmInvitationRequest','nativeAdversaryDamageDefense','validateNativeExperienceEligibility','inspectNativeUnarmedAttack',
+      'assertPreRollFearRollAllowed','inspectNativeRollParticipation','typedRollProof'].map(name=>[name,noop]));
+  Object.assign(mechanics,f.conditionRules,{rollRevision,rollBreakdown:rules.rollBreakdown,rollTraitBreakdown:rules.rollTraitBreakdown,
+    hopeCap:()=>6,reconcileNativeFormationBreakdown:(_db,_g,_row,b)=>b,
+    validateNativeExperienceEligibility:()=>{throw Object.assign(new Error('Reviewed source route.'),{code:'NATIVE_EXPERIENCE_ELIGIBILITY'});}});
+  const native=createRollCollaborationRules({sources,outcomes,mechanics});
+  return {native,notices:()=>notices,roll:(row,key,rng)=>native.contributeRoll(db,'g','owner',{
+    op:'roll',request:row.record_key,expected_revision:rollRevision(row),key},{rng})};
+}
+
+test('pending Spellcast condition change amends existing controls without dice then requires a new owner Roll revision',()=>{
+  const f=fixture();try{
+    const c=collaboration(f),original=f.prepare(),resources=structuredClone(f.pc.data.resources),oldProof=f.conditionRules.inspectSavedRollConditionContext(f.db,'g',original);
+    f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'cleared'});
+    let dice=0;const amended=c.roll(original,'before-release',()=>{dice++;return 8;});
+    assert.equal(amended.status,'pending');assert.equal(amended.data.breakdown.disadvantage,0);assert.equal(dice,0);
+    assert.equal(amended.data.revision,original.data.revision+1);assert.equal(c.notices(),1);assert.deepEqual(f.pc.data.resources,resources);
+    assert.deepEqual(f.conditionRules.inspectSavedRollConditionContext(f.db,'g',original),oldProof);
+    assert.notEqual(f.conditionRules.inspectSavedRollConditionContext(f.db,'g',amended).event_key,oldProof.event_key);
+    assert.deepEqual(c.roll(original,'before-release',()=>{throw Error('replay rolled');}),amended);
+    assert.throws(()=>c.roll(original,'stale-new-attempt',()=>{throw Error('stale rolled');}));
+    const resolved=c.roll(amended,'new-revision',()=>++dice===1?8:5);
+    assert.equal(dice,2);assert.equal(resolved.status,'resolved');assert.equal(resolved.data.result.total,15);
+    assert.equal(f.prove(f.db,'g',resolved).outcome,'success');assert.equal(f.pc.data.resources.hope,3);
+    assert.equal(f.db.getCityRecord('g','roll_operation','before-release:pc').data.op,'condition-odds-amendment');
+  }finally{f.close();}
+});
+
+test('new Restrained condition adds compulsory odds to an unrolled Spellcast request without consuming its Roll',()=>{
+  const f=fixture();try{
+    const c=collaboration(f);f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'cleared'});
+    const original=f.prepare();f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'active'});
+    const amended=c.roll(original,'condition-arrival',()=>{throw Error('old odds rolled');});
+    assert.equal(amended.data.breakdown.disadvantage,1);let dice=0;
+    const resolved=c.roll(amended,'accept-new-odds',()=>[8,5,4][dice++]);
+    assert.equal(dice,3);assert.equal(resolved.data.result.total,11);assert.equal(f.prove(f.db,'g',resolved).outcome,'failure');
+  }finally{f.close();}
+});
+
+test('condition amendment never waives a sheet change, different owner or partially rolled Tag Team',()=>{
+  for(const change of ['trait','owner','tag']){
+    const f=fixture();try{
+      const c=collaboration(f);let original=f.prepare();f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'cleared'});
+      if(change==='trait')f.pc.data.traits.Knowledge=3;
+      if(change==='tag')original=f.db.saveCityRecord('g',{...original,key:original.record_key,data:{...original.data,tag:{participants:[]}}});
+      if(change==='owner')assert.throws(()=>c.native.contributeRoll(f.db,'g','other',{op:'roll',request:original.record_key,key:'wrong',expected_revision:rollRevision(original)}));
+      else assert.throws(()=>c.roll(original,'unrelated-change',()=>{throw Error('invalid rolled');}));
+      assert.equal(c.notices(),0);assert.deepEqual(f.db.getCityRecord('g','roll_request',original.record_key),original);
+    }finally{f.close();}
+  }
+});
+
+test('condition amendment proof failure rolls back the request, revision, history and operation receipt',()=>{
+  const f=fixture();try{
+    const c=collaboration(f),original=f.prepare();f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'cleared'});f.failReceipt();
+    assert.throws(()=>c.roll(original,'failed-refresh',()=>{throw Error('uncommitted rolled');}),/injected source receipt failure/);
+    assert.deepEqual(f.db.getCityRecord('g','roll_request',original.record_key),original);
+    assert.equal(f.db.listCityRecords('g',{kind:'roll_operation'}).length,0);assert.equal(c.notices(),0);
+    assert.equal(f.db.listCityRecords('g',{kind:'saved_roll'}).length,0);
+  }finally{f.close();}
+});
+
+test('an owner-paid Experience survives condition amendment and rolling without a second Hope charge',()=>{
+  const f=fixture();try{
+    const c=collaboration(f),original=f.prepare();f.pc.data.experiences=[{name:'Occult',modifier:2}];
+    f.indexWorldEvent(f.db,'g',{key:'experience-source',kind:'roll_adjudication',source_kind:'gm',source_id:'reviewer',
+      visibility:'character',subject_key:'pc',session_id:'session',scene:'scene',details:{human_reviewed:true,ruling_key:'ruling',
+        roll_participation:{kind:'experience',request:original.record_key,character_id:'pc',experience:'Occult',description:'Relevant occult study.'}}});
+    const paid=c.native.contributeRoll(f.db,'g','owner',{op:'experience',request:original.record_key,key:'pay-once',
+      expected_revision:rollRevision(original),experience:'Occult',proof:'experience-source',description:'Relevant occult study.',pay_hope:true});
+    assert.equal(f.pc.data.resources.hope,1);
+    f.db.saveCityRecord('g',{...f.condition,key:f.condition.record_key,status:'cleared'});
+    const amended=c.roll(paid,'paid-refresh',()=>{throw Error('refresh rolled');});
+    assert.deepEqual(amended.data.experiences,paid.data.experiences);assert.equal(f.pc.data.resources.hope,1);
+    let dice=0;const resolved=c.roll(amended,'paid-roll',()=>++dice===1?5:8);
+    assert.equal(resolved.data.result.total,17);assert.equal(resolved.data.result.experience,2);assert.equal(f.pc.data.resources.hope,1);
+    assert.equal(f.prove(f.db,'g',resolved).outcome,'success');assert.equal(dice,2);
+  }finally{f.close();}
+});
 
 test('source-qualified Spellcast preparation adds native disadvantage and preserves its actual saved failure proof',()=>{
   const f=fixture();try{

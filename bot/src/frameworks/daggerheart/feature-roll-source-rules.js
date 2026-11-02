@@ -89,17 +89,19 @@ export function createFeatureRollConditionRules({resolveFeatureRollSource,active
   }
   function persistRollConditionContext(db,guild,request){
     if(!request.data.breakdown.feature_roll_source&&!request.data.breakdown.native_condition_odds)return null;
-    const data=binding(request),key=keyFor(request.record_key),prior=db.getWorldEvent(guild,key);
-    if(prior){if(prior.status!=='active'||prior.details.payload_hash!==hash(data))throw fail('feature_roll_immutable_preparation');return prior;}
+    const data=binding(request),base=keyFor(request.record_key),original=db.getWorldEvent(guild,base),
+      key=original&&original.details.payload_hash!==hash(data)?`${base}:${hash(data)}`:base,prior=db.getWorldEvent(guild,key);
+    if(prior){if(prior.status!=='active'||prior.details.payload_hash!==hash(data)||hash(prior.details.binding)!==hash(data))throw fail('feature_roll_immutable_preparation');return prior;}
     return indexWorldEvent(db,guild,{key,kind:'native_roll_conditions',source_id:'native:roll-conditions',
       title:'Source-qualified roll identity and native condition odds',session_id:data.session,scene:data.scene,visibility:'character',subject_key:data.character,
       details:{payload_hash:hash(data),binding:data}},'native:roll-conditions');
   }
   /** Read immutable preparation history, including conditions legitimately cleared after the dice. */
   function inspectSavedRollConditionContext(db,guild,request){
-    const d=request.data,event=db.getWorldEvent(guild,keyFor(request.record_key)),marked=markedSources(db,guild,d.input);
+    const d=request.data,data=binding(request),base=keyFor(request.record_key),
+      event=db.getWorldEvent(guild,`${base}:${hash(data)}`)||db.getWorldEvent(guild,base),marked=markedSources(db,guild,d.input);
     if(!event&&!d.breakdown.feature_roll_source&&!d.breakdown.native_condition_odds&&!marked.length)return null;
-    const data=binding(request),context=data.feature_roll_source,odds=data.native_condition_odds,
+    const context=data.feature_roll_source,odds=data.native_condition_odds,
       source=context&&db.getWorldEvent(guild,context.event),identity=context?.identity;
     if(event?.status!=='active'||event.kind!=='native_roll_conditions'||event.source_id!=='native:roll-conditions'
       ||event.visibility!=='character'||event.subject_key!==data.character||event.scene!==data.scene||event.session_id!==data.session

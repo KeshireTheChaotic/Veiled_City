@@ -1,5 +1,11 @@
 # AF07 — Qualification and release gate
 
+## Condition recovery and Spellcast composition — runtime verification complete for this delta
+
+Two new disposable-runtime scenarios use the existing initialized Application composition and real SQLite/native services. The recovery scenario submits an actual owner reaction, accepts an owner recovery declaration, adjudicates and rolls the recovery action, commits its condition clear, advances the scene and reopens SQLite. Historical condition proof and movement remain valid; wrong-owner and stale-scene clear requests fail. The Spellcast scenario prepares an actual packaged Jinx roll from the owner's loadout and existing reviewed source workflow, then rolls and verifies its native saved outcome. The identity grants no card costs/effects; no Jinx condition is created. This exercises the new generic native condition reader composition without a separate mechanics engine.
+
+Modified tests: af07-condition-recovery.test.mjs and af07-spellcast-preparation.test.mjs; exact inputs are in CONDITION-RUNTIME-EVIDENCE.json. Final outcome: **2 passed, 0 failed/skipped, exit 0 across the two runs**. Recovery fixture setup first omitted the required grounded ruling, then an event title; both were corrected before its final passing run. Runtime source/dice/receipts/database services are real; the GM provider is mocked. SQLite reopen is not an OS process restart. No live Discord/provider request occurred. Known/deferred: full Null Foam cast, remaining condition/source consumers, real-model feature selection/reselection and the rest of the 153-source scenario matrix. Next exact work: **AF07 a source-backed consequential scene for autonomous feature choice**, while AF04 mechanical activation remains in progress.
+
 **IN PROGRESS — focused offline changed-code evidence is recorded; full qualification is not complete.** AF07 requires source-qualified coverage of all 153 occurrences, multi-owner and recovery scenarios, and a separate authorized staging run with a real model. Offline fakes do not qualify the staging criterion.
 
 ## Completed evidence available
