@@ -1,0 +1,74 @@
+[
+  {
+    "path": "bot/tooling/veilkeeper2/binding-audit.mjs",
+    "sha256": "dce360fa656a0d8ff46ca9f2986aaaa1e7716ae6c408c739b514ed17e23f4eb9"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/bindings.mjs",
+    "sha256": "bc13eae087aa09a337a9107f51b7c514ba500a3eb0f360169abb515e6cdfb3ce"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/schema-audit.mjs",
+    "sha256": "d59d45711c219dea4af3e7afde5db0eac69fc16ec067e47ea90fce7c08e8c84d"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/schema.mjs",
+    "sha256": "161fb82969514436c3c60c31c7e5eb0cbe0d2783bc09592edfc7b28d77dbe56a"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/records.mjs",
+    "sha256": "d4e4e43c432f106c3fe1111c50131dc5ede91c115ad19cb7a3f4e5ea5504ad86"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/inventory.mjs",
+    "sha256": "c7c655b2dad72eb79a6442a70946d71dbf3378bc59a801294bea2b97f2e77d21"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r0-bindings.test.mjs",
+    "sha256": "c5b2ae4706e2cd3e6da3269608d3d91417a9019d627d092e68ca20079ce3d85a"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r0-schema.test.mjs",
+    "sha256": "36f353a41ec5fd2526a6b4ecb9933ebe83b757f48006a2f2e4cb060fd33fd4ba"
+  },
+  {
+    "path": "docs/veilkeeper2/BINDING_SUMMARY.json",
+    "sha256": "7a9742d41f8ac7032cad9fb67f0ce41ab825c5bed7f455f14dc97c69532825b6"
+  },
+  {
+    "path": "docs/veilkeeper2/COMMAND_BINDINGS.json",
+    "sha256": "54c02e465ebf2a490159c2852548b5787ba303c87cdd31bbe4566753bfb1f2c2"
+  },
+  {
+    "path": "docs/veilkeeper2/COMPOSITION_BINDINGS.json",
+    "sha256": "0ed8b22a84208ae544242a64b6db90e759989d6e78125730e64cbdba5fcad4bf"
+  },
+  {
+    "path": "docs/veilkeeper2/EFFECTIVE_SCHEMA.json",
+    "sha256": "44e5d08746d75303a1f8ea5559c2b8a345152464e9effcff6790f9ac58070742"
+  },
+  {
+    "path": "docs/veilkeeper2/PUBLIC_BINDINGS.json",
+    "sha256": "34b93a1a6a71879464e0295e3924b753672082a2efb2798bed1a7c1e0d653247"
+  },
+  {
+    "path": "docs/veilkeeper2/PUBLIC_DISPOSITIONS.json",
+    "sha256": "c5349b595b9fc3204bed2a8cb64f7974fcde0da10a6c516d14ab37ab637c734d"
+  },
+  {
+    "path": "docs/veilkeeper2/RECORD_CONTRACTS.json",
+    "sha256": "2ba04daa390d4764eed4bd16c1f7b6ec0606655a9a4548578b4e43bdf915acc6"
+  },
+  {
+    "path": "docs/veilkeeper2/R0_BINDING_TEST_EVIDENCE.json",
+    "sha256": "ab486f17307f88667adcdc224c1b060fd1301a09b554469b3e50535593e710d8"
+  },
+  {
+    "path": "docs/veilkeeper2/R0_BINDING_TEST_OUTPUT.txt",
+    "sha256": "007271676db20845bb134b2976afd5d8cbe6adfdf1cc07560ebe2f5b162d4b6a"
+  },
+  {
+    "path": "docs/veilkeeper2/R0_BINDING_REPORT.md",
+    "sha256": "60e705315cb3f06f5c26033c2138a450d1a6d1a10e4a78babc68e0e18d07ecb6"
+  }
+]

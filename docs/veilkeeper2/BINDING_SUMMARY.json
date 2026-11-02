@@ -1,0 +1,13 @@
+{
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "modules": 1077,
+  "exports": 4224,
+  "imports": 4909,
+  "unresolvedExports": 0,
+  "unresolvedImports": 0,
+  "explicitBindings": 333,
+  "returnedObjectContracts": 821,
+  "commandPaths": 219,
+  "unresolvedCommands": [],
+  "scope": "static declarations and route branches; not runtime call/authorization proof"
+}

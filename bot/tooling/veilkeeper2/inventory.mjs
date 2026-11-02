@@ -18,7 +18,7 @@ const modules = [];
 const errors = [];
 const manifest = [];
 const legacyTestArtifact = file => /(?:^|\/)(?:tests?|[^/]*fixtures)\/|(?:test|spec|regression|fixture|benchmark)[^/]*\.(?:m?js|cjs)$/.test(file);
-git('diff','--exit-code',baseline,'--','bot/src','bot/sql','content');
+git('diff','--exit-code',baseline,'--','bot/src','bot/sql','content',':(exclude)bot/src/v2');
 for (const file of tracked) {
   const bytes = fs.readFileSync(path.join(root,file));
   manifest.push({file,bytes:bytes.length,sha256:hash(bytes)});

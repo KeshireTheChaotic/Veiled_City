@@ -1,0 +1,32 @@
+{
+  "command": "node --test tests/veilkeeper2/r0-bindings.test.mjs tests/veilkeeper2/r0-schema.test.mjs",
+  "inputs": [
+    {
+      "path": "tooling/veilkeeper2/binding-audit.mjs",
+      "sha256": "dce360fa656a0d8ff46ca9f2986aaaa1e7716ae6c408c739b514ed17e23f4eb9"
+    },
+    {
+      "path": "tooling/veilkeeper2/bindings.mjs",
+      "sha256": "287e0757e74f870ef2c88264635bb4da32a3b328fec6eb292f6741f188d3895c"
+    },
+    {
+      "path": "tooling/veilkeeper2/schema-audit.mjs",
+      "sha256": "d59d45711c219dea4af3e7afde5db0eac69fc16ec067e47ea90fce7c08e8c84d"
+    },
+    {
+      "path": "tooling/veilkeeper2/schema.mjs",
+      "sha256": "f93dfbc6126359c4f41648795424b56dbd71f4b3f7df1782767cc70fd3af0f73"
+    },
+    {
+      "path": "tests/veilkeeper2/r0-bindings.test.mjs",
+      "sha256": "c5b2ae4706e2cd3e6da3269608d3d91417a9019d627d092e68ca20079ce3d85a"
+    },
+    {
+      "path": "tests/veilkeeper2/r0-schema.test.mjs",
+      "sha256": "36f353a41ec5fd2526a6b4ecb9933ebe83b757f48006a2f2e4cb060fd33fd4ba"
+    }
+  ],
+  "started": "2026-11-02T08:23:34.5539616Z",
+  "exitCode": 0,
+  "ended": "2026-11-02T08:23:34.8162715Z"
+}

@@ -1,0 +1,16 @@
+✔ resolves named aliases through multiple public barrels to the original definition (3.5353ms)
+✔ wildcard export conflicts and cycles remain unresolved; external namespaces are explicit (1.3354ms)
+✔ captures explicit dependency injection and factory return members without executing them (1.1536ms)
+✔ route evaluation respects nested groups, else branches, list selection and unknown input guards (1.2326ms)
+✔ destructured exports and anonymous default declarations retain source locations (0.4732ms)
+✔ extracts direct and loop schema additions without executing migration code (5.3205ms)
+✔ unresolved migration expressions stop schema claims rather than dropping columns (0.5061ms)
+✔ migration identifiers cannot escape the isolated schema statement (0.2781ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71.7408
