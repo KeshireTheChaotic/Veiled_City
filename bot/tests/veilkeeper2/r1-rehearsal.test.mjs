@@ -2,8 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createRehearsal} from '../../src/v2/rehearsal.js';
+import {openKnowledgeStore} from '../../src/v2/knowledge-store.js';
+import {createKnowledgeAuthority} from '../../src/v2/knowledge-authority.js';
 
-function fixture({failSelection=false,providerResult}={}){
+function fixture({failSelection=false,providerResult,knowledgeStore}={}){
   const event={campaignId:'c',messageId:'m',userId:'u',actorId:'pc'};
   const message={id:'m',campaignId:'c',userId:'u',channelId:'ch',revision:'1',deleted:false,text:'Interesting.'};
   const channel={id:'ch',campaignId:'c',sceneId:'scene',revision:'1',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']};
@@ -13,7 +15,8 @@ function fixture({failSelection=false,providerResult}={}){
   const app=createRehearsal({readers:{readMessage:()=>message,readChannel:()=>channel,readActor:()=>actor,
     readScene:()=>({id:'scene',campaignId:'c',sessionId:'session',revision:'1',status:'active',participants:[{userId:'u',actorId:'pc',presence:'present'}]}),
     readSession:()=>({id:'session',campaignId:'c',revision:'1',status:'active'})},
-    records:{metadata:(_c,ref)=>sources.get(ref),readText:(_c,ref,revision)=>{textReads.push(ref);return {revision,text:ref==='secret'?'GM-only culprit':'The clerk claims a tunnel exists.'};}},
+    records:knowledgeStore?undefined:{metadata:(_c,ref)=>sources.get(ref),readText:(_c,ref,revision)=>{textReads.push(ref);return {revision,text:ref==='secret'?'GM-only culprit':'The clerk claims a tunnel exists.'};}},
+    knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,
     selectContext:()=>{if(failSelection)throw new Error('Optional memory unavailable');return ['rumor','secret'];},
     provider:{generate:async request=>{requests.push(request);return providerResult?providerResult():{text:'“Mercer, interesting usually means trouble,” the clerk says.',usage:{inputTokens:42,outputTokens:12}};}}});
   return {app,event,channel,actor,sources,requests,textReads};
@@ -46,4 +49,34 @@ test('duplicate identical drafts reuse the offline publication identity and rema
   assert.equal(a.publication.id,b.publication.id);assert.equal(b.publication.sent,false);
   // Inference deduplication across replay is R7 work; no exactly-once model-call claim.
   assert.equal(f.requests.length,2);
+});
+
+test('optional generic retrieval checks guessed references and current audience before reading bodies',async()=>{
+  const f=fixture(),result=await f.app.respond(f.event),tools=f.app.capabilities(result.sourceHandle);
+  assert.equal(tools.context_read({topic:'knowledge',focus:'rumor'}).records[0].kind,'testimony');
+  const before=f.textReads.length;
+  for(const ref of ['secret','missing'])assert.deepEqual(tools.context_read({topic:'knowledge',focus:ref}).records,[]);
+  assert.equal(f.textReads.length,before);
+  assert.equal(tools.context_read({topic:'knowledge',focus:'rumor',recipients:['other']}).code,'invalid_context_query');
+  assert.equal(tools.context_read({topic:'knowledge',focus:'rumor',cursor:'forged'}).code,'context_not_available');
+  f.channel.revision='2';assert.equal(tools.context_read({topic:'knowledge',focus:'rumor'}).code,'source_authority_changed');
+  assert.equal(f.textReads.length,before);
+});
+
+test('persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts',async t=>{
+  const store=openKnowledgeStore();t.after(()=>store.close());
+  const event={id:'e',campaignId:'c',revision:'1',status:'committed',authority:'native_testimony',record:{id:'rumor',kind:'testimony',body:'A clerk claims a tunnel exists.',status:'active',scope:'scene',sceneId:'scene',visibility:'recipients',recipientIds:['u'],knownBy:[],sourceRefs:[],disclosure:'observed'}};
+  const native=createKnowledgeAuthority({store,sourceAuthority:{revalidate:()=>true},readEvidence:()=>event});
+  native.establish('c','e');const f=fixture({knowledgeStore:store}),result=await f.app.respond(f.event),tools=f.app.capabilities(result.sourceHandle);
+  assert.equal(f.requests[0].context.records[0].text,event.record.body);
+  const sourceRef=tools.context_read({topic:'conversation'}).source_ref;
+  const proposal=tools.knowledge_propose({source_ref:sourceRef,kind:'fact',claim:'The tunnel is real.'});
+  assert.equal(proposal.status,'proposed');assert.equal(store.proposal('c',proposal.proposal_ref).effectsCommitted,false);
+  assert.deepEqual(tools.context_read({topic:'knowledge',focus:proposal.proposal_ref}).records,[]);
+  event.id='e2';event.record.body='The clerk retracts the claim.';native.establish('c','e2','1');
+  assert.throws(()=>f.app.inspectPublication(result.publication.id),/authority/);
+  assert.equal(tools.context_read({topic:'knowledge',focus:'rumor'}).records[0].revision,'2');
+  event.id='e3';event.record.status='retracted';native.establish('c','e3','2');
+  assert.deepEqual(tools.context_read({topic:'knowledge',focus:'rumor'}).records,[]);
+  assert.equal(f.requests.length,1);
 });

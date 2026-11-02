@@ -1,0 +1,31 @@
+✔ offline app boots with exactly four tools and no game handlers or transport (1.2916ms)
+✔ model capability cannot mint or substitute an authenticated source handle (0.6193ms)
+✔ unknown actions, altered sources, other actors and stale revisions fail before native preparation (0.7306ms)
+✔ native validation, pending receipt and replay preserve trace without rerunning preparation (0.6148ms)
+✔ revocation during preparation prevents receipt creation and later context access (0.1857ms)
+✔ receipt inspection is source-bound and cannot expose another conversation (0.1992ms)
+✔ intake snapshots are immutable and a reused message cannot silently change authorship or content (0.3176ms)
+✔ preparation cannot claim committed effects or register duplicate rule names (0.2531ms)
+✔ invalid JSON objects, oversized requests and asynchronous native preparation are rejected (0.3061ms)
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (3.1194ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3577ms)
+✔ audience revocation during inference prevents queueing and later inspection (0.9034ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.6312ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.6314ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (0.8131ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (3.3499ms)
+✔ GM, cross-PC, other campaign/scene and pending disclosures never have their body read (1.7902ms)
+✔ an apparently shared paraphrase with a private source ancestor is excluded before inference (0.2006ms)
+✔ source closure accepts shared ancestry but rejects cycles and missing ancestors (0.3396ms)
+✔ NPC knowledge intersects audience entitlement, and human proxy portrayal is refused (0.873ms)
+✔ revoked source, changed ancestors and changed actor control invalidate issued packets (0.256ms)
+✔ testimony stays testimony and forged or edited capabilities cannot supply model context (0.2574ms)
+✔ stale or substituted body under a current revision cannot enter a prompt packet (0.1387ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.7439

@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/kernel.js",
+      "sha256": "91c9383051e7539fbab92de9887e5eb12399c55627118d12243c6dda0fb95ba5"
+    },
+    {
+      "path": "bot/src/v2/context-authority.js",
+      "sha256": "50e2c29a74898df6b6ceb304fb3c5c36cba9076178a1d9475a06f42697bec89a"
+    },
+    {
+      "path": "bot/src/v2/rehearsal.js",
+      "sha256": "66840a6f737746b3f0191ed15173a319f515c5199321aeca3f812c4fcef3512b"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-kernel.test.mjs",
+      "sha256": "496ced2034065431c061afdb9cb0369470002e5aa7b0fc18dd2ae0be3d30a42f"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+      "sha256": "bb13eafaabf4b0b0cc091a6768cac3107ef2a151bf66ae0799e67c8b7ebfe93a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-rehearsal.test.mjs",
+      "sha256": "6cec2ce433e1ae9e82bbc1763f9d711d49693bc3cc2ce398a7fcca18d7dd2b78"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "5b9939c7e73b66412c87e80727b4fe6aec7b82086ac3c1ce58cd8e0f4839f05a"
+    },
+    {
+      "path": "docs/veilkeeper2/GENERIC_NATIVE_API.md",
+      "sha256": "a7161477f9fe0d5242a809e1a47b6a635a48352f2d6947c412c6839d3cad2240"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_INTEGRATION_REPORT.md",
+      "sha256": "bb6638ea28df71a076334a0e53af81084ca46f6aedff00f6594e4d06e693c4b6"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_INTEGRATION_TEST_OUTPUT.txt",
+      "sha256": "c4510bdf548e44b8abfbc5a26e0a2b20a3c710a78a55323b73976870223a5be2"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_INTEGRATION_TEST_EVIDENCE.json",
+      "sha256": "85ccff97ad44e6777cb2c2eeb6fa44384aed414350ecf333beffda1e31bc4fa4"
+    }
+  ],
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6"
+}

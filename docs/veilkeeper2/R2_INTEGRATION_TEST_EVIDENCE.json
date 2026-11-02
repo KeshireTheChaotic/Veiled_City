@@ -1,0 +1,6 @@
+{
+  "command": "node --test tests/veilkeeper2/r1-kernel.test.mjs tests/veilkeeper2/r2-context-authority.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs",
+  "finishedUtc": "2026-11-02T13:44:26.4290791Z",
+  "startedUtc": "2026-11-02T13:44:26.2746039Z",
+  "exitCode": 0
+}

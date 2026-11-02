@@ -66,5 +66,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     inspect(grant);const {source}=grants.get(grant);
     return freeze({campaign:source.campaign,scene:source.scene,source_ref:source.id,recipients:[...source.recipients],revision:source.revision});
   }
-  return Object.freeze({issue,inspect,audience});
+  // A model-selected reference is only a lookup candidate, never an entitlement.
+  function read(source,reference){return inspect(issue(source,[reference]));}
+  return Object.freeze({issue,inspect,audience,read});
 }

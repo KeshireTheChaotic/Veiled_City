@@ -60,10 +60,11 @@ export function createMemoryJournal(){
  * are supplied by the trusted application, never by model arguments. No effect,
  * dice, publication, database patch or protected knowledge commit exists here.
  */
-export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null}){
+export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null,context=null}){
   if(typeof authority?.authenticate!=='function'||typeof authority?.revalidate!=='function')throw new TypeError('Native authentication and revalidation required');
   if(!['source','recordSource','receipt','recordReceipt'].every(k=>typeof journal?.[k]==='function'))throw new TypeError('Source and receipt repository required');
   if(knowledge!==null&&typeof knowledge.propose!=='function')throw new TypeError('Native knowledge proposal authority required');
+  if(context!==null&&typeof context.read!=='function')throw new TypeError('Native scoped context reader required');
   const handles=new WeakMap();
   function intake(event){
     const proof=authority.authenticate(event);
@@ -88,8 +89,12 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
     return Object.freeze({
       context_read:check(input=>{
         if(!closed(input,['topic'],['focus','cursor'])||!text(input.topic)||('focus'in input&&!text(input.focus))||('cursor'in input&&!text(input.cursor)))return blocked('invalid_context_query');
-        if(input.topic!=='conversation'||input.cursor)return blocked('context_not_available');
-        // No omniscient context fallback. R2 adds source/actor/audience-scoped retrieval.
+        if(input.cursor)return blocked('context_not_available');
+        if(input.topic==='knowledge'&&context){
+          if(!input.focus)return blocked('invalid_context_query');
+          try{return snapshot(context.read(source,input.focus));}catch{return blocked('context_not_available');}
+        }
+        if(input.topic!=='conversation')return blocked('context_not_available');
         return snapshot({source_ref:source.id,text:source.text,trace_id:source.traceId});
       }),
       action_propose:check(input=>{

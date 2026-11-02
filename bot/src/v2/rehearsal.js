@@ -3,13 +3,15 @@ import {createSourceAuthority} from './source-authority.js';
 import {createContextAuthority} from './context-authority.js';
 import {createModelGateway} from './model-gateway.js';
 import {createOfflinePublicationQueue} from './publication-queue.js';
+import {createKnowledgeAuthority} from './knowledge-authority.js';
 
 /** Explicit no-send composition. Providers/readers are native dependencies, never model-supplied. */
-export function createRehearsal({readers,records,provider,selectContext=()=>[],rules=[]}){
+export function createRehearsal({readers,records,provider,selectContext=()=>[],rules=[],knowledge:knowledgeConfig=null}){
   if(typeof selectContext!=='function')throw new TypeError('Native context selector required');
   const authority=createSourceAuthority(readers),journal=createMemoryJournal();
-  const kernel=createKernel({authority,journal,rules:createRulesetRegistry(rules)});
-  const context=createContextAuthority({sourceAuthority:authority,records,readActor:readers.readActor});
+  const context=createContextAuthority({sourceAuthority:authority,records:records??knowledgeConfig?.store,readActor:readers.readActor});
+  const knowledge=knowledgeConfig?createKnowledgeAuthority({...knowledgeConfig,sourceAuthority:authority}):null;
+  const kernel=createKernel({authority,journal,rules:createRulesetRegistry(rules),context,knowledge});
   const gateway=createModelGateway({contextAuthority:context,provider});
   const publications=createOfflinePublicationQueue({gateway,contextAuthority:context});
   async function respond(event,{signal}={}){
