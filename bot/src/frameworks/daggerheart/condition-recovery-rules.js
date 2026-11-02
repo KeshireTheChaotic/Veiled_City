@@ -1,5 +1,6 @@
 /** Native condition cleanup by an exact resolved owner action, preserving immutable receipt ancestry. */
 import {jsonHash as hash} from '../../kernel/json-hash.js';
+import {createHash} from 'node:crypto';
 import {nativeArbitrationFailure as fail} from './native-failure.js';
 export function createConditionRecoveryRules({capabilities}){
 const {ordinaryActionProof,ordinaryPrerequisite,validateNativeCondition,assertPcCanAct,indexWorldEvent}=capabilities||{};
@@ -42,10 +43,28 @@ function inspectNativeConditionClearAncestry(db,guild,condition){
     ||hash(JSON.parse(mutation.before_json))!==hash(d.before)||hash(JSON.parse(mutation.after_json))!==hash(d.after)
     ||hash(d.after)!==hash(d.before.map(c=>c.native_ref===actual.record_key?{...c,active:false}:c)))
     throw fail('native_condition_clear_immutable_ancestry');
-  const {proof,action,result}=actionProof(db,guild,actual,{accepted_intent:d.action,prerequisite:d.prerequisite},d.scope);
-  if(d.principal!==proof.principal.revision||d.character!==proof.pc.id||d.action_source!==action.source_event
-    ||d.action_hash!==actionHash(action)||d.prerequisite_hash!==hash(result)||d.scene!==proof.scene.key||d.session!==proof.scene.session_id)
-    throw fail('native_condition_clear_current_source_owner_result');
+  // This release was already committed under actionProof. Inspect its sealed ancestry,
+  // not today's location, attendance or controller. This reader cannot authorize a new clear.
+  const action=db.getCityRecord(guild,'typed_intent',d.action),a=action?.data,
+    authored=action&&db.getWorldEvent(guild,action.source_event),s=authored?.details,
+    result=db.getCityRecord(guild,'action_outcome_receipt',d.prerequisite);
+  if(action?.status!=='resolved'||!a||d.action_hash!==actionHash(action)||d.action_source!==action.source_event
+    ||d.character!==actual.subject_key||a.actor!==d.character||a.owner_user_id!==d.owner||a.actor_principal_revision!==d.principal
+    ||a.scene!==d.scene||a.session_id!==d.session||a.type!=='interact'||a.operation!=='clear_condition'
+    ||a.target_key!==actual.record_key||a.framing!=='immediate'
+    ||!['party','private'].includes(d.scope?.mode)||d.scope.actorUserId!==d.owner||d.scope.actorCharacterId!==d.character
+    ||authored?.status!=='active'||authored.kind!=='authored_turn'||authored.source_id!==`player:${d.owner}`
+    ||authored.scene!==d.scene||authored.session_id!==d.session||s?.author!==d.owner||s.character_id!==d.character
+    ||s.principal_revision!==d.principal||!db.ownerAuthoredSource(guild,authored.event_key,d.owner)
+    ||typeof s.raw_text!=='string'||s.raw_hash!==a.source_hash||createHash('sha256').update(s.raw_text).digest('hex')!==a.source_hash
+    ||!Number.isSafeInteger(a.start)||!Number.isSafeInteger(a.end)||a.start<0||a.end<=a.start||a.end>s.raw_text.length
+    ||s.raw_text.slice(a.start,a.end)!==a.source_span||action.visibility!==authored.visibility
+    ||(action.subject_key||null)!==(authored.subject_key||null)
+    ||action.visibility==='character'&&(d.scope.mode!=='private'||action.subject_key!==d.character)
+    ||result?.status!=='resolved'||d.prerequisite_hash!==hash(result)||a.outcome_receipt!==result.record_key
+    ||result.source_event!==action.source_event||result.data.action_id!==action.record_key||result.data.actor_ref!==d.character
+    ||!['resolved_no_roll','success'].includes(result.data.outcome))
+    throw fail('native_condition_clear_saved_source_owner_result');
   return receipt;
 }
 function clearNativeConditionFromOutcome(db,guild,input,scope){

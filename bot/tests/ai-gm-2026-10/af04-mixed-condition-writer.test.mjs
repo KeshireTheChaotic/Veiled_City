@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DatabaseSync} from 'node:sqlite';
+import {createHash} from 'node:crypto';
 import {createMixedConditionRules} from '../../src/frameworks/daggerheart/mixed-condition-rules.js';
 import {createGroupFeatureExecutionRules} from '../../src/frameworks/daggerheart/group-feature-execution-rules.js';
 import {createConditionRecoveryRules} from '../../src/frameworks/daggerheart/condition-recovery-rules.js';
@@ -78,19 +79,34 @@ test('successful, pending and retracted reactions cannot produce condition state
   }finally{f.close();}
 });
 
-test('existing owner-action recovery clears a mixed Restrained condition once and validates its saved release',()=>{
-  const f=fixture('character');try{
+function releaseFixture(){
+  const f=fixture('character');
     const row=f.rules.applyMixedCondition(f.db,'guild',f.binding,f.target),scope={mode:'private',actorUserId:'owner',actorCharacterId:'actor'};
-    const action={record_key:'free-action',source_event:'owner-source',data:{type:'interact',operation:'clear_condition',target_key:row.record_key,
-      actor:'actor',owner_user_id:'owner',actor_principal_revision:'principal',scene:'scene',session_id:'session',source_hash:'source',start:0,end:20,framing:'immediate'}},
-      result={record_key:'native-success',data:{outcome:'success'}};
+    const raw='I cut myself free.',sourceHash=createHash('sha256').update(raw).digest('hex');let live=true;
+    const action={kind:'typed_intent',record_key:'free-action',status:'resolved',source_event:'owner-source',visibility:'character',subject_key:'actor',
+      data:{type:'interact',operation:'clear_condition',target_key:row.record_key,
+      actor:'actor',owner_user_id:'owner',actor_principal_revision:'principal',scene:'scene',session_id:'session',source_hash:sourceHash,
+      start:0,end:raw.length,source_span:raw,framing:'immediate',outcome_receipt:'native-success'}},
+      result={kind:'action_outcome_receipt',record_key:'native-success',status:'resolved',source_event:'owner-source',
+        data:{outcome:'success',action_id:action.record_key,actor_ref:'actor'}};
+    f.put('typed_intent',action.record_key,action);f.put('action_outcome_receipt',result.record_key,result);
+    f.put('event',action.source_event,{event_key:action.source_event,status:'active',kind:'authored_turn',source_id:'player:owner',
+      scene:'scene',session_id:'session',visibility:'character',subject_key:'actor',
+      details:{author:'owner',character_id:'actor',principal_revision:'principal',raw_text:raw,raw_hash:sourceHash}});
+    f.db.ownerAuthoredSource=(_g,key,user)=>key===action.source_event&&user==='owner';
     const recovery=createConditionRecoveryRules({capabilities:{
-      ordinaryActionProof:(_db,_g,key,s)=>{assert.equal(key,action.record_key);assert.deepEqual(s,scope);return {row:action,pc:f.db.getCharacter('actor'),principal:{user:'owner',revision:'principal'},scene:{key:'scene',session_id:'session'},scope};},
+      ordinaryActionProof:(_db,_g,key,s)=>{if(!live)throw Error('current owner scene changed');assert.equal(key,action.record_key);assert.deepEqual(s,scope);return {row:action,pc:f.db.getCharacter('actor'),principal:{user:'owner',revision:'principal'},scene:{key:'scene',session_id:'session'},scope};},
       ordinaryPrerequisite:(_db,_g,p)=>{assert.equal(p.prerequisite_ref,result.record_key);return {receipt:result};},
       validateNativeCondition:f.rules.inspectMixedCondition,assertPcCanAct:()=>{},
       indexWorldEvent:(_db,_g,event)=>f.put('event',event.key,{...event,event_key:event.key,status:'active'})}});
     f.setRecovery(recovery);
     const input={condition:row.record_key,accepted_intent:action.record_key,prerequisite:result.record_key};
+    return {...f,row,scope,action,result,recovery,input,leaveScene:()=>live=false};
+}
+
+test('existing owner-action recovery clears a mixed Restrained condition once and validates its saved release',()=>{
+  const f=releaseFixture();try{
+    const {row,scope,action,result,recovery,input}=f;
     result.data.outcome='failure';assert.throws(()=>recovery.clearNativeConditionFromOutcome(f.db,'guild',input,scope));
     assert.equal(f.get('target','actor').conditions[0].active,true);
     result.data.outcome='success';
@@ -101,5 +117,44 @@ test('existing owner-action recovery clears a mixed Restrained condition once an
     assert.throws(()=>recovery.clearNativeConditionFromOutcome(f.db,'guild',input,{...scope,actorUserId:'other'}));
     const stored=f.get('pc_native_condition',row.record_key);stored.data.owner='other';f.put(stored.kind,stored.record_key,stored);
     assert.throws(()=>f.rules.inspectMixedCondition(f.db,'guild',row.record_key));
+  }finally{f.close();}
+});
+
+test('cleared history survives a later scene while a replay still requires current owner authority',()=>{
+  const f=releaseFixture();try{
+    const receipt=f.recovery.clearNativeConditionFromOutcome(f.db,'guild',f.input,f.scope),before=f.get('target','actor');
+    f.leaveScene();
+    assert.deepEqual(f.recovery.inspectNativeConditionClearAncestry(f.db,'guild',f.get('pc_native_condition',f.row.record_key)),receipt);
+    assert.equal(f.rules.inspectMixedCondition(f.db,'guild',f.row.record_key).status,'cleared');
+    const names=['narrativeSourceVisible','compileNativeFeatures','inspectNativeGmDecision','inspectCommittedGmDecision','nativeReactionTarget',
+      'commitGmActionCost','currentScene','scenePresence','sceneAccess','activeCityProxy','conversationPrincipal','personalCharacter','indexWorldEvent',
+      'typedRollProof','EncounterLibrary','reserveGmArbitrationNotice','applyNativeStressPassive'];
+    const capabilities=Object.fromEntries(names.map(name=>[name,()=>{throw Error(`unexpected live capability ${name}`);} ]));
+    const native=createGroupFeatureExecutionRules({capabilities:{...capabilities,RANGE_BANDS:['Melee','Very Close','Close','Far','Very Far'],
+      inspectMixedCondition:f.rules.inspectMixedCondition,inspectNativeConditionClearAncestry:f.recovery.inspectNativeConditionClearAncestry}});
+    assert.deepEqual(native.activeNativeConditions(f.db,'guild','actor'),[]);
+    assert.equal(native.nativeMovementConditionIssue(f.db,'guild','actor',{range:'Close'}),null);
+    assert.deepEqual(native.nativeIncomingConditions(f.db,'guild','actor'),[]);
+    assert.throws(()=>f.recovery.clearNativeConditionFromOutcome(f.db,'guild',f.input,f.scope),/current owner scene changed/);
+    assert.deepEqual(f.get('target','actor'),before);
+  }finally{f.close();}
+});
+
+test('historical clear inspection rejects changed declarations, results, audiences and revoked authorship',()=>{
+  const f=releaseFixture();try{
+    f.recovery.clearNativeConditionFromOutcome(f.db,'guild',f.input,f.scope);f.leaveScene();
+    const inspect=()=>f.rules.inspectMixedCondition(f.db,'guild',f.row.record_key);
+    for(const [kind,key,change] of [
+      ['typed_intent',f.action.record_key,r=>r.data.target_key='other-condition'],
+      ['typed_intent',f.action.record_key,r=>r.data.source_span='fabricated declaration'],
+      ['action_outcome_receipt',f.result.record_key,r=>r.data.outcome='failure'],
+      ['event',f.action.source_event,r=>r.status='retracted'],
+      ['event',f.action.source_event,r=>r.details.raw_text='I wait.'],
+      ['event',f.action.source_event,r=>r.visibility='party']
+    ]){
+      const original=f.get(kind,key),changed=structuredClone(original);change(changed);f.put(kind,key,changed);
+      assert.throws(inspect);f.put(kind,key,original);assert.equal(inspect().status,'cleared');
+    }
+    f.db.ownerAuthoredSource=()=>false;assert.throws(inspect);
   }finally{f.close();}
 });
