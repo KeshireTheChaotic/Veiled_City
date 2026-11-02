@@ -1,0 +1,11 @@
+# RF06-F01 I03 — Current RF06 obligations and storage inventory
+
+Refresh current source evidence after R84 without changing runtime behavior or the immutable I01 baseline. Add one offline architecture inventory tool and fresh pure scanner tests, then capture current HEAD/dirty paths/source fingerprints, VeiledDB method/SQL/transaction/delegated-repository candidates, syntactic storage callers, and remaining imports/ownership obligations in the RF06 hubs. Existing source, schema, public contracts, transition registries and other agents' files remain unchanged.
+
+Owned new tooling path: bot/tooling/architecture/rf06-inventory.mjs. Owned fresh test: bot/tests/ai-gm-2026-10/rf06-f01-i03.test.mjs. Owned outputs: I03-INVENTORY.json, I03-REMAINING.md, scope/ledger/hash/test evidence in this feature directory and a concise RF06 inventory/phase update. Index use is coordinated with active C; paused A is notified only for disjoint ownership.
+
+Use AST-backed extraction on a captured source snapshot; report parse failures and dynamic/unknown SQL conservatively. SQL-read syntax, function names, import presence or absence of a detected writer do not prove a qualified repository contract. Distinguish source evidence, already qualified original callers, independent candidates and transaction-sensitive holds. Select the next cohesive RF06 boundary from this inventory rather than treating small completed slices as phase completion.
+
+Scanner tests use only new synthetic source strings and Node standard libraries plus the new tool. Actual inventory execution opens no SQLite database, evaluates no runtime module, calls no provider/Discord and runs no inherited suite or broad runtime validator.
+
+The audit found 96 RF06-created sources missing from the documentation ownership/crosswalk CSVs, plus the tested I03 tool. After preserving Agent A's three C145 rows, the shared window appended those 97 paths and R85's new repository path to both CSVs. Source facts come from committed Git blobs; the tool override is pinned by its final hash. The backfill record contains exact additions, creation provenance, pre-append hashes/byte counts/row counts and final hashes/counts. Existing prefixes were preserved byte-for-byte. This does not change runtime ownership policy or regenerate the global dependency graph.

@@ -1,0 +1,3619 @@
+{
+  "source_commit": "c2fdbd48816164e7da8288b5f1e2f7580c30ec0a",
+  "source_policy": "Committed Git blobs only, normalized by Git; only the new tested B tool is a worktree override. Other agents dirty drafts are excluded. Existing rows are not regenerated.",
+  "tool_sha256": "410f45b14283083839cc5d604a6d2344a125ad3ed71f360ddf3bdc37c5b304f0",
+  "csv_inputs": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv",
+      "sha256": "97b0a6dcaf4c5fa9749aaa0aa7eca0b2afc0d6da56226c253b4a8e5ff8968214",
+      "bytes": 209008,
+      "rows": 362
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv",
+      "sha256": "a70a5276589b5e3ed03ddc046cb45e7fa32139f184d7956d8f9812bb72a240ae",
+      "bytes": 55739,
+      "rows": 362
+    }
+  ],
+  "headers": {
+    "ownership": [
+      "old_path",
+      "new_path",
+      "owner",
+      "rationale",
+      "move_phase",
+      "complexity",
+      "public_exports",
+      "bytes",
+      "lines",
+      "sha256",
+      "reverse_dependents",
+      "import_obligations",
+      "side_effects",
+      "risk",
+      "action"
+    ],
+    "crosswalk": [
+      "old_path",
+      "new_path",
+      "owner",
+      "move_phase",
+      "action",
+      "reverse_dependents",
+      "import_obligations"
+    ]
+  },
+  "ownership_rows": [
+    {
+      "old_path": "bot/src/application/composition/operations-discord.js",
+      "new_path": "bot/src/application/composition/operations-discord.js",
+      "owner": "application",
+      "rationale": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "initializeOperationsDiscord",
+      "bytes": 205,
+      "lines": 3,
+      "sha256": "7675b2265ba8dbb769595fc2e98b1cc9c15f7720b8481c0b9a49fe045a6fef35",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/application/composition/publication-discord.js",
+      "new_path": "bot/src/application/composition/publication-discord.js",
+      "owner": "application",
+      "rationale": "RF06 F03 R04 compose qualified Discord publication channel transport; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "initializePublicationDiscord",
+      "bytes": 421,
+      "lines": 4,
+      "sha256": "19ccfc7eb11dd5509631c6d180134cd7917de547733ffb9639f637e553fc63eb",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/application/composition/publication-operations.js",
+      "new_path": "bot/src/application/composition/publication-operations.js",
+      "owner": "application",
+      "rationale": "RF06 F03 R13 qualify publication telemetry over original Operations stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "initializePublicationOperations",
+      "bytes": 199,
+      "lines": 3,
+      "sha256": "f0798d4441d30d6db17a0294c26e4a20b9c5a3b4a36fc82f993d2fcb6915a328",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/application/composition/runtime-initializers.js",
+      "new_path": "bot/src/application/composition/runtime-initializers.js",
+      "owner": "application",
+      "rationale": "RF06 F05 R63 compose original startup initializer sequence; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "initializeRuntimeFrameworks",
+      "bytes": 6038,
+      "lines": 117,
+      "sha256": "37f5f7eec928fe4c15628d08c86bb714d0542173289f935e8e46d7fbef64c378",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/application/workflows/discord-interaction-event.js",
+      "new_path": "bot/src/application/workflows/discord-interaction-event.js",
+      "owner": "application",
+      "rationale": "RF06 F05 R61 isolate original interaction event workflow; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "registerInteractionHandler",
+      "bytes": 946,
+      "lines": 16,
+      "sha256": "d494f5469151c132faaebee683a8d2b3efcb14db6459158920523ab2a9daf86b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/bootstrap/ready.js",
+      "new_path": "bot/src/bootstrap/ready.js",
+      "owner": "bootstrap",
+      "rationale": "RF06 F05 R60 isolate original client ready registration; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "registerClientReadyHandler",
+      "bytes": 1054,
+      "lines": 16,
+      "sha256": "032f2e6c134b608ff7b4f6d62217c84c8620027995abaafc07d68c40672f08ff",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/bootstrap/shutdown.js",
+      "new_path": "bot/src/bootstrap/shutdown.js",
+      "owner": "bootstrap",
+      "rationale": "RF06 F05 R43 isolate original shutdown signal registration; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "registerShutdownHandlers",
+      "bytes": 399,
+      "lines": 6,
+      "sha256": "8c7fa063986e9e7c913a147216121f51605b11b01e784a88a2ff8b6965807f90",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/discord--operations/public.js",
+      "new_path": "bot/src/framework-to-framework/discord--operations/public.js",
+      "owner": "discord--operations",
+      "rationale": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "connectOperationsDiscordDiagnostics;handleCampaignStatusCommand;handleDoctorCommand;handleGmOverviewCommand",
+      "bytes": 1735,
+      "lines": 24,
+      "sha256": "f379813502661a9cd5ded081568b50f6e946806fccbb43a5b04e18d8955a03ab",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "new_path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "owner": "discord--persistence",
+      "rationale": "RF06 F04 R12 qualify same-connection Discord command receipt storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "connectDiscordAdministrativeReads;connectDiscordCampaignConfiguration;connectDiscordCampaignStatus;connectDiscordCanonReads;connectDiscordCaseboardReads;connectDiscordCharacterList;connectDiscordCommandReceipts;connectDiscordDirectorHistory;connectDiscordDirectorStatus;connectDiscordGmFactReads;connectDiscordGmNpcReads;connectDiscordPartyStatus;connectDiscordPlayerFactReads;connectDiscordPlayerSettings;connectDiscordRulesRulings;isGm",
+      "bytes": 4534,
+      "lines": 66,
+      "sha256": "1ca80d93fbafdac0effb9b9d0b523fd6fa4e4898a70d56aef7b82d4e665b613d",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/operations--publication/public.js",
+      "new_path": "bot/src/framework-to-framework/operations--publication/public.js",
+      "owner": "operations--publication",
+      "rationale": "RF06 F03 R13 qualify publication telemetry over original Operations stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "connectPublicationOperations",
+      "bytes": 366,
+      "lines": 5,
+      "sha256": "e2b553a34a5763b8a85c1749d4f9b8a5e45a0f85cb8e867fe1c9e1b1614ade77",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "new_path": "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "owner": "daggerheart",
+      "rationale": "RF06 F03 R67 add qualified cancellation reservation port; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createNativeGmNoticeReservationConsumer;nativeGmNoticeReservation",
+      "bytes": 453,
+      "lines": 5,
+      "sha256": "41c87468eae3cf4728d86e3c5e9b6dce9e43a62fa63fb593970dceca680c143a",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "createNativeGmNoticeReservationConsumer@4",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/administrative-read-commands.js",
+      "new_path": "bot/src/frameworks/discord/administrative-read-commands.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R20 isolate GM administrative read-only command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "handleAdministrativeReadCommand",
+      "bytes": 2529,
+      "lines": 33,
+      "sha256": "536470fc7a2ac92f0312fa42ad7c85debc480dcfbc8ff043f0011ce932e739f0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/attachment.js",
+      "new_path": "bot/src/frameworks/discord/attachment.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R45 route original attachment constructors through Discord; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createAttachment",
+      "bytes": 240,
+      "lines": 6,
+      "sha256": "2e96f2312d5e5cbd2c4306942a638c1eefb576dd0d7388ce678472246217dff5",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/campaign-setup-command.js",
+      "new_path": "bot/src/frameworks/discord/campaign-setup-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R27 isolate original campaign setup command and storage capability; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "handleCampaignSetupCommand",
+      "bytes": 797,
+      "lines": 13,
+      "sha256": "36bccf2ae2a929761afa03f422914f1d75ca117268df45ec88c195195ab19551",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/campaign-status-command.js",
+      "new_path": "bot/src/frameworks/discord/campaign-status-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R26 isolate original campaign status command and qualified stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "replyWithCampaignStatus",
+      "bytes": 1612,
+      "lines": 23,
+      "sha256": "07acd2bf434ae1b0d173c65b6bfce940e6450e82a7fae85d034b19d047d0d942",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/canon-read-commands.js",
+      "new_path": "bot/src/frameworks/discord/canon-read-commands.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R57 qualify original canon read command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCanonReadStore;handleCanonConflictsCommand;handleCanonStatusCommand",
+      "bytes": 1192,
+      "lines": 17,
+      "sha256": "45d74b1f572c6f1d46cb29ab2f7974cce7a4f51d80430ba1c3d1466ab599e255",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/caseboard-command.js",
+      "new_path": "bot/src/frameworks/discord/caseboard-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R78 isolate private caseboard display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCaseboardReadStore;handleCaseboardCommand",
+      "bytes": 842,
+      "lines": 17,
+      "sha256": "34cf6e5d3c58f7435331b296c19753cc9cc83333f6b4fd0f51949e8f66293b61",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "createInteractionTextDelivery@4",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/character-list-command.js",
+      "new_path": "bot/src/frameworks/discord/character-list-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R54 qualify owned character list command boundary; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCharacterListStore;handleCharacterListCommand",
+      "bytes": 672,
+      "lines": 11,
+      "sha256": "4034350a4c041ea3624308a4d26e8c6380e56c97b765aed412767d552fe7f506",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/client-factory.js",
+      "new_path": "bot/src/frameworks/discord/client-factory.js",
+      "owner": "discord",
+      "rationale": "RF06 F05 R62 isolate original Discord client construction; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createDiscordClient",
+      "bytes": 438,
+      "lines": 7,
+      "sha256": "5c9d2dc3f30316dcb528c9852c23f7a2553a6aa4f2abbc64fa7f00ae8c742729",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-mutations.js",
+      "new_path": "bot/src/frameworks/discord/command-mutations.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R11 isolate original command mutation classification; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "commandKey;isMutatingCommand",
+      "bytes": 1396,
+      "lines": 16,
+      "sha256": "941b3f252034bfaa40aefa9f2c868765e449607808ea663ba2f1f37bbc38f452",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "Set@2",
+      "risk": "metadata-backfill;module-state",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-record-text.js",
+      "new_path": "bot/src/frameworks/discord/command-record-text.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R05 isolate Discord character and encounter record views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "downtimeStatusText;encounterSummary;formatSheet;relationshipLine",
+      "bytes": 2728,
+      "lines": 45,
+      "sha256": "e43359293c297d1de5ac9e4e1c0bc126d5aa5d2c9cf4107464fa32f730865243",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-registration.js",
+      "new_path": "bot/src/frameworks/discord/command-registration.js",
+      "owner": "discord",
+      "rationale": "RF06 F05 R01 isolate schema-only Discord registration; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "registerCommands",
+      "bytes": 1056,
+      "lines": 24,
+      "sha256": "184e711dabb0de89f1a589884cb6c28b5463fc52d806c0a191df7f53c1c64999",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-route.js",
+      "new_path": "bot/src/frameworks/discord/command-route.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R02 isolate Discord command route decoding; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "resolveCommandRoute",
+      "bytes": 528,
+      "lines": 16,
+      "sha256": "c20adff3df5c2e97aa4486f419a84367e1ec326babb2858ac9f9bb1565d65f0c",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "new_path": "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R20 isolate GM administrative read-only command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertAdministrativeReadStore",
+      "bytes": 367,
+      "lines": 6,
+      "sha256": "034795fa534106241760b36f9e790bd2d9b0fc3d13beb2549b06ae589c03cb2d",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "new_path": "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R27 isolate original campaign setup command and storage capability; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCampaignConfigurationStore",
+      "bytes": 282,
+      "lines": 6,
+      "sha256": "7fc35f0a0da7a9a6b436607cce6de9756863c6631abfdb380cc8b4a3ebc4c2fc",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "new_path": "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R26 isolate original campaign status command and qualified stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCampaignStatusStore",
+      "bytes": 383,
+      "lines": 6,
+      "sha256": "e5a383111d1879a5980c6a963b323ad91d6cecae0c3169e970bff0573b5fcb90",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "new_path": "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R12 qualify same-connection Discord command receipt storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertCommandReceiptStore",
+      "bytes": 456,
+      "lines": 7,
+      "sha256": "c12acf50f02b3c0055cc76bcd425cef997ee277660badd48af5ccf1d307544e2",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/player-settings.js",
+      "new_path": "bot/src/frameworks/discord/contracts/player-settings.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R18 isolate player preference commands through qualified storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertPlayerSettingsStore",
+      "bytes": 355,
+      "lines": 6,
+      "sha256": "dcca87336b2697a1fccbab495e436479aca94861b15cccbca606985364ff149e",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "new_path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R84 isolate delivery diagnostic text; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "heldNativeNoticeLines;pendingDeliveryLines",
+      "bytes": 681,
+      "lines": 10,
+      "sha256": "e5b2c4780ae26de392fffc761cbfa3fead8e495f3d65808600dc7d026138b9ae",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/diagnostic-channel.js",
+      "new_path": "bot/src/frameworks/discord/diagnostic-channel.js",
+      "owner": "discord",
+      "rationale": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "fetchDiagnosticChannel",
+      "bytes": 184,
+      "lines": 3,
+      "sha256": "0e875fe79cbdb04d2c0bad44ddfd14ab41019ed8648713fa51269772a37fbf67",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/diagnostic-reply.js",
+      "new_path": "bot/src/frameworks/discord/diagnostic-reply.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R19 route GM diagnostics through Discord Operations boundary; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "replyWithDiagnosticLines",
+      "bytes": 423,
+      "lines": 9,
+      "sha256": "59e0eeb7d25ba3f274010c814a701c5d4e0453f875a09d4346f48452c55200b7",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/director-history-command.js",
+      "new_path": "bot/src/frameworks/discord/director-history-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R41 isolate original Director-history display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertDirectorHistoryStore;handleDirectorHistoryCommand",
+      "bytes": 999,
+      "lines": 12,
+      "sha256": "e1a458fa6848af8ffd041c7e1de97a717cad0e08ff9c41871617befdff5e464e",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/director-status-command.js",
+      "new_path": "bot/src/frameworks/discord/director-status-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R42 isolate original Director-status display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertDirectorStatusStore;handleDirectorStatusCommand",
+      "bytes": 1203,
+      "lines": 15,
+      "sha256": "06dbb38fdcea66bee9770fb1f2f5cca2ad4f9b418295a81a08051ed75e02407e",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/export-attachments.js",
+      "new_path": "bot/src/frameworks/discord/export-attachments.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R44 move original export attachment construction into Discord; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "exportAttachments",
+      "bytes": 259,
+      "lines": 6,
+      "sha256": "a3a2a81a185d7482e3c0bd8f26426d72c77ab5d0fa6d304e93798d89131296d8",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/fact-text.js",
+      "new_path": "bot/src/frameworks/discord/fact-text.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R38 move original fact display text into Discord; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "gmFactLine;playerFactLine",
+      "bytes": 989,
+      "lines": 16,
+      "sha256": "a030c8ac76d4f86d170c005770d6a68f437958ea841a7df6e7c31a6066610328",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-access.js",
+      "new_path": "bot/src/frameworks/discord/gm-access.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R46 isolate original lazy GM access predicate; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "hasGmAccess",
+      "bytes": 414,
+      "lines": 8,
+      "sha256": "53dabc7f817c9d9c4302351d3b2bc077214ed6cbce826d23cce6280db37d9da0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-fact-list.js",
+      "new_path": "bot/src/frameworks/discord/gm-fact-list.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R36 isolate original GM fact-list display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertGmFactReadStore;handleGmFactListCommand",
+      "bytes": 1091,
+      "lines": 20,
+      "sha256": "f8a46d7c02af507803d8b3aadc5c68e853bbfbe6ab529dd2bf7812670af64bab",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-npc-state.js",
+      "new_path": "bot/src/frameworks/discord/gm-npc-state.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R37 isolate original GM cognition display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "assertGmNpcReadStore;handleGmNpcStateCommand",
+      "bytes": 2490,
+      "lines": 31,
+      "sha256": "ab8ed65ec5834b795e745885a651bacc6558c3a1987f838d04afb806c5718252",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/idempotency.js",
+      "new_path": "bot/src/frameworks/discord/idempotency.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R12 qualify same-connection Discord command receipt storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "installReceiptCapture;replayReceiptIfPresent",
+      "bytes": 2630,
+      "lines": 56,
+      "sha256": "a964cda6ab35a39aa31ccdef2c3ff6c494f6f9a2366ae95ba00506690248e5ba",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/levelup-draft-text.js",
+      "new_path": "bot/src/frameworks/discord/levelup-draft-text.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R59 isolate original level up draft display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createLevelupDraftFormatter",
+      "bytes": 1290,
+      "lines": 18,
+      "sha256": "f7449beb6c1c7c58283feffa1f392bef812784e29948a9a19504c19bea583795",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "new_path": "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R56 isolate original NPC proxy packet display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "formatNpcProxyPacket;npcControlLabel",
+      "bytes": 3844,
+      "lines": 51,
+      "sha256": "6a69b678ca117c2d498420d23a85389deee2d69516520032b582d97941cb174c",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/party-status-command.js",
+      "new_path": "bot/src/frameworks/discord/party-status-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R39 isolate original continuing-party status display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertPartyStatusStore;handlePartyStatusCommand",
+      "bytes": 1146,
+      "lines": 20,
+      "sha256": "de950bec52263d31216cd82fb62c1fb752ab44c7721e44f6fa9dfe4d7ea9c0da",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/player-fact-list.js",
+      "new_path": "bot/src/frameworks/discord/player-fact-list.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R77 isolate player facts and clues read display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertPlayerFactReadStore;handlePlayerFactListCommand",
+      "bytes": 1165,
+      "lines": 22,
+      "sha256": "01505a6cab245d942d202c1495a4d92644431e45edc068566ed76b617e72e075",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/player-settings-commands.js",
+      "new_path": "bot/src/frameworks/discord/player-settings-commands.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R18 isolate player preference commands through qualified storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "handlePlayerSettingsCommand",
+      "bytes": 1281,
+      "lines": 22,
+      "sha256": "6d029dd8d0bb01e0caa783ec98f9ab1f32880a27b5c8a8368dc6110e2a930d4b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/private-chunk-reply.js",
+      "new_path": "bot/src/frameworks/discord/private-chunk-reply.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R40 isolate original guarded session-roster adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "replyWithPrivateChunks",
+      "bytes": 341,
+      "lines": 7,
+      "sha256": "98ca204f4aa77e4cfa5e8c107eb1dfd852ac14e8a1ea2df35d7bb3333ab5e042",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reference-selection.js",
+      "new_path": "bot/src/frameworks/discord/reference-selection.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R20 isolate GM administrative read-only command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "byPrefix",
+      "bytes": 313,
+      "lines": 6,
+      "sha256": "1b31a5e95271f8f9edc98654d0456dc68825a29890bff9bf96bba387a0bc46f9",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reply-options.js",
+      "new_path": "bot/src/frameworks/discord/reply-options.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R06 isolate Discord ephemeral reply compatibility; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "translateEphemeralReplies",
+      "bytes": 769,
+      "lines": 18,
+      "sha256": "c3ce3f3f234535a5b38e3d5c0c44ff7529199d2f7d7d3934ac218eb21d35df31",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reply-or-edit.js",
+      "new_path": "bot/src/frameworks/discord/reply-or-edit.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R47 isolate original saved-rulings display and reply adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "replyOrEdit",
+      "bytes": 330,
+      "lines": 6,
+      "sha256": "957d19f2d2c7c626fcdf98b4e61cac58783af7f68d5c1106f57952d6cdae0c93",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/rules-rulings-command.js",
+      "new_path": "bot/src/frameworks/discord/rules-rulings-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R47 isolate original saved-rulings display and reply adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "assertRulesRulingReadStore;handleRulesRulingsCommand",
+      "bytes": 691,
+      "lines": 12,
+      "sha256": "739ba8fbe1e584385a9b663f8c5bab3c08c3c69e3055193c0bdd4361997c18e0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/seed-command-output.js",
+      "new_path": "bot/src/frameworks/discord/seed-command-output.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R69 isolate seed command Discord reply; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "seedCommandReply",
+      "bytes": 684,
+      "lines": 10,
+      "sha256": "ab4151553fc9128aebc107338bbda75e0f4898aaa8b9cad5063ae9c527fca5ae",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/session-brief-command.js",
+      "new_path": "bot/src/frameworks/discord/session-brief-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R82 isolate opt-in session brief adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "replyWithSessionBrief",
+      "bytes": 426,
+      "lines": 9,
+      "sha256": "60ade07e159d7b1bb71396eadc29960c23f97ea5460f33e32ea356e1ed41a4d6",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/session-recap-command.js",
+      "new_path": "bot/src/frameworks/discord/session-recap-command.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R83 isolate ordinary recap adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "replyWithSessionRecap",
+      "bytes": 471,
+      "lines": 11,
+      "sha256": "0a637381176ddd5b8920d733e466b02270fdc394c0535fc631934d10a043a098",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "createInteractionTextDelivery@4",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/text-channel.js",
+      "new_path": "bot/src/frameworks/discord/text-channel.js",
+      "owner": "discord",
+      "rationale": "RF06 F03 R04 compose qualified Discord publication channel transport; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "textChannel",
+      "bytes": 284,
+      "lines": 9,
+      "sha256": "bf4dbafdfb5872949cf5c41499769242d2610e4049099984f3ce6ac6dd594e4b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/voice-commands.js",
+      "new_path": "bot/src/frameworks/discord/voice-commands.js",
+      "owner": "discord",
+      "rationale": "RF06 F04 R17 extract original Discord voice command family; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "handleVoiceCommand",
+      "bytes": 4156,
+      "lines": 61,
+      "sha256": "8f45c1315bccf8a1bd44648f9940a38b46764979292aaeb3c5b366524caa7096",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "new_path": "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "owner": "operations",
+      "rationale": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "operationsDiscordDiagnostics",
+      "bytes": 398,
+      "lines": 4,
+      "sha256": "0ecb0786314765d75b4bc8484054c5e7178b2e5af1cb9a241ef3ab518c806013",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "createFunctionPort@3",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/operations/publication-telemetry.js",
+      "new_path": "bot/src/frameworks/operations/publication-telemetry.js",
+      "owner": "operations",
+      "rationale": "RF06 F03 R13 qualify publication telemetry over original Operations stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "publicationTelemetrySource",
+      "bytes": 634,
+      "lines": 12,
+      "sha256": "1e251e5f8808779849ce3e2e662e13d6e32be04ee03b41689dd32e60f27f73ee",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "Object.freeze@6",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R24 isolate original administrative SQL readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "backupPreview;getBackup;getSnapshot;listBackups;listMutationLedger;listSnapshots",
+      "bytes": 2127,
+      "lines": 27,
+      "sha256": "31240cb0a8723267c92a93e6b5fef5fa9e2d11f40e8dae7d95b6e7b7cce9d341",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/administrative-reads.js",
+      "new_path": "bot/src/frameworks/persistence/administrative-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R20 isolate GM administrative read-only command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createAdministrativeReadStore",
+      "bytes": 469,
+      "lines": 7,
+      "sha256": "1bde2b4bbe4e351f3457c1e89bb3cbc870e63872152a223eb96f9313fbf47652",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R25 isolate original campaign configuration reader; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "getCampaign",
+      "bytes": 247,
+      "lines": 5,
+      "sha256": "87002da30f41954f593dc45d557f55ba106c171a9f28b739c37f8b9e34307dbb",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-configuration.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-configuration.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R27 isolate original campaign setup command and storage capability; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createCampaignConfigurationStore",
+      "bytes": 389,
+      "lines": 6,
+      "sha256": "2790416bbd3eb96d44889cc0db8c7f4f2ff9e84be507728f7751996d9b2e2960",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-status.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-status.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R26 isolate original campaign status command and qualified stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createCampaignStatusStore",
+      "bytes": 494,
+      "lines": 7,
+      "sha256": "e0ba67f6f815673ca05112129995bb28289563d67bf29fceb89a638c74f97998",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/canon-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/canon-read-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R58 isolate original canon SQL readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "listCanon;listCanonConflicts",
+      "bytes": 769,
+      "lines": 8,
+      "sha256": "f513bde2cc87ad2cf992004f2658d3a4d9071171ae38b7b387950776e15577b0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/canon-read-store.js",
+      "new_path": "bot/src/frameworks/persistence/canon-read-store.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R57 qualify original canon read command views; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createCanonReadStore",
+      "bytes": 415,
+      "lines": 7,
+      "sha256": "c4daa6cc69ef226f758bc94f892dbf75790d9e9f18aae386494f5011240babc6",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "new_path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R78 isolate private caseboard display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createCaseboardReadStore",
+      "bytes": 391,
+      "lines": 6,
+      "sha256": "1913e169ce39edac290701ea036b7a4b6910fbf11a225e1cb0fe8bf5b96d6b49",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "new_path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R80 extract original caseboard SQL; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "listVisibleActiveThreads",
+      "bytes": 402,
+      "lines": 9,
+      "sha256": "94473fa13e69e4163e9775c8303973869581cc5832246ab5daafc86bcf17cdc8",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/character-list-reads.js",
+      "new_path": "bot/src/frameworks/persistence/character-list-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R54 qualify owned character list command boundary; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createCharacterListStore",
+      "bytes": 349,
+      "lines": 6,
+      "sha256": "8d6d03ef85a8a3c71510b8cf533abf17e6313891c86359300e410365fd80d818",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/character-list-repository.js",
+      "new_path": "bot/src/frameworks/persistence/character-list-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R55 isolate original owned character list query; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "listCharacters",
+      "bytes": 541,
+      "lines": 8,
+      "sha256": "f2ccc14444817a54e06484c57553d8e87f574751f40723b34e42706eae1b4ab4",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/command-receipts.js",
+      "new_path": "bot/src/frameworks/persistence/command-receipts.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R12 qualify same-connection Discord command receipt storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createCommandReceiptStore",
+      "bytes": 540,
+      "lines": 7,
+      "sha256": "f48df31255de6016e3aaa5a1e588e9eec2f855690c693d33f57a83dcc653ed3c",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/director-history-reads.js",
+      "new_path": "bot/src/frameworks/persistence/director-history-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R41 isolate original Director-history display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createDirectorHistoryStore",
+      "bytes": 375,
+      "lines": 6,
+      "sha256": "f5ea388b16be183948d7266939c339a700e3fdf8b29462f3478eb73634dd5786",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/director-status-reads.js",
+      "new_path": "bot/src/frameworks/persistence/director-status-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R42 isolate original Director-status display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createDirectorStatusStore",
+      "bytes": 446,
+      "lines": 7,
+      "sha256": "3bfe52acbe6ed70ef1eee48abb317b7ed39bca56811058be7199f731ce02e36b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-access.js",
+      "new_path": "bot/src/frameworks/persistence/gm-access.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R46 isolate original lazy GM access predicate; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createGmAccessStore",
+      "bytes": 216,
+      "lines": 5,
+      "sha256": "a33d34c0d9609abb294d237ec71b91d330d28030c10d02949fa43b0d41d887e0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "new_path": "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R36 isolate original GM fact-list display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createGmFactReadStore",
+      "bytes": 335,
+      "lines": 6,
+      "sha256": "d0862377261cf21b9509170eac151358f102fb3d4883341760d5d7171de86ed3",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "new_path": "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R49 isolate original GM-fact SQL reader; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "listFactsForGM",
+      "bytes": 953,
+      "lines": 19,
+      "sha256": "1449d1bb7b53491f6209c88134e6d62048eee8221b7d5759de6a6124a991c562",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "new_path": "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R37 isolate original GM cognition display and read contract; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createGmNpcReadStore",
+      "bytes": 483,
+      "lines": 7,
+      "sha256": "28f362fca9cc58f91330c105df30ca5725ae19234544b50dbfa300b4b239f4f1",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R50 isolate original NPC cognition list queries; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "listNpcKnowledge;listNpcMemories",
+      "bytes": 1608,
+      "lines": 21,
+      "sha256": "ba6fa02f7e42154f6ccefe8baba281b3e43199c8714738d8ab49bc782509d709",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R51 isolate original NPC profile SQL readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "getNpcProfile;listNpcProfiles",
+      "bytes": 1137,
+      "lines": 14,
+      "sha256": "a4432ebb16e737a4fa2d88df2c0513f95a01721d6f664083ca443601cdafe6a0",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/party-status.js",
+      "new_path": "bot/src/frameworks/persistence/party-status.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R39 isolate original continuing-party status display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createPartyStatusStore",
+      "bytes": 455,
+      "lines": 7,
+      "sha256": "7365909186e461b9db70c27d88868125cd51d5a3f0f05d2b06198e8437802324",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-fact-reads.js",
+      "new_path": "bot/src/frameworks/persistence/player-fact-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R77 isolate player facts and clues read display; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createPlayerFactReadStore",
+      "bytes": 363,
+      "lines": 6,
+      "sha256": "e79af004394b45171308195aa2b6deb47cddaa0db464a7d01bbbe2b4c9015ef5",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-fact-repository.js",
+      "new_path": "bot/src/frameworks/persistence/player-fact-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R79 extract original player-safe fact SQL; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "playerFactsFor",
+      "bytes": 736,
+      "lines": 16,
+      "sha256": "c23426e1c5609f5e74d51b791170128e3cb2d2c07bd60d43df9d0e7e912e2e67",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "new_path": "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R23 extract independently qualified player preference SQL; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "getPlayer;getPlayerByPrivateChannel;setAccessibility;setPrivateChannel",
+      "bytes": 1270,
+      "lines": 30,
+      "sha256": "b750207e85d824113e980a67098b6d12e13eeefd75b9e5bb6863080ff747df6b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-settings.js",
+      "new_path": "bot/src/frameworks/persistence/player-settings.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R18 isolate player preference commands through qualified storage; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createPlayerSettingsStore",
+      "bytes": 467,
+      "lines": 7,
+      "sha256": "db4b6d3a9d7423c2aeee54d511ff8433d2bbaf03c93ed01cbcc23613e44abd51",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "new_path": "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "owner": "persistence",
+      "rationale": "RF06 F04 R47 isolate original saved-rulings display and reply adapter; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createRulesRulingReadStore",
+      "bytes": 366,
+      "lines": 6,
+      "sha256": "93b0c31335bc88c3076090030a37ebb034507c0d89ea06171404830ec5a53487",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "new_path": "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R48 isolate original saved-ruling SQL readers; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "getRulesRuling;searchRulesRulings",
+      "bytes": 670,
+      "lines": 9,
+      "sha256": "60680327ca1f3fe43b752c4006e389096cfa3d512fdec0834d88bf59ff63cc75",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "new_path": "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R04 compose qualified Discord publication channel transport; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "publicationDiscordAttachments;publicationDiscordChannels;publicationDiscordText",
+      "bytes": 943,
+      "lines": 10,
+      "sha256": "6663e5e6625db7bd5af5fe2b29303f80dcecbf6ce0f013ed7ea69203283a42b8",
+      "reverse_dependents": 8,
+      "import_obligations": 0,
+      "side_effects": "createFunctionPort@3;createFunctionPort@6;createFunctionPort@9",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "new_path": "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R67 add qualified cancellation reservation port; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "createGmNoticeReservationSource;publicationGmNoticeReservation",
+      "bytes": 464,
+      "lines": 5,
+      "sha256": "8407a86861d4b23f4fb864104257eafb3db422bb412b300b0110e272c89246b3",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "createGmNoticeReservationSource@4",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/operations.js",
+      "new_path": "bot/src/frameworks/publication/contracts/operations.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R13 qualify publication telemetry over original Operations stores; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "publicationOperations",
+      "bytes": 408,
+      "lines": 4,
+      "sha256": "184d375d01229d004ddb4a0845d259b2e05a7417118782c690a6c8706607b77f",
+      "reverse_dependents": 4,
+      "import_obligations": 0,
+      "side_effects": "createFunctionPort@3",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/delivery-receipts.js",
+      "new_path": "bot/src/frameworks/publication/delivery-receipts.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R09 isolate exact publication delivery receipt contracts; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "notSent;outboxSummary;validatePublicationAcknowledgement",
+      "bytes": 994,
+      "lines": 18,
+      "sha256": "1759d1014aece5b6e4b915ac8988ba6a463036bc205710128b8727a654664279",
+      "reverse_dependents": 4,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/gm-log-delivery.js",
+      "new_path": "bot/src/frameworks/publication/gm-log-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R28 isolate original GM log publication delivery; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "postGmLog",
+      "bytes": 885,
+      "lines": 15,
+      "sha256": "f0264360ceaf6615f5d1e5aec0566e1b09427f3dc82be4d195694a892f6be2dc",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/handout-text.js",
+      "new_path": "bot/src/frameworks/publication/handout-text.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R10 isolate original handout text presentation; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "handoutMarkdown;handoutSummary",
+      "bytes": 1609,
+      "lines": 34,
+      "sha256": "548be533808f075dbc0d4f1689b76772e8d97c29a8d4928bc306c57705a0848a",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/journal-delivery.js",
+      "new_path": "bot/src/frameworks/publication/journal-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R32 isolate original source-checked journal publications; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createJournalPublications",
+      "bytes": 2225,
+      "lines": 40,
+      "sha256": "0053d6fe61828a17524d3b385024e053eb0b1b83d6d9714d5ca4f1e79c37607b",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/play-message-delivery.js",
+      "new_path": "bot/src/frameworks/publication/play-message-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R33 isolate original play-channel publication delivery; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createPlayMessagePublisher",
+      "bytes": 2569,
+      "lines": 41,
+      "sha256": "f37d2795db72b73e20a594900fc6ab866941b2a67599f9392b20a53c0584f992",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/private-player-delivery.js",
+      "new_path": "bot/src/frameworks/publication/private-player-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R34 isolate original private-player publication delivery; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createPrivatePlayerPublisher",
+      "bytes": 4063,
+      "lines": 68,
+      "sha256": "1ecb67c9508b27ec1fd96d768d62f2606ebb43440e994ff3e8d0e419ec5d573e",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/private-relay-delivery.js",
+      "new_path": "bot/src/frameworks/publication/private-relay-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R30 isolate original GM private relay delivery; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "postPrivateRelay",
+      "bytes": 1456,
+      "lines": 23,
+      "sha256": "c9e30fa768438857af1fb0bf6ebe62ee42f893d7d5e73f5339896c20391359d4",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/reference-delivery.js",
+      "new_path": "bot/src/frameworks/publication/reference-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R08 isolate reference message publication delivery; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "upsertBotMessage",
+      "bytes": 1017,
+      "lines": 25,
+      "sha256": "b7f0a2b7d7e066482df703a1defde1e819da19ae0247a0bb148363926c16ff22",
+      "reverse_dependents": 2,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/reference-publications.js",
+      "new_path": "bot/src/frameworks/publication/reference-publications.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R31 isolate original source-checked reference publications; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "createReferencePublications",
+      "bytes": 3499,
+      "lines": 60,
+      "sha256": "c0f02de97ce76793e702b95dc6c22145d90b8700e46e0dbab7581462dd14e93e",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/state-error-delivery.js",
+      "new_path": "bot/src/frameworks/publication/state-error-delivery.js",
+      "owner": "publication",
+      "rationale": "RF06 F03 R29 isolate original operational error publication; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "postStateError",
+      "bytes": 2223,
+      "lines": 32,
+      "sha256": "315b579501c2d0607f02d93e92dfe4518736e9d6c5d1d5d24b7c18b65628b1cd",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "new_path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "owner": "tooling",
+      "rationale": "RF06 F01 I03 tested inventory tool; committed-source/path-policy metadata, not runtime requalification",
+      "move_phase": "RF06",
+      "complexity": "medium",
+      "public_exports": "captureRf06Inventory;inventoryStorageSources",
+      "bytes": 10063,
+      "lines": 127,
+      "sha256": "410f45b14283083839cc5d604a6d2344a125ad3ed71f360ddf3bdc37c5b304f0",
+      "reverse_dependents": 0,
+      "import_obligations": 0,
+      "side_effects": "createHash@12;).update@12;).digest@12;path.resolve@120;fileURLToPath@120",
+      "risk": "metadata-backfill;storage/transport/serialization-calls",
+      "action": "RF06_SOURCE_METADATA_BACKFILL"
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "new_path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "owner": "persistence",
+      "rationale": "RF06 F02 R85 extracts original publication diagnostic SELECTs on the caller connection; source-boundary metadata only",
+      "move_phase": "RF06",
+      "complexity": "low",
+      "public_exports": "heldNativeNotices;listPendingPublications",
+      "bytes": 981,
+      "lines": 12,
+      "sha256": "bc3bc82bde4d22ba22dd07e13ebf02eba3a51f3bdbecb00251ad4b743b2679f4",
+      "reverse_dependents": 1,
+      "import_obligations": 0,
+      "side_effects": "No top-level call candidate found; not a semantic purity proof",
+      "risk": "module-state",
+      "action": "NEW_SOURCE"
+    }
+  ],
+  "crosswalk_rows": [
+    {
+      "old_path": "bot/src/application/composition/operations-discord.js",
+      "new_path": "bot/src/application/composition/operations-discord.js",
+      "owner": "application",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/application/composition/publication-discord.js",
+      "new_path": "bot/src/application/composition/publication-discord.js",
+      "owner": "application",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/application/composition/publication-operations.js",
+      "new_path": "bot/src/application/composition/publication-operations.js",
+      "owner": "application",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/application/composition/runtime-initializers.js",
+      "new_path": "bot/src/application/composition/runtime-initializers.js",
+      "owner": "application",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/application/workflows/discord-interaction-event.js",
+      "new_path": "bot/src/application/workflows/discord-interaction-event.js",
+      "owner": "application",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/bootstrap/ready.js",
+      "new_path": "bot/src/bootstrap/ready.js",
+      "owner": "bootstrap",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/bootstrap/shutdown.js",
+      "new_path": "bot/src/bootstrap/shutdown.js",
+      "owner": "bootstrap",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/discord--operations/public.js",
+      "new_path": "bot/src/framework-to-framework/discord--operations/public.js",
+      "owner": "discord--operations",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "new_path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "owner": "discord--persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/framework-to-framework/operations--publication/public.js",
+      "new_path": "bot/src/framework-to-framework/operations--publication/public.js",
+      "owner": "operations--publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "new_path": "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "owner": "daggerheart",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/administrative-read-commands.js",
+      "new_path": "bot/src/frameworks/discord/administrative-read-commands.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/attachment.js",
+      "new_path": "bot/src/frameworks/discord/attachment.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/campaign-setup-command.js",
+      "new_path": "bot/src/frameworks/discord/campaign-setup-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/campaign-status-command.js",
+      "new_path": "bot/src/frameworks/discord/campaign-status-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/canon-read-commands.js",
+      "new_path": "bot/src/frameworks/discord/canon-read-commands.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/caseboard-command.js",
+      "new_path": "bot/src/frameworks/discord/caseboard-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/character-list-command.js",
+      "new_path": "bot/src/frameworks/discord/character-list-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/client-factory.js",
+      "new_path": "bot/src/frameworks/discord/client-factory.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-mutations.js",
+      "new_path": "bot/src/frameworks/discord/command-mutations.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-record-text.js",
+      "new_path": "bot/src/frameworks/discord/command-record-text.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-registration.js",
+      "new_path": "bot/src/frameworks/discord/command-registration.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/command-route.js",
+      "new_path": "bot/src/frameworks/discord/command-route.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "new_path": "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "new_path": "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "new_path": "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "new_path": "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/contracts/player-settings.js",
+      "new_path": "bot/src/frameworks/discord/contracts/player-settings.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "new_path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/diagnostic-channel.js",
+      "new_path": "bot/src/frameworks/discord/diagnostic-channel.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/diagnostic-reply.js",
+      "new_path": "bot/src/frameworks/discord/diagnostic-reply.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/director-history-command.js",
+      "new_path": "bot/src/frameworks/discord/director-history-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/director-status-command.js",
+      "new_path": "bot/src/frameworks/discord/director-status-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/export-attachments.js",
+      "new_path": "bot/src/frameworks/discord/export-attachments.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/fact-text.js",
+      "new_path": "bot/src/frameworks/discord/fact-text.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-access.js",
+      "new_path": "bot/src/frameworks/discord/gm-access.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-fact-list.js",
+      "new_path": "bot/src/frameworks/discord/gm-fact-list.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/gm-npc-state.js",
+      "new_path": "bot/src/frameworks/discord/gm-npc-state.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/idempotency.js",
+      "new_path": "bot/src/frameworks/discord/idempotency.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/levelup-draft-text.js",
+      "new_path": "bot/src/frameworks/discord/levelup-draft-text.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "new_path": "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/party-status-command.js",
+      "new_path": "bot/src/frameworks/discord/party-status-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/player-fact-list.js",
+      "new_path": "bot/src/frameworks/discord/player-fact-list.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/player-settings-commands.js",
+      "new_path": "bot/src/frameworks/discord/player-settings-commands.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/private-chunk-reply.js",
+      "new_path": "bot/src/frameworks/discord/private-chunk-reply.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reference-selection.js",
+      "new_path": "bot/src/frameworks/discord/reference-selection.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reply-options.js",
+      "new_path": "bot/src/frameworks/discord/reply-options.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/reply-or-edit.js",
+      "new_path": "bot/src/frameworks/discord/reply-or-edit.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/rules-rulings-command.js",
+      "new_path": "bot/src/frameworks/discord/rules-rulings-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/seed-command-output.js",
+      "new_path": "bot/src/frameworks/discord/seed-command-output.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/session-brief-command.js",
+      "new_path": "bot/src/frameworks/discord/session-brief-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/session-recap-command.js",
+      "new_path": "bot/src/frameworks/discord/session-recap-command.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/text-channel.js",
+      "new_path": "bot/src/frameworks/discord/text-channel.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/discord/voice-commands.js",
+      "new_path": "bot/src/frameworks/discord/voice-commands.js",
+      "owner": "discord",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "new_path": "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "owner": "operations",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/operations/publication-telemetry.js",
+      "new_path": "bot/src/frameworks/operations/publication-telemetry.js",
+      "owner": "operations",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/administrative-reads.js",
+      "new_path": "bot/src/frameworks/persistence/administrative-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-configuration.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-configuration.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/campaign-status.js",
+      "new_path": "bot/src/frameworks/persistence/campaign-status.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/canon-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/canon-read-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/canon-read-store.js",
+      "new_path": "bot/src/frameworks/persistence/canon-read-store.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "new_path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "new_path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/character-list-reads.js",
+      "new_path": "bot/src/frameworks/persistence/character-list-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/character-list-repository.js",
+      "new_path": "bot/src/frameworks/persistence/character-list-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/command-receipts.js",
+      "new_path": "bot/src/frameworks/persistence/command-receipts.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/director-history-reads.js",
+      "new_path": "bot/src/frameworks/persistence/director-history-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/director-status-reads.js",
+      "new_path": "bot/src/frameworks/persistence/director-status-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-access.js",
+      "new_path": "bot/src/frameworks/persistence/gm-access.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "new_path": "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "new_path": "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "new_path": "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "new_path": "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/party-status.js",
+      "new_path": "bot/src/frameworks/persistence/party-status.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-fact-reads.js",
+      "new_path": "bot/src/frameworks/persistence/player-fact-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-fact-repository.js",
+      "new_path": "bot/src/frameworks/persistence/player-fact-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "new_path": "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/player-settings.js",
+      "new_path": "bot/src/frameworks/persistence/player-settings.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "new_path": "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "new_path": "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "new_path": "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 8,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "new_path": "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/contracts/operations.js",
+      "new_path": "bot/src/frameworks/publication/contracts/operations.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 4,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/delivery-receipts.js",
+      "new_path": "bot/src/frameworks/publication/delivery-receipts.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 4,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/gm-log-delivery.js",
+      "new_path": "bot/src/frameworks/publication/gm-log-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/handout-text.js",
+      "new_path": "bot/src/frameworks/publication/handout-text.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/journal-delivery.js",
+      "new_path": "bot/src/frameworks/publication/journal-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/play-message-delivery.js",
+      "new_path": "bot/src/frameworks/publication/play-message-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/private-player-delivery.js",
+      "new_path": "bot/src/frameworks/publication/private-player-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/private-relay-delivery.js",
+      "new_path": "bot/src/frameworks/publication/private-relay-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/reference-delivery.js",
+      "new_path": "bot/src/frameworks/publication/reference-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 2,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/reference-publications.js",
+      "new_path": "bot/src/frameworks/publication/reference-publications.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/publication/state-error-delivery.js",
+      "new_path": "bot/src/frameworks/publication/state-error-delivery.js",
+      "owner": "publication",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "new_path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "owner": "tooling",
+      "move_phase": "RF06",
+      "action": "RF06_SOURCE_METADATA_BACKFILL",
+      "reverse_dependents": 0,
+      "import_obligations": 0
+    },
+    {
+      "old_path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "new_path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "owner": "persistence",
+      "move_phase": "RF06",
+      "action": "NEW_SOURCE",
+      "reverse_dependents": 1,
+      "import_obligations": 0
+    }
+  ],
+  "provenance": [
+    {
+      "path": "bot/src/application/composition/operations-discord.js",
+      "creation": {
+        "sha": "ba765395a495d3c30448e2c7fc9c2f425659543a",
+        "subject": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers"
+      },
+      "source_sha256": "7675b2265ba8dbb769595fc2e98b1cc9c15f7720b8481c0b9a49fe045a6fef35",
+      "owner": "application"
+    },
+    {
+      "path": "bot/src/application/composition/publication-discord.js",
+      "creation": {
+        "sha": "9492e39bc0e92fcca62895401cb3ce59aac0d9a5",
+        "subject": "RF06 F03 R04 compose qualified Discord publication channel transport"
+      },
+      "source_sha256": "19ccfc7eb11dd5509631c6d180134cd7917de547733ffb9639f637e553fc63eb",
+      "owner": "application"
+    },
+    {
+      "path": "bot/src/application/composition/publication-operations.js",
+      "creation": {
+        "sha": "4d349c19bbe08404402694dbc9b6f1d36a77c123",
+        "subject": "RF06 F03 R13 qualify publication telemetry over original Operations stores"
+      },
+      "source_sha256": "f0798d4441d30d6db17a0294c26e4a20b9c5a3b4a36fc82f993d2fcb6915a328",
+      "owner": "application"
+    },
+    {
+      "path": "bot/src/application/composition/runtime-initializers.js",
+      "creation": {
+        "sha": "7ed4d996f0a2a7fa9189dabad98d1a4223e87d70",
+        "subject": "RF06 F05 R63 compose original startup initializer sequence"
+      },
+      "source_sha256": "37f5f7eec928fe4c15628d08c86bb714d0542173289f935e8e46d7fbef64c378",
+      "owner": "application"
+    },
+    {
+      "path": "bot/src/application/workflows/discord-interaction-event.js",
+      "creation": {
+        "sha": "f3cb648598016d48f8f707007df211feef560028",
+        "subject": "RF06 F05 R61 isolate original interaction event workflow"
+      },
+      "source_sha256": "d494f5469151c132faaebee683a8d2b3efcb14db6459158920523ab2a9daf86b",
+      "owner": "application"
+    },
+    {
+      "path": "bot/src/bootstrap/ready.js",
+      "creation": {
+        "sha": "829d950fb25a696f65278ae6cb9d2ba2a88ef3db",
+        "subject": "RF06 F05 R60 isolate original client ready registration"
+      },
+      "source_sha256": "032f2e6c134b608ff7b4f6d62217c84c8620027995abaafc07d68c40672f08ff",
+      "owner": "bootstrap"
+    },
+    {
+      "path": "bot/src/bootstrap/shutdown.js",
+      "creation": {
+        "sha": "222f79c487bdaeddc2991c8ccf54dac326193a90",
+        "subject": "RF06 F05 R43 isolate original shutdown signal registration"
+      },
+      "source_sha256": "8c7fa063986e9e7c913a147216121f51605b11b01e784a88a2ff8b6965807f90",
+      "owner": "bootstrap"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--operations/public.js",
+      "creation": {
+        "sha": "ba765395a495d3c30448e2c7fc9c2f425659543a",
+        "subject": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers"
+      },
+      "source_sha256": "f379813502661a9cd5ded081568b50f6e946806fccbb43a5b04e18d8955a03ab",
+      "owner": "discord--operations"
+    },
+    {
+      "path": "bot/src/framework-to-framework/discord--persistence/public.js",
+      "creation": {
+        "sha": "102b2b0d75d885a02ddedc8d2c41d9c93969f213",
+        "subject": "RF06 F04 R12 qualify same-connection Discord command receipt storage"
+      },
+      "source_sha256": "1ca80d93fbafdac0effb9b9d0b523fd6fa4e4898a70d56aef7b82d4e665b613d",
+      "owner": "discord--persistence"
+    },
+    {
+      "path": "bot/src/framework-to-framework/operations--publication/public.js",
+      "creation": {
+        "sha": "4d349c19bbe08404402694dbc9b6f1d36a77c123",
+        "subject": "RF06 F03 R13 qualify publication telemetry over original Operations stores"
+      },
+      "source_sha256": "e2b553a34a5763b8a85c1749d4f9b8a5e45a0f85cb8e867fe1c9e1b1614ade77",
+      "owner": "operations--publication"
+    },
+    {
+      "path": "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "creation": {
+        "sha": "4bda0a6bdef9e6621931c21baae0cc30b2ba01ff",
+        "subject": "RF06 F03 R67 add qualified cancellation reservation port"
+      },
+      "source_sha256": "41c87468eae3cf4728d86e3c5e9b6dce9e43a62fa63fb593970dceca680c143a",
+      "owner": "daggerheart"
+    },
+    {
+      "path": "bot/src/frameworks/discord/administrative-read-commands.js",
+      "creation": {
+        "sha": "48974c0141e6f4dc5856ab1158d63f7714d3e6af",
+        "subject": "RF06 F04 R20 isolate GM administrative read-only command views"
+      },
+      "source_sha256": "536470fc7a2ac92f0312fa42ad7c85debc480dcfbc8ff043f0011ce932e739f0",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/attachment.js",
+      "creation": {
+        "sha": "0e3ab1bf05bfffd5961c2f577d82fc12a50d97e2",
+        "subject": "RF06 F04 R45 route original attachment constructors through Discord"
+      },
+      "source_sha256": "2e96f2312d5e5cbd2c4306942a638c1eefb576dd0d7388ce678472246217dff5",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/campaign-setup-command.js",
+      "creation": {
+        "sha": "6601f417ca95a989396ee5b0e107cd27d8bb24bd",
+        "subject": "RF06 F04 R27 isolate original campaign setup command and storage capability"
+      },
+      "source_sha256": "36bccf2ae2a929761afa03f422914f1d75ca117268df45ec88c195195ab19551",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/campaign-status-command.js",
+      "creation": {
+        "sha": "52abf143d14c2b70d5a3957b6ba2e2f2fa0fb4a0",
+        "subject": "RF06 F04 R26 isolate original campaign status command and qualified stores"
+      },
+      "source_sha256": "07acd2bf434ae1b0d173c65b6bfce940e6450e82a7fae85d034b19d047d0d942",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/canon-read-commands.js",
+      "creation": {
+        "sha": "4a88cccbdf4edce180347da9e8041701dad4592d",
+        "subject": "RF06 F04 R57 qualify original canon read command views"
+      },
+      "source_sha256": "45d74b1f572c6f1d46cb29ab2f7974cce7a4f51d80430ba1c3d1466ab599e255",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/caseboard-command.js",
+      "creation": {
+        "sha": "6a10e6ca51c79b08e06e78c352ac8763f30bcc52",
+        "subject": "RF06 F04 R78 isolate private caseboard display"
+      },
+      "source_sha256": "34cf6e5d3c58f7435331b296c19753cc9cc83333f6b4fd0f51949e8f66293b61",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/character-list-command.js",
+      "creation": {
+        "sha": "f5d5c28ff6e98b4f08f7b8a10f577bc0d19b0828",
+        "subject": "RF06 F04 R54 qualify owned character list command boundary"
+      },
+      "source_sha256": "4034350a4c041ea3624308a4d26e8c6380e56c97b765aed412767d552fe7f506",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/client-factory.js",
+      "creation": {
+        "sha": "a92a49931e8f49445f30b5c49c8d78e35e7cf447",
+        "subject": "RF06 F05 R62 isolate original Discord client construction"
+      },
+      "source_sha256": "5c9d2dc3f30316dcb528c9852c23f7a2553a6aa4f2abbc64fa7f00ae8c742729",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/command-mutations.js",
+      "creation": {
+        "sha": "6b7fd0a044197659b156b7661e54aa2fe2188313",
+        "subject": "RF06 F04 R11 isolate original command mutation classification"
+      },
+      "source_sha256": "941b3f252034bfaa40aefa9f2c868765e449607808ea663ba2f1f37bbc38f452",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/command-record-text.js",
+      "creation": {
+        "sha": "347932773484f45308c07155eb0d026eb05fc6e7",
+        "subject": "RF06 F04 R05 isolate Discord character and encounter record views"
+      },
+      "source_sha256": "e43359293c297d1de5ac9e4e1c0bc126d5aa5d2c9cf4107464fa32f730865243",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/command-registration.js",
+      "creation": {
+        "sha": "06dad37ad0a1ffdbe95b530076f0dbbe74397cdd",
+        "subject": "RF06 F05 R01 isolate schema-only Discord registration"
+      },
+      "source_sha256": "184e711dabb0de89f1a589884cb6c28b5463fc52d806c0a191df7f53c1c64999",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/command-route.js",
+      "creation": {
+        "sha": "d6ec14676df36ed014660b15fd59d133c55aaeec",
+        "subject": "RF06 F04 R02 isolate Discord command route decoding"
+      },
+      "source_sha256": "c20adff3df5c2e97aa4486f419a84367e1ec326babb2858ac9f9bb1565d65f0c",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "creation": {
+        "sha": "48974c0141e6f4dc5856ab1158d63f7714d3e6af",
+        "subject": "RF06 F04 R20 isolate GM administrative read-only command views"
+      },
+      "source_sha256": "034795fa534106241760b36f9e790bd2d9b0fc3d13beb2549b06ae589c03cb2d",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "creation": {
+        "sha": "6601f417ca95a989396ee5b0e107cd27d8bb24bd",
+        "subject": "RF06 F04 R27 isolate original campaign setup command and storage capability"
+      },
+      "source_sha256": "7fc35f0a0da7a9a6b436607cce6de9756863c6631abfdb380cc8b4a3ebc4c2fc",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "creation": {
+        "sha": "52abf143d14c2b70d5a3957b6ba2e2f2fa0fb4a0",
+        "subject": "RF06 F04 R26 isolate original campaign status command and qualified stores"
+      },
+      "source_sha256": "e5a383111d1879a5980c6a963b323ad91d6cecae0c3169e970bff0573b5fcb90",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "creation": {
+        "sha": "102b2b0d75d885a02ddedc8d2c41d9c93969f213",
+        "subject": "RF06 F04 R12 qualify same-connection Discord command receipt storage"
+      },
+      "source_sha256": "c12acf50f02b3c0055cc76bcd425cef997ee277660badd48af5ccf1d307544e2",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/contracts/player-settings.js",
+      "creation": {
+        "sha": "9678219aeffac394ec5bb87cdae3051fe0284bf1",
+        "subject": "RF06 F04 R18 isolate player preference commands through qualified storage"
+      },
+      "source_sha256": "dcca87336b2697a1fccbab495e436479aca94861b15cccbca606985364ff149e",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/delivery-status-text.js",
+      "creation": {
+        "sha": "540f18c515fc77175b37ca883acbd7574def8c51",
+        "subject": "RF06 F04 R84 isolate delivery diagnostic text"
+      },
+      "source_sha256": "e5b2c4780ae26de392fffc761cbfa3fead8e495f3d65808600dc7d026138b9ae",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/diagnostic-channel.js",
+      "creation": {
+        "sha": "ba765395a495d3c30448e2c7fc9c2f425659543a",
+        "subject": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers"
+      },
+      "source_sha256": "0e875fe79cbdb04d2c0bad44ddfd14ab41019ed8648713fa51269772a37fbf67",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/diagnostic-reply.js",
+      "creation": {
+        "sha": "3eacf657683b215811831a550f1d6ce6b25b1054",
+        "subject": "RF06 F04 R19 route GM diagnostics through Discord Operations boundary"
+      },
+      "source_sha256": "59e0eeb7d25ba3f274010c814a701c5d4e0453f875a09d4346f48452c55200b7",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/director-history-command.js",
+      "creation": {
+        "sha": "cde2b74ee77e89b57fead85892b612af00636c85",
+        "subject": "RF06 F04 R41 isolate original Director-history display and read contract"
+      },
+      "source_sha256": "e1a458fa6848af8ffd041c7e1de97a717cad0e08ff9c41871617befdff5e464e",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/director-status-command.js",
+      "creation": {
+        "sha": "eab2347523a9414092c0bab12b531dd820e532ff",
+        "subject": "RF06 F04 R42 isolate original Director-status display and read contract"
+      },
+      "source_sha256": "06dbb38fdcea66bee9770fb1f2f5cca2ad4f9b418295a81a08051ed75e02407e",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/export-attachments.js",
+      "creation": {
+        "sha": "0732642500e0c78b540ef0f1f4a9f65773882e76",
+        "subject": "RF06 F04 R44 move original export attachment construction into Discord"
+      },
+      "source_sha256": "a3a2a81a185d7482e3c0bd8f26426d72c77ab5d0fa6d304e93798d89131296d8",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/fact-text.js",
+      "creation": {
+        "sha": "36fd54d34003d4c213ff51469c176843c09dcbbf",
+        "subject": "RF06 F04 R38 move original fact display text into Discord"
+      },
+      "source_sha256": "a030c8ac76d4f86d170c005770d6a68f437958ea841a7df6e7c31a6066610328",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/gm-access.js",
+      "creation": {
+        "sha": "449e487a1aeb59a7ea8208d0769eb8ae7019a957",
+        "subject": "RF06 F04 R46 isolate original lazy GM access predicate"
+      },
+      "source_sha256": "53dabc7f817c9d9c4302351d3b2bc077214ed6cbce826d23cce6280db37d9da0",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/gm-fact-list.js",
+      "creation": {
+        "sha": "05ca78a38b0739e5862359352270cbcf46b15a75",
+        "subject": "RF06 F04 R36 isolate original GM fact-list display and read contract"
+      },
+      "source_sha256": "f8a46d7c02af507803d8b3aadc5c68e853bbfbe6ab529dd2bf7812670af64bab",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/gm-npc-state.js",
+      "creation": {
+        "sha": "e5ee650cc97434bae316db6716ca793c82934cb4",
+        "subject": "RF06 F04 R37 isolate original GM cognition display and read contract"
+      },
+      "source_sha256": "ab8ed65ec5834b795e745885a651bacc6558c3a1987f838d04afb806c5718252",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/idempotency.js",
+      "creation": {
+        "sha": "102b2b0d75d885a02ddedc8d2c41d9c93969f213",
+        "subject": "RF06 F04 R12 qualify same-connection Discord command receipt storage"
+      },
+      "source_sha256": "a964cda6ab35a39aa31ccdef2c3ff6c494f6f9a2366ae95ba00506690248e5ba",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/levelup-draft-text.js",
+      "creation": {
+        "sha": "067a35aa3eed5a2d6f5fc1a756eaebd6d3756236",
+        "subject": "RF06 F04 R59 isolate original level up draft display"
+      },
+      "source_sha256": "f7449beb6c1c7c58283feffa1f392bef812784e29948a9a19504c19bea583795",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "creation": {
+        "sha": "92dc0457d46278839b337535dda3544cc1756173",
+        "subject": "RF06 F04 R56 isolate original NPC proxy packet display"
+      },
+      "source_sha256": "6a69b678ca117c2d498420d23a85389deee2d69516520032b582d97941cb174c",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/party-status-command.js",
+      "creation": {
+        "sha": "cfca6e1481fa9922bfc85f384887d20ad09ec6fa",
+        "subject": "RF06 F04 R39 isolate original continuing-party status display"
+      },
+      "source_sha256": "de950bec52263d31216cd82fb62c1fb752ab44c7721e44f6fa9dfe4d7ea9c0da",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/player-fact-list.js",
+      "creation": {
+        "sha": "b5507a6d9cfa65c98e1f782ef402dea06faf516f",
+        "subject": "RF06 F04 R77 isolate player facts and clues read display"
+      },
+      "source_sha256": "01505a6cab245d942d202c1495a4d92644431e45edc068566ed76b617e72e075",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/player-settings-commands.js",
+      "creation": {
+        "sha": "9678219aeffac394ec5bb87cdae3051fe0284bf1",
+        "subject": "RF06 F04 R18 isolate player preference commands through qualified storage"
+      },
+      "source_sha256": "6d029dd8d0bb01e0caa783ec98f9ab1f32880a27b5c8a8368dc6110e2a930d4b",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/private-chunk-reply.js",
+      "creation": {
+        "sha": "3fa2a61b542898f9606a9a0458fea62d081a99cf",
+        "subject": "RF06 F04 R40 isolate original guarded session-roster adapter"
+      },
+      "source_sha256": "98ca204f4aa77e4cfa5e8c107eb1dfd852ac14e8a1ea2df35d7bb3333ab5e042",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/reference-selection.js",
+      "creation": {
+        "sha": "48974c0141e6f4dc5856ab1158d63f7714d3e6af",
+        "subject": "RF06 F04 R20 isolate GM administrative read-only command views"
+      },
+      "source_sha256": "1b31a5e95271f8f9edc98654d0456dc68825a29890bff9bf96bba387a0bc46f9",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/reply-options.js",
+      "creation": {
+        "sha": "d88bb55e88a2a8d02eefc5bea8582e1ccff77473",
+        "subject": "RF06 F04 R06 isolate Discord ephemeral reply compatibility"
+      },
+      "source_sha256": "c3ce3f3f234535a5b38e3d5c0c44ff7529199d2f7d7d3934ac218eb21d35df31",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/reply-or-edit.js",
+      "creation": {
+        "sha": "3f9e4714cd7462dd9dc283eb4feb1389015ea51f",
+        "subject": "RF06 F04 R47 isolate original saved-rulings display and reply adapter"
+      },
+      "source_sha256": "957d19f2d2c7c626fcdf98b4e61cac58783af7f68d5c1106f57952d6cdae0c93",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/rules-rulings-command.js",
+      "creation": {
+        "sha": "3f9e4714cd7462dd9dc283eb4feb1389015ea51f",
+        "subject": "RF06 F04 R47 isolate original saved-rulings display and reply adapter"
+      },
+      "source_sha256": "739ba8fbe1e584385a9b663f8c5bab3c08c3c69e3055193c0bdd4361997c18e0",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/seed-command-output.js",
+      "creation": {
+        "sha": "2107318d1f286e4ace6f028c76ecdd3a7ea17679",
+        "subject": "RF06 F04 R69 isolate seed command Discord reply"
+      },
+      "source_sha256": "ab4151553fc9128aebc107338bbda75e0f4898aaa8b9cad5063ae9c527fca5ae",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/session-brief-command.js",
+      "creation": {
+        "sha": "c3a4dfb47013f4ce1c2a3714cb7b4ed8d4c1d40c",
+        "subject": "RF06 F04 R82 isolate opt-in session brief adapter"
+      },
+      "source_sha256": "60ade07e159d7b1bb71396eadc29960c23f97ea5460f33e32ea356e1ed41a4d6",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/session-recap-command.js",
+      "creation": {
+        "sha": "c39c540066b6efa54da2acba385736d8c9134c8d",
+        "subject": "RF06 F04 R83 isolate ordinary recap adapter"
+      },
+      "source_sha256": "0a637381176ddd5b8920d733e466b02270fdc394c0535fc631934d10a043a098",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/text-channel.js",
+      "creation": {
+        "sha": "9492e39bc0e92fcca62895401cb3ce59aac0d9a5",
+        "subject": "RF06 F03 R04 compose qualified Discord publication channel transport"
+      },
+      "source_sha256": "bf4dbafdfb5872949cf5c41499769242d2610e4049099984f3ce6ac6dd594e4b",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/discord/voice-commands.js",
+      "creation": {
+        "sha": "57b0eb8ce3d95f3ad041e1c1e5f16517ba499af6",
+        "subject": "RF06 F04 R17 extract original Discord voice command family"
+      },
+      "source_sha256": "8f45c1315bccf8a1bd44648f9940a38b46764979292aaeb3c5b366524caa7096",
+      "owner": "discord"
+    },
+    {
+      "path": "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "creation": {
+        "sha": "ba765395a495d3c30448e2c7fc9c2f425659543a",
+        "subject": "RF06 F03 R07 qualify diagnostic privacy and retire unused root readers"
+      },
+      "source_sha256": "0ecb0786314765d75b4bc8484054c5e7178b2e5af1cb9a241ef3ab518c806013",
+      "owner": "operations"
+    },
+    {
+      "path": "bot/src/frameworks/operations/publication-telemetry.js",
+      "creation": {
+        "sha": "4d349c19bbe08404402694dbc9b6f1d36a77c123",
+        "subject": "RF06 F03 R13 qualify publication telemetry over original Operations stores"
+      },
+      "source_sha256": "1e251e5f8808779849ce3e2e662e13d6e32be04ee03b41689dd32e60f27f73ee",
+      "owner": "operations"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "creation": {
+        "sha": "5dda8fcf4fcfe8fa14898c8313eea72cb2539aed",
+        "subject": "RF06 F02 R24 isolate original administrative SQL readers"
+      },
+      "source_sha256": "31240cb0a8723267c92a93e6b5fef5fa9e2d11f40e8dae7d95b6e7b7cce9d341",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/administrative-reads.js",
+      "creation": {
+        "sha": "48974c0141e6f4dc5856ab1158d63f7714d3e6af",
+        "subject": "RF06 F04 R20 isolate GM administrative read-only command views"
+      },
+      "source_sha256": "1bde2b4bbe4e351f3457c1e89bb3cbc870e63872152a223eb96f9313fbf47652",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "creation": {
+        "sha": "60b685e34de9e1fb2a46324138a22e400b907067",
+        "subject": "RF06 F02 R25 isolate original campaign configuration reader"
+      },
+      "source_sha256": "87002da30f41954f593dc45d557f55ba106c171a9f28b739c37f8b9e34307dbb",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/campaign-configuration.js",
+      "creation": {
+        "sha": "6601f417ca95a989396ee5b0e107cd27d8bb24bd",
+        "subject": "RF06 F04 R27 isolate original campaign setup command and storage capability"
+      },
+      "source_sha256": "2790416bbd3eb96d44889cc0db8c7f4f2ff9e84be507728f7751996d9b2e2960",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/campaign-status.js",
+      "creation": {
+        "sha": "52abf143d14c2b70d5a3957b6ba2e2f2fa0fb4a0",
+        "subject": "RF06 F04 R26 isolate original campaign status command and qualified stores"
+      },
+      "source_sha256": "e0ba67f6f815673ca05112129995bb28289563d67bf29fceb89a638c74f97998",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/canon-read-repository.js",
+      "creation": {
+        "sha": "308886d62d2ef8c0aedfefb83e6987e19bc2ce5b",
+        "subject": "RF06 F02 R58 isolate original canon SQL readers"
+      },
+      "source_sha256": "f513bde2cc87ad2cf992004f2658d3a4d9071171ae38b7b387950776e15577b0",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/canon-read-store.js",
+      "creation": {
+        "sha": "4a88cccbdf4edce180347da9e8041701dad4592d",
+        "subject": "RF06 F04 R57 qualify original canon read command views"
+      },
+      "source_sha256": "c4daa6cc69ef226f758bc94f892dbf75790d9e9f18aae386494f5011240babc6",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/caseboard-reads.js",
+      "creation": {
+        "sha": "6a10e6ca51c79b08e06e78c352ac8763f30bcc52",
+        "subject": "RF06 F04 R78 isolate private caseboard display"
+      },
+      "source_sha256": "1913e169ce39edac290701ea036b7a4b6910fbf11a225e1cb0fe8bf5b96d6b49",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/caseboard-repository.js",
+      "creation": {
+        "sha": "1bf24d30f7c1ea366eb51eed8c8c81c403366b76",
+        "subject": "RF06 F02 R80 extract original caseboard SQL"
+      },
+      "source_sha256": "94473fa13e69e4163e9775c8303973869581cc5832246ab5daafc86bcf17cdc8",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/character-list-reads.js",
+      "creation": {
+        "sha": "f5d5c28ff6e98b4f08f7b8a10f577bc0d19b0828",
+        "subject": "RF06 F04 R54 qualify owned character list command boundary"
+      },
+      "source_sha256": "8d6d03ef85a8a3c71510b8cf533abf17e6313891c86359300e410365fd80d818",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/character-list-repository.js",
+      "creation": {
+        "sha": "3c7ffbb8df04e7abb1071b54736d15d7c9ba9797",
+        "subject": "RF06 F02 R55 isolate original owned character list query"
+      },
+      "source_sha256": "f2ccc14444817a54e06484c57553d8e87f574751f40723b34e42706eae1b4ab4",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/command-receipts.js",
+      "creation": {
+        "sha": "102b2b0d75d885a02ddedc8d2c41d9c93969f213",
+        "subject": "RF06 F04 R12 qualify same-connection Discord command receipt storage"
+      },
+      "source_sha256": "f48df31255de6016e3aaa5a1e588e9eec2f855690c693d33f57a83dcc653ed3c",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/director-history-reads.js",
+      "creation": {
+        "sha": "cde2b74ee77e89b57fead85892b612af00636c85",
+        "subject": "RF06 F04 R41 isolate original Director-history display and read contract"
+      },
+      "source_sha256": "f5ea388b16be183948d7266939c339a700e3fdf8b29462f3478eb73634dd5786",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/director-status-reads.js",
+      "creation": {
+        "sha": "eab2347523a9414092c0bab12b531dd820e532ff",
+        "subject": "RF06 F04 R42 isolate original Director-status display and read contract"
+      },
+      "source_sha256": "3bfe52acbe6ed70ef1eee48abb317b7ed39bca56811058be7199f731ce02e36b",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/gm-access.js",
+      "creation": {
+        "sha": "449e487a1aeb59a7ea8208d0769eb8ae7019a957",
+        "subject": "RF06 F04 R46 isolate original lazy GM access predicate"
+      },
+      "source_sha256": "a33d34c0d9609abb294d237ec71b91d330d28030c10d02949fa43b0d41d887e0",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "creation": {
+        "sha": "05ca78a38b0739e5862359352270cbcf46b15a75",
+        "subject": "RF06 F04 R36 isolate original GM fact-list display and read contract"
+      },
+      "source_sha256": "d0862377261cf21b9509170eac151358f102fb3d4883341760d5d7171de86ed3",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "creation": {
+        "sha": "d04d2541e568b3324ba9198da0f3f60e6698ada1",
+        "subject": "RF06 F02 R49 isolate original GM-fact SQL reader"
+      },
+      "source_sha256": "1449d1bb7b53491f6209c88134e6d62048eee8221b7d5759de6a6124a991c562",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "creation": {
+        "sha": "e5ee650cc97434bae316db6716ca793c82934cb4",
+        "subject": "RF06 F04 R37 isolate original GM cognition display and read contract"
+      },
+      "source_sha256": "28f362fca9cc58f91330c105df30ca5725ae19234544b50dbfa300b4b239f4f1",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "creation": {
+        "sha": "f86467f9207b9ff6c4a19816ac84a18c000d7627",
+        "subject": "RF06 F02 R50 isolate original NPC cognition list queries"
+      },
+      "source_sha256": "ba6fa02f7e42154f6ccefe8baba281b3e43199c8714738d8ab49bc782509d709",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "creation": {
+        "sha": "95c5c4e4fffd567af6340e8b0e3c616c53be5b7b",
+        "subject": "RF06 F02 R51 isolate original NPC profile SQL readers"
+      },
+      "source_sha256": "a4432ebb16e737a4fa2d88df2c0513f95a01721d6f664083ca443601cdafe6a0",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/party-status.js",
+      "creation": {
+        "sha": "cfca6e1481fa9922bfc85f384887d20ad09ec6fa",
+        "subject": "RF06 F04 R39 isolate original continuing-party status display"
+      },
+      "source_sha256": "7365909186e461b9db70c27d88868125cd51d5a3f0f05d2b06198e8437802324",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/player-fact-reads.js",
+      "creation": {
+        "sha": "b5507a6d9cfa65c98e1f782ef402dea06faf516f",
+        "subject": "RF06 F04 R77 isolate player facts and clues read display"
+      },
+      "source_sha256": "e79af004394b45171308195aa2b6deb47cddaa0db464a7d01bbbe2b4c9015ef5",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/player-fact-repository.js",
+      "creation": {
+        "sha": "7633b88f3e861ca08962192b031b289f9de095e0",
+        "subject": "RF06 F02 R79 extract original player-safe fact SQL"
+      },
+      "source_sha256": "c23426e1c5609f5e74d51b791170128e3cb2d2c07bd60d43df9d0e7e912e2e67",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "creation": {
+        "sha": "f42b7076718cf8584ede89777fa4d3727c318c6f",
+        "subject": "RF06 F02 R23 extract independently qualified player preference SQL"
+      },
+      "source_sha256": "b750207e85d824113e980a67098b6d12e13eeefd75b9e5bb6863080ff747df6b",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/player-settings.js",
+      "creation": {
+        "sha": "9678219aeffac394ec5bb87cdae3051fe0284bf1",
+        "subject": "RF06 F04 R18 isolate player preference commands through qualified storage"
+      },
+      "source_sha256": "db4b6d3a9d7423c2aeee54d511ff8433d2bbaf03c93ed01cbcc23613e44abd51",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "creation": {
+        "sha": "3f9e4714cd7462dd9dc283eb4feb1389015ea51f",
+        "subject": "RF06 F04 R47 isolate original saved-rulings display and reply adapter"
+      },
+      "source_sha256": "93b0c31335bc88c3076090030a37ebb034507c0d89ea06171404830ec5a53487",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "creation": {
+        "sha": "3c6423273f033eec59fd702d2d4a974b8a81b9b1",
+        "subject": "RF06 F02 R48 isolate original saved-ruling SQL readers"
+      },
+      "source_sha256": "60680327ca1f3fe43b752c4006e389096cfa3d512fdec0834d88bf59ff63cc75",
+      "owner": "persistence"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "creation": {
+        "sha": "9492e39bc0e92fcca62895401cb3ce59aac0d9a5",
+        "subject": "RF06 F03 R04 compose qualified Discord publication channel transport"
+      },
+      "source_sha256": "6663e5e6625db7bd5af5fe2b29303f80dcecbf6ce0f013ed7ea69203283a42b8",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "creation": {
+        "sha": "4bda0a6bdef9e6621931c21baae0cc30b2ba01ff",
+        "subject": "RF06 F03 R67 add qualified cancellation reservation port"
+      },
+      "source_sha256": "8407a86861d4b23f4fb864104257eafb3db422bb412b300b0110e272c89246b3",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/contracts/operations.js",
+      "creation": {
+        "sha": "4d349c19bbe08404402694dbc9b6f1d36a77c123",
+        "subject": "RF06 F03 R13 qualify publication telemetry over original Operations stores"
+      },
+      "source_sha256": "184d375d01229d004ddb4a0845d259b2e05a7417118782c690a6c8706607b77f",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/delivery-receipts.js",
+      "creation": {
+        "sha": "695987a98e2e5ed0d3c87707b81d3b6c53e6e2b0",
+        "subject": "RF06 F03 R09 isolate exact publication delivery receipt contracts"
+      },
+      "source_sha256": "1759d1014aece5b6e4b915ac8988ba6a463036bc205710128b8727a654664279",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/gm-log-delivery.js",
+      "creation": {
+        "sha": "89d0c01b4e41d17c7bc01f4a0e7d089dd2765925",
+        "subject": "RF06 F03 R28 isolate original GM log publication delivery"
+      },
+      "source_sha256": "f0264360ceaf6615f5d1e5aec0566e1b09427f3dc82be4d195694a892f6be2dc",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/handout-text.js",
+      "creation": {
+        "sha": "76a7be926c42b403ac4cf4f6f5df5804f09e2427",
+        "subject": "RF06 F03 R10 isolate original handout text presentation"
+      },
+      "source_sha256": "548be533808f075dbc0d4f1689b76772e8d97c29a8d4928bc306c57705a0848a",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/journal-delivery.js",
+      "creation": {
+        "sha": "f17c541ad6c309b4af76b2cbd584c36ee8ff401d",
+        "subject": "RF06 F03 R32 isolate original source-checked journal publications"
+      },
+      "source_sha256": "0053d6fe61828a17524d3b385024e053eb0b1b83d6d9714d5ca4f1e79c37607b",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/play-message-delivery.js",
+      "creation": {
+        "sha": "2f00af23ce8267170398aa54eb12c56b7851c0f4",
+        "subject": "RF06 F03 R33 isolate original play-channel publication delivery"
+      },
+      "source_sha256": "f37d2795db72b73e20a594900fc6ab866941b2a67599f9392b20a53c0584f992",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/private-player-delivery.js",
+      "creation": {
+        "sha": "1428ed208b6959a7474492436e91ce86b1c236ea",
+        "subject": "RF06 F03 R34 isolate original private-player publication delivery"
+      },
+      "source_sha256": "1ecb67c9508b27ec1fd96d768d62f2606ebb43440e994ff3e8d0e419ec5d573e",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/private-relay-delivery.js",
+      "creation": {
+        "sha": "be87756052ea96bc22d6ddedb822cc6ea5d5a24a",
+        "subject": "RF06 F03 R30 isolate original GM private relay delivery"
+      },
+      "source_sha256": "c9e30fa768438857af1fb0bf6ebe62ee42f893d7d5e73f5339896c20391359d4",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/reference-delivery.js",
+      "creation": {
+        "sha": "0d3f7d2fef8481dbfc7cd2bfdb8d0cbf7efa7e8a",
+        "subject": "RF06 F03 R08 isolate reference message publication delivery"
+      },
+      "source_sha256": "b7f0a2b7d7e066482df703a1defde1e819da19ae0247a0bb148363926c16ff22",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/reference-publications.js",
+      "creation": {
+        "sha": "f6b5f41edd2706de6397d108fb0f8e02f13a8623",
+        "subject": "RF06 F03 R31 isolate original source-checked reference publications"
+      },
+      "source_sha256": "c0f02de97ce76793e702b95dc6c22145d90b8700e46e0dbab7581462dd14e93e",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/src/frameworks/publication/state-error-delivery.js",
+      "creation": {
+        "sha": "22947c776021d09b0e4069241c5425730c3a11b6",
+        "subject": "RF06 F03 R29 isolate original operational error publication"
+      },
+      "source_sha256": "315b579501c2d0607f02d93e92dfe4518736e9d6c5d1d5d24b7c18b65628b1cd",
+      "owner": "publication"
+    },
+    {
+      "path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "creation": {
+        "sha": null,
+        "subject": "RF06 F01 I03 tested inventory tool"
+      },
+      "source_sha256": "410f45b14283083839cc5d604a6d2344a125ad3ed71f360ddf3bdc37c5b304f0",
+      "owner": "tooling"
+    },
+    {
+      "path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "creation": {
+        "sha": "803d5e57",
+        "subject": "RF06 F02 R85 extract publication diagnostic reads"
+      },
+      "source_sha256": "bc3bc82bde4d22ba22dd07e13ebf02eba3a51f3bdbecb00251ad4b743b2679f4",
+      "owner": "persistence"
+    }
+  ],
+  "csv_inputs_after": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv",
+      "sha256": "880816c3219ca2d864d459dfd5feb8dc99bfc410096760c341617d97c61746c2",
+      "bytes": 257555,
+      "rows": 461
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv",
+      "sha256": "6cbd75a83211a966a6ab93ef5d57bb9214b0ef39d98ca7857ce1cf09a5a65271",
+      "bytes": 70995,
+      "rows": 461
+    }
+  ],
+  "append_record": {
+    "source_commit": "803d5e5777428fac40581e901b74422be4ac1ad7",
+    "csv_inputs": [
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv",
+        "sha256": "97b0a6dcaf4c5fa9749aaa0aa7eca0b2afc0d6da56226c253b4a8e5ff8968214",
+        "bytes": 209008,
+        "rows": 363
+      },
+      {
+        "path": "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv",
+        "sha256": "a70a5276589b5e3ed03ddc046cb45e7fa32139f184d7956d8f9812bb72a240ae",
+        "bytes": 55739,
+        "rows": 363
+      }
+    ],
+    "appended_paths": [
+      "bot/src/application/composition/operations-discord.js",
+      "bot/src/application/composition/publication-discord.js",
+      "bot/src/application/composition/publication-operations.js",
+      "bot/src/application/composition/runtime-initializers.js",
+      "bot/src/application/workflows/discord-interaction-event.js",
+      "bot/src/bootstrap/ready.js",
+      "bot/src/bootstrap/shutdown.js",
+      "bot/src/framework-to-framework/discord--operations/public.js",
+      "bot/src/framework-to-framework/discord--persistence/public.js",
+      "bot/src/framework-to-framework/operations--publication/public.js",
+      "bot/src/frameworks/daggerheart/contracts/gm-notice-reservation.js",
+      "bot/src/frameworks/discord/administrative-read-commands.js",
+      "bot/src/frameworks/discord/attachment.js",
+      "bot/src/frameworks/discord/campaign-setup-command.js",
+      "bot/src/frameworks/discord/campaign-status-command.js",
+      "bot/src/frameworks/discord/canon-read-commands.js",
+      "bot/src/frameworks/discord/caseboard-command.js",
+      "bot/src/frameworks/discord/character-list-command.js",
+      "bot/src/frameworks/discord/client-factory.js",
+      "bot/src/frameworks/discord/command-mutations.js",
+      "bot/src/frameworks/discord/command-record-text.js",
+      "bot/src/frameworks/discord/command-registration.js",
+      "bot/src/frameworks/discord/command-route.js",
+      "bot/src/frameworks/discord/contracts/administrative-reads.js",
+      "bot/src/frameworks/discord/contracts/campaign-configuration.js",
+      "bot/src/frameworks/discord/contracts/campaign-status.js",
+      "bot/src/frameworks/discord/contracts/command-receipts.js",
+      "bot/src/frameworks/discord/contracts/player-settings.js",
+      "bot/src/frameworks/discord/delivery-status-text.js",
+      "bot/src/frameworks/discord/diagnostic-channel.js",
+      "bot/src/frameworks/discord/diagnostic-reply.js",
+      "bot/src/frameworks/discord/director-history-command.js",
+      "bot/src/frameworks/discord/director-status-command.js",
+      "bot/src/frameworks/discord/export-attachments.js",
+      "bot/src/frameworks/discord/fact-text.js",
+      "bot/src/frameworks/discord/gm-access.js",
+      "bot/src/frameworks/discord/gm-fact-list.js",
+      "bot/src/frameworks/discord/gm-npc-state.js",
+      "bot/src/frameworks/discord/idempotency.js",
+      "bot/src/frameworks/discord/levelup-draft-text.js",
+      "bot/src/frameworks/discord/npc-proxy-packet.js",
+      "bot/src/frameworks/discord/party-status-command.js",
+      "bot/src/frameworks/discord/player-fact-list.js",
+      "bot/src/frameworks/discord/player-settings-commands.js",
+      "bot/src/frameworks/discord/private-chunk-reply.js",
+      "bot/src/frameworks/discord/reference-selection.js",
+      "bot/src/frameworks/discord/reply-options.js",
+      "bot/src/frameworks/discord/reply-or-edit.js",
+      "bot/src/frameworks/discord/rules-rulings-command.js",
+      "bot/src/frameworks/discord/seed-command-output.js",
+      "bot/src/frameworks/discord/session-brief-command.js",
+      "bot/src/frameworks/discord/session-recap-command.js",
+      "bot/src/frameworks/discord/text-channel.js",
+      "bot/src/frameworks/discord/voice-commands.js",
+      "bot/src/frameworks/operations/contracts/discord-diagnostics.js",
+      "bot/src/frameworks/operations/publication-telemetry.js",
+      "bot/src/frameworks/persistence/administrative-read-repository.js",
+      "bot/src/frameworks/persistence/administrative-reads.js",
+      "bot/src/frameworks/persistence/campaign-configuration-repository.js",
+      "bot/src/frameworks/persistence/campaign-configuration.js",
+      "bot/src/frameworks/persistence/campaign-status.js",
+      "bot/src/frameworks/persistence/canon-read-repository.js",
+      "bot/src/frameworks/persistence/canon-read-store.js",
+      "bot/src/frameworks/persistence/caseboard-reads.js",
+      "bot/src/frameworks/persistence/caseboard-repository.js",
+      "bot/src/frameworks/persistence/character-list-reads.js",
+      "bot/src/frameworks/persistence/character-list-repository.js",
+      "bot/src/frameworks/persistence/command-receipts.js",
+      "bot/src/frameworks/persistence/director-history-reads.js",
+      "bot/src/frameworks/persistence/director-status-reads.js",
+      "bot/src/frameworks/persistence/gm-access.js",
+      "bot/src/frameworks/persistence/gm-fact-reads.js",
+      "bot/src/frameworks/persistence/gm-fact-repository.js",
+      "bot/src/frameworks/persistence/gm-npc-reads.js",
+      "bot/src/frameworks/persistence/npc-cognition-read-repository.js",
+      "bot/src/frameworks/persistence/npc-profile-read-repository.js",
+      "bot/src/frameworks/persistence/party-status.js",
+      "bot/src/frameworks/persistence/player-fact-reads.js",
+      "bot/src/frameworks/persistence/player-fact-repository.js",
+      "bot/src/frameworks/persistence/player-preferences-repository.js",
+      "bot/src/frameworks/persistence/player-settings.js",
+      "bot/src/frameworks/persistence/rules-ruling-reads.js",
+      "bot/src/frameworks/persistence/rules-ruling-repository.js",
+      "bot/src/frameworks/publication/contracts/discord-channels.js",
+      "bot/src/frameworks/publication/contracts/gm-notice-reservation-source.js",
+      "bot/src/frameworks/publication/contracts/operations.js",
+      "bot/src/frameworks/publication/delivery-receipts.js",
+      "bot/src/frameworks/publication/gm-log-delivery.js",
+      "bot/src/frameworks/publication/handout-text.js",
+      "bot/src/frameworks/publication/journal-delivery.js",
+      "bot/src/frameworks/publication/play-message-delivery.js",
+      "bot/src/frameworks/publication/private-player-delivery.js",
+      "bot/src/frameworks/publication/private-relay-delivery.js",
+      "bot/src/frameworks/publication/reference-delivery.js",
+      "bot/src/frameworks/publication/reference-publications.js",
+      "bot/src/frameworks/publication/state-error-delivery.js",
+      "bot/tooling/architecture/rf06-inventory.mjs",
+      "bot/src/frameworks/persistence/publication-diagnostic-repository.js"
+    ]
+  },
+  "result": {
+    "added_owner_rows": 98,
+    "added_crosswalk_rows": 98,
+    "prefix_preserved": true
+  }
+}

@@ -1,0 +1,13 @@
+✔ inventory reports SELECT syntax, writes and self-transaction calls without qualifying methods (4.1446ms)
+✔ repository imports and syntactic callers are mapped while unrelated regex exec is excluded (7.9759ms)
+✔ dynamic SQL, WITH, PRAGMA, comments and computed driver calls remain explicit review items (1.0757ms)
+✔ missing class/repository and parse failures cannot yield a complete scan (0.4871ms)
+✔ source inspection never evaluates constructor, import or top-level code (0.4404ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 79.8895

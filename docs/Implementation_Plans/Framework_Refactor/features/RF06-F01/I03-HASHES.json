@@ -1,0 +1,122 @@
+{
+  "run_id": "RF06-F01-I03-2026-11-01-01",
+  "snapshot_head": "305641096caf2dc38cf05e80262fae22e4fe751d",
+  "source_snapshot_sha256": "4559ca22cd64145f1e551ba88a7fd5bdf2272d69c3baa0ae2710848add71994c",
+  "schema_sha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+  "node": "v24.19.0",
+  "files": [
+    {
+      "path": "bot/tooling/architecture/rf06-inventory.mjs",
+      "sha256": "410f45b14283083839cc5d604a6d2344a125ad3ed71f360ddf3bdc37c5b304f0"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f01-i03.test.mjs",
+      "sha256": "a18691d5919167afe000e9c9133f00a418506d21381128ff3b9a566daed8abf7"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF06-F01/I03-INVENTORY.json",
+      "sha256": "16ed6040bb397ba0759ec1554ef3f9d7dccb9ce00ae66dd3c22674a28f75e878"
+    }
+  ],
+  "configuration_from_snapshot_HEAD": [
+    {
+      "path": "bot/package.json",
+      "sha256": "1b30999cced0db54a7aba4bc34fe2c0c7c854ba53bc15a7410ba662d943c5ebd"
+    },
+    {
+      "path": "bot/package-lock.json",
+      "sha256": "847e7d81d7020c493c34b34663093cc68adcd4f600d145e865fb7736653aaaf3"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/PACKAGES.json",
+      "sha256": "cd2faf8f677c4ebd98d7fdd71f2373c5df91658983e83e406f1c1de51aabc4a7"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/OWNERSHIP_DECISIONS.json",
+      "sha256": "fcaff2eb7ecd8786116638472ee135abdf753babf9193ca817f67a8ff5ac3673"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/RF01/TRANSITIONS.json",
+      "sha256": "7ef0b5591024539a220bc9de72c44f0141a99a241c0e12426b1e9780c3b5936f"
+    }
+  ],
+  "configuration_note": "These configuration paths were not dirty in the frozen snapshot; HEAD versions pin the ownership/import/transition/package inputs. Runtime source overrides are pinned per file in I03-INVENTORY.",
+  "tests": {
+    "initial_passed": 5,
+    "initial_duration_ms": 79.8895,
+    "final_passed": 6,
+    "final_duration_ms": 79.8346,
+    "failed": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "syntax_checks_passed": 2
+  },
+  "scan_exit_code": 0,
+  "final_files": [
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF06-F01/I03-OWNERSHIP-BACKFILL.json",
+      "sha256": "1b76ba53d1bd50384b50454e874a2e5a1fd0c8ea1693d51df5ecee4a9f7fac21",
+      "bytes": 158402
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF06-F01/I03-SCOPE.md",
+      "sha256": "85be5b4880c44d07d3a830db4018ccca0baaa4e1e7a811df3a2245a0394f2125",
+      "bytes": 2318
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF06-F01/I03-REMAINING.md",
+      "sha256": "7c746488e4291ae75b75c92055fb2b8c54e8beb2c8b9a077779cc416b493547f",
+      "bytes": 7710
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF06-F01/I03-LEDGER.md",
+      "sha256": "740f362ba5ae99dd383a44b9e3b98cb45023bf43a238898066d0a560d0beb263",
+      "bytes": 2629
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF06/LEDGER.md",
+      "sha256": "3900a648f27794ce7679fd6a26ab9b489d308d1e2e7968acb7b03bb9c968e9b6",
+      "bytes": 19013
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv",
+      "sha256": "880816c3219ca2d864d459dfd5feb8dc99bfc410096760c341617d97c61746c2",
+      "bytes": 257555
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/SOURCE_RELOCATION_CROSSWALK.csv",
+      "sha256": "6cbd75a83211a966a6ab93ef5d57bb9214b0ef39d98ca7857ce1cf09a5a65271",
+      "bytes": 70995
+    },
+    {
+      "path": "bot/src/frameworks/persistence/publication-diagnostic-repository.js",
+      "sha256": "bc3bc82bde4d22ba22dd07e13ebf02eba3a51f3bdbecb00251ad4b743b2679f4",
+      "bytes": 981
+    },
+    {
+      "path": "bot/src/frameworks/persistence/database.js",
+      "sha256": "80ca2abdb94487cfc31d041e18eccabac8760bd22b4e3fc166c055dce432a660",
+      "bytes": 180133
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f02-r85.test.mjs",
+      "sha256": "1af5b2c8cc262e637b40400b534897a38872cc3310258d0f572c3b9437412cb3",
+      "bytes": 6353
+    }
+  ],
+  "csv_backfill": {
+    "owner_rows_added": 98,
+    "crosswalk_rows_added": 98,
+    "owner_rows_final": 461,
+    "crosswalk_rows_final": 461,
+    "prefix_preserved": true,
+    "dependency_graph_regenerated": false
+  },
+  "r85": {
+    "commit": "803d5e5777428fac40581e901b74422be4ac1ad7",
+    "test": "node --test tests/ai-gm-2026-10/rf06-f02-r85.test.mjs tests/ai-gm-2026-10/rf06-f04-c84.test.mjs",
+    "passed": 9,
+    "failed": 0,
+    "syntax_checks_passed": 3
+  }
+}
