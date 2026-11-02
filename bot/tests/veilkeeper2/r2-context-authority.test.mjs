@@ -1,0 +1,48 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {createContextAuthority} from '../../src/v2/context-authority.js';
+
+function fixture(){
+  const source={id:'s',campaign:'c',scene:'scene',recipients:['u','v'],text:'Interesting.',traceId:'trace',revision:'1'};
+  const rows=new Map(),bodies=new Map(),reads=[];
+  let active=true;
+  const actor={id:'npc',campaignId:'c',sceneId:'scene',kind:'npc',status:'active',controllerUserId:null,controlRevision:'1'};
+  const authority=createContextAuthority({sourceAuthority:{revalidate:()=>active},readActor:()=>actor,records:{metadata:(_c,ref)=>rows.get(ref),readText:(_c,ref,revision)=>{reads.push(ref);return {revision,text:bodies.get(ref)};}}});
+  function add(ref,patch={}){rows.set(ref,{id:ref,revision:'1',contentHash:createHash('sha256').update(`body:${ref}`).digest('hex'),campaignId:'c',status:'active',kind:'testimony',scope:'scene',sceneId:'scene',sourceRefs:[],recipientIds:['u','v'],knownBy:['npc'],visibility:'recipients',disclosure:'acknowledged',...patch});bodies.set(ref,`body:${ref}`);}
+  return {source,rows,bodies,reads,authority,actor,add,revoke:()=>{active=false;}};
+}
+test('GM, cross-PC, other campaign/scene and pending disclosures never have their body read',()=>{
+  const f=fixture();f.add('ok');f.add('gm',{visibility:'gm'});f.add('private',{recipientIds:['u']});f.add('cross',{campaignId:'other'});f.add('scene',{sceneId:'other'});f.add('pending',{disclosure:'pending'});
+  const grant=f.authority.issue(f.source,[...f.rows.keys()]);
+  assert.deepEqual(f.reads,['ok']);assert.deepEqual(f.authority.inspect(grant).records.map(r=>r.ref),['ok']);
+  assert.equal(f.authority.inspect(grant).utterance,'Interesting.');
+});
+test('an apparently shared paraphrase with a private source ancestor is excluded before inference',()=>{
+  const f=fixture();f.add('secret',{visibility:'gm'});f.add('paraphrase',{sourceRefs:['secret'],visibility:'public',disclosure:'public'});
+  const packet=f.authority.inspect(f.authority.issue(f.source,['paraphrase']));assert.equal(packet.records.length,0);assert.deepEqual(f.reads,[]);
+});
+test('source closure accepts shared ancestry but rejects cycles and missing ancestors',()=>{
+  const f=fixture();f.add('base');f.add('a',{sourceRefs:['base']});f.add('b',{sourceRefs:['base']});f.add('diamond',{sourceRefs:['a','b']});f.add('cycle',{sourceRefs:['cycle']});f.add('missing',{sourceRefs:['absent']});
+  const packet=f.authority.inspect(f.authority.issue(f.source,['diamond','cycle','missing']));assert.deepEqual(packet.records.map(r=>r.ref),['diamond']);assert.deepEqual(f.reads,['diamond']);
+});
+test('NPC knowledge intersects audience entitlement, and human proxy portrayal is refused',()=>{
+  const f=fixture();f.add('known');f.add('unknown',{knownBy:[]});
+  const grant=f.authority.issue(f.source,['known','unknown'],{actorId:'npc'});assert.deepEqual(f.authority.inspect(grant).records.map(r=>r.ref),['known']);
+  f.actor.controllerUserId='human';assert.throws(()=>f.authority.inspect(grant),/authority/);assert.throws(()=>f.authority.issue(f.source,['known'],{actorId:'npc'}));
+});
+test('revoked source, changed ancestors and changed actor control invalidate issued packets',()=>{
+  const f=fixture();f.add('base');f.add('child',{sourceRefs:['base']});const grant=f.authority.issue(f.source,['child']);
+  f.rows.get('base').status='retracted';assert.throws(()=>f.authority.inspect(grant));
+  const g=fixture();const empty=g.authority.issue(g.source,[]);g.revoke();assert.throws(()=>g.authority.inspect(empty));
+});
+test('testimony stays testimony and forged or edited capabilities cannot supply model context',()=>{
+  const f=fixture();f.add('rumor');const grant=f.authority.issue(f.source,['rumor']);
+  const packet=f.authority.inspect(grant);assert.equal(packet.records[0].kind,'testimony');assert.ok(Object.isFrozen(packet.records[0]));
+  assert.throws(()=>f.authority.inspect({packet}));assert.throws(()=>{packet.records[0].kind='canon';});
+  assert.deepEqual(f.authority.audience(grant).recipients,['u','v']);
+});
+test('stale or substituted body under a current revision cannot enter a prompt packet',()=>{
+  const f=fixture();f.add('record');f.bodies.set('record','An unrelated private cache entry');
+  assert.throws(()=>f.authority.issue(f.source,['record']),/authority/);
+});

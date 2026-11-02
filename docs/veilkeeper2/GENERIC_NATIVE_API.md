@@ -27,4 +27,4 @@ Each request needs a closed versioned schema; reject additional properties. Nati
 
 Ordinary conversation requires none of these calls. The audience writer receives only eligible observations and portrayal, never an omniscient packet with an instruction to keep secrets. Harmless direct address and sensory second person are allowed. Native receipts govern consequential effects; no claim of complete natural-language semantic validation is made.
 
-This contract restates the supplied boundary for implementation review. No tool is registered, no action handler has been ported, and no architecture acceptance is claimed in R0.
+This contract governs the implementation. R1 binds exactly these four capability callbacks to native source handles; no game action handler is installed. R2 now has a separate metadata-first context authority used by the no-send rehearsal path. Wiring that retrieval into optional `context_read` calls, knowledge proposal execution, complete native effects and durable publication remains pending. No full phase or release acceptance is implied by these interfaces.

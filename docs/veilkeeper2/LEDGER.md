@@ -1,15 +1,16 @@
 # Veilkeeper 2.0 — current phase status
 
-Goal remains **R0–R8**, active and incomplete. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch `rebuild/veilkeeper2-audience-first`; pinned baseline `1ba6c7e15db1a66ba34b36336f31437beffe44d6`.
+Goal remains **R0–R8**, active and incomplete. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch `rebuild/veilkeeper2-audience-first`; pinned baseline `1ba6c7e15db1a66ba34b36336f31437beffe44d6` (upstream rechecked unchanged).
 
-- **R0:** Inventory and binding audit slices complete. All 1,077 legacy runtime modules, 4,224 exported bindings, 219 command routes, 55 effective tables and 456 literal record kinds inventoried. Dynamic providers/record uses and semantic conversion proofs remain explicit removal/migration holds. Full acceptance is not claimed. See [R0 report](R0_BINDING_REPORT.md), [initial inventory](REBUILD_INVENTORY.md), and [source corrections](SOURCE_REVIEW.md).
-- **R1:** Bootable offline preparation kernel implemented; nine fresh tests passed. No rules/effects, durable store, real authentication adapter, model gateway or publisher installed. Full acceptance remains open. See [R1 report](R1_REPORT.md).
-- **R2–R8:** Not implemented. Rules parity, persistent knowledge, conversation, Director, complete Discord commands, migration/durability and release qualification remain required.
+- **R0:** Inventory/binding slices complete. All 1,077 legacy modules, 4,224 exports, 219 command routes, 55 effective tables and 456 literal record kinds inventoried. Dynamic contracts and semantic conversion/removal proofs remain open. See [R0 report](R0_BINDING_REPORT.md).
+- **R1:** Offline generic preparation kernel, native-record source authority, provider-neutral scoped gateway and no-send publication queue implemented. Real transport/provider adapters and dependency checks remain. See [initial kernel report](R1_REPORT.md) and [current context/integration report](R2_CONTEXT_REPORT.md).
+- **R2:** Metadata-first audience/source closure, body hash/revision validation, actor-known intersection, grant revalidation and scoped one-call rehearsal implemented. Persistent knowledge proposals, evidence/identity/canon authority, weighted recall and import/export qualification remain.
+- **R3–R8:** Required and not implemented. No game rule handler/effect is installed. Consequential prose review, autonomous world behavior, complete Discord migration, durability, semantic data migration, release qualification and independent human review remain.
 
-Completed test batches: initial audit 5/5, new bindings/schema 8/8, offline kernel 9/9; all zero failures/skips. These are focused offline checks, not full product, live model, Discord or gameplay qualification. No unchanged completed batch was rerun.
+Completed coverage: initial audit 5/5, bindings/schema 8/8, kernel 9/9, current source/context/integration 18/18. All final batches have zero failures/skips. The initial context tests were rerun only after the content-hash guard changed their tested module; unchanged source tests were not rerun. Evidence and exact hashes are linked from phase reports. These are offline scoped checks, not live provider/Discord/gameplay or release proof.
 
-Exact per-slice source/test hashes, commands, timestamps, outputs and limitations are in the linked reports and adjacent evidence JSON. `CHECKPOINT_HASHES.json` belongs to historical commit `4a0a6e4c`; use the current slice manifests for current files.
+Older hash manifests describe their original commits. Use R2_CONTEXT_HASHES.json for this slice's current files and the report-specific manifests for unchanged earlier slices.
 
-No legacy source/schema/content was changed, no legacy test removed, no production DB opened, no live client started and nothing pushed or deployed. Rollback is to leave the original application active and the isolated offline root unused; there is no production data conversion to undo.
+Production entrypoint/configuration, legacy source/schema/content and all legacy tests remain intact. No production DB, live model, Discord send, deployment or push was used. The new opt-in path remains no-send and memory-only; no production migration needs rollback.
 
-**Next exact work:** finish R1 native principal/source, scoped packet and transport contracts; implement R2 audience/actor/source-closure knowledge authority. Continue resolving R0 dynamic contracts at the boundary being ported. Do not delete or automatically convert any unresolved legacy path. Preserve R3–R8 scope and separate owner deployment approval.
+**Next exact work:** R2 persistent knowledge/evidence/correction/canon authority and generic context/knowledge integration; then R3 authoritative rules. Finish remaining R1 adapters and carry R0 dynamic-contract holds into each port. Never delete or convert an unresolved legacy path; preserve the full R0–R8 objective and separate deployment approval.

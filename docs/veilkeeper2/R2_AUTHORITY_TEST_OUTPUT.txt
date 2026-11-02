@@ -1,0 +1,20 @@
+✔ uses native message text and exact recipient set, with stable immutable source identity (1.5504ms)
+✔ rejects spoofed users, extra authority properties, absent characters and cross-scene actors (0.3739ms)
+✔ private channel must be verified and entitled solely to its owner (0.1998ms)
+✔ source revokes when recipient membership, message content, session or control changes (0.9848ms)
+✔ human-controlled NPC proxy requires explicit delegation and keeps proxy identity (0.2646ms)
+✔ missing reader records, ambiguous attendance and forged source proofs fail closed (0.1595ms)
+✔ GM, cross-PC, other campaign/scene and pending disclosures never have their body read (1.6187ms)
+✔ an apparently shared paraphrase with a private source ancestor is excluded before inference (0.1558ms)
+✔ source closure accepts shared ancestry but rejects cycles and missing ancestors (0.3042ms)
+✔ NPC knowledge intersects audience entitlement, and human proxy portrayal is refused (0.3927ms)
+✔ revoked source, changed ancestors and changed actor control invalidate issued packets (0.6217ms)
+✔ testimony stays testimony and forged or edited capabilities cannot supply model context (0.242ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64.1845

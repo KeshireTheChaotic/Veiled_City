@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "started": "2026-11-02T13:21:22.6970207Z",
+  "ended": "2026-11-02T13:21:22.9717419Z",
+  "inputs": [
+    {
+      "path": "src/v2/source-authority.js",
+      "sha256": "19491eccca1eb7b1ff3ddb2a83dbad95cf729b1c080874acd3629f0e651667da"
+    },
+    {
+      "path": "src/v2/context-authority.js",
+      "sha256": "ff923c0e4c935a9fb1c9d8598de753405eed783bf172710f40b21f07a257baa0"
+    },
+    {
+      "path": "tests/veilkeeper2/r1-source-authority.test.mjs",
+      "sha256": "ee929196bc50086360217339605c0160ec45ca4b9de6535bb871043068eb091f"
+    },
+    {
+      "path": "tests/veilkeeper2/r2-context-authority.test.mjs",
+      "sha256": "ac353903d417bba196eadad811eaf433ab22eea6777c345c5ef14efaabb98d81"
+    }
+  ],
+  "command": "node --test tests/veilkeeper2/r1-source-authority.test.mjs tests/veilkeeper2/r2-context-authority.test.mjs"
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "path": "bot/package.json",
+    "sha256": "bcc9ecb746705a33ae681ac6695db119bcbbb7386eaae4bea7fb62dd215d2297"
+  },
+  {
+    "path": "bot/src/v2/source-authority.js",
+    "sha256": "19491eccca1eb7b1ff3ddb2a83dbad95cf729b1c080874acd3629f0e651667da"
+  },
+  {
+    "path": "bot/src/v2/context-authority.js",
+    "sha256": "d6efe3514727c7aaaf874b70cf25d6fadbce3026f0fe969c57853a893c040a0a"
+  },
+  {
+    "path": "bot/src/v2/model-gateway.js",
+    "sha256": "b8a000196904506d48489989572cd53f3edd6e2e37a913df7db7a3d853b452a1"
+  },
+  {
+    "path": "bot/src/v2/publication-queue.js",
+    "sha256": "76c51b5a7c335dad1c1f9e57eaafc5f3aeace5663f66a160760bf4a911d3c90a"
+  },
+  {
+    "path": "bot/src/v2/rehearsal.js",
+    "sha256": "f82d830c63d50d308eafefb4e987a9e0716f7bbda10dcfe6d2aa011cec0efe1f"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-source-authority.test.mjs",
+    "sha256": "ee929196bc50086360217339605c0160ec45ca4b9de6535bb871043068eb091f"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+    "sha256": "bb13eafaabf4b0b0cc091a6768cac3107ef2a151bf66ae0799e67c8b7ebfe93a"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-rehearsal.test.mjs",
+    "sha256": "e677ab9aae519fd2900ba510c1db1938236af13e3db3eee8f8bb2f031dca9252"
+  },
+  {
+    "path": "docs/veilkeeper2/R2_AUTHORITY_TEST_EVIDENCE.json",
+    "sha256": "3fd6cc6d2f38df1def79c313b8ae0b35032c0c135d5f2fddaf9f65950dab8af4"
+  },
+  {
+    "path": "docs/veilkeeper2/R2_AUTHORITY_TEST_OUTPUT.txt",
+    "sha256": "f2ab5306933c4deee6f6626869ad2b6fa811372fbc8c994026dc21323cb4ce05"
+  },
+  {
+    "path": "docs/veilkeeper2/R2_REHEARSAL_TEST_EVIDENCE.json",
+    "sha256": "3ea18f2dbde022ed66171d89073ed448309ced323dd06db471b1086388fb53f4"
+  },
+  {
+    "path": "docs/veilkeeper2/R2_REHEARSAL_TEST_OUTPUT.txt",
+    "sha256": "253f011a4559511634230ad2924cee1386609f8fb77b0c1c73393b29d2775359"
+  },
+  {
+    "path": "docs/veilkeeper2/R2_CONTEXT_REPORT.md",
+    "sha256": "b959c6eb2c9c2f3eab013af438fd702b58d36c393f62474413e8a179e0381eea"
+  },
+  {
+    "path": "docs/veilkeeper2/LEDGER.md",
+    "sha256": "f41936a506b3f2b3b856dc90eaa248aca875febe4dec1e7fe7d6bee2de4e3a5c"
+  },
+  {
+    "path": "docs/veilkeeper2/GENERIC_NATIVE_API.md",
+    "sha256": "003376c02480bc704b84c5f9ae2e6b87982258479f2ef7b4c1b2c2b0a27de410"
+  }
+]

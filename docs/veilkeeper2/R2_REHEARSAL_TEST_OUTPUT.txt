@@ -1,0 +1,20 @@
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (3.4112ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3526ms)
+✔ audience revocation during inference prevents queueing and later inspection (0.8492ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.6242ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.6261ms)
+✔ GM, cross-PC, other campaign/scene and pending disclosures never have their body read (1.6338ms)
+✔ an apparently shared paraphrase with a private source ancestor is excluded before inference (0.1667ms)
+✔ source closure accepts shared ancestry but rejects cycles and missing ancestors (0.2891ms)
+✔ NPC knowledge intersects audience entitlement, and human proxy portrayal is refused (0.7868ms)
+✔ revoked source, changed ancestors and changed actor control invalidate issued packets (0.2214ms)
+✔ testimony stays testimony and forged or edited capabilities cannot supply model context (0.2363ms)
+✔ stale or substituted body under a current revision cannot enter a prompt packet (0.1306ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.3187

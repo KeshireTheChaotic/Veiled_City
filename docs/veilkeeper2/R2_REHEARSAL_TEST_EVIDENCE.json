@@ -1,0 +1,32 @@
+{
+  "started": "2026-11-02T13:25:29.4689280Z",
+  "exitCode": 0,
+  "command": "node --test tests/veilkeeper2/r2-context-authority.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs",
+  "ended": "2026-11-02T13:25:29.7137683Z",
+  "inputs": [
+    {
+      "sha256": "d6efe3514727c7aaaf874b70cf25d6fadbce3026f0fe969c57853a893c040a0a",
+      "path": "src/v2/context-authority.js"
+    },
+    {
+      "sha256": "b8a000196904506d48489989572cd53f3edd6e2e37a913df7db7a3d853b452a1",
+      "path": "src/v2/model-gateway.js"
+    },
+    {
+      "sha256": "76c51b5a7c335dad1c1f9e57eaafc5f3aeace5663f66a160760bf4a911d3c90a",
+      "path": "src/v2/publication-queue.js"
+    },
+    {
+      "sha256": "f82d830c63d50d308eafefb4e987a9e0716f7bbda10dcfe6d2aa011cec0efe1f",
+      "path": "src/v2/rehearsal.js"
+    },
+    {
+      "sha256": "bb13eafaabf4b0b0cc091a6768cac3107ef2a151bf66ae0799e67c8b7ebfe93a",
+      "path": "tests/veilkeeper2/r2-context-authority.test.mjs"
+    },
+    {
+      "sha256": "e677ab9aae519fd2900ba510c1db1938236af13e3db3eee8f8bb2f031dca9252",
+      "path": "tests/veilkeeper2/r1-rehearsal.test.mjs"
+    }
+  ]
+}
