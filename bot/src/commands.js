@@ -1,8 +1,8 @@
 import {createLevelupDraftFormatter} from './frameworks/discord/public.js';
-import {canonProposalsText} from './frameworks/discord/public.js';
+import {canonProposalsText,npcProxyAssignmentsText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
-import {npcControlLabel,formatNpcProxyPacket} from './frameworks/discord/public.js';
+import {formatNpcProxyPacket} from './frameworks/discord/public.js';
 import {handleCharacterListCommand} from './frameworks/discord/public.js';
 import {connectDiscordCharacterList} from './framework-to-framework/discord--persistence/public.js';
 import {downtimeStatusText,relationshipLine} from './frameworks/discord/public.js';
@@ -1373,8 +1373,8 @@ Source file: ${a.name}${narrativeImported?`\nGM-private narrative: ${narrativeRe
     if(group==="npc"&&sub==="status"){
       const session=requireSession(db,interaction.guildId);
       const rows=isGM(db,interaction)?db.listNpcProxies(session.id,{statuses:["offered","active"]}):db.listNpcProxies(session.id,{userId:interaction.user.id,statuses:["offered","active"]});
-      const lines=rows.map(p=>`• **${p.npc_name}** — ${p.status} — ${npcControlLabel(p.control_level)}${isGM(db,interaction)?` — <@${p.discord_user_id}>`:""}`);
-      await interaction.reply({content:lines.length?`**NPC Proxy Assignments**\n${lines.join("\n")}`:"No active/offered NPC proxy assignments are visible to you.",ephemeral:true});
+      const displayRows=rows.map(proxy=>({proxy,showUserId:isGM(db,interaction)}));
+      await interaction.reply({content:npcProxyAssignmentsText(displayRows),ephemeral:true});
       return true;
     }
     if(group==="npc"&&sub==="packet"){

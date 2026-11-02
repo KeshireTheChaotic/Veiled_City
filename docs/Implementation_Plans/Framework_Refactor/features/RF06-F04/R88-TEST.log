@@ -1,0 +1,3 @@
+Initial run: exit 1; 2/3 passed. The GM path's harness expected three permission checks but observed four. Source review confirmed one pre-existing global dispatcher check, one status-query check, and one check per result row.
+
+Final run from `bot/`: `node --test tests/ai-gm-2026-10/rf06-f04-r88-npc-proxy-assignments.test.mjs` — exit 0; 3/3 passed; 0 failed, skipped, cancelled or todo.

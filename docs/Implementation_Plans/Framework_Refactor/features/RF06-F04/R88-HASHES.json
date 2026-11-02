@@ -1,0 +1,30 @@
+{
+  "feature": "RF06-F04-R88",
+  "base_commit": "aaf6d101",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "35a891e6c39cee78c8a55f08a87d27f1e76a3075b7b99014084db7fbdf89d7b1"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "5c13ccebdda73dbe92b39421785328bd6bee6ffceb1f7b8fdc2148043722f94b"
+    },
+    {
+      "path": "bot/src/frameworks/discord/npc-proxy-assignments-text.js",
+      "sha256": "2cdec5a163859dafb0def9d0018b2e00c4ced3e8c329e73687966ec922f79516"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-r88-npc-proxy-assignments.test.mjs",
+      "sha256": "3d47a9d532d0d2b4c3f859f3f619fa89fed421d4c102d5417e67db8de8afe13a"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-r88-npc-proxy-assignments.test.mjs",
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax_checks_passed": 4
+}

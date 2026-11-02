@@ -92,6 +92,7 @@ export {npcControlLabel,formatNpcProxyPacket} from './npc-proxy-packet.js';
 
 export {handleCanonStatusCommand,handleCanonConflictsCommand,assertCanonReadStore} from './canon-read-commands.js';
 export {canonProposalsText} from './canon-proposal-text.js';
+export {npcProxyAssignmentsText} from './npc-proxy-assignments-text.js';
 
 export {createLevelupDraftFormatter} from './levelup-draft-text.js';
 

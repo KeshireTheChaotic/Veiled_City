@@ -465,3 +465,4 @@ bot/src/frameworks/persistence/publication-diagnostic-repository.js,bot/src/fram
 "bot/src/frameworks/discord/canon-proposal-text.js","bot/src/frameworks/discord/canon-proposal-text.js","discord","RF06","NEW_SOURCE","1","0"
 "bot/src/frameworks/daggerheart/contracts/condition-source.js","bot/src/frameworks/daggerheart/contracts/condition-source.js","daggerheart","AF04","NEW_SOURCE","1","0"
 "bot/src/native-roll-conditions.js","bot/src/native-roll-conditions.js","daggerheart","AF04","NEW_SOURCE","3","0"
+"bot/src/frameworks/discord/npc-proxy-assignments-text.js","bot/src/frameworks/discord/npc-proxy-assignments-text.js","discord","RF06","NEW_SOURCE","1","0"
