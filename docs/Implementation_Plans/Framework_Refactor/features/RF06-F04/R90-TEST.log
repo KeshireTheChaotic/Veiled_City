@@ -1,0 +1,3 @@
+Initial run: exit 1; 2/3 passed. The 31 realistic rows exceeded the existing 1,950-character message limit before 30 complete lines fit. The test was corrected to use compact rows for the independent 30-row assertion; a separate long-note fixture continues to verify the exact clipping limit.
+
+Final run from `bot/`: `node --test tests/ai-gm-2026-10/rf06-f04-r90-relationship-list-text.test.mjs` — exit 0; 3/3 passed; 0 failed, skipped, cancelled or todo.

@@ -94,6 +94,7 @@ export {handleCanonStatusCommand,handleCanonConflictsCommand,assertCanonReadStor
 export {canonProposalsText} from './canon-proposal-text.js';
 export {npcProxyAssignmentsText} from './npc-proxy-assignments-text.js';
 export {handoutListText} from './handout-list-text.js';
+export {relationshipListText} from './relationship-list-text.js';
 
 export {createLevelupDraftFormatter} from './levelup-draft-text.js';
 

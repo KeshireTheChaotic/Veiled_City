@@ -1,6 +1,7 @@
 import {createLevelupDraftFormatter} from './frameworks/discord/public.js';
 import {canonProposalsText,npcProxyAssignmentsText} from './frameworks/discord/public.js';
 import {handoutListText} from './frameworks/discord/public.js';
+import {relationshipListText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {formatNpcProxyPacket} from './frameworks/discord/public.js';
@@ -1580,7 +1581,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
         if(isGM(db,interaction)&&q) c=db.findGuildCharacter(interaction.guildId,q,{includeClosed:true})||c;
         let rows=db.listRelationships(interaction.guildId,{includeGM:isGM(db,interaction),characterId:c?.id||null,userId:interaction.user.id});
         if(c) rows=rows.filter(r=>r.from_key===c.id||r.to_key===c.id||r.source_character_id===c.id);
-        await interaction.reply({content:rows.length?rows.slice(0,30).map(relationshipLine).join("\n").slice(0,1950):"No matching relationships are recorded.",ephemeral:true}); return true;
+        await interaction.reply({content:relationshipListText(rows),ephemeral:true}); return true;
       }
       if(!isGM(db,interaction)) throw new Error("GM/admin permission required.");
       if(sub==="set"){
