@@ -1,0 +1,85 @@
+{
+  "phase": "RF05-F04 C150",
+  "status": "character_creation_vocabulary_source_move_complete_root_compatibility_retained",
+  "release_qualified": false,
+  "implementation_byte_identical_after_consumer_import_change": true,
+  "native_source_adoption_deferment_preserved": "RF06-F07",
+  "qualification": {
+    "fresh_test": {
+      "command": "node --test tests/ai-gm-2026-10/rf05-f04-c150-character-system.test.mjs",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "native_policy_qualified": false
+    },
+    "syntax": {
+      "changed_files": 4,
+      "passed": 4,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "ratchet": {
+      "command": "node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05",
+      "source_modules": 1115,
+      "unowned": 1,
+      "import_occurrences": 4503,
+      "internal_import_occurrences": 4300,
+      "cycle_components": 1,
+      "largest_cycle": 51,
+      "accepted_legacy_occurrences": 584,
+      "active_violation_groups": 7,
+      "transition_errors": 0,
+      "pass": false,
+      "exit_code": 1,
+      "first_findings_reference": "Agent C native-roll-conditions ownership omission and import targets"
+    }
+  },
+  "manifest_excludes_itself": true,
+  "files": [
+    {
+      "path": "bot/src/character-system.js",
+      "sha256": "6109850901b5c0bd2ef2971ac1f62f164cf864273fd425f4d25c0334cd5f0938"
+    },
+    {
+      "path": "bot/src/frameworks/character/character-system.js",
+      "sha256": "47f063445f3c871567855dc82c789cd77513cf61659e8388f7cb6c9759c29bd7"
+    },
+    {
+      "path": "bot/src/frameworks/character/public.js",
+      "sha256": "cd86a0d61a0b21c5f7e3a9a150d9be51936f0aa4d025568c76518687a35c316c"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf05-f04-c150-character-system.test.mjs",
+      "sha256": "5c9d8b47bae6620cc53cd7a343539e73de4dbac6428cd76beb54647772f21e6f"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/FRAMEWORK_OWNERSHIP.csv",
+      "sha256": "c932e9bf511eccb5f55d31567630515179ed944b387ac58fed26db349ebf9303"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C150-SCOPE.md",
+      "sha256": "73976fc59cda6402c590ea380308023f3ad50ca17e5dd81e77df19f3e0e1f405"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C150-LEDGER.md",
+      "sha256": "ec19ca144632aacb9379ab00327cbd300ad070c264290dcb47f431e3eaac1e5d"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C150-TEST.log",
+      "sha256": "29a6ab38c58b159b7b2ef99e528289fb9344a0173737e70e62c97b993eb75bde"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C150-SYNTAX.log",
+      "sha256": "045ad59697bd5c47c53ac1c3ca396011b82a9e57d84a54f0a5da8f3a80ed466a"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/features/RF05-F04/C150-ARCHITECTURE.log",
+      "sha256": "2ef0e546aafaf73ab32d6973db13ab323266d8ec92158d135a9b66fc1e041ad2"
+    },
+    {
+      "path": "docs/Implementation_Plans/Framework_Refactor/phases/RF05/LEDGER.md",
+      "sha256": "306c7dde553ff2f2faea9fd4427d00ea72be456bc89d34485dcc1e67ec73c9be"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+Command: `node --test tests/ai-gm-2026-10/rf05-f04-c150-character-system.test.mjs`
+Working directory: `bot`
+Date: 2026-11-01
+Exit code: 0
+Outcome: 1 passed, 0 failed, 0 skipped (67.3712 ms)
+
+Passing case:
+- Character public/root export identity, source vocabulary values and identity,
+  and validation delegation order/result through a stub Native service.
+
+Limit: the stub does not qualify Daggerheart's production validation policy.

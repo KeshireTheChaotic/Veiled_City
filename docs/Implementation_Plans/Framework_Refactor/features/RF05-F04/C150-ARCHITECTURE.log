@@ -1,0 +1,13 @@
+Command: `node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05`
+Working directory: `bot`
+Date: 2026-11-01
+Outcome: exit 1; this RF05 snapshot is red on concurrent peer work.
+
+Reported counts: 1115 source modules, 1 unowned module, 4503 import
+occurrences, 4300 internal imports, 1 cycle component (largest 51 modules),
+584 accepted legacy occurrences, 7 active violation groups, and 0 transition
+errors. The first five findings concern Agent C's `native-roll-conditions.js`
+ownership omission and importers/targets. The Character root compatibility
+imports remain accepted under their existing transitions. This is not RF05
+release qualification. The existing RF06-F07 source-adoption deferral in the
+Character crosswalk remains unchanged.

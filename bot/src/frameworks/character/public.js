@@ -3,6 +3,7 @@ export {normalizeNarrativeMarkdown,narrativeRelativePath} from './narrative-text
 export {createNarrativeExportPackage,getNarrativeMarkdown,narrativeContext} from './character-narrative.js';
 export {buildGmCanonExport,buildGmHooksExport,buildGmPrivateExport,buildPlayerExport,createGmExportFiles,createPlayerExportFiles,
   gmCanonMarkdown,gmHooksMarkdown,gmPrivateMarkdown,markdownToDocx,playerCharacterProjection,playerMarkdown} from './character-export.js';
+export {ADVANCEMENTS,CLASS_DOMAINS,CUSTOM_DOMAINS,TRAITS,normalizeClassName,validateConceptDraft,validateDomainAccess,validateTraitSpread} from './character-system.js';
 export {createCharacterAdvancementPort} from './contracts/advancement.js';
 
 export {createCharacterCreationConsumer,characterCreationConsumer} from './contracts/creation.js';
