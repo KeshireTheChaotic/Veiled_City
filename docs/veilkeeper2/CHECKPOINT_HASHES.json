@@ -1,0 +1,106 @@
+[
+  {
+    "path": "bot/tests/veilkeeper2/r0-audit.test.mjs",
+    "sha256": "35e5018c5d3d0d054ce303529120e96a2ed925bce29d853ded534f9ebbf2cc8b"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/inventory.mjs",
+    "sha256": "413fbfb7e8e70f1ffe38eb9a241ceca679a58f1b16257325d9c3e95b5f109ec0"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/source-audit.mjs",
+    "sha256": "3a2523b62a0e87b8eabebd75b03a67562e9922a51c05cb78b173cd42ceab123f"
+  },
+  {
+    "path": "bot/tooling/veilkeeper2/test.mjs",
+    "sha256": "37f8182f03d951f140dc7aecdd652323e58b4c054f2ab89690318d716e810b7d"
+  },
+  {
+    "path": "docs/veilkeeper2/BASELINE_MANIFEST.json",
+    "sha256": "59fab93a9877d572dca3dc691ebfe2ee846670736d4765f1e31f6d441ff1fd73"
+  },
+  {
+    "path": "docs/veilkeeper2/CALL_GRAPH.json",
+    "sha256": "10e7d14b4ac5a75c7bd48d7915b4fd48f4555c2077778f54ecdc408352a8bff5"
+  },
+  {
+    "path": "docs/veilkeeper2/COMMAND_COMPATIBILITY.md",
+    "sha256": "d1a31029ba93f21cf68363c3047c31a4d01babbbe2aa9fe3e3caaf7e81dce7ca"
+  },
+  {
+    "path": "docs/veilkeeper2/COMMAND_PATHS.json",
+    "sha256": "1bf1a6da0b4bd8df9cd5c12b7b2f70ad154f0ec57b13eecb79c26c9c3304df40"
+  },
+  {
+    "path": "docs/veilkeeper2/COMMAND_SCHEMA.json",
+    "sha256": "35f007a6f2ffe2abcfdd766c4197e50bc680fb0d9f89cccb6b2bd648e6a5802a"
+  },
+  {
+    "path": "docs/veilkeeper2/COMPATIBILITY_FORMATS.json",
+    "sha256": "b7b04a6e7ba7c070a28289ab352ff1d20308a456dd88e2dc7b06ef86479106a4"
+  },
+  {
+    "path": "docs/veilkeeper2/GENERIC_NATIVE_API.md",
+    "sha256": "30af39272db91273c57b02ae43db82cbb0eecfe15121ff9280e698d9b9911053"
+  },
+  {
+    "path": "docs/veilkeeper2/LEDGER.md",
+    "sha256": "81eb418f6b3e4b7e8d4c39faffa2d207143ff8f2efe579c524ba94d8d7329300"
+  },
+  {
+    "path": "docs/veilkeeper2/MODULE_DISPOSITIONS.json",
+    "sha256": "dcd093b84c170cf47607d5acce8a6693173b40626665a07eb260d1fc08885196"
+  },
+  {
+    "path": "docs/veilkeeper2/R0_TEST_EVIDENCE.json",
+    "sha256": "e8c9138fd4292b1c893dea45ee917f73c78abaa612d6ad77094ae91f828c2328"
+  },
+  {
+    "path": "docs/veilkeeper2/R0_TEST_OUTPUT.txt",
+    "sha256": "0f18b5a8c607aa44b053c64b1615b7c917a66f334bdf17fa64c4768e9d3ecf99"
+  },
+  {
+    "path": "docs/veilkeeper2/REBUILD_INVENTORY.md",
+    "sha256": "85e481fa15e171570a79ec27d943df9ec8e206c4cd694680110b362b5cab2074"
+  },
+  {
+    "path": "docs/veilkeeper2/REMOVE_LIST.md",
+    "sha256": "938a7ad95a8ad25d9710b256861657f72ca6957cd75bcd1c515a84db3b43efdb"
+  },
+  {
+    "path": "docs/veilkeeper2/RULE_CATALOG.json",
+    "sha256": "28859c26b6d1f11a84cdd69afdd7244c49fc51074f0ec4eaed184a5d4ca3adcb"
+  },
+  {
+    "path": "docs/veilkeeper2/RULE_PARITY_MATRIX.md",
+    "sha256": "9a776cf98d1a0a7a6a196f4d90fc1c3418b8c82e490083cc225ee596322fab93"
+  },
+  {
+    "path": "docs/veilkeeper2/SOURCE_REFERENCE_AUDIT.json",
+    "sha256": "cdbe44e5a81a82abf07f50ac509f8beec93a262a6897c208a0990f998345eaa4"
+  },
+  {
+    "path": "docs/veilkeeper2/SOURCE_REVIEW.md",
+    "sha256": "611dd24ef1f040dcbeb3f4a5e4fbba46598bbd7415f2fb165bef71c14e55a834"
+  },
+  {
+    "path": "docs/veilkeeper2/STATE_MIGRATION_MAP.md",
+    "sha256": "3a19ec8b3f3f5c5e29f400b8ddbd5fbce3d3d5955f6afaea25af2215b49672ed"
+  },
+  {
+    "path": "docs/veilkeeper2/STATE_SCHEMA.json",
+    "sha256": "d02ca33039ed06c5cfb91ca30437048f6fa69e863143651366e2bc49f51644d8"
+  },
+  {
+    "path": "docs/veilkeeper2/SUMMARY.json",
+    "sha256": "6ccbbbcca9dd4ccf2a996329260660092a160c3500190310043f49ae29ace93d"
+  },
+  {
+    "path": "docs/veilkeeper2/SYMBOL_REFERENCE_AUDIT.json",
+    "sha256": "ead7895a71beafcb4e80e7db917c6156fb9175ced8730e468ce065cca96d0e1c"
+  },
+  {
+    "path": "docs/veilkeeper2/VEILKEEPER_2_ASTRA6_REBUILD_HANDOFF.md",
+    "sha256": "32ffe71bb6d339809447b09f4ac91cd4bca85a71d866a54c4c973886bfdd8657"
+  }
+]

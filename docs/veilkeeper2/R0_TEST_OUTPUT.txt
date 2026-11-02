@@ -1,0 +1,13 @@
+✔ AST inventory resolves relative imports and reexports while retaining unresolved dynamic edges (3.6588ms)
+✔ functions, methods, exports and callback calls keep exact source locations (1.279ms)
+✔ literal and dynamic SQL are separately identified without executing code (0.5409ms)
+✔ pinned references report missing and out-of-range sources rather than accepting a URL (0.34ms)
+✔ unsupported syntax fails explicitly and destination heuristics cannot approve deletion (0.3702ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.0705

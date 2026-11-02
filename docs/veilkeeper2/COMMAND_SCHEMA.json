@@ -1,0 +1,4572 @@
+[
+  {
+    "name": "vc-campaign",
+    "description": "Campaign setup and status",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "setup",
+        "description": "Configure this server",
+        "options": [
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "play_channel",
+            "description": "Main in-character play channel",
+            "required": true,
+            "type": 7
+          },
+          {
+            "name": "gm_role",
+            "description": "Optional human-GM/admin role",
+            "required": false,
+            "type": 8
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Active router",
+                "value": "active"
+              },
+              {
+                "name": "Assisted",
+                "value": "assisted"
+              },
+              {
+                "name": "Mention only",
+                "value": "mention"
+              }
+            ],
+            "name": "mode",
+            "description": "AI response policy",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show campaign configuration",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "channels",
+        "description": "Configure Veilkeeper support channels",
+        "options": [
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "rules_channel",
+            "description": "Low-cost rules questions channel",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "case_board",
+            "description": "Auto-published active/resolved case threads",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "journal",
+            "description": "Automatic session recap journal",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "known_npcs",
+            "description": "Auto-published player-known NPCs",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "known_locations",
+            "description": "Auto-published discovered locations",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "gm_log",
+            "description": "GM-only operational log",
+            "required": false,
+            "type": 7
+          },
+          {
+            "channel_types": [
+              0
+            ],
+            "name": "state_errors",
+            "description": "GM-only runtime/state error log",
+            "required": false,
+            "type": 7
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "sync",
+        "description": "Republish current case/NPC/location state to configured channels",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-session",
+    "description": "Session attendance and lifecycle",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "start",
+        "description": "Start a new session",
+        "options": [
+          {
+            "type": 3,
+            "name": "title",
+            "description": "Optional session title",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Auto (recommended)",
+                "value": "auto"
+              },
+              {
+                "name": "Already together",
+                "value": "already_together"
+              },
+              {
+                "name": "Shared incident",
+                "value": "shared_incident"
+              },
+              {
+                "name": "Common client",
+                "value": "common_client"
+              },
+              {
+                "name": "Crossed cases",
+                "value": "crossed_cases"
+              },
+              {
+                "name": "Mutual threat",
+                "value": "mutual_threat"
+              },
+              {
+                "name": "Faction summons",
+                "value": "faction_summons"
+              },
+              {
+                "name": "Chain of contacts",
+                "value": "chain_contacts"
+              },
+              {
+                "name": "Rescue",
+                "value": "rescue"
+              },
+              {
+                "name": "Debt / favor",
+                "value": "debt_favor"
+              },
+              {
+                "name": "Manual GM assembly",
+                "value": "manual"
+              }
+            ],
+            "name": "assembly",
+            "description": "How unrelated PCs converge",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "assemble",
+        "description": "Generate and launch the opening convergence scene",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "assembly-status",
+        "description": "Show GM-private convergence status and plan",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "roster",
+        "description": "GM: show current player-to-character and proxy assignments",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "converged",
+        "description": "Mark that immediate PC objectives now overlap",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "end",
+        "description": "End the active session and generate a recap",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "present",
+        "description": "Join the active session",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Owned character name; defaults to first active character",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "absent",
+        "description": "Mark yourself absent",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Offscreen (default/safest)",
+                "value": "offscreen"
+              },
+              {
+                "name": "Background only",
+                "value": "background"
+              },
+              {
+                "name": "Human proxy controls PC",
+                "value": "proxy"
+              }
+            ],
+            "name": "mode",
+            "description": "What happens to your PC",
+            "required": true
+          },
+          {
+            "name": "proxy",
+            "description": "Required for proxy mode",
+            "required": false,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "name": "note",
+            "description": "Optional logistical note",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "arrive",
+        "description": "Join after being late/absent",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character to enter with",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "leave",
+        "description": "Leave early",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Offscreen",
+                "value": "offscreen"
+              },
+              {
+                "name": "Background only",
+                "value": "background"
+              },
+              {
+                "name": "Human proxy controls PC",
+                "value": "proxy"
+              }
+            ],
+            "name": "mode",
+            "description": "What happens to your PC",
+            "required": true
+          },
+          {
+            "name": "proxy",
+            "description": "Required for proxy mode",
+            "required": false,
+            "type": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-character",
+    "description": "Character lifecycle",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "describe",
+        "description": "Save structured appearance or attributed expressive self-description",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "text, visibility, observers[], and facts[] OR lane:expressive (700 chars, unverified prose)",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "create",
+        "description": "Create a basic character record",
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Character name",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "class",
+            "description": "Daggerheart class",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "subclass",
+            "description": "Subclass",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "ancestry",
+            "description": "Veiled City ancestry",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "community",
+            "description": "Community",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "domains",
+            "description": "Comma-separated domains",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "import",
+        "description": "Import a player-safe character JSON",
+        "options": [
+          {
+            "name": "file",
+            "description": "Character JSON file",
+            "required": true,
+            "type": 11
+          },
+          {
+            "name": "narrative",
+            "description": "Optional PLAYER/PLAYERS character Markdown",
+            "required": false,
+            "type": 11
+          },
+          {
+            "name": "player",
+            "description": "GM/admin: player who will own this import",
+            "required": false,
+            "type": 6
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "context-export",
+        "description": "Export current campaign context for external character creation",
+        "options": [
+          {
+            "max_value": 25,
+            "min_value": 1,
+            "type": 4,
+            "name": "history_sessions",
+            "description": "Completed session recaps to include (default 10)",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "import-gm-hooks",
+        "description": "GM: import GM-only hook proposals for an existing character",
+        "options": [
+          {
+            "name": "file",
+            "description": "GM_HOOKS character JSON file",
+            "required": true,
+            "type": 11
+          },
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Override character name from the hook file",
+            "required": false
+          },
+          {
+            "name": "narrative",
+            "description": "Optional GM_PRIVATE/PLAYERS character Markdown",
+            "required": false,
+            "type": 11
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "narrative-import",
+        "description": "Import/update freeform character Markdown",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Player-safe",
+                "value": "player"
+              },
+              {
+                "name": "GM private",
+                "value": "gm_private"
+              }
+            ],
+            "name": "scope",
+            "description": "Narrative visibility",
+            "required": true
+          },
+          {
+            "name": "file",
+            "description": "Markdown .md file",
+            "required": true,
+            "type": 11
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "narrative-export",
+        "description": "Export freeform character Markdown with standard paths",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name; defaults to current/owned",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Player-safe",
+                "value": "player"
+              },
+              {
+                "name": "GM private",
+                "value": "gm_private"
+              },
+              {
+                "name": "Both",
+                "value": "all"
+              }
+            ],
+            "name": "scope",
+            "description": "Export scope",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "list",
+        "description": "List your characters",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "select",
+        "description": "Use a character in the current session",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "sheet",
+        "description": "Show your current or named character",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "export",
+        "description": "Download a current player-safe character sheet",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Owned character name; defaults to current",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "DOCX",
+                "value": "docx"
+              },
+              {
+                "name": "JSON",
+                "value": "json"
+              },
+              {
+                "name": "Markdown",
+                "value": "markdown"
+              },
+              {
+                "name": "All (JSON + Markdown + DOCX)",
+                "value": "all"
+              }
+            ],
+            "name": "format",
+            "description": "Export format",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "export-gm",
+        "description": "GM: download hooks, private state, and canon for a character",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Campaign character name",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "DOCX",
+                "value": "docx"
+              },
+              {
+                "name": "JSON",
+                "value": "json"
+              },
+              {
+                "name": "Markdown",
+                "value": "markdown"
+              },
+              {
+                "name": "All (JSON + Markdown + DOCX)",
+                "value": "all"
+              }
+            ],
+            "name": "format",
+            "description": "Export format",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "retire",
+        "description": "Retire a character",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "death",
+        "description": "Mark a character dead after resolving the death move",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Character name",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-level",
+    "description": "Character lifecycle",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "level-up",
+        "description": "Start a validated level-up draft",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Owned character name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "level-choose",
+        "description": "Choose the two advancements and mandatory new domain card",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Increase two traits",
+                "value": "traits"
+              },
+              {
+                "name": "+1 HP slot",
+                "value": "hp"
+              },
+              {
+                "name": "+1 Stress slot",
+                "value": "stress"
+              },
+              {
+                "name": "Increase two Experiences",
+                "value": "experience"
+              },
+              {
+                "name": "Additional domain card",
+                "value": "domain"
+              },
+              {
+                "name": "+1 Evasion",
+                "value": "evasion"
+              },
+              {
+                "name": "Upgrade subclass",
+                "value": "subclass"
+              },
+              {
+                "name": "+1 Proficiency (costs both)",
+                "value": "proficiency"
+              },
+              {
+                "name": "Multiclass (costs both)",
+                "value": "multiclass"
+              }
+            ],
+            "name": "advancement_one",
+            "description": "First advancement",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Increase two traits",
+                "value": "traits"
+              },
+              {
+                "name": "+1 HP slot",
+                "value": "hp"
+              },
+              {
+                "name": "+1 Stress slot",
+                "value": "stress"
+              },
+              {
+                "name": "Increase two Experiences",
+                "value": "experience"
+              },
+              {
+                "name": "Additional domain card",
+                "value": "domain"
+              },
+              {
+                "name": "+1 Evasion",
+                "value": "evasion"
+              },
+              {
+                "name": "Upgrade subclass",
+                "value": "subclass"
+              },
+              {
+                "name": "+1 Proficiency (costs both)",
+                "value": "proficiency"
+              },
+              {
+                "name": "Multiclass (costs both)",
+                "value": "multiclass"
+              }
+            ],
+            "name": "advancement_two",
+            "description": "Second advancement",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "domain_card",
+            "description": "Mandatory new domain card name",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "detail_one",
+            "description": "Targets/details for first advancement",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "detail_two",
+            "description": "Targets/details for second advancement",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "domain",
+            "description": "Card domain; required for official/non-bundled cards",
+            "required": false
+          },
+          {
+            "max_value": 10,
+            "min_value": 1,
+            "type": 4,
+            "name": "card_level",
+            "description": "Card level; required for official/non-bundled cards",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "tier_experience",
+            "description": "New +2 Experience required at levels 2, 5, and 8",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "level-confirm",
+        "description": "Commit your ready level-up draft",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-guest",
+    "description": "Guest and drop-in characters",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "create",
+        "description": "Create a one-shot/guest character",
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Guest character name",
+            "required": true
+          },
+          {
+            "name": "player",
+            "description": "Player who will control this guest",
+            "required": false,
+            "type": 6
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "claim",
+        "description": "Claim/select a guest character for this session",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Guest character name",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-npc",
+    "description": "Guest-controlled NPC antagonist proxy",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "offer",
+        "description": "Offer a sanitized NPC proxy package to a guest player",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          },
+          {
+            "name": "player",
+            "description": "Guest player",
+            "required": true,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Portrayal only",
+                "value": "portrayal"
+              },
+              {
+                "name": "Tactical (recommended)",
+                "value": "tactical"
+              },
+              {
+                "name": "Full NPC",
+                "value": "full_npc"
+              }
+            ],
+            "name": "control",
+            "description": "How much of this NPC the guest controls",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "objective",
+            "description": "Optional current objective the guest is allowed to know",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "gm_notes",
+            "description": "Optional GM-only source notes; sanitized before delivery",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "proxy",
+        "description": "Immediately assign an NPC antagonist to a guest player",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          },
+          {
+            "name": "player",
+            "description": "Guest player",
+            "required": true,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Portrayal only",
+                "value": "portrayal"
+              },
+              {
+                "name": "Tactical (recommended)",
+                "value": "tactical"
+              },
+              {
+                "name": "Full NPC",
+                "value": "full_npc"
+              }
+            ],
+            "name": "control",
+            "description": "How much of this NPC the guest controls",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "objective",
+            "description": "Optional current objective the guest is allowed to know",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "gm_notes",
+            "description": "Optional GM-only source notes; sanitized before delivery",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "claim",
+        "description": "Accept an NPC proxy offer",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "decline",
+        "description": "Decline an NPC proxy offer",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "release",
+        "description": "End an NPC proxy assignment",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show NPC proxy assignments available to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "packet",
+        "description": "Re-send your sanitized NPC control packet",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC/antagonist name",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-encounter",
+    "description": "GM-only Daggerheart Battle Point encounter builder",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "world",
+        "description": "Bind actors, propose or review a sourced non-coercive encounter",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "op:bind|propose|accept|decline and sourced encounter fields",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "build",
+        "description": "Build a multiplayer encounter from the live session roster",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Easy / shorter (-1 BP)",
+                "value": "easy"
+              },
+              {
+                "name": "Standard",
+                "value": "standard"
+              },
+              {
+                "name": "Hard / longer (+2 BP)",
+                "value": "hard"
+              }
+            ],
+            "name": "difficulty",
+            "description": "Encounter length/difficulty adjustment",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Auto",
+                "value": "auto"
+              },
+              {
+                "name": "Tier 1",
+                "value": "1"
+              },
+              {
+                "name": "Tier 2",
+                "value": "2"
+              },
+              {
+                "name": "Tier 3",
+                "value": "3"
+              },
+              {
+                "name": "Tier 4",
+                "value": "4"
+              }
+            ],
+            "name": "tier",
+            "description": "Adversary tier; auto uses the highest present PC tier",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Balanced",
+                "value": "balanced"
+              },
+              {
+                "name": "Boss",
+                "value": "boss"
+              },
+              {
+                "name": "Swarm",
+                "value": "swarm"
+              },
+              {
+                "name": "Strike team",
+                "value": "strike_team"
+              },
+              {
+                "name": "Hunt",
+                "value": "hunt"
+              }
+            ],
+            "name": "style",
+            "description": "Composition style",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "objective",
+            "description": "Player-facing scene objective",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "environment",
+            "description": "Veiled City environment name; blank chooses a tier-appropriate one",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show the GM-private current encounter budget and composition",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "adjust",
+        "description": "Adjust Battle Point assumptions",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Easy / shorter (-1 BP)",
+                "value": "easy"
+              },
+              {
+                "name": "Standard",
+                "value": "standard"
+              },
+              {
+                "name": "Hard / longer (+2 BP)",
+                "value": "hard"
+              }
+            ],
+            "name": "difficulty",
+            "description": "Replace the difficulty adjustment",
+            "required": false
+          },
+          {
+            "name": "boost_damage",
+            "description": "Apply +1d4/+2 damage to all adversaries (-2 BP)",
+            "required": false,
+            "type": 5
+          },
+          {
+            "type": 4,
+            "name": "custom_delta",
+            "description": "Additional GM BP adjustment (positive or negative)",
+            "required": false
+          },
+          {
+            "name": "rebalance",
+            "description": "Rebuild composition to the new budget (planned encounters only)",
+            "required": false,
+            "type": 5
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Optional GM note for custom adjustment",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "add",
+        "description": "Add an adversary to the current encounter",
+        "options": [
+          {
+            "type": 3,
+            "name": "adversary",
+            "description": "Veiled City adversary name",
+            "required": true
+          },
+          {
+            "max_value": 10,
+            "min_value": 1,
+            "type": 4,
+            "name": "quantity",
+            "description": "Units; for Minions this means party-sized groups",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "remove",
+        "description": "Remove an adversary from the current encounter",
+        "options": [
+          {
+            "type": 3,
+            "name": "adversary",
+            "description": "Adversary name",
+            "required": true
+          },
+          {
+            "max_value": 10,
+            "min_value": 1,
+            "type": 4,
+            "name": "quantity",
+            "description": "Units/groups to remove",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "start",
+        "description": "Mark the planned encounter active and initialize combatants",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "end",
+        "description": "End the current encounter and optionally resolve aftermath",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Auto apply (default)",
+                "value": "auto"
+              },
+              {
+                "name": "Require GM confirmation",
+                "value": "confirm"
+              },
+              {
+                "name": "Skip aftermath",
+                "value": "none"
+              }
+            ],
+            "name": "aftermath",
+            "description": "How to handle post-encounter consequences",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "aftermath-status",
+        "description": "Show the latest encounter aftermath draft/status",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "aftermath-confirm",
+        "description": "GM: apply a pending encounter aftermath",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "aftermath-discard",
+        "description": "GM: discard a pending encounter aftermath",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-combat",
+    "description": "GM-only Daggerheart Battle Point encounter builder",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "combatants",
+        "description": "Show deterministic adversary HP/Stress/conditions",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "damage",
+        "description": "Apply rolled damage to an adversary using thresholds",
+        "options": [
+          {
+            "type": 3,
+            "name": "target",
+            "description": "Combatant name or 8-char ID",
+            "required": true
+          },
+          {
+            "min_value": 0,
+            "type": 4,
+            "name": "amount",
+            "description": "Rolled incoming damage",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "heal",
+        "description": "Restore adversary HP",
+        "options": [
+          {
+            "type": 3,
+            "name": "target",
+            "description": "Combatant name or 8-char ID",
+            "required": true
+          },
+          {
+            "min_value": 1,
+            "type": 4,
+            "name": "hp",
+            "description": "HP to restore",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "stress",
+        "description": "Mark or clear adversary Stress",
+        "options": [
+          {
+            "type": 3,
+            "name": "target",
+            "description": "Combatant name or 8-char ID",
+            "required": true
+          },
+          {
+            "type": 4,
+            "name": "delta",
+            "description": "Positive marks Stress; negative clears",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "condition",
+        "description": "Add/remove an adversary condition",
+        "options": [
+          {
+            "type": 3,
+            "name": "target",
+            "description": "Combatant name or 8-char ID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "condition",
+            "description": "Condition name",
+            "required": true
+          },
+          {
+            "name": "remove",
+            "description": "Remove instead of add",
+            "required": false,
+            "type": 5
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "combatant-status",
+        "description": "Set adversary active/defeated/escaped/removed",
+        "options": [
+          {
+            "type": 3,
+            "name": "target",
+            "description": "Combatant name or 8-char ID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Active",
+                "value": "active"
+              },
+              {
+                "name": "Defeated",
+                "value": "defeated"
+              },
+              {
+                "name": "Escaped",
+                "value": "escaped"
+              },
+              {
+                "name": "Removed",
+                "value": "removed"
+              }
+            ],
+            "name": "status",
+            "description": "New status",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-party",
+    "description": "Persistent working-group state",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "establish",
+        "description": "Mark present PCs as a continuing party",
+        "options": [
+          {
+            "type": 3,
+            "name": "name",
+            "description": "Optional party/team name",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show established party status",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-relationship",
+    "description": "Structured character/NPC/faction relationship graph",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "list",
+        "description": "Show relationships visible to you",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Owned character; defaults to current",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "set",
+        "description": "GM: create or replace a relationship edge",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Character",
+                "value": "character"
+              },
+              {
+                "name": "NPC",
+                "value": "npc"
+              },
+              {
+                "name": "Faction",
+                "value": "faction"
+              },
+              {
+                "name": "Location",
+                "value": "location"
+              },
+              {
+                "name": "Other",
+                "value": "entity"
+              }
+            ],
+            "name": "from_type",
+            "description": "Source entity type",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "from",
+            "description": "Source character/name/key",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Character",
+                "value": "character"
+              },
+              {
+                "name": "NPC",
+                "value": "npc"
+              },
+              {
+                "name": "Faction",
+                "value": "faction"
+              },
+              {
+                "name": "Location",
+                "value": "location"
+              },
+              {
+                "name": "Other",
+                "value": "entity"
+              }
+            ],
+            "name": "to_type",
+            "description": "Target entity type",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "to",
+            "description": "Target character/name/key",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Trust",
+                "value": "trust"
+              },
+              {
+                "name": "Debt",
+                "value": "debt"
+              },
+              {
+                "name": "Fear",
+                "value": "fear"
+              },
+              {
+                "name": "Hostility",
+                "value": "hostility"
+              },
+              {
+                "name": "Affection",
+                "value": "affection"
+              },
+              {
+                "name": "Authority",
+                "value": "authority"
+              },
+              {
+                "name": "Family",
+                "value": "family"
+              },
+              {
+                "name": "Ally",
+                "value": "ally"
+              },
+              {
+                "name": "Rival",
+                "value": "rival"
+              },
+              {
+                "name": "Contact",
+                "value": "contact"
+              },
+              {
+                "name": "Suspicion",
+                "value": "suspicion"
+              },
+              {
+                "name": "Other",
+                "value": "other"
+              }
+            ],
+            "name": "relation",
+            "description": "Relationship type",
+            "required": true
+          },
+          {
+            "max_value": 5,
+            "min_value": -5,
+            "type": 4,
+            "name": "score",
+            "description": "Intensity from -5 to +5",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Character",
+                "value": "character"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Visibility",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "note",
+            "description": "Short context note",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "adjust",
+        "description": "GM: change a relationship score",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Relationship ID/prefix",
+            "required": true
+          },
+          {
+            "max_value": 10,
+            "min_value": -10,
+            "type": 4,
+            "name": "delta",
+            "description": "Score change",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "import-hooks",
+        "description": "GM: one-time backfill of existing character hook relationships",
+        "options": [
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Optional campaign character; blank imports all legacy characters",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-handout",
+    "description": "Evidence and generated campaign handouts",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "custody",
+        "description": "Explicit sourced custody, copies and recipient acceptance",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Closed evidence operation, exact id, key, source and revision",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "evidence",
+        "description": "Read-only scoped evidence lifecycle and pending transfer",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Exact handout ID",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "generate",
+        "description": "GM: generate a handout from established facts",
+        "options": [
+          {
+            "type": 3,
+            "name": "title",
+            "description": "Handout title",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Document/report",
+                "value": "document"
+              },
+              {
+                "name": "Email/message",
+                "value": "email"
+              },
+              {
+                "name": "Transcript",
+                "value": "transcript"
+              },
+              {
+                "name": "Call/digital log",
+                "value": "log"
+              },
+              {
+                "name": "Evidence card",
+                "value": "evidence"
+              },
+              {
+                "name": "Photo description",
+                "value": "photo_description"
+              },
+              {
+                "name": "Other",
+                "value": "other"
+              }
+            ],
+            "name": "kind",
+            "description": "Artifact type",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "facts",
+            "description": "Semicolon/newline-separated facts the artifact may contain",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Canonical",
+                "value": "canonical"
+              },
+              {
+                "name": "Partial",
+                "value": "partial"
+              },
+              {
+                "name": "Unreliable",
+                "value": "unreliable"
+              },
+              {
+                "name": "Illustrative",
+                "value": "illustrative"
+              }
+            ],
+            "name": "authority",
+            "description": "Evidence authority",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Specific player",
+                "value": "player"
+              },
+              {
+                "name": "Specific character",
+                "value": "character"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Who receives it",
+            "required": false
+          },
+          {
+            "name": "player",
+            "description": "Target for player-private visibility",
+            "required": false,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Target campaign character for character-private visibility",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "case",
+            "description": "Optional case/thread key",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "Optional linked NPC",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "location",
+            "description": "Optional linked location",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "create",
+        "description": "GM: store a handout without an AI generation call",
+        "options": [
+          {
+            "type": 3,
+            "name": "title",
+            "description": "Handout title",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "content",
+            "description": "Player-facing artifact text",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "facts",
+            "description": "Optional semicolon/newline-separated canonical/source facts",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "kind",
+            "description": "Artifact type",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Canonical",
+                "value": "canonical"
+              },
+              {
+                "name": "Partial",
+                "value": "partial"
+              },
+              {
+                "name": "Unreliable",
+                "value": "unreliable"
+              },
+              {
+                "name": "Illustrative",
+                "value": "illustrative"
+              }
+            ],
+            "name": "authority",
+            "description": "Evidence authority",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Specific player",
+                "value": "player"
+              },
+              {
+                "name": "Specific character",
+                "value": "character"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Who receives it",
+            "required": false
+          },
+          {
+            "name": "player",
+            "description": "Target for player-private visibility",
+            "required": false,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Target campaign character",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "list",
+        "description": "List evidence handouts visible to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "show",
+        "description": "Show a visible handout",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Handout ID/prefix or title",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "export",
+        "description": "Download a visible handout",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Handout ID/prefix or title",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Markdown",
+                "value": "markdown"
+              },
+              {
+                "name": "JSON",
+                "value": "json"
+              },
+              {
+                "name": "DOCX",
+                "value": "docx"
+              },
+              {
+                "name": "All",
+                "value": "all"
+              }
+            ],
+            "name": "format",
+            "description": "Export format",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "deliver",
+        "description": "GM: re-deliver an existing handout",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Handout ID/prefix or title",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "archive",
+        "description": "GM: archive a handout",
+        "options": [
+          {
+            "type": 3,
+            "name": "id",
+            "description": "Handout ID/prefix or title",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-player",
+    "description": "Player preferences",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "private-channel",
+        "description": "Use this channel for your private GM information",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "accessibility",
+        "description": "Set response/accessibility preferences",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Compact",
+                "value": "compact"
+              },
+              {
+                "name": "Standard",
+                "value": "standard"
+              },
+              {
+                "name": "Descriptive",
+                "value": "descriptive"
+              }
+            ],
+            "name": "length",
+            "description": "GM response length",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Full",
+                "value": "full"
+              },
+              {
+                "name": "Standard",
+                "value": "standard"
+              },
+              {
+                "name": "Narrative only",
+                "value": "narrative"
+              }
+            ],
+            "name": "mechanics",
+            "description": "Mechanical detail",
+            "required": false
+          },
+          {
+            "name": "screen_reader",
+            "description": "Prefer screen-reader-friendly formatting",
+            "required": false,
+            "type": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-roll",
+    "description": "Deterministic dice",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "pvp-menu",
+        "description": "Open your private native PvP consent, mechanics and recovery controls",
+        "options": [
+          {
+            "type": 3,
+            "name": "reference",
+            "description": "Exact proposal, contract, accepted intent, attack, damage, reaction or death request; omit for inbox",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "window",
+        "description": "Private native coordination inbox, consent and explicit GM recovery",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "op: inbox, request, respond, close, custody or GM cancel; exact window and revision",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "effect",
+        "description": "Privately review native feature effects or incoming NPC attack defenses",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Native effect operation and exact source/authority JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pvp",
+        "description": "Privately negotiate PC consent and source-bound attack/defense reviews and dice",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "PvP terms/rolls; narrate templates, draft/draft-review/ratify/scope-review, share; exact revision",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "contribute",
+        "description": "Authorize your own request-bound contribution, dice or selected result",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Request, current revision, unique key and explicit owned mechanical declaration",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "adjudicate",
+        "description": "GM: save exact sourced rules, feasibility or active attack adjudication",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Key, character, saved ruling, kind and exact adjudicated data",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pending",
+        "description": "Privately read your current sheet-derived pending roll requests",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "menu",
+        "description": "Open private controls for an owned pending roll request",
+        "options": [
+          {
+            "type": 3,
+            "name": "request",
+            "description": "Exact saved request key",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "result",
+        "description": "Privately retrieve a saved owned request/result without rolling or spending",
+        "options": [
+          {
+            "type": 3,
+            "name": "request",
+            "description": "Exact saved request key",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "request",
+        "description": "GM: adjudicate a source-verified pending roll without rolling or spending",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Authenticated declaration, trait, kind, modifier sources and adjudication",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "duality",
+        "description": "Roll Daggerheart Duality Dice",
+        "options": [
+          {
+            "type": 4,
+            "name": "modifier",
+            "description": "Trait/other modifier",
+            "required": false
+          },
+          {
+            "type": 4,
+            "name": "experience",
+            "description": "Experience modifier",
+            "required": false
+          },
+          {
+            "type": 4,
+            "name": "advantage",
+            "description": "Advantage d6 count",
+            "required": false
+          },
+          {
+            "type": 4,
+            "name": "disadvantage",
+            "description": "Disadvantage d6 count",
+            "required": false
+          },
+          {
+            "name": "reaction",
+            "description": "Reaction roll: does not generate Hope/Fear or count spotlight",
+            "required": false,
+            "type": 5
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "damage",
+        "description": "Roll damage/other dice",
+        "options": [
+          {
+            "type": 3,
+            "name": "dice",
+            "description": "e.g. 2d8+3",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-rules",
+    "description": "Grounded rules desk and persistent GM rulings",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "ask",
+        "description": "Ask a concise Daggerheart/Veiled City rules question",
+        "options": [
+          {
+            "type": 3,
+            "name": "question",
+            "description": "Rules question",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ruling",
+        "description": "GM: save/replace an authoritative campaign ruling",
+        "options": [
+          {
+            "type": 3,
+            "name": "key",
+            "description": "Short stable key, e.g. veil-camera",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "question",
+            "description": "Question this ruling answers",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "ruling",
+            "description": "Authoritative campaign ruling",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "rulings",
+        "description": "Show saved campaign rulings",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-downtime",
+    "description": "Formal between-session projects and world turns",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "long-project-status",
+        "description": "Read-only owned project proposals, phases and consent revisions",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "long-project",
+        "description": "Create, consent to or review phased downtime continuity",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Project, phase, explicit choice or GM adjudication",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "open",
+        "description": "GM: open a between-session downtime cycle",
+        "options": [
+          {
+            "type": 3,
+            "name": "label",
+            "description": "Downtime label",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "notes",
+            "description": "GM notes",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "project",
+        "description": "Submit a character downtime project",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Recovery",
+                "value": "recovery"
+              },
+              {
+                "name": "Investigation",
+                "value": "investigation"
+              },
+              {
+                "name": "Crafting",
+                "value": "crafting"
+              },
+              {
+                "name": "Ritual",
+                "value": "ritual"
+              },
+              {
+                "name": "Relationship",
+                "value": "relationship"
+              },
+              {
+                "name": "Income/upkeep",
+                "value": "income"
+              },
+              {
+                "name": "Surveillance",
+                "value": "surveillance"
+              },
+              {
+                "name": "Research",
+                "value": "research"
+              },
+              {
+                "name": "Long-term project",
+                "value": "project"
+              },
+              {
+                "name": "Other",
+                "value": "other"
+              }
+            ],
+            "name": "type",
+            "description": "Project type",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "title",
+            "description": "Short project title",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "objective",
+            "description": "What you are trying to accomplish",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Owned character; defaults to first active/reserve",
+            "required": false
+          },
+          {
+            "max_value": 20,
+            "min_value": 1,
+            "type": 4,
+            "name": "countdown",
+            "description": "Project countdown/progress target",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Character private",
+                "value": "character"
+              },
+              {
+                "name": "Player private",
+                "value": "player"
+              }
+            ],
+            "name": "visibility",
+            "description": "Who can know about this project",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show current downtime projects available to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "resolve",
+        "description": "GM: resolve the current downtime cycle and world turn",
+        "options": [
+          {
+            "max_value": 525600,
+            "min_value": 0,
+            "type": 4,
+            "name": "minutes",
+            "description": "Explicit fictional duration; omitted means no assumed elapsed minutes",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-canon",
+    "description": "Authoritative campaign canon and conflict resolution",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "set",
+        "description": "GM: establish a durable canon value",
+        "options": [
+          {
+            "type": 3,
+            "name": "key",
+            "description": "Stable key, e.g. npc.mara-voss.surname",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "value",
+            "description": "Canon value",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Visibility",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show current canon visible to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "conflicts",
+        "description": "GM: list pending canon conflicts",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "proposals",
+        "description": "GM: review pending character/player canon proposals",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Actionable",
+                "value": "actionable"
+              },
+              {
+                "name": "Pending",
+                "value": "pending"
+              },
+              {
+                "name": "Conflict",
+                "value": "conflict"
+              },
+              {
+                "name": "Accepted",
+                "value": "accepted"
+              },
+              {
+                "name": "Rejected",
+                "value": "rejected"
+              },
+              {
+                "name": "All",
+                "value": "all"
+              }
+            ],
+            "name": "status",
+            "description": "Proposal status; defaults to actionable",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "character",
+            "description": "Optional originating/associated character filter",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "proposal-resolve",
+        "description": "GM: accept, reject, or edit a canon proposal",
+        "options": [
+          {
+            "type": 3,
+            "name": "proposal_id",
+            "description": "Proposal ID/prefix",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Accept proposal",
+                "value": "accept"
+              },
+              {
+                "name": "Reject proposal",
+                "value": "reject"
+              },
+              {
+                "name": "Accept edited value",
+                "value": "custom"
+              }
+            ],
+            "name": "resolution",
+            "description": "Resolution",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "custom_value",
+            "description": "Required for edited value",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "GM only",
+                "value": "gm"
+              },
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              }
+            ],
+            "name": "visibility",
+            "description": "Override canon visibility",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "note",
+            "description": "Optional GM resolution note",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "resolve",
+        "description": "GM: resolve a canon conflict",
+        "options": [
+          {
+            "type": 3,
+            "name": "conflict_id",
+            "description": "Conflict ID/prefix",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Keep existing",
+                "value": "existing"
+              },
+              {
+                "name": "Accept proposed",
+                "value": "proposed"
+              },
+              {
+                "name": "Use custom value",
+                "value": "custom"
+              }
+            ],
+            "name": "resolution",
+            "description": "Resolution",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "custom_value",
+            "description": "Required for custom",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-voice",
+    "description": "Discord voice narration controls",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "join",
+        "description": "Have Veilkeeper join your current voice channel",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "leave",
+        "description": "GM: disconnect Veilkeeper from voice",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show voice narration status",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "repeat",
+        "description": "Replay the most recent narration without a new TTS charge",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "pause",
+        "description": "GM: pause voice narration playback",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "resume",
+        "description": "GM: resume voice narration playback",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "configure",
+        "description": "GM: change runtime voice settings",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Off",
+                "value": "off"
+              },
+              {
+                "name": "Narrative",
+                "value": "narrative"
+              },
+              {
+                "name": "Full IC narration",
+                "value": "full"
+              }
+            ],
+            "name": "mode",
+            "description": "What Veilkeeper narrates",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "voice",
+            "description": "Built-in voice name or custom voice_... ID",
+            "required": false
+          },
+          {
+            "max_value": 4,
+            "min_value": 0.25,
+            "type": 10,
+            "name": "speed",
+            "description": "Speech speed 0.25-4.0",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "instructions",
+            "description": "Voice delivery/style instructions",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "narrate",
+        "description": "GM: speak a one-off narration line",
+        "options": [
+          {
+            "type": 3,
+            "name": "text",
+            "description": "Text for Veilkeeper to narrate",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "Optional established NPC key for approved public diction",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-admin",
+    "description": "GM state safety, backups, diagnostics, and audit ledger",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "snapshot",
+        "description": "Create a manual campaign-state snapshot",
+        "options": [
+          {
+            "type": 3,
+            "name": "label",
+            "description": "Snapshot label",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "snapshots",
+        "description": "List recent campaign snapshots",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "rollback",
+        "description": "Restore a snapshot; creates a pre-rollback safety snapshot",
+        "options": [
+          {
+            "type": 3,
+            "name": "snapshot_id",
+            "description": "Snapshot ID/prefix",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "backup",
+        "description": "Create a durable logical campaign backup",
+        "options": [
+          {
+            "type": 3,
+            "name": "label",
+            "description": "Backup label",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Reason",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "backups",
+        "description": "List campaign backups",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "restore-preview",
+        "description": "Preview a backup before restoring it",
+        "options": [
+          {
+            "type": 3,
+            "name": "backup_id",
+            "description": "Backup ID/prefix",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "restore",
+        "description": "Restore a campaign backup after creating a safety snapshot",
+        "options": [
+          {
+            "type": 3,
+            "name": "backup_id",
+            "description": "Backup ID/prefix",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "doctor",
+        "description": "Run campaign/database/Discord configuration diagnostics",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "archive-history",
+        "description": "GM: preview, archive or inspect unfinished ended-session records",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Preview",
+                "value": "preview"
+              },
+              {
+                "name": "Apply",
+                "value": "apply"
+              },
+              {
+                "name": "List",
+                "value": "list"
+              }
+            ],
+            "name": "operation",
+            "description": "Read-only preview/list or confirmed archival",
+            "required": true
+          },
+          {
+            "min_value": 1,
+            "type": 4,
+            "name": "session",
+            "description": "Ended session number for preview/list",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "preview",
+            "description": "Exact signed preview token for apply",
+            "required": false,
+            "max_length": 1000
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Administrative reason for apply",
+            "required": false,
+            "max_length": 600
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ops",
+        "description": "GM: read-only privacy-safe usage, Fear and delivery health",
+        "options": [
+          {
+            "type": 3,
+            "name": "incident",
+            "description": "Opaque incident reference from this guild operational report",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-data",
+        "description": "GM: seed all GM/PLAYER files with privacy boundaries, preserving existing state",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "seed-package-preview",
+        "description": "GM: read-only validate inert definitions, citations, privacy and collisions",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Content package document JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-package-import",
+        "description": "GM: stage a rights-reviewed inert package through existing seed drafts",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "package document and explicit rights_approved boolean",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-package-review",
+        "description": "GM: exact revision approve/reject with separate public export review",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "id, expected_revision, decision, public_export boolean",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-package-export",
+        "description": "GM: read-only approved definitions, public-safe by default",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "id, optional public_only (default true)",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-drafts",
+        "description": "GM: list or inspect private seed drafts",
+        "options": [
+          {
+            "type": 3,
+            "name": "draft_id",
+            "description": "Exact draft ID for full details",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "draft",
+                "value": "draft"
+              },
+              {
+                "name": "approved",
+                "value": "approved"
+              },
+              {
+                "name": "rejected",
+                "value": "rejected"
+              },
+              {
+                "name": "removed",
+                "value": "removed"
+              }
+            ],
+            "name": "status",
+            "description": "Status filter (default draft)",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Filter by kind, target, source, or text",
+            "required": false
+          },
+          {
+            "max_value": 100000,
+            "min_value": 1,
+            "type": 4,
+            "name": "page",
+            "description": "Page (20 drafts per page)",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-add",
+        "description": "GM: add a private seed draft with a source event",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "JSON: kind, key, data, source_event, optional reason",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-edit",
+        "description": "GM: edit a pending seed draft; data replaces the proposed payload",
+        "options": [
+          {
+            "type": 3,
+            "name": "draft_id",
+            "description": "Exact draft ID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "json",
+            "description": "JSON replacement fields: kind, key, data, reason",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-remove",
+        "description": "GM: remove a pending seed draft, retaining an audit tombstone",
+        "options": [
+          {
+            "type": 3,
+            "name": "draft_id",
+            "description": "Exact draft ID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Removal reason",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-approve",
+        "description": "GM: validate and apply a pending seed draft without overwriting live data",
+        "options": [
+          {
+            "type": 3,
+            "name": "draft_id",
+            "description": "Exact draft ID",
+            "required": true
+          },
+          {
+            "name": "public_voice",
+            "description": "Explicitly approve these speaking directions for public voice (default false)",
+            "required": false,
+            "type": 5
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "seed-reject",
+        "description": "GM: reject a pending seed draft; rerunning the seeder will not recreate it",
+        "options": [
+          {
+            "type": 3,
+            "name": "draft_id",
+            "description": "Exact draft ID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Rejection reason",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ledger",
+        "description": "Show recent authoritative mutation ledger entries",
+        "options": [
+          {
+            "type": 3,
+            "name": "layer",
+            "description": "Optional source layer filter",
+            "required": false
+          },
+          {
+            "max_value": 50,
+            "min_value": 1,
+            "type": 4,
+            "name": "limit",
+            "description": "Entries to show",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-director",
+    "description": "Autonomous World Director controls and observability",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Show director cadence, pause state, and pending pass",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "history",
+        "description": "Show recent director passes",
+        "options": [
+          {
+            "max_value": 30,
+            "min_value": 1,
+            "type": 4,
+            "name": "limit",
+            "description": "Entries to show",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pause",
+        "description": "GM: pause automatic world-director passes",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "resume",
+        "description": "GM: resume automatic world-director passes",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "run",
+        "description": "GM: run one manual world-director pass",
+        "options": [
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "Why the manual pass is warranted",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-intel",
+    "description": "Player-safe campaign information",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "arc",
+        "description": "Record your character's private player-established continuity",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Statement or nonbinding beat response",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "organization",
+        "description": "Propose, explicitly confirm or decline your own world initiative",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Closed owner request or current key/revision and confirm|decline",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "organizations",
+        "description": "Read-only own requests and explicit community participation",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "continuity",
+        "description": "Read-only private candidate and invitation inbox with revision-bound responses",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "discover",
+        "description": "Read-only character-relative knowledge, changes, leads or arcs",
+        "options": [
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Literal subject to look up; no world action",
+            "required": false,
+            "max_length": 300
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "know",
+                "value": "know"
+              },
+              {
+                "name": "leads",
+                "value": "leads"
+              },
+              {
+                "name": "changed",
+                "value": "changed"
+              },
+              {
+                "name": "witness",
+                "value": "witness"
+              },
+              {
+                "name": "arcs",
+                "value": "arcs"
+              },
+              {
+                "name": "evidence",
+                "value": "evidence"
+              },
+              {
+                "name": "commitments",
+                "value": "commitments"
+              },
+              {
+                "name": "organizations",
+                "value": "organizations"
+              },
+              {
+                "name": "case",
+                "value": "case"
+              }
+            ],
+            "name": "mode",
+            "description": "Recorded information to show",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Legacy optional literal query and mode",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "recap",
+        "description": "Show the latest saved recap",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "brief",
+        "description": "Read-only current character's sourced continuity brief",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "clues",
+        "description": "Show clues available to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "facts",
+        "description": "Show recorded facts available to you",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "caseboard",
+        "description": "Show active player-visible threads",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-gm",
+    "description": "Human GM/admin tools",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "scene-description",
+        "description": "Establish selected visible NPC/scenery fields, never PC agency",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "entity_type/entity_key/location_key/visibility/facts JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "overview",
+        "description": "Show the GM campaign dashboard and items needing attention",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "delivery-status",
+        "description": "List committed narration awaiting delivery or reconciliation",
+        "options": [
+          {
+            "max_value": 100,
+            "min_value": 1,
+            "type": 4,
+            "name": "limit",
+            "description": "Maximum rows",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "delivery-resend",
+        "description": "Retry publication only; never rerun mechanics or GM reasoning",
+        "options": [
+          {
+            "type": 3,
+            "name": "turn",
+            "description": "Pending turn ID or unique prefix",
+            "required": true
+          },
+          {
+            "name": "force_uncertain",
+            "description": "Disabled: reconcile the exact uncertain part before retrying",
+            "required": false,
+            "type": 5
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "delivery-reconcile",
+        "description": "Audit an exact uncertain part; never rerun game mechanics",
+        "options": [
+          {
+            "type": 3,
+            "name": "part",
+            "description": "Exact publication part UUID",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Verified delivered",
+                "value": "delivered"
+              },
+              {
+                "name": "Confirmed not sent",
+                "value": "confirmed_not_sent"
+              }
+            ],
+            "name": "decision",
+            "description": "Verified delivery or explicit reviewed absence",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "reason",
+            "description": "GM evidence/reconciliation reason",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "channel",
+            "description": "Exact channel ID for a delivered message",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "message",
+            "description": "Exact bot message ID to verify",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "delivery-resync",
+        "description": "Revalidate a native notification reservation without sending or rolling",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Private roll",
+                "value": "roll_publication"
+              },
+              {
+                "name": "Party roll",
+                "value": "roll_party_publication"
+              },
+              {
+                "name": "Private PvP status",
+                "value": "pvp_status_publication"
+              },
+              {
+                "name": "Verified PvP narration",
+                "value": "pvp_projection_publication"
+              }
+            ],
+            "name": "kind",
+            "description": "Native notice kind",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "notice",
+            "description": "Exact reserved notice key from delivery-status",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "npc-state",
+        "description": "Inspect an NPC cognition profile, memories, knowledge, and goals",
+        "options": [
+          {
+            "type": 3,
+            "name": "npc",
+            "description": "NPC name or key",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fear",
+        "description": "Record a Fear change",
+        "options": [
+          {
+            "type": 4,
+            "name": "delta",
+            "description": "Positive or negative change",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fact-add",
+        "description": "Add a campaign fact",
+        "options": [
+          {
+            "type": 3,
+            "name": "content",
+            "description": "Fact text",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Specific player",
+                "value": "player"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Who may know it",
+            "required": true
+          },
+          {
+            "name": "player",
+            "description": "Required for player visibility",
+            "required": false,
+            "type": 6
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fact-edit",
+        "description": "Edit a recorded campaign fact",
+        "options": [
+          {
+            "type": 3,
+            "name": "fact_id",
+            "description": "Fact ID/prefix",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "content",
+            "description": "Replacement fact text",
+            "required": false
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Specific player",
+                "value": "player"
+              },
+              {
+                "name": "Character",
+                "value": "character"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Replacement visibility",
+            "required": false
+          },
+          {
+            "name": "player",
+            "description": "Player target when visibility=player",
+            "required": false,
+            "type": 6
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fact-archive",
+        "description": "Archive a fact without deleting its provenance",
+        "options": [
+          {
+            "type": 3,
+            "name": "fact_id",
+            "description": "Fact ID/prefix",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fact-promote",
+        "description": "Promote a fact to party/public/canon visibility",
+        "options": [
+          {
+            "type": 3,
+            "name": "fact_id",
+            "description": "Fact ID/prefix",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "Party fact",
+                "value": "party"
+              },
+              {
+                "name": "Public fact",
+                "value": "public"
+              },
+              {
+                "name": "Campaign canon",
+                "value": "canon"
+              },
+              {
+                "name": "Establish truth (GM ruling)",
+                "value": "established"
+              }
+            ],
+            "name": "target",
+            "description": "Promotion target",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "fact-list",
+        "description": "List recorded campaign facts",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "All",
+                "value": "all"
+              },
+              {
+                "name": "Public",
+                "value": "public"
+              },
+              {
+                "name": "Party",
+                "value": "party"
+              },
+              {
+                "name": "Specific player",
+                "value": "player"
+              },
+              {
+                "name": "Character",
+                "value": "character"
+              },
+              {
+                "name": "GM only",
+                "value": "gm"
+              }
+            ],
+            "name": "visibility",
+            "description": "Filter by visibility",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "category",
+            "description": "Optional category filter, e.g. fact, clue, recap",
+            "required": false
+          },
+          {
+            "name": "player",
+            "description": "Filter facts scoped to this player",
+            "required": false,
+            "type": 6
+          },
+          {
+            "type": 3,
+            "name": "search",
+            "description": "Search fact key/content",
+            "required": false
+          },
+          {
+            "max_value": 100,
+            "min_value": 1,
+            "type": 4,
+            "name": "limit",
+            "description": "Maximum facts to return (default 50)",
+            "required": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-sim",
+    "description": "GM: persistent campaign simulation",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Inspect fictional time, pending actions, and queued hooks",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "records",
+        "description": "Inspect GM-private simulation records",
+        "options": [
+          {
+            "type": 3,
+            "name": "kind",
+            "description": "Record kind: action, memory, goal, obligation, rumor, awareness, residue, hook",
+            "required": false
+          },
+          {
+            "type": 3,
+            "name": "status",
+            "description": "Optional status filter",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "entity",
+        "description": "Inspect or configure an NPC, faction, or location",
+        "options": [
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "NPC",
+                "value": "npc"
+              },
+              {
+                "name": "Faction",
+                "value": "faction"
+              },
+              {
+                "name": "Location",
+                "value": "location"
+              }
+            ],
+            "name": "type",
+            "description": "Entity type",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "key",
+            "description": "Stable entity key",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional state patch as JSON",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "update",
+        "description": "Record an established obligation, rumor, residue, or other typed update",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Typed update JSON; see NPC_SIMULATION.md",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "action",
+        "description": "Propose a typed NPC action with normal budgets and review boundaries",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Action intent JSON; see NPC_SIMULATION.md",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "review",
+        "description": "Approve, modify, defer, or reject a consequential NPC action",
+        "options": [
+          {
+            "type": 3,
+            "name": "action_id",
+            "description": "Action ID or unique prefix",
+            "required": true
+          },
+          {
+            "type": 3,
+            "choices": [
+              {
+                "name": "approve",
+                "value": "approve"
+              },
+              {
+                "name": "modify",
+                "value": "modify"
+              },
+              {
+                "name": "defer",
+                "value": "defer"
+              },
+              {
+                "name": "reject",
+                "value": "reject"
+              }
+            ],
+            "name": "decision",
+            "description": "GM decision",
+            "required": true
+          },
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional replacement action fields when modifying",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "advance",
+        "description": "Explicitly advance fictional minutes and process due events",
+        "options": [
+          {
+            "max_value": 525600,
+            "min_value": 1,
+            "type": 4,
+            "name": "minutes",
+            "description": "In-fiction minutes, never wall-clock time",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "share",
+        "description": "Transfer already-known information between actors with provenance",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "fromType,fromKey,toType,toKey,informationKey,source JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "goal",
+        "description": "Propose or review a sourced actor goal transition",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Actor/source/goal/op or key/decision JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "consequence",
+        "description": "Subscribe, preview or review bounded causal consequences",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "op:subscribe|run or key/decision JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "publish",
+        "description": "Retry delivery of queued player-facing NPC hooks",
+        "options": []
+      }
+    ]
+  },
+  {
+    "name": "vc-city",
+    "description": "GM: living city state and fictional calendar",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "status",
+        "description": "Inspect fictional calendar and due civic events",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "calendar",
+        "description": "Inspect or configure the fictional epoch and timezone",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional epoch/timezone JSON",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "events",
+        "description": "Inspect the GM-only semantic event index",
+        "options": [
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Optional event search",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "event",
+        "description": "Index or reconcile a sourced world event",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "World event JSON; see LIVING_CITY.md",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "schedule",
+        "description": "Schedule, cancel, or reschedule a fictional civic event",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Schedule JSON; see LIVING_CITY.md",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "review",
+        "description": "Approve, modify, defer, or reject a civic schedule",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key, decision, optional patch JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "preview",
+        "description": "Nonmutating preview of currently due civic events",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "records",
+        "description": "Inspect scoped GM-only civic records",
+        "options": [
+          {
+            "type": 3,
+            "name": "kind",
+            "description": "Optional civic kind filter",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "run",
+        "description": "Run one bounded opt-in institution opportunity",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "opportunity",
+        "description": "Propose a state-derived hook, never hidden mystery truth",
+        "options": [
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Current scene/location relevance",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "update",
+        "description": "Record sourced institution, district, audience belief or case state",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Typed kind/key/source_event/data JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "membership",
+        "description": "Link an existing location to a district",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "district, location, source_event JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "report",
+        "description": "File an authorized known NPC report with an institution",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Known source/report/institution JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "link",
+        "description": "Add a typed causal or attributed assertion link",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "from/to/relation/optional asserted_by JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "action",
+        "description": "Propose a procedure/resource-constrained institutional action",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Institution intent JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "commitment",
+        "description": "Establish an explicit consensual commitment or cancel one",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Commitment terms/participants/interval JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "flags",
+        "description": "Configure opt-in civic directors and opportunities",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Boolean opt-in feature flags; see NEXT_EXPANSION.md",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "connect",
+        "description": "Establish verified service, travel, or communication edges",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "kind, from, to, source_event, optional duration JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "service",
+        "description": "Propose a sourced infrastructure condition change",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key, condition, source_event, optional major JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "transmit",
+        "description": "Transmit already-known belief through an established channel",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Source/recipient/mechanism/authorization JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "history",
+        "description": "Find bounded summaries with original source events",
+        "options": [
+          {
+            "type": 3,
+            "name": "query",
+            "description": "Relevant historical incident/entity",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "upkeep",
+        "description": "Record opt-in established upkeep or explicit settlement; never auto-spend",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Agreed parties/terms/due or settlement JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "minor",
+        "description": "Draft one relevant minor NPC without creating persistent agency",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "minor-* key, source_event, role, location, established context JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "minor-review",
+        "description": "Promote or discard a minor NPC draft",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key, decision:promote|discard JSON",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "vc-story",
+    "description": "GM: sourced context and bounded story operations",
+    "type": 1,
+    "options": [
+      {
+        "type": 1,
+        "name": "brief",
+        "description": "Read-only GM preparation, reviews, motives, sources and fictional schedules",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "delegation",
+        "description": "Explicitly configure or revoke bounded AI delegation",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "mode, allow, max_operations, max_cost, expires_minute JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ai-inbox",
+        "description": "Read-only GM-private AI proposals, receipts and delegation",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional kind, page and status filters",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "ai-review",
+        "description": "Authenticated GM approve or reject a revision-bound AI intent",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key, decision, expected_revision from inbox JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "expansion-status",
+        "description": "Read-only expansion flags, lifecycle counts, bounds and recovery",
+        "options": []
+      },
+      {
+        "type": 1,
+        "name": "memory",
+        "description": "Consolidate, revise or revert actor-relative evidence clusters",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Actor, source pointers and topic; no canon rewriting",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "arc-beat",
+        "description": "Propose a nonbinding private callback to a player-established arc",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Character, arc, source and invitation",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "context",
+        "description": "Read-only actor-relative context plan",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Actor/scope/query/budget JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "diagnose",
+        "description": "Read-only narration integrity diagnostic",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "result and scope JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "conversation",
+        "description": "Resolve one explicit NPC contact opportunity",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Stable key, source, NPCs, goals, opportunity and known information JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pacing",
+        "description": "Configure non-mechanical scene cues",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "source_event and descriptive cues JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "pacing-status",
+        "description": "Read-only pacing advice and current scene cues",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional message for silence advice JSON",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "mystery",
+        "description": "Link three independent clue routes to fixed existing canon",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key/source/anchor_key/question/routes JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "clues",
+        "description": "Read-only scoped evidence paths; no automatic secret revelation",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key, userId, characterId, optional gm JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "attempt",
+        "description": "Record an existing action roll without locking essential clues",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key/source/mystery/route/roll_id/character_id/difficulty JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "negotiate",
+        "description": "Reviewable offers/counteroffers/acceptance; never auto-spend PC resources",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key/step/source_event/op/participants/terms/accepted_by JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "forecast",
+        "description": "Read-only hypothetical outcomes and mitigations; GM-only",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "query or event_key JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "why",
+        "description": "Read-only source, cause, approval and ledger explanation",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "event_key or mutation_id JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "group",
+        "description": "Propose, respond to or review an NPC community lifecycle",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Sourced group proposal/response/review JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "strategy",
+        "description": "Propose, replan, review or step a bounded existing actor strategy",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Actor/goal/source/steps/cost ceiling or key/op JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "scene",
+        "description": "Record sourced scene presence, departure, evidence or descriptive barriers",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Entity/location/source/zone/state/visibility JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "scene-view",
+        "description": "Read-only actual or actor-relative scene occupancy",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "Optional observer_type/observer_key JSON",
+            "required": false
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "portray",
+        "description": "Configure established NPC diction; optional explicit public voice approval",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "npc/source_event/direction/public_voice_approved JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "author",
+        "description": "Draft a typed world entity; no authority before human review",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key/kind/source_event/data JSON",
+            "required": true
+          }
+        ]
+      },
+      {
+        "type": 1,
+        "name": "author-review",
+        "description": "Human approve/reject a validated world draft",
+        "options": [
+          {
+            "type": 3,
+            "name": "json",
+            "description": "key/decision JSON",
+            "required": true
+          }
+        ]
+      }
+    ]
+  }
+]

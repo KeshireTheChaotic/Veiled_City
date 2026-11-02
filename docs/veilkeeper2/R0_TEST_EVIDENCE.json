@@ -1,0 +1,28 @@
+{
+  "run_id": "2026-11-02T08:12:37.821Z",
+  "started": "2026-11-02T08:12:37.821Z",
+  "ended": "2026-11-02T08:12:37.926Z",
+  "command": "node --test tests/veilkeeper2/r0-audit.test.mjs",
+  "node": "v24.19.0",
+  "inputs": [
+    {
+      "path": "tooling/veilkeeper2/source-audit.mjs",
+      "sha256": "3a2523b62a0e87b8eabebd75b03a67562e9922a51c05cb78b173cd42ceab123f"
+    },
+    {
+      "path": "tooling/veilkeeper2/inventory.mjs",
+      "sha256": "413fbfb7e8e70f1ffe38eb9a241ceca679a58f1b16257325d9c3e95b5f109ec0"
+    },
+    {
+      "path": "tooling/veilkeeper2/test.mjs",
+      "sha256": "37f8182f03d951f140dc7aecdd652323e58b4c054f2ab89690318d716e810b7d"
+    },
+    {
+      "path": "tests/veilkeeper2/r0-audit.test.mjs",
+      "sha256": "35e5018c5d3d0d054ce303529120e96a2ed925bce29d853ded534f9ebbf2cc8b"
+    }
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null
+}

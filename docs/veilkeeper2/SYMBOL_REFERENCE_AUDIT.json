@@ -1,0 +1,2501 @@
+[
+  {
+    "file": "bot/src/gm.js",
+    "name": "shouldRespond",
+    "citedStart": 483,
+    "citedEnd": 548,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:483:21",
+        "name": "shouldRespond",
+        "line": 483,
+        "end": 548,
+        "kind": "FunctionExpression",
+        "sha256": "049c01bd31e0e76fef7b3a373b4cffaa5589e0b8d54debbd263a6271fa2600ec"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "processPartyTurn",
+    "citedStart": 407,
+    "citedEnd": 565,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:407:0",
+        "name": "processPartyTurn",
+        "line": 407,
+        "end": 534,
+        "kind": "FunctionDeclaration",
+        "sha256": "aa8990f8638192ea267dccb3e824b073a7335bdddbf6300d757ce5d7a889eb5e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "runTurn",
+    "citedStart": 623,
+    "citedEnd": 1020,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:623:15",
+        "name": "runTurn",
+        "line": 623,
+        "end": 1020,
+        "kind": "FunctionExpression",
+        "sha256": "1aa2d91b5189fce430586830a19bbfcc3301be055099cce9d0de89b53f413600"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/player-intent-contract.js",
+    "name": "createPlayerIntentContract",
+    "citedStart": 2,
+    "citedEnd": 65,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/player-intent-contract.js:2:7",
+        "name": "createPlayerIntentContract",
+        "line": 2,
+        "end": 66,
+        "kind": "FunctionDeclaration",
+        "sha256": "c457a8d2e5c601fd69c39112d9a17ff94aa0cef7400d0d26972d4efbae37e793"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "persistPlayerIntents",
+    "citedStart": 64,
+    "citedEnd": 142,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:64:0",
+        "name": "persistPlayerIntents",
+        "line": 64,
+        "end": 140,
+        "kind": "FunctionDeclaration",
+        "sha256": "7d50c5f038753a9ed5425156e685b89f5a88fb8ec7fa6690d515a957256420bb"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+    "name": "coordinateNarrative",
+    "citedStart": 7,
+    "citedEnd": 50,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-delegation.js:7:7",
+        "name": "coordinateNarrative",
+        "line": 7,
+        "end": 32,
+        "kind": "FunctionDeclaration",
+        "sha256": "a3772cce7cc820295dd24dfac189e33dda6cb931524b43afc7301e56e77e57a0"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+    "name": "creativeBrief",
+    "citedStart": 7,
+    "citedEnd": 50,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-delegation.js:33:7",
+        "name": "creativeBrief",
+        "line": 33,
+        "end": 49,
+        "kind": "FunctionDeclaration",
+        "sha256": "b507afc7f7a260a09f12e324cbb87554d49e7a665eb56be41b3e832f1f24cf3f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+    "name": "narrativeTasks",
+    "citedStart": 8,
+    "citedEnd": 41,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-tasks.js:8:7",
+        "name": "narrativeTasks",
+        "line": 8,
+        "end": 41,
+        "kind": "FunctionDeclaration",
+        "sha256": "045d559245d572c78f52a265a5d9e031683f5d38c28341dd42764f4f945390eb"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "authorNarrativeRequests",
+    "citedStart": 170,
+    "citedEnd": 216,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:170:7",
+        "name": "authorNarrativeRequests",
+        "line": 170,
+        "end": 216,
+        "kind": "FunctionDeclaration",
+        "sha256": "d6a34a7227f9783e47ec585ab8e96df3a525c89eb9b23d418f7bbccf03fd860e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/pvp-output.js",
+    "name": "prepareAuthorizedTurnOutput",
+    "citedStart": 374,
+    "citedEnd": 610,
+    "definitions": [
+      {
+        "id": "bot/src/pvp-output.js:374:7",
+        "name": "prepareAuthorizedTurnOutput",
+        "line": 374,
+        "end": 617,
+        "kind": "FunctionDeclaration",
+        "sha256": "5f3b3b175614d2a62163a8295a128caa0cd9bb68cf0a72f7a7f0291904996bb5"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "validateUnit",
+    "citedStart": 68,
+    "citedEnd": 159,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:68:0",
+        "name": "validateUnit",
+        "line": 68,
+        "end": 158,
+        "kind": "FunctionDeclaration",
+        "sha256": "783213436a7b797b5d2d7bd37f450ad58257cfaa48fe681858ddca4888b2eefc"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/identity-rules.js",
+    "name": "createWorldIdentityRules",
+    "citedStart": 7,
+    "citedEnd": 86,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/identity-rules.js:7:7",
+        "name": "createWorldIdentityRules",
+        "line": 7,
+        "end": 127,
+        "kind": "FunctionDeclaration",
+        "sha256": "7fd434698a0314123593ac913dbaea69cc61e8bddce109e25e5ca46cd6fc386f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/identity-rules.js",
+    "name": "establishNativeNarrativeEntity",
+    "citedStart": 7,
+    "citedEnd": 86,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/identity-rules.js:15:0",
+        "name": "establishNativeNarrativeEntity",
+        "line": 15,
+        "end": 86,
+        "kind": "FunctionDeclaration",
+        "sha256": "8746bfc94f03883f68854ed05017ccd22afb9b270eaeeda9ccbdaad6f5541e1d"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/director-cadence.js",
+    "name": "queueDirectorAfterPartyTurn",
+    "citedStart": 9,
+    "citedEnd": 32,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/director-cadence.js:9:0",
+        "name": "queueDirectorAfterPartyTurn",
+        "line": 9,
+        "end": 33,
+        "kind": "FunctionDeclaration",
+        "sha256": "ea7b91ff37005c148f1e26f702ea0f1aad4fe74a771ffa5d1ad89a4b0dc144e1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "runWorldDirector",
+    "citedStart": 1102,
+    "citedEnd": 1162,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:1102:24",
+        "name": "runWorldDirector",
+        "line": 1102,
+        "end": 1182,
+        "kind": "FunctionExpression",
+        "sha256": "a5ee89bb81bff59a89846cc083a31cb87fe7382ef61828ef773ad3ce6c9c3046"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "structuredResponse",
+    "citedStart": 418,
+    "citedEnd": 480,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:418:26",
+        "name": "structuredResponse",
+        "line": 418,
+        "end": 481,
+        "kind": "FunctionExpression",
+        "sha256": "09812602ae78c70067c62395666e127274cd34ed1dfc38b5918ede1c18885423"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "processPartyTurn",
+    "citedStart": 407,
+    "citedEnd": 565,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:407:0",
+        "name": "processPartyTurn",
+        "line": 407,
+        "end": 534,
+        "kind": "FunctionDeclaration",
+        "sha256": "aa8990f8638192ea267dccb3e824b073a7335bdddbf6300d757ce5d7a889eb5e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "processPrivateTurn",
+    "citedStart": 311,
+    "citedEnd": 405,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:311:0",
+        "name": "processPrivateTurn",
+        "line": 311,
+        "end": 405,
+        "kind": "FunctionDeclaration",
+        "sha256": "4833ef03016463d0a83ec8f689d4fb6685e7eb956f4ab8b15fd24fc917b34ff1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "processTurnEnvelope",
+    "citedStart": 569,
+    "citedEnd": 620,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:540:0",
+        "name": "processTurnEnvelope",
+        "line": 540,
+        "end": 564,
+        "kind": "FunctionDeclaration",
+        "sha256": "73bbcccc606de847be2cde38752082d16b1e7c48039cf0812081536610c2e628"
+      }
+    ],
+    "status": "manual-semantic-review-required"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "resolveController",
+    "citedStart": 73,
+    "citedEnd": 88,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:73:0",
+        "name": "resolveController",
+        "line": 73,
+        "end": 88,
+        "kind": "FunctionDeclaration",
+        "sha256": "3bdecd0d27571089202f7cf9a1e375e3e941898f990968ea7f8d5b06556339d4"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/index.js",
+    "name": "routeNativeSpans",
+    "citedStart": 105,
+    "citedEnd": 110,
+    "definitions": [
+      {
+        "id": "bot/src/index.js:105:0",
+        "name": "routeNativeSpans",
+        "line": 105,
+        "end": 109,
+        "kind": "FunctionDeclaration",
+        "sha256": "d67468facda0ea2723188bd62ffe5f64201bf193a4e51679c9fa9c92abd80414"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "shouldRespond",
+    "citedStart": 483,
+    "citedEnd": 548,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:483:21",
+        "name": "shouldRespond",
+        "line": 483,
+        "end": 548,
+        "kind": "FunctionExpression",
+        "sha256": "049c01bd31e0e76fef7b3a373b4cffaa5589e0b8d54debbd263a6271fa2600ec"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "buildContext",
+    "citedStart": 550,
+    "citedEnd": 622,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:550:14",
+        "name": "buildContext",
+        "line": 550,
+        "end": 552,
+        "kind": "FunctionExpression",
+        "sha256": "02ec8a0fc853805ab24b0ba5822f8cb199b322ee5db9221302231da9307041d0"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "runTurn",
+    "citedStart": 623,
+    "citedEnd": 1020,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:623:15",
+        "name": "runTurn",
+        "line": 623,
+        "end": 1020,
+        "kind": "FunctionExpression",
+        "sha256": "1aa2d91b5189fce430586830a19bbfcc3301be055099cce9d0de89b53f413600"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "structuredResponse",
+    "citedStart": 418,
+    "citedEnd": 480,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:418:26",
+        "name": "structuredResponse",
+        "line": 418,
+        "end": 481,
+        "kind": "FunctionExpression",
+        "sha256": "09812602ae78c70067c62395666e127274cd34ed1dfc38b5918ede1c18885423"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "requestModel",
+    "citedStart": 410,
+    "citedEnd": 413,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:410:20",
+        "name": "requestModel",
+        "line": 410,
+        "end": 412,
+        "kind": "FunctionExpression",
+        "sha256": "3b4e11948d4a27e23c0998200cca06acf31e3870efde4ce5b8c62e6892467a8a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/player-intent-contract.js",
+    "name": "createPlayerIntentContract",
+    "citedStart": 2,
+    "citedEnd": 65,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/player-intent-contract.js:2:7",
+        "name": "createPlayerIntentContract",
+        "line": 2,
+        "end": 66,
+        "kind": "FunctionDeclaration",
+        "sha256": "c457a8d2e5c601fd69c39112d9a17ff94aa0cef7400d0d26972d4efbae37e793"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/player-intent-validation.js",
+    "name": "validatePlayerIntents",
+    "citedStart": 1,
+    "citedEnd": 118,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/player-intent-validation.js:15:0",
+        "name": "validatePlayerIntents",
+        "line": 15,
+        "end": 80,
+        "kind": "FunctionDeclaration",
+        "sha256": "dd8cbe600d4c5b5fade742f8f1e50782df5e701edbb103a83af00bce878e102b"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/player-intent-validation.js",
+    "name": "recoverPlayerIntents",
+    "citedStart": 1,
+    "citedEnd": 118,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/player-intent-validation.js:83:0",
+        "name": "recoverPlayerIntents",
+        "line": 83,
+        "end": 115,
+        "kind": "FunctionDeclaration",
+        "sha256": "70c030ca3c6befe086ea710b73b7ab148d2200d2dc1e90612be5acb7f77983a2"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "persistPlayerIntents",
+    "citedStart": 64,
+    "citedEnd": 142,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:64:0",
+        "name": "persistPlayerIntents",
+        "line": 64,
+        "end": 140,
+        "kind": "FunctionDeclaration",
+        "sha256": "7d50c5f038753a9ed5425156e685b89f5a88fb8ec7fa6690d515a957256420bb"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "persistTypedDialogue",
+    "citedStart": 143,
+    "citedEnd": 162,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:143:0",
+        "name": "persistTypedDialogue",
+        "line": 143,
+        "end": 160,
+        "kind": "FunctionDeclaration",
+        "sha256": "744eee1a0a97923342c203e7b17de5d1dbc14692a8889a5fd53f80878e604dae"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "currentTypedMovement",
+    "citedStart": 163,
+    "citedEnd": 208,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:163:0",
+        "name": "currentTypedMovement",
+        "line": 163,
+        "end": 177,
+        "kind": "FunctionDeclaration",
+        "sha256": "844ca318041a998b859b85dda4f30db785b4a1da6ad5ecaeb5086bc64ff140b6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "autoCompleteOrdinaryMovements",
+    "citedStart": 163,
+    "citedEnd": 208,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:179:0",
+        "name": "autoCompleteOrdinaryMovements",
+        "line": 179,
+        "end": 206,
+        "kind": "FunctionDeclaration",
+        "sha256": "a6e8787d76d7b4f4607fada53d3bcf4df067a41bece5ab64e7e5728ef1ccdaea"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+    "name": "validateIntentResolutions",
+    "citedStart": 209,
+    "citedEnd": 236,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/typed-intent-persistence.js:209:0",
+        "name": "validateIntentResolutions",
+        "line": 209,
+        "end": 233,
+        "kind": "FunctionDeclaration",
+        "sha256": "eb0604db95703bac51ca623cbf12e3b01321af979059814bafadd2e96529830c"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/semantic-intake.js",
+    "name": "proposeIntents",
+    "citedStart": 19,
+    "citedEnd": 143,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/semantic-intake.js:19:7",
+        "name": "proposeIntents",
+        "line": 19,
+        "end": 85,
+        "kind": "FunctionDeclaration",
+        "sha256": "3423e695723cd0ce752770294ac5e8200ed47f8ed3eb78b8240911aec9da74e6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/semantic-intake.js",
+    "name": "acceptIntentForAdjudication",
+    "citedStart": 19,
+    "citedEnd": 143,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/semantic-intake.js:88:7",
+        "name": "acceptIntentForAdjudication",
+        "line": 88,
+        "end": 141,
+        "kind": "FunctionDeclaration",
+        "sha256": "3467702da3a9b66c8b4fd95d5df713a988f30e4ecc1fde4699f08821ac5c1eb7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/gameplay-intake.js",
+    "name": "routeGameplayIntake",
+    "citedStart": 9,
+    "citedEnd": 16,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/gameplay-intake.js:9:7",
+        "name": "routeGameplayIntake",
+        "line": 9,
+        "end": 14,
+        "kind": "FunctionDeclaration",
+        "sha256": "b3f2d99a9b2167c67256cdc1f3ce0b4c020b49742ba8604aaa15e2b437714931"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/gameplay-intake.js",
+    "name": "semanticResponseObligation",
+    "citedStart": 23,
+    "citedEnd": 39,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/gameplay-intake.js:23:7",
+        "name": "semanticResponseObligation",
+        "line": 23,
+        "end": 35,
+        "kind": "FunctionDeclaration",
+        "sha256": "21d07617c03d318af7bfbb0fa8cff7725e6fe7bf2c3b0de40015bc3fb7298976"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+    "name": "captureAuthoredTurnEnvelope",
+    "citedStart": 14,
+    "citedEnd": 34,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/authored-turn-envelope.js:14:7",
+        "name": "captureAuthoredTurnEnvelope",
+        "line": 14,
+        "end": 33,
+        "kind": "FunctionDeclaration",
+        "sha256": "234a504c92e164bce7796f53462ab306a4709aec85b440015d7efd6f493d5f9a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+    "name": "recordNativeConsumedSpans",
+    "citedStart": 35,
+    "citedEnd": 50,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/authored-turn-envelope.js:35:7",
+        "name": "recordNativeConsumedSpans",
+        "line": 35,
+        "end": 49,
+        "kind": "FunctionDeclaration",
+        "sha256": "75902c1b352ff4af41260dc0aef8ac5cd2babc56ec03d74a662a916eb02e2c21"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/interpretation-context.js",
+    "name": "interpretationContext",
+    "citedStart": 74,
+    "citedEnd": 104,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/interpretation-context.js:74:7",
+        "name": "interpretationContext",
+        "line": 74,
+        "end": 104,
+        "kind": "FunctionDeclaration",
+        "sha256": "d3d95dd580282b945a97b33b1025dd1f56cacbaccc38331af559bc627a1ce9cc"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/context-builder.js",
+    "name": "createNarrativeContextBuilder",
+    "citedStart": 2,
+    "citedEnd": 134,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/context-builder.js:2:7",
+        "name": "createNarrativeContextBuilder",
+        "line": 2,
+        "end": 134,
+        "kind": "FunctionDeclaration",
+        "sha256": "0f95c72afde4ba350a42cb8b9bfbaf56b26f8133b83b042568fffca50905a82d"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/context-builder.js",
+    "name": "buildNarrativeContext",
+    "citedStart": 2,
+    "citedEnd": 134,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/context-builder.js:11:0",
+        "name": "buildNarrativeContext",
+        "line": 11,
+        "end": 132,
+        "kind": "FunctionDeclaration",
+        "sha256": "682e0b3b65238d3085c0201df31810d48efd8bf0635698fd13daaa86fb7124db"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/audience-authority.js",
+    "name": "createAudienceAuthority",
+    "citedStart": 14,
+    "citedEnd": 46,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/audience-authority.js:14:7",
+        "name": "createAudienceAuthority",
+        "line": 14,
+        "end": 45,
+        "kind": "FunctionDeclaration",
+        "sha256": "91e6239830faee73be52e50e51349b4617cdaec23270fed8004ed56b31c5d502"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/audience-authority.js",
+    "name": "audienceSurface",
+    "citedStart": 47,
+    "citedEnd": 55,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/audience-authority.js:47:7",
+        "name": "audienceSurface",
+        "line": 47,
+        "end": 54,
+        "kind": "FunctionDeclaration",
+        "sha256": "6f52be8a13378ec929b87bb10e0933f7ac8903d08958bfc826178c9b5950087b"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+    "name": "mintNarrativeAudience",
+    "citedStart": 12,
+    "citedEnd": 38,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/native-audience-grant.js:12:2",
+        "name": "mintNarrativeAudience",
+        "line": 12,
+        "end": 29,
+        "kind": "FunctionDeclaration",
+        "sha256": "8a96de756e53887fb2a46a9cf13531337bc6e7ed5e8b92b85e3ba6aff531cdf7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+    "name": "revalidateNarrativeAudience",
+    "citedStart": 12,
+    "citedEnd": 38,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/native-audience-grant.js:30:2",
+        "name": "revalidateNarrativeAudience",
+        "line": 30,
+        "end": 37,
+        "kind": "FunctionDeclaration",
+        "sha256": "9ec8f706e928448d34e0e42db28fd4c4ec6a86e04b2a3e0f628a8d668cec24c7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/source-visibility.js",
+    "name": "createNarrativeSourceVisibility",
+    "citedStart": 2,
+    "citedEnd": 30,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/source-visibility.js:2:7",
+        "name": "createNarrativeSourceVisibility",
+        "line": 2,
+        "end": 30,
+        "kind": "FunctionDeclaration",
+        "sha256": "58d3f3f78d458e7bafd83fb2433c988bde4b138b68a7ca8071284b9fbd4b994e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+    "name": "coordinateNarrative",
+    "citedStart": 7,
+    "citedEnd": 50,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-delegation.js:7:7",
+        "name": "coordinateNarrative",
+        "line": 7,
+        "end": 32,
+        "kind": "FunctionDeclaration",
+        "sha256": "a3772cce7cc820295dd24dfac189e33dda6cb931524b43afc7301e56e77e57a0"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+    "name": "creativeBrief",
+    "citedStart": 7,
+    "citedEnd": 50,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-delegation.js:33:7",
+        "name": "creativeBrief",
+        "line": 33,
+        "end": 49,
+        "kind": "FunctionDeclaration",
+        "sha256": "b507afc7f7a260a09f12e324cbb87554d49e7a665eb56be41b3e832f1f24cf3f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+    "name": "narrativeTasks",
+    "citedStart": 8,
+    "citedEnd": 79,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-tasks.js:8:7",
+        "name": "narrativeTasks",
+        "line": 8,
+        "end": 41,
+        "kind": "FunctionDeclaration",
+        "sha256": "045d559245d572c78f52a265a5d9e031683f5d38c28341dd42764f4f945390eb"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+    "name": "taskDispositions",
+    "citedStart": 8,
+    "citedEnd": 79,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-tasks.js:42:7",
+        "name": "taskDispositions",
+        "line": 42,
+        "end": 79,
+        "kind": "FunctionDeclaration",
+        "sha256": "e37013401049ed7cbbf93c880d3de31af87569b7e6444dc4d7416f7d15e50aad"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+    "name": "actToNativeUnit",
+    "citedStart": 9,
+    "citedEnd": 36,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-writer-v9.js:9:7",
+        "name": "actToNativeUnit",
+        "line": 9,
+        "end": 20,
+        "kind": "FunctionDeclaration",
+        "sha256": "8088edd07227013b974eb5364333374d1135537a60c171eb632f18974b9f8e0e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+    "name": "compileWriterV9",
+    "citedStart": 9,
+    "citedEnd": 36,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-writer-v9.js:21:7",
+        "name": "compileWriterV9",
+        "line": 21,
+        "end": 36,
+        "kind": "FunctionDeclaration",
+        "sha256": "c78f8d5bc0888c500b6bb9cc6d8f6270e453ba40bfb29ba16d93102ff60e6d6e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+    "name": "compileNarrativeActs",
+    "citedStart": 14,
+    "citedEnd": 45,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-acts-v9.js:14:7",
+        "name": "compileNarrativeActs",
+        "line": 14,
+        "end": 45,
+        "kind": "FunctionDeclaration",
+        "sha256": "ed2003845a74ccd7698bb2e13e5f70290f9777a754751c8afbf70bc4ec9e1048"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "validateUnit",
+    "citedStart": 68,
+    "citedEnd": 159,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:68:0",
+        "name": "validateUnit",
+        "line": 68,
+        "end": 158,
+        "kind": "FunctionDeclaration",
+        "sha256": "783213436a7b797b5d2d7bd37f450ad58257cfaa48fe681858ddca4888b2eefc"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "authorNarrativeRequests",
+    "citedStart": 170,
+    "citedEnd": 216,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:170:7",
+        "name": "authorNarrativeRequests",
+        "line": 170,
+        "end": 216,
+        "kind": "FunctionDeclaration",
+        "sha256": "d6a34a7227f9783e47ec585ab8e96df3a525c89eb9b23d418f7bbccf03fd860e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "establishNarrativeUnits",
+    "citedStart": 218,
+    "citedEnd": 299,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:218:7",
+        "name": "establishNarrativeUnits",
+        "line": 218,
+        "end": 307,
+        "kind": "FunctionDeclaration",
+        "sha256": "12c737d1d3aef47e80554a1d849f0fc16b45a8b9661423a4152f439941fe9940"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-authority.js",
+    "name": "renderNarrativeUnit",
+    "citedStart": 300,
+    "citedEnd": 319,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-authority.js:308:7",
+        "name": "renderNarrativeUnit",
+        "line": 308,
+        "end": 319,
+        "kind": "FunctionDeclaration",
+        "sha256": "24a6503719439a68d87fe07512380c59842399d9127b8a2b5522f75358e0cee6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+    "name": "speakerBrief",
+    "citedStart": 13,
+    "citedEnd": 53,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-speakers.js:28:7",
+        "name": "speakerBrief",
+        "line": 28,
+        "end": 44,
+        "kind": "FunctionDeclaration",
+        "sha256": "0d14224f8976b3d9995daa68b16495a5e89039b43563a8cc445448ffa4bbe56d"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+    "name": "npcAddresses",
+    "citedStart": 13,
+    "citedEnd": 53,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-speakers.js:13:7",
+        "name": "npcAddresses",
+        "line": 13,
+        "end": 27,
+        "kind": "FunctionDeclaration",
+        "sha256": "8e70d11f7e84cb543c5e337948e2fd6edd9fe6c72cb9af724fd3d8c19121f9ce"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/pvp-output.js",
+    "name": "prepareAuthorizedTurnOutput",
+    "citedStart": 374,
+    "citedEnd": 610,
+    "definitions": [
+      {
+        "id": "bot/src/pvp-output.js:374:7",
+        "name": "prepareAuthorizedTurnOutput",
+        "line": 374,
+        "end": 617,
+        "kind": "FunctionDeclaration",
+        "sha256": "5f3b3b175614d2a62163a8295a128caa0cd9bb68cf0a72f7a7f0291904996bb5"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/pvp-output.js",
+    "name": "renderPart",
+    "citedStart": 123,
+    "citedEnd": 227,
+    "definitions": [
+      {
+        "id": "bot/src/pvp-output.js:123:0",
+        "name": "renderPart",
+        "line": 123,
+        "end": 228,
+        "kind": "FunctionDeclaration",
+        "sha256": "692b0e2e8995ce6edff4c3367ab90ed1a9e50bffe00dc9b9bf618ab57d9b1876"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/pvp-output.js",
+    "name": "validateOutputPart",
+    "citedStart": 123,
+    "citedEnd": 227,
+    "definitions": [
+      {
+        "id": "bot/src/pvp-output.js:367:7",
+        "name": "validateOutputPart",
+        "line": 367,
+        "end": 372,
+        "kind": "FunctionDeclaration",
+        "sha256": "20779cb64750febcc15d71b4c794ad9430a5ab1536cdf6af3b731e3637eecedc"
+      }
+    ],
+    "status": "manual-semantic-review-required"
+  },
+  {
+    "file": "bot/src/pvp-output.js",
+    "name": "validateOutputPart",
+    "citedStart": 367,
+    "citedEnd": 372,
+    "definitions": [
+      {
+        "id": "bot/src/pvp-output.js:367:7",
+        "name": "validateOutputPart",
+        "line": 367,
+        "end": 372,
+        "kind": "FunctionDeclaration",
+        "sha256": "20779cb64750febcc15d71b4c794ad9430a5ab1536cdf6af3b731e3637eecedc"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-completeness.js",
+    "name": "validateNarrativeCompleteness",
+    "citedStart": 6,
+    "citedEnd": 45,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-completeness.js:6:7",
+        "name": "validateNarrativeCompleteness",
+        "line": 6,
+        "end": 46,
+        "kind": "FunctionDeclaration",
+        "sha256": "1df342c1953532c8782b5c8bb1ce4f155cf1063d7b3844b7f46bb7798f283628"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/narrative-integrity.js",
+    "name": "validateCandidateClaims",
+    "citedStart": 113,
+    "citedEnd": 145,
+    "definitions": [
+      {
+        "id": "bot/src/narrative-integrity.js:117:7",
+        "name": "validateCandidateClaims",
+        "line": 117,
+        "end": 160,
+        "kind": "FunctionDeclaration",
+        "sha256": "0711cd9d35bbd7716be5abdf95d3e6c96d2798dc0c618bc6987dfbc361d54725"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/narrative-integrity.js",
+    "name": "validateNarrativeClaims",
+    "citedStart": 113,
+    "citedEnd": 145,
+    "definitions": [
+      {
+        "id": "bot/src/narrative-integrity.js:113:7",
+        "name": "validateNarrativeClaims",
+        "line": 113,
+        "end": 115,
+        "kind": "FunctionDeclaration",
+        "sha256": "bf4b4d4d55d72e038c6198e3afdaa75d797e345ea8fbce78805289f842b56ceb"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/material-paraphrases.js",
+    "name": "materialParaphrases",
+    "citedStart": 2,
+    "citedEnd": 28,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/material-paraphrases.js:2:7",
+        "name": "materialParaphrases",
+        "line": 2,
+        "end": 27,
+        "kind": "FunctionDeclaration",
+        "sha256": "94691b08830aa37bb34342388e54981d903f713a5c75b238eea6685809871e70"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/adapter-registry.js",
+    "name": "registerIntentAdapter",
+    "citedStart": 2,
+    "citedEnd": 4,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/adapter-registry.js:3:7",
+        "name": "registerIntentAdapter",
+        "line": 3,
+        "end": 3,
+        "kind": "FunctionDeclaration",
+        "sha256": "3a0a8f49d6683ef23299c7c3ae55ccbac3cae3484a82e0468201f9f843b122a9"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/native-preflight.js",
+    "name": "preflight",
+    "citedStart": 15,
+    "citedEnd": 58,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/native-preflight.js:15:0",
+        "name": "preflight",
+        "line": 15,
+        "end": 49,
+        "kind": "FunctionDeclaration",
+        "sha256": "b4aab73280535662628e54ac7b09afb66e70ff1a02a06d985c8d91e360adcbd0"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/intent/native-preflight.js",
+    "name": "applyNative",
+    "citedStart": 15,
+    "citedEnd": 58,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/intent/native-preflight.js:50:0",
+        "name": "applyNative",
+        "line": 50,
+        "end": 58,
+        "kind": "FunctionDeclaration",
+        "sha256": "a577234eadf54b040d63e58a9afba37f08cc4f74d7d180471c15c296a8eb08de"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/ai-intents.js",
+    "name": "dispatchAiIntents",
+    "citedStart": 144,
+    "citedEnd": 173,
+    "definitions": [
+      {
+        "id": "bot/src/ai-intents.js:144:7",
+        "name": "dispatchAiIntents",
+        "line": 144,
+        "end": 176,
+        "kind": "FunctionDeclaration",
+        "sha256": "b38d4eb72c5617e65e876807264a17edac50bb7ac7ff7a1d10862d43f49fb813"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/operation-authority.js",
+    "name": "createWorldOperationAuthority",
+    "citedStart": 4,
+    "citedEnd": 211,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/operation-authority.js:4:7",
+        "name": "createWorldOperationAuthority",
+        "line": 4,
+        "end": 211,
+        "kind": "FunctionDeclaration",
+        "sha256": "1af679dbcb86ed6c1568f02725d295fa07f39d69243cb25fffc8dc0c2949f6ce"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/operation-authority.js",
+    "name": "prepareNativeWorldOperation",
+    "citedStart": 58,
+    "citedEnd": 104,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/operation-authority.js:58:0",
+        "name": "prepareNativeWorldOperation",
+        "line": 58,
+        "end": 103,
+        "kind": "FunctionDeclaration",
+        "sha256": "3b2f064ba0d1abdfb0f7834f707203a91703b1b75bd8cd841f119323b18d841b"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/state.js",
+    "name": "applyAuthoritativeMutation",
+    "citedStart": 78,
+    "citedEnd": 248,
+    "definitions": [
+      {
+        "id": "bot/src/state.js:78:7",
+        "name": "applyAuthoritativeMutation",
+        "line": 78,
+        "end": 246,
+        "kind": "FunctionDeclaration",
+        "sha256": "d3ae3ec028f95c9272f815d971316094314eb765ea8a4d75cf8aaaf89869ed10"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/state.js",
+    "name": "previewAuthoritativeMutation",
+    "citedStart": 249,
+    "citedEnd": 259,
+    "definitions": [
+      {
+        "id": "bot/src/state.js:249:7",
+        "name": "previewAuthoritativeMutation",
+        "line": 249,
+        "end": 259,
+        "kind": "FunctionDeclaration",
+        "sha256": "1a867ca0b6cb8a7d360db006928573bfa8e3745f0ffe8078b27db51242bf92ca"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/turn-orchestration.js",
+    "name": "commitGmTurn",
+    "citedStart": 25,
+    "citedEnd": 96,
+    "definitions": [
+      {
+        "id": "bot/src/turn-orchestration.js:25:7",
+        "name": "commitGmTurn",
+        "line": 25,
+        "end": 95,
+        "kind": "FunctionDeclaration",
+        "sha256": "dcf887148c4856e276523a4d636cc12802a4db13bfd3db8d49ef7d75be48cd59"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/turn-orchestration.js",
+    "name": "reconcilePreviewConsequences",
+    "citedStart": 19,
+    "citedEnd": 24,
+    "definitions": [
+      {
+        "id": "bot/src/turn-orchestration.js:19:7",
+        "name": "reconcilePreviewConsequences",
+        "line": 19,
+        "end": 24,
+        "kind": "FunctionDeclaration",
+        "sha256": "602fba849e6760ff709a447a74496e3621fe3af3037d8843444f2e68fce6e6b9"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+    "name": "createUnifiedAdjudication",
+    "citedStart": 5,
+    "citedEnd": 169,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/unified-adjudication.js:5:7",
+        "name": "createUnifiedAdjudication",
+        "line": 5,
+        "end": 249,
+        "kind": "FunctionDeclaration",
+        "sha256": "a221492e2e77ffbcd0a44df5ab682a87b0ed505bb2607e3c1340f88ae4bb8efd"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+    "name": "adjudicateSceneBoard",
+    "citedStart": 5,
+    "citedEnd": 169,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/unified-adjudication.js:8:0",
+        "name": "adjudicateSceneBoard",
+        "line": 8,
+        "end": 167,
+        "kind": "FunctionDeclaration",
+        "sha256": "f03d89756002671a04042e4b448c38753f738b8d692bd021aae568b7b48500bf"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+    "name": "applyUnifiedBatch",
+    "citedStart": 198,
+    "citedEnd": 249,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/unified-adjudication.js:198:0",
+        "name": "applyUnifiedBatch",
+        "line": 198,
+        "end": 246,
+        "kind": "FunctionDeclaration",
+        "sha256": "92b234e461ad890e60851e5d993d1cac1bc6cc9961c4ff131a6b3d80bd6d7481"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+    "name": "createGmExecutionRules",
+    "citedStart": 5,
+    "citedEnd": 65,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/gm-execution-rules.js:5:7",
+        "name": "createGmExecutionRules",
+        "line": 5,
+        "end": 180,
+        "kind": "FunctionDeclaration",
+        "sha256": "db3890b3ca1633be3409fb257e7d430a656a95b10416ba75e50f727abff978b2"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+    "name": "executeUnifiedGmActions",
+    "citedStart": 5,
+    "citedEnd": 65,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/gm-execution-rules.js:26:0",
+        "name": "executeUnifiedGmActions",
+        "line": 26,
+        "end": 66,
+        "kind": "FunctionDeclaration",
+        "sha256": "ac38ddc714056ce82504bfe18907957add784bfab3877638b724d46ae3b79017"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+    "name": "createRollRequestRules",
+    "citedStart": 7,
+    "citedEnd": 141,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/roll-request-rules.js:7:7",
+        "name": "createRollRequestRules",
+        "line": 7,
+        "end": 166,
+        "kind": "FunctionDeclaration",
+        "sha256": "0e6e49a7882133ee0fba5ba5d762b6743856110b1207d8460a43df8d85853fb8"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+    "name": "prepareRollRequest",
+    "citedStart": 7,
+    "citedEnd": 141,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/roll-request-rules.js:116:0",
+        "name": "prepareRollRequest",
+        "line": 116,
+        "end": 141,
+        "kind": "FunctionDeclaration",
+        "sha256": "10a30be097576db0bcabd817031a5f67bd33ec5b8016e4db8e6ba02ad1f44f94"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+    "name": "createPcDeathRules",
+    "citedStart": 7,
+    "citedEnd": 100,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/pc-death-rules.js:7:7",
+        "name": "createPcDeathRules",
+        "line": 7,
+        "end": 297,
+        "kind": "FunctionDeclaration",
+        "sha256": "3f5c3c6dff21586b3324892698233499acb11e83630c850856f5d325c5935c05"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+    "name": "choosePcDeathMove",
+    "citedStart": 7,
+    "citedEnd": 100,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/pc-death-rules.js:59:0",
+        "name": "choosePcDeathMove",
+        "line": 59,
+        "end": 99,
+        "kind": "FunctionDeclaration",
+        "sha256": "a16a2394d12c63a427b0ab059f46adfecff75b3544bc4be65d92641b084b9e03"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/daggerheart/pvp-authority.js",
+    "name": "createNativePvpAuthority",
+    "citedStart": 3,
+    "citedEnd": 22,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/daggerheart/pvp-authority.js:3:7",
+        "name": "createNativePvpAuthority",
+        "line": 3,
+        "end": 22,
+        "kind": "FunctionDeclaration",
+        "sha256": "c8e1c6a69de635b90c7167d4cb7488d203c14cbd297cfe6b27a16478e9aa26ba"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-action-window.js",
+    "name": "openActionWindow",
+    "citedStart": 17,
+    "citedEnd": 85,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-action-window.js:17:7",
+        "name": "openActionWindow",
+        "line": 17,
+        "end": 51,
+        "kind": "FunctionDeclaration",
+        "sha256": "c9d898cf71e989a44b722c89a1150a2643ae9883060cf4ea87affd6f98157a37"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-action-window.js",
+    "name": "joinActionWindow",
+    "citedStart": 17,
+    "citedEnd": 85,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-action-window.js:53:7",
+        "name": "joinActionWindow",
+        "line": 53,
+        "end": 84,
+        "kind": "FunctionDeclaration",
+        "sha256": "90a53edbc1d789a7af31d54506d84b2d078a076e4d9ea8c96c6f2c094af24bdd"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-action-window.js",
+    "name": "resolveActionWindow",
+    "citedStart": 95,
+    "citedEnd": 170,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-action-window.js:95:7",
+        "name": "resolveActionWindow",
+        "line": 95,
+        "end": 124,
+        "kind": "FunctionDeclaration",
+        "sha256": "2c3970bcf4f05a31b276ff26975ddd39aa88649ea5c6a176138a4e189ffa720e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-continuity.js",
+    "name": "recordCharacterArrival",
+    "citedStart": 32,
+    "citedEnd": 58,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-continuity.js:46:0",
+        "name": "recordCharacterArrival",
+        "line": 46,
+        "end": 58,
+        "kind": "FunctionDeclaration",
+        "sha256": "e09b1b5ce52a171d0ae6a312f68f488abd180e9f58f270f819a6cda48b7c3ad1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-continuity.js",
+    "name": "reconcileSceneArrival",
+    "citedStart": 32,
+    "citedEnd": 58,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-continuity.js:32:0",
+        "name": "reconcileSceneArrival",
+        "line": 32,
+        "end": 44,
+        "kind": "FunctionDeclaration",
+        "sha256": "297e806704b67ea0fb08e4cbc671c6539f775474f3a718a89e8e7d356b27bbf9"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/autonomous-world.js",
+    "name": "applyAutonomousWorld",
+    "citedStart": 120,
+    "citedEnd": 316,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/autonomous-world.js:120:7",
+        "name": "applyAutonomousWorld",
+        "line": 120,
+        "end": 122,
+        "kind": "FunctionDeclaration",
+        "sha256": "e9252971e951d82c20e5f4200d879863e8aacc9ab1e346322aef8acf880cddad"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/identity-rules.js",
+    "name": "establishNativeNarrativeEntity",
+    "citedStart": 15,
+    "citedEnd": 86,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/identity-rules.js:15:0",
+        "name": "establishNativeNarrativeEntity",
+        "line": 15,
+        "end": 86,
+        "kind": "FunctionDeclaration",
+        "sha256": "8746bfc94f03883f68854ed05017ccd22afb9b270eaeeda9ccbdaad6f5541e1d"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/content/content.js",
+    "name": "search",
+    "citedStart": 24,
+    "citedEnd": 74,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/content/content.js:43:8",
+        "name": "search",
+        "line": 43,
+        "end": 73,
+        "kind": "FunctionExpression",
+        "sha256": "ce632b609228872bf9443a4ae3ea221b04e9acc1fa048fa2b8dad787c2c756c3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/context-planner.js",
+    "name": "plan",
+    "citedStart": 8,
+    "citedEnd": 79,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/context-planner.js:10:6",
+        "name": "plan",
+        "line": 10,
+        "end": 79,
+        "kind": "FunctionExpression",
+        "sha256": "8d44102cfdb72ac6510eb8fed1ce8b6855633008e8b1f361c1ad49ce408d0c29"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/context-planner.js",
+    "name": "authorityIndex",
+    "citedStart": 80,
+    "citedEnd": 88,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/context-planner.js:80:16",
+        "name": "authorityIndex",
+        "line": 80,
+        "end": 83,
+        "kind": "FunctionExpression",
+        "sha256": "718d259f29a83bf6f891b47083a168d5a3befc81e0d83f51ed2e2565dcc078ef"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/context-planner.js",
+    "name": "authorityPage",
+    "citedStart": 80,
+    "citedEnd": 88,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/context-planner.js:84:15",
+        "name": "authorityPage",
+        "line": 84,
+        "end": 87,
+        "kind": "FunctionExpression",
+        "sha256": "a3dbe79e37b0ea41d4d12fc6d762f989c8c1b4cce4a4260a920886bc32936e6a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+    "name": "createMemoryLifecycle",
+    "citedStart": 5,
+    "citedEnd": 91,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/memory-lifecycle.js:5:7",
+        "name": "createMemoryLifecycle",
+        "line": 5,
+        "end": 151,
+        "kind": "FunctionDeclaration",
+        "sha256": "1deb99f2277b14118245f8d0f207c5d12f2b18a7dc276a633d2ca889ddce43f5"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+    "name": "rememberEntity",
+    "citedStart": 5,
+    "citedEnd": 91,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/memory-lifecycle.js:50:0",
+        "name": "rememberEntity",
+        "line": 50,
+        "end": 90,
+        "kind": "FunctionDeclaration",
+        "sha256": "9b414d8a7ff28a1b8368b2b714154a30f815c9417dccdfa2b9c71103fcc87d31"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+    "name": "reviseMemory",
+    "citedStart": 92,
+    "citedEnd": 120,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/memory-lifecycle.js:92:0",
+        "name": "reviseMemory",
+        "line": 92,
+        "end": 112,
+        "kind": "FunctionDeclaration",
+        "sha256": "1a455f6310c909317ef5746e066cedd33a852d5e8da3b3825f6d4c47112c3b0a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+    "name": "retractMemory",
+    "citedStart": 92,
+    "citedEnd": 120,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/memory-lifecycle.js:114:0",
+        "name": "retractMemory",
+        "line": 114,
+        "end": 119,
+        "kind": "FunctionDeclaration",
+        "sha256": "f9c0a6703ab733449358e406c7b3d4ad3ed5f6bc3033d6855abea24b4068b9e7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+    "name": "createNarrativeMemory",
+    "citedStart": 4,
+    "citedEnd": 96,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/narrative-memory.js:4:7",
+        "name": "createNarrativeMemory",
+        "line": 4,
+        "end": 128,
+        "kind": "FunctionDeclaration",
+        "sha256": "1eb6b2bcf3b36611206297a71e8360022961dbd1f36c465643d0df45fcc215e1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+    "name": "acknowledgeNarrativeMemory",
+    "citedStart": 4,
+    "citedEnd": 96,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/narrative-memory.js:76:0",
+        "name": "acknowledgeNarrativeMemory",
+        "line": 76,
+        "end": 95,
+        "kind": "FunctionDeclaration",
+        "sha256": "c4681506f34ec56410023ad9ce7acc82c20ceba0848e78a4cee41b3634adc0e3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+    "name": "selectDisclosedNarrativeMemory",
+    "citedStart": 101,
+    "citedEnd": 128,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/narrative-memory.js:101:0",
+        "name": "selectDisclosedNarrativeMemory",
+        "line": 101,
+        "end": 125,
+        "kind": "FunctionDeclaration",
+        "sha256": "86faf8c4581a8fb480ff004188c3a925e5b778ec089d358c7f0e4c9e6076745e"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+    "name": "applyCanonProposalDrafts",
+    "citedStart": 3,
+    "citedEnd": 44,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/canon-proposal-drafts.js:3:7",
+        "name": "applyCanonProposalDrafts",
+        "line": 3,
+        "end": 44,
+        "kind": "FunctionDeclaration",
+        "sha256": "97ad76c0183063d3f1d0e071e40db958db87daa71a0e656bf3fb1784293f5aa6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+    "name": "factVisibleTo",
+    "citedStart": 2,
+    "citedEnd": 13,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/disclosure-authority.js:2:7",
+        "name": "factVisibleTo",
+        "line": 2,
+        "end": 6,
+        "kind": "FunctionDeclaration",
+        "sha256": "90b1d5b19193b437581c91435dbab66abce94bb95733fefd60b7c500326d0421"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+    "name": "disclosureFailureReason",
+    "citedStart": 2,
+    "citedEnd": 13,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/disclosure-authority.js:7:7",
+        "name": "disclosureFailureReason",
+        "line": 7,
+        "end": 13,
+        "kind": "FunctionDeclaration",
+        "sha256": "b5b2cc61c5976496d13a558c6bc174ed2fd2c101aa2eb4345fc7541129969ca5"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/npc/cognition.js",
+    "name": "retrieveNpcCognition",
+    "citedStart": 65,
+    "citedEnd": 148,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/npc/cognition.js:65:0",
+        "name": "retrieveNpcCognition",
+        "line": 65,
+        "end": 147,
+        "kind": "FunctionDeclaration",
+        "sha256": "c763bbce1a721235c5dcfb455225870558effc00f1c29ebd53b6d2a0f9c5f7d6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/npc/cognition-drafts.js",
+    "name": "applyNpcCognitionDrafts",
+    "citedStart": 7,
+    "citedEnd": 85,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/npc/cognition-drafts.js:7:7",
+        "name": "applyNpcCognitionDrafts",
+        "line": 7,
+        "end": 85,
+        "kind": "FunctionDeclaration",
+        "sha256": "0347a40c37284ed31ab79f64ae07f6d7f28578344fbafa55c858010a1307e38a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/npc/motivation.js",
+    "name": "actorSource",
+    "citedStart": 6,
+    "citedEnd": 41,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/npc/motivation.js:8:0",
+        "name": "actorSource",
+        "line": 8,
+        "end": 41,
+        "kind": "FunctionDeclaration",
+        "sha256": "b21dac3622657364a02e4d4f9c2693e4888ebc7c5b8f62f49971a43fbcafa0b1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/npc/motivation.js",
+    "name": "createNpcMotivationRules",
+    "citedStart": 6,
+    "citedEnd": 41,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/npc/motivation.js:6:7",
+        "name": "createNpcMotivationRules",
+        "line": 6,
+        "end": 164,
+        "kind": "FunctionDeclaration",
+        "sha256": "4bfbae8f01764296ee7452d701f383fa0daf1f4e1e20599eede77b9c8d22eaf8"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/director-cadence.js",
+    "name": "createDirectorCadence",
+    "citedStart": 6,
+    "citedEnd": 37,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/director-cadence.js:6:7",
+        "name": "createDirectorCadence",
+        "line": 6,
+        "end": 37,
+        "kind": "FunctionDeclaration",
+        "sha256": "3f68196150199b5ca87ad86ae9e447c55a2ccbe4fa3c71186aeae303012cba3a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/director-cadence.js",
+    "name": "queueDirectorAfterPartyTurn",
+    "citedStart": 6,
+    "citedEnd": 37,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/director-cadence.js:9:0",
+        "name": "queueDirectorAfterPartyTurn",
+        "line": 9,
+        "end": 33,
+        "kind": "FunctionDeclaration",
+        "sha256": "ea7b91ff37005c148f1e26f702ea0f1aad4fe74a771ffa5d1ad89a4b0dc144e1"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+    "name": "rankWorldNarrativeOpportunities",
+    "citedStart": 16,
+    "citedEnd": 33,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/narrative-opportunity-policy.js:16:7",
+        "name": "rankWorldNarrativeOpportunities",
+        "line": 16,
+        "end": 33,
+        "kind": "FunctionDeclaration",
+        "sha256": "44b0c9b23b751c79ad4442d24e178e5dcd1baef38f9c1276d4862c116e7734ec"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/world/director-action-ranking.js",
+    "name": "rankDirectorActions",
+    "citedStart": 6,
+    "citedEnd": 25,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/world/director-action-ranking.js:6:7",
+        "name": "rankDirectorActions",
+        "line": 6,
+        "end": 25,
+        "kind": "FunctionDeclaration",
+        "sha256": "058aadb4a5fb3935bd8ae84cc9a9938a9e40cfc37e9d19f1b7a659fbae231ead"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "runWorldDirector",
+    "citedStart": 1102,
+    "citedEnd": 1162,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:1102:24",
+        "name": "runWorldDirector",
+        "line": 1102,
+        "end": 1182,
+        "kind": "FunctionExpression",
+        "sha256": "a5ee89bb81bff59a89846cc083a31cb87fe7382ef61828ef773ad3ce6c9c3046"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/gm.js",
+    "name": "planNpcActions",
+    "citedStart": 1184,
+    "citedEnd": 1225,
+    "definitions": [
+      {
+        "id": "bot/src/gm.js:1184:22",
+        "name": "planNpcActions",
+        "line": 1184,
+        "end": 1219,
+        "kind": "FunctionExpression",
+        "sha256": "5b27ea25777db56b4dbfad82d2a351483ddf201eddaf2674c1f8a105f9442d3a"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/persistence/database.js",
+    "name": "migrateSchema",
+    "citedStart": 38,
+    "citedEnd": 126,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/persistence/database.js:50:15",
+        "name": "migrateSchema",
+        "line": 50,
+        "end": 125,
+        "kind": "FunctionExpression",
+        "sha256": "d08755054f27e39757e14490fccbd9378345eb0c4b3b189c7d805418fe60672f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/content/content.js",
+    "name": "read",
+    "citedStart": 39,
+    "citedEnd": 42,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/content/content.js:39:6",
+        "name": "read",
+        "line": 39,
+        "end": 42,
+        "kind": "FunctionExpression",
+        "sha256": "c4a4e03eb7a55bbbcc2b24a0aff167b21f80680f296cc7f268cd2b490e41fba5"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/privacy.js",
+    "name": "assertGmOnlyChannel",
+    "citedStart": 35,
+    "citedEnd": 85,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/privacy.js:35:7",
+        "name": "assertGmOnlyChannel",
+        "line": 35,
+        "end": 70,
+        "kind": "FunctionDeclaration",
+        "sha256": "56026de0c1a4430c49670992ae29ddecada14f2f9061f410717df18511aa7cb7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/privacy.js",
+    "name": "assertPlayerPrivateChannel",
+    "citedStart": 35,
+    "citedEnd": 85,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/privacy.js:77:7",
+        "name": "assertPlayerPrivateChannel",
+        "line": 77,
+        "end": 84,
+        "kind": "FunctionDeclaration",
+        "sha256": "5598db3dd38245537b825fa0e267b15f08532805f68c2c938f498d2439b193cd"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/client-factory.js",
+    "name": "createDiscordClient",
+    "citedStart": 3,
+    "citedEnd": 7,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/client-factory.js:3:7",
+        "name": "createDiscordClient",
+        "line": 3,
+        "end": 6,
+        "kind": "FunctionDeclaration",
+        "sha256": "652eb781d0a1642836ef338015e0d96b2937ec1ad640c250dc3c6fd6bd38892f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/chunking.js",
+    "name": "splitDiscordText",
+    "citedStart": 17,
+    "citedEnd": 73,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/chunking.js:17:7",
+        "name": "splitDiscordText",
+        "line": 17,
+        "end": 66,
+        "kind": "FunctionDeclaration",
+        "sha256": "4a1c155a33572b2f1ec294b5e43eb1eaa22d8818fce7b146ca9e2ee9b775a254"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/delivery.js",
+    "name": "createInteractionTextDelivery",
+    "citedStart": 2,
+    "citedEnd": 13,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/delivery.js:2:7",
+        "name": "createInteractionTextDelivery",
+        "line": 2,
+        "end": 13,
+        "kind": "FunctionDeclaration",
+        "sha256": "58e06ba0c57a43bd9d0c73dda92ad66b1379b75604d926257045c65147f73ca3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/publication-outbox.js",
+    "name": "queueTurnPublications",
+    "citedStart": 42,
+    "citedEnd": 72,
+    "definitions": [
+      {
+        "id": "bot/src/publication-outbox.js:42:7",
+        "name": "queueTurnPublications",
+        "line": 42,
+        "end": 70,
+        "kind": "FunctionDeclaration",
+        "sha256": "79f829abc18d0078a120ab410a2bfd3372bd4354dce8519dbcbe9a34457addd6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/publication-outbox.js",
+    "name": "deliverTurnOutbox",
+    "citedStart": 92,
+    "citedEnd": 143,
+    "definitions": [
+      {
+        "id": "bot/src/publication-outbox.js:92:7",
+        "name": "deliverTurnOutbox",
+        "line": 92,
+        "end": 141,
+        "kind": "FunctionDeclaration",
+        "sha256": "b450c1022affc5a3712a876ea127c41e13764526abe3fe8d731c409210588cfe"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/publication-outbox.js",
+    "name": "reconcilePublication",
+    "citedStart": 144,
+    "citedEnd": 169,
+    "definitions": [
+      {
+        "id": "bot/src/publication-outbox.js:144:7",
+        "name": "reconcilePublication",
+        "line": 144,
+        "end": 169,
+        "kind": "FunctionDeclaration",
+        "sha256": "3043bca05ef855971d48fe18def6c157eef40ad3793cb7b4a7136c87aa061343"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/publishing.js",
+    "name": "deliverQueuedTurn",
+    "citedStart": 115,
+    "citedEnd": 150,
+    "definitions": [
+      {
+        "id": "bot/src/publishing.js:115:7",
+        "name": "deliverQueuedTurn",
+        "line": 115,
+        "end": 147,
+        "kind": "FunctionDeclaration",
+        "sha256": "b572776d60536497047d53468df820d7b2f96168acce7d4262dd44f678b53b23"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/bootstrap/config.js",
+    "name": "loadConfig",
+    "citedStart": 29,
+    "citedEnd": 97,
+    "definitions": [
+      {
+        "id": "bot/src/bootstrap/config.js:29:7",
+        "name": "loadConfig",
+        "line": 29,
+        "end": 97,
+        "kind": "FunctionDeclaration",
+        "sha256": "2dc6e513b78b60df37a05464c0c0920a7e817628d16b7fd45c173771e9bdd3b3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/ai-provider/model-transport.js",
+    "name": "requestModel",
+    "citedStart": 8,
+    "citedEnd": 43,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/ai-provider/model-transport.js:8:2",
+        "name": "requestModel",
+        "line": 8,
+        "end": 43,
+        "kind": "FunctionDeclaration",
+        "sha256": "96f7525de8ba98412868aa5c9022b021ffc70a38efd9647a5f230aff199c0d7d"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+    "name": "beginGenerationFeedback",
+    "citedStart": 2,
+    "citedEnd": 16,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/ai-provider/generation-feedback.js:2:7",
+        "name": "beginGenerationFeedback",
+        "line": 2,
+        "end": 16,
+        "kind": "FunctionDeclaration",
+        "sha256": "abd6532cf1dacab16ce35afb337cc1a1ba4e0efc3e9629d52932a56666d23ab3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/session/scene-continuity.js",
+    "name": "createSceneContinuity",
+    "citedStart": 6,
+    "citedEnd": 177,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/session/scene-continuity.js:6:7",
+        "name": "createSceneContinuity",
+        "line": 6,
+        "end": 177,
+        "kind": "FunctionDeclaration",
+        "sha256": "34e24fd32f9f84b34b34ba622b0e8c0a3dccf25a9855271b0da9298b5db6c3fa"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/character-export.js",
+    "name": "playerCharacterProjection",
+    "citedStart": 31,
+    "citedEnd": 40,
+    "definitions": [
+      {
+        "id": "bot/src/character-export.js:33:7",
+        "name": "playerCharacterProjection",
+        "line": 33,
+        "end": 39,
+        "kind": "FunctionDeclaration",
+        "sha256": "50ca88a7fcaf90049c4e1f7fbc0579d20465973501fa2859601c8c19c1ce54be"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/character-export.js",
+    "name": "buildPlayerExport",
+    "citedStart": 41,
+    "citedEnd": 59,
+    "definitions": [
+      {
+        "id": "bot/src/character-export.js:41:7",
+        "name": "buildPlayerExport",
+        "line": 41,
+        "end": 58,
+        "kind": "FunctionDeclaration",
+        "sha256": "a100269f54c63d3a3823435db5f7c920f0cb16ac9c3efec7dc68458d4ab094a7"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/character-export.js",
+    "name": "buildGmHooksExport",
+    "citedStart": 60,
+    "citedEnd": 81,
+    "definitions": [
+      {
+        "id": "bot/src/character-export.js:60:7",
+        "name": "buildGmHooksExport",
+        "line": 60,
+        "end": 80,
+        "kind": "FunctionDeclaration",
+        "sha256": "0f49719ecb0f80714e179ae11cf3dfd0acf5b9d3942c44c272f2f7b6e74f2434"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/character-export.js",
+    "name": "buildGmPrivateExport",
+    "citedStart": 82,
+    "citedEnd": 98,
+    "definitions": [
+      {
+        "id": "bot/src/character-export.js:82:7",
+        "name": "buildGmPrivateExport",
+        "line": 82,
+        "end": 97,
+        "kind": "FunctionDeclaration",
+        "sha256": "44c9d6681ac558858dabe9588771db1ae63dfd24a29b1b27a5eaf7a331c0ba1f"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/character-export.js",
+    "name": "buildGmCanonExport",
+    "citedStart": 108,
+    "citedEnd": 124,
+    "definitions": [
+      {
+        "id": "bot/src/character-export.js:108:7",
+        "name": "buildGmCanonExport",
+        "line": 108,
+        "end": 123,
+        "kind": "FunctionDeclaration",
+        "sha256": "68e5aed5282d1cb5fa2bfd77b370c9d6bef94dc20a073d06fe8137eba27728f0"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/gm-hook-import.js",
+    "name": "normalizeGmHookImport",
+    "citedStart": 5,
+    "citedEnd": 32,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/gm-hook-import.js:5:7",
+        "name": "normalizeGmHookImport",
+        "line": 5,
+        "end": 32,
+        "kind": "FunctionDeclaration",
+        "sha256": "84c88c6ff2d925513560187e7616074e20b7ec0c91508a0d1e21e4fc0d238370"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/discord/command-definitions.js",
+    "name": "buildCommands",
+    "citedStart": 9,
+    "citedEnd": 640,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/discord/command-definitions.js:9:7",
+        "name": "buildCommands",
+        "line": 9,
+        "end": 640,
+        "kind": "FunctionDeclaration",
+        "sha256": "ad1aab1bd2a9e26a2cb1398092e4637e64d69269b65ee043394346748f3e8561"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+    "name": "applyCanonProposalDrafts",
+    "citedStart": 19,
+    "citedEnd": 26,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/canon-proposal-drafts.js:3:7",
+        "name": "applyCanonProposalDrafts",
+        "line": 3,
+        "end": 44,
+        "kind": "FunctionDeclaration",
+        "sha256": "97ad76c0183063d3f1d0e071e40db958db87daa71a0e656bf3fb1784293f5aa6"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+    "name": "acknowledgeNarrativeMemory",
+    "citedStart": 76,
+    "citedEnd": 96,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/knowledge/narrative-memory.js:76:0",
+        "name": "acknowledgeNarrativeMemory",
+        "line": 76,
+        "end": 95,
+        "kind": "FunctionDeclaration",
+        "sha256": "c4681506f34ec56410023ad9ce7acc82c20ceba0848e78a4cee41b3634adc0e3"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/publication-outbox.js",
+    "name": "deliverTurnOutbox",
+    "citedStart": 92,
+    "citedEnd": 143,
+    "definitions": [
+      {
+        "id": "bot/src/publication-outbox.js:92:7",
+        "name": "deliverTurnOutbox",
+        "line": 92,
+        "end": 141,
+        "kind": "FunctionDeclaration",
+        "sha256": "b450c1022affc5a3712a876ea127c41e13764526abe3fe8d731c409210588cfe"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/context-builder.js",
+    "name": "buildNarrativeContext",
+    "citedStart": 11,
+    "citedEnd": 134,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/context-builder.js:11:0",
+        "name": "buildNarrativeContext",
+        "line": 11,
+        "end": 132,
+        "kind": "FunctionDeclaration",
+        "sha256": "682e0b3b65238d3085c0201df31810d48efd8bf0635698fd13daaa86fb7124db"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  },
+  {
+    "file": "bot/src/frameworks/narrative/audience-authority.js",
+    "name": "createAudienceAuthority",
+    "citedStart": 14,
+    "citedEnd": 46,
+    "definitions": [
+      {
+        "id": "bot/src/frameworks/narrative/audience-authority.js:14:7",
+        "name": "createAudienceAuthority",
+        "line": 14,
+        "end": 45,
+        "kind": "FunctionDeclaration",
+        "sha256": "91e6239830faee73be52e50e51349b4617cdaec23270fed8004ed56b31c5d502"
+      }
+    ],
+    "status": "definition-overlaps-cited-range"
+  }
+]

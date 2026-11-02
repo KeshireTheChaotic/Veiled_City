@@ -1,0 +1,19 @@
+{
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "head": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "trackedFiles": 5404,
+  "parsedModules": 1100,
+  "runtimeModules": 1077,
+  "functions": 10711,
+  "imports": 4480,
+  "unresolvedImports": 0,
+  "parseErrors": 0,
+  "commands": 24,
+  "commandLeaves": 219,
+  "tables": 55,
+  "referenceRanges": 135,
+  "invalidReferences": 12,
+  "legacyTestArtifacts": 535,
+  "contentFiles": 66,
+  "gate": "R0 HOLD: candidate dispositions, dynamic call binding, migration and mechanic completeness need review"
+}
