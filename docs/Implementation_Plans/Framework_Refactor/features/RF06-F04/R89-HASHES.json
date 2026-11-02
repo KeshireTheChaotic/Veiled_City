@@ -1,0 +1,30 @@
+{
+  "feature": "RF06-F04-R89",
+  "base_commit": "f5fc6ab6",
+  "files": [
+    {
+      "path": "bot/src/commands.js",
+      "sha256": "a837d6996b3df4b7315a5761c07219cfe81c691c40473ec529200a7813d5a39d"
+    },
+    {
+      "path": "bot/src/frameworks/discord/public.js",
+      "sha256": "77fb51d0b8a57bbcdc0b9dc1b6f09ab4e8efae2743a8f89bd5108180a4ea42c7"
+    },
+    {
+      "path": "bot/src/frameworks/discord/handout-list-text.js",
+      "sha256": "4b65421c4aea53190a3c7876aa6294153516e7ea88742ac4bd65657f3a8c6907"
+    },
+    {
+      "path": "bot/tests/ai-gm-2026-10/rf06-f04-r89-handout-list-text.test.mjs",
+      "sha256": "7f8ef30330d203ad6ba9f403f28695cf8c4092ebca6f37c275bbac86d8384a38"
+    }
+  ],
+  "test": {
+    "command": "node --test tests/ai-gm-2026-10/rf06-f04-r89-handout-list-text.test.mjs",
+    "exit_code": 0,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax_checks_passed": 4
+}

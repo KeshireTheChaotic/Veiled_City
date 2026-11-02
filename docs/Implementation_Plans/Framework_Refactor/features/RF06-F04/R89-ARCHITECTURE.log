@@ -1,0 +1,3 @@
+`node tooling/architecture/check-boundaries.mjs --ratchet --phase RF05` from `bot/`: exit 1; 1,110 source modules, 1 unowned module, 7 active violation groups and 0 transition errors. The first reported ownership/import-target errors all point to Agent C's `bot/src/native-roll-conditions.js`; no R89 path is reported in the available errors. The R89 formatter is under the Discord framework directory and has no imports.
+
+This is a shared-worktree RF05 ratchet result, not a pass for the full RF06 gate. The command did not execute application code, tests, SQLite or external services.

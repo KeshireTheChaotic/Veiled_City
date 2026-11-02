@@ -1,5 +1,6 @@
 import {createLevelupDraftFormatter} from './frameworks/discord/public.js';
 import {canonProposalsText,npcProxyAssignmentsText} from './frameworks/discord/public.js';
+import {handoutListText} from './frameworks/discord/public.js';
 import {handleCanonStatusCommand,handleCanonConflictsCommand} from './frameworks/discord/public.js';
 import {connectDiscordCanonReads} from './framework-to-framework/discord--persistence/public.js';
 import {formatNpcProxyPacket} from './frameworks/discord/public.js';
@@ -1611,7 +1612,7 @@ GM notes: ${a.draft.gm_notes}`:""}`.slice(0,1950):"No aftermath draft exists for
       if(sub==="list"){
         const c=activeCharacterForUser(db,interaction.guildId,interaction.user.id);
         const rows=db.listHandoutsFor(interaction.guildId,interaction.user.id,{characterId:c?.id||null,includeGM:gmUser,limit:40});
-        await interaction.reply({content:rows.length?rows.map(h=>`• \`${h.id.slice(0,8)}\` **${h.title}** — ${h.kind} / ${h.authority} / ${h.visibility}`).join("\n").slice(0,1950):"No visible handouts/evidence are recorded.",ephemeral:true}); return true;
+        await interaction.reply({content:handoutListText(rows),ephemeral:true}); return true;
       }
       if(["show","export"].includes(sub)){
         const h=db.findHandout(interaction.guildId,interaction.options.getString("id",true)); if(!h||!handoutVisibleTo(db,interaction.guildId,interaction.user.id,h,gmUser)) throw new Error("Handout not found or not visible to you.");
