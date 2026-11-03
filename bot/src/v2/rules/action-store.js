@@ -1,15 +1,17 @@
 import {DatabaseSync} from 'node:sqlite';
 import {pcEffectResource} from './pc-resources.js';
+import {incomingDamageOutcome} from './incoming-damage.js';
 const graphs={ordinary_roll:{pending:['awaiting_notice','cancelled'],awaiting_notice:['awaiting_player_roll','cancelled'],awaiting_player_roll:['ready_to_resolve','cancelled'],ready_to_resolve:['cancelled']},hope_cost:{pending:['awaiting_consent','cancelled'],awaiting_consent:['ready_to_commit','cancelled'],ready_to_commit:['cancelled']}};
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const decode=r=>r?JSON.parse(r.data):null;
 /** Native control state only: cannot mark effects resolved or patch actor state. */
 export function openActionStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
-  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents'].includes(r.name)))throw new Error('Dedicated action database required');
+  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents','vk3_pc_defenses'].includes(r.name)))throw new Error('Dedicated action database required');
     db.exec('PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS vk3_actions(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id)); CREATE TABLE IF NOT EXISTS vk3_action_events(campaign TEXT,source TEXT,data TEXT,PRIMARY KEY(campaign,source));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_action_hope(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor))');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_cost_terms(campaign TEXT,action TEXT,data TEXT,PRIMARY KEY(campaign,action)); CREATE TABLE IF NOT EXISTS vk3_cost_consents(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id));');
+    db.exec('CREATE TABLE IF NOT EXISTS vk3_pc_defenses(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor));');
   }catch(e){db.close();throw e;}
   const read=(c,a)=>decode(db.prepare('SELECT data FROM vk3_actions WHERE campaign=? AND id=?').get(c,a));
   function tx(check,fn){if(typeof check!=='function')throw new Error('Native action authority required');db.exec('BEGIN IMMEDIATE');try{check();const r=fn();check();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}}
@@ -64,6 +66,34 @@ export function openActionStore(filename=':memory:'){
     db.prepare('INSERT INTO vk3_cost_consents VALUES(?,?,?)').run(input.campaignId,input.id,JSON.stringify(input));
     const after={...action,status:input.status==='accepted'?'ready_to_commit':'cancelled',revision:action.revision+1};db.prepare('UPDATE vk3_actions SET data=? WHERE campaign=? AND id=?').run(JSON.stringify(after),input.campaignId,input.actionRef);return input;
   });}
-  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,
+  const readPcDefenses=(c,a)=>decode(db.prepare('SELECT data FROM vk3_pc_defenses WHERE campaign=? AND actor=?').get(c,a));
+  const damageEvent=(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-damage:${a}`));
+  function initializePcDefenses(input,{check}){
+    if(!input||Object.keys(input).sort().join(',')!=='actorId,armorSlots,campaignId,controlRevision,hp,ownerUserId'||!['campaignId','actorId','ownerUserId','controlRevision'].every(k=>id(input[k])))throw new Error('Closed native PC defense bootstrap required');
+    if([input.hp,input.armorSlots].some(r=>!r||Object.keys(r).sort().join(',')!=='current,max'))throw new Error('Closed native marked resource values required');
+    incomingDamageOutcome({damage:0,major:1,severe:2,hp:input.hp,armorSlots:input.armorSlots,defenses:{resistance:'none',armorReduction:1,armorAllowed:true},useArmor:false});
+    return tx(check,()=>{const row={...structuredClone(input),revision:1},old=readPcDefenses(input.campaignId,input.actorId);if(old){if(JSON.stringify(old)!==JSON.stringify(row))throw new Error('PC defenses already initialized');return old;}
+      db.prepare('INSERT INTO vk3_pc_defenses VALUES(?,?,?)').run(input.campaignId,input.actorId,JSON.stringify(row));return row;});
+  }
+  function commitIncomingDamage(input,{check,readAttack,readArmorChoice}){
+    if(!input||Object.keys(input).sort().join(',')!=='attackRef,campaignId,expectedRevision'||![input.campaignId,input.attackRef].every(id)||!Number.isSafeInteger(input.expectedRevision)||input.expectedRevision<1||typeof readAttack!=='function'||typeof readArmorChoice!=='function')throw new Error('Closed native incoming damage operation required');
+    return tx(check,()=>{
+      const attack=structuredClone(readAttack(input.campaignId,input.attackRef)),choice=structuredClone(readArmorChoice(input.campaignId,input.attackRef));
+      if(attack?.id!==input.attackRef||Object.keys(attack).sort().join(',')!=='actorId,campaignId,controlRevision,damage,defenses,id,major,ownerUserId,resultHash,resultRef,sceneId,severe,sourceRef,sourceRevision,termsHash'||attack.campaignId!==input.campaignId||!['actorId','ownerUserId','controlRevision','sceneId','resultRef','resultHash','termsHash','sourceRef','sourceRevision'].every(k=>id(attack[k]))
+        ||choice?.kind!=='incoming_armor_choice'||Object.keys(choice).sort().join(',')!=='actorId,attackRef,campaignId,controlRevision,id,kind,ownerUserId,resultHash,resultRef,sceneId,sourceRef,sourceRevision,termsHash,useArmor'||choice.campaignId!==input.campaignId||choice.attackRef!==input.attackRef||choice.actorId!==attack.actorId||choice.ownerUserId!==attack.ownerUserId||choice.controlRevision!==attack.controlRevision||choice.sceneId!==attack.sceneId||choice.resultRef!==attack.resultRef||choice.resultHash!==attack.resultHash||choice.termsHash!==attack.termsHash||typeof choice.useArmor!=='boolean'||!['id','sourceRef','sourceRevision'].every(k=>id(choice[k])))throw new Error('Exact native hit and affected-owner Armor choice required');
+      const prior=damageEvent(input.campaignId,input.attackRef);if(prior){if(prior.kind!=='incoming_damage'||JSON.stringify(prior.request)!==JSON.stringify(input)||JSON.stringify(prior.attack)!==JSON.stringify(attack)||JSON.stringify(prior.ownerChoice)!==JSON.stringify(choice))throw new Error('Incoming damage replay conflict');return prior;}
+      const before=readPcDefenses(input.campaignId,attack.actorId);
+      if(!before||before.revision!==input.expectedRevision||before.ownerUserId!==attack.ownerUserId||before.controlRevision!==attack.controlRevision)throw new Error('Current native PC defense revision required');
+      const outcome=incomingDamageOutcome({damage:attack.damage,major:attack.major,severe:attack.severe,hp:before.hp,armorSlots:before.armorSlots,defenses:attack.defenses,useArmor:choice.useArmor}),after={...before,hp:outcome.hp,armorSlots:outcome.armorSlots,revision:before.revision+1};
+      const receipt={kind:'incoming_damage',id:`incoming-damage:${input.attackRef}`,request:input,attack,ownerChoice:choice,before,after,outcome:{...outcome,effectsCommitted:true}};
+      if(JSON.stringify(readAttack(input.campaignId,input.attackRef))!==JSON.stringify(attack)||JSON.stringify(readArmorChoice(input.campaignId,input.attackRef))!==JSON.stringify(choice))throw new Error('Incoming damage authority changed');
+      db.prepare('UPDATE vk3_pc_defenses SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(after),input.campaignId,attack.actorId);
+      db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(input.campaignId,receipt.id,JSON.stringify(receipt));
+      if(outcome.deathChoiceRequired){const eligibility={id:`incoming-death:${input.attackRef}`,status:'awaiting_owner',campaignId:input.campaignId,sceneId:attack.sceneId,actorId:attack.actorId,ownerUserId:attack.ownerUserId,controlRevision:attack.controlRevision,causeRef:receipt.id,sourceRef:attack.sourceRef,sourceRevision:attack.sourceRevision};db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(input.campaignId,eligibility.id,JSON.stringify(eligibility));}
+      return receipt;
+    });
+  }
+  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+    readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),
     readOutcome:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`${a}:hope-committed`)),close:()=>db.close()});
 }
