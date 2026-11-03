@@ -1,0 +1,48 @@
+{
+  "checkpoint": "R3_DISCORD_DEATH_INGRESS",
+  "files": [
+    {
+      "sha256": "a75c4270632536c5aae1f84026ca84e885c5e3576821ff920279985def9dcfe3",
+      "path": "bot/src/v2/death-prompts.js"
+    },
+    {
+      "sha256": "c8c25eede46d19b13695cbea3173ccb75024f4a6d0b1488f4bd7138115185b21",
+      "path": "bot/src/v2/discord-death-decisions.js"
+    },
+    {
+      "sha256": "10ea095773b9c47432abda21eb7f5d979e3c1e0c3dbfea5e3091211f21b9f6a4",
+      "path": "bot/src/v2/rules/death-decision-ingress.js"
+    },
+    {
+      "sha256": "c4b23491e773ecc0ea9dd7e2941cb25fea27f7ed905fa47cbac2dbe7cd8702b3",
+      "path": "bot/src/v2/component-choice-sources.js"
+    },
+    {
+      "sha256": "9dabb0910dc7c0884bb228e60f0a5ec4533208df305cad5ab766541a336f45ef",
+      "path": "bot/src/v2/component-decision-store.js"
+    },
+    {
+      "sha256": "5e26c5a445946f3b37f856c6fe2ab9420320f8241765ede3794259cc311ea1b5",
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs"
+    },
+    {
+      "sha256": "b88edf9b1cb9fa885c336e03285a404f34042a5e6633707b06271dc31c1d8a40",
+      "path": "bot/tests/veilkeeper2/r3-component-choice-sources.test.mjs"
+    },
+    {
+      "sha256": "c022a512e93ce555a607b6991695843c356ed69d5aff2d04294b1a75007fea4c",
+      "path": "bot/tests/veilkeeper2/r3-component-decision-store.test.mjs"
+    },
+    {
+      "sha256": "9bbf5a43a547b1339035ffc7fc8b1196a02dd22cd250df9e8e647840f1cc652f",
+      "path": "bot/tests/veilkeeper2/r3-component-outcome-chain.test.mjs"
+    },
+    {
+      "sha256": "b7adc050d64ba26d50b73cb386b760c0c330c4b859e65f0223265cb3e6e01eeb",
+      "path": "bot/tests/veilkeeper2/r3-discord-cost-decisions.test.mjs"
+    }
+  ],
+  "durationMs": 2595.2436,
+  "testsPassed": 17,
+  "node": "v26.13.0"
+}

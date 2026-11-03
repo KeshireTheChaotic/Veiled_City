@@ -1,0 +1,28 @@
+import {DatabaseSync} from 'node:sqlite';
+import {createHash,randomUUID,randomBytes} from 'node:crypto';
+const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex'),id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
+const moves={risk_it_all:'Risk It All',avoid_death:'Avoid Death',blaze_of_glory:'Blaze of Glory'};
+export function deathPromptPayload(message){
+  if(typeof message?.content!=='string'||!Array.isArray(message.components)||message.embeds?.length||message.attachments?.size)throw new Error('Exact native death prompt payload required');
+  return {content:message.content,components:message.components.map(row=>{const r=row.toJSON?.()??row;if(r.type!==1||!Array.isArray(r.components))throw new Error('Native death button row required');return {type:1,components:r.components.map(button=>{const b=button.toJSON?.()??button;if(b.type!==2)throw new Error('Native death button required');return {type:2,style:b.style,label:b.label,custom_id:b.custom_id??b.customId,disabled:b.disabled===true,emoji:b.emoji??null,url:b.url??null};})};})};
+}
+export function openDeathPromptStore(filename=':memory:',{clock=()=>Date.now()}={}){
+  const db=new DatabaseSync(filename);try{db.exec('PRAGMA busy_timeout=5000');if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>r.name!=='vk3_death_prompts'))throw new Error('Dedicated death prompt database required');db.exec('CREATE TABLE IF NOT EXISTS vk3_death_prompts(id TEXT PRIMARY KEY,data TEXT NOT NULL)');}catch(e){db.close();throw e;}
+  const get=ref=>{const r=db.prepare('SELECT data FROM vk3_death_prompts WHERE id=?').get(ref);return r?JSON.parse(r.data):null;};
+  function tx(check,fn){if(typeof check!=='function')throw new Error('Native death prompt authority required');db.exec('BEGIN IMMEDIATE');try{check();const value=fn();check();db.exec('COMMIT');return value;}catch(e){db.exec('ROLLBACK');throw e;}}
+  function issue({terms,channelId,expiresAt},{check}){
+    if(!terms||!['death_review','death_choice'].includes(terms.purpose)||!['campaignId','sceneId','actorId','ownerUserId','controlRevision','requestRef'].every(k=>id(terms[k]))||!id(channelId)||!Number.isSafeInteger(expiresAt)||expiresAt<=clock()||expiresAt>clock()+900000||!Number.isSafeInteger(terms.level)||!Number.isSafeInteger(terms.hopeCap)||!Array.isArray(terms.allowedMoves)||terms.allowedMoves.some(move=>!Object.hasOwn(moves,move)))throw new Error('Current bounded native death prompt terms required');
+    return tx(check,()=>{
+      const decisions=terms.purpose==='death_review'?['reviewed']:Object.keys(moves),options=decisions.map(decision=>({decision,customId:`vk2death:${randomBytes(24).toString('hex')}`,label:decision==='reviewed'?'I reviewed these risks':moves[decision],disabled:decision!=='reviewed'&&!terms.allowedMoves.includes(decision)}));
+      const content=`Your death move is your choice.\nRisk It All: Fear means death; matching dice clear all HP and Stress; Hope requires your explicit allocation of the Hope die across marked HP/Stress.\nAvoid Death: you become unconscious; a Hope die at or below your level permanently removes one Hope slot. Losing the last slot ends your journey.\nBlaze of Glory: one independently proposed, GM-approved final action is an automatic Critical, then you die.\nLevel ${terms.level}; permanent Hope slots ${terms.hopeCap}. No automatic choice, allocation, scar description or extra Fear move.${terms.allowedMoves.length<3?' An owned death feature requires native review for disabled options.':''}`;
+      const payload={content,components:[{type:1,components:options.map(o=>({type:2,style:2,label:o.label,custom_id:o.customId,disabled:o.disabled}))}]},row={id:randomUUID(),terms:structuredClone(terms),termsHash:hash(terms),channelId,expiresAt,options,payload,payloadHash:hash(deathPromptPayload(payload)),status:'awaiting_delivery',messageId:null};db.prepare('INSERT INTO vk3_death_prompts VALUES(?,?)').run(row.id,JSON.stringify(row));return row;
+    });
+  }
+  function acknowledge(ref,{check,readDelivery}){return tx(check,()=>{
+    const row=get(ref);if(!row||!['awaiting_delivery','active'].includes(row.status)||row.expiresAt<=clock()||typeof readDelivery!=='function')throw new Error('Current native death prompt delivery required');const proof=structuredClone(readDelivery(ref));
+    if(proof?.status!=='delivered'||proof.campaignId!==row.terms.campaignId||proof.channelId!==row.channelId||!id(proof.messageId)||proof.payloadHash!==row.payloadHash||JSON.stringify(proof.recipientIds)!==JSON.stringify([row.terms.ownerUserId])||row.messageId&&row.messageId!==proof.messageId)throw new Error('Exact private delivered death risks required');
+    if(JSON.stringify(readDelivery(ref))!==JSON.stringify(proof))throw new Error('Death prompt delivery changed');const after={...row,status:'active',messageId:proof.messageId,delivery:proof};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
+  });}
+  function readPrompt(token){for(const raw of db.prepare('SELECT data FROM vk3_death_prompts').all()){const row=JSON.parse(raw.data),option=row.options.find(o=>o.customId===token);if(option)return {...row,...option,customId:token,status:row.expiresAt<=clock()?'expired':row.status};}return null;}
+  return Object.freeze({issue,acknowledge,readPrompt,revoke(ref,{check}){return tx(check,()=>{const row=get(ref);if(!row)throw new Error('Native death prompt required');db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify({...row,status:'revoked'}),ref);});},close:()=>db.close()});
+}

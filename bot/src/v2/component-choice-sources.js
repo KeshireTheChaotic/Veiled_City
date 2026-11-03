@@ -11,7 +11,10 @@ export function createComponentChoiceSources({decisionReader,sceneStore,sourceAu
     const channel=sceneStore.readers.readChannel(decision.campaignId,decision.channelId);if(!channel||channel.sceneId!==decision.sceneId)throw new Error('Current component scene channel required');
     const audience=await audienceReader.read({guildId:decision.campaignId,channelId:decision.channelId,sceneId:decision.sceneId,mode:channel.kind,ownerUserId:channel.ownerUserId??null},{signal});
     if(stable(data(channel))!==stable(audience.channelRecord))throw new Error('Component audience requires reconciliation');
-    const event={campaignId:decision.campaignId,messageId:interactionId,userId:decision.principal,actorId:decision.actorId},message={id:interactionId,campaignId:decision.campaignId,userId:decision.principal,channelId:decision.channelId,deleted:false,text:`Native owner cost decision: ${decision.decision}`,origin:'discord_component'};
+    if(decision.audienceFingerprint!==undefined&&decision.audienceFingerprint!==audience.fingerprint)throw new Error('Observed component audience changed');
+    const labels={death_review:'death risk review',death_choice:'death move choice'},purpose=decision.purpose;
+    if(purpose!==undefined&&!Object.hasOwn(labels,purpose))throw new Error('Supported native owner decision purpose required');
+    const event={campaignId:decision.campaignId,messageId:interactionId,userId:decision.principal,actorId:decision.actorId},message={id:interactionId,campaignId:decision.campaignId,userId:decision.principal,channelId:decision.channelId,deleted:false,text:`Native owner ${purpose===undefined?'cost':labels[purpose]} decision: ${decision.decision}`,origin:'discord_component'};
     const old=sceneStore.readers.readMessage(event.campaignId,interactionId);
     if(old&&stable(data(old))!==stable(message))throw new Error('Component source identity conflict');
     const candidate=createSourceAuthority({...sceneStore.readers,readMessage:(c,id)=>c===event.campaignId&&id===interactionId?{...message,revision:old?.revision??'1'}:null});
