@@ -1,0 +1,13 @@
+# R3 — saved native hit to private owner damage authority (slice complete)
+
+Added `rules/incoming-damage-authority.js`. It verifies a saved committed Fear attack's offer/result/decision/owner-review lineage, exact Fear debit and hit. It reconstructs attack and damage calculations solely from saved native faces and rejects differing results or trailing dice; no new RNG is invoked. Original source ancestry, current exclusive affected-PC ownership/control and initial target revision are required.
+
+The explicit native Armor choice must bind offer/result hashes and the affected owner/actor/control. Its current source must be private to that owner. The adapter normalizes only fixed mechanical fields into the action-store damage transaction. A later duplicate reads the existing immutable receipt and original expected resource revision without treating changed target state as permission for a new attack. Current owner/source proof remains required.
+
+Modified files: new authority module, `r3-fear-coordinator.test.mjs`, this report and hash manifest.
+
+Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-fear-coordinator.test.mjs`: 26 passed, zero failures/skips, 3699.808 ms. Output: parent `incoming-damage-authority-test.log`. The changed test adds actual Fear-store/roll-store/coordinator→action-store damage execution, original receipt replay after Fear-store reopen and changed target revision, corrupted saved damage rejection, wrong result hash, public/revoked source and stale initial target rejection. Existing unchanged suites did not rerun. The action store in this integration test is in-memory; its separate file-backed damage/reopen tests are recorded in the preceding store report.
+
+Evidence limits: actual native arithmetic and SQLite services, with injected source/actor/Armor-event readers. This does not prove real event provenance or live Discord quality. Real Armor-choice ingress, legal target revisions from condition expiration, full feature defenses, native attack legality adapters and canonical actor-state migration remain required. Interruption completion and owner death lifecycle are still open.
+
+Migration/rollback: no schema change in this slice. No production data or entry point changed. Preserve committed Fear and damage receipts across rollback; do not reset resource revisions to replay an outcome. R3 and R0–R8 remain incomplete; no live send, deployment, retirement or completed-major-phase push occurred. Next exact phase: R3 safely link saved damage/death eligibility back to interruption completion, then connect native owner Armor/death choice ingress and qualify competing-process/crash behavior. Publishing target remains the rebuild branch.

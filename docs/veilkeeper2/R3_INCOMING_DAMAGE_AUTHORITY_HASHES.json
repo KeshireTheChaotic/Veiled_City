@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/incoming-damage-authority.js",
+    "sha256": "fdd9d790430a5dae0dcbe13867978b8580c95bf018370311168ae5803cfd5ad7"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs",
+    "sha256": "86e8e0981faf2376e2cb3920596690b121c1d2aedbe70dec5afd3d4a3569bc31"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_INCOMING_DAMAGE_AUTHORITY_REPORT.md",
+    "sha256": "4384f01c46a4a0058f89defaf081521f362e5451b09aa9e79c1cd7161ef25800"
+  }
+]

@@ -7,6 +7,9 @@ import {openRollStore} from '../../src/v2/rules/roll-store.js';
 import {openFearReservations} from '../../src/v2/rules/fear-reservations.js';
 import {createFearOpportunityReader} from '../../src/v2/rules/fear-opportunity-reader.js';
 import {createPreRollFearCoordinator} from '../../src/v2/rules/pre-roll-fear-coordinator.js';
+import {createIncomingDamageAuthority} from '../../src/v2/rules/incoming-damage-authority.js';
+import {openActionStore} from '../../src/v2/rules/action-store.js';
+import {createHash} from 'node:crypto';
 function fixture(t,amount=1){
   const dir=mkdtempSync(join(tmpdir(),'vk2-fear-order-'));let rolls,fear,coordinator,reader;
   const check=()=>{},owner={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1'},npc={id:'npc',kind:'npc',status:'active',campaignId:'c',sceneId:'s',controllerUserId:null};
@@ -187,4 +190,26 @@ test('invalid native RNG or final authorization failure rolls back both debit an
   const f=fixture(t),options=readyAttack(f);assert.throws(()=>f.coordinator.rollIncoming('c','q',{...options,rng:()=>21}),/out of range/);
   let checks=0;assert.throws(()=>f.coordinator.rollIncoming('c','q',{...options,check(){if(++checks===2)throw new Error('Execution authority changed');},rng:s=>s===20?15:2}),/Execution authority changed/);f.reopen();
   assert.equal(f.fear.initialize('c',1,{check:f.check}),1);assert.equal(f.fear.reserved('c'),1);assert.equal(f.fear.read('c','q').incoming.status,'ready');assert.equal(f.fear.read('c','q').incoming.result,undefined);
+});
+
+function damageChain(t,f){
+  const options=readyAttack(f),faces=[15,2,2],result=f.coordinator.rollIncoming('c','q',{...options,rng:()=>faces.shift()}),actions=openActionStore();t.after(()=>actions.close());
+  actions.initializePcDefenses({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',hp:{current:0,max:6},armorSlots:{current:0,max:3}},{check:f.check});
+  const actor={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1',revision:'pc:1'},choice={id:'armor',kind:'incoming_armor_choice',campaignId:'c',sceneId:'s',attackRef:'attack',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:result.id,resultHash:createHash('sha256').update(JSON.stringify(result)).digest('hex'),termsHash:result.termsHash,sourceRef:'armor-source',sourceRevision:'1',useArmor:false};
+  let corrupt=false;
+  const authority=createIncomingDamageAuthority({fearStore:{read(c,q){const row=f.fear.read(c,q);if(corrupt)row.incoming.result.damage.total++;return row;}},actionStore:actions,sourceAuthority:{inspectReference(ref){if(ref==='revoked')throw new Error('Armor source revoked');return {campaign:'c',scene:'s',principal:'u',actors:['pc'],recipients:ref==='public'?['u','other']:['u']};}},readActor:()=>actor,readArmorChoice:()=>choice});
+  return {actions,actor,choice,authority,corrupt(){corrupt=true;}};
+}
+test('actual native saved attack settles through private owner Armor evidence and replays against later state without reroll',t=>{
+  const f=fixture(t),chain=damageChain(t,f),result=chain.authority.commit('c','q','armor');assert.equal(result.after.hp.current,1);assert.equal(result.after.armorSlots.current,0);f.reopen();
+  chain.actor.revision='pc:2';assert.deepEqual(chain.authority.commit('c','q','armor'),result);assert.equal(chain.actions.readPcDefenses('c','pc').revision,2);assert.equal(f.fear.initialize('c',0,{check:f.check}),0);
+});
+test('corrupt native saved damage cannot establish an authoritative PC effect',t=>{
+  const f=fixture(t),chain=damageChain(t,f);chain.corrupt();assert.throws(()=>chain.authority.commit('c','q','armor'),/saved damage dice mismatch/);
+  assert.equal(chain.actions.readPcDefenses('c','pc').hp.current,0);assert.equal(chain.actions.readIncomingDamage('c','attack'),null);
+});
+test('wrong result, public or revoked Armor source and stale target state cannot authorize damage',t=>{
+  const f=fixture(t),chain=damageChain(t,f),original=structuredClone(chain.choice);
+  for(const patch of [{resultHash:'different'},{sourceRef:'public'},{sourceRef:'revoked'},{useArmor:'yes'}]){Object.assign(chain.choice,original,patch);assert.throws(()=>chain.authority.commit('c','q','armor'));}
+  Object.assign(chain.choice,original);chain.actor.revision='pc:2';assert.throws(()=>chain.authority.commit('c','q','armor'),/target revision/);assert.equal(chain.actions.readPcDefenses('c','pc').revision,1);
 });
