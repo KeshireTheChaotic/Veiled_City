@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/tests/veilkeeper2/r3-action-durability.test.mjs",
+    "sha256": "bc9f4a48cdfecc112759e894ba2484078f5a3351d294702fd9b58e4dec5e4799"
+  },
+  {
+    "path": "bot/src/v2/rules/action-store.js",
+    "sha256": "5c5e7bd6d8750cfe8a8865be7aac79f767afd54e1b3e2ad0ca7476b3a5d5b6e6"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_ACTION_DURABILITY_REPORT.md",
+    "sha256": "16bbbf0205ebe0cd5b8ab48dc7fff64a77578f2558c09b7ad3f28fad7f198dc1"
+  }
+]
