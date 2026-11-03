@@ -4,6 +4,11 @@ Authorized scope (user decision, 2026-11-03): live qualification in the **test g
 
 Before anything: the bot token that was pasted into chat is exposed. Reset it in the Discord Developer Portal (Bot -> Reset Token) and use the new value only in your own terminal.
 
+## Live status log
+
+- 2026-11-03: Server Members Intent enabled by the user; login smoke passed (ready, exactly one guild, the allowed test guild, router and message observer attached, clean close). The prerequisite above is satisfied.
+- 2026-11-03: `node --env-file=<legacy .env> src/register-commands.js` registered 24 root commands to guild 1467249344947159291 only (guild-scoped overwrite; includes the optional `character` option on `vc-session absent` and `leave`).
+- 2026-11-03: native bot started against a scratch copy of the legacy database with ChatGPT-mode inference capped at 10 calls, allowed guild = the test guild. Stopping it deletes the scratch stores. Commands still to be exercised by a human in the guild: checks 1-7 below.
 ## Prerequisite found by the first live smoke attempt (2026-11-03)
 
 A login smoke test with the legacy .env reached Discord (the token was accepted) but the gateway refused the connection: **"Used disallowed intents"**. The native client requests the privileged **Server Members Intent** because its audience check lists every guild member (who can see a channel decides who may read a message). The legacy client never requested it, so it is not enabled for this application. Before any live run, open the Discord Developer Portal -> your application -> Bot -> Privileged Gateway Intents and turn on **Server Members Intent** (Message Content must stay on). No message was sent, no command registered, no model called, and the temporary copy of the legacy database was deleted.
