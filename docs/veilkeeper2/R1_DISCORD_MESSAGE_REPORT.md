@@ -1,0 +1,7 @@
+# R1 — authenticated Discord message reader
+
+Completed native read slice. The reader fetches guild/channel/message records, rejects mismatched author/channel/campaign, bots, webhooks and system messages, refreshes audience permissions, and requires current author readership and write access. Source text comes from Discord's fetched message. Its fingerprint binds body/edit timestamp and audience evidence. No writes or sends occur.
+
+Fresh command: `node --test tests/veilkeeper2/r1-discord-message-reader.test.mjs` from bot. Actual result: 3/3 passed, zero failures/skips, 487.6199 ms. Cases cover native text/edit fingerprint, spoofed and non-player authorship, channel mismatch, revoked writing, failed fetch and cancellation. SDK permission bitfields are real; Discord transport is synthetic. Installed MessageManager fetch options were inspected. No live Discord access was used, and unchanged suites were not rerun.
+
+Holds: evidence is not yet committed to the scene store or refreshed throughout inference/publication; an edit can occur between message and audience fetches. Native event provenance, scene/control binding, concurrency and live permission qualification remain required. GuildText only is currently qualified. Full R0–R2 gates remain open and R3–R8 outstanding. Rollback leaves the opt-in reader unused. No production change, deployment or push. Next: atomic native evidence ingestion and permission invalidation during inference.
