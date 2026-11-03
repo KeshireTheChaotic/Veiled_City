@@ -1,0 +1,37 @@
+{
+  "node": "v26.13.0",
+  "checkpoint": "R6_OWNER_DEATH_COMMANDS",
+  "completedCases": 21,
+  "runs": [
+    {
+      "durationMs": 1997.1305,
+      "passed": 6
+    },
+    {
+      "durationMs": 810.8712,
+      "passed": 12
+    },
+    {
+      "durationMs": 1165.6883,
+      "passed": 3
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/v2/discord-death-commands.js",
+      "sha256": "113b501faed4b9bc225d9dfcf5e8d958568a21b805d179215a6a0c5ca19412d3"
+    },
+    {
+      "path": "bot/src/v2/interaction-receipts.js",
+      "sha256": "5c79b3c7647914d0704fd4ad0aa66f7e112f2e71b3e72055113ec7e5d6b6fd96"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "2e738121a6fde83f0cecb262c5ee6516a48bc0f975d82a5de2df978fa1d1ff2b"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs",
+      "sha256": "55c47525ef1220b14fec7bf66dbc693602fd8ef0a9ba299d2cba1f5adb9366ee"
+    }
+  ]
+}

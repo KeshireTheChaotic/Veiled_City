@@ -19,6 +19,7 @@ import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
 import {MessageFlags,ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';
 import {createNativeDeathWorkflow} from '../../src/v2/native-death-workflow.js';
 import {createDeathInteractionReconciliation} from '../../src/v2/death-interaction-reconciliation.js';
+import {createDiscordDeathCommands} from '../../src/v2/discord-death-commands.js';
 
 function fixture(t,{features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-ingress-')),client=new EventEmitter();client.user={id:'bot'};
@@ -147,7 +148,7 @@ function workflowFixture(t,f,{faces=[5,1]}={}){
   function open(){workflow=createNativeDeathWorkflow({client:f.client,actionStore:f.actions,sceneStore:f.scenes,sourceAuthority:f.sources,readActorSnapshot:f.snapshot,readRoute:()=>route,promptStore:f.prompts,decisionStore:f.decisions,interactionReceipts:receipts,clock:f.clock,rng:sides=>{draws.push(sides);if(!faces.length)throw new Error('Unexpected extra RNG');return faces.shift();},onError:(error,metadata)=>errors.push({error,metadata})});}
   open();t.after(()=>{workflow.close();receipts.close();assert.ok(resolve(dir).startsWith(resolve(tmpdir())+sep));rmSync(dir,{recursive:true,force:true});});
   async function click(decision){const message=sent.at(-1),prompt=f.prompts.readPrompt(message.components[0].components[0].custom_id),option=prompt.options.find(o=>o.decision===decision);assert.ok(option,decision);const event={id:`workflow-click-${nextInteraction++}`,client:f.client,isButton:()=>true,user:{id:'u',bot:false},guildId:'c',channelId:'private',message,customId:option.customId,deferred:false,replied:false,async deferReply(options){assert.equal(options.flags,MessageFlags.Ephemeral);this.deferred=true;},async editReply(options){assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);this.replied=true;}};f.client.emit('interactionCreate',event);await workflow.drain();return {event,row:receipts.read(event.id)};}
-  return {sent,errors,replies,draws,click,present:()=>workflow.present('c','attack',{check:()=>{}}),setMode(value){mode=value;},get workflow(){return workflow;},reopen(){workflow.close();receipts.close();f.reopen();receipts=openInteractionReceipts(file);open();}};
+  return {sent,errors,replies,draws,click,present:()=>workflow.present('c','attack',{check:()=>{}}),setMode(value){mode=value;},get receipts(){return receipts;},get workflow(){return workflow;},reopen(){workflow.close();receipts.close();f.reopen();receipts=openInteractionReceipts(file);open();}};
 }
 test('composed native workflow progresses private review, fate and owner allocation with one saved prompt per stage',async t=>{
   const f=fixture(t),w=workflowFixture(t,f);const first=await w.present();assert.equal(first.purpose,'death_review');assert.equal(w.sent.length,1);assert.equal((await w.present()).promptRef,first.promptRef);assert.equal(w.sent.length,1);
@@ -206,4 +207,43 @@ test('canonical repair preserves uncertain acknowledgement and never permits a r
 });
 test('composed native reconciliation rechecks caller scope after cold reopen and sends nothing',async t=>{
   const f=fixture(t),w=workflowFixture(t,f);await w.present();const review=await w.click('reviewed');w.reopen();const count=w.sent.length;assert.throws(()=>w.workflow.reconcile(review.event.id),/caller authorization/);const row=w.workflow.reconcile(review.event.id,{check:()=>{}});assert.equal(row.processing,'committed');assert.equal(row.reply,'delivered');assert.equal(w.sent.length,count);assert.equal(w.draws.length,0);
+});
+function commandFixture(t,f,w){
+  const replies=[],errors=[];let defers=0,sequence=0;
+  const commands=createDiscordDeathCommands({client:f.client,workflow:w.workflow,actionStore:f.actions,sceneStore:f.scenes,readActorSnapshot:f.snapshot,readRoute:()=>({guildId:'c',channelId:'private',sceneId:'s',ownerUserId:'u'}),interactionReceipts:w.receipts,onError:(error,meta)=>errors.push({error,meta})});t.after(()=>commands.close());
+  function event(input={op:'death-review',request:'incoming-death:attack'},{commandName='vc-roll',userId='u'}={}){return {id:`native-command-${++sequence}`,client:f.client,commandName,guildId:'c',channelId:'private',user:{id:userId,bot:false},isChatInputCommand:()=>true,isButton:()=>false,options:{getSubcommandGroup:()=>commandName==='vc'?'roll':null,getSubcommand:()=> 'effect',getString:()=>JSON.stringify(input)},deferred:false,replied:false,async deferReply(options){assert.equal(options.flags,MessageFlags.Ephemeral);defers++;this.deferred=true;},async editReply(options){assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);this.replied=true;}};}
+  async function run(e){f.client.emit('interactionCreate',e);return commands.handle(e);}
+  return {commands,event,run,replies,errors,get defers(){return defers;}};
+}
+test('native command aliases privately present controls without accepting risks or rolling',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w);for(const commandName of ['vc-roll','vc']){const e=c.event(undefined,{commandName});assert.equal((await c.run(e)).status,'committed');assert.equal(w.receipts.read(e.id).binding.kind,'discord_command');}
+  assert.equal(w.sent.length,1);assert.equal(w.draws.length,0);assert.equal(c.defers,2);assert.equal(f.actions.readIncomingDeathReview('c','attack'),null);assert.equal(f.actions.readIncomingDeathChoice('c','attack'),null);assert.deepEqual(c.errors,[]);
+});
+test('native command must be client-observed and refuses other owners without reading their controls',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),unseen=c.event();await assert.rejects(c.commands.handle(unseen),/Observed/);await assert.rejects(c.run(c.event(undefined,{userId:'outsider'})),/owned native/);assert.equal(c.defers,0);assert.equal(w.sent.length,0);assert.equal(w.draws.length,0);
+});
+test('native command duplicate and cold claim cannot repeat publication or private response',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),e=c.event();await c.run(e);assert.equal((await c.run(e)).status,'already_claimed');assert.equal(c.defers,1);c.commands.close();w.reopen();const restored=commandFixture(t,f,w);assert.equal((await restored.run(e)).status,'already_claimed');assert.equal(restored.defers,0);assert.equal(w.sent.length,1);
+});
+test('native command observation leaves legacy operations and natural speech untouched',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w);for(const input of [{op:'death-review',request:'legacy-request'},{op:'death-choose',request:'incoming-death:attack',move:'risk_it_all'},{op:'inbox'},{op:'death-review',request:'incoming-death:attack',owner:'other'}])assert.equal(await c.run(c.event(input)),false);const speech={id:'chat',client:f.client,isChatInputCommand:()=>false,content:'I ask the guard for directions.'};f.client.emit('interactionCreate',speech);assert.equal(await c.commands.handle(speech),false);assert.equal(c.defers,0);assert.equal(w.sent.length,0);
+});
+test('native command rechecks session authority after private defer and gives only a generic hold',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),e=c.event(),base=e.deferReply;e.deferReply=async function(options){await base.call(this,options);const {revision,...session}=f.scenes.readers.readSession('c','session');f.scenes.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'end-session',records:[{kind:'session',data:{...session,status:'ended'},expectedRevision:Number(revision)}]},{check:()=>{}});};
+  assert.equal((await c.run(e)).status,'native_review_required');assert.equal(w.receipts.read(e.id).processing,'held');assert.equal(c.replies.length,1);assert.doesNotMatch(c.replies[0],/attack|session|source:|SECRET/);assert.equal(w.sent.length,0);assert.equal(w.draws.length,0);
+});
+test('native command reconciles only the current owner receipt without replaying effects or prompts',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);await w.present();const review=await w.click('reviewed'),c=commandFixture(t,f,w),count=w.sent.length;const e=c.event({op:'death-reconcile',interaction:review.event.id});assert.equal((await c.run(e)).status,'committed');assert.equal(w.sent.length,count);assert.equal(w.draws.length,0);assert.match(c.replies[0],/No effects or replies were replayed/);assert.equal(w.receipts.read(review.event.id).reply,'delivered');
+});
+test('native command public invocation still publishes controls only to the owner private route',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w);f.scenes.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'party-setup',records:[{kind:'channel',expectedRevision:null,data:{id:'party',campaignId:'c',sceneId:'s',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']}}]},{check:()=>{}});
+  const guild=await f.client.guilds.fetch(),fetch=guild.channels.fetch,privateChannel=await fetch('private');guild.channels.fetch=async channelId=>channelId==='party'?{...privateChannel,id:'party'}:fetch(channelId);
+  const event=c.event();event.channelId='party';assert.equal((await c.run(event)).status,'committed');assert.equal(w.sent.length,1);assert.equal(w.sent[0].channelId,'private');assert.equal(c.defers,1);assert.equal(f.actions.readIncomingDeathReview('c','attack'),null);
+});
+test('native command refreshed permission snapshot rejects a new private observer before publication',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),guild=await f.client.guilds.fetch(),members=await guild.members.fetch();members.set('outsider',{id:'outsider',permissions:new PermissionsBitField([]),roles:{cache:new Map()}});guild.memberCount=members.size;
+  const event=c.event();assert.equal((await c.run(event)).status,'native_review_required');assert.equal(w.receipts.read(event.id).processing,'held');assert.equal(w.sent.length,0);assert.equal(w.draws.length,0);assert.equal(c.replies.length,1);assert.doesNotMatch(c.replies[0],/private_channel_audience|outsider|incoming-death/);
+});
+test('native command confirmation failure preserves completed presentation without replaying it',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),event=c.event();let replies=0;event.editReply=async()=>{replies++;throw new Error('Private reply unavailable');};assert.equal((await c.run(event)).status,'committed');assert.equal(w.receipts.read(event.id).reply,'uncertain');assert.equal((await c.run(event)).status,'already_claimed');assert.equal(w.sent.length,1);assert.equal(replies,1);assert.equal(c.defers,1);
 });
