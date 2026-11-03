@@ -68,24 +68,27 @@ Latest reports/manifests are under docs/veilkeeper2. They are slice evidence, no
 
 Actual SQLite/source/rules checks are separate from simulated SDK/member/send/readback/reply/GM/declaration certificates. No mocked test proves live Discord quality. Passing suites must not be rerun without a tested-code change.
 
+## Additions after the usage-pause checkpoint (2026-11-03, all offline-tested; none installed in the legacy start)
+
+Resumed by explicit user request after limits reset. Reports are under docs/veilkeeper2; read the one named for a slice before relying on it.
+
+- GM commands (discord-gm-session.js + discord-gm-authority.js, R6_GM_SESSION_COMMAND_REPORT.md): session start/end, reopen (only sessions ended by native end), PC bootstrap preview/review, pc-register, pc-rebind, draft-list, draft-publish. All except start/end travel in the existing `vc-roll effect` JSON, so no schema additions were needed. Each uses private acknowledgement, a durable closed interaction claim, fresh human-GM authority and a fixed native effect; nothing retries after an uncertain effect or reply.
+- Adapters (native-campaign-adapters.js): GM policy from the campaign gm_role_id only (no administrator fallback); owner-session reader resolves exactly one registered PC in the single active session.
+- Composition (native-root.js, legacy-readonly-repository.js, native-start.js, R6_NATIVE_ROOT_REPORT.md, R6_NATIVE_START_REPORT.md): createNativeRoot opens six dedicated stores (+turns.sqlite with a provider), the exclusive router, the GM/attendance/death services and the message observer. `npm run start:v2:native` needs VK2_NATIVE=1, VK2_NATIVE_DIR (new/empty), VK2_LEGACY_DB (opened read-only), DISCORD_TOKEN. Inference is a second opt-in (VK2_INFERENCE=1, OPENAI_API_KEY, VK2_MODEL, VK2_MAX_TURNS 1-100) behind a hard call budget.
+- Evidence and drafts: discord-message-observer.js records owner messages as native evidence; with a provider each becomes a withheld draft (empty GM context, nothing sent). turn-store adds recentDrafts and the publishing lifecycle (draft_saved -> publishing -> published or publication_uncertain). draft-publish sends one approved draft once, no mentions, no knowledge acknowledgement.
+- Schema: by user decision `vc-session absent` and `leave` gained an optional `character` option. The pinned COMMAND_SCHEMA.json (frozen baseline) was not regenerated. register-commands has not been run.
+- R0 (R0_DYNAMIC_TRIAGE_REPORT.md, DYNAMIC_RECORD_TRIAGE.json): 1,009 dynamic uses grouped. 118 forwarding wrappers verified pure. City-record writers (85 files, 210 uses): 51 files fully resolved, 34 partial (traced kinds recorded, untraced lines named), 0 unresolved. Per-file literal candidates are unreliable; only RESOLVED_WRITERS entries count. No hold is released; typed projections are unproved.
+- User decisions recorded 2026-11-03: live qualification only in test guild 1467249344947159291, $5 inference cap, legacy DB copy only (never production). A bot token was pasted into chat and must be reset; it was never used or stored. See LIVE_QUALIFICATION_RUNBOOK.md (user runs it with their own secrets). No live run has happened.
 ## Migration/rollback and next exact work
 
 Dedicated v2 stores reject unrelated schemas; never point them at production. Preserve all source, scene, character, action/Hope/life, roll/Fear, prompt/response, decision, interaction, knowledge and publication files. Do not delete choices, uncertain attempts, epochs or receipts to make old code run. Older constructors/digests/validators may reject new tables/metadata; disable opt-in services and use preserved copies/reviewed migration on rollback.
 
 Next actions:
 
-1. Check actual goal/usage and Git status. If paused, stop until explicit resume. Preserve README. Inspect latest report/manifest/commit and remote heads before integration. Baseline unchanged does not close R0 dynamic audit holds.
-2. Session-start and PC bootstrap preview/review routing are done (R6_GM_SESSION_COMMAND_REPORT.md, router option nativeGm with bootstrap deps). Remaining: no public private-state output, no retry after uncertain effects/replies. Root currently owns death and optional attendance only; GM factory/services are not routed yet.
-3. Policy and owner-session adapters exist (R6_CAMPAIGN_ADAPTERS_REPORT.md) and are composed with the native stores and router in createNativeRoot (R6_NATIVE_ROOT_REPORT.md, simulated client only); remaining: host entry point, real repository/client run, historical migration. Finish private native preview/review presentation; do not substitute role booleans or model markers for authority. Respect lease freshness.
-4. Session end exists (closes scenes, deletes nothing). Reopening exists; recap/opening occasions need live-inference authorization and remain open through the same audience writer, preserving important pending actions. Owner registration and in-place rebinding exist (pc-register, pc-rebind); add explicit player selection without resetting canonical resources, fictional movement or granting PC proxies. Pre-session attendance and legacy guest/NPC delegation remain open.
-5. Migrate historical actors and pending death/Blaze/roll/Fear state with exact source/authority/knowledge lineage. Full actor-frame CAS must not be relaxed when changing projection. Old initialized or partial profiles need reviewed attestation/recovery, not re-bootstrap.
-6. Finish actual native GM/rules/encounter/range/feature/cost/PvP/team/movement/item/downtime adapters and conversational result publication/Fear continuation. Then broaden R4/R5 living-world/NPC behavior rather than stopping at controls.
-7. Close R0 dynamic contracts and every R1–R8 acceptance gate, independent live tests, concurrency/crash, semantic migration/rollback and performance before retiring runtime paths or declaring a major phase complete. Publish certified major phases only to origin rebuild; production remains separate.
-
-
-
-
-
-
-
-
+1. Check goal/usage and git status. Preserve README.md (unrelated dirty). Do not rerun passed unchanged suites. Confirm the user has reset the exposed token before any live step.
+2. Live qualification (user-run, test guild only): follow LIVE_QUALIFICATION_RUNBOOK.md steps 1-7 and collect results. Nothing live is claimed until then. Run register-commands for the test guild only after confirming it is guild-scoped.
+3. Compose GM context for drafts: records store, selectContext/recall/knowledge and rules registry in createNativeRoot (the turn runner currently gets an empty records stub). Then a recap/opening occasion through the same exactly-once publication path.
+4. Close the 34 partial R0 writer entries (read the untraced lines named in RESOLVED_WRITERS evidence), then prove typed projections per kind before releasing any hold; audit the 626 keyed reads and 17 world-event writes the same way.
+5. Migrate historical actors and pending death/Blaze/roll/Fear state with exact source/authority/knowledge lineage. Full actor-frame CAS must not be relaxed. Old initialized or partial profiles need reviewed attestation/recovery, not re-bootstrap. Pre-session attendance and legacy guest/NPC delegation remain open.
+6. Finish native GM/rules/encounter/range/feature/cost/PvP/team/movement/item/downtime adapters and conversational result publication/Fear continuation; then R4/R5 living-world and NPC behavior rather than stopping at controls.
+7. Close every R1-R8 acceptance gate: independent live tests, concurrency/crash, semantic migration/rollback, performance. Publish certified major phases only to origin rebuild; production cutover needs separate authorization.
