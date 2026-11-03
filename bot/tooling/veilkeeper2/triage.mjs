@@ -95,6 +95,13 @@ export const RESOLVED_WRITERS=Object.freeze({
   'bot/src/frameworks/daggerheart/condition-recovery-rules.js':{kinds:['native_mixed_condition','pc_native_condition'],partial:true,evidence:'condition-recovery-rules.js:56,84 condition from injected validateNativeCondition; kinds taken from mixed-condition-rules recordKind, injection wiring not re-traced'},
   'bot/src/frameworks/intent/typed-intent-persistence.js':{kinds:['semantic_intent_proposal','typed_intent'],partial:true,evidence:'typed-intent-persistence.js:122,165 reads; :131 acceptedRow comes from acceptIntentForAdjudication/resolvePendingReferent, not traced'},
   'bot/src/frameworks/daggerheart/pvp-profile-rules.js':{kinds:['pvp_encounter_contract'],partial:true,evidence:'pvp-profile-rules.js live() reads pvp_encounter_contract; :193 spread of live() result not traced'},
+  'bot/src/frameworks/session/scene-continuity.js':{kinds:['scene_presence'],evidence:'scene-continuity.js:60-64,169 records() lists kind scene_presence; :172 archives those rows'},
+  'bot/src/frameworks/narrative/narrative-authority.js':{kinds:['scene_authoring_attempt'],evidence:'narrative-authority.js:210 spread of getCityRecord(...,"scene_authoring_attempt",attempt)'},
+  'bot/src/frameworks/knowledge/narrative-memory.js':{kinds:['narrative_delivery'],evidence:'narrative-memory.js:79,91 job from listNarrativeRecords(...,"narrative_delivery")'},
+  'bot/src/frameworks/narrative/interpretation-context.js':{kinds:['scene_entry'],evidence:'interpretation-context.js:115,125 entry from db.characterContinuity(...,{kind:"scene_entry"}); that reader is not re-traced',partial:true},
+  'bot/src/frameworks/daggerheart/pvp-reaction-rules.js':{kinds:['pvp_reaction_offer'],partial:true,evidence:'pvp-reaction-rules.js:23 proof() reads pvp_reaction_offer; :86 f.row assumed to be that row, return of proof() not read'},
+  'bot/src/frameworks/session/window-coordinator.js':{kinds:['scene_action_window'],partial:true,evidence:'window-coordinator.js:29-30 current() reads scene_action_window and :70 closes it; :136 resolveActionWindow result and :222 plan not traced'},
+  'bot/src/frameworks/daggerheart/roll-collaboration-rules.js':{kinds:['roll_request'],partial:true,evidence:'roll-collaboration-rules.js:218 roll_request read; save() callers :354 (other) and :428 (row) not fully traced'},
   'bot/src/frameworks/operations/ai-review.js':{kinds:['ai_intent','consequence','goal_transition','group_transition','organization_request','seed_draft','strategy'],evidence:'ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks'}
 });
 /** Review aid: for a `{...name,` spread write, the nearest earlier assignment of `name` in the file.

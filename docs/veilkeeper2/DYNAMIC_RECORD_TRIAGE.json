@@ -559,7 +559,14 @@
         "pvp_reaction_review",
         "pvp_reaction_roll_receipt",
         "reaction"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_reaction_offer"
+        ],
+        "partial": true,
+        "evidence": "pvp-reaction-rules.js:23 proof() reads pvp_reaction_offer; :86 f.row assumed to be that row, return of proof() not read"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-round-rules.js": {
       "uses": 3,
@@ -601,7 +608,14 @@
         "roll_disclosure",
         "roll_operation",
         "tag_usage"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "roll_request"
+        ],
+        "partial": true,
+        "evidence": "roll-collaboration-rules.js:218 roll_request read; save() callers :354 (other) and :428 (row) not fully traced"
+      }
     },
     "bot/src/frameworks/daggerheart/rules-arbitration-rules.js": {
       "uses": 1,
@@ -757,7 +771,13 @@
         "native_narrative_memory",
         "native_npc_speech_testimony",
         "observation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "narrative_delivery"
+        ],
+        "evidence": "narrative-memory.js:79,91 job from listNarrativeRecords(...,\"narrative_delivery\")"
+      }
     },
     "bot/src/frameworks/knowledge/owned-community.js": {
       "uses": 2,
@@ -832,7 +852,14 @@
         "narrative_context",
         "owner_context",
         "scene_entry"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_entry"
+        ],
+        "evidence": "interpretation-context.js:115,125 entry from db.characterContinuity(...,{kind:\"scene_entry\"}); that reader is not re-traced",
+        "partial": true
+      }
     },
     "bot/src/frameworks/narrative/narrative-authority.js": {
       "uses": 1,
@@ -847,7 +874,13 @@
         "native_outcome",
         "scene",
         "scene_authoring_attempt"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_authoring_attempt"
+        ],
+        "evidence": "narrative-authority.js:210 spread of getCityRecord(...,\"scene_authoring_attempt\",attempt)"
+      }
     },
     "bot/src/frameworks/narrative/narrative-salience.js": {
       "uses": 1,
@@ -1009,7 +1042,13 @@
         "arrival",
         "scene_presence",
         "scene_residue"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_presence"
+        ],
+        "evidence": "scene-continuity.js:60-64,169 records() lists kind scene_presence; :172 archives those rows"
+      }
     },
     "bot/src/frameworks/session/scene-entry-native.js": {
       "uses": 1,
@@ -1081,7 +1120,14 @@
         "scene_window_lifecycle",
         "window_action_receipt",
         "window_cancellation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_action_window"
+        ],
+        "partial": true,
+        "evidence": "window-coordinator.js:29-30 current() reads scene_action_window and :70 closes it; :136 resolveActionWindow result and :222 plan not traced"
+      }
     },
     "bot/src/frameworks/world/autonomous-world.js": {
       "uses": 5,
