@@ -13,8 +13,8 @@ function root(t,over={}){
   return {r,client,directory};
 }
 test('native root opens its dedicated stores and takes exclusive ownership of interactions',t=>{
-  const {r,client,directory}=root(t);assert.deepEqual(readdirSync(directory).filter(f=>f.endsWith('.sqlite')).sort(),['actions.sqlite','decisions.sqlite','interactions.sqlite','prompts.sqlite','scenes.sqlite','sources.sqlite']);assert.ok(client.listenerCount('interactionCreate')>0);
-  assert.throws(()=>createNativeRoot({client,directory,characterRepository:{getCharacter:()=>null,listCharacters:()=>[]},campaignRepository:{getCampaign:()=>null},rng:()=>1}),/unclaimed client/);r.close();assert.equal(client.listenerCount('interactionCreate'),0);
+  const {r,client,directory}=root(t);assert.deepEqual(readdirSync(directory).filter(f=>f.endsWith('.sqlite')).sort(),['actions.sqlite','decisions.sqlite','interactions.sqlite','prompts.sqlite','scenes.sqlite','sources.sqlite']);assert.ok(client.listenerCount('interactionCreate')>0);assert.equal(client.listenerCount('messageCreate'),1);
+  assert.throws(()=>createNativeRoot({client,directory,characterRepository:{getCharacter:()=>null,listCharacters:()=>[]},campaignRepository:{getCampaign:()=>null},rng:()=>1}),/unclaimed client/);r.close();assert.equal(client.listenerCount('interactionCreate'),0);assert.equal(client.listenerCount('messageCreate'),0);
 });
 test('owner route comes from the verified private channel of the registered PC, never a guess',t=>{
   const {r}=root(t);assert.throws(()=>r.readOwnerRoute('c','pc'),/Verified owner private channel/);

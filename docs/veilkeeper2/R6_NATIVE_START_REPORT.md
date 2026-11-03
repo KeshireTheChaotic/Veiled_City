@@ -6,4 +6,7 @@ Tests: r6-legacy-readonly-repository 2 passed (row shapes/order, file hash uncha
 
 Known issues: no natural-message intake, GM inference, startup session assembly or command registration in this entry point; legacy tables are read through two SQL statements copied from the legacy repository and must be re-verified if that schema changes; the owner private channel records must already exist in the native scene store.
 
-Deferred: native message intake composition, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
+Update (message evidence): bot/src/v2/discord-message-observer.js listens for messageCreate and passes only human messages from registered native channels, by the owner of exactly one registered PC in that channel's scene, to the existing intake (evidence capture only: no reply, no inference, no authority). createNativeRoot composes message reader, intake and observer and closes the observer first (root and start tests extended: messageCreate listener present, then released). Tests: r1-discord-message-observer 3 passed, r6-native-root 2, r6-native-start 4; intake/reader suites unchanged. The intake stays simulated: no live message fetch occurred.
+
+Deferred: GM turn runner/provider composition (needs live inference authorization), live Discord/inference qualification (needs authorization), historical migration, recap/opening.
+
