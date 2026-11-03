@@ -19,12 +19,13 @@ export function openFearReservations(filename=':memory:'){
     const terms=preRollFearTerms({...opportunity,fear:pool.amount,reservedFear:reserved(campaign)}),row={terms,bindingHash:hash(terms),fingerprint,status:'awaiting_announcement',history:[{status:'awaiting_announcement'}]};
     if(hash(readOpportunity(campaign,requestRef))!==fingerprint)throw new Error('Fear opportunity changed');db.prepare('INSERT INTO vk3_fear_reservations VALUES(?,?,?)').run(campaign,requestRef,JSON.stringify(row));return row;
   });}
-  function acknowledge(campaign,requestRef,{readNotice,check}){return tx(check,()=>{
+  function acknowledge(campaign,requestRef,{readNotice,readOpportunity,check}){return tx(check,()=>{
     const row=read(campaign,requestRef),notice=structuredClone(readNotice(campaign,requestRef));
+    if(typeof readOpportunity!=='function'||!row||hash(readOpportunity(campaign,requestRef))!==row.fingerprint)throw new Error('Pending pre-roll opportunity changed');
     if(!row||!['awaiting_announcement','announced'].includes(row.status)||notice?.status!=='delivered'||notice.kind!=='pre_roll_fear'||notice.requestRef!==requestRef||notice.bindingHash!==row.bindingHash
       ||notice.baseCost!==1||notice.printedFearCost!==0||notice.npcId!==row.terms.npcId||notice.actorId!==row.terms.actorId||!Array.isArray(notice.recipientIds)||notice.recipientIds.length!==1||notice.recipientIds[0]!==row.terms.ownerUserId||typeof notice.messageId!=='string'||!notice.messageId)throw new Error('Exact delivered owner Fear announcement required');
     if(row.notice){if(JSON.stringify(row.notice)!==JSON.stringify(notice))throw new Error('Fear notice replay conflict');return row;}
-    const after={...row,status:'announced',notice,history:[...row.history,{status:'announced',messageId:notice.messageId}]};if(JSON.stringify(readNotice(campaign,requestRef))!==JSON.stringify(notice))throw new Error('Fear notice changed');db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),campaign,requestRef);return after;
+    const after={...row,status:'announced',notice,history:[...row.history,{status:'announced',messageId:notice.messageId}]};if(JSON.stringify(readNotice(campaign,requestRef))!==JSON.stringify(notice)||hash(readOpportunity(campaign,requestRef))!==row.fingerprint)throw new Error('Fear notice or opportunity changed');db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),campaign,requestRef);return after;
   });}
   function cancel(c,q,{check}){return tx(check,()=>{const row=read(c,q);if(!row)throw new Error('Native Fear reservation required');if(row.status==='cancelled')return row;const after={...row,status:'cancelled',history:[...row.history,{status:'cancelled'}]};db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),c,q);return after;});}
   return Object.freeze({initialize,reserve,acknowledge,cancel,read,reserved,close:()=>db.close()});
