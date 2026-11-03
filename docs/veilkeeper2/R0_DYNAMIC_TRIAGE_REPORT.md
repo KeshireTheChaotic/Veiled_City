@@ -18,7 +18,10 @@ Update (partial resolutions + review aid): spreadOrigin() in triage.mjs shows th
 
 Update (batch 3, partial): incoming-attack, native-publications, city-core, pvp-damage, city-civic, action-continuation and autonomous-world recorded as PARTIAL with traced kinds. Status: fully resolved 12 files/15 uses; partial 12 files/80 uses; unresolved 61 files/115 uses.
 
+Update (batch 4): consequences, commitments, strategy, contact-groups and opening-attendance fully resolved; session-opening and memory-lifecycle partial. Status: fully resolved 17 files/31 uses; partial 14 files/87 uses; unresolved 54 files/92 uses.
+
 Next: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 

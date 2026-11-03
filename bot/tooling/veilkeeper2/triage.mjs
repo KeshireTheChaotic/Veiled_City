@@ -41,6 +41,13 @@ export const RESOLVED_WRITERS=Object.freeze({
   'bot/src/frameworks/world/city-civic.js':{kinds:['change','community','message','report'],partial:true,evidence:'city-civic.js:145,170,175,225 traced; :115 kind from data not traced'},
   'bot/src/frameworks/session/action-continuation.js':{kinds:['action_continuation','compound_action'],partial:true,evidence:'action-continuation.js:171,175,192,206 traced; :212 signal origin not traced'},
   'bot/src/frameworks/world/autonomous-world.js':{kinds:['autonomous_entity'],partial:true,evidence:'autonomous-world.js:285 traced; :60,:257,:259,:263 rows not traced'},
+  'bot/src/frameworks/world/consequences.js':{kinds:['consequence','consequence_subscription'],evidence:'consequences.js:12,67,71 spread of getCityRecord rows'},
+  'bot/src/frameworks/world/commitments.js':{kinds:['commitment','commitment_offer'],evidence:'commitments.js:13,20,67 spread of getCityRecord rows'},
+  'bot/src/frameworks/npc/strategy.js':{kinds:['strategy'],evidence:'strategy.js:99,147,150 before=getCityRecord(...,"strategy")'},
+  'bot/src/frameworks/world/contact-groups.js':{kinds:['community','group_transition'],evidence:'contact-groups.js:63,84,92,96 getCityRecord group_transition/community'},
+  'bot/src/frameworks/session/opening-attendance.js':{kinds:['opening_attendance_registration','opening_entry_opportunity'],evidence:'opening-attendance.js:5 const KIND; :155,158 getCityRecord opening_entry_opportunity'},
+  'bot/src/frameworks/session/session-opening.js':{kinds:['session_opening_job'],partial:true,evidence:'session-opening.js:4 const KIND; :34,96,155 rows come from inspectSessionOpening, not traced'},
+  'bot/src/frameworks/knowledge/memory-lifecycle.js':{kinds:['memory_revision'],partial:true,evidence:'memory-lifecycle.js:107,118 traced; :82 old row origin not traced'},
   'bot/src/frameworks/operations/ai-review.js':{kinds:['ai_intent','consequence','goal_transition','group_transition','organization_request','seed_draft','strategy'],evidence:'ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks'}
 });
 /** Review aid: for a `{...name,` spread write, the nearest earlier assignment of `name` in the file.

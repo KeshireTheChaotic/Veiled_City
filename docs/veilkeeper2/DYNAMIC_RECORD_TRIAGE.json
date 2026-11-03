@@ -537,7 +537,14 @@
       "candidateKinds": [
         "memory_identity",
         "memory_revision"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "memory_revision"
+        ],
+        "partial": true,
+        "evidence": "memory-lifecycle.js:107,118 traced; :82 old row origin not traced"
+      }
     },
     "bot/src/frameworks/knowledge/narrative-memory.js": {
       "uses": 1,
@@ -648,7 +655,13 @@
       "candidateKinds": [
         "goal",
         "strategy"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "strategy"
+        ],
+        "evidence": "strategy.js:99,147,150 before=getCityRecord(...,\"strategy\")"
+      }
     },
     "bot/src/frameworks/operations/ai-review.js": {
       "uses": 1,
@@ -709,7 +722,14 @@
         "native_session_attendance",
         "opening_attendance_carry",
         "opening_entry_opportunity"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "opening_attendance_registration",
+          "opening_entry_opportunity"
+        ],
+        "evidence": "opening-attendance.js:5 const KIND; :155,158 getCityRecord opening_entry_opportunity"
+      }
     },
     "bot/src/frameworks/session/scene-action-window.js": {
       "uses": 7,
@@ -763,7 +783,14 @@
         "native_session_opening_job",
         "session_opening_generation",
         "session_opening_turn"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "session_opening_job"
+        ],
+        "partial": true,
+        "evidence": "session-opening.js:4 const KIND; :34,96,155 rows come from inspectSessionOpening, not traced"
+      }
     },
     "bot/src/frameworks/session/story-continuity.js": {
       "uses": 1,
@@ -843,7 +870,14 @@
         "commitment",
         "commitment_offer",
         "obligation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "commitment",
+          "commitment_offer"
+        ],
+        "evidence": "commitments.js:13,20,67 spread of getCityRecord rows"
+      }
     },
     "bot/src/frameworks/world/consequences.js": {
       "uses": 3,
@@ -852,7 +886,14 @@
         "consequence_applied",
         "consequence_cursor",
         "consequence_subscription"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "consequence",
+          "consequence_subscription"
+        ],
+        "evidence": "consequences.js:12,67,71 spread of getCityRecord rows"
+      }
     },
     "bot/src/frameworks/world/contact-groups.js": {
       "uses": 4,
@@ -861,7 +902,14 @@
         "community_membership",
         "conversation",
         "group_transition"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "community",
+          "group_transition"
+        ],
+        "evidence": "contact-groups.js:63,84,92,96 getCityRecord group_transition/community"
+      }
     },
     "bot/src/frameworks/world/identity-rules.js": {
       "uses": 1,
