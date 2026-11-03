@@ -14,7 +14,10 @@ Update (reopen): `session reopen` (option session=<id>) reopens a session only w
 
 Update (rebind): `vc-roll effect {op:pc-rebind,actor}` updates a registered PC's owner/controller to the current repository owner in place (same scene, name kept, no proxy fields, controlRevision advances so earlier controller proofs are invalid). Refused for unchanged owner, unregistered, inactive or not-in-active-scene actors. No resources/position/attendance change. Tests: r6-gm-session-command 14 passed, r6-discord-gm-authority 14.
 
+Update (router wiring test): the router now builds the GM authority itself from `nativeGm` {readPolicy, clock?, leaseMs?, bootstrap?, characters?} after its unclaimed-client check, because a pre-built authority registers an interactionCreate observer that the check rejects; the router closes it. New test in r3-discord-death-decisions (router consumer suite, now 55 passed): an observed GM `session end` ends the fixture's active session through the router with no legacy callbacks, and a non-GM is denied privately. Router wiring no longer lacks a test.
+
 Deferred: real campaign-policy/selection/repository adapters, session end/recap/opening, registration/rebinding, historical migration.
+
 
 
 
