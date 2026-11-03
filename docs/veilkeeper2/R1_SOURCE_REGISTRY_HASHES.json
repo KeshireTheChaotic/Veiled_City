@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "752b87b9125c17a81d798803d6b31962fa4a7d0497acb4e79e4e1b4da94dc6c7",
+    "path": "bot/src/v2/source-registry.js"
+  },
+  {
+    "sha256": "dd6811d8390c37212479ce9862c6042ec0b3b1113c789c112da1b73c5fe27160",
+    "path": "bot/src/v2/source-authority.js"
+  },
+  {
+    "sha256": "cfe9a05daf732a35dca396e35fb6d10e25ef7017f73c05c2f93f48bbdfbb6ecb",
+    "path": "bot/tests/veilkeeper2/r1-source-registry.test.mjs"
+  },
+  {
+    "sha256": "48adbdb8c10eb7aaf2d15f0fb4d264017c72257b31dca17c780fe4c877a8cf1f",
+    "path": "docs/veilkeeper2/R1_SOURCE_REGISTRY_REPORT.md"
+  }
+]

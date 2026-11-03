@@ -10,9 +10,11 @@ const fail=()=>{throw new Error('Current authenticated scene source required');}
  * never a model tool or player JSON. Readers return current server-owned records.
  * This authorizes conversation/control, not consent, spending or successful effects.
  */
-export function createSourceAuthority({readMessage,readSession,readScene,readActor,readChannel}){
+export function createSourceAuthority({readMessage,readSession,readScene,readActor,readChannel,sourceRegistry=null}){
   if([readMessage,readSession,readScene,readActor,readChannel].some(fn=>typeof fn!=='function'))throw new TypeError('Complete current native readers required');
   const issued=new Map();
+  if(sourceRegistry!==null&&(typeof sourceRegistry.get!=='function'||typeof sourceRegistry.put!=='function'))throw new TypeError('Native source registry required');
+  const getIssued=id=>issued.get(id)??sourceRegistry?.get(id);
   function inspect(event){
     if(!event||Object.keys(event).sort().join(',')!=='actorId,campaignId,messageId,userId'
       ||!Object.values(event).every(nonempty))fail();
@@ -48,23 +50,23 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
     return {proof,control:{actorId:actor.id,role:actor.controlRole,kind:actor.kind,delegationRef:actor.delegationRef??null}};
   }
   function authenticate(event){
-    const {proof,control}=inspect(event),prior=issued.get(proof.id);
+    const {proof,control}=inspect(event),prior=getIssued(proof.id);
     if(prior&&prior.fingerprint!==digest(proof))fail();
-    if(!prior)issued.set(proof.id,{event:structuredClone(event),fingerprint:digest(proof),control:Object.freeze(control)});
+    if(!prior){const entry={event:structuredClone(event),fingerprint:digest(proof),control:Object.freeze(control)};sourceRegistry?.put(proof.id,entry);issued.set(proof.id,entry);}
     return structuredClone(proof);
   }
   function revalidate(source){
     try{
-      const prior=issued.get(source?.id);
+      const prior=getIssued(source?.id);
       if(!prior)return false;
       const {proof}=inspect(prior.event);
       return digest(proof)===prior.fingerprint&&Object.keys(proof).every(key=>JSON.stringify(proof[key])===JSON.stringify(source[key]));
     }catch{return false;}
   }
   return Object.freeze({authenticate,revalidate,inspectReference(ref,revision){
-    const prior=issued.get(ref);if(!prior)fail();const {proof}=inspect(prior.event);
+    const prior=getIssued(ref);if(!prior)fail();const {proof}=inspect(prior.event);
     if(proof.revision!==revision||digest(proof)!==prior.fingerprint)fail();return structuredClone(proof);
   },inspectControl(source){
-    if(!revalidate(source))fail();return issued.get(source.id).control;
+    if(!revalidate(source))fail();return Object.freeze(structuredClone(getIssued(source.id).control));
   }});
 }
