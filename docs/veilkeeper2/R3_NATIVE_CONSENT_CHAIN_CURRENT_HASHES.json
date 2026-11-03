@@ -1,0 +1,10 @@
+[
+  {
+    "path": "bot/tests/veilkeeper2/r3-native-consent-chain.test.mjs",
+    "sha256": "ec1664fdda67732317b7d298717c1abcfab4ff5d23d39b3f1111b4284a2ff448"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_NATIVE_CONSENT_CHAIN_REPORT.md",
+    "sha256": "628fb590cb9990b560731f8261ac25dfffde4ae7d8161c8b007140adef8ef518"
+  }
+]
