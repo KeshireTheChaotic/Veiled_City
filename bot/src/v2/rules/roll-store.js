@@ -31,6 +31,7 @@ export function openRollStore(filename=':memory:'){
     return insert(c,q,'roll',input.id,{id:input.id,campaignId:c,sceneId:r.sceneId,requestRef:q,actorId:r.actorId,ownerUserId:r.ownerUserId,authenticated:true,origin:'owner_roll',hope:input.hope,fear:input.fear});
   });}
   return Object.freeze({createRequest,acknowledgeDelivery,recordOwnerRoll,
+    readResultForRequest:(c,q)=>event(c,q,'roll'),
     readRequest(c,q){const r=request(c,q);return r?{...r,status:event(c,q,'notice')?'awaiting_player_roll':'awaiting_notice'}:null;},
     readDelivery(c,id){const r=db.prepare("SELECT request FROM vk3_roll_events WHERE campaign=? AND id=? AND kind='notice'").get(c,id);return r?event(c,r.request,'notice'):null;},
     readRoll(c,id){const r=db.prepare("SELECT request FROM vk3_roll_events WHERE campaign=? AND id=? AND kind='roll'").get(c,id);return r?event(c,r.request,'roll'):null;},close:()=>db.close()});
