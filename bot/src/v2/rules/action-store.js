@@ -38,7 +38,7 @@ export function openActionStore(filename=':memory:'){
     if(![input.campaignId,input.actorId,input.ownerUserId].every(id)||!Number.isSafeInteger(input.hope)||!Number.isSafeInteger(input.cap)||input.cap<0||input.cap>6||input.hope<0||input.hope>input.cap)throw new Error('Native Hope bootstrap required');
     return tx(check,()=>{const row={...input,revision:1},old=readHope(input.campaignId,input.actorId);if(old){if(JSON.stringify(old)!==JSON.stringify(row))throw new Error('Hope already initialized');return old;}db.prepare('INSERT INTO vk3_action_hope VALUES(?,?,?)').run(input.campaignId,input.actorId,JSON.stringify(row));return row;});
   }
-  function commitHopeCost(input,{readCost,check}){
+  function commitHopeCost(input,{readCost,check,inspectBlazeCost}){
     if(typeof readCost!=='function'||![input.campaignId,input.actionId,input.costRef].every(id)||![input.expectedActionRevision,input.expectedHopeRevision].every(Number.isSafeInteger))throw new Error('Native action-cost commit required');
     return tx(check,()=>{
       const action=read(input.campaignId,input.actionId),cost=structuredClone(readCost(input.campaignId,input.costRef)),hope=readHope(input.campaignId,action?.actorId);
@@ -47,12 +47,24 @@ export function openActionStore(filename=':memory:'){
       const eventKey=`${action.id}:hope-committed`,previous=decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(input.campaignId,eventKey));
       if(previous){if(JSON.stringify(previous.request)!==JSON.stringify(input)||JSON.stringify(previous.cost)!==JSON.stringify(cost))throw new Error('Action outcome replay conflict');return previous;}
       const life=decode(db.prepare('SELECT data FROM vk3_pc_life WHERE campaign=? AND actor=?').get(input.campaignId,action.actorId));
-      if(life&&(life.status!=='active'||life.deathState&&life.deathState.status!=='recovered'||readPcDefenses(input.campaignId,action.actorId)?.hp.current>=readPcDefenses(input.campaignId,action.actorId)?.hp.max))throw new Error('PC lifecycle requires native recovery before an ordinary Hope action');
+      const registeredTerms=readActionTerms(input.campaignId,action.id);
+      if(registeredTerms?.blaze!==undefined&&(life?.status!=='active'||life.deathState?.status!=='blaze_pending'))throw new Error('Blaze-linked cost requires its pending native final action');
+      let blazeAuthorization=null;
+      if(life&&(life.status!=='active'||life.deathState&&life.deathState.status!=='recovered'||readPcDefenses(input.campaignId,action.actorId)?.hp.current>=readPcDefenses(input.campaignId,action.actorId)?.hp.max)){
+        if(life.status!=='active'||life.deathState?.status!=='blaze_pending'||typeof inspectBlazeCost!=='function')throw new Error('PC lifecycle requires native recovery before an ordinary Hope action');
+        const terms=registeredTerms,proof=structuredClone(inspectBlazeCost(input.campaignId,action.id));
+        const plan=proof&&decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(input.campaignId,proof.planRef));
+        const approval=proof&&decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(input.campaignId,proof.approvalRef));
+        const critical=proof&&decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(input.campaignId,proof.criticalRef));
+        const slot=plan?.plan?.costs?.find(slot=>slot.actionRef===action.id);
+        if(!proof||proof.campaignId!==input.campaignId||proof.requestRef!==life.deathState.request||proof.actorId!==action.actorId||proof.ownerUserId!==action.ownerUserId||proof.controlRevision!==life.controlRevision||proof.costActionRef!==action.id||proof.costSlot!==cost.costSlot||proof.amount!==cost.amount||proof.sourceRef!==action.sourceRef||proof.sourceRevision!==action.sourceRevision||!terms?.blaze||terms.blaze.attackRef!==proof.attackRef||terms.blaze.approvalRef!==proof.approvalRef||terms.blaze.planRef!==proof.planRef||terms.blaze.parentActionRef!==proof.parentActionRef||!plan||hash(plan)!==proof.planHash||!approval||hash(approval)!==proof.approvalHash||!critical||hash(critical)!==proof.criticalHash||approval.binding.action.id!==proof.parentActionRef||hash(approval.binding.action)!==proof.parentActionHash||!slot||slot.slot!==cost.costSlot||slot.amount!==cost.amount)throw new Error('Exact stored approved Blaze cost authorization required');
+        blazeAuthorization=proof;
+      }
       if(action.status!=='ready_to_commit'||action.revision!==input.expectedActionRevision||hope.revision!==input.expectedHopeRevision)throw new Error('Action or Hope revision conflict');
       const change=pcEffectResource({resources:{hope:hope.hope,hope_max:hope.cap}},'hope',-cost.amount),afterHope={...hope,hope:change.after,revision:hope.revision+1},afterAction={...action,status:'resolved',revision:action.revision+1,effectsCommitted:true};
-      const receipt={request:input,cost,beforeAction:action,afterAction,beforeHope:hope,afterHope,effectsCommitted:true};
+      const receipt={request:input,cost,beforeAction:action,afterAction,beforeHope:hope,afterHope,effectsCommitted:true,...(blazeAuthorization?{blazeAuthorization}:{})};
       db.prepare('UPDATE vk3_action_hope SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(afterHope),input.campaignId,action.actorId);db.prepare('UPDATE vk3_actions SET data=? WHERE campaign=? AND id=?').run(JSON.stringify(afterAction),input.campaignId,action.id);db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(input.campaignId,eventKey,JSON.stringify(receipt));
-      if(JSON.stringify(readCost(input.campaignId,input.costRef))!==JSON.stringify(cost))throw new Error('Cost evidence changed');return receipt;
+      if(JSON.stringify(readCost(input.campaignId,input.costRef))!==JSON.stringify(cost)||blazeAuthorization&&hash(inspectBlazeCost(input.campaignId,action.id))!==hash(blazeAuthorization))throw new Error('Cost evidence changed');return receipt;
     });
   }
   const readActionTerms=(c,a)=>decode(db.prepare('SELECT data FROM vk3_cost_terms WHERE campaign=? AND action=?').get(c,a));

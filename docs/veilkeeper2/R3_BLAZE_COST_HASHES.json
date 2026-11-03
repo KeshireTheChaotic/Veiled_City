@@ -1,0 +1,30 @@
+[
+  {
+    "sha256": "64fa0b63ba0bfd67591d236f5ccdac0373afd5109c2508971deb18c8f6beb42f",
+    "path": "bot/src/v2/rules/blaze-costs.js"
+  },
+  {
+    "sha256": "17f7f94b18e5e7ebcf419f9f105ab17bb6b8bcbc1f8f8aa4bc28ca5124ee61cd",
+    "path": "bot/src/v2/rules/blaze-of-glory.js"
+  },
+  {
+    "sha256": "b1eafe85af7788271b832a23daa09159abf145817bbfea0e98f78874262d7432",
+    "path": "bot/src/v2/rules/action-store.js"
+  },
+  {
+    "sha256": "6aee7225261f65a94adf2e3dc8a20ccff538a924e16c8b985530dedc4437569f",
+    "path": "bot/src/v2/rules/hope-cost-authority.js"
+  },
+  {
+    "sha256": "347309a0adaf43a301e58937e20411a3249cbc651ed62c4e05b9029331db30b9",
+    "path": "bot/tests/veilkeeper2/r3-death-outcome-store.test.mjs"
+  },
+  {
+    "sha256": "669812d5b0c13e50a0c85b4d730d96448d52c65ee5239ad9169d5a1361a21a76",
+    "path": "docs/veilkeeper2/R3_BLAZE_COST_REPORT.md"
+  },
+  {
+    "sha256": "96f754b42826db16989ed0fca2242049eb4372b2bcbe1c11511e1aacbec40cf4",
+    "path": "docs/veilkeeper2/LEDGER.md"
+  }
+]

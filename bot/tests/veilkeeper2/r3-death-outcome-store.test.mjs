@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve,sep} from 'node:path';
 import {openActionStore} from '../../src/v2/rules/action-store.js';
 import {DatabaseSync} from 'node:sqlite';
+import {createAtomicHopeCostAuthority} from '../../src/v2/rules/hope-cost-authority.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fixture(t,{move='risk_it_all',cap=6,hope=3,features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-outcome-')),path=join(dir,'actions.sqlite');let store=openActionStore(path),revoked=false;
@@ -144,4 +145,41 @@ test('final Blaze authority failure rolls death and consumption back while retai
   const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f),proof=terminalBlaze(f,b);b.action.status='resolved';let checks=0;
   assert.throws(()=>f.store.completeIncomingBlaze('c','attack',{...b.options,inspectTerminalAction:()=>proof,check(){if(++checks===2)throw new Error('Final action authority changed');}}),/Final action authority changed/);f.reopen();
   assert.equal(f.store.readPcLife('c','pc').life.status,'active');assert.equal(f.store.readIncomingBlazeApproval('c','attack').status,'approved');assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_final_action');
+});
+
+function blazeCosts(f,count=1){
+  const b=blazeOptions(f);f.store.approveIncomingBlaze('c','attack',b.options);f.store.createIncomingBlazeCritical('c','attack',b.options);
+  const costs=Array.from({length:count},(_,i)=>({actionRef:`final-cost-${i}`,slot:`slot-${i}`,amount:count===1?2:1,resource:'hope',sourceRef:b.action.sourceRef,sourceRevision:b.action.sourceRevision})),plan={id:'native-plan',revision:'1',actionRef:b.action.id,actionRevision:'1',actionHash:hash(b.action),ruleFingerprint:'d'.repeat(64),costs};
+  const options={...b.options,inspectCostPlan:()=>plan},check=()=>{};
+  const link={attackRef:'attack',parentActionRef:b.action.id,approvalRef:'incoming-death-blaze-approval:attack',planRef:'incoming-death-blaze-cost-plan:attack'};
+  function addCost(cost){const identity={id:cost.actionRef,campaignId:'c',actorId:'pc',ownerUserId:'u',sceneId:'s',sourceRef:b.action.sourceRef,sourceRevision:'1',kind:'hope_cost'};
+    f.store.create(identity,{check});f.store.registerHopeTerms({...identity,revision:'terms-1',controlRevision:'1',cost:{resource:'hope',slot:cost.slot,amount:cost.amount},blaze:link},{check});f.store.transition({campaignId:'c',actionId:identity.id,expectedRevision:1,sourceRef:`window:${identity.id}`,to:'awaiting_consent'},{check});
+    f.store.recordHopeConsent({id:`consent:${identity.id}`,campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',sourceRef:b.action.sourceRef,sourceRevision:'1',choiceSourceRef:`choice:${identity.id}`,choiceSourceRevision:'1',actionRef:identity.id,actionRevision:'terms-1',amount:cost.amount,costSlot:cost.slot,revision:'1',status:'accepted'},{check});
+  }
+  for(const cost of costs)addCost(cost);f.store.prepareIncomingBlazeCosts('c','attack',options);
+  function run(ref,revision=1,authorized=true){const source={id:b.action.sourceRef,revision:'1',campaign:'c',scene:'s',principal:'u',actors:['pc']},authority=createAtomicHopeCostAuthority({sourceAuthority:{...f.options.sourceAuthority,revalidate:()=>true},readActor:()=>({id:'pc',kind:'pc',status:f.store.readPcLife('c','pc').life.status,campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1'}),readActionTerms:f.store.readActionTerms,readConsent:f.store.readConsent,actionStore:f.store,...(authorized?{inspectBlazeCost:(c,action)=>f.store.inspectIncomingBlazeCost(c,'attack',action,options)}:{})});return authority.commit(source,'pc',{action_ref:ref,consent_ref:`consent:${ref}`},revision);}
+  return {b,plan,options,addCost,run};
+}
+test('only the planned consented Blaze Hope cost bypasses the pending-death action hold and replays once',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),c=blazeCosts(f);assert.throws(()=>c.run('final-cost-0',1,false),/native recovery/);assert.equal(f.store.readHope('c','pc').hope,3);
+  const receipt=c.run('final-cost-0');assert.equal(receipt.afterHope.hope,1);assert.equal(receipt.blazeAuthorization.parentActionRef,'final-action');f.reopen();assert.deepEqual(c.run('final-cost-0'),receipt);assert.equal(f.store.readHope('c','pc').hope,1);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_final_action');
+});
+test('multiple approved Blaze cost slots can commit out of plan order with one canonical Hope lineage',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),c=blazeCosts(f,2);c.run('final-cost-1',1);c.run('final-cost-0',2);f.reopen();assert.equal(f.store.readHope('c','pc').hope,1);assert.equal(f.store.readHope('c','pc').revision,3);assert.equal(c.run('final-cost-1',1).afterHope.hope,2);
+});
+test('aliases, changed cost rules and revoked GM approval cannot charge outside the exact Blaze plan',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),c=blazeCosts(f);c.addCost({...c.plan.costs[0],actionRef:'alias'});assert.throws(()=>c.run('alias'),/outside the approved Blaze plan/);
+  c.plan.ruleFingerprint='e'.repeat(64);assert.throws(()=>c.run('final-cost-0'),/current approved final-action cost rules/i);c.plan.ruleFingerprint='d'.repeat(64);
+  c.b.approval.status='revoked';assert.throws(()=>c.run('final-cost-0'),/Authenticated human GM/);assert.equal(f.store.readHope('c','pc').hope,3);assert.equal(f.store.read('c','final-cost-0').status,'ready_to_commit');
+});
+test('revocation during a Blaze cost rolls Hope, action and cost receipt back together',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),c=blazeCosts(f);let reads=0;c.options.inspectGmApproval=()=>{if(++reads===2)c.b.approval.status='revoked';return c.b.approval;};
+  assert.throws(()=>c.run('final-cost-0'),/Authenticated human GM/);f.reopen();assert.equal(f.store.readHope('c','pc').hope,3);assert.equal(f.store.read('c','final-cost-0').status,'ready_to_commit');assert.equal(f.store.readOutcome('c','final-cost-0'),null);
+});
+
+test('a Blaze-linked cost cannot execute as an ordinary healthy-PC charge',t=>{
+  const f=fixture(t),faces=[6,6];f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});const check=()=>{},identity={id:'bad-cost',campaignId:'c',actorId:'pc',ownerUserId:'u',sceneId:'s',sourceRef:'m',sourceRevision:'1',kind:'hope_cost'};
+  f.store.create(identity,{check});f.store.registerHopeTerms({...identity,revision:'terms',controlRevision:'1',cost:{resource:'hope',slot:'base',amount:1},blaze:{attackRef:'attack',parentActionRef:'other',approvalRef:'missing',planRef:'missing'}},{check});f.store.transition({campaignId:'c',actionId:'bad-cost',expectedRevision:1,sourceRef:'window',to:'awaiting_consent'},{check});f.store.transition({campaignId:'c',actionId:'bad-cost',expectedRevision:2,sourceRef:'owner-choice',to:'ready_to_commit'},{check});
+  const cost={id:'cost',actionRef:'bad-cost',campaignId:'c',actorId:'pc',ownerUserId:'u',sourceRef:'m',sourceRevision:'1',status:'accepted',ownerConfirmed:true,amount:1,costSlot:'base'};
+  assert.throws(()=>f.store.commitHopeCost({campaignId:'c',actionId:'bad-cost',costRef:'cost',expectedActionRevision:3,expectedHopeRevision:1},{check,readCost:()=>cost}),/Blaze-linked cost requires/);assert.equal(f.store.readHope('c','pc').hope,3);
 });

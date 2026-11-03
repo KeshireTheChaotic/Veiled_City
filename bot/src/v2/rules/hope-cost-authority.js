@@ -36,7 +36,7 @@ export function createHopeCostAuthority({sourceAuthority,readActor,readAction,re
 /** Uses the unified action/resource transaction while retaining all owner proof
  * checks. Native action terms remain separate from mutable execution status.
  */
-export function createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms,readConsent,actionStore}){
+export function createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms,readConsent,actionStore,inspectBlazeCost}){
   if(typeof readActionTerms!=='function'||typeof actionStore?.commitHopeCost!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Unified native action cost store required');
   function readAction(campaign,ref){
     const state=actionStore.read(campaign,ref),terms=readActionTerms(campaign,ref);
@@ -47,7 +47,7 @@ export function createAtomicHopeCostAuthority({sourceAuthority,readActor,readAct
   const adapter={spend(input,{readEvidence,check}){
     const cost=readEvidence(input.campaignId,input.evidenceRef),state=actionStore.read(input.campaignId,cost.actionRef),prior=actionStore.readOutcome(input.campaignId,cost.actionRef);
     return actionStore.commitHopeCost({campaignId:input.campaignId,actionId:cost.actionRef,costRef:input.evidenceRef,
-      expectedActionRevision:prior?.request.expectedActionRevision??state.revision,expectedHopeRevision:input.expectedRevision},{readCost:readEvidence,check});
+      expectedActionRevision:prior?.request.expectedActionRevision??state.revision,expectedHopeRevision:input.expectedRevision},{readCost:readEvidence,check,inspectBlazeCost});
   }};
   return createHopeCostAuthority({sourceAuthority,readActor,readAction,readConsent,hopeStore:adapter});
 }

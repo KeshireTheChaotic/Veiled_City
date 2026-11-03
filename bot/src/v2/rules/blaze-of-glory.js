@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {createBlazeCosts} from './blaze-costs.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 /** Native human review and no-dice Critical only. No effect/consent grant and
@@ -58,5 +59,6 @@ export function createBlazeOfGlory({db,tx,readPcLife,rawOutcome,deathEvent,damag
     db.prepare('UPDATE vk3_pc_life SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(life),c,b.actorId);db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
   });}
   function approvalView(c,a){const approved=deathEvent(c,a,'blaze-approval'),final=deathEvent(c,a,'blaze-final');if(!final)return approved;if(!approved||final.approvalHash!==hash(approved)||final.effectsCommitted!==true)throw new Error('Exact consumed native Blaze approval required');return {...approved,status:'consumed',completionRef:final.id};}
-  return Object.freeze({approveIncomingBlaze:approve,createIncomingBlazeCritical:critical,completeIncomingBlaze:complete,readIncomingBlazeApproval:approvalView,readIncomingBlazeCritical:(c,a)=>deathEvent(c,a,'blaze-critical')});
+  const costs=createBlazeCosts({db,tx,readPcLife,rawOutcome,deathEvent,binding});
+  return Object.freeze({...costs,approveIncomingBlaze:approve,createIncomingBlazeCritical:critical,completeIncomingBlaze:complete,readIncomingBlazeApproval:approvalView,readIncomingBlazeCritical:(c,a)=>deathEvent(c,a,'blaze-critical')});
 }
