@@ -59,11 +59,12 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     const review=ownerEvidenceReader(readReview),choice=ownerEvidenceReader(readChoice);
     return fearStore.rollIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readDefense:(campaign,request)=>({review:review(campaign,request),choice:choice(campaign,request)}),rng});
   }
-  function completeIncoming(c,q,{check,readDamage,readDeathEligibility}){return fearStore.completeIncoming(c,q,{check:heldAuthority(c,q,check),readDamage,readDeathEligibility});}
+  function completeIncoming(c,q,{check,readDamage,readDeathEligibility,readDeathOutcome}){return fearStore.completeIncoming(c,q,{check:heldAuthority(c,q,check),readDamage,readDeathEligibility,readDeathOutcome});}
   function inspectContinuation(c,q){
     if(typeof sourceAuthority?.inspectReference!=='function'||typeof readActor!=='function'||typeof readAdjudication!=='function')throw new Error('Native original-action eligibility readers required');
     const row=fearStore.read(c,q),request=rollStore.readRequest(c,q);
     if(row?.status!=='completed'||!row.completion||!request||!request.adjudicationRef)throw new Error('Completed interruption and pending native adjudication required');
+    if(row.completion.originalActionBlocked===true)throw new Error('Resolved death outcome requires native recovery or a fresh owner declaration');
     const proof=sourceAuthority.inspectReference(request.sourceRef,request.sourceRevision),actor=readActor(c,request.actorId),a=readAdjudication(c,request.adjudicationRef),hp=actor?.data?.resources?.hp;
     if(proof.campaign!==c||proof.scene!==request.sceneId||proof.principal!==request.ownerUserId||!proof.actors.includes(request.actorId)||actor?.id!==request.actorId||actor.kind!=='pc'||actor.status!=='active'||actor.campaignId!==c||actor.sceneId!==request.sceneId||actor.ownerUserId!==request.ownerUserId||actor.controllerUserId!==request.ownerUserId||actor.controlRole!=='owner'||actor.controlRevision!==request.controlRevision||typeof actor.revision!=='string'||!actor.revision
       ||![hp?.current,hp?.max].every(Number.isSafeInteger)||hp.current<0||hp.max<1||hp.current>=hp.max

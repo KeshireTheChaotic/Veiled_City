@@ -245,3 +245,39 @@ test('native eligibility changed after release cannot save owner dice and final 
   f.coordinator.resumeOriginalRoll('c','q',{check:f.check});f.adjudication.revision='2';
   assert.throws(()=>f.rolls.recordOwnerRoll('c','q',{id:'owner-dice',ownerUserId:'u',hope:9,fear:4},{check:f.check,readContinuation:f.coordinator.inspectContinuation}),/continuation changed/);assert.equal(f.rolls.readResultForRequest('c','q'),null);
 });
+
+function resolvedDeathChain(t,f,move,faces,{cap=6}={}){
+  const chain=damageChain(t,f,{hpMax:1}),actions=chain.actions,check=()=>{};
+  actions.initializeHope({campaignId:'c',actorId:'pc',ownerUserId:'u',hope:Math.min(3,cap),cap},{check});actions.initializePcLife({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'pc-source',sourceRevision:'1',level:2,stress:{current:3,max:6}},{check});chain.authority.commit('c','q','armor');
+  const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex'),snapshot=()=>{const s=actions.readPcLife('c','pc');return {actorId:'pc',ownerUserId:'u',controlRevision:'1',status:s.life.status,data:{level:s.life.level,death_state:s.life.deathState,resources:{hp:s.defenses.hp,armor:s.defenses.armorSlots,stress:s.life.stress,hope:s.hope.hope,hope_max:s.hope.cap},features:[]}};},sourceAuthority={inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc'],recipients:['u']})};
+  const eligible=actions.readIncomingDeath('c','attack'),base={campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',requestRef:eligible.id,eligibilityHash:hash(eligible),resourceRevision:2,actorSnapshotHash:hash(snapshot()),sourceRef:'owner-death-source',sourceRevision:'1'};
+  actions.recordIncomingDeathReview('c','attack',{check,sourceAuthority,readEvidence:()=>({...base,id:'death-review',kind:'incoming_death_review',sequence:1})});actions.recordIncomingDeathChoice('c','attack',{check,sourceAuthority,readEvidence:()=>({...base,id:'death-choice',kind:'incoming_death_choice',sequence:2,reviewRef:'death-review',move})});
+  const options={check,sourceAuthority,readActorSnapshot:snapshot},stream=[...faces],outcome=actions.resolveIncomingDeath('c','attack',{...options,rng:()=>stream.shift()}),completion={check:f.check,readDamage:actions.readIncomingDamage,readDeathEligibility:actions.readIncomingDeath,readDeathOutcome:actions.readIncomingDeathOutcome};
+  return {...chain,hash,snapshot,options,outcome,completion};
+}
+test('actual resolved death or unconscious outcome completes an interruption but blocks its old PC action even with stale actor projection',t=>{
+  for(const [move,faces,cap=6] of [['risk_it_all',[1,12]],['avoid_death',[3]],['avoid_death',[1],1]]){
+    const f=fixture(t),c=resolvedDeathChain(t,f,move,faces,{cap}),completion=f.coordinator.completeIncoming('c','q',c.completion);f.reopen();assert.equal(completion.deathOutcomeRef,c.outcome.id);assert.equal(completion.originalActionBlocked,true);assert.equal(f.fear.read('c','q').status,'completed');
+    assert.equal(f.owner.status,'active');assert.equal(f.owner.data.resources.hp.current,0);assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check:f.check}),/recovery or a fresh owner declaration/);assert.equal(f.rolls.readFearHold('c','q').status,'held');assert.deepEqual(f.coordinator.completeIncoming('c','q',c.completion),completion);
+  }
+});
+test('native critical death recovery allows completion then ordinary current continuation validation',t=>{
+  const f=fixture(t),c=resolvedDeathChain(t,f,'risk_it_all',[6,6]),completion=f.coordinator.completeIncoming('c','q',c.completion);assert.equal(completion.originalActionBlocked,false);f.coordinator.resumeOriginalRoll('c','q',{check:f.check});assert.equal(f.rolls.readFearHold('c','q').status,'completed');
+});
+test('pending native Hope allocation blocks completion until explicit recovery resolves',t=>{
+  const f=fixture(t),c=resolvedDeathChain(t,f,'risk_it_all',[3,1]);assert.throws(()=>f.coordinator.completeIncoming('c','q',c.completion),/death choice remains pending/);
+  const evidence={id:'allocation',kind:'incoming_death_allocation',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'allocation-source',sourceRevision:'1',requestRef:c.outcome.requestRef,outcomeHash:c.hash(c.outcome),sequence:3,hp:1,stress:2};
+  c.actions.allocateIncomingDeathRecovery('c','attack',{...c.options,readEvidence:()=>evidence});assert.equal(f.coordinator.completeIncoming('c','q',c.completion).originalActionBlocked,false);assert.equal(c.actions.readPcLife('c','pc').defenses.hp.current,0);
+});
+test('wrong cause or changing native death proof cannot close a lethal interruption; final rollback preserves committed PC fate',t=>{
+  const f=fixture(t),c=resolvedDeathChain(t,f,'risk_it_all',[1,12]);assert.throws(()=>f.coordinator.completeIncoming('c','q',{...c.completion,readDeathOutcome:()=>({...c.outcome,causeRef:'different'})}),/Exact resolved native/);
+  let reads=0;assert.throws(()=>f.coordinator.completeIncoming('c','q',{...c.completion,readDeathOutcome:()=>({...c.outcome,scar:++reads===1?false:true})}),/death outcome changed/);
+  let checks=0;assert.throws(()=>f.coordinator.completeIncoming('c','q',{...c.completion,check(){if(++checks===2)throw new Error('Completion authority changed');}}),/Completion authority changed/);f.reopen();assert.equal(f.fear.read('c','q').status,'executing');assert.equal(c.actions.readPcLife('c','pc').life.status,'dead');assert.equal(f.rolls.readFearHold('c','q').status,'held');
+});
+
+test('Blaze interruption stays pending until its saved approved final action actually reaches terminal death',t=>{
+  const f=fixture(t),c=resolvedDeathChain(t,f,'blaze_of_glory',[]);assert.throws(()=>f.coordinator.completeIncoming('c','q',c.completion),/death choice remains pending/);
+  const action={id:'final-action',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'owner-final-source',sourceRevision:'1',status:'accepted',kind:'ordinary_action',parametersHash:'c'.repeat(64)},approval={id:'gm-review',revision:'1',kind:'human_gm_blaze_approval',status:'approved',campaignId:'c',sceneId:'s',requestRef:c.outcome.requestRef,actionRef:action.id,actionRevision:action.revision,actionHash:c.hash(action),outcomeHash:c.hash(c.outcome),reviewerUserId:'gm',rulingRef:'ruling',rulingRevision:'1',sourceRef:'gm-source',sourceRevision:'1'},options={...c.options,actionRef:action.id,approvalRef:approval.id,readOwnerAction:()=>action,inspectGmApproval:()=>approval};
+  const approved=c.actions.approveIncomingBlaze('c','attack',options),critical=c.actions.createIncomingBlazeCritical('c','attack',options),proof={id:'terminal',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',actionRef:action.id,actionRevision:action.revision,actionHash:c.hash(action),approvalRef:approved.id,approvalHash:c.hash(approved),criticalRef:critical.id,criticalHash:c.hash(critical),kind:action.kind,status:'resolved',receiptRef:'native-final',receiptHash:'d'.repeat(64),effectRef:null,effectHash:null,consentReceiptRef:null,consentReceiptHash:null,stateAfterHash:c.hash(c.actions.readPcLife('c','pc')),actorAfterHash:c.hash(c.snapshot())};
+  action.status='resolved';c.actions.completeIncomingBlaze('c','attack',{...options,inspectTerminalAction:()=>proof});const completion=f.coordinator.completeIncoming('c','q',c.completion);assert.equal(completion.originalActionBlocked,true);assert.equal(c.actions.readPcLife('c','pc').life.status,'dead');assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check:f.check}),/recovery or a fresh owner declaration/);
+});

@@ -123,19 +123,31 @@ export function openFearReservations(filename=':memory:'){
     if(hash(readCandidate(c,q))!==incoming.termsHash||JSON.stringify(readDefense(c,q))!==JSON.stringify(defense))throw new Error('Incoming execution authority changed');
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,status:'executing',incoming:{...incoming,status:roll.success?'awaiting_armor':'missed',result},history:[...row.history,{status:'executing',resultRef:result.id}]}),c,q);return result;
   });}
-  function completeIncoming(c,q,{check,readDamage,readDeathEligibility}){return tx(check,()=>{
+  function completeIncoming(c,q,{check,readDamage,readDeathEligibility,readDeathOutcome}){return tx(check,()=>{
     const row=read(c,q),incoming=row?.incoming,r=incoming?.result,t=incoming?.terms;
     if(row?.status==='completed')return row.completion;
     if(row?.status!=='executing'||!r||!t||!['missed','awaiting_armor'].includes(incoming.status))throw new Error('Saved terminal native incoming outcome required');
-    let damage=null;
+    let damage=null,death=null,originalActionBlocked=false;
     if(r.roll.success){
       if(typeof readDamage!=='function'||typeof readDeathEligibility!=='function')throw new Error('Native damage and death eligibility readers required');
       damage=structuredClone(readDamage(c,t.id));const a=damage?.attack;
       if(damage?.kind!=='incoming_damage'||damage.id!==`incoming-damage:${t.id}`||damage.outcome?.effectsCommitted!==true||a?.campaignId!==c||a.id!==t.id||a.resultRef!==r.id||a.resultHash!==hash(r)||a.termsHash!==incoming.termsHash||a.actorId!==t.actorId||a.ownerUserId!==t.ownerUserId||a.controlRevision!==t.controlRevision||a.sceneId!==t.sceneId)throw new Error('Exact committed incoming damage receipt required');
-      if(damage.outcome.deathChoiceRequired||readDeathEligibility(c,t.id))throw new Error('Affected owner death choice remains pending; interruption stays held');
-      if(hash(readDamage(c,t.id))!==hash(damage)||readDeathEligibility(c,t.id))throw new Error('Incoming terminal damage evidence changed');
+      const eligibility=structuredClone(readDeathEligibility(c,t.id));
+      if(damage.outcome.deathChoiceRequired){
+        if(!eligibility||typeof readDeathOutcome!=='function')throw new Error('Affected owner death choice remains pending; interruption stays held');
+        death=structuredClone(readDeathOutcome(c,t.id));if(death?.status!=='resolved')throw new Error('Affected owner death choice remains pending; interruption stays held');
+        const life=death.after?.life,hp=death.after?.defenses?.hp;
+        const expected=death.move==='risk_it_all'?death.result==='dead'?'dead':death.result==='recovered'||death.result==='allocate_recovery'?'recovered':null:death.move==='avoid_death'?['unconscious','journey_ended'].includes(death.result)?death.result:null:death.move==='blaze_of_glory'&&death.result==='blaze_pending'?'dead':null;
+        if(eligibility.id!==`incoming-death:${t.id}`||eligibility.causeRef!==damage.id||eligibility.campaignId!==c||eligibility.actorId!==t.actorId||eligibility.ownerUserId!==t.ownerUserId||eligibility.controlRevision!==t.controlRevision||eligibility.sceneId!==t.sceneId||death.id!==`incoming-death-outcome:${t.id}`||death.causeRef!==damage.id||death.requestRef!==eligibility.id||death.effectsCommitted!==true||death.choiceRef!==`incoming-death-choice:${t.id}`||typeof death.choiceHash!=='string'||!/^[a-f0-9]{64}$/.test(death.choiceHash)||!death.before?.defenses||hash(death.before.defenses)!==hash(damage.after)||!expected
+          ||life?.campaignId!==c||life.actorId!==t.actorId||life.ownerUserId!==t.ownerUserId||life.controlRevision!==t.controlRevision||life.deathState?.request!==eligibility.id||life.deathState.status!==expected||life.status!==(['dead','journey_ended'].includes(expected)?'dead':'active')||![hp?.current,hp?.max].every(Number.isSafeInteger)||hp.max<1||hp.max>12||hp.current<0||hp.current>hp.max
+          ||death.result==='allocate_recovery'&&death.allocation?.effectsCommitted!==true||death.move==='blaze_of_glory'&&death.blazeFinal?.effectsCommitted!==true)throw new Error('Exact resolved native owner death outcome required');
+        if(death.after.defenses.campaignId!==c||death.after.defenses.actorId!==t.actorId||death.after.defenses.ownerUserId!==t.ownerUserId||death.after.defenses.controlRevision!==t.controlRevision)throw new Error('Exact native death resource owner required');
+        originalActionBlocked=expected!=='recovered'||life.status!=='active'||hp.current>=hp.max;
+        if(hash(readDeathOutcome(c,t.id))!==hash(death))throw new Error('Native death outcome changed during completion');
+      }else if(eligibility)throw new Error('Unexpected incoming death eligibility requires native review');
+      if(hash(readDamage(c,t.id))!==hash(damage)||hash(readDeathEligibility(c,t.id))!==hash(eligibility))throw new Error('Incoming terminal damage evidence changed');
     }else if(incoming.status!=='missed'||r.damage!==null)throw new Error('Exact saved native miss required');
-    const completion={campaignId:c,requestRef:q,decisionRef:t.decisionRef,resultRef:r.id,damageRef:damage?.id??null,damageHash:damage?hash(damage):null,requiresOriginalActionReview:true};
+    const completion={campaignId:c,requestRef:q,decisionRef:t.decisionRef,resultRef:r.id,damageRef:damage?.id??null,damageHash:damage?hash(damage):null,deathOutcomeRef:death?.id??null,deathOutcomeHash:death?hash(death):null,originalActionBlocked,requiresOriginalActionReview:true};
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,status:'completed',incoming:{...incoming,status:r.roll.success?'resolved':'missed'},completion,history:[...row.history,{status:'completed',resultRef:r.id}]}),c,q);return completion;
   });}
   return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,rollIncoming,completeIncoming,
