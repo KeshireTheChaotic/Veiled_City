@@ -28,7 +28,7 @@ test('reopened reservations preserve capacity and reject subsequently persisted 
 });
 
 test('reopened notices replay once and acknowledged interruptions cannot release reserved Fear',t=>{
-  const f=fixture(t),row=f.fear.reserve('c','q',f.options),notice=f.notice(row);
+  const f=fixture(t),row=f.fear.reserve('c','q',f.options),attempt=f.fear.claimAnnouncement('c','q',f.options),notice={...f.notice(row),attemptId:attempt.attemptId};
   const announced=f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice});f.reopen();
   assert.deepEqual(f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice}),announced);assert.equal(f.fear.read('c','q').history.length,2);
   assert.throws(()=>f.fear.cancel('c','q',{check:f.check}),/reviewed recovery/);f.reopen();
@@ -55,4 +55,29 @@ test('reopening cannot turn a stale source into current Fear announcement author
   const f=fixture(t),row=f.fear.reserve('c','q',f.options);f.reopen();f.invalidate();
   assert.throws(()=>f.fear.acknowledge('c','q',{...f.options,readNotice:()=>f.notice(row)}),/Source no longer current/);
   assert.equal(f.fear.read('c','q').status,'awaiting_announcement');assert.equal(f.fear.reserved('c'),1);
+});
+
+test('saved announcement claim blocks cancellation and resend across reopen despite stale external proof',t=>{
+  const f=fixture(t),row=f.fear.reserve('c','q',f.options),before=f.fear.readPublication('c','q');
+  const attempt=f.fear.claimAnnouncement('c','q',f.options);assert.equal(attempt.attemptCount,1);assert.ok(attempt.attemptId);f.reopen();
+  assert.deepEqual(f.fear.readPublication('c','q'),attempt);assert.throws(()=>f.fear.claimAnnouncement('c','q',f.options),/already attempted/);
+  assert.throws(()=>f.fear.cancel('c','q',{check:f.check,readPublication:()=>before}),/reviewed recovery/);
+  f.fear.markAnnouncementUncertain('c','q',attempt.attemptId,{check:f.check});f.reopen();assert.equal(f.fear.readPublication('c','q').status,'uncertain');
+  assert.throws(()=>f.fear.claimAnnouncement('c','q',f.options),/already attempted/);assert.equal(f.fear.reserved('c'),1);
+  const notice={...f.notice(row),attemptId:attempt.attemptId};
+  assert.throws(()=>f.fear.acknowledge('c','q',{...f.options,readNotice:()=>({...notice,attemptId:'wrong'})}),/saved Fear publication/);
+  const delivered=f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice});f.reopen();assert.equal(f.fear.readPublication('c','q').status,'delivered');
+  assert.deepEqual(f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice}),delivered);
+});
+
+test('cancelled reservation cannot claim publication and stale owner source leaves publication unattempted',t=>{
+  const f=fixture(t);f.fear.reserve('c','q',f.options);f.invalidate();
+  assert.throws(()=>f.fear.claimAnnouncement('c','q',f.options),/Source no longer current/);assert.equal(f.fear.readPublication('c','q').status,'not_started');
+  f.fear.cancel('c','q',{check:f.check,readPublication:f.fear.readPublication});assert.throws(()=>f.fear.claimAnnouncement('c','q',f.options),/already attempted or unavailable/);
+});
+
+test('final authorization failure rolls publication claim back and unclaimed receipt cannot announce',t=>{
+  const f=fixture(t),row=f.fear.reserve('c','q',f.options);let checks=0;
+  assert.throws(()=>f.fear.claimAnnouncement('c','q',{...f.options,check(){if(++checks===2)throw new Error('Publication authority changed');}}),/Publication authority changed/);f.reopen();
+  assert.equal(f.fear.readPublication('c','q').status,'not_started');assert.throws(()=>f.fear.acknowledge('c','q',{...f.options,readNotice:()=>f.notice(row)}),/saved Fear publication/);
 });

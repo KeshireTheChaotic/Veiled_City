@@ -1,0 +1,13 @@
+# R3 — transaction-bound announcement attempts (slice complete)
+
+Fear reservations now contain durable native publication state. `claimAnnouncement` validates the current opportunity and changes `not_started` to `delivering` with one random attempt identity inside the Fear transaction. A second claim is rejected. `markAnnouncementUncertain` retains the same identity without allowing resend. Acknowledgement requires matching saved attempt identity plus the existing exact native owner-only notice proof and current opportunity; it records delivered publication state. Replay is inert.
+
+Cancellation now checks the stored publication state in its own transaction before consulting external evidence. Thus a stale external `not_started` assertion cannot release a reservation after a saved publication attempt. Cancellation and claim serialize in the same database. No network operation, automatic resend, Fear debit, execution API or AI tool was added.
+
+Modified files: `rules/fear-reservations.js`, `r3-fear-reservations.test.mjs`, `r3-fear-durability.test.mjs`, this report and hash manifest.
+
+Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-fear-coordinator.test.mjs tests/veilkeeper2/r3-fear-reservations.test.mjs tests/veilkeeper2/r3-fear-durability.test.mjs tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs`: 21 passed, zero failures/skips, 968.2002 ms. New file-backed cases cover claim/reopen, stale cancellation proof, no resend, uncertainty/reopen, wrong attempt, exact delivered replay, cancellation-before-claim, stale source and claim authorization rollback. Changed-dependency suites reran; unchanged roll/process-race suites did not.
+
+Migration/rollback: new reservations store publication state in the existing JSON record; no schema or production migration occurred. Older records lacking publication state are deliberately held rather than assumed unattempted. They require reviewed migration/recovery. Downgrading could bypass the saved-attempt guard; preserve database copies and leave the opt-in runtime disabled on rollback.
+
+Known holds: coordinator-bound hold validation before a send, exact live Discord audience/delivery proof, uncertain delivery reconciliation, competing-process publication/cancellation qualification, native reviewer/GM decision authority, atomic Fear debit/attack/death settlement and full R3 parity. Tests use injected native evidence and do not establish live quality. R0–R8 remain incomplete. Next exact phase: R3 connect announcement claims to the saved roll hold and native publication adapter before enabling sends. No major-phase push, deployment or legacy retirement occurred; publishing target remains `rebuild/veilkeeper2-audience-first`.
