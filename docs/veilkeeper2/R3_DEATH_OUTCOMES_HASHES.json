@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/pc-death-outcomes.js",
+    "sha256": "1a991c30a26572c759049b9d18510632eb379d306477cdb0430aba4d80ee486c"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-death-outcomes.test.mjs",
+    "sha256": "aae02c8dc2bbd690bb8f06a5ec71039ede859da78da9a15ee607e9678d60472d"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DEATH_OUTCOMES_REPORT.md",
+    "sha256": "8f2c0ad31c397a71817fa5d7c82e2e5ef1cd3d418211f0c2a35ffa6bdc3f1b04"
+  }
+]
