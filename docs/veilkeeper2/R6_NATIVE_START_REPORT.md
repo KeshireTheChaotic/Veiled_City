@@ -18,6 +18,8 @@ Update (legacy .env, ChatGPT mode, guild allowlist; user instruction): native-st
 
 Live smoke attempt (user-authorized, test guild only, nothing sent): startNative with the legacy .env (loaded by path), a scratch copy of the legacy database and VK2_ALLOWED_GUILD_ID reached the Discord gateway but was refused with "Used disallowed intents": the native client needs the privileged Server Members Intent for its full-member audience reads and it is not enabled for this application. The legacy .env already sets DISCORD_GUILD_ID to the test guild, AI_AUTH_MODE=chatgpt and a Codex login file exists. Next live step is the user enabling the intent (runbook prerequisite) and rerunning the smoke. The scratch database copy was deleted.
 
+Update (records plumbing): with a provider the root also opens knowledge.sqlite (the existing knowledge store) and passes it as the turn runner records source in place of the empty stub. It is empty and nothing selects references yet, so context is unchanged; GM-authored records and recall are the next composition step. Tests: r6-native-root 4, r6-native-start 8, r1-discord-turn-runner and r1-discord-chain re-run (21 passed).
+
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 
 
