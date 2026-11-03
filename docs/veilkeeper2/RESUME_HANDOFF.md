@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Prepared 2026-11-02. The full R0–R8 goal is incomplete. This is a current-state handoff, not phase acceptance. The requested pause threshold is now reached: five-hour 98% used / weekly 79% used. Implementation has stopped. The goal pause is recorded immediately after this documentation commit; verify actual goal status, and do not resume work without explicit user instruction. Do not infer approval from time passing or redeem a reset without permission.
+Resumed 2026-11-03 by explicit goal activation. The full R0–R8 goal remains active and incomplete. Initial resumed usage: five-hour 1% used / weekly 79% used; recheck live limits at checkpoints and pause again at 98% used on either limit. This is a resumption guide, not phase acceptance. Latest lifecycle changes and evidence are in R3_DEATH_OUTCOME_STATE_REPORT.md. Do not infer approval from time passing or redeem a reset without permission.
 
 ## Workspace, Git and authorization
 
@@ -39,7 +39,7 @@ R3 Fear chain:
 8. `incoming-damage.js` calculates resistance, marked Armor/HP and death eligibility. `incoming-damage-authority.js` reconstructs saved native dice, verifies current private owner Armor choice and normalizes fixed mechanical records into the action store. No new RNG is used during damage.
 9. `action-store.js` atomically updates native marked HP/Armor, one damage receipt and owner death eligibility. A duplicate attack/choice cannot apply twice. Death requests do not choose a fate.
 10. Misses and committed nonlethal damage can close the interruption. Pending death eligibility blocks closure. The original roll stays held until current native continuation proves owner/control, ability to act and unchanged published stakes/Difficulty/modifiers. Dice recording rechecks that immutable continuation proof. Changed adjudication requires reviewed recovery; no refresh route yet.
-11. Latest slice saves private death review and immutable owner choice among all three SRD moves. It does NOT resolve death dice, fate, Hope/Stress recovery, allocation, scars or Blaze final action. Actual actor snapshot/event provenance remains a native adapter obligation.
+11. Private death review and immutable owner choice persist. The resumed lifecycle slice adds canonical Stress/level/status/death state alongside existing HP/Armor/Hope, once-only native death dice/outcomes, critical recovery and Avoid Death permanent Hope cap/scars. Hope allocation and Blaze final action remain pending. See R3_DEATH_OUTCOME_STATE_REPORT.md; actual actor/event provenance and canonical live migration remain native adapter obligations.
 
 ## Phase gates — truthful status
 
@@ -72,10 +72,9 @@ Real GM decision, encounter/statblock/presence/range/access, passive/condition/f
 ## Ordered next actions
 
 1. Check goal status and live limits. If paused, stop until explicit resume. Inspect Git status/latest report and preserve README. Recheck remote heads before future integration; do not reset or overwrite externally published work.
-2. Finish owner death lifecycle from pinned `pc-death-rules.js` / `pc-death-eligibility.js`, plus current pure outcomes/evidence modules. First establish canonical transactional PC Stress/Hope/cap/level/status/death-state inputs; current marked-defense storage alone cannot safely settle all moves. Do not create competing PC authorities or generic patches.
-3. Resolve a saved owner choice with native once-only dice and immutable outcome. Preserve all branches: Risk It All Fear death, critical full HP/Stress recovery, Hope awaiting explicit allocation; Avoid Death unconscious/scar/permanent Hope slot loss and journey end; Blaze of Glory approved owner final action then death. No automatic allocation, authored scar or extra Fear move.
+2. Continue owner death lifecycle from pinned `pc-death-rules.js` and current `pc-life-state.js`. Canonical transactional Stress/level/status/death state now shares the action database with existing HP/Armor/Hope. Qualify native live actor/source projection and migration; do not create competing PC authorities or generic patches.
+3. Implement explicit native Hope recovery allocation and Blaze of Glory approved owner final action/death. Once-only initial death outcomes now preserve all branches and Awaiting states. Do not automatically allocate recovery, author a scar, add a Fear move or invent the final action.
 4. Link actual death outcome/eligibility into lethal interruption completion. A dead/unconscious PC must not regain its original action. Add lawful continuation/refresh/recovery only from current native rules; retain stale-action holds.
 5. Connect actual native Armor/death component decisions, private risk display and source evidence, then current actor/adjudication/GM legality readers. Qualify source revocation, edited messages, ownership changes and private scope through real native stores. Do not promote synthetic marker fields to authority.
 6. Qualify concurrent damage/death/announcement/cancellation, process crash, delivery ambiguity and restart without duplicate effects/RNG/output. Rehearse semantic migration/restore before retirement. Preserve native transaction boundaries and canonical receipts.
 7. Complete R0 public contract/dependency/removal map and every remaining R1–R8 acceptance gate. Restore conversational/autonomous scope alongside mechanics: the end goal is a living GM world, not a rules terminal. Only certify full phase completion against governing specs; then publish that phase to origin rebuild. Production cutover remains separately authorized.
-

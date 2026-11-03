@@ -1,0 +1,30 @@
+[
+  {
+    "path": "bot/src/v2/rules/action-store.js",
+    "sha256": "a9b99778f3257665cbe581234cd9d3c71e2e93d1896198dc0264096931763ac3"
+  },
+  {
+    "path": "bot/src/v2/rules/pc-life-state.js",
+    "sha256": "eaca3889aeb4e30418fae4bcde9fb5f9314099b694446015a65ffb071dd6bee4"
+  },
+  {
+    "path": "bot/src/v2/rules/pc-death-eligibility.js",
+    "sha256": "a1ac2ad0d248bb37e13c06ba9669c9268900c3fbe8b999022f5ab58eaa3d8dd8"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-death-outcome-store.test.mjs",
+    "sha256": "e6cc5f88b14e79060ee4727db1ee47829ef31e0bf4f993e7e8fed77eaaf73608"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DEATH_OUTCOME_STATE_REPORT.md",
+    "sha256": "f2248cb0bbf1ad8f6e1782fa5d702cdbce9f1fe12c25a51c5f98c881fa05f540"
+  },
+  {
+    "path": "docs/veilkeeper2/LEDGER.md",
+    "sha256": "bfe791c8827e6913a7847bab1d46403c3984ae0b4740feaa0952e1a52ccd3546"
+  },
+  {
+    "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+    "sha256": "17f4b5f46bfd25d3ade09c2ad40ed832f13107dc82cbedaf06ef734d2a4d55e9"
+  }
+]

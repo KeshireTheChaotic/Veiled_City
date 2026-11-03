@@ -2,6 +2,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {pcEffectResource} from './pc-resources.js';
 import {incomingDamageOutcome} from './incoming-damage.js';
 import {createHash} from 'node:crypto';
+import {createPcLifeState} from './pc-life-state.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const graphs={ordinary_roll:{pending:['awaiting_notice','cancelled'],awaiting_notice:['awaiting_player_roll','cancelled'],awaiting_player_roll:['ready_to_resolve','cancelled'],ready_to_resolve:['cancelled']},hope_cost:{pending:['awaiting_consent','cancelled'],awaiting_consent:['ready_to_commit','cancelled'],ready_to_commit:['cancelled']}};
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
@@ -9,11 +10,12 @@ const decode=r=>r?JSON.parse(r.data):null;
 /** Native control state only: cannot mark effects resolved or patch actor state. */
 export function openActionStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
-  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents','vk3_pc_defenses'].includes(r.name)))throw new Error('Dedicated action database required');
+  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents','vk3_pc_defenses','vk3_pc_life'].includes(r.name)))throw new Error('Dedicated action database required');
     db.exec('PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS vk3_actions(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id)); CREATE TABLE IF NOT EXISTS vk3_action_events(campaign TEXT,source TEXT,data TEXT,PRIMARY KEY(campaign,source));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_action_hope(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor))');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_cost_terms(campaign TEXT,action TEXT,data TEXT,PRIMARY KEY(campaign,action)); CREATE TABLE IF NOT EXISTS vk3_cost_consents(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_pc_defenses(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor));');
+    db.exec('CREATE TABLE IF NOT EXISTS vk3_pc_life(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor));');
   }catch(e){db.close();throw e;}
   const read=(c,a)=>decode(db.prepare('SELECT data FROM vk3_actions WHERE campaign=? AND id=?').get(c,a));
   function tx(check,fn){if(typeof check!=='function')throw new Error('Native action authority required');db.exec('BEGIN IMMEDIATE');try{check();const r=fn();check();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}}
@@ -43,6 +45,8 @@ export function openActionStore(filename=':memory:'){
         ||cost.sourceRef!==action.sourceRef||cost.sourceRevision!==action.sourceRevision||cost.status!=='accepted'||cost.ownerConfirmed!==true||!Number.isSafeInteger(cost.amount)||cost.amount<1||hope?.ownerUserId!==action.ownerUserId)throw new Error('Native owner action cost required');
       const eventKey=`${action.id}:hope-committed`,previous=decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(input.campaignId,eventKey));
       if(previous){if(JSON.stringify(previous.request)!==JSON.stringify(input)||JSON.stringify(previous.cost)!==JSON.stringify(cost))throw new Error('Action outcome replay conflict');return previous;}
+      const life=decode(db.prepare('SELECT data FROM vk3_pc_life WHERE campaign=? AND actor=?').get(input.campaignId,action.actorId));
+      if(life&&(life.status!=='active'||life.deathState&&life.deathState.status!=='recovered'||readPcDefenses(input.campaignId,action.actorId)?.hp.current>=readPcDefenses(input.campaignId,action.actorId)?.hp.max))throw new Error('PC lifecycle requires native recovery before an ordinary Hope action');
       if(action.status!=='ready_to_commit'||action.revision!==input.expectedActionRevision||hope.revision!==input.expectedHopeRevision)throw new Error('Action or Hope revision conflict');
       const change=pcEffectResource({resources:{hope:hope.hope,hope_max:hope.cap}},'hope',-cost.amount),afterHope={...hope,hope:change.after,revision:hope.revision+1},afterAction={...action,status:'resolved',revision:action.revision+1,effectsCommitted:true};
       const receipt={request:input,cost,beforeAction:action,afterAction,beforeHope:hope,afterHope,effectsCommitted:true};
@@ -114,7 +118,8 @@ export function openActionStore(filename=':memory:'){
     if(JSON.stringify(readEvidence(c,a))!==JSON.stringify(e))throw new Error('Owner death evidence changed');inspect();
     db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
   });}
-  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+  const pcLife=createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,deathEvent});
+  return Object.freeze({...pcLife,create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
     recordIncomingDeathReview:(c,a,options)=>recordDeathEvidence(c,a,'review',options),recordIncomingDeathChoice:(c,a,options)=>recordDeathEvidence(c,a,'choice',options),
     readIncomingDeathReview:(c,a)=>deathEvent(c,a,'review'),readIncomingDeathChoice:(c,a)=>deathEvent(c,a,'choice'),
     readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),
