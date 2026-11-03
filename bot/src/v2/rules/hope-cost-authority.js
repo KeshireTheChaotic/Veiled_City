@@ -2,14 +2,15 @@
  * spending is a separate native call and remains outside the AI capability set.
  */
 export function createHopeCostAuthority({sourceAuthority,readActor,readAction,readConsent,hopeStore}){
+  const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
   if(typeof sourceAuthority?.revalidate!=='function'||[readActor,readAction,readConsent].some(f=>typeof f!=='function')||typeof hopeStore?.spend!=='function')throw new TypeError('Native action-cost readers required');
   function evidence(source,actorId,parameters){
     if(!sourceAuthority.revalidate(source)||!parameters||Object.keys(parameters).sort().join(',')!=='action_ref,consent_ref')throw new Error('Native action and owner consent references required');
     const actor=readActor(source.campaign,actorId),action=readAction(source.campaign,parameters.action_ref),consent=readConsent(source.campaign,parameters.consent_ref);
     if(!source.actors.includes(actorId)||actor?.id!==actorId||actor.kind!=='pc'||actor.status!=='active'||actor.campaignId!==source.campaign||actor.sceneId!==source.scene
-      ||actor.ownerUserId!==source.principal||actor.controllerUserId!==source.principal||actor.controlRole!=='owner'
+      ||actor.ownerUserId!==source.principal||actor.controllerUserId!==source.principal||actor.controlRole!=='owner'||!id(actor.controlRevision)
       ||!action||action.id!==parameters.action_ref||action.campaignId!==source.campaign||action.sceneId!==source.scene||action.actorId!==actorId||action.ownerUserId!==source.principal
-      ||action.status!=='awaiting_cost'||action.sourceRef!==source.id||action.sourceRevision!==source.revision||action.controlRevision!==actor.controlRevision
+      ||action.status!=='awaiting_cost'||!id(action.revision)||action.sourceRef!==source.id||action.sourceRevision!==source.revision||action.controlRevision!==actor.controlRevision
       ||action.cost?.resource!=='hope'||!Number.isSafeInteger(action.cost.amount)||action.cost.amount<1||typeof action.cost.slot!=='string'||!action.cost.slot
       ||!consent||consent.campaignId!==source.campaign||consent.sceneId!==source.scene||consent.id!==parameters.consent_ref||consent.status!=='accepted'||consent.ownerUserId!==source.principal||consent.sourceRef!==source.id||consent.sourceRevision!==source.revision
       ||consent.actionRef!==action.id||consent.actionRevision!==action.revision||consent.actorId!==actorId||consent.amount!==action.cost.amount||consent.costSlot!==action.cost.slot

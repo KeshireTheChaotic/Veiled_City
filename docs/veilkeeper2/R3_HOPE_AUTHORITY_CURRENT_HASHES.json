@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "33b4795adfc15c76c68eeb9c739f79ffe68d308257f0ccf748ba41b910cf8fe2",
+    "path": "bot/src/v2/rules/hope-cost-authority.js"
+  },
+  {
+    "sha256": "dce5459d4e4af43bd77789f9c192662a1018ba80a35342060445189946294263",
+    "path": "bot/tests/veilkeeper2/r3-hope-authority.test.mjs"
+  },
+  {
+    "sha256": "abcca76d2a81f84e5200208224f27a9a4eca616298cbea97d1ede2804ab57cca",
+    "path": "docs/veilkeeper2/R3_HOPE_AUTHORITY_REPORT.md"
+  },
+  {
+    "sha256": "1c988568a61513fc589333c29723fc41b8aedb8ebda1e790ec5b58b3823881a6",
+    "path": "docs/veilkeeper2/LEDGER.md"
+  }
+]
