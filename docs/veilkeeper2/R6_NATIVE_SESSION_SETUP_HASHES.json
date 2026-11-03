@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "path": "bot/src/v2/native-session-setup.js",
+      "sha256": "5b8bfba95b7c76a543672ace86f9ea883fdf5a225083a4fefc171af8828e7614"
+    },
+    {
+      "path": "bot/src/v2/session-occasions.js",
+      "sha256": "4c2f49cfccae9a1e7d8b6ec2a2267e6f326f27cf891b28c6fa75c08ed4069d12"
+    },
+    {
+      "path": "bot/src/v2/scene-store.js",
+      "sha256": "89a4c1089c4b39a75e5a1affcfa85d2f76b6ea7e2fab6471305f32e2aeaaed95"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-authority.js",
+      "sha256": "902c7c983fa0160197dd692ec4517fbcfd545cbe6087804fdb92cf9b7d2764a7"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-discord-gm-authority.test.mjs",
+      "sha256": "01f1207b4fd7520cf4690e88053e51d013626fc45ab3f71ed5cc78fae8597a27"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-scene-store.test.mjs",
+      "sha256": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c"
+    }
+  ],
+  "node": "v26.13.0",
+  "completedCases": 20,
+  "checkpoint": "R6_NATIVE_SESSION_SETUP",
+  "durationMs": 532.3219
+}

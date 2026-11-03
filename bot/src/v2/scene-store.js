@@ -1,16 +1,17 @@
 import {DatabaseSync} from 'node:sqlite';
 import {createHash} from 'node:crypto';
+import {SESSION_ASSEMBLIES} from './session-occasions.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const ids=v=>Array.isArray(v)&&v.length<=256&&v.every(id)&&new Set(v).size===v.length;
 const fields={message:['id','campaignId','userId','channelId','deleted','text','origin'],channel:['id','campaignId','sceneId','kind','permissionsVerified','recipientIds','writerIds','ownerUserId'],
-  scene:['id','campaignId','sessionId','status','participants'],session:['id','campaignId','status'],actor:['id','campaignId','sceneId','status','kind','ownerUserId','controllerUserId','controlRole','proxyAuthorized','delegationRef','name']};
+  scene:['id','campaignId','sessionId','status','participants'],session:['id','campaignId','status','title','assembly','setup'],actor:['id','campaignId','sceneId','status','kind','ownerUserId','controllerUserId','controlRole','proxyAuthorized','delegationRef','name']};
 const decode=r=>r?JSON.parse(r.data):null;
 function valid(kind,d){
   if(!d||typeof d!=='object'||Array.isArray(d)||!fields[kind]||Object.keys(d).some(k=>!fields[kind].includes(k))||!id(d.id)||!id(d.campaignId))return false;
   if(kind==='message')return id(d.userId)&&id(d.channelId)&&typeof d.deleted==='boolean'&&typeof d.text==='string'&&d.text.length<=16000&&(d.origin===undefined||['discord_message','discord_component'].includes(d.origin));
   if(kind==='channel')return id(d.sceneId)&&['party','private'].includes(d.kind)&&typeof d.permissionsVerified==='boolean'&&ids(d.recipientIds)&&ids(d.writerIds)&&(d.ownerUserId==null||id(d.ownerUserId));
-  if(kind==='session')return ['active','ended'].includes(d.status);
+  if(kind==='session')return ['active','ended'].includes(d.status)&&(d.title===undefined||typeof d.title==='string'&&d.title.length<=256)&&(d.assembly===undefined||SESSION_ASSEMBLIES.includes(d.assembly))&&(d.setup===undefined||d.setup&&Object.keys(d.setup).sort().join(',')==='interactionId,principal,snapshotHash,sourceRef,sourceRevision'&&Object.values(d.setup).every(id)&&/^[a-f0-9]{64}$/.test(d.setup.snapshotHash));
   if(kind==='scene')return id(d.sessionId)&&['active','closed'].includes(d.status)&&Array.isArray(d.participants)&&d.participants.length<=256&&d.participants.every(p=>p&&Object.keys(p).sort().join(',')==='actorId,presence,userId'&&id(p.actorId)&&id(p.userId)&&['present','late','guest','absent'].includes(p.presence))&&new Set(d.participants.map(p=>p.actorId)).size===d.participants.length;
   return id(d.sceneId)&&['active','closed'].includes(d.status)&&['pc','npc'].includes(d.kind)&&[null,undefined,'owner','proxy'].includes(d.controlRole)
     &&[d.ownerUserId,d.controllerUserId,d.delegationRef].every(v=>v==null||id(v))&&(d.proxyAuthorized===undefined||typeof d.proxyAuthorized==='boolean')&&(d.name===undefined||id(d.name));
@@ -58,5 +59,5 @@ export function openSceneStore(filename=':memory:'){
     }catch(e){db.exec('ROLLBACK');throw e;}
   }
   const readers=Object.freeze({readMessage:(c,id)=>read('message',c,id),readChannel:(c,id)=>read('channel',c,id),readScene:(c,id)=>read('scene',c,id),readSession:(c,id)=>read('session',c,id),readActor:(c,id)=>read('actor',c,id)});
-  return Object.freeze({readers,commitSnapshot,history:(campaign,kind,id)=>db.prepare('SELECT data,source FROM vk2_scene_history WHERE campaign=? AND kind=? AND id=? ORDER BY revision').all(campaign,kind,id).map(r=>({record:decode(r),sourceRef:r.source})),close:()=>db.close()});
+  return Object.freeze({readers,commitSnapshot,activeSessions:campaign=>db.prepare("SELECT r.data FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='session' AND json_extract(r.data,'$.status')='active'").all(campaign).map(decode),history:(campaign,kind,id)=>db.prepare('SELECT data,source FROM vk2_scene_history WHERE campaign=? AND kind=? AND id=? ORDER BY revision').all(campaign,kind,id).map(r=>({record:decode(r),sourceRef:r.source})),close:()=>db.close()});
 }

@@ -7,6 +7,7 @@ import {createDiscordGmAuthority} from '../../src/v2/discord-gm-authority.js';
 import {openSceneStore} from '../../src/v2/scene-store.js';
 import {openActionStore} from '../../src/v2/rules/action-store.js';
 import {createPcBootstrapSource} from '../../src/v2/pc-bootstrap-source.js';
+import {createNativeSessionSetup} from '../../src/v2/native-session-setup.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 function fixture(t){
   let now=1000000,fetches=0;const client=new EventEmitter(),policy={campaignId:'c',revision:'1',gmRoleId:'gm-role',gmUserIds:[],allowAdministrators:false},roles=new Map([['gm-role',{}]]),guild={id:'c'},member={id:'gm',guild,user:{id:'gm',bot:false},roles:{cache:new Map([['gm-role',{}]])},permissions:new PermissionsBitField([])},channel={id:'admin',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages])};
@@ -43,4 +44,19 @@ test('observed exact GM snapshot review authorizes actual atomic native bootstra
 });
 test('closing invalidates leases and detaches observation without altering registered roles',async t=>{
   const f=fixture(t);f.observe();const proof=await f.authority.authorize(f.event);f.authority.close();assert.throws(()=>f.authority.check(proof));assert.equal(f.client.listenerCount('interactionCreate'),0);assert.equal(f.member.roles.cache.has('gm-role'),true);
+});
+test('observed human session creation saves provenance and an empty opening occasion without PC attendance',async t=>{
+  const f=fixture(t),scenes=openSceneStore();t.after(()=>scenes.close());f.observe();const proof=await f.authority.authorize(f.event),setup=createNativeSessionSetup({sceneStore:scenes,gmAuthority:f.authority}),created=setup.start(proof);assert.equal(created.session.title,'Night watch');assert.equal(created.session.assembly,'auto');assert.equal(created.session.setup.principal,'gm');assert.equal(created.session.setup.sourceRevision,proof.sourceRevision);assert.deepEqual(created.scene.participants,[]);assert.equal(scenes.activeSessions('c').length,1);assert.equal(scenes.activeSessions('other').length,0);assert.deepEqual(setup.start(proof),created);assert.equal(scenes.history('c','session',created.session.id).length,1);assert.equal(scenes.history('c','scene',created.scene.id).length,1);
+});
+test('another session-start command cannot replace an active session',async t=>{
+  const f=fixture(t),scenes=openSceneStore();t.after(()=>scenes.close());f.observe();const proof=await f.authority.authorize(f.event),setup=createNativeSessionSetup({sceneStore:scenes,gmAuthority:f.authority}),first=setup.start(proof),secondEvent={...f.event,id:'second-interaction'};f.client.emit('interactionCreate',secondEvent);const second=await f.authority.authorize(secondEvent);assert.throws(()=>setup.start(second),/Existing active session/);assert.equal(scenes.activeSessions('c').length,1);assert.equal(scenes.activeSessions('c')[0].id,first.session.id);assert.equal(scenes.readers.readSession('c',second.targetRef),null);
+});
+test('native session and opening scene roll back together when final GM authority is revoked',async t=>{
+  const f=fixture(t),scenes=openSceneStore();t.after(()=>scenes.close());f.observe();const proof=await f.authority.authorize(f.event);let checks=0;const setup=createNativeSessionSetup({sceneStore:scenes,gmAuthority:{...f.authority,check(value){if(++checks===2)f.member.roles.cache.clear();return f.authority.check(value);}}});assert.throws(()=>setup.start(proof),/revoked/);assert.equal(scenes.readers.readSession('c',proof.targetRef),null);assert.equal(scenes.readers.readScene('c',`${proof.targetRef}:opening`),null);assert.equal(scenes.activeSessions('c').length,0);
+});
+test('session-start replay cannot reopen an ended session or displace its successor',async t=>{
+  const f=fixture(t),scenes=openSceneStore();t.after(()=>scenes.close());f.observe();const proof=await f.authority.authorize(f.event),setup=createNativeSessionSetup({sceneStore:scenes,gmAuthority:f.authority}),first=setup.start(proof),{revision,...old}=first.session;scenes.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'native-end-fixture',records:[{kind:'session',data:{...old,status:'ended'},expectedRevision:Number(revision)}]},{check:()=>f.authority.check(proof)});const nextEvent={...f.event,id:'next-session'};f.client.emit('interactionCreate',nextEvent);const next=setup.start(await f.authority.authorize(nextEvent));const replay=setup.start(proof);assert.equal(replay.session.status,'ended');assert.deepEqual(replay.receipt,first.receipt);assert.equal(scenes.activeSessions('c')[0].id,next.session.id);assert.equal(scenes.activeSessions('c').length,1);
+});
+test('native session metadata rejects unsupported assembly and non-provenance fields',t=>{
+  const scenes=openSceneStore();t.after(()=>scenes.close());for(const patch of [{assembly:'force_pc_reunion'},{setup:{principal:'gm',gm:true}},{hp:99}])assert.throws(()=>scenes.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'bad',records:[{kind:'session',data:{id:'session',campaignId:'c',status:'active',...patch},expectedRevision:null}]},{check:()=>{}}),/Closed native/);assert.equal(scenes.activeSessions('c').length,0);
 });

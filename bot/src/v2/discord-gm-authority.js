@@ -1,8 +1,9 @@
 import {createHash} from 'node:crypto';
 import {ChannelType,PermissionFlagsBits as P} from 'discord.js';
+import {SESSION_ASSEMBLIES} from './session-occasions.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
-const assemblies=new Set(['auto','already_together','shared_incident','common_client','crossed_cases','mutual_threat','faction_summons','chain_contacts','rescue','debt_favor','manual']);
+const assemblies=new Set(SESSION_ASSEMBLIES);
 /** Native human operation authority, not PC control, canon or inference context.
  * check() validates a short-lived refreshed lease; it is not another Discord
  * fetch. Refresh immediately before use when crossing an asynchronous boundary.
