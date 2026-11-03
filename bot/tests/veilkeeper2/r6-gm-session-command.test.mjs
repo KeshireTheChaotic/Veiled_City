@@ -31,7 +31,9 @@ test('uncertain reply delivery is recorded and not retried',async t=>{
 test('unrelated and attendance subcommands are not claimed',async t=>{
   const f=fixture(t);f.event.options.getSubcommand=()=> 'present';assert.equal(f.service.claimsRoute(f.event),false);assert.equal(await f.service.handle(f.event),false);
 });
-const roll=(f,id,json)=>{const e={...f.event,id,commandName:'vc-roll',deferred:false,replied:false,options:{getSubcommand:()=> 'effect',getSubcommandGroup:()=>null,getString:()=>JSON.stringify(json)}};e.deferReply=async()=>{e.deferred=true;f.replies.push([id,'defer']);};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
+const GM_SUBCOMMANDS={'session-reopen':['session-reopen',{session:'session'}],'pc-register':['register-character',{actor:'character'}],'pc-rebind':['rebind-character',{actor:'character'}],'pc-bootstrap-preview':['bootstrap-preview',{actor:'character'}],'pc-bootstrap-review':['bootstrap-review',{actor:'character',snapshotHash:'snapshot'}],'draft-list':['drafts',{}],'draft-publish':['publish-draft',{source:'source',fingerprint:'fingerprint'}]};
+// Drives the typed /vc-gm subcommands; `input` keeps the closed native operation shape the services verify.
+const roll=(f,id,input)=>{const [sub,fields]=GM_SUBCOMMANDS[input.op]??['unsupported',{}],values={};for(const [field,option] of Object.entries(fields))values[option]=input[field];const e={...f.event,id,commandName:'vc-gm',deferred:false,replied:false,options:{getSubcommand:()=>sub,getSubcommandGroup:()=>null,getString:name=>values[name]}};e.deferReply=async()=>{e.deferred=true;f.replies.push([id,'defer']);};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
 test('GM previews a private snapshot, then exact review atomically initializes the PC once',async t=>{
   const f=fixture(t,{withBootstrap:true}),p=roll(f,'p1',{op:'pc-bootstrap-preview',actor:'pc'});assert.equal((await f.service.handle(p)).status,'committed');const text=f.replies.find(r=>r[0]==='p1'&&r[1]!=='defer')[1],hash=text.match(/snapshotHash ([a-f0-9]{64})/)[1];assert.ok(!f.actions.readPcLife('c','pc')?.life);
   const bad=roll(f,'r0',{op:'pc-bootstrap-review',actor:'pc',snapshotHash:'0'.repeat(64)});assert.equal((await f.service.handle(bad)).status,'native_review_required');assert.ok(!f.actions.readPcLife('c','pc')?.life);
@@ -109,4 +111,8 @@ test('an unconfirmed send holds the draft as uncertain and is never retried',asy
   const f=draftFixture(t);let calls=0;const guild=await f.client.guilds.fetch(),channel=await guild.channels.fetch();channel.send=async()=>{calls++;throw new Error('network gone');};
   assert.equal((await f.service.handle(roll(f,'p6',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');assert.equal(f.draftRows[0].state,'uncertain:network gone');assert.match(f.replies.at(-1)[1],/not confirmed/);
   assert.equal((await f.service.handle(roll(f,'p7',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');assert.equal(calls,1);
+});
+test('a /vc-roll command carrying GM operation JSON is not claimed by the GM service',async t=>{
+  const f=fixture(t,{withBootstrap:true}),e={...f.event,commandName:'vc-roll',options:{getSubcommand:()=> 'effect',getSubcommandGroup:()=>null,getString:()=>JSON.stringify({op:'pc-register',actor:'pc3'})}};f.client.emit('interactionCreate',e);
+  assert.equal(f.service.claimsRoute(e),false);assert.equal(await f.service.handle(e),false);assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
 });

@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {ChannelType,PermissionFlagsBits as P} from 'discord.js';
 import {SESSION_ASSEMBLIES} from './session-occasions.js';
+import {gmCommandInput} from './discord-gm-input.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 const assemblies=new Set(SESSION_ASSEMBLIES);
@@ -19,8 +20,8 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
       const title=e.options.getString('title')??'',assembly=e.options.getString('assembly')??'auto';if(typeof title!=='string'||title.length>256||!assemblies.has(assembly))throw new Error('Native session title and assembly required');const payload={title,assembly};return {operation:'session_start',targetRef:`session:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};
     }
     if((e.commandName==='vc-session'||e.commandName==='vc'&&group==='session')&&sub==='end'){const payload={};return {operation:'session_end',targetRef:`session-end:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};}
-    if((e.commandName==='vc-roll'||e.commandName==='vc'&&group==='roll')&&sub==='effect'){
-      const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)throw new Error('Bounded native GM review required');const input=JSON.parse(raw);
+    const input=gmCommandInput(e);if(input){
+
       if(input?.op==='draft-publish'&&Object.keys(input).sort().join(',')==='fingerprint,op,source'&&id(input.source)&&/^[a-f0-9]{64}$/.test(input.fingerprint))return {operation:'draft_publish',targetRef:input.source,snapshotHash:hash(input)};
       if(input?.op==='draft-list'&&Object.keys(input).join(',')==='op')return {operation:'draft_list',targetRef:'drafts',snapshotHash:hash(input)};
       if(input?.op==='session-reopen'&&Object.keys(input).sort().join(',')==='op,session'&&id(input.session)){const payload={session:input.session};return {operation:'session_reopen',targetRef:input.session,snapshotHash:hash(payload),payload};}

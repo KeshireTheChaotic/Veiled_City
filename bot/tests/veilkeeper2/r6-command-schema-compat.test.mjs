@@ -14,6 +14,9 @@ test('the native router only claims session and roll commands that the registere
   assert.ok(stringOption(sub(roll,'effect'),'json'),'vc-roll effect json');
   assert.ok(sub(byName('vc-player'),'private-channel'),'vc-player private-channel (the legacy owner command, now native)');
 });
-test('GM bootstrap, registration, rebind, reopen and death operations travel in the existing roll effect JSON (no schema additions)',()=>{
-  const json=stringOption(sub(byName('vc-roll'),'effect'),'json');assert.ok(json.max_length===undefined||json.max_length>=4096,'json option must allow the 4096-char native bound');
+test('every native GM operation is a typed /vc-gm subcommand and /vc-roll stays dice-only',()=>{
+  const gm=byName('vc-gm'),roll=byName('vc-roll'),spec={'session-reopen':['session'],'register-character':['character'],'rebind-character':['character'],'bootstrap-preview':['character'],'bootstrap-review':['character','snapshot'],'drafts':[],'publish-draft':['source','fingerprint']};
+  for(const [name,opts] of Object.entries(spec)){const s=sub(gm,name);assert.ok(s,`vc-gm ${name}`);assert.deepEqual((s.options??[]).map(o=>o.name).sort(),[...opts].sort());for(const o of s.options??[]){assert.equal(o.type,3);assert.equal(o.required,true);}assert.equal(sub(roll,name),undefined,`vc-roll must not carry ${name}`);}
+  for(const name of ['snapshot','fingerprint']){const o=stringOption(sub(gm,name==='snapshot'?'bootstrap-review':'publish-draft'),name);assert.equal(o.min_length,64);assert.equal(o.max_length,64);}
+  assert.ok((gm.options??[]).length<=25);
 });

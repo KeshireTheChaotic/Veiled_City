@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
+import {gmCommandInput} from './discord-gm-input.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Routes observed human GM commands: `session start`, private `pc-bootstrap-preview`
  * exact `pc-bootstrap-review` and `session end`. Each uses a private acknowledgement, a durable closed
@@ -12,21 +13,19 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
   const setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
-  const inRoll=e=>e.commandName==='vc-roll'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='roll';
-  /** Returns {kind, ref} for a claimed GM command, else null. */
+    /** Returns {kind, ref} for a claimed GM command, else null. */
   function route(e){
     try{
       if(e?.isChatInputCommand?.()!==true)return null;
       if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
-      if(inRoll(e)&&e.options.getSubcommand()==='effect'){
-        const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
-        if(drafts&&input?.op==='draft-publish')return {kind:'publish',ref:`draft-publish:${input.source}`,raw};
-        if(drafts&&input?.op==='draft-list')return {kind:'drafts',ref:'draft-list',raw};
-        if(input?.op==='session-reopen')return {kind:'reopen',ref:`session-reopen:${input.session}`,raw};
-        if(!bootstrap&&!characters)return null;
-        if(characters&&(input?.op==='pc-register'||input?.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref:`:${input.actor}`,raw};
-        if(!bootstrap)return null;
-        if(input?.op==='pc-bootstrap-preview'||input?.op==='pc-bootstrap-review')return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref:`${input.op}:${input.actor}`,raw};
+      const input=gmCommandInput(e);
+      if(input){
+        const ref=`${input.op}:${input.actor??input.source??input.session??''}`;
+        if(input.op==='session-reopen')return {kind:'reopen',ref,raw:input};
+        if(drafts&&input.op==='draft-publish')return {kind:'publish',ref,raw:input};
+        if(drafts&&input.op==='draft-list')return {kind:'drafts',ref,raw:input};
+        if(characters&&(input.op==='pc-register'||input.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref,raw:input};
+        if(bootstrap&&(input.op==='pc-bootstrap-preview'||input.op==='pc-bootstrap-review'))return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref,raw:input};
       }
     }catch{}
     return null;
@@ -54,7 +53,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
    * It records no knowledge acknowledgement: published narration is not objective truth.
    */
   async function publishDraft(proof,declaration){
-    const c=proof.campaignId,source=proof.targetRef,input=JSON.parse(declaration),fingerprint=input.fingerprint;
+    const c=proof.campaignId,source=proof.targetRef,input=declaration,fingerprint=input.fingerprint;
     const row=drafts.recent(c,20).find(d=>d.source===source);if(!row||row.fingerprint!==fingerprint)throw new Error('Approved draft is not a current saved draft');
     const draft=row.draft,target=draft.delivery,channelRecord=target&&sceneStore.readers.readChannel(c,target.channelId);
     if(typeof draft.text!=='string'||draft.text.length>1900)throw new Error('Draft must fit one message; review needed');
@@ -76,12 +75,12 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
       else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publishDraft(proof,r.raw);text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
-      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Approve with op draft-publish, source and fingerprint:\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
+      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Send one with /vc-gm publish-draft (source and fingerprint):\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
       else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
       else if(r.kind==='register'){if(proof.operation!=='pc_register')throw new Error('Registration authority required');receipt=register(proof,characters);text='Character registered to its owner in the active scene. No resources, movement, proxy or attendance were set.';}
-      else if(r.kind==='preview'){if(proof.operation!=='pc_bootstrap_preview')throw new Error('Preview authority required');const source=bootstrap.readSource(c,actor);receipt=source;text=`Review this before approving (private). ${describe(source)}. Approve with op pc-bootstrap-review, actor and that snapshotHash. This grants no PC control.`;}
+      else if(r.kind==='preview'){if(proof.operation!=='pc_bootstrap_preview')throw new Error('Preview authority required');const source=bootstrap.readSource(c,actor);receipt=source;text=`Review this before approving (private). ${describe(source)}. Approve with /vc-gm bootstrap-review using this character and the snapshotHash above. This grants no PC control.`;}
       else{
         if(proof.operation!=='pc_bootstrap_review')throw new Error('Review authority required');
         const {readSource,actionStore}=bootstrap;receipt=actionStore.initializePcFromReviewedSource(c,actor,{check:()=>gmAuthority.check(proof),readSource,inspectReview:()=>gmAuthority.bootstrapReview(proof,readSource(c,actor))});text='Reviewed PC state saved. Later damage and resources are unaffected by a replay.';

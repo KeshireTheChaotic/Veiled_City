@@ -45,7 +45,7 @@ $env:DISCORD_GUILD_ID = "1467249344947159291"
 
 ## 2. Register commands in the test guild only
 
-Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-scoped, not global) before running it. The native router claims only commands already in the schema (`vc-session start|end|present|absent|arrive|leave`, `vc-roll effect`).
+Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-scoped, not global) before running it. The native router claims only commands defined in the schema: `/vc-session start|end|present|absent|arrive|leave`, `/vc-player private-channel`, the typed `/vc-gm` subcommands (`session-reopen`, `register-character`, `rebind-character`, `bootstrap-preview`, `bootstrap-review`, `drafts`, `publish-draft`) and the owner death-prompt commands that already existed in `/vc-roll effect`. `/vc-roll` carries no GM operation.
 
 ## 3. Start the native path
 
@@ -53,7 +53,7 @@ Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-sc
 npm run start:v2:native
 ```
 
-What this exercises: native interaction routing (death prompts, attendance, GM session start/end, PC bootstrap preview/review, registration, rebind, reopen via `vc-roll effect` JSON) and player-message evidence capture. Without step 3b no model calls occur.
+What this exercises: native interaction routing (death prompts, attendance, GM session start/end, PC bootstrap preview/review, character registration, rebind, session reopen, private channel) and player-message evidence capture. Without step 3b no model calls occur.
 
 ## 3b. Optional: withheld GM drafts under the call cap
 
@@ -72,12 +72,12 @@ The call ceiling plus the output-token bound limits spend; check your provider d
 ## 4. Checks to run and report back
 
 1. `vc-session start` as a GM-role member (expect private reply, session in native store).
-2. `vc-roll effect` with `{"op":"pc-register","actor":"<character id>"}` then `{"op":"pc-bootstrap-preview","actor":"<id>"}` and the exact review with the returned snapshotHash.
+2. `/vc-gm register-character character:<character id>`, then `/vc-gm bootstrap-preview character:<id>`, then `/vc-gm bootstrap-review character:<id> snapshot:<hash shown by the preview>`.
 3. `vc-session present|absent|arrive|leave` as an owner (absent/leave accept the new optional `character`).
 4. A player message in a registered channel (evidence capture only).
 5. `vc-session end`, then `{"op":"session-reopen","session":"<id>"}`.
-6. With step 3b running: after a player message, `vc-roll effect` with `{"op":"draft-list"}` as a GM-role member privately lists up to five withheld drafts (source id, fingerprint and first 180 characters; nothing is sent to players).
-7. To send one reviewed draft: `vc-roll effect` with `{"op":"draft-publish","source":"<source id>","fingerprint":"<64-hex fingerprint from the list>"}` as a GM-role member. It re-checks the GM role and the original channel audience, sends the text once (no mentions, one message, up to 1,900 characters) and records no knowledge or canon acknowledgement. A send that cannot be confirmed is held as `publication_uncertain` and is never retried.
+6. With step 3b running: after a player message, `/vc-gm drafts` as a GM privately lists up to five withheld drafts (source id, fingerprint and first 180 characters; nothing is sent to players).
+7. To send one reviewed draft: `/vc-gm publish-draft source:<source id> fingerprint:<64-hex fingerprint from the list>` as a GM. It re-checks the GM role and the original channel audience, sends the text once (no mentions, one message, up to 1,900 characters) and records no knowledge or canon acknowledgement. A send that cannot be confirmed is held as `publication_uncertain` and is never retried.
 
 Stop with Ctrl+C (graceful close). Delete `$env:VK2_NATIVE_DIR` and the DB copy afterwards.
 
@@ -90,4 +90,4 @@ Live inference, the GM turn runner, performance targets and production cutover r
 
 The legacy design is kept: the character's owner runs `/vc-player private-channel` in their own private channel. The bot checks, from two fresh Discord reads, that only that owner can see it (administrators and the GM role are observers, not recipients) and registers it for the owner's scene. There is no GM channel-id command. Order: `/vc-session start`, register the character, then the owner runs `/vc-player private-channel` in their channel, then `/vc-session present`.
 
-GM operations still travel in `/vc-roll effect` JSON for now; the user asked to stop adding operations there and moving them to typed subcommands is pending a schema decision.
+All GM operations are typed `/vc-gm` subcommands (user decision 2026-11-03); `/vc-roll` is dice only. The owner death-prompt commands still use the baseline `/vc-roll effect` option and are a separate decision.
