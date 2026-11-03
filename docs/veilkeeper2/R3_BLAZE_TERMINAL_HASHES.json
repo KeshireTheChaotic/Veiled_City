@@ -1,0 +1,22 @@
+[
+  {
+    "sha256": "cbda8d17cecf922fbf25701ac799d68863c6166b1048381e7594b5c1cf2c10d0",
+    "path": "bot/src/v2/rules/blaze-of-glory.js"
+  },
+  {
+    "sha256": "0ec569c3ad43e98d93f3877e179d1eb5543c5c355d5c15579abb6a66ebea7fbe",
+    "path": "bot/src/v2/rules/pc-life-state.js"
+  },
+  {
+    "sha256": "31679c2db8aed52d8c82140cbca879c99164dd00ed1027bcccbbc4448b7908cc",
+    "path": "bot/tests/veilkeeper2/r3-death-outcome-store.test.mjs"
+  },
+  {
+    "sha256": "045a4ec9ddfc2f7f23bed53a6aaeecd382816fa5e9a99b957220c027058be4f6",
+    "path": "docs/veilkeeper2/R3_BLAZE_TERMINAL_REPORT.md"
+  },
+  {
+    "sha256": "97bbef07e2c4b1a132ad44522c7c0dd742dbe5de6581e959e7b5ad07598224b6",
+    "path": "docs/veilkeeper2/LEDGER.md"
+  }
+]

@@ -95,8 +95,8 @@ test('an older persisted death outcome without the full recovery frame remains h
   const e=allocation(f,3,2);assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e}),/requires reviewed migration/);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');
 });
 
-function blazeOptions(f){
-  const initial=f.store.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('Blaze has no death dice');}}),action={id:'final-action',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'owner-final-source',sourceRevision:'1',status:'accepted',kind:'ordinary_action',parametersHash:'c'.repeat(64)};
+function blazeOptions(f,kind='ordinary_action'){
+  const initial=f.store.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('Blaze has no death dice');}}),action={id:'final-action',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'owner-final-source',sourceRevision:'1',status:'accepted',kind,parametersHash:'c'.repeat(64)};
   const approval={id:'gm-review',revision:'1',kind:'human_gm_blaze_approval',status:'approved',campaignId:'c',sceneId:'s',requestRef:initial.requestRef,actionRef:action.id,actionRevision:action.revision,actionHash:hash(action),outcomeHash:hash(initial),reviewerUserId:'gm',rulingRef:'ruling',rulingRevision:'1',sourceRef:'gm-source',sourceRevision:'1'};
   return {action,approval,options:{...f.options,actionRef:action.id,approvalRef:approval.id,readOwnerAction:()=>action,inspectGmApproval:()=>approval}};
 }
@@ -117,4 +117,31 @@ test('GM approval authority rollback and changed native actor frame cannot save 
   const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f);let checks=0;
   assert.throws(()=>f.store.approveIncomingBlaze('c','attack',{...b.options,check(){if(++checks===2)throw new Error('GM authority changed');}}),/GM authority changed/);f.reopen();assert.equal(f.store.readIncomingBlazeApproval('c','attack'),null);
   f.features.push('New owned feature');assert.throws(()=>f.store.approveIncomingBlaze('c','attack',b.options),/Current native Blaze actor snapshot/);assert.equal(f.store.readIncomingBlazeApproval('c','attack'),null);
+});
+
+function terminalBlaze(f,b){
+  const approval=f.store.approveIncomingBlaze('c','attack',b.options),critical=f.store.createIncomingBlazeCritical('c','attack',b.options);
+  return {id:'terminal',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',actionRef:b.action.id,actionRevision:b.action.revision,actionHash:hash(b.action),approvalRef:approval.id,approvalHash:hash(approval),criticalRef:critical.id,criticalHash:hash(critical),kind:b.action.kind,status:'resolved',receiptRef:'native-final-receipt',receiptHash:'d'.repeat(64),effectRef:null,effectHash:null,consentReceiptRef:null,consentReceiptHash:null,stateAfterHash:hash(f.store.readPcLife('c','pc')),actorAfterHash:hash(f.readActorSnapshot())};
+}
+test('verified terminal Blaze action commits death once and consumes approval across reopen',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f),proof=terminalBlaze(f,b);b.action.status='resolved';const options={...b.options,inspectTerminalAction:()=>proof};
+  const receipt=f.store.completeIncomingBlaze('c','attack',options);f.reopen();assert.equal(receipt.after.life.status,'dead');assert.equal(receipt.after.life.deathState.status,'dead');assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'resolved');assert.equal(f.store.readIncomingBlazeApproval('c','attack').status,'consumed');
+  assert.deepEqual(f.store.completeIncomingBlaze('c','attack',options),receipt);assert.throws(()=>f.store.createIncomingBlazeCritical('c','attack',b.options),/already consumed/);assert.throws(()=>f.store.approveIncomingBlaze('c','attack',b.options),/already consumed/);
+});
+test('unresolved action or wrong saved Critical/state cannot invent Blaze completion',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f),proof=terminalBlaze(f,b),options={...b.options,inspectTerminalAction:()=>proof};
+  assert.throws(()=>f.store.completeIncomingBlaze('c','attack',options),/Actual resolved native final action/);b.action.status='resolved';
+  for(const patch of [{criticalHash:'wrong'},{actionRef:'other'},{status:'pending'},{stateAfterHash:'e'.repeat(64)}])assert.throws(()=>f.store.completeIncomingBlaze('c','attack',{...options,inspectTerminalAction:()=>({...proof,...patch})}));
+  assert.equal(f.store.readPcLife('c','pc').life.status,'active');assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_final_action');
+});
+test('PvP Blaze terminal evidence requires explicit verified consent and applied damage references',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f,'pvp_attack'),proof=terminalBlaze(f,b);proof.status='damage_applied';
+  assert.throws(()=>f.store.completeIncomingBlaze('c','attack',{...b.options,inspectTerminalAction:()=>proof}),/protected consent/);
+  Object.assign(proof,{consentReceiptRef:'target-consent',consentReceiptHash:'e'.repeat(64),effectRef:'native-pvp-damage',effectHash:'f'.repeat(64)});
+  assert.equal(f.store.completeIncomingBlaze('c','attack',{...b.options,inspectTerminalAction:()=>proof}).after.life.status,'dead');
+});
+test('final Blaze authority failure rolls death and consumption back while retaining the terminal action proof',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f),proof=terminalBlaze(f,b);b.action.status='resolved';let checks=0;
+  assert.throws(()=>f.store.completeIncomingBlaze('c','attack',{...b.options,inspectTerminalAction:()=>proof,check(){if(++checks===2)throw new Error('Final action authority changed');}}),/Final action authority changed/);f.reopen();
+  assert.equal(f.store.readPcLife('c','pc').life.status,'active');assert.equal(f.store.readIncomingBlazeApproval('c','attack').status,'approved');assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_final_action');
 });

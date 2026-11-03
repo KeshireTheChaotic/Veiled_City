@@ -23,8 +23,9 @@ export function createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,dea
   }
   const rawOutcome=(c,a)=>deathEvent(c,a,'outcome');
   function outcome(c,a){
-    const initial=rawOutcome(c,a),allocation=deathEvent(c,a,'allocation');
+    const initial=rawOutcome(c,a),allocation=deathEvent(c,a,'allocation'),blazeFinal=deathEvent(c,a,'blaze-final');
     if(allocation&&(!initial||allocation.id!==`incoming-death-allocation:${a}`||allocation.outcomeHash!==hash(initial)||allocation.effectsCommitted!==true||!allocation.evidence||!allocation.after||!allocation.actorAfter))throw new Error('Exact saved native recovery receipt required');
+    if(blazeFinal){if(!initial||initial.move!=='blaze_of_glory'||blazeFinal.id!==`incoming-death-blaze-final:${a}`||blazeFinal.outcomeHash!==hash(initial)||blazeFinal.effectsCommitted!==true||!blazeFinal.after||!blazeFinal.actorAfter)throw new Error('Exact saved native Blaze completion required');return {...initial,status:'resolved',after:blazeFinal.after,actorAfter:blazeFinal.actorAfter,blazeFinal};}
     return initial&&allocation?{...initial,status:'resolved',after:allocation.after,actorAfter:allocation.actorAfter,allocation}:initial;
   }
   const actorAfter=(actor,state)=>({...actor,status:state.life.status,data:{...actor.data,death_state:state.life.deathState,resources:{...actor.data.resources,hp:state.defenses.hp,armor:state.defenses.armorSlots,stress:state.life.stress,hope:state.hope.hope,hope_max:state.hope.cap}}});
