@@ -29,5 +29,14 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
   function acknowledgeAnnouncement(c,q,{check,readNotice}){return fearStore.acknowledge(c,q,{check:heldAuthority(c,q,check),readOpportunity:opportunityReader.read,readNotice});}
   function markAnnouncementUncertain(c,q,attemptId,{check}){return fearStore.markAnnouncementUncertain(c,q,attemptId,{check:heldAuthority(c,q,check)});}
   function recordAnnouncementResponse(c,q,attemptId,{check,readResponse}){return fearStore.recordAnnouncementResponse(c,q,attemptId,{check:heldAuthority(c,q,check),readResponse});}
-  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse});
+  function prepareIncoming(c,q,{check,readCandidate}){
+    if(typeof readCandidate!=='function')throw new Error('Native attack legality reader required');
+    const currentCandidate=(campaign,request)=>{
+      const candidate=readCandidate(campaign,request),opportunity=opportunityReader.read(campaign,request);
+      if(candidate?.sourceRef!==opportunity.request.sourceRef||candidate.sourceRevision!==opportunity.request.sourceRevision)throw new Error('Incoming candidate must retain original interrupted source');
+      return candidate;
+    };
+    return fearStore.prepareIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:currentCandidate});
+  }
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming});
 }

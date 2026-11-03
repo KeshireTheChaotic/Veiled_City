@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/rules/fear-reservations.js",
+    "sha256": "8afcf22aff4d03f904f95b2cd35315a9f04e11ed56ea01c400f9571c8a4f145b"
+  },
+  {
+    "path": "bot/src/v2/rules/pre-roll-fear-coordinator.js",
+    "sha256": "ad160b06ef18055a8ee8b64e3a72959232208ea03b64be420a20ae0826a411b6"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs",
+    "sha256": "82e51396a8e0ba519a1ba7453f5047aa6be3e215f26f72cf8e3c25c4b13901c6"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_PRE_ROLL_INCOMING_OFFER_REPORT.md",
+    "sha256": "f017a40f061ef38f38378a33307930eeb7e530ecd156ec7b6d3bf39ff23b6302"
+  }
+]

@@ -1,6 +1,7 @@
 import {DatabaseSync} from 'node:sqlite';
 import {createHash,randomUUID} from 'node:crypto';
 import {preRollFearTerms} from './pre-roll-fear.js';
+import {diceSpec} from './dice.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const decode=r=>r?JSON.parse(r.data):null;
 /** Native reservation/notice state only. Funds remain unspent until an eventual
@@ -70,5 +71,19 @@ export function openFearReservations(filename=':memory:'){
     if(JSON.stringify(readHold(c,q))!==JSON.stringify(hold)||JSON.stringify(readReview(c,q))!==JSON.stringify(review)||JSON.stringify(readPublication(c,q))!==JSON.stringify(publication))throw new Error('Orphan recovery evidence changed');
     db.prepare('INSERT INTO vk3_fear_reservations VALUES(?,?,?)').run(c,q,JSON.stringify(row));return row;
   });}
-  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
+  function prepareIncoming(c,q,{check,readCandidate}){return tx(check,()=>{
+    const row=read(c,q);if(row?.status!=='announced'||row.publication?.status!=='delivered'||typeof readCandidate!=='function')throw new Error('Acknowledged native Fear announcement required before incoming offer');
+    const candidate=structuredClone(readCandidate(c,q)),t=row.terms;
+    const strings=['id','campaignId','sceneId','requestRef','decisionRef','actorId','ownerUserId','controlRevision','npcId','sourceRef','sourceRevision','targetRevision','encounterRevision','statblockRevision','ruleFingerprint','damageExpression','damageType'];
+    if(!candidate||Object.keys(candidate).length!==strings.length+5||strings.some(k=>typeof candidate[k]!=='string'||!candidate[k]||candidate[k].length>256)
+      ||candidate.campaignId!==c||candidate.sceneId!==t.sceneId||candidate.requestRef!==q||candidate.decisionRef!==t.decisionRef||candidate.actorId!==t.actorId||candidate.ownerUserId!==t.ownerUserId||candidate.controlRevision!==t.controlRevision||candidate.npcId!==t.npcId
+      ||!/^[a-f0-9]{64}$/.test(candidate.ruleFingerprint)||!['physical','magic'].includes(candidate.damageType)||![candidate.attackBonus,candidate.evasion,candidate.major,candidate.severe].every(Number.isSafeInteger)||candidate.evasion<1||candidate.major<1||candidate.severe<candidate.major
+      ||!candidate.defenses||Object.keys(candidate.defenses).sort().join(',')!=='armorAllowed,armorReduction,resistance,sourceRef'||!['none','half','immune'].includes(candidate.defenses.resistance)||![1,2].includes(candidate.defenses.armorReduction)||typeof candidate.defenses.armorAllowed!=='boolean'||typeof candidate.defenses.sourceRef!=='string'||!candidate.defenses.sourceRef)throw new Error('Exact inspected native incoming attack candidate required');
+    diceSpec(candidate.damageExpression);
+    const fingerprint=hash(candidate);if(row.incoming){if(row.incoming.termsHash!==fingerprint)throw new Error('Immutable incoming offer conflict');return row.incoming;}
+    const incoming={terms:candidate,termsHash:fingerprint,status:'awaiting_defense',effectsCommitted:false};
+    if(hash(readCandidate(c,q))!==fingerprint)throw new Error('Incoming candidate changed');
+    db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,incoming}),c,q);return incoming;
+  });}
+  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
 }

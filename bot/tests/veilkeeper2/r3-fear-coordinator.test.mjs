@@ -106,3 +106,23 @@ test('native response identity survives reopen, rejects conflicts and cannot be 
   assert.throws(()=>f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>({attemptId:attempt.attemptId,messageId:'different'})}),/saved native send response/);
   assert.equal(f.fear.readPublication('c','q').status,'delivering');
 });
+
+function attackCandidate(){return {id:'attack',campaignId:'c',sceneId:'s',requestRef:'q',decisionRef:'decision:q',actorId:'pc',ownerUserId:'u',controlRevision:'1',npcId:'npc',sourceRef:'source',sourceRevision:'1',targetRevision:'pc:1',encounterRevision:'encounter:1',statblockRevision:'template:1',ruleFingerprint:'b'.repeat(64),damageExpression:'2d6+3',damageType:'physical',attackBonus:2,evasion:12,major:8,severe:16,defenses:{resistance:'none',armorReduction:1,armorAllowed:true,sourceRef:'base'}};}
+function announce(f){const row=f.coordinator.reserve('c','q',{check:f.check}),attempt=f.coordinator.claimAnnouncement('c','q',{check:f.check});f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>({attemptId:attempt.attemptId,status:'delivered',kind:'pre_roll_fear',requestRef:'q',bindingHash:row.bindingHash,baseCost:1,printedFearCost:0,npcId:'npc',actorId:'pc',recipientIds:['u'],messageId:'fear-notice'})});}
+test('acknowledged native interruption prepares one immutable incoming offer without spending or rolling',t=>{
+  const f=fixture(t),candidate=attackCandidate();announce(f);const options={check:f.check,readCandidate:()=>candidate},offer=f.coordinator.prepareIncoming('c','q',options);f.reopen();
+  assert.equal(offer.status,'awaiting_defense');assert.equal(offer.effectsCommitted,false);assert.deepEqual(f.coordinator.prepareIncoming('c','q',options),offer);
+  assert.equal(f.fear.initialize('c',1,{check:f.check}),1);assert.equal(f.fear.reserved('c'),1);assert.equal(f.rolls.readResultForRequest('c','q'),null);assert.equal(f.rolls.readFearHold('c','q').status,'held');
+  assert.throws(()=>f.coordinator.prepareIncoming('c','q',{...options,readCandidate:()=>({...candidate,targetRevision:'pc:2'})}),/Immutable incoming offer conflict/);
+});
+test('incoming offer cannot bypass announcement, original source, target ownership or inspected rule terms',t=>{
+  const f=fixture(t),options={check:f.check,readCandidate:attackCandidate};assert.throws(()=>f.coordinator.prepareIncoming('c','q',options),/Matching active/);announce(f);
+  for(const patch of [{sourceRef:'other'},{sourceRevision:'2'},{ownerUserId:'other'},{npcId:'other'},{damageExpression:'free damage'},{evasion:0},{ruleFingerprint:'unknown'},{defenses:{resistance:'none',armorReduction:3,armorAllowed:true,sourceRef:'base'}}])assert.throws(()=>f.coordinator.prepareIncoming('c','q',{...options,readCandidate:()=>({...attackCandidate(),...patch})}));
+  assert.equal(f.fear.read('c','q').incoming,undefined);
+});
+test('changing native candidate or final authorization failure cannot save an incoming offer',t=>{
+  const f=fixture(t);announce(f);let reads=0;
+  assert.throws(()=>f.coordinator.prepareIncoming('c','q',{check:f.check,readCandidate:()=>({...attackCandidate(),targetRevision:++reads===1?'pc:1':'pc:2'})}),/candidate changed/);
+  let checks=0;assert.throws(()=>f.coordinator.prepareIncoming('c','q',{readCandidate:attackCandidate,check(){if(++checks===2)throw new Error('Attack authority changed');}}),/Attack authority changed/);f.reopen();
+  assert.equal(f.fear.read('c','q').incoming,undefined);assert.equal(f.fear.reserved('c'),1);
+});
