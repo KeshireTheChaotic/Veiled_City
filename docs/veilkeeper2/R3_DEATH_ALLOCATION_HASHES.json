@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/rules/pc-life-state.js",
+    "sha256": "fe5b3efd68d892eae260aa8d6b653f60216f9950b734f56ac2b582b99ef1270d"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-death-outcome-store.test.mjs",
+    "sha256": "f9c6fbe5475c9b3026855782885d3d7ad18314c8eb9a8da4ef2effe640b430fe"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DEATH_ALLOCATION_REPORT.md",
+    "sha256": "2897ee2ce56eb97f575e5f1f7c85015d76a234246089c8af3949a1af74e48f95"
+  },
+  {
+    "path": "docs/veilkeeper2/LEDGER.md",
+    "sha256": "3a88a14876d5d6beb91a27ed6234af3522ee39b8dda39fbe213d942705485db1"
+  }
+]

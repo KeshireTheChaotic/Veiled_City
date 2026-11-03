@@ -5,6 +5,7 @@ import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join,resolve,sep} from 'node:path';
 import {openActionStore} from '../../src/v2/rules/action-store.js';
+import {DatabaseSync} from 'node:sqlite';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 function fixture(t,{move='risk_it_all',cap=6,hope=3,features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-outcome-')),path=join(dir,'actions.sqlite');let store=openActionStore(path),revoked=false;
@@ -15,11 +16,11 @@ function fixture(t,{move='risk_it_all',cap=6,hope=3,features=[]}={}){
   const attack={id:'attack',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:'roll',resultHash:'roll-hash',termsHash:'offer-hash',sourceRef:'attack-source',sourceRevision:'1',damage:10,major:8,severe:16,defenses:{resistance:'none',armorReduction:1,armorAllowed:true}},choice={id:'armor',kind:'incoming_armor_choice',campaignId:'c',sceneId:'s',attackRef:'attack',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:'roll',resultHash:'roll-hash',termsHash:'offer-hash',sourceRef:'armor-source',sourceRevision:'1',useArmor:false};
   store.commitIncomingDamage({campaignId:'c',attackRef:'attack',expectedRevision:1},{check,readAttack:()=>attack,readArmorChoice:()=>choice});
   const sourceAuthority={inspectReference(){if(revoked)throw new Error('Owner source revoked');return {campaign:'c',scene:'s',principal:'u',actors:['pc'],recipients:['u']};}};
-  const readActorSnapshot=()=>{const {life,defenses,hope}=store.readPcLife('c','pc');return {actorId:'pc',ownerUserId:'u',controlRevision:'1',status:life.status,data:{level:life.level,resources:{hp:defenses.hp,armor:defenses.armorSlots,stress:life.stress,hope:hope.hope,hope_max:hope.cap},features}};};
+  const readActorSnapshot=()=>{const {life,defenses,hope}=store.readPcLife('c','pc');return {actorId:'pc',ownerUserId:'u',controlRevision:'1',status:life.status,data:{level:life.level,death_state:life.deathState,resources:{hp:defenses.hp,armor:defenses.armorSlots,stress:life.stress,hope:hope.hope,hope_max:hope.cap},features}};};
   const eligible=store.readIncomingDeath('c','attack'),base={campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',requestRef:eligible.id,eligibilityHash:hash(eligible),resourceRevision:2,actorSnapshotHash:hash(readActorSnapshot()),sourceRef:'owner-source',sourceRevision:'1'};
   const review={...base,id:'review',kind:'incoming_death_review',sequence:1},ownerChoice={...base,id:'choice',kind:'incoming_death_choice',sequence:2,reviewRef:'review',move};
   store.recordIncomingDeathReview('c','attack',{check,sourceAuthority,readEvidence:()=>review});store.recordIncomingDeathChoice('c','attack',{check,sourceAuthority,readEvidence:()=>ownerChoice});
-  return {get store(){return store;},features,readActorSnapshot,revoke(){revoked=true;},reopen(){store.close();store=openActionStore(path);},options:{check,sourceAuthority,readActorSnapshot}};
+  return {get store(){return store;},path,features,readActorSnapshot,revoke(){revoked=true;},reopen(){store.close();store=openActionStore(path);},options:{check,sourceAuthority,readActorSnapshot}};
 }
 const cases=[
   {name:'Risk It All with Fear',move:'risk_it_all',faces:[1,12],result:'dead',status:'resolved',hp:6,stress:3,actorStatus:'dead',cap:6,hope:3},
@@ -56,4 +57,40 @@ test('canonical death state blocks an ordinary Hope action; recovered PC can use
     if(allowed)assert.equal(f.store.commitHopeCost(input,options).afterHope.hope,2);
     else{assert.throws(()=>f.store.commitHopeCost(input,options),/native recovery/);assert.equal(f.store.read('c','a').status,'ready_to_commit');}
   }
+});
+
+function allocation(f,hp,stress){const initial=f.store.readIncomingDeathOutcome('c','attack');return {id:'allocation',kind:'incoming_death_allocation',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'allocation-source',sourceRevision:'1',requestRef:initial.requestRef,outcomeHash:hash(initial),sequence:3,hp,stress};}
+test('explicit owner recovery uses the saved Hope budget, resolves once and preserves original dice after reopen',t=>{
+  const f=fixture(t),faces=[5,1],initial=f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()}),e=allocation(f,3,2),options={...f.options,readEvidence:()=>e};
+  const resolved=f.store.allocateIncomingDeathRecovery('c','attack',options);f.reopen();const state=f.store.readPcLife('c','pc');assert.equal(state.defenses.hp.current,3);assert.equal(state.life.stress.current,1);assert.equal(state.life.deathState.status,'recovered');assert.equal(state.hope.hope,3);assert.equal(resolved.status,'resolved');assert.deepEqual(resolved.roll,initial.roll);
+  assert.deepEqual(f.store.allocateIncomingDeathRecovery('c','attack',options),resolved);assert.deepEqual(f.store.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('No reroll');}}),resolved);
+  assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...options,readEvidence:()=>({...e,hp:2,stress:3})}),/replay conflict/);
+});
+test('recovery budget caps at marked slots and does not force an owner to clear HP',t=>{
+  for(const [faces,hp,stress,afterHp,afterStress] of [[[10,2],6,3,0,0],[[3,1],0,3,6,0]]){
+    const f=fixture(t),stream=[...faces];f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>stream.shift()});const e=allocation(f,hp,stress);f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e});const state=f.store.readPcLife('c','pc');assert.equal(state.defenses.hp.current,afterHp);assert.equal(state.life.stress.current,afterStress);
+  }
+});
+test('invalid amounts, old outcomes, public sources and stale native frames cannot allocate recovery',t=>{
+  const f=fixture(t),faces=[5,1];f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});const e=allocation(f,3,2);
+  for(const patch of [{hp:-1},{hp:7},{hp:2},{stress:4},{outcomeHash:'wrong'},{sequence:2}])assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>({...e,...patch})}));
+  assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,sourceAuthority:{inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc'],recipients:['u','other']})},readEvidence:()=>e}),/private owner/);
+  f.features.push('New owned feature');assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e}),/compare-and-set is stale/);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);
+});
+test('final recovery authorization rollback retains pending outcome and both marked pools',t=>{
+  const f=fixture(t),faces=[5,1];f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});const e=allocation(f,3,2);let checks=0;
+  assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e,check(){if(++checks===2)throw new Error('Recovery authority revoked');}}),/Recovery authority revoked/);f.reopen();const state=f.store.readPcLife('c','pc');assert.equal(state.defenses.hp.current,6);assert.equal(state.life.stress.current,3);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');
+});
+
+test('an unrelated native control event cannot impersonate a saved recovery receipt',t=>{
+  const f=fixture(t),faces=[5,1];f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});const check=()=>{};
+  f.store.create({id:'a',campaignId:'c',actorId:'pc',ownerUserId:'u',sceneId:'s',sourceRef:'m',sourceRevision:'1',kind:'ordinary_roll'},{check});
+  f.store.transition({campaignId:'c',actionId:'a',expectedRevision:1,sourceRef:'incoming-death-allocation:attack',to:'awaiting_notice'},{check});
+  assert.throws(()=>f.store.readIncomingDeathOutcome('c','attack'),/Exact saved native recovery receipt/);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);
+});
+
+test('an older persisted death outcome without the full recovery frame remains held for migration',t=>{
+  const f=fixture(t),faces=[5,1],initial=f.store.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});delete initial.actorAfter;delete initial.actorBefore;
+  const db=new DatabaseSync(f.path);try{db.prepare('UPDATE vk3_action_events SET data=? WHERE campaign=? AND source=?').run(JSON.stringify(initial),'c','incoming-death-outcome:attack');}finally{db.close();}f.reopen();
+  const e=allocation(f,3,2);assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e}),/requires reviewed migration/);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');
 });
