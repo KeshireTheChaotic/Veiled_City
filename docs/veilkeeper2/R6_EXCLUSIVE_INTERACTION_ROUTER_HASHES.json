@@ -1,0 +1,20 @@
+{
+  "node": "v26.13.0",
+  "durationMs": 5367.278,
+  "files": [
+    {
+      "path": "bot/src/v2/discord-interaction-router.js",
+      "sha256": "e2fa14b5c0a48ed65451291ec34584a1f551522ca2744bbf77ab0bef9f7b68a1"
+    },
+    {
+      "path": "bot/src/v2/discord-death-commands.js",
+      "sha256": "a37155d57a0cc9c83262cffd9504ebda17b3b16e53fc17405a560ab6bab6335a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "59e7bc84fb5b40184dd5e500f761fb225761b3b1d2aea4209f8b74bd21d3924f"
+    }
+  ],
+  "checkpoint": "R6_EXCLUSIVE_INTERACTION_ROUTER",
+  "completedCases": 14
+}

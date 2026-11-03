@@ -57,5 +57,6 @@ export function createDiscordDeathCommands({client,workflow,actionStore,sceneSto
     }
   }
   async function handle(event){const parsed=parse(event);if(!parsed)return false;if(pending.has(event.id))return pending.get(event.id);const job=execute(event,parsed);pending.set(event.id,job);try{return await job;}finally{pending.delete(event.id);}}
-  return Object.freeze({handle,close(){closed=true;controller.abort();client.off('interactionCreate',observer);}});
+  function claimsRoute(event){try{if(event?.isChatInputCommand?.()!==true||!(event.commandName==='vc-roll'||event.commandName==='vc'&&event.options.getSubcommandGroup(false)==='roll')||event.options.getSubcommand()!=='effect')return false;const raw=event.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return false;const input=JSON.parse(raw);return input?.op==='death-reconcile'||typeof input?.request==='string'&&input.request.startsWith('incoming-death:');}catch{return false;}}
+  return Object.freeze({handle,claimsRoute,close(){closed=true;controller.abort();client.off('interactionCreate',observer);}});
 }

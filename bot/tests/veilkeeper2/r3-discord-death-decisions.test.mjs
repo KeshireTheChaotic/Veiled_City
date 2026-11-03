@@ -20,6 +20,7 @@ import {MessageFlags,ChannelType,PermissionsBitField,PermissionFlagsBits as P} f
 import {createNativeDeathWorkflow} from '../../src/v2/native-death-workflow.js';
 import {createDeathInteractionReconciliation} from '../../src/v2/death-interaction-reconciliation.js';
 import {createDiscordDeathCommands} from '../../src/v2/discord-death-commands.js';
+import {createDiscordInteractionRouter} from '../../src/v2/discord-interaction-router.js';
 
 function fixture(t,{features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-ingress-')),client=new EventEmitter();client.user={id:'bot'};
@@ -246,4 +247,28 @@ test('native command refreshed permission snapshot rejects a new private observe
 });
 test('native command confirmation failure preserves completed presentation without replaying it',async t=>{
   const f=fixture(t),w=workflowFixture(t,f),c=commandFixture(t,f,w),event=c.event();let replies=0;event.editReply=async()=>{replies++;throw new Error('Private reply unavailable');};assert.equal((await c.run(event)).status,'committed');assert.equal(w.receipts.read(event.id).reply,'uncertain');assert.equal((await c.run(event)).status,'already_claimed');assert.equal(w.sent.length,1);assert.equal(replies,1);assert.equal(c.defers,1);
+});
+function routerFixture(t,f){
+  const w=workflowFixture(t,f);w.workflow.close();f.reader.close();const otherCommands=[],otherComponents=[],errors=[],replies=[];let count=0;const faces=[5,1];
+  const router=createDiscordInteractionRouter({client:f.client,nativeDeath:{actionStore:f.actions,sceneStore:f.scenes,sourceAuthority:f.sources,readActorSnapshot:f.snapshot,readRoute:()=>({guildId:'c',channelId:'private',sceneId:'s',ownerUserId:'u'}),readOwnerRoute:()=>({guildId:'c',channelId:'private',sceneId:'s',ownerUserId:'u'}),promptStore:f.prompts,decisionStore:f.decisions,interactionReceipts:w.receipts,clock:f.clock,rng:()=>faces.shift()},handleOtherCommand:async event=>otherCommands.push(event.id),handleOtherComponent:async event=>otherComponents.push(event.id),onError:(error,meta)=>errors.push({error,meta})});t.after(()=>router.close());
+  function event({user='u',input={op:'death-review',request:'incoming-death:attack'},customId=null,message=null,commandName='vc-roll'}={}){return {id:`root-event-${++count}`,client:f.client,guildId:'c',channelId:'private',user:{id:user,bot:false},commandName,isChatInputCommand:()=>customId===null,isButton:()=>customId!==null,customId,message,options:{getSubcommand:()=> 'effect',getSubcommandGroup:()=> 'roll',getString:()=>JSON.stringify(input)},deferred:false,replied:false,ephemeral:false,async deferReply(options){assert.equal(options.flags,MessageFlags.Ephemeral);this.deferred=true;this.ephemeral=true;},async editReply(options){assert.equal(this.ephemeral,true);assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);this.replied=true;},async reply(options){assert.equal(options.flags,MessageFlags.Ephemeral);assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);this.replied=true;this.ephemeral=true;}};}
+  async function emit(e){f.client.emit('interactionCreate',e);await router.drain();return e;}
+  async function click(decision){const message=w.sent.at(-1),prompt=f.prompts.readPrompt(message.components[0].components[0].custom_id),option=prompt.options.find(o=>o.decision===decision);assert.ok(option);return emit(event({customId:option.customId,message}));}
+  return {router,w,event,emit,click,errors,replies,otherCommands,otherComponents};
+}
+test('exclusive native root routes owner commands and full component progression without legacy callbacks',async t=>{
+  const f=fixture(t),r=routerFixture(t,f);await r.emit(r.event());assert.equal(r.w.sent.length,1);await r.click('reviewed');assert.equal(r.w.sent.length,2);await r.click('risk_it_all');assert.equal(r.w.sent.length,3);await r.click('allocate:3:2');assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,3);assert.equal(f.actions.readPcLife('c','pc').life.stress.current,1);assert.deepEqual(r.otherCommands,[]);assert.deepEqual(r.otherComponents,[]);assert.deepEqual(r.errors,[]);
+});
+test('exclusive native root privately denies wrong owners without falling through to legacy',async t=>{
+  const f=fixture(t),r=routerFixture(t,f),e=r.event({user:'outsider'});await r.emit(e);await r.emit(e);assert.equal(r.replies.length,1);assert.doesNotMatch(r.replies[0],/incoming-death|attack|ownerUser|source:/);assert.equal(r.w.sent.length,0);assert.deepEqual(r.otherCommands,[]);assert.equal(f.actions.readIncomingDeathReview('c','attack'),null);
+});
+test('exclusive native root consumes malformed native routes and leaves unrelated routes to explicit callbacks',async t=>{
+  const f=fixture(t),r=routerFixture(t,f);await r.emit(r.event({input:{op:'death-review',request:'incoming-death:attack',owner:'outsider'}}));assert.equal(r.replies.length,1);assert.deepEqual(r.otherCommands,[]);
+  const legacy=r.event({input:{op:'death-review',request:'legacy-request'}});await r.emit(legacy);assert.deepEqual(r.otherCommands,[legacy.id]);const other=r.event({customId:'other-native:control',message:{id:'other'}});await r.emit(other);assert.deepEqual(r.otherComponents,[other.id]);assert.equal(r.w.sent.length,0);
+});
+test('exclusive native root privately handles unknown native buttons and detaches all owned listeners on close',async t=>{
+  const f=fixture(t),r=routerFixture(t,f);await r.emit(r.event({customId:`vk2death:${'b'.repeat(48)}`,message:{id:'missing'}}));assert.equal(r.replies.length,1);assert.deepEqual(r.otherComponents,[]);assert.equal(f.client.listenerCount('messageCreate'),0);r.router.close();assert.equal(f.client.listenerCount('interactionCreate'),0);f.client.emit('interactionCreate',r.event());await r.router.drain();assert.equal(r.w.sent.length,0);
+});
+test('exclusive native root rejects a client already owned by another interaction handler',t=>{
+  const f=fixture(t);const existing=f.client.listenerCount('interactionCreate');assert.throws(()=>createDiscordInteractionRouter({client:f.client,nativeDeath:{readOwnerRoute:()=>{} }}),/unclaimed client/);assert.equal(f.client.listenerCount('interactionCreate'),existing);
 });
