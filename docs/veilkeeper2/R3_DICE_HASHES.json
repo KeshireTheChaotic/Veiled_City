@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/rules/dice.js",
+    "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+  },
+  {
+    "path": "bot/src/frameworks/daggerheart/dice.js",
+    "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-dice.test.mjs",
+    "sha256": "f718848bcf9f8328520b8713f3520ce5176684d7e6ac7ca435541df9ae5a4ef8"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DICE_REPORT.md",
+    "sha256": "48c7f89175c721fa672e8071b01c52370f0aaa51e679bdab1f0055e3fa057cfa"
+  }
+]
