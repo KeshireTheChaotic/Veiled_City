@@ -1,0 +1,7 @@
+# R1 — native Discord intake to scene storage
+
+Completed ingestion slice. The adapter reads native Discord evidence, validates candidate authorship/audience against current persisted scene/session/PC or proxy control, verifies a second evidence fingerprint, and commits changed message/channel records atomically with expected revisions. Identical evidence causes no new record revision. Edited evidence invalidates existing issued sources through the durable readers. Intake is native-only, outside the four AI capabilities.
+
+Fresh command: `node --test tests/veilkeeper2/r1-discord-intake.test.mjs` from bot. Actual result: 3/3 passed, zero failures/skips, 113.5426 ms. Cases exercise real SQLite and source authority with synthetic transport evidence: durable intake/replay/edit invalidation, unauthorized control and changing evidence with no partial write. No live Discord inference, publication or production database was used. Unchanged suites were not rerun.
+
+Holds: no atomic Discord snapshot is possible across separate API reads; evidence may change after verification. Event provenance and continuous refresh during inference/send, complete channel qualification, scene provisioning and live SDK qualification remain required. Transport remains opt-in; existing production paths are unchanged. Full R0–R2 gates remain open; R3–R8 remain outstanding. No major-phase push, deployment or migration occurred. Rollback leaves the adapter unused. Next: connect freshness checks throughout the rehearsal/provider cycle and durable publication.
