@@ -20,7 +20,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};if(sub==='reopen'){const session=e.options.getString('session',true);return {kind:'reopen',ref:`session-reopen:${session}`,raw:[session]};}}
       if((bootstrap||characters)&&inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
-        if(characters&&input?.op==='pc-register')return {kind:'register',ref:`pc-register:${input.actor}`,raw};
+        if(characters&&(input?.op==='pc-register'||input?.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref:`:${input.actor}`,raw};
         if(!bootstrap)return null;
         if(input?.op==='pc-bootstrap-preview'||input?.op==='pc-bootstrap-review')return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref:`${input.op}:${input.actor}`,raw};
       }
@@ -32,17 +32,19 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   /** Registers an existing native character to its repository owner in the sole active scene.
    * Rebinding or replacing an existing registration is refused here and needs native review.
    */
-  function register(proof,repository){
+  function register(proof,repository,rebind=false){
     const c=proof.campaignId,actorId=proof.targetRef,character=repository.getCharacter(actorId);
     const check=()=>{
       gmAuthority.check(proof);const sessions=sceneStore.activeSessions(c),scenes=sessions.length===1?sceneStore.activeScenes(c,sessions[0].id):[];
       if(sessions.length!==1||scenes.length!==1)throw new Error('Exactly one active scene required to register a character');
       if(character?.id!==actorId||character.guild_id!==c||typeof character.owner_user_id!=='string'||!character.owner_user_id||!['active','reserve','guest'].includes(character.status)||repository.getCharacter(actorId)?.owner_user_id!==character.owner_user_id)throw new Error('Native character with a registered owner required');
-      const existing=sceneStore.readers.readActor(c,actorId);if(existing&&existing.status==='active'&&!(existing.sceneId===scenes[0].id&&existing.ownerUserId===character.owner_user_id&&existing.controlRole==='owner'))throw new Error('Existing character registration requires native review');
-      return scenes[0];
+      const existing=sceneStore.readers.readActor(c,actorId);
+      if(rebind){if(existing?.kind!=='pc'||existing.status!=='active'||existing.sceneId!==scenes[0].id||existing.ownerUserId===character.owner_user_id&&!done)throw new Error('Active registered character with a changed repository owner required');}
+      else if(existing&&existing.status==='active'&&!(existing.sceneId===scenes[0].id&&existing.ownerUserId===character.owner_user_id&&existing.controlRole==='owner'))throw new Error('Existing character registration requires native review');
+      return {scene:scenes[0],existing};
     };
-    const scene=check();
-    return sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`pc-register:${proof.sourceRef}`,records:[{kind:'actor',data:{id:actorId,campaignId:c,sceneId:scene.id,kind:'pc',status:'active',ownerUserId:character.owner_user_id,controllerUserId:character.owner_user_id,controlRole:'owner'},expectedRevision:null}]},{check});
+    let done=false;const {scene,existing}=check(),owner=character.owner_user_id,data={id:actorId,campaignId:c,sceneId:scene.id,kind:'pc',status:'active',ownerUserId:owner,controllerUserId:owner,controlRole:'owner'};if(rebind&&existing.name)data.name=existing.name;done=true;
+    return sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`pc-${rebind?'rebind':'register'}:${proof.sourceRef}`,records:[{kind:'actor',data,expectedRevision:rebind?Number(existing.revision):null}]},{check});
   }
   async function execute(e,r){
     const id=e.id,bookkeeping=()=>{},alive=()=>{controller.signal.throwIfAborted();if(closed||e.client!==client||e.user?.bot!==false)throw new Error('Native GM command closed');};
@@ -55,6 +57,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
+      else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
       else if(r.kind==='register'){if(proof.operation!=='pc_register')throw new Error('Registration authority required');receipt=register(proof,characters);text='Character registered to its owner in the active scene. No resources, movement, proxy or attendance were set.';}
       else if(r.kind==='preview'){if(proof.operation!=='pc_bootstrap_preview')throw new Error('Preview authority required');const source=bootstrap.readSource(c,actor);receipt=source;text=`Review this before approving (private). ${describe(source)}. Approve with op pc-bootstrap-review, actor and that snapshotHash. This grants no PC control.`;}
       else{
