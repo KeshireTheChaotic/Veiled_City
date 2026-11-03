@@ -1,0 +1,40 @@
+{
+  "node": "v26.13.0",
+  "completedCases": 81,
+  "files": [
+    {
+      "path": "bot/src/v2/death-prompts.js",
+      "sha256": "28685932c4ac42a6789a0c4458c1192ab5fdc7653806930f2787db524f7c3f09"
+    },
+    {
+      "path": "bot/src/v2/native-death-workflow.js",
+      "sha256": "87562ea0d783dbcc89f1ba669d5b885978a3aa85b83b842a0511aac4100718bd"
+    },
+    {
+      "path": "bot/src/v2/discord-death-commands.js",
+      "sha256": "68a5907dd42872a21baa41dfd74fd87c6e6b750ab1c8e523be44df4d707afd8e"
+    },
+    {
+      "path": "bot/src/v2/interaction-receipts.js",
+      "sha256": "75cd9cb35f68206d7dda2791643d2a52010d4f37727615ac1b2644be664cc6d7"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "30e830d45a9ece831e741da49f1ef5c5442df551eaaef2dae1eaf27360261c90"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs",
+      "sha256": "905b82a9e3bf12180931eb0fd7de2498d12c8c6673ec26ef678fbbf1f59f2890"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs",
+      "sha256": "55c47525ef1220b14fec7bf66dbc693602fd8ef0a9ba299d2cba1f5adb9366ee"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-death-prompt-refresh.test.mjs",
+      "sha256": "e006d535884c08833627cc5ab039a16da7ddcb65d2a8db52ed81f522d340ff78"
+    }
+  ],
+  "durationMs": 27923.9048,
+  "checkpoint": "R6_OWNER_PROMPT_REFRESH"
+}

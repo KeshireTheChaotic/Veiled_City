@@ -37,10 +37,24 @@ export function createNativeDeathWorkflow({client,actionStore,sceneStore,sourceA
     const delivered=row.status==='awaiting_delivery'?await publisher.publish(row.id,{check:stable,signal:workSignal}):await publisher.reconcile(row.id,{check:stable,signal:workSignal});
     return {status:'presented',promptRef:delivered.id,purpose,messageId:delivered.messageId};
   }
+  async function refresh(campaignId,attackRef,promptRef,{check,interactionId,signal}={}){
+    if(typeof check!=='function')throw new Error('Native owner refresh caller authorization required');
+    const requestRef=`incoming-death:${attackRef}`,old=promptStore.read(promptRef);
+    function purpose(){const o=actionStore.readIncomingDeathOutcome(campaignId,attackRef);if(o?.status==='awaiting_allocation')return 'death_allocation';if(o||actionStore.readIncomingDeathChoice(campaignId,attackRef))throw new Error('Saved native choice/outcome cannot be replaced by refreshing controls');return actionStore.readIncomingDeathReview(campaignId,attackRef)?'death_choice':'death_review';}
+    const stage=purpose(),terms=ingress.readTerms(campaignId,requestRef,stage),route=structuredClone(readRoute(campaignId,attackRef));
+    if(!old||old.terms.campaignId!==campaignId||old.terms.requestRef!==requestRef||old.terms.purpose!==stage||old.terms.actorId!==terms.actorId||old.terms.ownerUserId!==terms.ownerUserId||route?.guildId!==campaignId||route.sceneId!==terms.sceneId||route.ownerUserId!==terms.ownerUserId)throw new Error('Exact stale owner controls required');
+    const approval=()=>{
+      controller.signal.throwIfAborted();signal?.throwIfAborted();check();const row=interactionReceipts.read(interactionId),b=row?.binding;
+      if(closed||row?.ack!=='deferred'||!['pending','held','committed'].includes(row.processing)||b?.kind!=='discord_command'||b.operation!=='death-refresh'||b.id!==interactionId||b.promptRef!==promptRef||b.requestRef!==requestRef||b.campaignId!==campaignId||b.sceneId!==terms.sceneId||b.actorId!==terms.actorId||b.principal!==terms.ownerUserId||row.bindingHash!==hash(b)||purpose()!==stage||hash(ingress.readTerms(campaignId,requestRef,stage))!==hash(terms)||JSON.stringify(readRoute(campaignId,attackRef))!==JSON.stringify(route))throw new Error('Observed explicit owner refresh command required');
+      return {kind:'owner_requested_death_prompt_refresh',interactionId,promptRef,requestRef,campaignId,sceneId:terms.sceneId,actorId:terms.actorId,ownerUserId:terms.ownerUserId,oldTermsHash:old.termsHash,termsHash:hash(terms),commandHash:b.commandHash};
+    };approval();
+    promptStore.refresh(promptRef,{terms,channelId:route.channelId,expiresAt:clock()+600000},{check:()=>{approval();},readApproval:approval});
+    return present(campaignId,attackRef,{check:()=>{approval();},signal});
+  }
   const dispatcher=createDiscordDeathDispatcher({client,promptStore,decisionReader:decisions,choiceSources,ingress,receipts:interactionReceipts,onError,async onCommitted({decision,source},{signal}){
     const attackRef=decision.requestRef.slice('incoming-death:'.length),scope={campaignId:decision.campaignId,sceneId:decision.sceneId,actorId:decision.actorId,ownerUserId:decision.principal};
     const check=()=>{controller.signal.throwIfAborted();signal.throwIfAborted();inspectOwnerReceiptSource(sourceAuthority,{sourceRef:source.id,sourceRevision:source.revision},scope,{privateAudience:true});};check();
     const next=await present(decision.campaignId,attackRef,{check,signal});if(next.status==='native_review_required')throw new Error('Native death prompt progression requires reconciliation');
   }});
-  return Object.freeze({present,reconcile(ref,{check}={}){if(typeof check!=='function')throw new Error('Native reconciliation caller authorization required');return reconciliation.reconcile(ref,{check:()=>{controller.signal.throwIfAborted();if(closed)throw new Error('Native death workflow closed');check();}});},drain:()=>dispatcher.drain(),close(){if(closed)return;closed=true;controller.abort();dispatcher.close();decisions.close();}});
+  return Object.freeze({present,refresh,reconcile(ref,{check}={}){if(typeof check!=='function')throw new Error('Native reconciliation caller authorization required');return reconciliation.reconcile(ref,{check:()=>{controller.signal.throwIfAborted();if(closed)throw new Error('Native death workflow closed');check();}});},drain:()=>dispatcher.drain(),close(){if(closed)return;closed=true;controller.abort();dispatcher.close();decisions.close();}});
 }

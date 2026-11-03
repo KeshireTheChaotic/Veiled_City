@@ -1,0 +1,22 @@
+# R3/R6 — explicit owner stale-control refresh (slice complete)
+
+An observed owner command can now request `death-refresh` with the exact native request and old prompt references through either existing effect-command alias. Native owner/session/audience checks run before the workflow reads the durable deferred command claim. That claim must specifically bind the refresh operation, owner, request, actor, prompt and command hash. No GM override or player-supplied ownership, state, dice or feature mapping is accepted.
+
+The fixed prompt operation atomically creates the replacement and marks the old prompt superseded, retaining its original terms, tokens, message/delivery/publication evidence and explicit owner approval link. `ensure` ignores superseded history but still holds duplicates. Only stale confirmed-delivered controls qualify; current controls and any unconfirmed/uncertain send remain held. Changed native terms are rederived, including unsupported owned-feature restrictions. Already saved move/outcome stages cannot be replaced. Pending Hope allocation controls can refresh without changing the accepted move, dice, marked pools or budget. Superseded buttons cannot accept a new decision.
+
+The same native supersession proof replays without another replacement; a different proof cannot reuse that old prompt. Final authorization failure rolls back both new prompt and old supersession. Refreshing controls never accepts risks, selects a move, allocates recovery, draws dice or supplies PC fiction. Fresh private delivery still uses the existing durable no-resend publication path; a failure of that replacement send remains uncertain rather than creating another generation.
+
+Modified files: `bot/src/v2/death-prompts.js`, `native-death-workflow.js`, `discord-death-commands.js`, `interaction-receipts.js`; extended `bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs`; new `r6-death-prompt-refresh.test.mjs`; report/hash manifest and ledger. No production entrypoint, legacy route, gameplay validator or existing test was retired. AI capabilities remain unchanged.
+
+Verification complete on Node v26.13.0, worktree root:
+
+```text
+node --test bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs bot/tests/veilkeeper2/r6-death-prompt-refresh.test.mjs
+81 passed; 0 failed/cancelled/skipped; 27923.9048 ms
+```
+
+The existing live exec session was polled to completion without restarting. Output is in the tool transcript. Actual SQLite/native source/rules/command/root modules exercise explicit refresh, retired-button rejection, changed owned features, duplicate command suppression, still-current/uncertain-send rejection, saved move/dice preservation and allocation-only refresh. The prompt-store transaction tests use a native approval-reader fixture for proof replay and final authorization rollback; composed tests obtain that proof from observed native commands. Discord gateway/permissions/send/readback/reply remain simulated. Cold recovery is covered by the changed workflow/transport tests; no process-kill or live Discord qualification follows. No whole-phase acceptance is claimed.
+
+Migration/rollback: additive `superseded` prompt status and linked supersession metadata; a closed refresh-command binding variant in the existing native interaction table. No schema or production migration. Preserve both generations and all receipts. Old code must not treat superseded rows as fresh or discard their delivery history; roll back by disabling the opt-in root and retaining files for reviewed recovery. Multiple old active prompts still require explicit reconciliation, not arbitrary selection. An actor-frame change after an already saved risk review remains held by native immutable review/choice compare-and-set; UI refresh cannot rebase consequential evidence.
+
+Known holds: unsaved-send-response recovery and command-gap repair; actual native session setup/late-arrival/identity/import adapters; full command/rules/GM/Blaze parity; conversational outcome publication/Fear continuation; canonical migration and independent live/process/crash qualification. R3/R6 and R0–R8 remain incomplete. Next exact phase: native session/actor adapters, then remaining actual command/rules/GM/executor integration. No major-phase gate, merge/push or production deployment occurred. Completed-phase publication remains restricted to the rebuild branch.
