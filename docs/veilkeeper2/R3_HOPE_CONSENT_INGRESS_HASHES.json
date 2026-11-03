@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/hope-consent-ingress.js",
+    "sha256": "ab9c211b8fa15e989d506db8896f8542523077f0561f5dbe5994e2520d12bb38"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-hope-consent-ingress.test.mjs",
+    "sha256": "22faf857a9b365fcda55829e1b0ebb4130f4ec6a941b5dff0688f2f770d91a5b"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_HOPE_CONSENT_INGRESS_REPORT.md",
+    "sha256": "47ea579d3c9647fc0d1a1ff5f075ddf11e9216d5d96edb22345a7b29eacee318"
+  }
+]

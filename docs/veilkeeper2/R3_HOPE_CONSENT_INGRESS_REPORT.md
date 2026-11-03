@@ -1,0 +1,7 @@
+# R3 — explicit native owner cost-decision ingress
+
+Added a native-only ingress binding a verified decision event to current actor ownership/control, campaign/scene, immutable action terms and exact cost. The original action source and distinct owner choice source/revision are both preserved. Accepted decisions open readiness through the existing atomic consent transaction; rejection cancels without spending. Silence or unspecified decisions never become consent. Current terms/decision/actor records are reread inside transaction authorization checks.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-hope-consent-ingress.test.mjs`. Actual result: 3/3 passed, zero failures/skips, 53.5487 ms. Tests compose real SQLite action/terms/consent storage with synthetic native decision/source/actor readers and cover separate source lineage, replay, wrong owner/control, altered cost, nondecision and explicit rejection. Unchanged suites were not rerun.
+
+The decision reader still needs authenticated Discord command/component integration; arbitrary JSON labels are not a production proof. Historical source immutability, control transfer/revocation, reservation policy, complete action consequence parity and live qualification remain open. No AI capability or model amount entrypoint was added. R3 and broader gates remain incomplete. No production change, migration, deployment or phase push occurred. Next: connect verified transport decisions and fully validate source lineage in unified outcome receipts before default installation.
