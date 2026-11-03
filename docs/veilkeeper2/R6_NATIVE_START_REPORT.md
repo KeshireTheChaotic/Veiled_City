@@ -20,6 +20,8 @@ Live smoke attempt (user-authorized, test guild only, nothing sent): startNative
 
 Update (records plumbing): with a provider the root also opens knowledge.sqlite (the existing knowledge store) and passes it as the turn runner records source in place of the empty stub. It is empty and nothing selects references yet, so context is unchanged; GM-authored records and recall are the next composition step. Tests: r6-native-root 4, r6-native-start 8, r1-discord-turn-runner and r1-discord-chain re-run (21 passed).
 
+Update (explicit GM configuration, from the first live commands): createCampaignGmPolicyReader accepts host-supplied gmRoleId, gmUserIds and allowAdministrators (campaign gm_role_id still wins; nothing inferred), createNativeRoot takes gmPolicy, and native-start reads VK2_GM_ROLE_ID / VK2_GM_USER_IDS / VK2_GM_ALLOW_ADMINISTRATORS=1 (digits-only ids validated). Tests: r6-campaign-adapters 4, r6-native-start 9, r6-native-root 4, r6-gm-session-command 18, r3 router suite 56 (91 passed).
+
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 
 

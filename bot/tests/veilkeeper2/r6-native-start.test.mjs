@@ -40,3 +40,9 @@ test('ChatGPT mode needs a model but no API key, and keeps the call budget',asyn
   const p=await createOpenAIProviderFromEnv({AI_AUTH_MODE:'chatgpt',OPENAI_GM_MODEL:'model-x',VK2_MAX_TURNS:'2'});assert.equal(typeof p.generate,'function');assert.equal(p.remaining,2);
   await assert.rejects(createOpenAIProviderFromEnv({AI_AUTH_MODE:'api_key',VK2_MODEL:'m'}),/OPENAI_API_KEY/);
 });
+test('explicit GM configuration comes only from opt-in variables and is passed to the root',async t=>{
+  const {gmPolicyFromEnv}=await import('../../src/v2/native-start.js');
+  assert.deepEqual(gmPolicyFromEnv({}),{gmRoleId:null,gmUserIds:[],allowAdministrators:false});assert.deepEqual(gmPolicyFromEnv({VK2_GM_ROLE_ID:'12345',VK2_GM_USER_IDS:' 111111, 222222 ',VK2_GM_ALLOW_ADMINISTRATORS:'1'}),{gmRoleId:'12345',gmUserIds:['111111','222222'],allowAdministrators:true});
+  assert.equal(gmPolicyFromEnv({VK2_GM_ALLOW_ADMINISTRATORS:'true'}).allowAdministrators,false);for(const bad of [{VK2_GM_ROLE_ID:'abc'},{VK2_GM_USER_IDS:'1,x'}])assert.throws(()=>gmPolicyFromEnv(bad),/Discord ids/);
+  const s=setup(t);let passed;await startNative({...s.options,env:{...s.env,VK2_GM_ALLOW_ADMINISTRATORS:'1'},createRoot:o=>{passed=o;return {close(){}};}}).then(a=>a.close());assert.deepEqual(passed.gmPolicy,{gmRoleId:null,gmUserIds:[],allowAdministrators:true});
+});

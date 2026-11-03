@@ -1,12 +1,13 @@
 import {createHash} from 'node:crypto';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
-/** Read-only GM policy from the campaign record. Only the configured GM role counts;
- * administrator fallback and user lists are never inferred from the legacy row.
+/** Read-only GM policy: the campaign record's gm_role_id, plus only what the host passes explicitly
+ * (a role, named user ids, or an administrator opt-in). Nothing is inferred from the legacy row.
  */
-export function createCampaignGmPolicyReader({repository}){
+export function createCampaignGmPolicyReader({repository,gmRoleId=null,gmUserIds=[],allowAdministrators=false}){
   if(typeof repository?.getCampaign!=='function')throw new TypeError('Campaign repository required');
-  return campaignId=>{const row=repository.getCampaign(campaignId);if(!row||row.guild_id!==campaignId||!id(row.gm_role_id))throw new Error('Configured campaign GM role required');return {campaignId,revision:hash([campaignId,row.gm_role_id]),gmRoleId:row.gm_role_id,gmUserIds:[],allowAdministrators:false};};
+  if(!Array.isArray(gmUserIds)||gmUserIds.length>100||gmUserIds.some(u=>!id(u))||typeof allowAdministrators!=='boolean'||gmRoleId!==null&&!id(gmRoleId))throw new TypeError('Valid explicit GM configuration required');
+  return campaignId=>{const row=repository.getCampaign(campaignId);if(!row||row.guild_id!==campaignId)throw new Error('Configured campaign GM authority required');const role=id(row.gm_role_id)?row.gm_role_id:gmRoleId;if(!id(role)&&!gmUserIds.length&&!allowAdministrators)throw new Error('Configured campaign GM role required');return {campaignId,revision:hash([campaignId,role??null,[...gmUserIds],allowAdministrators]),gmRoleId:id(role)?role:null,gmUserIds:[...gmUserIds],allowAdministrators};};
 }
 /** Resolves the owner's registered PC in the single active native session. The query is a
  * character id or exact name; absent, ambiguous or unregistered matches are refused, never guessed.

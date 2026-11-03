@@ -17,6 +17,14 @@ export async function createOpenAIProviderFromEnv(env){
   const client=chatgpt?(await import('../frameworks/ai-provider/public.js')).createChatGptClient({timeoutMs:60000}):new (await import('openai')).default({apiKey});
   return createCallBudget(createOpenAIResponsesProvider({client,model,maxOutputTokens:1024,timeoutMs:60000}),{maxCalls});
 }
+/** Explicit GM configuration for campaigns whose record names no GM role: VK2_GM_ROLE_ID, VK2_GM_USER_IDS
+ * (comma-separated user ids) and/or VK2_GM_ALLOW_ADMINISTRATORS=1. All are opt-in; none is inferred.
+ */
+export function gmPolicyFromEnv(env){
+  const ids=String(env.VK2_GM_USER_IDS??'').split(',').map(v=>v.trim()).filter(Boolean),role=env.VK2_GM_ROLE_ID?.trim()||null;
+  if(role&&!/^\d{5,25}$/.test(role)||ids.some(v=>!/^\d{5,25}$/.test(v)))throw new Error('VK2_GM_ROLE_ID and VK2_GM_USER_IDS must be Discord ids');
+  return {gmRoleId:role,gmUserIds:ids,allowAdministrators:env.VK2_GM_ALLOW_ADMINISTRATORS==='1'};
+}
 /** Explicit opt-in native start. It never touches the legacy runtime: the legacy database is opened
  * read-only and the native stores must live in a new or empty directory.
  * Required: VK2_NATIVE=1, VK2_NATIVE_DIR, VK2_LEGACY_DB, DISCORD_TOKEN (may come from the legacy .env named by
@@ -35,7 +43,7 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
   const repository=openRepository(legacyDb),client=createClient();let root;
   try{
-    root=createRoot({client,directory,characterRepository:repository,campaignRepository:repository,rng,provider,allowedGuildIds:new Set([guildId]),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
+    root=createRoot({client,directory,characterRepository:repository,campaignRepository:repository,rng,provider,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
     await client.login(token);
   }catch(error){root?.close();repository.close();client.destroy?.();throw error;}
   let closed=false;
