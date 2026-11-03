@@ -1,0 +1,297 @@
+{
+  "total": 1009,
+  "scope": "mechanical grouping only; no record is classified public, migrated or granted execution authority",
+  "groups": {
+    "forwarding-wrapper": {
+      "count": 118,
+      "callees": {
+        "indexWorldEvent": 118
+      },
+      "topFiles": [
+        [
+          "bot/src/action-consent.js",
+          2
+        ],
+        [
+          "bot/src/consent-native.js",
+          2
+        ],
+        [
+          "bot/src/fear-reservations.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/encounter-activation-service.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/fear-service.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/native-environment-access.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/native-environment-arrivals.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/native-environment-countdown.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/native-environment-door-chain.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/native-environment-imaging.js",
+          2
+        ]
+      ]
+    },
+    "world-event-write": {
+      "count": 17,
+      "callees": {
+        "indexWorldEvent": 14,
+        "saveWorldEvent": 3
+      },
+      "topFiles": [
+        [
+          "bot/src/frameworks/world/city-calendar.js",
+          2
+        ],
+        [
+          "bot/src/ai-intents.js",
+          1
+        ],
+        [
+          "bot/src/city-commands.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-access-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-recording-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-recovery-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/mixed-condition-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pvp-authorship-rules.js",
+          1
+        ]
+      ]
+    },
+    "keyed-read": {
+      "count": 626,
+      "callees": {
+        "getWorldEvent": 559,
+        "getCityRecord": 67
+      },
+      "topFiles": [
+        [
+          "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+          25
+        ],
+        [
+          "bot/src/pvp-output.js",
+          21
+        ],
+        [
+          "bot/src/frameworks/daggerheart/incoming-attack-rules.js",
+          15
+        ],
+        [
+          "bot/src/framework-to-framework/narrative--world/signals.js",
+          11
+        ],
+        [
+          "bot/src/frameworks/character/observation.js",
+          11
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+          11
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+          10
+        ],
+        [
+          "bot/src/frameworks/daggerheart/defensive-feature-rules.js",
+          9
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pc-effect-rules.js",
+          9
+        ],
+        [
+          "bot/src/frameworks/session/session-opening.js",
+          9
+        ]
+      ]
+    },
+    "city-record-write-spread-kind": {
+      "count": 194,
+      "callees": {
+        "saveCityRecord": 194
+      },
+      "topFiles": [
+        [
+          "bot/src/frameworks/daggerheart/pvp-brawl-rules.js",
+          10
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+          10
+        ],
+        [
+          "bot/src/frameworks/daggerheart/incoming-attack-rules.js",
+          9
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pvp-agreement-rules.js",
+          9
+        ],
+        [
+          "bot/src/frameworks/session/scene-action-window.js",
+          7
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pvp-damage-rules.js",
+          6
+        ],
+        [
+          "bot/src/frameworks/session/action-continuation.js",
+          5
+        ],
+        [
+          "bot/src/frameworks/world/autonomous-world.js",
+          5
+        ],
+        [
+          "bot/src/frameworks/world/city-core-rules.js",
+          5
+        ],
+        [
+          "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js",
+          4
+        ]
+      ]
+    },
+    "list-read": {
+      "count": 38,
+      "callees": {
+        "listWorldEvents": 14,
+        "listCityRecords": 24
+      },
+      "topFiles": [
+        [
+          "bot/src/frameworks/intent/context-reader.js",
+          4
+        ],
+        [
+          "bot/src/city-commands.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/outcome-preview.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/roll-options-rules.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/session/session-briefs.js",
+          2
+        ],
+        [
+          "bot/src/commands.js",
+          1
+        ],
+        [
+          "bot/src/framework-to-framework/narrative--world/signals.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-output-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/gm-ruling-rules.js",
+          1
+        ]
+      ]
+    },
+    "city-record-write-dynamic-kind": {
+      "count": 16,
+      "callees": {
+        "saveCityRecord": 16
+      },
+      "topFiles": [
+        [
+          "bot/src/frameworks/daggerheart/environment-countdown-rules.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/world/city-civic.js",
+          2
+        ],
+        [
+          "bot/src/native-publications.js",
+          2
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-access-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-recording-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-recovery-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/environment-witness-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/mixed-condition-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js",
+          1
+        ],
+        [
+          "bot/src/frameworks/knowledge/historical-archive.js",
+          1
+        ]
+      ]
+    }
+  }
+}
