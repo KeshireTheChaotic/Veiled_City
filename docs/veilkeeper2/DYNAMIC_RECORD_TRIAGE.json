@@ -1,4 +1,817 @@
 {
+  "cityRecordWriters": {
+    "bot/src/application/workflows/assembly-planning.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "assembly_plan_history",
+        "assembly_refresh",
+        "assembly_refresh_lease",
+        "assembly_refresh_review"
+      ]
+    },
+    "bot/src/application/workflows/assembly-publications.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "assembly_delivery",
+        "assembly_delivery_metadata",
+        "assembly_reconciliation"
+      ]
+    },
+    "bot/src/application/workflows/session-opening-recovery.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "native_opening_delivery_review",
+        "native_opening_precommit_review",
+        "session_opening_precommit_review",
+        "session_opening_review"
+      ]
+    },
+    "bot/src/application/workflows/session-opening-runner.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "session_opening_job"
+      ]
+    },
+    "bot/src/content-packages.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "content_package",
+        "reference"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/condition-recovery-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "native_condition_clear",
+        "pc_native_condition_clear"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/encounter-activation-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "native_encounter_activation"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/encounter-grounding-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "encounter_actor",
+        "encounter_binding"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/environment-access-rules.js": {
+      "uses": 1,
+      "candidateKinds": []
+    },
+    "bot/src/frameworks/daggerheart/environment-countdown-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "native_adjudication",
+        "native_recording_upload",
+        "owner_action",
+        "roll_operation",
+        "scene_effect"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/environment-recording-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "handout",
+        "video"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/environment-recovery-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "native_environment_recovery_declaration"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/environment-witness-rules.js": {
+      "uses": 1,
+      "candidateKinds": []
+    },
+    "bot/src/frameworks/daggerheart/feature-effect-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "gm_feature_effect_receipt",
+        "native_feature_effect"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/feature-window-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "gm_action_cost_receipt",
+        "gm_feature_use_receipt",
+        "native_adjudication",
+        "native_feature_payment",
+        "native_feature_reservation",
+        "native_feature_trigger",
+        "native_feature_trigger_review",
+        "native_feature_use",
+        "native_feature_window"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/gm-action-review-rules.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "action_review_choice",
+        "gm_action_review",
+        "gm_action_review_receipt",
+        "ordinary_effect_review",
+        "unsupported_action"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/gm-execution-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "action",
+        "adversary",
+        "gm_action_continuation",
+        "gm_arbitration_decision",
+        "gm_execution_review",
+        "gm_native_roll_receipt",
+        "gm_reaction_submission",
+        "native_gm_reaction_withdrawal",
+        "reaction"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/gm-ruling-rules.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "action",
+        "gm_action_ruling",
+        "unsupported_action"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "gm_arbitration_decision",
+        "gm_group_feature_choice",
+        "gm_group_feature_effect",
+        "gm_group_feature_execution",
+        "gm_group_feature_progress",
+        "gm_group_feature_review",
+        "native_condition_expiry",
+        "native_condition_review",
+        "native_gm_arbitration",
+        "native_gm_spotlight",
+        "native_gm_spotlight_cursor",
+        "native_group_feature",
+        "native_group_feature_choice",
+        "native_group_feature_effect",
+        "native_group_progress",
+        "native_npc_reaction",
+        "native_pc_condition",
+        "npc",
+        "pc_native_condition",
+        "pc_native_condition_expiry"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/incoming-attack-rules.js": {
+      "uses": 9,
+      "candidateKinds": [
+        "attack",
+        "incoming_armor_owner_choice",
+        "incoming_defense_choice",
+        "native_incoming_withheld",
+        "native_npc_attack_offer",
+        "native_volley_offer",
+        "native_volley_result",
+        "npc_attack_roll_receipt",
+        "npc_damage_passive_proof",
+        "npc_hit_feature_proof",
+        "npc_passive_proof",
+        "npc_volley_attack",
+        "npc_volley_roll_receipt",
+        "pc_death_move_request",
+        "pc_effect_receipt",
+        "pc_incoming_attack",
+        "pc_incoming_review"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/mixed-condition-rules.js": {
+      "uses": 1,
+      "candidateKinds": []
+    },
+    "bot/src/frameworks/daggerheart/ordinary-effect-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "ordinary_effect_diagnostic",
+        "ordinary_effect_receipt",
+        "unsupported_action"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pc-death-rules.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "pc_blaze_action",
+        "pc_blaze_gm_approval",
+        "pc_consciousness_receipt",
+        "pc_death_outcome",
+        "pc_death_owner_choice",
+        "pc_death_recovery_allocation",
+        "pc_death_review"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pc-effect-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "native_pc_feature_review",
+        "pc_effect_authority",
+        "pc_effect_owner_choice",
+        "pc_effect_receipt",
+        "pc_effect_review",
+        "pc_healing_source_choice",
+        "pc_healing_source_review",
+        "reviewed_feature"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-agreement-rules.js": {
+      "uses": 9,
+      "candidateKinds": [
+        "pvp_agreement",
+        "pvp_attempt",
+        "pvp_campaign_review",
+        "pvp_consent",
+        "pvp_consent_reply",
+        "pvp_proposal",
+        "pvp_resolution_receipt",
+        "pvp_round_receipt",
+        "pvp_terms_offer",
+        "pvp_terms_review",
+        "pvp_terms_revision"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-attack-rules.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "attack",
+        "pvp_attack_mechanics_review",
+        "pvp_attack_owner_authorization",
+        "pvp_attack_request",
+        "pvp_attack_review",
+        "pvp_attack_roll_receipt",
+        "pvp_defense_option_receipt",
+        "pvp_fear_trigger"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-brawl-rules.js": {
+      "uses": 10,
+      "candidateKinds": [
+        "native_pvp_opportunity",
+        "pvp_brawl_stop_receipt",
+        "pvp_spotlight_opportunity",
+        "pvp_spotlight_owner_pass",
+        "pvp_spotlight_pass",
+        "pvp_spotlight_review",
+        "pvp_target_lock"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-damage-rules.js": {
+      "uses": 6,
+      "candidateKinds": [
+        "action_outcome_receipt",
+        "compound_action",
+        "native_campaign_damage",
+        "native_pvp_damage_review",
+        "pc_death_move_request",
+        "pc_effect_authority",
+        "pc_effect_receipt",
+        "pvp_action_terminal_receipt",
+        "pvp_armor_owner_choice",
+        "pvp_campaign_damage_review",
+        "pvp_damage_group_member",
+        "pvp_damage_offer",
+        "pvp_damage_owner_review",
+        "pvp_damage_roll_receipt",
+        "verified_pvp_damage"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "pvp_exchange_gate",
+        "pvp_fear_trigger"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js": {
+      "uses": 11,
+      "candidateKinds": [
+        "action_interrupt_receipt",
+        "pvp_fear_complication_receipt",
+        "pvp_fear_context",
+        "pvp_fear_context_established",
+        "pvp_fear_effect",
+        "pvp_fear_effect_receipt",
+        "pvp_fear_move_decision",
+        "pvp_fear_recovery",
+        "pvp_fear_selection",
+        "pvp_fear_threat_progression",
+        "pvp_fear_threat_progression_receipt"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-profile-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "pvp_attack_intent",
+        "pvp_damage_consent",
+        "pvp_damage_consent_reply",
+        "pvp_damage_review",
+        "pvp_damage_terms_offer",
+        "pvp_encounter_contract",
+        "pvp_encounter_terms",
+        "pvp_target_edge_consent"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-reaction-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "difficulty",
+        "pvp_reaction_offer",
+        "pvp_reaction_review",
+        "pvp_reaction_roll_receipt",
+        "reaction"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-round-rules.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "pvp_fear_trigger",
+        "pvp_resolution_receipt",
+        "pvp_round_choice",
+        "pvp_round_continuation",
+        "pvp_round_receipt",
+        "pvp_strike_receipt"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/pvp-terminal-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "pvp_attempt",
+        "scene_window_lifecycle"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "pvp_round_receipt",
+        "roll_adjudication",
+        "roll_disclosure",
+        "roll_operation",
+        "tag_usage"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/rules-arbitration-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "action_outcome_receipt",
+        "character_location",
+        "native_adjudication",
+        "none",
+        "provisional",
+        "roll_adjudication",
+        "saved_ruling"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/typed-roll-execution.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "action_outcome_receipt",
+        "pvp_typed_roll_operation",
+        "typed_intent"
+      ]
+    },
+    "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js": {
+      "uses": 4,
+      "candidateKinds": [
+        "action_outcome_receipt",
+        "compound_action",
+        "native_adjudication"
+      ]
+    },
+    "bot/src/frameworks/intent/action-dependency.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "action_continuation_signal",
+        "compound_action"
+      ]
+    },
+    "bot/src/frameworks/intent/review-action.js": {
+      "uses": 2,
+      "candidateKinds": []
+    },
+    "bot/src/frameworks/intent/semantic-intake.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "authored_turn_envelope",
+        "semantic_intent_diagnostic",
+        "semantic_intent_proposal",
+        "typed_intent"
+      ]
+    },
+    "bot/src/frameworks/intent/typed-intent-persistence.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "move",
+        "semantic_intent_diagnostic",
+        "semantic_intent_proposal",
+        "typed_intent"
+      ]
+    },
+    "bot/src/frameworks/knowledge/historical-archive.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "historical_archive_inventory"
+      ]
+    },
+    "bot/src/frameworks/knowledge/memory-clusters.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "memory",
+        "memory_cluster",
+        "memory_cursor",
+        "npc_memory",
+        "report"
+      ]
+    },
+    "bot/src/frameworks/knowledge/memory-lifecycle.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "memory_identity",
+        "memory_revision"
+      ]
+    },
+    "bot/src/frameworks/knowledge/narrative-memory.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "narrative_delivery",
+        "narrative_world_memory",
+        "native_narrative_disclosure",
+        "native_narrative_memory",
+        "native_npc_speech_testimony",
+        "observation"
+      ]
+    },
+    "bot/src/frameworks/knowledge/owned-community.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "community",
+        "community_membership",
+        "history",
+        "organization_request",
+        "owner_request_review",
+        "property"
+      ]
+    },
+    "bot/src/frameworks/knowledge/personal-continuity.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "arc",
+        "arc_beat",
+        "arc_candidate",
+        "organization_request",
+        "player_statement"
+      ]
+    },
+    "bot/src/frameworks/narrative/fresh-npc-authoring.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "native_fresh_authoring_scope",
+        "native_fresh_npc_utterance",
+        "npc_authoring_attempt",
+        "npc_authoring_hold",
+        "npc_fresh_authoring"
+      ]
+    },
+    "bot/src/frameworks/narrative/fresh-scene-authoring.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "native_fresh_scene_description",
+        "scene_authoring_attempt",
+        "scene_authoring_hold",
+        "scene_fresh_authoring"
+      ]
+    },
+    "bot/src/frameworks/narrative/interpretation-context.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "gm_utterance",
+        "narrative_context",
+        "owner_context",
+        "scene_entry"
+      ]
+    },
+    "bot/src/frameworks/narrative/narrative-authority.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "narrative_draft",
+        "narrative_repair",
+        "narrative_request",
+        "narrative_unit",
+        "narrative_unit_fates",
+        "narrative_unit_review",
+        "native_narrative_unit",
+        "native_outcome",
+        "scene",
+        "scene_authoring_attempt"
+      ]
+    },
+    "bot/src/frameworks/narrative/narrative-salience.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "narrative_interest",
+        "narrative_salience"
+      ]
+    },
+    "bot/src/frameworks/narrative/scene-fiction-authority.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "native_scene_fiction",
+        "scene_authoring_attempt",
+        "scene_fiction",
+        "scene_fiction_draft",
+        "scene_fiction_hold",
+        "scene_local_detail"
+      ]
+    },
+    "bot/src/frameworks/npc/motivation.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "awareness",
+        "goal",
+        "goal_state",
+        "goal_transition",
+        "institution",
+        "report"
+      ]
+    },
+    "bot/src/frameworks/npc/strategy.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "goal",
+        "strategy"
+      ]
+    },
+    "bot/src/frameworks/operations/ai-review.js": {
+      "uses": 1,
+      "candidateKinds": []
+    },
+    "bot/src/frameworks/persistence/database.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "historical_archive_conflict"
+      ]
+    },
+    "bot/src/frameworks/session/action-continuation.js": {
+      "uses": 5,
+      "candidateKinds": [
+        "action_continuation",
+        "event",
+        "move"
+      ]
+    },
+    "bot/src/frameworks/session/negotiations.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "negotiation",
+        "obligation"
+      ]
+    },
+    "bot/src/frameworks/session/opening-attendance.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "native_attendance_carry",
+        "native_opening_entry_opportunity",
+        "native_session_attendance",
+        "opening_attendance_carry",
+        "opening_entry_opportunity"
+      ]
+    },
+    "bot/src/frameworks/session/scene-action-window.js": {
+      "uses": 7,
+      "candidateKinds": [
+        "scene_action_participant",
+        "scene_action_pending",
+        "scene_action_resolution",
+        "scene_action_window",
+        "scene_window_occurrence",
+        "window_action_receipt"
+      ]
+    },
+    "bot/src/frameworks/session/scene-continuity.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "arrival",
+        "scene_presence",
+        "scene_residue"
+      ]
+    },
+    "bot/src/frameworks/session/scene-entry-native.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "arrival",
+        "entry_policy"
+      ]
+    },
+    "bot/src/frameworks/session/scene-setup.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "arrival",
+        "native_scene_setup_offer",
+        "owner_initial_scene_confirmation",
+        "scene_setup",
+        "scene_setup_declaration"
+      ]
+    },
+    "bot/src/frameworks/session/session-opening.js": {
+      "uses": 4,
+      "candidateKinds": [
+        "native_opening_epoch",
+        "native_session_opening_attempt",
+        "native_session_opening_job",
+        "session_opening_generation",
+        "session_opening_turn"
+      ]
+    },
+    "bot/src/frameworks/session/story-continuity.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "clue_attempt",
+        "mystery",
+        "pacing",
+        "setup_payoff",
+        "story_setup"
+      ]
+    },
+    "bot/src/frameworks/session/window-coordinator.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "scene_action_resolution",
+        "scene_action_window",
+        "scene_window_lifecycle",
+        "window_action_receipt",
+        "window_cancellation"
+      ]
+    },
+    "bot/src/frameworks/world/autonomous-world.js": {
+      "uses": 5,
+      "candidateKinds": [
+        "ai_gm_input",
+        "autonomous_turn",
+        "legacy_scene_entry",
+        "legacy_scene_entry_adapter",
+        "none",
+        "scene_entry",
+        "semantic_intents",
+        "world_conflict"
+      ]
+    },
+    "bot/src/frameworks/world/city-civic.js": {
+      "uses": 5,
+      "candidateKinds": [
+        "influence_action",
+        "transmission"
+      ]
+    },
+    "bot/src/frameworks/world/city-core-rules.js": {
+      "uses": 6,
+      "candidateKinds": [
+        "action",
+        "cycle"
+      ]
+    },
+    "bot/src/frameworks/world/commitments.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "commitment",
+        "commitment_offer",
+        "obligation"
+      ]
+    },
+    "bot/src/frameworks/world/consequences.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "consequence",
+        "consequence_applied",
+        "consequence_cursor",
+        "consequence_subscription"
+      ]
+    },
+    "bot/src/frameworks/world/contact-groups.js": {
+      "uses": 4,
+      "candidateKinds": [
+        "community",
+        "community_membership",
+        "conversation",
+        "group_transition"
+      ]
+    },
+    "bot/src/frameworks/world/identity-rules.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "autonomous_entity",
+        "gm_authority",
+        "gm_private_hook",
+        "narrative_draft",
+        "native_ai_gm",
+        "native_narrative_entity"
+      ]
+    },
+    "bot/src/frameworks/world/infrastructure.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "change",
+        "connect",
+        "infrastructure",
+        "service"
+      ]
+    },
+    "bot/src/frameworks/world/long-projects.js": {
+      "uses": 3,
+      "candidateKinds": [
+        "long_project"
+      ]
+    },
+    "bot/src/frameworks/world/minor-npc-service.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "minor_draft"
+      ]
+    },
+    "bot/src/frameworks/world/reviewed-authoring.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "world_draft"
+      ]
+    },
+    "bot/src/frameworks/world/seed-drafts.js": {
+      "uses": 2,
+      "candidateKinds": [
+        "goal",
+        "seed_clock",
+        "seed_content",
+        "seed_draft",
+        "seed_fields",
+        "seed_knowledge_source",
+        "seed_library",
+        "seed_reference",
+        "seed_source",
+        "seed_template"
+      ]
+    },
+    "bot/src/frameworks/world/upkeep.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "obligation",
+        "upkeep",
+        "upkeep_settlement"
+      ]
+    },
+    "bot/src/native-publications.js": {
+      "uses": 6,
+      "candidateKinds": [
+        "gm_arbitration_private",
+        "gm_arbitration_publication",
+        "native_notice",
+        "pvp_attack_publication",
+        "pvp_attack_status",
+        "pvp_damage_choice",
+        "pvp_damage_publication",
+        "pvp_fear_effect",
+        "pvp_fear_publication",
+        "pvp_fear_trigger",
+        "pvp_projection",
+        "pvp_projection_publication",
+        "pvp_status_publication"
+      ]
+    },
+    "bot/src/pvp-menu.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "pvp_ui_checkpoint",
+        "pvp_ui_delivery",
+        "pvp_ui_token"
+      ]
+    },
+    "bot/src/roll-menu.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "action_outcome_receipt",
+        "roll_menu_token",
+        "roll_operation"
+      ]
+    },
+    "bot/src/state.js": {
+      "uses": 1,
+      "candidateKinds": [
+        "candidate_claim_review",
+        "post_turn_review_audit",
+        "pvp_campaign_review",
+        "semantic_candidate_review"
+      ]
+    }
+  },
   "total": 1009,
   "scope": "mechanical grouping only; no record is classified public, migrated or granted execution authority",
   "groups": {

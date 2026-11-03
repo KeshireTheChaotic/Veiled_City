@@ -8,4 +8,7 @@ What it does not do: no record is classified public, migrated or granted authori
 
 Test: r0-triage.test.mjs 1 passed (grouping). Generation exit 0 on the pinned RECORD_CONTRACTS.json.
 
+Update: DYNAMIC_RECORD_TRIAGE.json now lists, for the 85 files containing city-record writers (210 uses), the literal kind: strings in each file as a bounded candidate set. This is not proof of what is written: spread objects may carry kinds from other modules. Files with no literal candidate (kind fully external, highest-risk holds): bot/src/frameworks/daggerheart/environment-access-rules.js, bot/src/frameworks/daggerheart/environment-witness-rules.js, bot/src/frameworks/daggerheart/mixed-condition-rules.js, bot/src/frameworks/intent/review-action.js, bot/src/frameworks/operations/ai-review.js. Test: r0-triage 2 passed.
+
 Next: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
