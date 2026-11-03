@@ -90,6 +90,11 @@ export const RESOLVED_WRITERS=Object.freeze({
   'bot/src/frameworks/daggerheart/environment-recording-rules.js':{kinds:['native_environment_recording'],evidence:'environment-recording-rules.js:5 const kind'},
   'bot/src/frameworks/daggerheart/environment-countdown-rules.js':{kinds:['native_environment_countdown','native_environment_countdown_head','native_environment_countdown_step'],partial:true,evidence:'environment-countdown-rules.js:11 KIND/STEP constants and :114 _head traced; :98 local kind is KIND or STEP, not traced'},
   'bot/src/content-packages.js':{kinds:['seed_draft'],partial:true,evidence:'content-packages.js:70 spreads reviewSeedDraft result; seed_draft kind assumed from that function and not re-traced'},
+  'bot/src/frameworks/daggerheart/typed-roll-execution.js':{kinds:['typed_intent'],evidence:'typed-roll-execution.js:23 accepted=listCityRecords kind typed_intent; declaration=accepted[0] spread at :66,:75,:92'},
+  'bot/src/frameworks/narrative/narrative-salience.js':{kinds:['narrative_salience'],evidence:'narrative-salience.js:164,168 rows from records(db,guild,"narrative_salience")'},
+  'bot/src/frameworks/daggerheart/condition-recovery-rules.js':{kinds:['native_mixed_condition','pc_native_condition'],partial:true,evidence:'condition-recovery-rules.js:56,84 condition from injected validateNativeCondition; kinds taken from mixed-condition-rules recordKind, injection wiring not re-traced'},
+  'bot/src/frameworks/intent/typed-intent-persistence.js':{kinds:['semantic_intent_proposal','typed_intent'],partial:true,evidence:'typed-intent-persistence.js:122,165 reads; :131 acceptedRow comes from acceptIntentForAdjudication/resolvePendingReferent, not traced'},
+  'bot/src/frameworks/daggerheart/pvp-profile-rules.js':{kinds:['pvp_encounter_contract'],partial:true,evidence:'pvp-profile-rules.js live() reads pvp_encounter_contract; :193 spread of live() result not traced'},
   'bot/src/frameworks/operations/ai-review.js':{kinds:['ai_intent','consequence','goal_transition','group_transition','organization_request','seed_draft','strategy'],evidence:'ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks'}
 });
 /** Review aid: for a `{...name,` spread write, the nearest earlier assignment of `name` in the file.

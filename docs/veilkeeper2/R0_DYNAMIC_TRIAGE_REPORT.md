@@ -26,7 +26,10 @@ Update (batch 6): 19 more files fully resolved and 9 partial. Status: fully reso
 
 Update (forwarding wrappers): isPureForwarder() verifies that each of the 118 forwarding wrappers spreads its own enclosing rest parameter and nothing else (118/118 pure; a spot-check of six showed real pass-through functions and capability-injection arrows). A pure forwarder adds no record kind; its kinds are decided at its callers, which are already counted among the 2,911 callsites. Wrappers therefore need no separate migration decision, but injected capability functions remain part of each rule factory's port. Test: r0-triage 5 passed.
 
+Update (batch 7): typed-roll-execution and narrative-salience fully resolved; condition-recovery, typed-intent-persistence and pvp-profile partial. Status: fully resolved 48 files/81 uses; partial 30 files/120 uses; unresolved 7 files/9 uses.
+
 Next: close the partial entries' untraced lines, resolve the last unresolved writers, then trace the 118 forwarding wrappers to real call sites. Original item: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 

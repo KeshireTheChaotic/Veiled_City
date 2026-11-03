@@ -83,7 +83,15 @@
       "candidateKinds": [
         "native_condition_clear",
         "pc_native_condition_clear"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_mixed_condition",
+          "pc_native_condition"
+        ],
+        "partial": true,
+        "evidence": "condition-recovery-rules.js:56,84 condition from injected validateNativeCondition; kinds taken from mixed-condition-rules recordKind, injection wiring not re-traced"
+      }
     },
     "bot/src/frameworks/daggerheart/encounter-activation-rules.js": {
       "uses": 1,
@@ -534,7 +542,14 @@
         "pvp_encounter_contract",
         "pvp_encounter_terms",
         "pvp_target_edge_consent"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_encounter_contract"
+        ],
+        "partial": true,
+        "evidence": "pvp-profile-rules.js live() reads pvp_encounter_contract; :193 spread of live() result not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-reaction-rules.js": {
       "uses": 1,
@@ -612,7 +627,13 @@
         "action_outcome_receipt",
         "pvp_typed_roll_operation",
         "typed_intent"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "typed_intent"
+        ],
+        "evidence": "typed-roll-execution.js:23 accepted=listCityRecords kind typed_intent; declaration=accepted[0] spread at :66,:75,:92"
+      }
     },
     "bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js": {
       "uses": 4,
@@ -675,7 +696,15 @@
         "semantic_intent_diagnostic",
         "semantic_intent_proposal",
         "typed_intent"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "semantic_intent_proposal",
+          "typed_intent"
+        ],
+        "partial": true,
+        "evidence": "typed-intent-persistence.js:122,165 reads; :131 acceptedRow comes from acceptIntentForAdjudication/resolvePendingReferent, not traced"
+      }
     },
     "bot/src/frameworks/knowledge/historical-archive.js": {
       "uses": 1,
@@ -825,7 +854,13 @@
       "candidateKinds": [
         "narrative_interest",
         "narrative_salience"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "narrative_salience"
+        ],
+        "evidence": "narrative-salience.js:164,168 rows from records(db,guild,\"narrative_salience\")"
+      }
     },
     "bot/src/frameworks/narrative/scene-fiction-authority.js": {
       "uses": 2,
