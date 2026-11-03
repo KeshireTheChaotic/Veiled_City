@@ -1,0 +1,22 @@
+[
+  {
+    "sha256": "aaa9b76426e1849eaa160b819ffc91199007a8688e08383d6ece10b7f80f3bf3",
+    "path": "bot/src/v2/rules/action-store.js"
+  },
+  {
+    "sha256": "5009e97267fb7cfa2a4e8ee9bc4edf705f04e51714c528c88ca8625ea1882dac",
+    "path": "bot/tests/veilkeeper2/r3-action-hope.test.mjs"
+  },
+  {
+    "sha256": "54f7a886a4002e723c286253526b41c0ff302c99a31fb25c5e4157984b83e67b",
+    "path": "bot/tests/veilkeeper2/r3-action-store.test.mjs"
+  },
+  {
+    "sha256": "998f1f2140914c59b0a55467827b2e65d519030d0229d7b3c5b2555687adedd6",
+    "path": "bot/tests/veilkeeper2/r3-roll-action.test.mjs"
+  },
+  {
+    "sha256": "84d8bfc5da5c32ec80aa66fabbc5c3bb2b5354847138b3d2af913d578185a152",
+    "path": "docs/veilkeeper2/R3_ACTION_HOPE_REPORT.md"
+  }
+]
