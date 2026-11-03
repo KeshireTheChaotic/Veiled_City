@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {openHopeStore} from '../../src/v2/rules/hope-store.js';
+import {createHopeCostAuthority} from '../../src/v2/rules/hope-cost-authority.js';
+function fixture(t){const store=openHopeStore();t.after(()=>store.close());store.initialize({campaignId:'c',actorId:'pc',ownerUserId:'u',hope:3,cap:6},{check:()=>{}});
+  const source={id:'m',revision:'1',campaign:'c',scene:'s',principal:'u',actors:['pc']},actor={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1'};
+  const action={id:'a',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',status:'awaiting_cost',sourceRef:'m',sourceRevision:'1',controlRevision:'1',cost:{resource:'hope',slot:'base',amount:2}},consent={id:'consent',campaignId:'c',sceneId:'s',revision:'1',status:'accepted',ownerUserId:'u',sourceRef:'m',sourceRevision:'1',actionRef:'a',actionRevision:'1',actorId:'pc',amount:2,costSlot:'base'};
+  const authority=createHopeCostAuthority({sourceAuthority:{revalidate:()=>true},readActor:()=>actor,readAction:()=>action,readConsent:()=>consent,hopeStore:store});return {store,source,actor,action,consent,authority,parameters:{action_ref:'a',consent_ref:'consent'}};}
+test('native action and explicit owner cost consent commit one bounded cost',t=>{const f=fixture(t);assert.equal(f.authority.definition.validate({source:f.source,proposal:{actorRef:'pc',parameters:f.parameters}}),true);assert.equal(f.store.read('c','pc').hope,3);const receipt=f.authority.commit(f.source,'pc',f.parameters,1);assert.equal(receipt.after.hope,1);assert.deepEqual(f.authority.commit(f.source,'pc',f.parameters,1),receipt);});
+test('stale owner/control/action consent and model amount injection cannot spend',t=>{for(const change of [f=>f.actor.controlRole='proxy',f=>f.actor.controlRevision='2',f=>f.action.revision='2',f=>f.consent.amount=1,f=>f.parameters.amount=1]){const f=fixture(t);change(f);assert.throws(()=>f.authority.commit(f.source,'pc',f.parameters,1));assert.equal(f.store.read('c','pc').hope,3);}});
