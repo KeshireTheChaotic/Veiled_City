@@ -1,0 +1,7 @@
+# R3 — native Discord cost-component observation
+
+Added an opt-in client event observer and strict component decision reader. Only objects observed on the configured client's interactionCreate stream, tied to that client and a non-bot owner, can be accepted. Server-owned prompt token, campaign/channel/message, actor, owner, immutable terms revision and exact cost must match. Replay cannot change a decision. Close detaches observation, clears transient records and disables acceptance. No replies, sends, spending or model tools are added.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-discord-cost-decisions.test.mjs`. Final result: 3/3 passed, zero failures/skips. The suite reran after adding the closed-state acceptance guard. Tests use a native EventEmitter transport double and synthetic prompts/terms; no live Discord event was consumed. Coverage: unobserved-object denial, exact owner prompt/replay, wrong owner/message/channel, changed terms, lifecycle detach/clear.
+
+Remaining: durable server-issued prompt tokens, prompt freshness/revocation, real Discord client registration and permission refresh, component-to-source provenance persistence and consent ingress integration. Event observation is a native boundary, not cryptographic verification of arbitrary JSON; do not expose this API to the model. All phase gates remain incomplete. No production change, deployment or phase push occurred. Next: persist prompt/interaction evidence and map it into native source/consent records while retaining exact audience ownership.

@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "d886e049faefc5b86f9f46082b0e5453dd436fbd9a023edb59d6fda098cec3ef",
+    "path": "bot/src/v2/discord-cost-decisions.js"
+  },
+  {
+    "sha256": "b7adc050d64ba26d50b73cb386b760c0c330c4b859e65f0223265cb3e6e01eeb",
+    "path": "bot/tests/veilkeeper2/r3-discord-cost-decisions.test.mjs"
+  },
+  {
+    "sha256": "a552284ff54c3c6cff8e4b731019f9da64a8d8891389986e916f3b40a9f2c22d",
+    "path": "docs/veilkeeper2/R3_DISCORD_COST_DECISIONS_REPORT.md"
+  }
+]
