@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "2a6de00380953b768fc36b257167208c0b86c1a11b077053212045be1ffc0623",
+    "path": "bot/src/v2/rules/incoming-damage.js"
+  },
+  {
+    "sha256": "eec19897e6b24f579c2e65f72da98f24bcd628c1eb2b8842e780ade49bdfc2b2",
+    "path": "bot/tests/veilkeeper2/r3-incoming-damage.test.mjs"
+  },
+  {
+    "sha256": "396642e23555482ccf105156065bd875957c57dd2b6016811b7216d5ee9f09ea",
+    "path": "docs/veilkeeper2/R3_INCOMING_DAMAGE_REPORT.md"
+  },
+  {
+    "sha256": "3585c5b1efbf3ed5ca05f9c073a726e5ce0dc69a5307b56caa5aaf3315543863",
+    "path": "docs/veilkeeper2/LEDGER.md"
+  }
+]

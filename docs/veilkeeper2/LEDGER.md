@@ -1,46 +1,42 @@
 # Veilkeeper 2.0 — current state
 
-The full **R0–R8 goal remains active and incomplete**. Working tree: `D:\Library\Development\Veiled_City_2\rebuild`, branch `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6`. Do not use the deprecated directory.
+The full R0–R8 goal remains active and incomplete. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch: `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6` in parent `baseline`. Deprecated checkout remains untouched. Preserve the unrelated dirty `README.md`.
 
-## Usage stop instruction
+## Binding requirements
 
-The user explicitly requests: **at 2% usage remaining, pause and create a thorough handoff of the current state and next steps**. Check the live `get_usage_limits` tool at each implementation checkpoint; use the first applicable limit to reach 98% used. Last observed: five-hour 15% used, weekly 50% used on 2026-11-02. At the threshold, finish the state/handoff record, call `update_goal` with `paused`, and stop work until the user resumes. Do not use resets without explicit authorization. The handoff must include exact branch/commit/dirty paths, governing files, implemented versus uncompleted gates, current test/hash evidence, unresolved risks, migration/rollback state and ordered executable next steps.
+Use the four governing specs and rebuild handoff under `docs/`, plus `AGENTS.md`. Exactly four generic AI capabilities; native validators own consequential rules. No generic state patches, fabricated dice, inferred owner consent or GM-private context in player inference. R0–R8 gates remain binding.
+
+At 2% remaining on either usage limit, write a thorough handoff, set the goal paused and stop until resume. Read live limits at checkpoints; historical percentages are not current evidence. Never redeem a reset without authorization.
+
+After completed major phases, integrate and publish to origin's rebuild branch, never `codex/clean-ai-gm-2026-10`. This worktree already uses the target branch; no self-merge is needed. No complete major-phase gate or phase push is claimed. Production deployment requires separate authorization.
 
 ## Phase status
 
-**Publication instruction:** after each major phase passes its acceptance gates, integrate into the rebuild branch and push it to `origin`. The user explicitly excludes `codex/clean-ai-gm-2026-10` as a merge target. This worktree is already on `rebuild/veilkeeper2-audience-first`; do not manufacture a self-merge. Git publication is authorized at phase completion, not production deployment. R0–R2 currently have open gates.
-
-- **R0 partial:** 1,077 modules, 4,224 exports, 219 command routes, 55 effective tables and 456 literal record kinds inventoried. Dynamic contracts and semantic migration/removal proofs remain open. [Inventory report](R0_BINDING_REPORT.md).
-- **R1 partial:** offline four-capability kernel, source authority, scoped provider gateway and no-send queue implemented. Real provider/transport adapters and full dependency qualification remain. [Kernel](R1_REPORT.md), [context](R2_CONTEXT_REPORT.md).
-- **R2 partial:** audience/source closure, actor-known intersection, hashed/versioned context, durable knowledge proposals/history, weighted recall policy, separate JSON packages, durable private-hook imports, independent human canon review and isolated private planning implemented. Real native adapters, imported relationships, full import/export formats, source-bound relevance/pins, reviewed-canon-to-knowledge integration and provider tool loops remain open.
-- **R3 partial:** opt-in ordinary roll preparation, immutable notice/owner dice evidence, deterministic dice/resource/combat primitives and an atomic Hope-cost proof transaction exist. Full action-state integration, modifiers/team/PvP, Fear/death and catalog parity remain open. See R3_ROLL_LIFECYCLE_REPORT.md and R3_HOPE_AUTHORITY_REPORT.md. No gameplay handler is installed in the default runtime.
-- **R4–R8 incomplete:** prose review, autonomy, Discord migration, full durability/migration and independent qualification remain required. R7 has opt-in durable turn claims and withheld draft storage, with recovery reconciliation still open.
-
-## Current implementation evidence
-
-Completed scoped checks are recorded in their reports; no offline result establishes live Discord quality or whole-phase acceptance. Do not rerun passing suites unless their tested code changes.
-
-| Slice | Latest applicable evidence |
+| Phase | Implemented evidence and outstanding gate |
 | --- | --- |
-| Source/context boundary | [Context report](R2_CONTEXT_REPORT.md) |
-| Knowledge persistence and generic lookup | [Knowledge](R2_KNOWLEDGE_REPORT.md), [integration](R2_INTEGRATION_REPORT.md) |
-| Weighted recall | [Recall report](R2_RECALL_REPORT.md), 20/20 at its checkpoint |
-| JSON package boundaries | [Package report](R2_PACKAGES_REPORT.md) |
-| Private imports, canon review and imported relationships | [Relationship report](R2_RELATIONSHIP_REPORT.md), 25/25; R2_RELATIONSHIP_HASHES.json |
-| Private planning and current rehearsal | [Planning report](R2_PLANNING_REPORT.md), 15/15; R2_PLANNING_HASHES.json |
-| Durable private records into planning | [Storage adapter report](R2_PLANNING_STORAGE_REPORT.md), 22/22; R2_PLANNING_STORAGE_HASHES.json supersedes the private-store hash |
-| Generic tool-loop and source-bound continuation | [Tool-loop report](R2_TOOLS_REPORT.md); R2_TOOLS_HASHES.json supersedes kernel/gateway/rehearsal hashes |
-| OpenAI Responses adapter | [Provider report](R1_PROVIDER_REPORT.md), 28/28; R1_PROVIDER_HASHES.json supersedes the gateway hash |
-| Durable native scene/source records | [Scene store report](R1_SCENE_REPORT.md), 6/6; R1_SCENE_HASHES.json |
+| R0 partial | Static inventory: 1,077 modules, 4,224 exports, 219 routes, 55 effective tables, 456 literal kinds. Dynamic contracts and semantic migration/removal proof remain open. See R0_BINDING_REPORT.md. |
+| R1 partial | Four-capability kernel, scoped provider gateway, offline-tested Responses adapter, source/scene persistence and read-only Discord ingestion. Native/live qualification and full dependency replacement remain open. |
+| R2 partial | Source closure, actor-known context, durable knowledge proposals/history, weighted recall, private packages/hooks/relationships, canon review and separate private planning. Real relevance/identity/source adapters, complete import/export formats and migration remain open. |
+| R3 partial | Ordinary requests/notices/owner dice, action windows, unified atomic Hope costs, native component consent chain, deterministic dice/resource/combat/death primitives, Fear reservations/holds/announcement transport and readback reconciliation. Incoming PC damage preview is implemented. Full modifiers/team/PvP/features, incoming defense/Armor lifecycle, atomic Fear/attack/death effects and parity remain open. |
+| R4–R8 incomplete | Full prose consequence review, proactive living actors, Discord command/session migration, durable world migration/publication and independent live qualification remain required. R7 has opt-in turn claims/withheld drafts; it is not qualified recovery or delivery. |
 
-Hash manifests are checkpoint-specific. Newer manifests supersede hashes of changed files; older evidence remains historical. Initial failures and their fixes remain in the relevant reports.
+## Current R3 evidence
 
-## Isolation and next work
+Completed suites are recorded in checkpoint reports. Rerun only when tested code changes; no focused result establishes whole-phase or live quality.
 
-Production entrypoint/configuration and legacy runtime source/schema/content remain unchanged. No production database, live model, Discord send, deployment or push has been used. Dedicated v2 databases and in-memory rehearsal remain opt-in; no production migration needs rollback. The user separately authorized and committed documentation cleanup in `3ca9db9d`; governing specs now reside under `docs/`, with removed source documentation recoverable from the pinned Git revision. Documentation deletion does not satisfy runtime retirement gates.
+- Hope action/owner/component chain: R3_COMPONENT_OUTCOME_CHAIN_REPORT.md and R3_NATIVE_CONSENT_CHAIN_REPORT.md.
+- Fear roll/hold serialization: R3_FEAR_COORDINATION_REPORT.md; real separate-process competition: R3_FEAR_CONCURRENCY_REPORT.md.
+- Cancellation/uncertainty and reviewed orphan holds: R3_FEAR_CANCELLATION_REPORT.md and R3_FEAR_ORPHAN_RECOVERY_REPORT.md.
+- Held announcement claims: R3_FEAR_HELD_PUBLICATION_REPORT.md. Native opt-in Discord transport: R3_DISCORD_FEAR_ANNOUNCEMENTS_REPORT.md.
+- Latest Fear source/test hashes and 32/32 changed-dependency checks: R3_FEAR_RECONCILIATION_REPORT.md and R3_FEAR_RECONCILIATION_HASHES.json. No-resend reconciliation uses a saved native send response; the send-to-local-save gap stays held.
+- Incoming damage preview: R3_INCOMING_DAMAGE_REPORT.md, 3/3; matching hash manifest.
 
-Imported directional GM-private relationships, durable private planning and scene records, bounded generic tool calling and an offline-tested Responses adapter are implemented. Production target resolution, full relationship dimensions, live transport authorization, recall adapters and live provider qualification remain open. **Next exact work:** native transport ingestion and recall/context adapters, then R3 deterministic rules behind the generic dispatcher. Preserve all R0–R8 requirements and separate deployment approval. Never retire unresolved legacy runtime paths.
+Manifests are checkpoint-specific, not a combined current-source certification. Later hashes supersede changed files. Older reports remain historical; in particular the original announced-cancellation expectation was replaced by the pinned-rule guard.
 
-Latest checkpoint: GuildText Discord audience projection passes 5/5 fresh tests; see R1_DISCORD_AUDIENCE_REPORT.md and R1_DISCORD_AUDIENCE_HASHES.json. Live ingestion, fresh membership evidence and thread/DM qualification remain open. RESUME_HANDOFF.md contains the detailed state and next actions. Usage reset observed: five-hour 1% used, weekly 64% used; goal remains active.
+## Isolation, rollback and next work
 
-Latest Hope authority regression: explicit nonempty action/control revisions required; 3/3 checks pass. R3_HOPE_AUTHORITY_CURRENT_HASHES.json is current for that authority. Current usage: five-hour 25% used, weekly 67% used; retain the 2%-remaining handoff/pause instruction.
+Production entrypoint/configuration and legacy runtime source/schema/content have not been switched or retired. No production database, live model, Discord send or deployment was used. All Discord transport tests used simulated SDK responses. Dedicated v2 stores remain opt-in; shared authoritative migration remains required. Preserve receipt/history/hold/attempt records. Old store code can reject newer tables; rollback requires preserved database copies rather than deleting active holds or uncertainty.
+
+The user-authorized documentation cleanup is committed as `3ca9db9d`; this does not satisfy runtime retirement gates. `RESUME_HANDOFF.md` is an older detailed snapshot; use this ledger and newer reports for subsequent work.
+
+Next exact phase: continue R3 with source-bound incoming-offer and owner-defense review/confirmation. The pinned flow debits Fear only after defense checks and before attack RNG. Then settle owner Armor/HP/death effects atomically and qualify parity. Publication/cancellation process races, crash recovery and native/live adapters remain open. Finish all original R0–R8 gates before declaring completion or retiring legacy paths.

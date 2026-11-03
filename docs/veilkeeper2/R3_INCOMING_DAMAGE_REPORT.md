@@ -1,0 +1,9 @@
+# R3 — native PC incoming-damage arithmetic (slice complete)
+
+Added pure `rules/incoming-damage.js` from pinned `incoming-attack-rules.js:485–509`: resistance/rounding, Minor/Major/Severe marks, reviewed Armor reduction, marked HP saturation, marked Armor slots and the owner death-choice requirement. It validates native numeric/resource terms, rejects unavailable or inapplicable Armor and forbids Armor spending against zero/immune damage. It calculates a preview only; no resources change and no death move is selected.
+
+Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-incoming-damage.test.mjs`: 3 passed, zero failures/skips, 51.8872 ms. Fifteen explicit damage/resistance/Armor boundary cases plus saturation, death-choice prevention and invalid terms are covered. Inputs remain unchanged. No unchanged suite reran. These are expected-outcome arithmetic tests, not full legacy execution equivalence or live gameplay qualification.
+
+Pinned execution order verified separately: `gm-execution-rules.js:40` prepares an incoming offer; `incoming-attack-rules.js:217–267` preserves owner defense review and confirmation; `gm-capability-rules.js:95–129` charges inside the attack transaction after defense checks and before RNG. A delivered Fear announcement is insufficient to debit or inflict damage.
+
+Modified files: new calculator/test, this report/hash manifest; the current ledger is refreshed to remove obsolete status/usage summaries. No schema/data migration, production change or retirement occurred. Rollback removes the unused calculator; production remains unchanged. Holds: native attack legality/statblock/passive/condition adapters, owner defense/Armor evidence, atomic Fear+roll+effect settlement, injury/death source ancestry and full R3 parity. Next exact phase: R3 native incoming-offer and owner-defense lifecycle before enabling Fear debit or attack RNG. R0–R8 remain incomplete; no major-phase push occurred.
