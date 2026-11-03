@@ -8,9 +8,9 @@ test('the native router only claims session and roll commands that the registere
   const session=byName('vc-session'),roll=byName('vc-roll');assert.ok(session&&roll);
   for(const name of ['start','end','present','absent','arrive','leave'])assert.ok(sub(session,name),`vc-session ${name}`);
   for(const name of ['title','assembly'])assert.ok(stringOption(sub(session,'start'),name),`start ${name}`);
-  for(const name of ['present','arrive'])assert.ok(stringOption(sub(session,name),'character'),` character`);
-  // Known gap: absent/leave carry no character option, so an owner with several PCs gets the safe refusal (ambiguous query) rather than a choice.
-  for(const name of ['absent','leave']){assert.ok(stringOption(sub(session,name),'mode'),` mode`);assert.equal(stringOption(sub(session,name),'character'),undefined,` has no character option`);}
+  for(const name of ['present','arrive'])assert.ok(stringOption(sub(session,name),'character'),`${name} character`);
+  // absent and leave accept an optional character so an owner with several PCs can choose which one.
+  for(const name of ['absent','leave']){assert.ok(stringOption(sub(session,name),'mode'),`${name} mode`);assert.ok(stringOption(sub(session,name),'character'),`${name} character`);}
   assert.ok(stringOption(sub(roll,'effect'),'json'),'vc-roll effect json');
 });
 test('GM bootstrap, registration, rebind, reopen and death operations travel in the existing roll effect JSON (no schema additions)',()=>{

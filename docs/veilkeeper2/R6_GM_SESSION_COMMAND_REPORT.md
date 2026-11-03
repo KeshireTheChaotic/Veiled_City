@@ -18,7 +18,10 @@ Update (router wiring test): the router now builds the GM authority itself from 
 
 Update (schema compatibility): `session reopen` is now the roll-effect JSON op `{op:session-reopen,session}` instead of a new subcommand, so every native-claimed command already exists in the registered schema (vc-session start/end/present/absent/arrive/leave; vc-roll effect json) and no legacy command schema change is needed. r6-command-schema-compat.test.mjs (2 passed) guards this against drift. Known gap it surfaced: vc-session absent/leave have no `character` option, so an owner with several PCs gets the safe ambiguous-query refusal instead of a choice; fixing it needs an additive schema change that is a registration decision. Tests re-run: r6-gm-session-command 14, r6-discord-gm-authority 14.
 
+Update (authorized schema change, 2026-11-03): by the user's explicit decision, `vc-session absent` and `vc-session leave` now carry an optional string option `character` (additive; required `mode` unchanged; legacy handlers ignore it). Two edits in bot/src/frameworks/discord/command-definitions.js. The pinned COMMAND_SCHEMA.json audit describes the frozen baseline and is intentionally NOT regenerated; the live schema now differs from it by exactly these two optional options. scripts/validate-command-schema.mjs passes; r0-bindings/schema/triage 13 passed, r6-command-schema-compat 2 and r6-session-attendance 10 passed. Registration (register-commands) has not been run.
+
 Deferred: real campaign-policy/selection/repository adapters, session end/recap/opening, registration/rebinding, historical migration.
+
 
 
 

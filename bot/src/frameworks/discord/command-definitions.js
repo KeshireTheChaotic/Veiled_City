@@ -54,7 +54,8 @@ export function buildCommands(){
             {name:"Background only",value:"background"},
             {name:"Human proxy controls PC",value:"proxy"}))
           .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))
-          .addStringOption(o=>o.setName("note").setDescription("Optional logistical note")))
+          .addStringOption(o=>o.setName("note").setDescription("Optional logistical note"))
+.addStringOption(o=>o.setName("character").setDescription("Owned character name; defaults to your only active character")))
         .addSubcommand(s=>s.setName("arrive").setDescription("Join after being late/absent")
           .addStringOption(o=>o.setName("character").setDescription("Character to enter with")))
         .addSubcommand(s=>s.setName("leave").setDescription("Leave early")
@@ -62,7 +63,8 @@ export function buildCommands(){
             {name:"Offscreen",value:"offscreen"},
             {name:"Background only",value:"background"},
             {name:"Human proxy controls PC",value:"proxy"}))
-          .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))))
+          .addUserOption(o=>o.setName("proxy").setDescription("Required for proxy mode"))
+.addStringOption(o=>o.setName("character").setDescription("Owned character name; defaults to your only active character"))))
       .addSubcommandGroup(g=>g.setName("character").setDescription("Character lifecycle")
         .addSubcommand(s=>s.setName("describe").setDescription("Save structured appearance or attributed expressive self-description")
           .addStringOption(o=>o.setName("json").setDescription("text, visibility, observers[], and facts[] OR lane:expressive (700 chars, unverified prose)")
