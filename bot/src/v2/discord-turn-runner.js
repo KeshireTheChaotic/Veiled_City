@@ -3,19 +3,22 @@ import {createSourceAuthority} from './source-authority.js';
 /** Native no-send orchestration. Every turn owns its audience application;
  * only async refreshed inspection is exposed for its publication.
  */
-export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority}){
+export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null}){
   if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='function')throw new TypeError('Native intake, provider and application required');
   const pending=new Map();
   async function respond(request,{signal}={}){
     const nativeRequest=structuredClone(request),event=await intake.ingest(nativeRequest,{signal});
     const authority=createAuthority(applicationOptions?.readers),source=authority.authenticate(event);
     const validate=()=>{if(!authority.revalidate(source))throw new Error('Native turn source revoked');};
+    const claim=turnStore?.claim({campaignId:source.campaign,sourceRef:source.id,sourceRevision:source.revision});
+    if(claim&&claim.status!=='claimed')return Object.freeze(claim);
     const refresh=()=>intake.ingest(nativeRequest,{signal});
     const app=createApplication({...applicationOptions,provider:{async generate(input){
       await refresh();validate();const result=await provider.generate(input);await refresh();validate();return result;
     }}});
     const result=await app.respond(event,{signal});
-    await refresh();app.inspectPublication(result.publication.id);
+    await refresh();const publication=app.inspectPublication(result.publication.id);
+    if(claim)turnStore.saveDraft(claim,publication,{check:()=>{validate();app.inspectPublication(result.publication.id);}});
     pending.set(result.publication.id,{app,request:nativeRequest});return result;
   }
   async function inspectPublication(id,{signal}={}){

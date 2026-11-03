@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/discord-turn-runner.js",
+    "sha256": "26f4a402428087217f653129ad0922c9f2cdd52909af75bff23a5de15fb86fec"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+    "sha256": "8a7cecd318a20de3efbfc8e2f55b45de26db3fc4736f69e36ae29111a255d34a"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs",
+    "sha256": "da476e2a0b8274fa839c5e0abb458a15abd7af050fea91b84f1ee383b6d7ec0e"
+  },
+  {
+    "path": "docs/veilkeeper2/R7_RUNNER_CLAIMS_REPORT.md",
+    "sha256": "f11ec62651ab09f72e0f66376b5156ee3625feab4edfc85e940205b248a69368"
+  }
+]
