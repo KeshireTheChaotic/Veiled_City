@@ -1,4 +1,4 @@
-﻿# Live qualification runbook â€” test guild only
+# Live qualification runbook — test guild only
 
 Authorized scope (user decision, 2026-11-03): live qualification in the **test guild 1467249344947159291** only, inference spend capped at **$5 total**, source data from a **copy** of the legacy database. Never the production guild or database. The assistant does not handle secrets; you run these commands.
 
@@ -35,8 +35,7 @@ What this exercises: native interaction routing (death prompts, attendance, GM s
 
 ## 3b. Optional: withheld GM drafts under the call cap
 
-A second opt-in turns player messages into **withheld GM drafts** (stored in the native turn store; never sent to Discord; the console prints only 
-ative-draft-withheld <messageId>). Context is empty for now (no GM records composed), so drafts test the provider path, not story quality.
+A second opt-in turns player messages into **withheld GM drafts** (stored in the native turn store; never sent to Discord; the console prints only `native-draft-withheld <messageId>`). Context is empty for now (no GM records composed), so drafts test the provider path, not story quality.
 
 ```powershell
 $env:VK2_INFERENCE = "1"
