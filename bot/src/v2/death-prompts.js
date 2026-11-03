@@ -19,10 +19,24 @@ export function openDeathPromptStore(filename=':memory:',{clock=()=>Date.now()}=
     });
   }
   function acknowledge(ref,{check,readDelivery}){return tx(check,()=>{
-    const row=get(ref);if(!row||!['awaiting_delivery','active'].includes(row.status)||row.expiresAt<=clock()||typeof readDelivery!=='function')throw new Error('Current native death prompt delivery required');const proof=structuredClone(readDelivery(ref));
+    const row=get(ref);if(!row||!['awaiting_delivery','delivering','uncertain','active'].includes(row.status)||row.expiresAt<=clock()||typeof readDelivery!=='function')throw new Error('Current native death prompt delivery required');const proof=structuredClone(readDelivery(ref));
     if(proof?.status!=='delivered'||proof.campaignId!==row.terms.campaignId||proof.channelId!==row.channelId||!id(proof.messageId)||proof.payloadHash!==row.payloadHash||JSON.stringify(proof.recipientIds)!==JSON.stringify([row.terms.ownerUserId])||row.messageId&&row.messageId!==proof.messageId)throw new Error('Exact private delivered death risks required');
-    if(JSON.stringify(readDelivery(ref))!==JSON.stringify(proof))throw new Error('Death prompt delivery changed');const after={...row,status:'active',messageId:proof.messageId,delivery:proof};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
+    if(row.publication&&(proof.attemptId!==row.publication.attemptId||proof.audienceFingerprint!==row.publication.audienceFingerprint||!row.publication.response||proof.messageId!==row.publication.response.messageId))throw new Error('Exact claimed death delivery response required');
+    if(JSON.stringify(readDelivery(ref))!==JSON.stringify(proof))throw new Error('Death prompt delivery changed');const after={...row,status:'active',messageId:proof.messageId,delivery:proof,...(row.publication?{publication:{...row.publication,status:'delivered'}}:{})};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
+  });}
+  function claim(ref,{check,audienceFingerprint}){return tx(check,()=>{
+    const row=get(ref);if(!row||row.status!=='awaiting_delivery'||row.publication||row.expiresAt<=clock()||typeof audienceFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(audienceFingerprint))throw new Error('Current unattempted death prompt required; no resend permitted');
+    const after={...row,status:'delivering',publication:{attemptId:randomUUID(),audienceFingerprint,status:'delivering',response:null}};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
+  });}
+  function recordResponse(ref,attemptId,{check,readResponse}){return tx(check,()=>{
+    const row=get(ref),response=typeof readResponse==='function'?structuredClone(readResponse(ref)):null;
+    if(!row||!['delivering','uncertain'].includes(row.status)||row.publication?.attemptId!==attemptId||response?.attemptId!==attemptId||response.campaignId!==row.terms.campaignId||response.channelId!==row.channelId||response.promptRef!==ref||response.audienceFingerprint!==row.publication.audienceFingerprint||!id(response.messageId)||row.publication.response&&hash(row.publication.response)!==hash(response)||hash(readResponse(ref))!==hash(response))throw new Error('Immutable native death send response required');
+    const after={...row,publication:{...row.publication,response}};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
+  });}
+  function markUncertain(ref,attemptId,{check}){return tx(check,()=>{
+    const row=get(ref);if(!row||row.publication?.attemptId!==attemptId)throw new Error('Saved death send attempt required');if(['active','revoked'].includes(row.status))return row;
+    const after={...row,status:'uncertain',publication:{...row.publication,status:'uncertain'}};db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify(after),ref);return after;
   });}
   function readPrompt(token){for(const raw of db.prepare('SELECT data FROM vk3_death_prompts').all()){const row=JSON.parse(raw.data),option=row.options.find(o=>o.customId===token);if(option)return {...row,...option,customId:token,status:row.expiresAt<=clock()?'expired':row.status};}return null;}
-  return Object.freeze({issue,acknowledge,readPrompt,revoke(ref,{check}){return tx(check,()=>{const row=get(ref);if(!row)throw new Error('Native death prompt required');db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify({...row,status:'revoked'}),ref);});},close:()=>db.close()});
+  return Object.freeze({issue,acknowledge,claim,recordResponse,markUncertain,read:ref=>{const row=get(ref);return row?{...row,status:row.expiresAt<=clock()?'expired':row.status}:null;},readPrompt,revoke(ref,{check}){return tx(check,()=>{const row=get(ref);if(!row)throw new Error('Native death prompt required');db.prepare('UPDATE vk3_death_prompts SET data=? WHERE id=?').run(JSON.stringify({...row,status:'revoked'}),ref);});},close:()=>db.close()});
 }

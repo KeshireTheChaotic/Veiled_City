@@ -24,6 +24,8 @@ After completed major phases, integrate and publish to origin's rebuild branch, 
 
 Completed suites are recorded in checkpoint reports. Rerun only when tested code changes; no focused result establishes whole-phase or live quality.
 
+- Native private death risk/move prompt publication and saved-response readback reconciliation are implemented as opt-in transport; see R3_DISCORD_DEATH_PUBLICATION_REPORT.md (27 distinct focused checks across completed runs). Explicit recovery-allocation controls and actual command/session wiring remain next; no live send or major-phase gate is claimed.
+
 - Hope action/owner/component chain: R3_COMPONENT_OUTCOME_CHAIN_REPORT.md and R3_NATIVE_CONSENT_CHAIN_REPORT.md.
 - Fear roll/hold serialization: R3_FEAR_COORDINATION_REPORT.md; real separate-process competition: R3_FEAR_CONCURRENCY_REPORT.md.
 - Cancellation/uncertainty and reviewed orphan holds: R3_FEAR_CANCELLATION_REPORT.md and R3_FEAR_ORPHAN_RECOVERY_REPORT.md.

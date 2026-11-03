@@ -82,3 +82,8 @@ test('native delivery acknowledgement rejects a different payload or audience an
   f.prompts.revoke(e.p.id,{check:()=>{}});assert.throws(()=>f.prompts.acknowledge(e.p.id,{check:()=>{},readDelivery:()=>base}));
   assert.deepEqual(deathPromptPayload(e.p.payload),deathPromptPayload({...e.p.payload,components:e.p.payload.components.map(row=>({toJSON:()=>row}))}));
 });
+test('previous death envelopes without a GM role field retain native replay for unconfigured roles',async t=>{
+  const f=fixture(t),e=f.issue();await f.accept(e);const envelope=f.decisions.get(e.interaction.id);delete envelope.record.audienceGmRoleId;
+  const oldStore=openComponentDecisionStore();oldStore.put(envelope);const reader=createDiscordDeathDecisions({client:f.client,promptStore:f.prompts,readTerms:f.ingress.readTerms,audienceReader:{read:async()=>{throw new Error('Replay must not invent a fresh event');}},decisionStore:oldStore});t.after(()=>{reader.close();oldStore.close();});
+  assert.equal(reader.readNative(e.interaction.id).principal,'u');assert.equal(reader.readNative(e.interaction.id).sequence,1);
+});

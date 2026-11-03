@@ -9,7 +9,7 @@ export function createComponentChoiceSources({decisionReader,sceneStore,sourceAu
   async function ingest(interactionId,{signal}={}){
     const decision=decisionReader.readNative(interactionId);if(!decision)throw new Error('Observed native decision required');const fingerprint=JSON.stringify(decision);
     const channel=sceneStore.readers.readChannel(decision.campaignId,decision.channelId);if(!channel||channel.sceneId!==decision.sceneId)throw new Error('Current component scene channel required');
-    const audience=await audienceReader.read({guildId:decision.campaignId,channelId:decision.channelId,sceneId:decision.sceneId,mode:channel.kind,ownerUserId:channel.ownerUserId??null},{signal});
+    const audience=await audienceReader.read({guildId:decision.campaignId,channelId:decision.channelId,sceneId:decision.sceneId,mode:channel.kind,ownerUserId:channel.ownerUserId??null,gmRoleId:decision.audienceGmRoleId??null},{signal});
     if(stable(data(channel))!==stable(audience.channelRecord))throw new Error('Component audience requires reconciliation');
     if(decision.audienceFingerprint!==undefined&&decision.audienceFingerprint!==audience.fingerprint)throw new Error('Observed component audience changed');
     const labels={death_review:'death risk review',death_choice:'death move choice'},purpose=decision.purpose;
