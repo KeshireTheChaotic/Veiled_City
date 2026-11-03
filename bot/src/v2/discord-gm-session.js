@@ -3,7 +3,7 @@ import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Routes observed human GM commands: `session start`, private `pc-bootstrap-preview`
- * and exact `pc-bootstrap-review`. Each uses a private acknowledgement, a durable closed
+ * exact `pc-bootstrap-review` and `session end`. Each uses a private acknowledgement, a durable closed
  * claim, fresh GM authority and a fixed native effect. Nothing is published to the table
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
@@ -17,7 +17,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   function route(e){
     try{
       if(e?.isChatInputCommand?.()!==true)return null;
-      if((e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session')&&e.options.getSubcommand()==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};
+      if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
       if(bootstrap&&inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
         if(input?.op==='pc-bootstrap-preview'||input?.op==='pc-bootstrap-review')return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref:`${input.op}:${input.actor}`,raw};
@@ -36,6 +36,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       await e.deferReply({flags:MessageFlags.Ephemeral});interactionReceipts.acknowledge(id,'deferred',{check:bookkeeping});alive();stage='decision';
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
+      else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
       else if(r.kind==='preview'){if(proof.operation!=='pc_bootstrap_preview')throw new Error('Preview authority required');const source=bootstrap.readSource(c,actor);receipt=source;text=`Review this before approving (private). ${describe(source)}. Approve with op pc-bootstrap-review, actor and that snapshotHash. This grants no PC control.`;}
       else{
         if(proof.operation!=='pc_bootstrap_review')throw new Error('Review authority required');

@@ -39,4 +39,16 @@ test('GM previews a private snapshot, then exact review atomically initializes t
 });
 test('bootstrap ops are unclaimed unless native bootstrap dependencies are supplied',async t=>{
   const f=fixture(t),e=roll(f,'p2',{op:'pc-bootstrap-preview',actor:'pc'});assert.equal(f.service.claimsRoute(e),false);
+});const endEvent=(f,id)=>{const e={...f.event,id,deferred:false,replied:false,options:{getSubcommand:()=> 'end',getSubcommandGroup:()=> 'session',getString:()=>null}};e.deferReply=async()=>{e.deferred=true;f.replies.push([id,'defer']);};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
+test('GM end closes the active session and scenes without deleting history, then a new session can start',async t=>{
+  const f=fixture(t);await f.service.handle(f.event);const sid=f.sceneStore.activeSessions('c')[0].id;
+  const r=await f.service.handle(endEvent(f,'e1'));assert.equal(r.status,'committed',f.errors.join('|'));assert.equal(f.sceneStore.activeSessions('c').length,0);assert.equal(f.sceneStore.readers.readSession('c',sid).status,'ended');assert.equal(f.sceneStore.readers.readScene('c',`${sid}:opening`).status,'closed');assert.equal(f.sceneStore.history('c','session',sid).length,2);assert.match(f.replies.at(-1)[1],/Nothing was deleted/);
+  assert.equal((await f.service.handle(endEvent(f,'e1'))).status,'already_claimed');
+  const next={...f.event,id:'i2',deferred:false};next.deferReply=async()=>{next.deferred=true;};next.editReply=async()=>{};f.client.emit('interactionCreate',next);assert.equal((await f.service.handle(next)).status,'committed',f.errors.join('|'));assert.equal(f.sceneStore.activeSessions('c').length,1);
+});
+test('GM end without exactly one active session is held and changes nothing',async t=>{
+  const f=fixture(t),r=await f.service.handle(endEvent(f,'e2'));assert.equal(r.status,'native_review_required');assert.equal(f.interactionReceipts.read('e2').processing,'held');
+});
+test('a non-GM member cannot end the session',async t=>{
+  const f=fixture(t);await f.service.handle(f.event);f.member.roles.cache.clear();assert.equal((await f.service.handle(endEvent(f,'e3'))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,1);
 });
