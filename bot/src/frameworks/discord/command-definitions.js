@@ -264,6 +264,13 @@ export function buildCommands(){
           .addStringOption(o=>o.setName("id").setDescription("Handout ID/prefix or title").setRequired(true))))
       .addSubcommandGroup(g=>g.setName("player").setDescription("Player preferences")
         .addSubcommand(s=>s.setName("private-channel").setDescription("Use this channel for your private GM information"))
+.addSubcommand(s=>s.setName("death-review").setDescription("Privately review your character's death choice for a pending incoming attack")
+.addStringOption(o=>o.setName("request").setDescription("Death request id from the prompt (incoming-death:...)").setRequired(true)))
+.addSubcommand(s=>s.setName("death-refresh").setDescription("Replace your expired death-choice controls; saved choices are kept")
+.addStringOption(o=>o.setName("request").setDescription("Death request id from the prompt (incoming-death:...)").setRequired(true))
+.addStringOption(o=>o.setName("prompt").setDescription("Prompt id of the expired controls").setRequired(true)))
+.addSubcommand(s=>s.setName("death-reconcile").setDescription("Check the saved outcome of a death-choice click that showed no confirmation")
+.addStringOption(o=>o.setName("interaction").setDescription("Interaction id of that click").setRequired(true)))
         .addSubcommand(s=>s.setName("accessibility").setDescription("Set response/accessibility preferences")
           .addStringOption(o=>o.setName("length").setDescription("GM response length").addChoices(
             {name:"Compact",value:"compact"},{name:"Standard",value:"standard"},{name:"Descriptive",value:"descriptive"}))

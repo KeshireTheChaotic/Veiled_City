@@ -45,7 +45,7 @@ $env:DISCORD_GUILD_ID = "1467249344947159291"
 
 ## 2. Register commands in the test guild only
 
-Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-scoped, not global) before running it. The native router claims only commands defined in the schema: `/vc-session start|end|present|absent|arrive|leave`, `/vc-player private-channel`, the typed `/vc-gm` subcommands (`session-reopen`, `register-character`, `rebind-character`, `bootstrap-preview`, `bootstrap-review`, `drafts`, `publish-draft`) and the owner death-prompt commands that already existed in `/vc-roll effect`. `/vc-roll` carries no GM operation.
+Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-scoped, not global) before running it. The native router claims only commands defined in the schema: `/vc-session start|end|present|absent|arrive|leave`, `/vc-player private-channel`, the typed `/vc-gm` subcommands (`session-reopen`, `register-character`, `rebind-character`, `bootstrap-preview`, `bootstrap-review`, `drafts`, `publish-draft`) and the owner death-prompt subcommands `/vc-player death-review`, `death-refresh` and `death-reconcile`. `/vc-roll` is dice only.
 
 ## 3. Start the native path
 
@@ -90,4 +90,4 @@ Live inference, the GM turn runner, performance targets and production cutover r
 
 The legacy design is kept: the character's owner runs `/vc-player private-channel` in their own private channel. The bot checks, from two fresh Discord reads, that only that owner can see it (administrators and the GM role are observers, not recipients) and registers it for the owner's scene. There is no GM channel-id command. Order: `/vc-session start`, register the character, then the owner runs `/vc-player private-channel` in their channel, then `/vc-session present`.
 
-All GM operations are typed `/vc-gm` subcommands (user decision 2026-11-03); `/vc-roll` is dice only. The owner death-prompt commands still use the baseline `/vc-roll effect` option and are a separate decision.
+All GM operations are typed `/vc-gm` subcommands (user decision 2026-11-03); `/vc-roll` is dice only. Owner death-prompt commands are typed `/vc-player` subcommands (user decision 2026-11-03).

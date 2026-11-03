@@ -13,10 +13,12 @@ export function createDiscordDeathCommands({client,workflow,actionStore,sceneSto
   const audiences=createDiscordAudienceReader({client}),observed=new WeakSet(),pending=new Map(),controller=new AbortController();let closed=false;
   const observer=event=>{if(event&&typeof event==='object')observed.add(event);};client.on('interactionCreate',observer);
   const report=(error,interactionId,stage)=>{try{onError(error,{interactionId,stage});}catch{}};
+  /** Owner death-prompt operations are typed `/vc-player` subcommands; `/vc-roll` is dice only. */
+  function ownerSubcommand(event){try{if(event?.isChatInputCommand?.()!==true||!(event.commandName==='vc-player'||event.commandName==='vc'&&event.options.getSubcommandGroup(false)==='player'))return null;const sub=event.options.getSubcommand();return ['death-review','death-refresh','death-reconcile'].includes(sub)?sub:null;}catch{return null;}}
   function parse(event){
     try{
-      if(event?.isChatInputCommand?.()!==true||!(event.commandName==='vc-roll'||event.commandName==='vc'&&event.options.getSubcommandGroup(false)==='roll')||event.options.getSubcommand()!=='effect')return null;
-      const raw=event.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
+      const sub=ownerSubcommand(event),get=name=>event.options.getString(name,true);if(!sub)return null;
+      const input=sub==='death-review'?{op:sub,request:get('request')}:sub==='death-refresh'?{op:sub,request:get('request'),prompt:get('prompt')}:{op:sub,interaction:get('interaction')},raw=JSON.stringify(input);
       if(input?.op==='death-review'&&Object.keys(input).sort().join(',')==='op,request'&&id(input.request)&&input.request.startsWith('incoming-death:'))return {input,raw};
       if(input?.op==='death-refresh'&&Object.keys(input).sort().join(',')==='op,prompt,request'&&id(input.request)&&input.request.startsWith('incoming-death:')&&id(input.prompt))return {input,raw};
       if(input?.op==='death-reconcile'&&Object.keys(input).sort().join(',')==='interaction,op'&&id(input.interaction))return {input,raw};
@@ -58,6 +60,6 @@ export function createDiscordDeathCommands({client,workflow,actionStore,sceneSto
     }
   }
   async function handle(event){const parsed=parse(event);if(!parsed)return false;if(pending.has(event.id))return pending.get(event.id);const job=execute(event,parsed);pending.set(event.id,job);try{return await job;}finally{pending.delete(event.id);}}
-  function claimsRoute(event){try{if(event?.isChatInputCommand?.()!==true||!(event.commandName==='vc-roll'||event.commandName==='vc'&&event.options.getSubcommandGroup(false)==='roll')||event.options.getSubcommand()!=='effect')return false;const raw=event.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return false;const input=JSON.parse(raw);return input?.op==='death-reconcile'||typeof input?.request==='string'&&input.request.startsWith('incoming-death:');}catch{return false;}}
+  function claimsRoute(event){return ownerSubcommand(event)!==null;}
   return Object.freeze({handle,claimsRoute,close(){closed=true;controller.abort();client.off('interactionCreate',observer);}});
 }

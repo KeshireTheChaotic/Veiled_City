@@ -19,4 +19,7 @@ test('every native GM operation is a typed /vc-gm subcommand and /vc-roll stays 
   for(const [name,opts] of Object.entries(spec)){const s=sub(gm,name);assert.ok(s,`vc-gm ${name}`);assert.deepEqual((s.options??[]).map(o=>o.name).sort(),[...opts].sort());for(const o of s.options??[]){assert.equal(o.type,3);assert.equal(o.required,true);}assert.equal(sub(roll,name),undefined,`vc-roll must not carry ${name}`);}
   for(const name of ['snapshot','fingerprint']){const o=stringOption(sub(gm,name==='snapshot'?'bootstrap-review':'publish-draft'),name);assert.equal(o.min_length,64);assert.equal(o.max_length,64);}
   assert.ok((gm.options??[]).length<=25);
+});test('owner death-prompt operations are typed /vc-player subcommands',()=>{
+  const player=byName('vc-player'),spec={'death-review':['request'],'death-refresh':['prompt','request'],'death-reconcile':['interaction']};
+  for(const [name,opts] of Object.entries(spec)){const s=sub(player,name);assert.ok(s,`vc-player ${name}`);assert.deepEqual((s.options??[]).map(o=>o.name).sort(),opts);for(const o of s.options)assert.equal(o.required,true);assert.equal(sub(byName('vc-roll'),name),undefined);}
 });
