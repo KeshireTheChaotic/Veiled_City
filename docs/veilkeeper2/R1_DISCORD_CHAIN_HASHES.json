@@ -1,0 +1,10 @@
+[
+  {
+    "path": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+    "sha256": "74d5630c743b9f9340a970b6f5391d81e8c2b810179773e0d8580f2978675825"
+  },
+  {
+    "path": "docs/veilkeeper2/R1_DISCORD_CHAIN_REPORT.md",
+    "sha256": "d30c4e0d5622be0c4f133e736442d02096b55d63b72677eaf2ccaf28dab97e4f"
+  }
+]
