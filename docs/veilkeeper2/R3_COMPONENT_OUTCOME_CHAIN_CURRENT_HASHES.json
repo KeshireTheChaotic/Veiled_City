@@ -1,0 +1,10 @@
+[
+  {
+    "sha256": "9bbf5a43a547b1339035ffc7fc8b1196a02dd22cd250df9e8e647840f1cc652f",
+    "path": "bot/tests/veilkeeper2/r3-component-outcome-chain.test.mjs"
+  },
+  {
+    "sha256": "a9f87d32ea1d4ad46bfb5bf344ea3e80db52454cfa8abb1d3e11c67390fdf86c",
+    "path": "docs/veilkeeper2/R3_COMPONENT_OUTCOME_CHAIN_REPORT.md"
+  }
+]
