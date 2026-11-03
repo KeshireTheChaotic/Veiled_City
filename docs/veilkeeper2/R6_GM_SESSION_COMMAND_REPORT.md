@@ -10,6 +10,9 @@ Update (session end): `session end` (vc-session/vc session) ends the single acti
 
 Update (owner registration): `vc-roll effect {op:pc-register,actor}` (needs the optional `characters` repository) registers an existing native character to its repository owner as controlRole owner in the sole active scene. It sets no resources, movement, proxy or attendance, and refuses existing registrations elsewhere (rebinding needs native review) and absent/ambiguous scenes. Added the pc_register declaration. Tests: r6-gm-session-command 11 passed, r6-discord-gm-authority 14 passed.
 
+Update (reopen): `session reopen` (option session=<id>) reopens a session only when the native end command ended it, no other session is active, restoring exactly the scenes that command closed with participants preserved; it grants no arrival, resources or revived proofs. Added scene-store sessionScenes reader and session_reopen declaration. Tests: r6-gm-session-command 13 passed, r6-discord-gm-authority 14, r1-scene-store 6.
+
 Deferred: real campaign-policy/selection/repository adapters, session end/recap/opening, registration/rebinding, historical migration.
+
 
 

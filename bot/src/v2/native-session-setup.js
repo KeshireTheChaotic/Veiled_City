@@ -26,5 +26,18 @@ export function createNativeSessionSetup({sceneStore,gmAuthority}){
     const receipt=sceneStore.commitSnapshot({campaignId,principal:proof.principal,sourceRef:`session-end:${proof.sourceRef}`,records:[{kind:'session',data:{...strip(session),status:'ended'},expectedRevision:Number(session.revision)},...scenes.map(s=>({kind:'scene',data:{id:s.id,campaignId:s.campaignId,sessionId:s.sessionId,status:'closed',participants:s.participants},expectedRevision:Number(s.revision)}))]},{check});
     return {session:sceneStore.readers.readSession(campaignId,session.id),closedScenes:scenes.map(s=>s.id),receipt};
   }
-  return Object.freeze({start,end});
+  /** Reopens an ended session only if the native end command ended it, restoring exactly
+   * the scenes that command closed. It never creates PC arrival or resets resources.
+   */
+  function reopen(proof){
+    const declaration=gmAuthority.readDeclaration(proof);
+    if(proof?.kind!=='native_human_gm_authority'||proof.role!=='human_gm'||proof.operation!=='session_reopen'||declaration.operation!=='session_reopen'||declaration.targetRef!==proof.targetRef||declaration.snapshotHash!==proof.snapshotHash)throw new Error('Exact observed human session-reopen declaration required');
+    const campaignId=proof.campaignId,sessionId=proof.targetRef,endedBy=(kind,id)=>sceneStore.history(campaignId,kind,id).at(-1)?.sourceRef?.startsWith('session-end:')===true;let restored=false;
+    const check=()=>{gmAuthority.check(proof);if(hash(gmAuthority.readDeclaration(proof))!==hash(declaration))throw new Error('Native session declaration changed');const active=sceneStore.activeSessions(campaignId),own=sceneStore.readers.readSession(campaignId,sessionId);
+      if(!(own?.status==='ended'&&endedBy('session',sessionId)&&active.length===0)&&!(restored&&own?.status==='active'&&active.length===1&&active[0].id===sessionId))throw new Error('Only a session ended by native end can reopen, with no other active session');};
+    check();const strip=({revision,...data})=>data,session=sceneStore.readers.readSession(campaignId,sessionId),scenes=sceneStore.sessionScenes(campaignId,sessionId).filter(s=>s.status==='closed'&&endedBy('scene',s.id));restored=true;
+    const receipt=sceneStore.commitSnapshot({campaignId,principal:proof.principal,sourceRef:`session-reopen:${proof.sourceRef}`,records:[{kind:'session',data:{...strip(session),status:'active'},expectedRevision:Number(session.revision)},...scenes.map(s=>({kind:'scene',data:{id:s.id,campaignId:s.campaignId,sessionId:s.sessionId,status:'active',participants:s.participants},expectedRevision:Number(s.revision)}))]},{check});
+    return {session:sceneStore.readers.readSession(campaignId,sessionId),reopenedScenes:scenes.map(s=>s.id),receipt};
+  }
+  return Object.freeze({start,end,reopen});
 }

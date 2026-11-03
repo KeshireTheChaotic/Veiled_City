@@ -62,3 +62,15 @@ test('registration needs an active scene and a GM',async t=>{
   const f=fixture(t,{withBootstrap:true});assert.equal((await f.service.handle(roll(f,'g3',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
   await f.service.handle(f.event);f.member.roles.cache.clear();assert.equal((await f.service.handle(roll(f,'g4',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
 });
+const reopenEvent=(f,id,session)=>{const e={...f.event,id,deferred:false,replied:false,options:{getSubcommand:()=> 'reopen',getSubcommandGroup:()=> 'session',getString:()=>session}};e.deferReply=async()=>{e.deferred=true;};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
+test('GM reopens a natively ended session with its closed scenes and refuses other cases',async t=>{
+  const f=fixture(t);await f.service.handle(f.event);const sid=f.sceneStore.activeSessions('c')[0].id;
+  assert.equal((await f.service.handle(reopenEvent(f,'o0',sid))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,1);
+  await f.service.handle(endEvent(f,'e9'));assert.equal((await f.service.handle(reopenEvent(f,'o1','missing'))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,0);
+  assert.equal((await f.service.handle(reopenEvent(f,'o2',sid))).status,'committed',f.errors.join('|'));assert.equal(f.sceneStore.activeSessions('c')[0].id,sid);assert.equal(f.sceneStore.readers.readScene('c',`${sid}:opening`).status,'active');assert.equal(f.sceneStore.history('c','session',sid).length,3);
+});
+test('a session ended outside the native end command cannot reopen',async t=>{
+  const f=fixture(t);await f.service.handle(f.event);const sid=f.sceneStore.activeSessions('c')[0].id,s=f.sceneStore.readers.readSession('c',sid),{revision,...old}=s;
+  f.sceneStore.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'manual-end',records:[{kind:'session',data:{...old,status:'ended'},expectedRevision:Number(revision)}]},{check:()=>{}});
+  assert.equal((await f.service.handle(reopenEvent(f,'o3',sid))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,0);
+});

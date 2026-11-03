@@ -19,6 +19,7 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
       const title=e.options.getString('title')??'',assembly=e.options.getString('assembly')??'auto';if(typeof title!=='string'||title.length>256||!assemblies.has(assembly))throw new Error('Native session title and assembly required');const payload={title,assembly};return {operation:'session_start',targetRef:`session:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};
     }
     if((e.commandName==='vc-session'||e.commandName==='vc'&&group==='session')&&sub==='end'){const payload={};return {operation:'session_end',targetRef:`session-end:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};}
+    if((e.commandName==='vc-session'||e.commandName==='vc'&&group==='session')&&sub==='reopen'){const session=e.options.getString('session',true);if(!id(session))throw new Error('Native session id required');const payload={session};return {operation:'session_reopen',targetRef:session,snapshotHash:hash(payload),payload};}
     if((e.commandName==='vc-roll'||e.commandName==='vc'&&group==='roll')&&sub==='effect'){
       const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)throw new Error('Bounded native GM review required');const input=JSON.parse(raw);
       if(input?.op==='pc-register'&&Object.keys(input).sort().join(',')==='actor,op'&&id(input.actor))return {operation:'pc_register',targetRef:input.actor,snapshotHash:hash(input)};
