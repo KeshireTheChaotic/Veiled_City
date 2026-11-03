@@ -107,7 +107,7 @@ test('native response identity survives reopen, rejects conflicts and cannot be 
   assert.equal(f.fear.readPublication('c','q').status,'delivering');
 });
 
-function attackCandidate(){return {id:'attack',campaignId:'c',sceneId:'s',requestRef:'q',decisionRef:'decision:q',actorId:'pc',ownerUserId:'u',controlRevision:'1',npcId:'npc',sourceRef:'source',sourceRevision:'1',targetRevision:'pc:1',encounterRevision:'encounter:1',statblockRevision:'template:1',ruleFingerprint:'b'.repeat(64),damageExpression:'2d6+3',damageType:'physical',attackBonus:2,evasion:12,major:8,severe:16,defenses:{resistance:'none',armorReduction:1,armorAllowed:true,sourceRef:'base'}};}
+function attackCandidate(){return {id:'attack',campaignId:'c',sceneId:'s',requestRef:'q',decisionRef:'decision:q',actorId:'pc',ownerUserId:'u',controlRevision:'1',npcId:'npc',sourceRef:'source',sourceRevision:'1',targetRevision:'pc:1',encounterRevision:'encounter:1',statblockRevision:'template:1',ruleFingerprint:'b'.repeat(64),damageExpression:'2d6+3',damageType:'physical',attackBonus:2,evasion:12,major:8,severe:16,advantage:false,disadvantage:false,defenses:{resistance:'none',armorReduction:1,armorAllowed:true,sourceRef:'base'}};}
 function announce(f){const row=f.coordinator.reserve('c','q',{check:f.check}),attempt=f.coordinator.claimAnnouncement('c','q',{check:f.check});f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>({attemptId:attempt.attemptId,status:'delivered',kind:'pre_roll_fear',requestRef:'q',bindingHash:row.bindingHash,baseCost:1,printedFearCost:0,npcId:'npc',actorId:'pc',recipientIds:['u'],messageId:'fear-notice'})});}
 test('acknowledged native interruption prepares one immutable incoming offer without spending or rolling',t=>{
   const f=fixture(t),candidate=attackCandidate();announce(f);const options={check:f.check,readCandidate:()=>candidate},offer=f.coordinator.prepareIncoming('c','q',options);f.reopen();
@@ -157,4 +157,34 @@ test('base-defense confirmation cannot silently accept a feature defense while w
   f.coordinator.prepareIncoming('c','q',options);f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>defenseEvidence(f)});
   assert.throws(()=>f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>defenseEvidence(f,'incoming_defense_choice')}),/separate native reviewed route/);
   assert.equal(f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>defenseEvidence(f,'incoming_defense_choice',{decision:'withhold_defense'})}).status,'hold_for_owner');
+});
+
+function readyAttack(f,candidate=attackCandidate()){
+  announce(f);const options={check:f.check,readCandidate:()=>candidate};f.coordinator.prepareIncoming('c','q',options);
+  const review=defenseEvidence(f);f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>review});
+  const choice=defenseEvidence(f,'incoming_defense_choice');f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>choice});
+  return {...options,readReview:()=>review,readChoice:()=>choice};
+}
+test('one native attack atomically spends reserved Fear and saves critical dice; replay never draws or spends again',t=>{
+  const f=fixture(t),options=readyAttack(f),faces=[20,2,4],sides=[];
+  const result=f.coordinator.rollIncoming('c','q',{...options,rng:s=>{sides.push(s);return faces.shift();}});f.reopen();
+  assert.deepEqual(sides,[20,6,6]);assert.equal(result.roll.critical,'attack_success');assert.equal(result.damage.total,21);assert.deepEqual(result.fear,{before:1,after:0,amount:1});
+  assert.equal(f.fear.initialize('c',0,{check:f.check}),0);assert.equal(f.fear.reserved('c'),0);assert.equal(f.fear.read('c','q').incoming.status,'awaiting_armor');assert.equal(f.rolls.readFearHold('c','q').status,'held');assert.equal(result.hpEffectsCommitted,false);
+  assert.deepEqual(f.coordinator.rollIncoming('c','q',{...options,readCandidate(){throw new Error('Historical replay does not authorize a new attack');},rng(){throw new Error('No reroll');}}),result);
+});
+test('native miss draws no damage and native effective advantage selects the correct d20',t=>{
+  const missed=fixture(t),options=readyAttack(missed);let draws=0;
+  const result=missed.coordinator.rollIncoming('c','q',{...options,rng:s=>{assert.equal(s,20);draws++;return 1;}});assert.equal(draws,1);assert.equal(result.damage,null);assert.equal(missed.fear.read('c','q').incoming.status,'missed');
+  const f=fixture(t),adv=readyAttack(f,{...attackCandidate(),advantage:true}),faces=[3,15,2,2],sides=[];
+  const hit=f.coordinator.rollIncoming('c','q',{...adv,rng:s=>{sides.push(s);return faces.shift();}});assert.deepEqual(sides,[20,20,6,6]);assert.equal(hit.roll.selected,15);assert.equal(hit.damage.total,7);
+});
+test('unconfirmed or revoked owner defense cannot spend Fear or draw attack dice',t=>{
+  const f=fixture(t);prepareDefense(f);const options={check:f.check,readCandidate:attackCandidate,readReview:()=>defenseEvidence(f),readChoice:()=>defenseEvidence(f,'incoming_defense_choice')};let draws=0;
+  assert.throws(()=>f.coordinator.rollIncoming('c','q',{...options,rng:()=>{draws++;return 10;}}),/defense proofs/);assert.equal(draws,0);assert.equal(f.fear.initialize('c',1,{check:f.check}),1);
+  const g=fixture(t),ready=readyAttack(g);assert.throws(()=>g.coordinator.rollIncoming('c','q',{...ready,readChoice:()=>({...ready.readChoice(),sourceRef:'revoked'}),rng:()=>{draws++;return 10;}}),/revoked/);assert.equal(draws,0);assert.equal(g.fear.initialize('c',1,{check:g.check}),1);
+});
+test('invalid native RNG or final authorization failure rolls back both debit and saved attack',t=>{
+  const f=fixture(t),options=readyAttack(f);assert.throws(()=>f.coordinator.rollIncoming('c','q',{...options,rng:()=>21}),/out of range/);
+  let checks=0;assert.throws(()=>f.coordinator.rollIncoming('c','q',{...options,check(){if(++checks===2)throw new Error('Execution authority changed');},rng:s=>s===20?15:2}),/Execution authority changed/);f.reopen();
+  assert.equal(f.fear.initialize('c',1,{check:f.check}),1);assert.equal(f.fear.reserved('c'),1);assert.equal(f.fear.read('c','q').incoming.status,'ready');assert.equal(f.fear.read('c','q').incoming.result,undefined);
 });

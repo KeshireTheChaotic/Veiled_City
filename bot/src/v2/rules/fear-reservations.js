@@ -1,7 +1,7 @@
 import {DatabaseSync} from 'node:sqlite';
 import {createHash,randomUUID} from 'node:crypto';
 import {preRollFearTerms} from './pre-roll-fear.js';
-import {diceSpec} from './dice.js';
+import {diceSpec,d,gmD20Roll,gmAttackDamage} from './dice.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const decode=r=>r?JSON.parse(r.data):null;
 /** Native reservation/notice state only. Funds remain unspent until an eventual
@@ -75,9 +75,10 @@ export function openFearReservations(filename=':memory:'){
     const row=read(c,q);if(row?.status!=='announced'||row.publication?.status!=='delivered'||typeof readCandidate!=='function')throw new Error('Acknowledged native Fear announcement required before incoming offer');
     const candidate=structuredClone(readCandidate(c,q)),t=row.terms;
     const strings=['id','campaignId','sceneId','requestRef','decisionRef','actorId','ownerUserId','controlRevision','npcId','sourceRef','sourceRevision','targetRevision','encounterRevision','statblockRevision','ruleFingerprint','damageExpression','damageType'];
-    if(!candidate||Object.keys(candidate).length!==strings.length+5||strings.some(k=>typeof candidate[k]!=='string'||!candidate[k]||candidate[k].length>256)
+    if(!candidate||Object.keys(candidate).length!==strings.length+7||strings.some(k=>typeof candidate[k]!=='string'||!candidate[k]||candidate[k].length>256)
       ||candidate.campaignId!==c||candidate.sceneId!==t.sceneId||candidate.requestRef!==q||candidate.decisionRef!==t.decisionRef||candidate.actorId!==t.actorId||candidate.ownerUserId!==t.ownerUserId||candidate.controlRevision!==t.controlRevision||candidate.npcId!==t.npcId
       ||!/^[a-f0-9]{64}$/.test(candidate.ruleFingerprint)||!['physical','magic'].includes(candidate.damageType)||![candidate.attackBonus,candidate.evasion,candidate.major,candidate.severe].every(Number.isSafeInteger)||candidate.evasion<1||candidate.major<1||candidate.severe<candidate.major
+      ||typeof candidate.advantage!=='boolean'||typeof candidate.disadvantage!=='boolean'||candidate.advantage&&candidate.disadvantage
       ||!candidate.defenses||Object.keys(candidate.defenses).sort().join(',')!=='armorAllowed,armorReduction,resistance,sourceRef'||!['none','half','immune'].includes(candidate.defenses.resistance)||![1,2].includes(candidate.defenses.armorReduction)||typeof candidate.defenses.armorAllowed!=='boolean'||typeof candidate.defenses.sourceRef!=='string'||!candidate.defenses.sourceRef)throw new Error('Exact inspected native incoming attack candidate required');
     diceSpec(candidate.damageExpression);
     const fingerprint=hash(candidate);if(row.incoming){if(row.incoming.termsHash!==fingerprint)throw new Error('Immutable incoming offer conflict');return row.incoming;}
@@ -107,7 +108,22 @@ export function openFearReservations(filename=':memory:'){
     if(hash(readCandidate(c,q))!==incoming.termsHash||JSON.stringify(readEvidence(c,q))!==JSON.stringify(evidence))throw new Error('Incoming defense authority changed');
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,incoming:after}),c,q);return after;
   });}
-  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,
+  function rollIncoming(c,q,{check,readCandidate,readDefense,rng=d}){return tx(check,()=>{
+    const row=read(c,q),incoming=row?.incoming;
+    if(!incoming||typeof readDefense!=='function'||typeof rng!=='function')throw new Error('Native reviewed incoming attack required');
+    const defense=structuredClone(readDefense(c,q)),choice=incoming.choices?.at(-1);
+    if(!incoming.review||choice?.decision!=='confirm_base_defenses'||JSON.stringify(defense)!==JSON.stringify({review:incoming.review,choice}))throw new Error('Current exact native owner defense proofs required');
+    if(incoming.result)return incoming.result;
+    if(row.status!=='announced'||row.publication?.status!=='delivered'||incoming.status!=='ready'||typeof readCandidate!=='function'||hash(readCandidate(c,q))!==incoming.termsHash)throw new Error('Current ready native incoming attack required');
+    const pool=db.prepare('SELECT amount FROM vk3_fear_pool WHERE campaign=?').get(c);
+    if(!pool||!Number.isSafeInteger(pool.amount)||pool.amount<reserved(c)||pool.amount<1||pool.amount>12||row.terms.baseCost!==1||row.terms.printedFearCost!==0)throw new Error('Exact reserved campaign Fear required');
+    db.prepare('UPDATE vk3_fear_pool SET amount=? WHERE campaign=?').run(pool.amount-1,c);
+    const t=incoming.terms,roll=gmD20Roll({kind:'attack',modifier:t.attackBonus,difficulty:t.evasion,advantage:t.advantage,disadvantage:t.disadvantage},rng),damage=gmAttackDamage(roll,t.damageExpression,rng);
+    const result={id:`${t.id}:roll`,campaignId:c,requestRef:q,attackRef:t.id,decisionRef:t.decisionRef,termsHash:incoming.termsHash,reviewRef:incoming.review.id,choiceRef:choice.id,fear:{before:pool.amount,after:pool.amount-1,amount:1},roll,damage,damageType:t.damageType,fearCommitted:true,hpEffectsCommitted:false};
+    if(hash(readCandidate(c,q))!==incoming.termsHash||JSON.stringify(readDefense(c,q))!==JSON.stringify(defense))throw new Error('Incoming execution authority changed');
+    db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,status:'executing',incoming:{...incoming,status:roll.success?'awaiting_armor':'missed',result},history:[...row.history,{status:'executing',resultRef:result.id}]}),c,q);return result;
+  });}
+  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,rollIncoming,
     reviewIncoming:(c,q,options)=>incomingDefense(c,q,'review',options),recordIncomingDefense:(c,q,options)=>incomingDefense(c,q,'choice',options),
     read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
 }

@@ -40,17 +40,23 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
   function prepareIncoming(c,q,{check,readCandidate}){
     return fearStore.prepareIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate)});
   }
-  function ownerDefense(c,q,operation,{check,readCandidate,readEvidence}){
+  function ownerEvidenceReader(readEvidence){
     if(typeof sourceAuthority?.inspectReference!=='function'||typeof readEvidence!=='function')throw new Error('Native owner source and defense evidence readers required');
-    const inspected=(campaign,request)=>{
+    return (campaign,request)=>{
       const evidence=readEvidence(campaign,request),terms=fearStore.read(campaign,request)?.incoming?.terms;
       if(!terms||typeof evidence?.sourceRef!=='string'||typeof evidence.sourceRevision!=='string')throw new Error('Owned incoming defense source required');
       const proof=sourceAuthority.inspectReference(evidence.sourceRef,evidence.sourceRevision);
       if(proof.campaign!==campaign||proof.scene!==terms.sceneId||proof.principal!==terms.ownerUserId||!proof.actors.includes(terms.actorId)||!Array.isArray(proof.recipients)||proof.recipients.length!==1||proof.recipients[0]!==terms.ownerUserId)throw new Error('Current private affected-owner defense source required');
       return evidence;
     };
-    return fearStore[operation](c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readEvidence:inspected});
   }
-  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,
+  function ownerDefense(c,q,operation,{check,readCandidate,readEvidence}){
+    return fearStore[operation](c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readEvidence:ownerEvidenceReader(readEvidence)});
+  }
+  function rollIncoming(c,q,{check,readCandidate,readReview,readChoice,rng}){
+    const review=ownerEvidenceReader(readReview),choice=ownerEvidenceReader(readChoice);
+    return fearStore.rollIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readDefense:(campaign,request)=>({review:review(campaign,request),choice:choice(campaign,request)}),rng});
+  }
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,
     reviewIncoming:(c,q,options)=>ownerDefense(c,q,'reviewIncoming',options),recordIncomingDefense:(c,q,options)=>ownerDefense(c,q,'recordIncomingDefense',options)});
 }
