@@ -15,7 +15,8 @@ import {createDiscordDeathDecisions} from '../../src/v2/discord-death-decisions.
 import {createComponentChoiceSources} from '../../src/v2/component-choice-sources.js';
 import {createDiscordDeathDispatcher} from '../../src/v2/discord-death-dispatcher.js';
 import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
-import {MessageFlags} from 'discord.js';
+import {MessageFlags,ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';
+import {createNativeDeathWorkflow} from '../../src/v2/native-death-workflow.js';
 
 function fixture(t,{features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-ingress-')),client=new EventEmitter();client.user={id:'bot'};
@@ -45,7 +46,7 @@ function fixture(t,{features=[]}={}){
   }
   async function accept(event){event.observe();return reader.accept(event.interaction);}
   async function stage(event){await accept(event);const source=await bridge.ingest(event.interaction.id);return ingress.record(source);}
-  return {client,channel,features,snapshot,issue,accept,stage,get actions(){return actions;},get reader(){return reader;},get prompts(){return prompts;},get bridge(){return bridge;},get ingress(){return ingress;},get sources(){return sources;},get decisions(){return decisions;},reopen(){close();open();},expire(){now+=60001;},setFingerprint(v){fingerprint=v;},beforeAudience(fn){beforeAudience=fn;}};
+  return {client,channel,features,snapshot,issue,accept,stage,clock:()=>now,get scenes(){return scenes;},get actions(){return actions;},get reader(){return reader;},get prompts(){return prompts;},get bridge(){return bridge;},get ingress(){return ingress;},get sources(){return sources;},get decisions(){return decisions;},reopen(){close();open();},expire(){now+=60001;},setFingerprint(v){fingerprint=v;},beforeAudience(fn){beforeAudience=fn;}};
 }
 
 test('delivered review and exact owner move survive cold stores, then native fate draws exactly once',async t=>{
@@ -135,4 +136,45 @@ test('real native choice remains saved when private dispatcher confirmation fail
 });
 test('real native owner rejection produces only a private generic hold and no death evidence',async t=>{
   const f=fixture(t),d=dispatcherFixture(t,f),review=f.issue();review.interaction.user.id='outsider';const row=await d.emit(review);assert.equal(row.processing,'held');assert.equal(f.actions.readIncomingDeathReview('c','attack'),null);assert.equal(d.replies.length,1);assert.match(d.replies[0],/native review/);assert.doesNotMatch(d.replies[0],/pc|attack|SECRET|risks required/);
+});
+function workflowFixture(t,f,{faces=[5,1]}={}){
+  const dir=mkdtempSync(join(tmpdir(),'vk3-workflow-')),file=join(dir,'interactions.sqlite'),sent=[],errors=[],replies=[],draws=[];let receipts=openInteractionReceipts(file),workflow,mode='ok',nextInteraction=1;
+  const member=id=>({id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}),members=new Map(['bot','u'].map(id=>[id,member(id)])),route={guildId:'c',channelId:'private',sceneId:'s',ownerUserId:'u'};
+  const channel={id:'private',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),async send(payload){if(mode==='send-fails')throw new Error('Send uncertain');assert.deepEqual(payload.allowedMentions,{parse:[]});assert.equal(payload.enforceNonce,true);const message={id:`delivered-${sent.length+1}`,guildId:'c',channelId:'private',author:{id:'bot',bot:true},webhookId:null,system:false,content:payload.content,components:payload.components};sent.push(message);return message;},messages:{async fetch({message}){if(mode==='read-fails')throw new Error('Readback failed');return sent.find(m=>m.id===message);}}};
+  const guild={id:'c',memberCount:2,members:{fetch:async()=>members},roles:{fetch:async()=>new Map()},channels:{fetch:async()=>channel}};f.client.guilds={fetch:async()=>guild};
+  function open(){workflow=createNativeDeathWorkflow({client:f.client,actionStore:f.actions,sceneStore:f.scenes,sourceAuthority:f.sources,readActorSnapshot:f.snapshot,readRoute:()=>route,promptStore:f.prompts,decisionStore:f.decisions,interactionReceipts:receipts,clock:f.clock,rng:sides=>{draws.push(sides);if(!faces.length)throw new Error('Unexpected extra RNG');return faces.shift();},onError:(error,metadata)=>errors.push({error,metadata})});}
+  open();t.after(()=>{workflow.close();receipts.close();assert.ok(resolve(dir).startsWith(resolve(tmpdir())+sep));rmSync(dir,{recursive:true,force:true});});
+  async function click(decision){const message=sent.at(-1),prompt=f.prompts.readPrompt(message.components[0].components[0].custom_id),option=prompt.options.find(o=>o.decision===decision);assert.ok(option,decision);const event={id:`workflow-click-${nextInteraction++}`,client:f.client,isButton:()=>true,user:{id:'u',bot:false},guildId:'c',channelId:'private',message,customId:option.customId,deferred:false,replied:false,async deferReply(options){assert.equal(options.flags,MessageFlags.Ephemeral);this.deferred=true;},async editReply(options){assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);this.replied=true;}};f.client.emit('interactionCreate',event);await workflow.drain();return {event,row:receipts.read(event.id)};}
+  return {sent,errors,replies,draws,click,present:()=>workflow.present('c','attack',{check:()=>{}}),setMode(value){mode=value;},get workflow(){return workflow;},reopen(){workflow.close();receipts.close();f.reopen();receipts=openInteractionReceipts(file);open();}};
+}
+test('composed native workflow progresses private review, fate and owner allocation with one saved prompt per stage',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);const first=await w.present();assert.equal(first.purpose,'death_review');assert.equal(w.sent.length,1);assert.equal((await w.present()).promptRef,first.promptRef);assert.equal(w.sent.length,1);
+  assert.equal((await w.click('reviewed')).row.processing,'committed');assert.equal(w.sent.length,2);assert.equal(w.draws.length,0);w.reopen();await w.present();assert.equal(w.sent.length,2);
+  assert.equal((await w.click('risk_it_all')).row.processing,'committed');assert.deepEqual(w.draws,[12,12]);assert.equal(w.sent.length,3);assert.equal(f.actions.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');w.reopen();await w.present();assert.equal(w.sent.length,3);
+  assert.equal((await w.click('allocate:3:2')).row.processing,'committed');assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,3);assert.equal(f.actions.readPcLife('c','pc').life.stress.current,1);assert.equal((await w.present()).status,'resolved');assert.equal(w.sent.length,3);assert.equal(w.draws.length,2);assert.deepEqual(w.errors,[]);
+});
+for(const [move,faces,status,result,drawCount] of [['risk_it_all',[1,12],'resolved','dead',2],['avoid_death',[2],'resolved','unconscious',1],['blaze_of_glory',[],'awaiting_final_action','blaze_pending',0]])test(`composed native workflow resolves ${move} without inventing a final action`,async t=>{
+  const f=fixture(t),w=workflowFixture(t,f,{faces});await w.present();await w.click('reviewed');await w.click(move);const outcome=f.actions.readIncomingDeathOutcome('c','attack');assert.equal(outcome.status,status);assert.equal(outcome.result,result);assert.equal(w.draws.length,drawCount);assert.equal(w.sent.length,2);w.reopen();assert.equal((await w.present()).status,status);assert.equal(w.draws.length,drawCount);assert.deepEqual(w.errors,[]);
+});
+test('native workflow reconciles saved delivery without issuing another prompt',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);w.setMode('read-fails');await assert.rejects(w.present(),/Readback failed/);assert.equal(w.sent.length,1);w.reopen();w.setMode('ok');assert.equal((await w.present()).status,'presented');assert.equal(w.sent.length,1);
+});
+test('native workflow cannot bypass an uncertain send or expired prompt by issuing a fresh one',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);w.setMode('send-fails');await assert.rejects(w.present());w.reopen();w.setMode('ok');assert.equal((await w.present()).status,'native_review_required');assert.equal(w.sent.length,0);
+  const g=fixture(t),v=workflowFixture(t,g);await v.present();for(let i=0;i<11;i++)g.expire();assert.equal((await v.present()).status,'native_review_required');assert.equal(v.sent.length,1);
+});
+test('native workflow resumes a durably saved owner choice before fate and draws once',async t=>{
+  const f=fixture(t);await f.stage(f.issue());await f.stage(f.issue('death_choice','risk_it_all'));f.reopen();const w=workflowFixture(t,f);assert.equal((await w.present()).purpose,'death_allocation');assert.equal(w.draws.length,2);w.reopen();await w.present();assert.equal(w.draws.length,2);assert.equal(w.sent.length,1);
+});
+test('competing workflow presentation calls share one durable prompt and send',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f),results=await Promise.allSettled([w.present(),w.present()]);assert.ok(results.some(r=>r.status==='fulfilled'));assert.equal(w.sent.length,1);const first=results.find(r=>r.status==='fulfilled').value;assert.equal((await w.present()).promptRef,first.promptRef);assert.equal(w.sent.length,1);
+});
+test('changed workflow terms cannot bypass an earlier uncertain prompt',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);w.setMode('send-fails');await assert.rejects(w.present());f.features.push('New owned fact');w.setMode('ok');await assert.rejects(w.present(),/Existing death prompts require native reconciliation/);assert.equal(w.sent.length,0);assert.equal(w.draws.length,0);
+});
+test('failed next-prompt publication preserves committed review and holds progression without a fresh send',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);await w.present();w.setMode('send-fails');const click=await w.click('reviewed');assert.equal(click.row.processing,'committed');assert.equal(click.row.hold,'progression');assert.equal(f.actions.readIncomingDeathReview('c','attack').evidence.id,click.event.id);assert.equal(f.actions.readIncomingDeathChoice('c','attack'),null);w.reopen();w.setMode('ok');assert.equal((await w.present()).status,'native_review_required');assert.equal(w.sent.length,1);assert.equal(w.draws.length,0);
+});
+test('native workflow Critical clears HP and Stress without requesting an allocation',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f,{faces:[6,6]});await w.present();await w.click('reviewed');await w.click('risk_it_all');assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,0);assert.equal(f.actions.readPcLife('c','pc').life.stress.current,0);assert.equal(f.actions.readIncomingDeathOutcome('c','attack').result,'recovered');assert.equal(w.sent.length,2);assert.equal(w.draws.length,2);assert.deepEqual(w.errors,[]);
 });

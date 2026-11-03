@@ -1,12 +1,12 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
-const confirmations={death_review:'Your risk review is saved. Choose your death move using the native controls.',death_choice:'Your death move choice is saved. Native resolution is pending.',death_allocation:'Your recovery allocation is saved.'};
+const confirmations={death_review:'Your risk review is saved. Choose your death move using the native controls.',death_choice:'Your death move choice is saved.',death_allocation:'Your recovery allocation is saved.'};
 /** Opt-in native listener. No natural-language routing, inference or fate dice.
  * A claimed interaction is never automatically processed or replied to again.
  */
-export function createDiscordDeathDispatcher({client,promptStore,decisionReader,choiceSources,ingress,receipts,onError=()=>{}}){
-  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof promptStore?.readPrompt!=='function'||typeof decisionReader?.accept!=='function'||typeof choiceSources?.ingest!=='function'||typeof ingress?.record!=='function'||typeof receipts?.claim!=='function'||typeof onError!=='function')throw new TypeError('Native death dispatch dependencies required');
+export function createDiscordDeathDispatcher({client,promptStore,decisionReader,choiceSources,ingress,receipts,onError=()=>{},onCommitted=async()=>{}}){
+  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof promptStore?.readPrompt!=='function'||typeof decisionReader?.accept!=='function'||typeof choiceSources?.ingest!=='function'||typeof ingress?.record!=='function'||typeof receipts?.claim!=='function'||typeof onError!=='function'||typeof onCommitted!=='function')throw new TypeError('Native death dispatch dependencies required');
   const pending=new Set(),controller=new AbortController();let closed=false;
   const report=(error,interactionId,stage)=>{try{onError(error,{interactionId,stage});}catch{}};
   const bookkeeping=()=>{};
@@ -24,6 +24,7 @@ export function createDiscordDeathDispatcher({client,promptStore,decisionReader,
       const evidence=decision.purpose==='death_allocation'?receipt?.allocation?.evidence:receipt?.evidence;
       if(!Object.hasOwn(confirmations,decision.purpose)||evidence?.id!==binding.id||evidence.sourceRef!==source.id||evidence.sourceRevision!==source.revision||evidence.actorId!==binding.actorId||evidence.campaignId!==binding.campaignId||evidence.sceneId!==binding.sceneId||evidence.ownerUserId!==binding.principal||evidence.requestRef!==decision.requestRef||typeof receipt?.id!=='string'||!receipt.id)throw new Error('Exact native owner interaction outcome required');
       receipts.complete(binding.id,{id:receipt.id,hash:hash(receipt)},{check:bookkeeping});
+      current();stage='progression';await onCommitted({decision:structuredClone(decision),source:structuredClone(source),receipt:structuredClone(receipt)},{signal:controller.signal});
       current();receipts.claimReply(binding.id,{check:current});
       try{await event.editReply({content:confirmations[decision.purpose],allowedMentions:{parse:[]}});receipts.finishReply(binding.id,'delivered',{check:bookkeeping});}catch(error){receipts.finishReply(binding.id,'uncertain',{check:bookkeeping});report(error,binding.id,'reply');}
     }catch(error){

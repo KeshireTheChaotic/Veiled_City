@@ -1,0 +1,57 @@
+{
+  "completedCases": 54,
+  "checkpoint": "R6_NATIVE_DEATH_WORKFLOW",
+  "node": "v26.13.0",
+  "runs": [
+    {
+      "durationMs": 14086.6372,
+      "passed": 50
+    },
+    {
+      "durationMs": 2011.8676,
+      "passed": 4
+    }
+  ],
+  "files": [
+    {
+      "path": "bot/src/v2/native-death-workflow.js",
+      "sha256": "16ba65551a9dad711f0312bb6f373de83a91422560ed7c8ff68ef0e63c34ca5c"
+    },
+    {
+      "path": "bot/src/v2/death-prompts.js",
+      "sha256": "2102dfdda57ccb7907196816ab7cb6e640905fef00339b7f353b2ca5a7b96229"
+    },
+    {
+      "path": "bot/src/v2/discord-death-dispatcher.js",
+      "sha256": "bf1cdc01f103ade2d1f6fecf438345d7c940f2d88b61888491d6071c102e9739"
+    },
+    {
+      "path": "bot/src/v2/interaction-receipts.js",
+      "sha256": "6253db422daa3e10f72e75a831c0331f00a8e85fe292b9785da14fd691981163"
+    },
+    {
+      "path": "bot/src/v2/rules/action-store.js",
+      "sha256": "b1eafe85af7788271b832a23daa09159abf145817bbfea0e98f78874262d7432"
+    },
+    {
+      "path": "bot/src/v2/rules/pc-life-state.js",
+      "sha256": "3daaa7c6be18feac2ad61864c6cf62d35c236f1cc53540d268c107e7a579ecc6"
+    },
+    {
+      "path": "bot/src/v2/source-authority.js",
+      "sha256": "b10c32a2f560fe26290fe4ea07fee212f5332d2342f351d32555d85d7cac5dcb"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "1af60de68b0770f58a121ff2aaed7bfd2d45ec7d0adc220fedfc31f565b2ea13"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs",
+      "sha256": "55c47525ef1220b14fec7bf66dbc693602fd8ef0a9ba299d2cba1f5adb9366ee"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs",
+      "sha256": "905b82a9e3bf12180931eb0fd7de2498d12c8c6673ec26ef678fbbf1f59f2890"
+    }
+  ]
+}
