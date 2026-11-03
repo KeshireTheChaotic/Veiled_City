@@ -6,9 +6,10 @@ const decode=r=>r?JSON.parse(r.data):null;
 /** Native control state only: cannot mark effects resolved or patch actor state. */
 export function openActionStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
-  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope'].includes(r.name)))throw new Error('Dedicated action database required');
+  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents'].includes(r.name)))throw new Error('Dedicated action database required');
     db.exec('PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS vk3_actions(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id)); CREATE TABLE IF NOT EXISTS vk3_action_events(campaign TEXT,source TEXT,data TEXT,PRIMARY KEY(campaign,source));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_action_hope(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor))');
+    db.exec('CREATE TABLE IF NOT EXISTS vk3_cost_terms(campaign TEXT,action TEXT,data TEXT,PRIMARY KEY(campaign,action)); CREATE TABLE IF NOT EXISTS vk3_cost_consents(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id));');
   }catch(e){db.close();throw e;}
   const read=(c,a)=>decode(db.prepare('SELECT data FROM vk3_actions WHERE campaign=? AND id=?').get(c,a));
   function tx(check,fn){if(typeof check!=='function')throw new Error('Native action authority required');db.exec('BEGIN IMMEDIATE');try{check();const r=fn();check();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}}
@@ -45,6 +46,24 @@ export function openActionStore(filename=':memory:'){
       if(JSON.stringify(readCost(input.campaignId,input.costRef))!==JSON.stringify(cost))throw new Error('Cost evidence changed');return receipt;
     });
   }
-  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,
+  const readActionTerms=(c,a)=>decode(db.prepare('SELECT data FROM vk3_cost_terms WHERE campaign=? AND action=?').get(c,a));
+  const readConsent=(c,id)=>decode(db.prepare('SELECT data FROM vk3_cost_consents WHERE campaign=? AND id=?').get(c,id));
+  function registerHopeTerms(input,{check}){return tx(check,()=>{
+    const action=read(input.campaignId,input.id);
+    if(!action||action.kind!=='hope_cost'||['id','campaignId','actorId','ownerUserId','sceneId','sourceRef','sourceRevision'].some(k=>action[k]!==input[k])
+      ||!id(input.revision)||!id(input.controlRevision)||input.cost?.resource!=='hope'||!id(input.cost.slot)||!Number.isSafeInteger(input.cost.amount)||input.cost.amount<1)throw new Error('Native immutable Hope action terms required');
+    const old=readActionTerms(input.campaignId,input.id);if(old){if(JSON.stringify(old)!==JSON.stringify(input))throw new Error('Immutable action terms conflict');return old;}
+    if(!['pending','awaiting_consent'].includes(action.status))throw new Error('Action terms window closed');
+    db.prepare('INSERT INTO vk3_cost_terms VALUES(?,?,?)').run(input.campaignId,input.id,JSON.stringify(input));return input;
+  });}
+  function recordHopeConsent(input,{check}){return tx(check,()=>{
+    const terms=readActionTerms(input.campaignId,input.actionRef),action=read(input.campaignId,input.actionRef),old=readConsent(input.campaignId,input.id);
+    if(old){if(JSON.stringify(old)!==JSON.stringify(input))throw new Error('Immutable owner consent conflict');return old;}
+    if(!terms||action?.status!=='awaiting_consent'||!id(input.id)||!id(input.revision)||!['accepted','rejected'].includes(input.status)
+      ||['campaignId','sceneId','actorId','ownerUserId','sourceRef','sourceRevision'].some(k=>input[k]!==terms[k])||input.actionRevision!==terms.revision||input.amount!==terms.cost.amount||input.costSlot!==terms.cost.slot)throw new Error('Exact native owner action consent required');
+    db.prepare('INSERT INTO vk3_cost_consents VALUES(?,?,?)').run(input.campaignId,input.id,JSON.stringify(input));
+    const after={...action,status:input.status==='accepted'?'ready_to_commit':'cancelled',revision:action.revision+1};db.prepare('UPDATE vk3_actions SET data=? WHERE campaign=? AND id=?').run(JSON.stringify(after),input.campaignId,input.actionRef);return input;
+  });}
+  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,
     readOutcome:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`${a}:hope-committed`)),close:()=>db.close()});
 }

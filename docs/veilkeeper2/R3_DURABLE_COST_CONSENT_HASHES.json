@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "3c5aef2bad6a274ac8e28d5204f71d9319a2890bf7a602e24f7f5f4e9cd6f924",
+    "path": "bot/src/v2/rules/action-store.js"
+  },
+  {
+    "sha256": "82f13ccc54eaadddb859bd340ad766c4b57ea2faff583ed74261ec7181967d9a",
+    "path": "bot/tests/veilkeeper2/r3-durable-cost-consent.test.mjs"
+  },
+  {
+    "sha256": "5f26c4f69d0a4eb0855e8dde7d89dff32f8aa6e63c4bc46b21e8963bdc391f0f",
+    "path": "docs/veilkeeper2/R3_DURABLE_COST_CONSENT_REPORT.md"
+  }
+]
