@@ -219,7 +219,14 @@
         "pc_effect_receipt",
         "pc_incoming_attack",
         "pc_incoming_review"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pc_incoming_attack"
+        ],
+        "partial": true,
+        "evidence": "incoming-attack-rules.js:227,243,257,299,508 traced; :349-368 volley/context rows (inspectVolley, context) not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/mixed-condition-rules.js": {
       "uses": 1,
@@ -345,7 +352,17 @@
         "pvp_damage_owner_review",
         "pvp_damage_roll_receipt",
         "verified_pvp_damage"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_attack_request",
+          "pvp_damage_offer",
+          "pvp_damage_roll_receipt",
+          "typed_intent"
+        ],
+        "partial": true,
+        "evidence": "pvp-damage-rules.js:33,172,236,302,306 traced; :237 offer row not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js": {
       "uses": 1,
@@ -667,7 +684,15 @@
         "action_continuation",
         "event",
         "move"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "action_continuation",
+          "compound_action"
+        ],
+        "partial": true,
+        "evidence": "action-continuation.js:171,175,192,206 traced; :212 signal origin not traced"
+      }
     },
     "bot/src/frameworks/session/negotiations.js": {
       "uses": 1,
@@ -771,21 +796,46 @@
         "scene_entry",
         "semantic_intents",
         "world_conflict"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "autonomous_entity"
+        ],
+        "partial": true,
+        "evidence": "autonomous-world.js:285 traced; :60,:257,:259,:263 rows not traced"
+      }
     },
     "bot/src/frameworks/world/city-civic.js": {
       "uses": 5,
       "candidateKinds": [
         "influence_action",
         "transmission"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "change",
+          "community",
+          "message",
+          "report"
+        ],
+        "partial": true,
+        "evidence": "city-civic.js:145,170,175,225 traced; :115 kind from data not traced"
+      }
     },
     "bot/src/frameworks/world/city-core-rules.js": {
       "uses": 6,
       "candidateKinds": [
         "action",
         "cycle"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "action",
+          "personnel"
+        ],
+        "partial": true,
+        "evidence": "city-core-rules.js:109,131,138,156 traced; :52 kind variable and :128 institute row not traced"
+      }
     },
     "bot/src/frameworks/world/commitments.js": {
       "uses": 3,
@@ -909,7 +959,14 @@
         "pvp_projection",
         "pvp_projection_publication",
         "pvp_status_publication"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_damage_offer"
+        ],
+        "partial": true,
+        "evidence": "native-publications.js:150 traced; :36,:56 kind notice and :70,:75,:166 variable kind not traced"
+      }
     },
     "bot/src/pvp-menu.js": {
       "uses": 1,

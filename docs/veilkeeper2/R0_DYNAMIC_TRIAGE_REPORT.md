@@ -16,7 +16,10 @@ Update (8 more source-resolved writers): environment-recovery, historical-archiv
 
 Update (partial resolutions + review aid): spreadOrigin() in triage.mjs shows the nearest earlier assignment of a spread variable as a review aid. pvp-fear-move, pvp-brawl, pvp-agreement and scene-action-window are recorded as PARTIAL (traced kinds only; untraced lines named in the evidence). Status: fully resolved 12 files/15 uses; partial 5 files/38 uses; unresolved 68 files/157 uses. Test: r0-triage 4 passed.
 
+Update (batch 3, partial): incoming-attack, native-publications, city-core, pvp-damage, city-civic, action-continuation and autonomous-world recorded as PARTIAL with traced kinds. Status: fully resolved 12 files/15 uses; partial 12 files/80 uses; unresolved 61 files/115 uses.
+
 Next: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 
