@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "839a7719251d4f66455f37d9591e465e0b8ea024cb873d4900aae74e1ff26b86",
+    "path": "bot/src/v2/rules/roll-action-lifecycle.js"
+  },
+  {
+    "sha256": "998f1f2140914c59b0a55467827b2e65d519030d0229d7b3c5b2555687adedd6",
+    "path": "bot/tests/veilkeeper2/r3-roll-action.test.mjs"
+  },
+  {
+    "sha256": "d0a0a2d422bcc3400dc88ddce62e15ea1c3c975d6ef8c20f22e5066b4bc1ff1e",
+    "path": "docs/veilkeeper2/R3_ROLL_ACTION_REPORT.md"
+  }
+]
