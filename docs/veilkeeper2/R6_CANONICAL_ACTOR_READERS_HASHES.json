@@ -1,0 +1,16 @@
+{
+  "completedCases": 7,
+  "durationMs": 1366.7059,
+  "files": [
+    {
+      "path": "bot/src/v2/canonical-actor-readers.js",
+      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-canonical-actor-readers.test.mjs",
+      "sha256": "b10aed622311fcb2966b71f76442c9a17d17594ef6eb65a26c3c6243d2fe7cc4"
+    }
+  ],
+  "node": "v26.13.0",
+  "checkpoint": "R6_CANONICAL_ACTOR_READERS"
+}

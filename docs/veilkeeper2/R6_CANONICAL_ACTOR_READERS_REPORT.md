@@ -1,0 +1,22 @@
+# R1/R3/R6 — canonical native actor readers (slice complete)
+
+Added native PC projection readers joining registered scene control, the existing native character repository and canonical PC lifecycle/resource tables. Fixed engine snapshots retain sheet features, inventory, location, other resource fields and private data for native validators, while overriding HP/Armor/Stress/Hope/permanent slots/death state/status from canonical engine state. Source-authority metadata contains only registered control plus canonical gameplay status, never full character data. The combined `readers` object can be passed to source authority; `readActorSnapshot` is for native rules only, not inference or unscoped export.
+
+The reader requires an already initialized, matching canonical PC owner/control identity. It does not create characters, import packages, bootstrap mechanics, reset death state or assume healthy resources. Missing/partial profiles, cross-campaign/owner mismatches, level disagreement, an active native profile contradicting a legacy death/unmigrated death state, and an active zero-Hope-slot bootstrap require reviewed migration. A stale legacy active status cannot revive canonical death. Closed registration remains closed. NPC metadata continues through its existing registered control reader; this is not an NPC cognition/state implementation.
+
+Inputs are read twice to reject an inconsistent combined snapshot. The metadata projection also verifies that its earlier registered owner/control still matches the canonical snapshot and current control. Returned objects are detached from repository values. No writer, generic patch, import authority or new AI capability was introduced.
+
+Modified files: new `bot/src/v2/canonical-actor-readers.js`, new `bot/tests/veilkeeper2/r6-canonical-actor-readers.test.mjs`, this report/hash manifest and ledger. Existing source authority, gameplay validators, startup, legacy repository and tests were not changed.
+
+Verification complete, Node v26.13.0, worktree root:
+
+```text
+node --test bot/tests/veilkeeper2/r6-canonical-actor-readers.test.mjs
+7 passed; 0 failed/cancelled/skipped; 1366.7059 ms
+```
+
+Output is in the tool transcript. Tests use actual file-backed scene/source-registry/action stores, a fresh native-shaped SQLite character repository, actual source authority and native damage/death outcomes with cold reopen. They cover stale-resource overlay without losing other fields, no sheet leakage through source metadata, detached results, canonical death/receipt replay without live grants, unconscious/permanent-Hope scar preservation, missing and incompatible migration holds, owner/campaign revocation, closed control and a simulated mixed-owner read race. Native attack/Armor/review/choice certificates and deterministic fate inputs are test fixtures; the repository API shape matches `frameworks/persistence/database.js:793–795`, but its complete production migration/constructor was not executed. No live Discord, inference, process-race qualification or full parity/phase quality is claimed. The initial six-case run preceded the control-race guard/test change; this seven-case result supersedes it. Unchanged completed suites were not rerun.
+
+Migration/rollback: read-only adapter, no schema or production write. It requires reviewed native lifecycle bootstrap and does not certify legacy conversion. Full actor frames captured before introducing additional sheet fields must be reconciled before switching a pending death/allocation operation to a different projection; the native compare-and-set is intentionally not relaxed. Keep all character/control/source/action records. Leave this adapter unused on rollback; never fall back to healthy sheet defaults for canonical death or missing profiles.
+
+Known holds: actual owner/GM session creation/assembly/end and pre-session selection; reviewed atomic canonical bootstrap and migration including imported historical death; full actor/sheet revision/identity policy, NPC adapters and remaining command/rules/GM/Blaze execution; conversational outcome publication/Fear continuation and independent live/process/crash qualification. R1/R3/R6 and R0–R8 remain incomplete. Next exact phase: native session setup and reviewed actor migration/bootstrap adapters, then remaining command/rules/GM integration. No completed major-phase gate, merge/push or production deployment occurred. Completed-phase publication remains limited to the rebuild branch.
