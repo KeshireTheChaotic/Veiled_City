@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
+import {createNativeCharacterRegistration} from './native-character-registration.js';
 import {gmCommandInput} from './discord-gm-input.js';
 import {createDiscordAudienceReader} from './discord-audience-reader.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -12,7 +13,7 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  */
 export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
-  const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
+  const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),registration=createNativeCharacterRegistration({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
     /** Returns {kind, ref} for a claimed GM command, else null. */
   function route(e){
@@ -33,23 +34,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   }
   async function reply(e,content,check){const id=e.id;interactionReceipts.claimReply(id,{check});try{await e.editReply({content,allowedMentions:{parse:[]}});interactionReceipts.finishReply(id,'delivered',{check});}catch(error){interactionReceipts.finishReply(id,'uncertain',{check});report(error,id,'reply');}}
   const describe=s=>`PC ${s.actorId} (owner ${s.ownerUserId}), level ${s.level}: HP ${s.hp.current}/${s.hp.max}, Armor ${s.armorSlots.current}/${s.armorSlots.max}, Stress ${s.stress.current}/${s.stress.max}, Hope ${s.hope}/${s.hopeCap}. snapshotHash ${hash(s)}`;
-  /** Registers an existing native character to its repository owner in the sole active scene.
-   * Rebinding or replacing an existing registration is refused here and needs native review.
-   */
-  function register(proof,repository,rebind=false){
-    const c=proof.campaignId,actorId=proof.targetRef,character=repository.getCharacter(actorId);
-    const check=()=>{
-      gmAuthority.check(proof);const sessions=sceneStore.activeSessions(c),scenes=sessions.length===1?sceneStore.activeScenes(c,sessions[0].id):[];
-      if(sessions.length!==1||scenes.length!==1)throw new Error('Exactly one active scene required to register a character');
-      if(character?.id!==actorId||character.guild_id!==c||typeof character.owner_user_id!=='string'||!character.owner_user_id||!['active','reserve','guest'].includes(character.status)||repository.getCharacter(actorId)?.owner_user_id!==character.owner_user_id)throw new Error('Native character with a registered owner required');
-      const existing=sceneStore.readers.readActor(c,actorId);
-      if(rebind){if(existing?.kind!=='pc'||existing.status!=='active'||existing.sceneId!==scenes[0].id||existing.ownerUserId===character.owner_user_id&&!done)throw new Error('Active registered character with a changed repository owner required');}
-      else if(existing&&existing.status==='active'&&!(existing.sceneId===scenes[0].id&&existing.ownerUserId===character.owner_user_id&&existing.controlRole==='owner'))throw new Error('Existing character registration requires native review');
-      return {scene:scenes[0],existing};
-    };
-    let done=false;const {scene,existing}=check(),owner=character.owner_user_id,data={id:actorId,campaignId:c,sceneId:scene.id,kind:'pc',status:'active',ownerUserId:owner,controllerUserId:owner,controlRole:'owner'};if(rebind&&existing.name)data.name=existing.name;done=true;
-    return sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`pc-${rebind?'rebind':'register'}:${proof.sourceRef}`,records:[{kind:'actor',data,expectedRevision:rebind?Number(existing.revision):null}]},{check});
-  }
   /** Sends one GM-approved saved draft to its original audience, at most once.
    * It records no knowledge acknowledgement: published narration is not objective truth.
    */
@@ -83,8 +67,8 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Send one with /vc-gm publish-draft (source and fingerprint):\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
-      else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
-      else if(r.kind==='register'){if(proof.operation!=='pc_register')throw new Error('Registration authority required');receipt=register(proof,characters);text='Character registered to its owner in the active scene. No resources, movement, proxy or attendance were set.';}
+      else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=registration.register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
+      else if(r.kind==='register'){if(proof.operation!=='pc_register')throw new Error('Registration authority required');receipt=registration.register(proof,characters);text='Character registered to its owner in the active scene. No resources, movement, proxy or attendance were set.';}
       else if(r.kind==='preview'){if(proof.operation!=='pc_bootstrap_preview')throw new Error('Preview authority required');const source=bootstrap.readSource(c,actor);receipt=source;text=`Review this before approving (private). ${describe(source)}. Approve with /vc-gm bootstrap-review using this character and the snapshotHash above. This grants no PC control.`;}
       else{
         if(proof.operation!=='pc_bootstrap_review')throw new Error('Review authority required');
