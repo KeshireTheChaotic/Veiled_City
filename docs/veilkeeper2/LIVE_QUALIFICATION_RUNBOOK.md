@@ -54,7 +54,8 @@ The call ceiling plus the output-token bound limits spend; check your provider d
 3. `vc-session present|absent|arrive|leave` as an owner (absent/leave accept the new optional `character`).
 4. A player message in a registered channel (evidence capture only).
 5. `vc-session end`, then `{"op":"session-reopen","session":"<id>"}`.
-6. With step 3b running: after a player message, `vc-roll effect` with `{"op":"draft-list"}` as a GM-role member privately lists up to five withheld drafts (source id and first 300 characters; nothing is sent to players).
+6. With step 3b running: after a player message, `vc-roll effect` with `{"op":"draft-list"}` as a GM-role member privately lists up to five withheld drafts (source id, fingerprint and first 180 characters; nothing is sent to players).
+7. To send one reviewed draft: `vc-roll effect` with `{"op":"draft-publish","source":"<source id>","fingerprint":"<64-hex fingerprint from the list>"}` as a GM-role member. It re-checks the GM role and the original channel audience, sends the text once (no mentions, one message, up to 1,900 characters) and records no knowledge or canon acknowledgement. A send that cannot be confirmed is held as `publication_uncertain` and is never retried.
 
 Stop with Ctrl+C (graceful close). Delete `$env:VK2_NATIVE_DIR` and the DB copy afterwards.
 

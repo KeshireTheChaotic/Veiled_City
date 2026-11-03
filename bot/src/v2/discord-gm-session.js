@@ -9,7 +9,7 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
 export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,onError=()=>{}}){
-  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&typeof drafts.recent!=='function')throw new TypeError('Native GM session dependencies required');
+  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
   const setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
   const inRoll=e=>e.commandName==='vc-roll'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='roll';
@@ -20,6 +20,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
       if(inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
+        if(drafts&&input?.op==='draft-publish')return {kind:'publish',ref:`draft-publish:${input.source}`,raw};
         if(drafts&&input?.op==='draft-list')return {kind:'drafts',ref:'draft-list',raw};
         if(input?.op==='session-reopen')return {kind:'reopen',ref:`session-reopen:${input.session}`,raw};
         if(!bootstrap&&!characters)return null;
@@ -49,6 +50,21 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
     let done=false;const {scene,existing}=check(),owner=character.owner_user_id,data={id:actorId,campaignId:c,sceneId:scene.id,kind:'pc',status:'active',ownerUserId:owner,controllerUserId:owner,controlRole:'owner'};if(rebind&&existing.name)data.name=existing.name;done=true;
     return sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`pc-${rebind?'rebind':'register'}:${proof.sourceRef}`,records:[{kind:'actor',data,expectedRevision:rebind?Number(existing.revision):null}]},{check});
   }
+  /** Sends one GM-approved saved draft to its original audience, at most once.
+   * It records no knowledge acknowledgement: published narration is not objective truth.
+   */
+  async function publishDraft(proof,declaration){
+    const c=proof.campaignId,source=proof.targetRef,input=JSON.parse(declaration),fingerprint=input.fingerprint;
+    const row=drafts.recent(c,20).find(d=>d.source===source);if(!row||row.fingerprint!==fingerprint)throw new Error('Approved draft is not a current saved draft');
+    const draft=row.draft,target=draft.delivery,channelRecord=target&&sceneStore.readers.readChannel(c,target.channelId);
+    if(typeof draft.text!=='string'||draft.text.length>1900)throw new Error('Draft must fit one message; review needed');
+    if(!channelRecord||channelRecord.permissionsVerified!==true||JSON.stringify([...channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort())||channelRecord.kind!==target.mode)throw new Error('Draft audience changed; review needed');
+    const guild=await client.guilds.fetch({guild:c,force:true}),channel=await guild.channels.fetch(target.channelId,{force:true});
+    if(channel?.guildId!==c||channel.id!==target.channelId||typeof channel.send!=='function')throw new Error('Draft channel unavailable');
+    drafts.begin(c,source,{approvedFingerprint:fingerprint,approval:{principal:proof.principal,sourceRef:proof.sourceRef,sourceRevision:proof.sourceRevision},check:()=>gmAuthority.check(proof)});
+    let sent;try{sent=await channel.send({content:draft.text,allowedMentions:{parse:[]},enforceNonce:true,nonce:source.slice(-20)});}catch(error){drafts.uncertain(c,source,error?.message??'send failed');throw new Error('Send was not confirmed; the draft is held and will not be retried');}
+    drafts.finish(c,source,sent.id);return {messageId:sent.id};
+  }
   async function execute(e,r){
     const id=e.id,bookkeeping=()=>{},alive=()=>{controller.signal.throwIfAborted();if(closed||e.client!==client||e.user?.bot!==false)throw new Error('Native GM command closed');};
     const binding={id,kind:'discord_command',campaignId:String(e.guildId),sceneId:`gm-operation:${id}`,actorId:`human-gm:${e.user?.id}`,principal:String(e.user?.id),channelId:String(e.channelId),requestRef:r.ref,commandHash:hash([e.commandName,r.raw])};
@@ -59,7 +75,8 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
-      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent:\n${rows.map((d,i)=>`${i+1}) ${d.source}: ${String(d.draft.text).slice(0,300)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
+      else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publishDraft(proof,r.raw);text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
+      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Approve with op draft-publish, source and fingerprint:\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
       else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}

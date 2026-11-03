@@ -35,7 +35,7 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     router=createDiscordInteractionRouter({client,
       nativeDeath:{actionStore,sceneStore,sourceAuthority,readActorSnapshot:canonical.readActorSnapshot,readRoute:route,readOwnerRoute:route,promptStore,decisionStore,interactionReceipts,clock,rng},
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},
-      nativeGm:{readPolicy,drafts:turnStore?{recent:(c,n)=>turnStore.recentDrafts(c,n)}:null,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
+      nativeGm:{readPolicy,drafts:turnStore?{recent:(c,n)=>turnStore.recentDrafts(c,n),begin:(c,s,o)=>turnStore.beginPublication(c,s,o),finish:(c,s,m)=>turnStore.finishPublication(c,s,m),uncertain:(c,s,r)=>turnStore.markPublicationUncertain(c,s,r)}:null,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
       handleOtherCommand,handleOtherComponent,onError});
     const intake=createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore});
     // Context is empty until GM records are composed; turns are withheld drafts and are never sent.

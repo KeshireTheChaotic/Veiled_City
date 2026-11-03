@@ -9,14 +9,14 @@ import {openActionStore} from '../../src/v2/rules/action-store.js';
 import {createPcBootstrapSource} from '../../src/v2/pc-bootstrap-source.js';
 import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
 function fixture(t,{id='i1',withBootstrap=false}={}){
-  let now=1000000;const client=new EventEmitter(),policy={campaignId:'c',revision:'1',gmRoleId:'gm-role',gmUserIds:[],allowAdministrators:false},roles=new Map([['gm-role',{}]]),guild={id:'c'},member={id:'gm',guild,user:{id:'gm',bot:false},roles:{cache:new Map([['gm-role',{}]])},permissions:new PermissionsBitField([])},channel={id:'admin',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages])};
+  let now=1000000;const sentMessages=[],client=new EventEmitter(),policy={campaignId:'c',revision:'1',gmRoleId:'gm-role',gmUserIds:[],allowAdministrators:false},roles=new Map([['gm-role',{}]]),guild={id:'c'},member={id:'gm',guild,user:{id:'gm',bot:false},roles:{cache:new Map([['gm-role',{}]])},permissions:new PermissionsBitField([])},channel={id:'admin',guildId:'c',type:ChannelType.GuildText,send:async payload=>{sentMessages.push(payload);return {id:'sent-'+sentMessages.length};},permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages])};
   guild.members={fetch:async()=>member};guild.roles={fetch:async()=>roles};guild.channels={fetch:async()=>channel};client.guilds={fetch:async()=>guild};
   const gmAuthority=createDiscordGmAuthority({client,readPolicy:()=>policy,clock:()=>now}),sceneStore=openSceneStore(),interactionReceipts=openInteractionReceipts(),errors=[];
   const draftRows=[],owners={pc3:'u3'},actions=openActionStore(),character={id:'pc',guild_id:'c',owner_user_id:'u',status:'active',data:{level:2,resources:{hp:{current:2,max:6},armor:{current:1,max:3},stress:{current:2,max:6},hope:3,hope_max:6}}},readSource=createPcBootstrapSource({sceneStore,characterRepository:{getCharacter:()=>character}});sceneStore.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'owner-registration',records:[{kind:'actor',expectedRevision:null,data:{id:'pc',campaignId:'c',sceneId:'s',kind:'pc',status:'active',ownerUserId:'u',controllerUserId:'u',controlRole:'owner'}}]},{check:()=>{}});
-  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap:withBootstrap?{readSource,actionStore:actions}:null,drafts:withBootstrap?{recent:(c,n)=>{assert.equal(c,'c');return draftRows.slice(0,n);}}:null,characters:withBootstrap?{getCharacter:cid=>cid==='pc3'?{id:'pc3',guild_id:'c',owner_user_id:owners.pc3,status:'active'}:cid==='pc'?character:null}:null,onError:e=>errors.push(e.message)});
+  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap:withBootstrap?{readSource,actionStore:actions}:null,drafts:withBootstrap?{recent:(c,n)=>{assert.equal(c,'c');return draftRows.filter(d=>!d.state).slice(0,n);},begin:(c,s,o)=>{const d=draftRows.find(x=>x.source===s&&!x.state);if(!d||d.fingerprint!==o.approvedFingerprint)throw new Error('not current');o.check();d.state='publishing';d.approval=o.approval;return d.draft;},finish:(c,s,m)=>{draftRows.find(x=>x.source===s).state='published:'+m;},uncertain:(c,s,r)=>{draftRows.find(x=>x.source===s).state='uncertain:'+r;}}:null,characters:withBootstrap?{getCharacter:cid=>cid==='pc3'?{id:'pc3',guild_id:'c',owner_user_id:owners.pc3,status:'active'}:cid==='pc'?character:null}:null,onError:e=>errors.push(e.message)});
   t.after(()=>{service.close();actions.close();gmAuthority.close();interactionReceipts.close();sceneStore.close();});
   const replies=[],event={id,client,guildId:'c',channelId:'admin',user:{id:'gm',bot:false},createdTimestamp:now,commandName:'vc-session',deferred:false,replied:false,isChatInputCommand:()=>true,options:{getSubcommand:()=> 'start',getSubcommandGroup:()=> 'session',getString:n=>n==='title'?'Night watch':n==='assembly'?'auto':null},deferReply:async o=>{event.deferred=true;replies.push(['defer',o.flags]);},editReply:async o=>{replies.push(['reply',o.content]);}};
-  client.emit('interactionCreate',event);return {draftRows,owners,actions,readSource,client,member,sceneStore,interactionReceipts,service,event,replies,errors};
+  client.emit('interactionCreate',event);return {sentMessages,draftRows,owners,actions,readSource,client,member,sceneStore,interactionReceipts,service,event,replies,errors};
 }
 test('observed GM start creates the session privately and replays once',async t=>{
   const f=fixture(t),r=await f.service.handle(f.event);assert.equal(r.status,'committed');assert.equal(f.sceneStore.activeSessions('c').length,1);assert.equal(f.replies.length,2);assert.match(f.replies[1][1],/Nothing was announced/);const row=f.interactionReceipts.read('i1');assert.equal(row.processing,'committed');assert.equal(row.reply,'delivered');
@@ -83,7 +83,30 @@ test('GM rebinds a registered PC to the changed repository owner in place and re
 });
 test('GM lists withheld drafts privately, and non-GMs and unconfigured services get nothing',async t=>{
   const f=fixture(t,{withBootstrap:true}),texts=f.replies;assert.equal((await f.service.handle(roll(f,'d0',{op:'draft-list'}))).status,'committed');assert.match(texts.at(-1)[1],/No withheld drafts yet/);
-  f.draftRows.push({source:'src-1',draft:{text:'The clerk glances up. '.repeat(40)}},{source:'src-2',draft:{text:'Rain.'}});assert.equal((await f.service.handle(roll(f,'d1',{op:'draft-list'}))).status,'committed');const out=texts.at(-1)[1];assert.match(out,/GM only\. Withheld drafts, nothing was sent/);assert.match(out,/1\) src-1: The clerk glances up\./);assert.match(out,/2\) src-2: Rain\./);assert.ok(out.length<2000);
+  f.draftRows.push({source:'src-1',fingerprint:'c'.repeat(64),draft:{text:'The clerk glances up. '.repeat(40)}},{source:'src-2',fingerprint:'d'.repeat(64),draft:{text:'Rain.'}});assert.equal((await f.service.handle(roll(f,'d1',{op:'draft-list'}))).status,'committed');const out=texts.at(-1)[1];assert.match(out,/GM only\. Withheld drafts, nothing was sent/);assert.match(out,/1\) src-1 fingerprint c{64}: The clerk glances up\./);assert.match(out,/2\) src-2 fingerprint d{64}: Rain\./);assert.ok(out.length<2000);
   f.member.roles.cache.clear();assert.equal((await f.service.handle(roll(f,'d2',{op:'draft-list'}))).status,'native_review_required');assert.doesNotMatch(texts.at(-1)[1],/src-1|clerk/);
   const g=fixture(t);assert.equal(g.service.claimsRoute(roll(g,'d3',{op:'draft-list'})),false);
+});
+const FP='a'.repeat(64),OTHER_FP='b'.repeat(64);
+function draftFixture(t,over={}){
+  const f=fixture(t,{withBootstrap:true});f.sceneStore.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'chan',records:[{kind:'channel',expectedRevision:null,data:{id:'admin',campaignId:'c',sceneId:'s',kind:'party',permissionsVerified:true,recipientIds:['u','v'],writerIds:['u','v']}}]},{check:()=>{}});
+  f.draftRows.push({source:'src-1',fingerprint:FP,draft:{text:'The clerk waits.',audience:{recipients:['v','u']},delivery:{channelId:'admin',mode:'party',messageId:'m1'},...over}});return f;
+}
+test('GM approves an exact saved draft and it is sent once to its original audience without knowledge acknowledgement',async t=>{
+  const f=draftFixture(t),r=await f.service.handle(roll(f,'p0',{op:'draft-publish',source:'src-1',fingerprint:FP}));assert.equal(r.status,'committed',f.errors.join('|'));
+  assert.deepEqual(f.sentMessages,[{content:'The clerk waits.',allowedMentions:{parse:[]},enforceNonce:true,nonce:'src-1'}]);assert.equal(f.draftRows[0].state,'published:sent-1');assert.equal(f.draftRows[0].approval.principal,'gm');assert.match(f.replies.at(-1)[1],/not acknowledged as knowledge or canon/);
+  assert.equal((await f.service.handle(roll(f,'p0',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'already_claimed');
+  assert.equal((await f.service.handle(roll(f,'p1',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');assert.equal(f.sentMessages.length,1);
+});
+test('a wrong fingerprint, changed audience, oversize text or non-GM sends nothing',async t=>{
+  const f=draftFixture(t);assert.equal((await f.service.handle(roll(f,'p2',{op:'draft-publish',source:'src-1',fingerprint:OTHER_FP}))).status,'native_review_required');
+  f.draftRows[0].draft.audience.recipients=['u'];assert.equal((await f.service.handle(roll(f,'p3',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');
+  f.draftRows[0].draft.audience.recipients=['u','v'];f.draftRows[0].draft.text='x'.repeat(1901);assert.equal((await f.service.handle(roll(f,'p4',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');
+  f.draftRows[0].draft.text='ok';f.member.roles.cache.clear();assert.equal((await f.service.handle(roll(f,'p5',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');
+  assert.equal(f.sentMessages.length,0);assert.equal(f.draftRows[0].state,undefined);
+});
+test('an unconfirmed send holds the draft as uncertain and is never retried',async t=>{
+  const f=draftFixture(t);let calls=0;const guild=await f.client.guilds.fetch(),channel=await guild.channels.fetch();channel.send=async()=>{calls++;throw new Error('network gone');};
+  assert.equal((await f.service.handle(roll(f,'p6',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');assert.equal(f.draftRows[0].state,'uncertain:network gone');assert.match(f.replies.at(-1)[1],/not confirmed/);
+  assert.equal((await f.service.handle(roll(f,'p7',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');assert.equal(calls,1);
 });

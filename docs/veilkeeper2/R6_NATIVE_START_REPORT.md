@@ -12,6 +12,8 @@ Update (withheld GM drafts, offline-tested): createNativeRoot accepts an optiona
 
 Update (private draft review): turn-store recentDrafts(campaign,limit<=20) and the GM-only roll-effect op `{op:draft-list}` (authority operation draft_list, enabled only when a provider/turn store exists) privately show up to five newest withheld drafts (source id plus 300 characters, under 1,700 characters). Tests: r6-gm-session-command 15, r7-turn-store extended, r6-discord-gm-authority 14, r6-native-root 4, r6-native-start 6, r3-discord-death-decisions router suite 55 all passed. Drafts remain unreviewed and unsent.
 
+Update (approved publication): the turn runner now saves each draft with its delivery target (channel, message, mode). turn-store gained beginPublication/finishPublication/markPublicationUncertain (draft_saved -> publishing -> published or publication_uncertain; exact-fingerprint approval, one start only, no automatic completion). `{op:draft-publish,source,fingerprint}` (authority operation draft_publish) re-checks the GM role and the original channel audience (verified channel, same recipients and mode), refuses text over 1,900 characters, starts publication, sends once with no mentions, then finishes; a failed send is recorded uncertain and never retried; no knowledge acknowledgement or canon is recorded. Tests: r6-gm-session-command 18, r7-turn-store 3 plus lifecycle, r1-discord-turn-runner and chain unchanged-pass, r6-native-root 4, r6-native-start 6 (57 total) and r3 router suite re-run; all fakes, no live send.
+
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 
 

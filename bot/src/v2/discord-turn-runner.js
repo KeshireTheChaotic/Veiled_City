@@ -18,7 +18,7 @@ export function createDiscordTurnRunner({intake,provider,applicationOptions,crea
     }}});
     const result=await app.respond(event,{signal});
     await refresh();const publication=app.inspectPublication(result.publication.id);
-    if(claim)turnStore.saveDraft(claim,publication,{check:()=>{validate();app.inspectPublication(result.publication.id);}});
+    if(claim)turnStore.saveDraft(claim,{...publication,delivery:{channelId:nativeRequest.channelId,messageId:nativeRequest.messageId,mode:nativeRequest.mode}},{check:()=>{validate();app.inspectPublication(result.publication.id);}});
     pending.set(result.publication.id,{app,request:nativeRequest});return result;
   }
   async function inspectPublication(id,{signal}={}){

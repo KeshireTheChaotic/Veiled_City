@@ -23,3 +23,15 @@ test('recentDrafts returns newest saved drafts for review within a bound and ign
   const {openTurnStore}=await import('../../src/v2/turn-store.js'),s=openTurnStore(),save=ref=>{const c=s.claim({campaignId:'c',sourceRef:ref,sourceRevision:'1'});if(ref!=='open')s.saveDraft(c,{text:`draft ${ref}`,sent:false,knowledgeAcknowledged:false,status:'awaiting_review'},{check:()=>{}});};
   try{for(const ref of ['a','b','open','c'])save(ref);assert.deepEqual(s.recentDrafts('c',2).map(d=>d.source),['c','b']);assert.equal(s.recentDrafts('c').length,3);assert.deepEqual(s.recentDrafts('other'),[]);for(const bad of [0,21,1.5])assert.throws(()=>s.recentDrafts('c',bad),/bounded/);}finally{s.close();}
 });
+test('publication starts only from the exact approved saved draft, once, and never silently completes',async()=>{
+  const {openTurnStore}=await import('../../src/v2/turn-store.js'),s=openTurnStore();
+  try{
+    const save=ref=>{const c=s.claim({campaignId:'c',sourceRef:ref,sourceRevision:'1'});s.saveDraft(c,{text:`draft ${ref}`,sent:false,knowledgeAcknowledged:false,status:'awaiting_review'},{check:()=>{}});return s.recentDrafts('c',20).find(d=>d.source===ref).fingerprint;};
+    const fp=save('a'),other=save('b'),approval={principal:'gm'},ok=()=>{};
+    assert.throws(()=>s.beginPublication('c','a',{approvedFingerprint:other,approval,check:ok}),/current saved draft/);assert.throws(()=>s.beginPublication('c','missing',{approvedFingerprint:fp,approval,check:ok}),/current saved draft/);assert.throws(()=>s.beginPublication('c','a',{approvedFingerprint:fp,approval,check:()=>{throw new Error('revoked');}}),/revoked/);assert.equal(s.inspectNative('c','a').status,'draft_saved');
+    assert.equal(s.beginPublication('c','a',{approvedFingerprint:fp,approval,check:ok}).text,'draft a');assert.equal(s.inspectNative('c','a').status,'publishing');assert.equal(s.inspectNative('c','a').data.approval.principal,'gm');
+    assert.throws(()=>s.beginPublication('c','a',{approvedFingerprint:fp,approval,check:ok}),/current saved draft/);assert.deepEqual(s.recentDrafts('c',20).map(d=>d.source),['b']);
+    assert.equal(s.finishPublication('c','a','m1'),'published');assert.equal(s.inspectNative('c','a').data.published.messageId,'m1');assert.throws(()=>s.finishPublication('c','a','m2'),/started publication/);assert.throws(()=>s.markPublicationUncertain('c','b','x'),/started publication/);
+    s.beginPublication('c','b',{approvedFingerprint:other,approval,check:ok});assert.equal(s.markPublicationUncertain('c','b','timeout'),'publication_uncertain');assert.throws(()=>s.beginPublication('c','b',{approvedFingerprint:other,approval,check:ok}),/current saved draft/);
+  }finally{s.close();}
+});

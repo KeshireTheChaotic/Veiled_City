@@ -21,6 +21,7 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
     if((e.commandName==='vc-session'||e.commandName==='vc'&&group==='session')&&sub==='end'){const payload={};return {operation:'session_end',targetRef:`session-end:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};}
     if((e.commandName==='vc-roll'||e.commandName==='vc'&&group==='roll')&&sub==='effect'){
       const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)throw new Error('Bounded native GM review required');const input=JSON.parse(raw);
+      if(input?.op==='draft-publish'&&Object.keys(input).sort().join(',')==='fingerprint,op,source'&&id(input.source)&&/^[a-f0-9]{64}$/.test(input.fingerprint))return {operation:'draft_publish',targetRef:input.source,snapshotHash:hash(input)};
       if(input?.op==='draft-list'&&Object.keys(input).join(',')==='op')return {operation:'draft_list',targetRef:'drafts',snapshotHash:hash(input)};
       if(input?.op==='session-reopen'&&Object.keys(input).sort().join(',')==='op,session'&&id(input.session)){const payload={session:input.session};return {operation:'session_reopen',targetRef:input.session,snapshotHash:hash(payload),payload};}
       if(input?.op==='pc-rebind'&&Object.keys(input).sort().join(',')==='actor,op'&&id(input.actor))return {operation:'pc_rebind',targetRef:input.actor,snapshotHash:hash(input)};
