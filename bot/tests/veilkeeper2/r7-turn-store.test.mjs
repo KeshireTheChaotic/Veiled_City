@@ -19,3 +19,7 @@ test('revoked final authorization rolls back the draft and forged lease fails',(
     assert.throws(()=>store.saveDraft({...claim,token:'forged'},draft,{check:()=>{}}),/mismatch/);
   }finally{store.close();}
 });
+test('recentDrafts returns newest saved drafts for review within a bound and ignores unsaved claims',async()=>{
+  const {openTurnStore}=await import('../../src/v2/turn-store.js'),s=openTurnStore(),save=ref=>{const c=s.claim({campaignId:'c',sourceRef:ref,sourceRevision:'1'});if(ref!=='open')s.saveDraft(c,{text:`draft ${ref}`,sent:false,knowledgeAcknowledged:false,status:'awaiting_review'},{check:()=>{}});};
+  try{for(const ref of ['a','b','open','c'])save(ref);assert.deepEqual(s.recentDrafts('c',2).map(d=>d.source),['c','b']);assert.equal(s.recentDrafts('c').length,3);assert.deepEqual(s.recentDrafts('other'),[]);for(const bad of [0,21,1.5])assert.throws(()=>s.recentDrafts('c',bad),/bounded/);}finally{s.close();}
+});

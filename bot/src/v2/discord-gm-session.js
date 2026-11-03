@@ -8,8 +8,8 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
-export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,onError=()=>{}}){
-  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function')throw new TypeError('Native GM session dependencies required');
+export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,onError=()=>{}}){
+  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&typeof drafts.recent!=='function')throw new TypeError('Native GM session dependencies required');
   const setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
   const inRoll=e=>e.commandName==='vc-roll'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='roll';
@@ -20,6 +20,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
       if(inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
+        if(drafts&&input?.op==='draft-list')return {kind:'drafts',ref:'draft-list',raw};
         if(input?.op==='session-reopen')return {kind:'reopen',ref:`session-reopen:${input.session}`,raw};
         if(!bootstrap&&!characters)return null;
         if(characters&&(input?.op==='pc-register'||input?.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref:`:${input.actor}`,raw};
@@ -58,6 +59,8 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
+      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent:\n${rows.map((d,i)=>`${i+1}) ${d.source}: ${String(d.draft.text).slice(0,300)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
+
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
       else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
       else if(r.kind==='register'){if(proof.operation!=='pc_register')throw new Error('Registration authority required');receipt=register(proof,characters);text='Character registered to its owner in the active scene. No resources, movement, proxy or attendance were set.';}

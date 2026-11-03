@@ -1,4 +1,4 @@
-﻿# R6 — opt-in native start and read-only legacy repository (complete slice)
+# R6 — opt-in native start and read-only legacy repository (complete slice)
 
 Delivered: bot/src/v2/legacy-readonly-repository.js opens the existing legacy database file read-only (never creating or migrating it) and exposes only getCharacter, getCampaign and listCharacters with the legacy row shapes and ordering. bot/src/v2/native-start.js startNative() starts the native path only when VK2_NATIVE=1 with VK2_NATIVE_DIR (new or empty directory), VK2_LEGACY_DB and DISCORD_TOKEN: it opens the read-only repository, builds createNativeRoot on a Discord client and logs in, closing root, repository and client in reverse order (once) on close or on any startup failure. package.json gained start:v2:native; the legacy ``start`` script and src/index.js are unchanged.
 
@@ -9,6 +9,8 @@ Known issues: no natural-message intake, GM inference, startup session assembly 
 Update (message evidence): bot/src/v2/discord-message-observer.js listens for messageCreate and passes only human messages from registered native channels, by the owner of exactly one registered PC in that channel's scene, to the existing intake (evidence capture only: no reply, no inference, no authority). createNativeRoot composes message reader, intake and observer and closes the observer first (root and start tests extended: messageCreate listener present, then released). Tests: r1-discord-message-observer 3 passed, r6-native-root 2, r6-native-start 4; intake/reader suites unchanged. The intake stays simulated: no live message fetch occurred.
 
 Update (withheld GM drafts, offline-tested): createNativeRoot accepts an optional provider and opens turns.sqlite; observed owner messages then go through the turn runner and each result is a withheld draft handed to onDraft (never sent). native-start adds a second opt-in (VK2_INFERENCE=1, OPENAI_API_KEY, VK2_MODEL, VK2_MAX_TURNS 1-100 default 10) behind createCallBudget (provider-budget.js), a hard call ceiling with no retry. Context is empty (records stub) until GM records are composed. Tests: r1-provider-budget 2, r1-discord-message-observer 4, r6-native-root 4, r6-native-start 6 passed with fakes; no model call or send occurred.
+
+Update (private draft review): turn-store recentDrafts(campaign,limit<=20) and the GM-only roll-effect op `{op:draft-list}` (authority operation draft_list, enabled only when a provider/turn store exists) privately show up to five newest withheld drafts (source id plus 300 characters, under 1,700 characters). Tests: r6-gm-session-command 15, r7-turn-store extended, r6-discord-gm-authority 14, r6-native-root 4, r6-native-start 6, r3-discord-death-decisions router suite 55 all passed. Drafts remain unreviewed and unsent.
 
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 

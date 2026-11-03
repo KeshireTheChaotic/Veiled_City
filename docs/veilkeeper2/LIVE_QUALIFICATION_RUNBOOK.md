@@ -54,6 +54,7 @@ The call ceiling plus the output-token bound limits spend; check your provider d
 3. `vc-session present|absent|arrive|leave` as an owner (absent/leave accept the new optional `character`).
 4. A player message in a registered channel (evidence capture only).
 5. `vc-session end`, then `{"op":"session-reopen","session":"<id>"}`.
+6. With step 3b running: after a player message, `vc-roll effect` with `{"op":"draft-list"}` as a GM-role member privately lists up to five withheld drafts (source id and first 300 characters; nothing is sent to players).
 
 Stop with Ctrl+C (graceful close). Delete `$env:VK2_NATIVE_DIR` and the DB copy afterwards.
 

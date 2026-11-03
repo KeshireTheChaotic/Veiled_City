@@ -30,13 +30,14 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
       promptStore=open(openDeathPromptStore,join(directory,'prompts.sqlite'),{clock}),decisionStore=open(openComponentDecisionStore,join(directory,'decisions.sqlite')),interactionReceipts=open(openInteractionReceipts,join(directory,'interactions.sqlite'));
     const canonical=createCanonicalActorReaders({sceneStore,actionStore,characterRepository}),sourceAuthority=createSourceAuthority({...canonical.readers,sourceRegistry:registry}),readPolicy=createCampaignGmPolicyReader({repository:campaignRepository});
     const route=(campaignId,actorId)=>{const actor=sceneStore.readers.readActor(campaignId,actorId),channel=actor?.kind==='pc'&&actor.ownerUserId?sceneStore.ownerPrivateChannel(campaignId,actor.sceneId,actor.ownerUserId):null;if(!channel)throw new Error('Verified owner private channel required');return {guildId:campaignId,channelId:channel.id,sceneId:actor.sceneId,ownerUserId:actor.ownerUserId};};
+    const turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null;
     const readOwnerSession=createOwnerSessionReader({sceneStore,repository:characterRepository,readPolicy});
     router=createDiscordInteractionRouter({client,
       nativeDeath:{actionStore,sceneStore,sourceAuthority,readActorSnapshot:canonical.readActorSnapshot,readRoute:route,readOwnerRoute:route,promptStore,decisionStore,interactionReceipts,clock,rng},
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},
-      nativeGm:{readPolicy,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
+      nativeGm:{readPolicy,drafts:turnStore?{recent:(c,n)=>turnStore.recentDrafts(c,n)}:null,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
       handleOtherCommand,handleOtherComponent,onError});
-    const intake=createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore}),turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null;
+    const intake=createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore});
     // Context is empty until GM records are composed; turns are withheld drafts and are never sent.
     const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:sceneStore.readers,records:{metadata:()=>null,readText:()=>null}}}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,onDraft,onError});

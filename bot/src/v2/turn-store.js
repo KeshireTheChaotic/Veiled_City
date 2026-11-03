@@ -33,5 +33,7 @@ export function openTurnStore(filename=':memory:'){
       check();db.exec('COMMIT');return {status:'awaiting_revalidation',sent:false,knowledgeAcknowledged:false};
     }catch(e){db.exec('ROLLBACK');throw e;}
   }
-  return Object.freeze({claim,saveDraft,inspectNative:read,close:()=>db.close()});
+  /** Newest saved drafts for GM review only; drafts are unreviewed and never player-visible. */
+  const recentDrafts=(campaignId,limit=5)=>{if(!id(campaignId)||!Number.isSafeInteger(limit)||limit<1||limit>20)throw new Error('Campaign and bounded draft count required');return db.prepare("SELECT source,revision,data FROM vk2_turns WHERE campaign=? AND status='draft_saved' ORDER BY rowid DESC LIMIT ?").all(campaignId,limit).map(r=>({source:r.source,revision:r.revision,draft:JSON.parse(r.data).draft}));};
+  return Object.freeze({claim,saveDraft,recentDrafts,inspectNative:read,close:()=>db.close()});
 }
