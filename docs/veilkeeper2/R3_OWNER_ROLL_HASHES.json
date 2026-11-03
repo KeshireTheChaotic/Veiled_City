@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "c494d1de84604a3232e70880d388fd8e86ce79a5929ae1ef4e22d3016c0bfcbe",
+    "path": "bot/src/v2/rules/owner-roll-evidence.js"
+  },
+  {
+    "sha256": "d6bc62e06e7d8d7f38a13c2099c9501e12b199678615a287deababa567a597b3",
+    "path": "bot/tests/veilkeeper2/r3-owner-roll.test.mjs"
+  },
+  {
+    "sha256": "f8c2ce95ba7d452c07e6196dc8272a08e1fe24f07d2d7bb3236e8794e54e28ae",
+    "path": "docs/veilkeeper2/R3_OWNER_ROLL_REPORT.md"
+  }
+]
