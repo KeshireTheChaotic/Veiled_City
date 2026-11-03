@@ -61,7 +61,13 @@
     },
     "bot/src/frameworks/daggerheart/environment-access-rules.js": {
       "uses": 1,
-      "candidateKinds": []
+      "candidateKinds": [],
+      "resolved": {
+        "kinds": [
+          "native_environment_admission"
+        ],
+        "evidence": "environment-access-rules.js:7 const kind"
+      }
     },
     "bot/src/frameworks/daggerheart/environment-countdown-rules.js": {
       "uses": 2,
@@ -88,7 +94,13 @@
     },
     "bot/src/frameworks/daggerheart/environment-witness-rules.js": {
       "uses": 1,
-      "candidateKinds": []
+      "candidateKinds": [],
+      "resolved": {
+        "kinds": [
+          "native_environment_witness_accounts"
+        ],
+        "evidence": "environment-witness-rules.js:6 const kind"
+      }
     },
     "bot/src/frameworks/daggerheart/feature-effect-rules.js": {
       "uses": 2,
@@ -192,7 +204,18 @@
     },
     "bot/src/frameworks/daggerheart/mixed-condition-rules.js": {
       "uses": 1,
-      "candidateKinds": []
+      "candidateKinds": [],
+      "resolved": {
+        "kinds": [
+          "native_mixed_condition",
+          "pc_native_condition"
+        ],
+        "eventKinds": [
+          "native_mixed_condition",
+          "native_pc_condition"
+        ],
+        "evidence": "mixed-condition-rules.js:10-11 recordKind/eventKind"
+      }
     },
     "bot/src/frameworks/daggerheart/ordinary-effect-rules.js": {
       "uses": 1,
@@ -399,7 +422,13 @@
     },
     "bot/src/frameworks/intent/review-action.js": {
       "uses": 2,
-      "candidateKinds": []
+      "candidateKinds": [],
+      "resolved": {
+        "kinds": [
+          "ai_intent"
+        ],
+        "evidence": "review-action.js:10 getCityRecord(guild,\"ai_intent\",key); spread preserves row.kind"
+      }
     },
     "bot/src/frameworks/intent/semantic-intake.js": {
       "uses": 3,
@@ -555,7 +584,19 @@
     },
     "bot/src/frameworks/operations/ai-review.js": {
       "uses": 1,
-      "candidateKinds": []
+      "candidateKinds": [],
+      "resolved": {
+        "kinds": [
+          "ai_intent",
+          "consequence",
+          "goal_transition",
+          "group_transition",
+          "organization_request",
+          "seed_draft",
+          "strategy"
+        ],
+        "evidence": "ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks"
+      }
     },
     "bot/src/frameworks/persistence/database.js": {
       "uses": 1,

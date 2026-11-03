@@ -10,5 +10,8 @@ Test: r0-triage.test.mjs 1 passed (grouping). Generation exit 0 on the pinned RE
 
 Update: DYNAMIC_RECORD_TRIAGE.json now lists, for the 85 files containing city-record writers (210 uses), the literal kind: strings in each file as a bounded candidate set. This is not proof of what is written: spread objects may carry kinds from other modules. Files with no literal candidate (kind fully external, highest-risk holds): bot/src/frameworks/daggerheart/environment-access-rules.js, bot/src/frameworks/daggerheart/environment-witness-rules.js, bot/src/frameworks/daggerheart/mixed-condition-rules.js, bot/src/frameworks/intent/review-action.js, bot/src/frameworks/operations/ai-review.js. Test: r0-triage 2 passed.
 
-Next: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+Update (source-resolved writers): the five files with no literal candidate are resolved by reading the source (RESOLVED_WRITERS in triage.mjs, with evidence lines): environment-access (native_environment_admission), environment-witness (native_environment_witness_accounts), mixed-condition (record kinds pc_native_condition/native_mixed_condition; event kinds native_pc_condition/native_mixed_condition), review-action (ai_intent in place) and ai-review (closed list of 7 review kinds). Kind sets are closed; payloads stay read-only holds. Test: r0-triage 3 passed.
+
+Next: resolve the remaining 80 writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
