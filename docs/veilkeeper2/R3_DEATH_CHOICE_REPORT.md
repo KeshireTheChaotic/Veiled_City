@@ -1,0 +1,7 @@
+# R3 — native owner death-choice evidence
+
+Added read-only proof composition for Risk It All and Avoid Death. A committed native consequence must explicitly make the same actor eligible; current scene/owner/control, accepted source-bound owner move choice and authenticated saved dice must agree. Native records are reread before return. The inspector calculates only; no PC fate, resource, recovery allocation or publication is committed.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-death-choice.test.mjs`. Actual result: 3/3 passed, zero failures/skips, 55.4833 ms. New cases cover owner-selected calculations, no mutation, uncommitted cause, proxy/wrong-owner/stale-source rejection, fabricated origin and invalid native level/faces. Readers are synthetic. No legacy tests/fixtures or live death scenario were used; no unchanged suite reran.
+
+Remaining: durable eligibility/choice/dice lifecycle and chronological proofs, native consequence receipt authority, body/HP/death state and reaction windows, Blaze of Glory, full owner recovery allocation, once-only atomic fate/resource receipts and complete parity. No death operation is installed in the default runtime. R3 and all broader gates remain incomplete. No production change, migration, deployment or phase push occurred. Rollback leaves opt-in modules unused. Next: durable native action and owner-choice state integrating these proofs before any fate commit.

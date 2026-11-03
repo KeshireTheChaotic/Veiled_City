@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/death-choice-evidence.js",
+    "sha256": "0e94538e4e6d2bf63e11e96aab53fad3d2e82d56eb02e9b4967b1bee45dd42cd"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-death-choice.test.mjs",
+    "sha256": "68c2fc66f87ce58d647a8edf648cdd17056dda78b50ecb739857ed335377e5a9"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DEATH_CHOICE_REPORT.md",
+    "sha256": "37148c591c6c528358f372efa237014a9fefffa3a48ddc8142f15e5e0f3aeacb"
+  }
+]
