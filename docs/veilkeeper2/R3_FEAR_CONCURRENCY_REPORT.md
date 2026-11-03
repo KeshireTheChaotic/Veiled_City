@@ -1,0 +1,9 @@
+# R3 — competing-process roll/hold verification (slice complete)
+
+Added `bot/tests/veilkeeper2/r3-fear-concurrency.test.mjs` and its native child-process fixture. Each case starts two separate Node processes with independent connections to the same temporary file-backed SQLite database. Both report readiness before the parent releases their operation. Cases force hold-first, roll-first and simultaneous release. The reopened database must contain exactly one successful outcome: held request without dice, or saved dice without a hold. Errors must identify the corresponding rule rejection rather than a lock/transport failure.
+
+Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-fear-concurrency.test.mjs`: 3 passed, zero failures/skips, 301.0263 ms. No production source changed; no previously passed suite reran. These are actual local OS processes and SQLite transactions, with synthetic native authorization and fixed owner dice. One simultaneous schedule was exercised, not exhaustive interleaving or abrupt crash recovery.
+
+Modified files: the two new test files, this report and SHA-256 manifest. Rollback removes test artifacts only; temporary databases are created and removed within the test. No production migration, deployment, legacy retirement or phase push occurred.
+
+R3 remains partial. Known holds: orphan-hold reviewed recovery, publication/cancellation coordination, interrupted attack/death completion, atomic Fear debit/effects, real source/GM decision adapters and full rules parity. This does not establish live Discord or GM quality. Next exact phase: continue R3 by implementing reviewed recovery for a saved hold whose reservation failed, without generic unlock or fabricated completion. Integration/publishing remains on `rebuild/veilkeeper2-audience-first`; baseline is untouched.

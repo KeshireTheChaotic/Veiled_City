@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "14b039d97d34ef1d443f8f855ef6a3a865031ed7dee2e055cf8aeed9887b271e",
+    "path": "bot/src/v2/rules/roll-store.js"
+  },
+  {
+    "sha256": "753e2dd99d0690beb0dbe2a0cb8594456da7ce432f06bb236464c063bcdb09ed",
+    "path": "bot/tests/veilkeeper2/r3-fear-concurrency.test.mjs"
+  },
+  {
+    "sha256": "b6a20a0f5b3f5804faee8819980ec9bda1036c023de6c7558d1fccd8c57ff82c",
+    "path": "bot/tests/veilkeeper2/fixtures/fear-race-worker.mjs"
+  },
+  {
+    "sha256": "bbbba3d85f520d9d2a3b7dd6e4bd9f225dd356d61a412907052b470b7891ea56",
+    "path": "docs/veilkeeper2/R3_FEAR_CONCURRENCY_REPORT.md"
+  }
+]
