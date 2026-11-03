@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "sha256": "b5535768ae61fe0dfca378a695430b67ea7e595a0a4e3caa18ab14f347ebcc89",
+      "path": "bot/src/v2/discord-gm-authority.js"
+    },
+    {
+      "sha256": "08c7c23ff2bad941de99f36fe39537ed657c7bdea0fd2345e41499da7b41b626",
+      "path": "bot/tests/veilkeeper2/r6-discord-gm-authority.test.mjs"
+    },
+    {
+      "sha256": "538b4cfbb4d4ab900dc13c74b10b82864312b5fcffc47b0d5d08b3a542ea2a9f",
+      "path": "bot/src/v2/rules/pc-bootstrap.js"
+    },
+    {
+      "sha256": "43cc00281a23fc3e6edb92c1d77856d17a84de640b920622de5e7d22fc8754ab",
+      "path": "bot/src/v2/pc-bootstrap-source.js"
+    }
+  ],
+  "completedCases": 9,
+  "durationMs": 532.8302,
+  "node": "v26.13.0",
+  "checkpoint": "R6_NATIVE_GM_AUTHORITY"
+}
