@@ -30,7 +30,14 @@
       "uses": 1,
       "candidateKinds": [
         "session_opening_job"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "session_opening_job"
+        ],
+        "partial": true,
+        "evidence": "session-opening-runner.js:41,94 read session_opening_job; save() row comes from inspect/assert helpers not re-traced"
+      }
     },
     "bot/src/content-packages.js": {
       "uses": 1,
@@ -50,7 +57,13 @@
       "uses": 1,
       "candidateKinds": [
         "native_encounter_activation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "encounter_binding"
+        ],
+        "evidence": "encounter-activation-rules.js:38,49 spread of getCityRecord(guild,\"encounter_binding\",...) (candidate native_encounter_activation is only read)"
+      }
     },
     "bot/src/frameworks/daggerheart/encounter-grounding-rules.js": {
       "uses": 2,
@@ -90,7 +103,13 @@
       "uses": 1,
       "candidateKinds": [
         "native_environment_recovery_declaration"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_environment_resolution"
+        ],
+        "evidence": "environment-recovery-rules.js:5 const kind (literal candidate native_environment_recovery_declaration is not the written kind)"
+      }
     },
     "bot/src/frameworks/daggerheart/environment-witness-rules.js": {
       "uses": 1,
@@ -452,7 +471,13 @@
       "uses": 1,
       "candidateKinds": [
         "historical_archive_inventory"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "historical_record_archive"
+        ],
+        "evidence": "historical-archive.js:6 const archiveKind (candidate set differs)"
+      }
     },
     "bot/src/frameworks/knowledge/memory-clusters.js": {
       "uses": 1,
@@ -602,7 +627,13 @@
       "uses": 1,
       "candidateKinds": [
         "historical_archive_conflict"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "goal_state"
+        ],
+        "evidence": "database.js:1787-1788 spread of getCityRecord(guildId,\"goal_state\",...) (candidate historical_archive_conflict is not the written kind); only the one dynamic writer is resolved, not the file"
+      }
     },
     "bot/src/frameworks/session/action-continuation.js": {
       "uses": 5,
@@ -772,19 +803,38 @@
       "uses": 3,
       "candidateKinds": [
         "long_project"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "long_project",
+          "project_draft"
+        ],
+        "evidence": "long-projects.js:38,40 before/draft reads spread at :46,:89,:144"
+      }
     },
     "bot/src/frameworks/world/minor-npc-service.js": {
       "uses": 1,
       "candidateKinds": [
         "minor_draft"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "minor_draft"
+        ],
+        "evidence": "minor-npc-service.js:30 before=getCityRecord(...,\"minor_draft\")"
+      }
     },
     "bot/src/frameworks/world/reviewed-authoring.js": {
       "uses": 1,
       "candidateKinds": [
         "world_draft"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "world_draft"
+        ],
+        "evidence": "reviewed-authoring.js:60 before=getCityRecord(...,\"world_draft\")"
+      }
     },
     "bot/src/frameworks/world/seed-drafts.js": {
       "uses": 2,
