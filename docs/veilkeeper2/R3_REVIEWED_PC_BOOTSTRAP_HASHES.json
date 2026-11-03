@@ -1,0 +1,44 @@
+{
+  "durationMs": 4681.4606,
+  "completedCases": 54,
+  "files": [
+    {
+      "sha256": "538b4cfbb4d4ab900dc13c74b10b82864312b5fcffc47b0d5d08b3a542ea2a9f",
+      "path": "bot/src/v2/rules/pc-bootstrap.js"
+    },
+    {
+      "sha256": "b0dd32d59260fe53c1c2ff744e3dc0af7c49394d5380736530c92d643d407236",
+      "path": "bot/src/v2/rules/action-store.js"
+    },
+    {
+      "sha256": "43cc00281a23fc3e6edb92c1d77856d17a84de640b920622de5e7d22fc8754ab",
+      "path": "bot/src/v2/pc-bootstrap-source.js"
+    },
+    {
+      "sha256": "6a78c544299a36f60deac3699f7d87f61e34347489887a3607e44a3a07d365fd",
+      "path": "bot/tests/veilkeeper2/r6-reviewed-pc-bootstrap.test.mjs"
+    },
+    {
+      "sha256": "b10aed622311fcb2966b71f76442c9a17d17594ef6eb65a26c3c6243d2fe7cc4",
+      "path": "bot/tests/veilkeeper2/r6-canonical-actor-readers.test.mjs"
+    },
+    {
+      "sha256": "54f7a886a4002e723c286253526b41c0ff302c99a31fb25c5e4157984b83e67b",
+      "path": "bot/tests/veilkeeper2/r3-action-store.test.mjs"
+    },
+    {
+      "sha256": "5009e97267fb7cfa2a4e8ee9bc4edf705f04e51714c528c88ca8625ea1882dac",
+      "path": "bot/tests/veilkeeper2/r3-action-hope.test.mjs"
+    },
+    {
+      "sha256": "954fae7502c422fb73d55e542bcd0119d5bf9611f241cb3f7670ef85e049275b",
+      "path": "bot/tests/veilkeeper2/r3-incoming-damage-store.test.mjs"
+    },
+    {
+      "sha256": "347309a0adaf43a301e58937e20411a3249cbc651ed62c4e05b9029331db30b9",
+      "path": "bot/tests/veilkeeper2/r3-death-outcome-store.test.mjs"
+    }
+  ],
+  "checkpoint": "R3_REVIEWED_PC_BOOTSTRAP",
+  "node": "v26.13.0"
+}

@@ -3,6 +3,7 @@ import {pcEffectResource} from './pc-resources.js';
 import {incomingDamageOutcome} from './incoming-damage.js';
 import {createHash} from 'node:crypto';
 import {createPcLifeState} from './pc-life-state.js';
+import {createPcBootstrap} from './pc-bootstrap.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const graphs={ordinary_roll:{pending:['awaiting_notice','cancelled'],awaiting_notice:['awaiting_player_roll','cancelled'],awaiting_player_roll:['ready_to_resolve','cancelled'],ready_to_resolve:['cancelled']},hope_cost:{pending:['awaiting_consent','cancelled'],awaiting_consent:['ready_to_commit','cancelled'],ready_to_commit:['cancelled']}};
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
@@ -132,7 +133,7 @@ export function openActionStore(filename=':memory:'){
     db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
   });}
   const pcLife=createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,deathEvent});
-  return Object.freeze({...pcLife,create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+  return Object.freeze({...pcLife,...createPcBootstrap({db,tx}),create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
     recordIncomingDeathReview:(c,a,options)=>recordDeathEvidence(c,a,'review',options),recordIncomingDeathChoice:(c,a,options)=>recordDeathEvidence(c,a,'choice',options),
     readIncomingDeathReview:(c,a)=>deathEvent(c,a,'review'),readIncomingDeathChoice:(c,a)=>deathEvent(c,a,'choice'),
     readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),
