@@ -99,6 +99,14 @@ export function spreadOrigin(source,use){
   const name=/\{\s*\.\.\.\s*([A-Za-z_$][\w$]*)/.exec(use.expression)?.[1];if(!name)return null;
   const before=source.split(/\r?\n/).slice(0,use.line).join('\n'),re=new RegExp(`\\b${name.replace(/\$/g,'\\$')}\\s*=(?!=)\\s*([^;\\n]{0,200})`,'g');let last=null,m;while((m=re.exec(before)))last=m[1];return {name,assignedFrom:last};
 }
+/** A forwarding wrapper is pure when the call spreads the enclosing function's own rest parameter
+ * and nothing else, so it adds no record kind: kinds are decided at its callers.
+ */
+export function isPureForwarder(source,use){
+  const arg=/\(\s*\.\.\.\s*(\w+)\s*\)/.exec(use.expression)?.[1];if(!arg)return false;
+  const head=source.split(/\r?\n/).slice(Math.max(0,use.line-4),use.line).join('\n');
+  return new RegExp(`\\(\\s*(?:[\\w$,\\s]*,)?\\s*\\.\\.\\.\\s*${arg}\\s*\\)\\s*(?:=>|\\{)`).test(head)||new RegExp(`\\.\\.\\.\\s*${arg}\\s*\\)\\s*(?:=>|\\{)`).test(head);
+}
 export function triage(uses){
   const groups={};for(const use of uses){const g=classify(use);(groups[g]??={count:0,callees:{},files:{}});groups[g].count++;groups[g].callees[use.callee]=(groups[g].callees[use.callee]??0)+1;groups[g].files[use.file]=(groups[g].files[use.file]??0)+1;}
   return groups;
@@ -106,7 +114,7 @@ export function triage(uses){
 if(import.meta.url===new URL(`file:///${process.argv[1].replace(/\\/g,'/')}`).href){
   const groups=triage(contracts.dynamicUses),writers={};
   for(const use of contracts.dynamicUses)if(/^city-record-write/.test(classify(use))){const w=writers[use.file]??={uses:0,candidateKinds:candidateKinds(fs.readFileSync(new URL('../../../'+use.file,import.meta.url),'utf8')),...(RESOLVED_WRITERS[use.file]?{resolved:RESOLVED_WRITERS[use.file]}:{})};w.uses++;}
-  const report={cityRecordWriters:writers,total:contracts.dynamicUses.length,scope:'mechanical grouping only; no record is classified public, migrated or granted execution authority',groups:Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,{count:v.count,callees:v.callees,topFiles:Object.entries(v.files).sort((a,b)=>b[1]-a[1]).slice(0,10)}]))};
+  const wrappers=contracts.dynamicUses.filter(u=>classify(u)==='forwarding-wrapper').map(u=>({file:u.file,line:u.line,pure:isPureForwarder(fs.readFileSync(new URL('../../../'+u.file,import.meta.url),'utf8'),u)})),report={forwardingWrappers:{total:wrappers.length,pure:wrappers.filter(w=>w.pure).length,notVerified:wrappers.filter(w=>!w.pure)},cityRecordWriters:writers,total:contracts.dynamicUses.length,scope:'mechanical grouping only; no record is classified public, migrated or granted execution authority',groups:Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,{count:v.count,callees:v.callees,topFiles:Object.entries(v.files).sort((a,b)=>b[1]-a[1]).slice(0,10)}]))};
   fs.writeFileSync(new URL('DYNAMIC_RECORD_TRIAGE.json',root),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,v.count])),null,1),report.total,Object.keys(writers).length,'writer files;',Object.values(writers).filter(w=>w.candidateKinds.length===0&&!w.resolved).length,'unresolved with no literal candidate');
 }

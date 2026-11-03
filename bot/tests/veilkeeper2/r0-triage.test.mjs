@@ -18,3 +18,10 @@ test('spreadOrigin names the spread variable and its nearest earlier assignment'
   const {spreadOrigin}=await import('../../tooling/veilkeeper2/triage.mjs'),src='const before=db.getCityRecord(g,"long_project",k);\nconst row=other;\ndb.saveCityRecord(g,{...before,key});';
   assert.deepEqual(spreadOrigin(src,{line:3,expression:'db.saveCityRecord(g,{...before,key})'}),{name:'before',assignedFrom:'db.getCityRecord(g,"long_project",k)'});assert.equal(spreadOrigin(src,{line:3,expression:'db.saveCityRecord(g,{kind,key})'}),null);
 });
+test('only a call that spreads the enclosing rest parameter alone is a pure forwarder',async()=>{
+  const {isPureForwarder}=await import('../../tooling/veilkeeper2/triage.mjs'),use=line=>({line,expression:'nativeWorldEvents.indexWorldEvent(...args)'});
+  assert.equal(isPureForwarder('function indexWorldEvent(...args){return nativeWorldEvents.indexWorldEvent(...args);}',use(1)),true);
+  assert.equal(isPureForwarder('const f={a:(...args)=>x.indexWorldEvent(...args)};',use(1)),true);
+  assert.equal(isPureForwarder('function indexWorldEvent(db){return nativeWorldEvents.indexWorldEvent(...args);}',use(1)),false);
+  assert.equal(isPureForwarder('function f(...args){}',{line:1,expression:'db.saveCityRecord(g,{kind:"x"})'}),false);
+});

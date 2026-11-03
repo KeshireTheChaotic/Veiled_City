@@ -24,7 +24,10 @@ Update (batch 5): nine more files fully resolved (gm-action-review, gm-ruling, a
 
 Update (batch 6): 19 more files fully resolved and 9 partial. Status: fully resolved 46 files/77 uses; partial 27 files/117 uses; unresolved 12 files/16 uses. Remaining unresolved writers are windows/narrative/typed-roll files whose rows come from helper functions or null-initialized variables and need hand tracing.
 
+Update (forwarding wrappers): isPureForwarder() verifies that each of the 118 forwarding wrappers spreads its own enclosing rest parameter and nothing else (118/118 pure; a spot-check of six showed real pass-through functions and capability-injection arrows). A pure forwarder adds no record kind; its kinds are decided at its callers, which are already counted among the 2,911 callsites. Wrappers therefore need no separate migration decision, but injected capability functions remain part of each rule factory's port. Test: r0-triage 5 passed.
+
 Next: close the partial entries' untraced lines, resolve the last unresolved writers, then trace the 118 forwarding wrappers to real call sites. Original item: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 

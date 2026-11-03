@@ -1,4 +1,9 @@
 {
+  "forwardingWrappers": {
+    "total": 118,
+    "pure": 118,
+    "notVerified": []
+  },
   "cityRecordWriters": {
     "bot/src/application/workflows/assembly-planning.js": {
       "uses": 3,
