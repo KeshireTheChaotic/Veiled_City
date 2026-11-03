@@ -9,6 +9,7 @@ export function createOwnerRollEvidence({sourceAuthority,readRequest,readRoll,re
     if(!sourceAuthority.revalidate(source))throw new Error('Current roll source required');
     const request=readRequest(source.campaign,requestRef),roll=readRoll(source.campaign,rollRef);
     const actor=readActor(source.campaign,request?.actorId),delivery=readDelivery(source.campaign,request?.noticeRef);
+    const evidence=JSON.stringify([request,roll,actor,delivery]);
     if(!request||request.id!==requestRef||request.campaignId!==source.campaign||request.sceneId!==source.scene||request.status!=='awaiting_player_roll'
       ||request.ownerUserId!==source.principal||!source.actors.includes(request.actorId)||actor?.id!==request.actorId||actor.kind!=='pc'
       ||actor.ownerUserId!==source.principal||actor.controllerUserId!==source.principal||actor.controlRole!=='owner'||actor.status!=='active'
@@ -22,6 +23,7 @@ export function createOwnerRollEvidence({sourceAuthority,readRequest,readRoll,re
       ||!Number.isSafeInteger(roll.sequence)||roll.sequence<=delivery.sequence)throw new Error('Delivered stakes before authenticated owner dice required');
     const faces=[roll.hope,roll.fear];let index=0;const result=dualityRoll({},()=>faces[index++]);
     if(!sourceAuthority.revalidate(source))throw new Error('Roll source changed');
+    if(JSON.stringify([readRequest(source.campaign,requestRef),readRoll(source.campaign,rollRef),readActor(source.campaign,request.actorId),readDelivery(source.campaign,request.noticeRef)])!==evidence)throw new Error('Native roll evidence changed');
     return Object.freeze({...result,id:roll.id,requestRef,difficulty:request.difficulty,success:result.duality==='Critical'||result.total>=request.difficulty,effectsCommitted:false});
   }
   return Object.freeze({inspect});

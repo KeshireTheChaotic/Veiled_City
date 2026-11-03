@@ -1,0 +1,7 @@
+# R3 — complete ordinary roll evidence chain
+
+The result inspector now snapshots request, owner result, actor and delivered notice and rereads all four before returning arithmetic. Any changed native record fails validation. Fresh integration tests compose real preparation, SQLite roll storage and owner-result inspection; transport authorization remains injected.
+
+Command from bot: `node --test tests/veilkeeper2/r3-roll-lifecycle.test.mjs tests/veilkeeper2/r3-owner-roll.test.mjs`. Actual result: 6/6 passed, zero failures/skips, 62.6876 ms. Three new cases prove unresolved preparation before delivery/dice, exact threshold resolution without effects, stale owner-control rejection preserving historical dice and changing evidence rejection. Existing owner-inspector cases reran because its implementation changed; no unrelated suite was rerun.
+
+This qualifies ordinary unmodified evidence composition only. Authenticated live notices/submissions, source-history proofs, modifiers/team/PvP, request cancellation, consumed outcomes, resource effects and all native action parity remain mandatory. No RNG or game effect is executed by inspection. R0–R2 holds and R3–R8 gates remain open. No production change, migration, deployment or phase push occurred. Rollback leaves opt-in modules unused. Next: once-only native outcome consumption and resource validation, without treating verified arithmetic as effect authority.
