@@ -27,14 +27,28 @@ test('reopened reservations preserve capacity and reject subsequently persisted 
   assert.equal(f.fear.read('c','q').status,'awaiting_announcement');assert.equal(f.fear.reserved('c'),1);
 });
 
-test('reopened notices replay once; failed cancellation rolls back and successful cancellation persists',t=>{
+test('reopened notices replay once and acknowledged interruptions cannot release reserved Fear',t=>{
   const f=fixture(t),row=f.fear.reserve('c','q',f.options),notice=f.notice(row);
   const announced=f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice});f.reopen();
   assert.deepEqual(f.fear.acknowledge('c','q',{...f.options,readNotice:()=>notice}),announced);assert.equal(f.fear.read('c','q').history.length,2);
-  let checks=0;assert.throws(()=>f.fear.cancel('c','q',{check(){if(++checks===2)throw new Error('Authority changed');}}),/Authority changed/);f.reopen();
+  assert.throws(()=>f.fear.cancel('c','q',{check:f.check}),/reviewed recovery/);f.reopen();
   assert.deepEqual(f.fear.read('c','q'),announced);assert.equal(f.fear.reserved('c'),1);
-  const cancelled=f.fear.cancel('c','q',{check:f.check});f.reopen();assert.deepEqual(f.fear.read('c','q'),cancelled);assert.equal(f.fear.reserved('c'),0);assert.equal(cancelled.history.length,3);
+});
+
+test('only proven unattempted cancellation survives reopen; final authority failure rolls back',t=>{
+  const f=fixture(t),row=f.fear.reserve('c','q',f.options),readPublication=()=>({campaignId:'c',requestRef:'q',bindingHash:row.bindingHash,status:'not_started',attemptCount:0});
+  let checks=0;assert.throws(()=>f.fear.cancel('c','q',{readPublication,check(){if(++checks===2)throw new Error('Authority changed');}}),/Authority changed/);f.reopen();
+  assert.deepEqual(f.fear.read('c','q'),row);assert.equal(f.fear.reserved('c'),1);
+  const cancelled=f.fear.cancel('c','q',{check:f.check,readPublication});f.reopen();assert.deepEqual(f.fear.read('c','q'),cancelled);assert.equal(f.fear.reserved('c'),0);assert.equal(cancelled.history.length,2);
   assert.deepEqual(f.fear.cancel('c','q',{check:f.check}),cancelled);
+});
+
+test('missing, attempted, uncertain or changing publication proof cannot cancel an interruption',t=>{
+  const f=fixture(t),row=f.fear.reserve('c','q',f.options),proof={campaignId:'c',requestRef:'q',bindingHash:row.bindingHash,status:'not_started',attemptCount:0};
+  assert.throws(()=>f.fear.cancel('c','q',{check:f.check}),/publication proof/);
+  for(const patch of [{status:'delivering'},{status:'uncertain'},{status:'delivered'},{attemptCount:1},{campaignId:'other'},{bindingHash:'different'}])assert.throws(()=>f.fear.cancel('c','q',{check:f.check,readPublication:()=>({...proof,...patch})}),/reviewed recovery/);
+  let reads=0;assert.throws(()=>f.fear.cancel('c','q',{check:f.check,readPublication:()=>++reads===1?proof:{...proof,status:'delivering',attemptCount:1}}),/changed during cancellation/);
+  f.reopen();assert.deepEqual(f.fear.read('c','q'),row);assert.equal(f.fear.reserved('c'),1);
 });
 
 test('reopening cannot turn a stale source into current Fear announcement authority',t=>{

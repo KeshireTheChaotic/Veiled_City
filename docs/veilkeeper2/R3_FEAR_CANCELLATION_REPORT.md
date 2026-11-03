@@ -1,0 +1,11 @@
+# R3 — preserve announced or uncertain Fear interruptions (slice complete)
+
+Pinned source verification: baseline HEAD remains `1ba6c7e15db1a66ba34b36336f31437beffe44d6`. `bot/src/frameworks/daggerheart/pre-roll-fear-rules.js`, lines 138–149, prohibits ordinary cancellation after a publication attempt or delivery uncertainty. The initial rebuild cancellation API incorrectly allowed announced reservations to release capacity. That behavior and its earlier synthetic test expectation are replaced here.
+
+Changed `bot/src/v2/rules/fear-reservations.js`: cancellation now requires an awaiting, unacknowledged reservation and current native publication evidence bound to campaign/request/terms, with status `not_started` and zero attempts. Missing, attempted, uncertain, delivered or changing proof holds the reservation for reviewed recovery. A cancelled receipt remains idempotent. No Fear debit or effects API was added.
+
+Updated the reservation and durability tests to assert this rule. Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-fear-reservations.test.mjs tests/veilkeeper2/r3-fear-durability.test.mjs tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs`: 10 passed, zero failures/skips, 344.6967 ms. Covers reopened acknowledged holds, unattempted cancellation, authorization rollback, changing proof and all listed uncertainty cases. Suites reran because their Fear-store dependency changed. This supersedes the announced-cancellation expectation in the prior durability checkpoint; other earlier evidence remains historical.
+
+Known holds: publication evidence is injected, with no production delivery adapter yet; its lifecycle must serialize with cancellation in the final transaction coordinator. Native GM decision provenance, pre-roll interruption locking, reviewed recovery, atomic Fear debit and attack resolution, full R3 parity and R0–R8 acceptance remain open. Local SQLite/synthetic evidence does not establish live Discord quality.
+
+No production migration or deployment occurred. Rollback leaves the opt-in store unused; do not roll back this guard while enabling publication. Next exact phase: R3 native pre-roll interruption coordination and shared publication authority. No major-phase gate has passed; integration/publishing remains destined for `rebuild/veilkeeper2-audience-first`, never the baseline branch.

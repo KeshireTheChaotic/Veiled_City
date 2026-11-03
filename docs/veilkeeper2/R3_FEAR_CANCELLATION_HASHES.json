@@ -1,0 +1,22 @@
+[
+  {
+    "path": "bot/src/v2/rules/fear-reservations.js",
+    "sha256": "f4702099aa2cf5e58935e4c5dbd687e6529fd48409eb449e2af3bb78a75df5b0"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-reservations.test.mjs",
+    "sha256": "3e5aea8e307f8a145458d99e66faf7fbcd543eec472b2e6b74e9d361993d1c71"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-durability.test.mjs",
+    "sha256": "a8d4ee4ee7b2c30cbf198abefca7bf0d337b88c7288627ffa62df38d576e2566"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs",
+    "sha256": "640bf99d3b7be9cf726df9b4be9bf5246fcc8376955dd8f908e41a00fd8098e4"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_FEAR_CANCELLATION_REPORT.md",
+    "sha256": "77040de55b20a2d0ea4a6c0dfd1b3ba8a33121a2d1e23a8b2ff1a5a7711df2a8"
+  }
+]

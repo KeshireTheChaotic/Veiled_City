@@ -27,6 +27,15 @@ export function openFearReservations(filename=':memory:'){
     if(row.notice){if(JSON.stringify(row.notice)!==JSON.stringify(notice))throw new Error('Fear notice replay conflict');return row;}
     const after={...row,status:'announced',notice,history:[...row.history,{status:'announced',messageId:notice.messageId}]};if(JSON.stringify(readNotice(campaign,requestRef))!==JSON.stringify(notice)||hash(readOpportunity(campaign,requestRef))!==row.fingerprint)throw new Error('Fear notice or opportunity changed');db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),campaign,requestRef);return after;
   });}
-  function cancel(c,q,{check}){return tx(check,()=>{const row=read(c,q);if(!row)throw new Error('Native Fear reservation required');if(row.status==='cancelled')return row;const after={...row,status:'cancelled',history:[...row.history,{status:'cancelled'}]};db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),c,q);return after;});}
+  function cancel(c,q,{check,readPublication}){return tx(check,()=>{
+    const row=read(c,q);if(!row)throw new Error('Native Fear reservation required');if(row.status==='cancelled')return row;
+    if(row.status!=='awaiting_announcement'||row.notice)throw new Error('Acknowledged Fear interruption requires reviewed recovery');
+    if(typeof readPublication!=='function')throw new Error('Native unattempted Fear publication proof required');
+    const publication=structuredClone(readPublication(c,q));
+    if(publication?.campaignId!==c||publication.requestRef!==q||publication.bindingHash!==row.bindingHash||publication.status!=='not_started'||publication.attemptCount!==0)throw new Error('Attempted or uncertain Fear publication requires reviewed recovery');
+    const after={...row,status:'cancelled',history:[...row.history,{status:'cancelled'}]};
+    if(JSON.stringify(readPublication(c,q))!==JSON.stringify(publication))throw new Error('Fear publication changed during cancellation');
+    db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),c,q);return after;
+  });}
   return Object.freeze({initialize,reserve,acknowledge,cancel,read,reserved,close:()=>db.close()});
 }
