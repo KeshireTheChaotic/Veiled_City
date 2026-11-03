@@ -13,7 +13,7 @@ function fixture(t,amount=1){
   function close(){rolls?.close();fear?.close();rolls=fear=null;}
   function reopen(){close();rolls=openRollStore(join(dir,'rolls.sqlite'));fear=openFearReservations(join(dir,'fear.sqlite'));
     reader=createFearOpportunityReader({rollStore:rolls,sourceAuthority:{inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc']})},readActor:(_c,id)=>id==='pc'?owner:npc,inspectGmDecision:(_c,q)=>({id:`decision:${q}`,status:'gm_action_ready',issuer:'native_gm_decision',campaignId:'c',sceneId:'s',requestRef:q,npcId:'npc',targetActorId:'pc',operation:'commit_adversary_attack',feature:'standard_attack',advantage:false,disadvantage:false,experienceRef:null,printedFearCost:0})});
-    coordinator=createPreRollFearCoordinator({rollStore:rolls,fearStore:fear,opportunityReader:reader});
+    coordinator=createPreRollFearCoordinator({rollStore:rolls,fearStore:fear,opportunityReader:reader,sourceAuthority:{inspectReference(ref){if(ref==='revoked')throw new Error('Source revoked');return {campaign:'c',scene:'s',principal:ref==='other-owner'?'other':'u',actors:['pc'],recipients:ref==='party-source'?['u','other']:['u']};}}});
   }
   t.after(()=>{close();rmSync(dir,{recursive:true,force:true});});reopen();fear.initialize('c',amount,{check});
   function request(q){rolls.createRequest({id:q,campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',noticeRef:`notice:${q}`,stakes:'The guard hears.',difficulty:12,modifier:0,experience:0,advantage:0,disadvantage:0,sourceRef:'source',sourceRevision:'1'},{check});rolls.acknowledgeDelivery('c',q,{messageId:`message:${q}`,recipientIds:['u']},{check});}
@@ -125,4 +125,36 @@ test('changing native candidate or final authorization failure cannot save an in
   assert.throws(()=>f.coordinator.prepareIncoming('c','q',{check:f.check,readCandidate:()=>({...attackCandidate(),targetRevision:++reads===1?'pc:1':'pc:2'})}),/candidate changed/);
   let checks=0;assert.throws(()=>f.coordinator.prepareIncoming('c','q',{readCandidate:attackCandidate,check(){if(++checks===2)throw new Error('Attack authority changed');}}),/Attack authority changed/);f.reopen();
   assert.equal(f.fear.read('c','q').incoming,undefined);assert.equal(f.fear.reserved('c'),1);
+});
+
+function defenseEvidence(f,kind='incoming_defense_review',patch={}){const incoming=f.fear.read('c','q').incoming;return {id:kind==='incoming_defense_review'?'review':'choice',kind,campaignId:'c',sceneId:'s',attackRef:'attack',termsHash:incoming.termsHash,ownerUserId:'u',actorId:'pc',controlRevision:'1',sourceRef:'owner-source',sourceRevision:'1',sequence:kind==='incoming_defense_review'?1:2,...(kind==='incoming_defense_choice'?{reviewRef:'review',decision:'confirm_base_defenses'}:{}),...patch};}
+function prepareDefense(f){announce(f);f.coordinator.prepareIncoming('c','q',{check:f.check,readCandidate:attackCandidate});}
+test('ordered private owner review, withholding and confirmation persist without spending or rolling',t=>{
+  const f=fixture(t);prepareDefense(f);const options={check:f.check,readCandidate:attackCandidate},review=defenseEvidence(f);
+  f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>review});
+  const withheld=defenseEvidence(f,'incoming_defense_choice',{decision:'withhold_defense'});assert.equal(f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>withheld}).status,'hold_for_owner');f.reopen();
+  const choice=defenseEvidence(f,'incoming_defense_choice',{id:'confirmed',sequence:3}),result=f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>choice});f.reopen();
+  assert.equal(result.status,'ready');assert.equal(result.choices.length,2);assert.deepEqual(f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>choice}),result);
+  assert.equal(f.fear.initialize('c',1,{check:f.check}),1);assert.equal(f.fear.reserved('c'),1);assert.equal(f.rolls.readResultForRequest('c','q'),null);assert.equal(result.effectsCommitted,false);
+});
+test('unreviewed, out-of-order, wrong-owner or public defense choices cannot open an attack',t=>{
+  const f=fixture(t);prepareDefense(f);const options={check:f.check,readCandidate:attackCandidate},choice=defenseEvidence(f,'incoming_defense_choice');
+  assert.throws(()=>f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>choice}),/Ordered reviewed/);
+  for(const sourceRef of ['other-owner','party-source','revoked'])assert.throws(()=>f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>defenseEvidence(f,'incoming_defense_review',{sourceRef})}));
+  f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>defenseEvidence(f)});
+  for(const patch of [{sequence:1},{reviewRef:'different'},{controlRevision:'2'},{termsHash:'different'},{decision:'auto_accept'}])assert.throws(()=>f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>({...choice,...patch})}));
+  assert.equal(f.fear.read('c','q').incoming.status,'awaiting_defense');
+});
+test('stale native attack candidate or revoked final authority leaves the owner defense window pending',t=>{
+  const f=fixture(t);prepareDefense(f);const review=defenseEvidence(f),options={check:f.check,readEvidence:()=>review};
+  assert.throws(()=>f.coordinator.reviewIncoming('c','q',{...options,readCandidate:()=>({...attackCandidate(),targetRevision:'pc:2'})}),/Current native incoming/);
+  let checks=0;assert.throws(()=>f.coordinator.reviewIncoming('c','q',{...options,readCandidate:attackCandidate,check(){if(++checks===2)throw new Error('Owner authorization changed');}}),/Owner authorization changed/);f.reopen();
+  assert.equal(f.fear.read('c','q').incoming.review,undefined);assert.equal(f.fear.read('c','q').incoming.status,'awaiting_defense');
+});
+
+test('base-defense confirmation cannot silently accept a feature defense while withholding remains available',t=>{
+  const f=fixture(t);announce(f);const candidate={...attackCandidate(),defenses:{resistance:'half',armorReduction:1,armorAllowed:true,sourceRef:'owned-feature'}},options={check:f.check,readCandidate:()=>candidate};
+  f.coordinator.prepareIncoming('c','q',options);f.coordinator.reviewIncoming('c','q',{...options,readEvidence:()=>defenseEvidence(f)});
+  assert.throws(()=>f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>defenseEvidence(f,'incoming_defense_choice')}),/separate native reviewed route/);
+  assert.equal(f.coordinator.recordIncomingDefense('c','q',{...options,readEvidence:()=>defenseEvidence(f,'incoming_defense_choice',{decision:'withhold_defense'})}).status,'hold_for_owner');
 });

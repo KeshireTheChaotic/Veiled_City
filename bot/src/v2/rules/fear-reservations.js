@@ -85,5 +85,29 @@ export function openFearReservations(filename=':memory:'){
     if(hash(readCandidate(c,q))!==fingerprint)throw new Error('Incoming candidate changed');
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,incoming}),c,q);return incoming;
   });}
-  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
+  function incomingDefense(c,q,mode,{check,readCandidate,readEvidence}){return tx(check,()=>{
+    const row=read(c,q),incoming=row?.incoming;
+    if(row?.status!=='announced'||!incoming||!['awaiting_defense','hold_for_owner','ready'].includes(incoming.status)||typeof readCandidate!=='function'||typeof readEvidence!=='function'||hash(readCandidate(c,q))!==incoming.termsHash)throw new Error('Current native incoming offer required');
+    const evidence=structuredClone(readEvidence(c,q)),t=incoming.terms;
+    if(evidence?.campaignId!==c||evidence.sceneId!==t.sceneId||evidence.attackRef!==t.id||evidence.termsHash!==incoming.termsHash||evidence.ownerUserId!==t.ownerUserId||evidence.actorId!==t.actorId||evidence.controlRevision!==t.controlRevision
+      ||!['id','sourceRef','sourceRevision'].every(k=>typeof evidence[k]==='string'&&evidence[k])||!Number.isSafeInteger(evidence.sequence)||evidence.sequence<1)throw new Error('Exact affected owner defense evidence required');
+    let after;
+    if(mode==='review'){
+      if(evidence.kind!=='incoming_defense_review')throw new Error('Native owner defense review required');
+      if(incoming.review){if(JSON.stringify(incoming.review)!==JSON.stringify(evidence))throw new Error('Immutable owner review conflict');return incoming;}
+      after={...incoming,review:evidence,choices:[]};
+    }else{
+      if(evidence.kind!=='incoming_defense_choice'||!incoming.review||evidence.reviewRef!==incoming.review.id||evidence.sequence<=incoming.review.sequence||!['confirm_base_defenses','withhold_defense'].includes(evidence.decision))throw new Error('Ordered reviewed explicit owner defense choice required');
+      if(evidence.decision==='confirm_base_defenses'&&(t.defenses.sourceRef!=='base'||t.defenses.resistance!=='none'||t.defenses.armorReduction!==1||!t.defenses.armorAllowed))throw new Error('Feature defenses require their separate native reviewed route');
+      const prior=incoming.choices.find(e=>e.id===evidence.id);if(prior){if(JSON.stringify(prior)!==JSON.stringify(evidence))throw new Error('Owner defense choice replay conflict');return incoming;}
+      if(incoming.status==='ready')throw new Error('Owner defense already confirmed');
+      const last=incoming.choices.at(-1);if(last&&evidence.sequence<=last.sequence)throw new Error('Owner defense choice sequence changed');
+      after={...incoming,status:evidence.decision==='confirm_base_defenses'?'ready':'hold_for_owner',choices:[...incoming.choices,evidence]};
+    }
+    if(hash(readCandidate(c,q))!==incoming.termsHash||JSON.stringify(readEvidence(c,q))!==JSON.stringify(evidence))throw new Error('Incoming defense authority changed');
+    db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,incoming:after}),c,q);return after;
+  });}
+  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,
+    reviewIncoming:(c,q,options)=>incomingDefense(c,q,'review',options),recordIncomingDefense:(c,q,options)=>incomingDefense(c,q,'choice',options),
+    read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
 }
