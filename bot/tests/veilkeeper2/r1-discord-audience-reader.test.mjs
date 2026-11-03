@@ -20,3 +20,14 @@ test('cancellation skips dispatch and refresh failure returns no cached proof',a
   const f=fixture(),abort=new AbortController();abort.abort();await assert.rejects(f.reader.read(f.args,{signal:abort.signal}));assert.deepEqual(f.calls,[]);
   f.guild.members.fetch=async()=>{throw new Error('refresh failed');};await assert.rejects(f.reader.read(f.args),/refresh failed/);
 });
+test('a rate-limited member listing waits the stated delay once and retries with a fresh read',async()=>{
+  const f=fixture();let attempts=0;const original=f.guild.members.fetch;f.guild.members.fetch=async()=>{attempts++;if(attempts===1)throw Object.assign(new Error('Request with opcode 8 was rate limited. Retry after 0.01 seconds.'),{name:'GatewayRateLimitError',data:{retry_after:0.01}});return original();};
+  const started=Date.now(),proof=await f.reader.read(f.args);assert.equal(attempts,2);assert.deepEqual(proof.channelRecord.recipientIds,['owner']);assert.ok(Date.now()-started>=250);
+});
+test('a second rate limit, an unreasonable delay or an unrelated error is not retried further',async()=>{
+  const limited=seconds=>Object.assign(new Error(`Request with opcode 8 was rate limited. Retry after ${seconds} seconds.`),{data:{retry_after:seconds}});
+  const a=fixture();let attempts=0;a.guild.members.fetch=async()=>{attempts++;throw limited(0.01);};await assert.rejects(a.reader.read(a.args),/rate limited/);assert.equal(attempts,2);
+  const b=fixture();attempts=0;b.guild.members.fetch=async()=>{attempts++;throw limited(300);};await assert.rejects(b.reader.read(b.args),/rate limited/);assert.equal(attempts,1);
+  const c=fixture();attempts=0;c.guild.members.fetch=async()=>{attempts++;throw new Error('Missing Access');};await assert.rejects(c.reader.read(c.args),/Missing Access/);assert.equal(attempts,1);
+  const d=fixture();d.guild.members.fetch=async()=>{throw limited(0.01);};const controller=new AbortController();controller.abort();await assert.rejects(d.reader.read(d.args,{signal:controller.signal}));
+});
