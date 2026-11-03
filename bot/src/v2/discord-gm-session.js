@@ -1,7 +1,6 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
-import {createDiscordAudienceReader} from './discord-audience-reader.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Routes observed human GM commands: `session start`, private `pc-bootstrap-preview`
  * exact `pc-bootstrap-review` and `session end`. Each uses a private acknowledgement, a durable closed
@@ -9,9 +8,9 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
-export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){
+export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
-  const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
+  const setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
   const inRoll=e=>e.commandName==='vc-roll'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='roll';
   /** Returns {kind, ref} for a claimed GM command, else null. */
@@ -21,7 +20,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
       if(inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
-        if(input?.op==='channel-register')return {kind:'channel',ref:`channel-register:${input.channel}`,raw};
         if(drafts&&input?.op==='draft-publish')return {kind:'publish',ref:`draft-publish:${input.source}`,raw};
         if(drafts&&input?.op==='draft-list')return {kind:'drafts',ref:'draft-list',raw};
         if(input?.op==='session-reopen')return {kind:'reopen',ref:`session-reopen:${input.session}`,raw};
@@ -52,19 +50,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
     let done=false;const {scene,existing}=check(),owner=character.owner_user_id,data={id:actorId,campaignId:c,sceneId:scene.id,kind:'pc',status:'active',ownerUserId:owner,controllerUserId:owner,controlRole:'owner'};if(rebind&&existing.name)data.name=existing.name;done=true;
     return sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`pc-${rebind?'rebind':'register'}:${proof.sourceRef}`,records:[{kind:'actor',data,expectedRevision:rebind?Number(existing.revision):null}]},{check});
   }
-  /** Registers one verified private channel for a registered PC's owner in that PC's active scene.
-   * The audience is read twice from Discord and must match; a channel already bound to another
-   * scene or kind is refused for review rather than reassigned.
-   */
-  async function registerChannel(proof,rawJson){
-    const c=proof.campaignId,actorId=proof.targetRef,{channel:channelId}=JSON.parse(rawJson),actor=sceneStore.readers.readActor(c,actorId),scene=actor&&sceneStore.readers.readScene(c,actor.sceneId);
-    if(actor?.kind!=='pc'||actor.status!=='active'||actor.controlRole!=='owner'||!actor.ownerUserId||scene?.status!=='active'||sceneStore.readers.readSession(c,scene.sessionId)?.status!=='active')throw new Error('Registered active owner PC in an active scene required');
-    const scope={guildId:c,channelId,sceneId:scene.id,mode:'private',ownerUserId:actor.ownerUserId,gmRoleId:readGmRoleId(c)??null},first=await audiences.read(scope,{signal:controller.signal}),second=await audiences.read(scope,{signal:controller.signal});
-    if(first.fingerprint!==second.fingerprint)throw new Error('Discord audience changed during registration');
-    const current=sceneStore.readers.readChannel(c,channelId);if(current&&(current.sceneId!==scene.id||current.kind!=='private'||current.ownerUserId!==actor.ownerUserId))throw new Error('Channel is bound to another scene or owner; review needed');
-    const receipt=sceneStore.commitSnapshot({campaignId:c,principal:proof.principal,sourceRef:`channel-register:${proof.sourceRef}`,records:[{kind:'channel',data:first.channelRecord,expectedRevision:current?Number(current.revision):null}]},{check:()=>gmAuthority.check(proof)});
-    return {receipt,recipients:first.channelRecord.recipientIds.length};
-  }
   /** Sends one GM-approved saved draft to its original audience, at most once.
    * It records no knowledge acknowledgement: published narration is not objective truth.
    */
@@ -90,7 +75,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
-      else if(r.kind==='channel'){if(proof.operation!=='channel_register')throw new Error('Channel registration authority required');const done=await registerChannel(proof,r.raw);receipt=done.receipt;text=`Private channel registered for the character's owner (verified audience: ${done.recipients} member). Admins and GM-role members are observers, not recipients.`;}
       else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publishDraft(proof,r.raw);text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
       else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Approve with op draft-publish, source and fingerprint:\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 

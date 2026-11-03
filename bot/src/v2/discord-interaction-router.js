@@ -17,7 +17,7 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeSession
     workflow=createNativeDeathWorkflow({...nativeDeath,client,onError});
     commands=createDiscordDeathCommands({...nativeDeath,client,workflow,readRoute:nativeDeath.readOwnerRoute,onError});
     if(nativeSession)attendance=createDiscordSessionAttendance({...nativeSession,client,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});
-    if(nativeGm){const {readPolicy,clock,leaseMs,...services}=nativeGm;gmAuthority=createDiscordGmAuthority({client,readPolicy,...(clock?{clock}:{}),...(leaseMs?{leaseMs}:{})});gmSession=createDiscordGmSession({...services,readGmRoleId:c=>readPolicy(c).gmRoleId,client,gmAuthority,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
+    if(nativeGm){const {readPolicy,clock,leaseMs,...services}=nativeGm;gmAuthority=createDiscordGmAuthority({client,readPolicy,...(clock?{clock}:{}),...(leaseMs?{leaseMs}:{})});gmSession=createDiscordGmSession({...services,client,gmAuthority,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
   }catch(error){gmSession?.close();gmAuthority?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
   async function deny(event){
     if(closed||denials.has(event.id))return;denials.add(event.id);if(denials.size>1024)denials.delete(denials.values().next().value);
