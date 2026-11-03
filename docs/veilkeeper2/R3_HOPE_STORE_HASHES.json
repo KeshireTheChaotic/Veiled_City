@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/hope-store.js",
+    "sha256": "9f911f628802b7ea294ea75a75a93f3dd1cca73c7b00c8937c73bdab22b96f5d"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-hope-store.test.mjs",
+    "sha256": "68cdff449d82616002714a5eb85a1493460796d01296e8351b825ac2bbe43ea9"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_HOPE_STORE_REPORT.md",
+    "sha256": "c34daecb46ad32c724a81db1e66273fc5ffb51784d948275a6c7b02f4810e05d"
+  }
+]
