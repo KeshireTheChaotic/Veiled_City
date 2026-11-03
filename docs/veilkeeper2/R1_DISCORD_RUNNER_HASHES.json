@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "662e47cd37472945bc1fbf6c758ade0461bcba690fb9045cd0e712eef6f826da",
+    "path": "bot/src/v2/discord-turn-runner.js"
+  },
+  {
+    "sha256": "da476e2a0b8274fa839c5e0abb458a15abd7af050fea91b84f1ee383b6d7ec0e",
+    "path": "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs"
+  },
+  {
+    "sha256": "09a2f0124186a9e2e2b33e81f504f007fa54bc7538b15b5bdcc197f3e96bcbf0",
+    "path": "docs/veilkeeper2/R1_DISCORD_RUNNER_REPORT.md"
+  }
+]
