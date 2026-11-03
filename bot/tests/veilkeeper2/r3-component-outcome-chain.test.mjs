@@ -1,0 +1,26 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {EventEmitter} from 'node:events';
+import {openSceneStore} from '../../src/v2/scene-store.js';
+import {createSourceAuthority} from '../../src/v2/source-authority.js';
+import {openActionStore} from '../../src/v2/rules/action-store.js';
+import {openCostPromptStore} from '../../src/v2/cost-prompt-store.js';
+import {openComponentDecisionStore} from '../../src/v2/component-decision-store.js';
+import {createDiscordCostDecisions} from '../../src/v2/discord-cost-decisions.js';
+import {createComponentChoiceSources} from '../../src/v2/component-choice-sources.js';
+import {createHopeConsentIngress} from '../../src/v2/rules/hope-consent-ingress.js';
+import {createAtomicHopeCostAuthority} from '../../src/v2/rules/hope-cost-authority.js';
+async function fixture(t){const scene=openSceneStore(),actions=openActionStore(),prompts=openCostPromptStore(':memory:',{clock:()=>1000}),envelopes=openComponentDecisionStore(),client=new EventEmitter(),check=()=>{};
+  const channel={id:'ch',campaignId:'c',sceneId:'s',kind:'private',ownerUserId:'u',permissionsVerified:true,recipientIds:['u'],writerIds:['u']};
+  scene.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'setup',records:[{kind:'channel',data:channel},{kind:'session',data:{id:'session',campaignId:'c',status:'active'}},{kind:'scene',data:{id:'s',campaignId:'c',sessionId:'session',status:'active',participants:[{actorId:'pc',userId:'u',presence:'present'}]}},{kind:'actor',data:{id:'pc',campaignId:'c',sceneId:'s',kind:'pc',status:'active',ownerUserId:'u',controllerUserId:'u',controlRole:'owner'}},{kind:'message',data:{id:'attempt',campaignId:'c',userId:'u',channelId:'ch',deleted:false,text:'I use the ability.'}}].map(r=>({...r,expectedRevision:null}))},{check});
+  const sources=createSourceAuthority(scene.readers),attempt=sources.authenticate({campaignId:'c',messageId:'attempt',userId:'u',actorId:'pc'}),identity={id:'a',campaignId:'c',actorId:'pc',ownerUserId:'u',sceneId:'s',sourceRef:attempt.id,sourceRevision:attempt.revision,kind:'hope_cost'};
+  actions.create(identity,{check});actions.initializeHope({campaignId:'c',actorId:'pc',ownerUserId:'u',hope:3,cap:6},{check});actions.registerHopeTerms({...identity,revision:'1',controlRevision:'1',cost:{resource:'hope',slot:'base',amount:2}},{check});actions.transition({campaignId:'c',actionId:'a',expectedRevision:1,sourceRef:'window',to:'awaiting_consent'},{check});
+  const prompt=prompts.issue({campaignId:'c',sceneId:'s',channelId:'ch',ownerUserId:'u',actorId:'pc',actionRef:'a',termsRevision:'1',costSlot:'base',amount:2,expiresAt:2000},{check});prompts.acknowledge(prompt.id,'notice',{check});
+  const decisions=createDiscordCostDecisions({client,readPrompt:prompts.readPrompt,readActionTerms:actions.readActionTerms,decisionStore:envelopes});t.after(()=>{decisions.close();envelopes.close();prompts.close();actions.close();scene.close();});
+  const interaction={id:'interaction',client,isButton:()=>true,user:{id:'u',bot:false},guildId:'c',channelId:'ch',message:{id:'notice'},customId:prompt.acceptToken};client.emit('interactionCreate',interaction);decisions.accept(interaction);
+  const bridge=createComponentChoiceSources({decisionReader:decisions,sceneStore:scene,sourceAuthority:sources,audienceReader:{read:async()=>({channelRecord:channel})}}),choice=await bridge.ingest(interaction.id);
+  const ingress=createHopeConsentIngress({sourceAuthority:sources,readActor:scene.readers.readActor,readDecision:bridge.readDecision,actionStore:actions}),authority=createAtomicHopeCostAuthority({sourceAuthority:sources,readActor:scene.readers.readActor,readActionTerms:actions.readActionTerms,readConsent:actions.readConsent,actionStore:actions});
+  return {actions,prompts,prompt,choice,consent:()=>ingress.record(choice,'a'),commit:consent=>authority.commit(attempt,'pc',{action_ref:'a',consent_ref:consent.id},1)};
+}
+test('delivered native prompt and observed owner component reach one atomic cost outcome',async t=>{const f=await fixture(t),consent=f.consent(),receipt=f.commit(consent);assert.equal(receipt.afterAction.status,'resolved');assert.equal(receipt.afterHope.hope,1);assert.equal(receipt.cost.choiceSourceRef,f.choice.id);assert.deepEqual(f.commit(consent),receipt);});
+test('revoked prompt before consent ingestion cannot open readiness or spend Hope',async t=>{const f=await fixture(t);f.prompts.revoke(f.prompt.id,{check:()=>{}});assert.throws(f.consent);assert.equal(f.actions.read('c','a').status,'awaiting_consent');assert.equal(f.actions.readHope('c','pc').hope,3);assert.equal(f.actions.readOutcome('c','a'),null);});

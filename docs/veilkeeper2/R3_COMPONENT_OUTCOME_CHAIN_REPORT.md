@@ -1,0 +1,7 @@
+# R3 — observed component to atomic outcome integration
+
+Fresh full-chain tests compose durable native prompt delivery, observed client component decision, persisted interaction envelope, component source mapping, source authority, owner-consent ingress and unified action/Hope outcome. Exact choice-source lineage survives into the committed receipt and replay remains inert. Revoking the prompt after source mapping but before consent ingestion blocks readiness and spending.
+
+Command from bot: `node --test tests/veilkeeper2/r3-component-outcome-chain.test.mjs`. Actual result: 2/2 passed, zero failures/skips, 70.1836 ms. Real SQLite/service code is composed; EventEmitter transport, live audience refresh and initial native provisioning are doubles. No production key, real Discord interaction or send was used. Production code did not change, so existing passed suites were not rerun.
+
+Remaining: authenticated live client/command registration, actual delivery acknowledgements, prompt/interaction/source/consent recovery across physical reopen/crash, race windows, immutable configuration, all remaining game mechanics and full phase gates. This single fixed cost path is not complete R3 parity. No production change, migration, deployment or phase push occurred. Next: multi-store recovery for this full observed-component chain, then native transport/runtime integration and the remaining R3 catalog.
