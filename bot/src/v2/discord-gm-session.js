@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
 import {gmCommandInput} from './discord-gm-input.js';
+import {createDiscordAudienceReader} from './discord-audience-reader.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Routes observed human GM commands: `session start`, private `pc-bootstrap-preview`
  * exact `pc-bootstrap-review` and `session end`. Each uses a private acknowledgement, a durable closed
@@ -9,9 +10,9 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
-export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,onError=()=>{}}){
+export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
-  const setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
+  const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
     /** Returns {kind, ref} for a claimed GM command, else null. */
   function route(e){
@@ -58,6 +59,10 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
     const draft=row.draft,target=draft.delivery,channelRecord=target&&sceneStore.readers.readChannel(c,target.channelId);
     if(typeof draft.text!=='string'||draft.text.length>1900)throw new Error('Draft must fit one message; review needed');
     if(!channelRecord||channelRecord.permissionsVerified!==true||JSON.stringify([...channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort())||channelRecord.kind!==target.mode)throw new Error('Draft audience changed; review needed');
+    // Publish security: re-read the live Discord audience and the scene at send time, not only the stored record.
+    const scene=sceneStore.readers.readScene(c,channelRecord.sceneId);if(scene?.status!=='active'||sceneStore.readers.readSession(c,scene.sessionId)?.status!=='active')throw new Error('Draft scene is no longer active; review needed');
+    const live=await audiences.read({guildId:c,channelId:target.channelId,sceneId:channelRecord.sceneId,mode:channelRecord.kind,ownerUserId:channelRecord.ownerUserId??null,gmRoleId:readGmRoleId(c)??null,participantIds:channelRecord.kind==='party'?[...channelRecord.recipientIds]:[]},{signal:controller.signal});
+    if(JSON.stringify([...live.channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort()))throw new Error('Live Discord audience differs from the draft audience; review needed');
     const guild=await client.guilds.fetch({guild:c,force:true}),channel=await guild.channels.fetch(target.channelId,{force:true});
     if(channel?.guildId!==c||channel.id!==target.channelId||typeof channel.send!=='function')throw new Error('Draft channel unavailable');
     drafts.begin(c,source,{approvedFingerprint:fingerprint,approval:{principal:proof.principal,sourceRef:proof.sourceRef,sourceRevision:proof.sourceRevision},check:()=>gmAuthority.check(proof)});
