@@ -10,9 +10,10 @@ import {createDiscordDeathPrompts} from '../../src/v2/discord-death-prompts.js';
 import {createDiscordDeathDecisions} from '../../src/v2/discord-death-decisions.js';
 import {createDiscordAudienceReader} from '../../src/v2/discord-audience-reader.js';
 import {openComponentDecisionStore} from '../../src/v2/component-decision-store.js';
-function fixture(t){
+function fixture(t,{allocation=false}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-delivery-')),filename=join(dir,'prompts.sqlite');let store=openDeathPromptStore(filename),calls=0,mode='ok',saved,now=Date.now();
   const check=()=>{},terms={purpose:'death_review',campaignId:'g',sceneId:'s',actorId:'pc',ownerUserId:'owner',controlRevision:'1',requestRef:'incoming-death:attack',level:2,hopeCap:6,allowedMoves:['risk_it_all','avoid_death','blaze_of_glory']},route={guildId:'g',channelId:'ch',sceneId:'s',ownerUserId:'owner'};
+  if(allocation)Object.assign(terms,{purpose:'death_allocation',budget:5,markedHp:6,markedStress:3,allowedMoves:[],allowedAllocations:[{decision:'allocate:2:3',hp:2,stress:3},{decision:'allocate:3:2',hp:3,stress:2},{decision:'allocate:4:1',hp:4,stress:1},{decision:'allocate:5:0',hp:5,stress:0}]});
   const row=store.issue({terms,channelId:'ch',expiresAt:now+60000},{check});
   const member=id=>({id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}),members=new Map(['bot','owner'].map(id=>[id,member(id)]));
   const channel={id:'ch',guildId:'g',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),send:async payload=>{
@@ -59,4 +60,7 @@ test('published GM observer role and exact audience binding reach observed owner
   const decisions=openComponentDecisionStore(),reader=createDiscordDeathDecisions({client:f.client,promptStore:f.store,readTerms:()=>f.terms,audienceReader:createDiscordAudienceReader({client:f.client}),decisionStore:decisions});t.after(()=>{reader.close();decisions.close();});
   const interaction={id:'owner-click',client:f.client,isButton:()=>true,user:{id:'owner',bot:false},guildId:'g',channelId:'ch',message:f.saved,customId:f.row.options[0].customId};f.client.emit('interactionCreate',interaction);const record=await reader.accept(interaction);assert.equal(record.audienceGmRoleId,'gm');assert.equal(record.audienceFingerprint,f.store.read(f.row.id).delivery.audienceFingerprint);
   f.addOutsider();await assert.rejects(reader.accept(interaction));
+});
+test('native recovery allocation prompt publishes the exact saved splits without choosing one',async t=>{
+  const f=fixture(t,{allocation:true}),delivered=await f.transport().publish(f.row.id,{check:f.check});assert.equal(delivered.status,'active');assert.match(f.saved.content,/clears 5 marked slots/);assert.deepEqual(f.saved.components[0].components.map(b=>b.label),['Clear 2 HP, 3 Stress','Clear 3 HP, 2 Stress','Clear 4 HP, 1 Stress','Clear 5 HP, 0 Stress']);assert.equal(f.calls,1);assert.equal(delivered.options.every(o=>o.disabled===false),true);
 });

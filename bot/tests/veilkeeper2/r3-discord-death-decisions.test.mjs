@@ -87,3 +87,30 @@ test('previous death envelopes without a GM role field retain native replay for 
   const oldStore=openComponentDecisionStore();oldStore.put(envelope);const reader=createDiscordDeathDecisions({client:f.client,promptStore:f.prompts,readTerms:f.ingress.readTerms,audienceReader:{read:async()=>{throw new Error('Replay must not invent a fresh event');}},decisionStore:oldStore});t.after(()=>{reader.close();oldStore.close();});
   assert.equal(reader.readNative(e.interaction.id).principal,'u');assert.equal(reader.readNative(e.interaction.id).sequence,1);
 });
+async function pendingRecovery(f,faces=[5,1]){
+  await f.stage(f.issue());await f.stage(f.issue('death_choice','risk_it_all'));const stream=[...faces];return f.actions.resolveIncomingDeath('c','attack',{check:()=>{},sourceAuthority:f.sources,readActorSnapshot:f.snapshot,rng:()=>stream.shift()});
+}
+test('explicit owner recovery button commits the chosen native split and preserves dice across cold replay',async t=>{
+  const f=fixture(t),initial=await pendingRecovery(f),e=f.issue('death_allocation','allocate:3:2');assert.match(e.p.payload.content,/clears 5 marked slots/);assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,6);assert.equal(f.actions.readPcLife('c','pc').life.stress.current,3);
+  await f.accept(e);f.reopen();const source=await f.bridge.ingest(e.interaction.id),resolved=f.ingress.record(source);assert.equal(resolved.status,'resolved');assert.deepEqual(resolved.roll,initial.roll);assert.equal(resolved.after.defenses.hp.current,3);assert.equal(resolved.after.life.stress.current,1);assert.equal(resolved.after.hope.hope,3);
+  const evidence=resolved.allocation.evidence;assert.equal(evidence.hp,3);assert.equal(evidence.stress,2);assert.equal(evidence.sequence,3);f.reopen();assert.throws(()=>f.reader.readNative(e.interaction.id),/Pending canonical/);
+  assert.deepEqual(f.actions.allocateIncomingDeathRecovery('c','attack',{check:()=>{},sourceAuthority:f.sources,readActorSnapshot:f.snapshot,readEvidence:()=>evidence}),resolved);assert.deepEqual(f.actions.resolveIncomingDeath('c','attack',{check:()=>{},sourceAuthority:f.sources,readActorSnapshot:f.snapshot,rng(){throw new Error('No new dice');}}),resolved);
+});
+test('legal recovery buttons include leaving all HP marked and cap recovery at all marked slots',async t=>{
+  for(const [faces,decision,hp,stress] of [[[3,1],'allocate:0:3',6,0],[[10,1],'allocate:6:3',0,0]]){
+    const f=fixture(t);await pendingRecovery(f,faces);const e=f.issue('death_allocation',decision);for(const a of e.p.terms.allowedAllocations){assert.equal(a.hp+a.stress,e.p.terms.budget);assert.ok(a.hp<=6&&a.stress<=3);}
+    const resolved=await f.stage(e);assert.equal(resolved.after.defenses.hp.current,hp);assert.equal(resolved.after.life.stress.current,stress);
+  }
+});
+test('allocation controls require a saved Hope outcome and never infer a choice from silence',async t=>{
+  const f=fixture(t);assert.throws(()=>f.issue('death_allocation','allocate:3:2'));await pendingRecovery(f);const e=f.issue('death_allocation','allocate:3:2');f.expire();await assert.rejects(f.accept(e));assert.equal(f.actions.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,6);
+});
+test('changed native allocation frame or other owner cannot clear resources',async t=>{
+  for(const mutate of [(f,e)=>e.interaction.user.id='other',f=>f.features.push('changed frame')]){
+    const f=fixture(t);await pendingRecovery(f);const e=f.issue('death_allocation','allocate:3:2');mutate(f,e);await assert.rejects(f.accept(e));assert.equal(f.actions.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');assert.equal(f.actions.readPcLife('c','pc').life.stress.current,3);
+  }
+});
+test('maximum native Hope budget exposes all thirteen splits in valid five-button rows',t=>{
+  const store=openDeathPromptStore();t.after(()=>store.close());const terms={purpose:'death_allocation',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',requestRef:'incoming-death:attack',level:2,hopeCap:6,allowedMoves:[],budget:12,markedHp:12,markedStress:12,allowedAllocations:Array.from({length:13},(_,hp)=>({decision:`allocate:${hp}:${12-hp}`,hp,stress:12-hp}))};
+  const prompt=store.issue({terms,channelId:'private',expiresAt:Date.now()+60000},{check:()=>{}});assert.equal(prompt.options.length,13);assert.deepEqual(prompt.payload.components.map(row=>row.components.length),[5,5,3]);assert.equal(prompt.options[0].label,'Clear 0 HP, 12 Stress');assert.equal(prompt.options[12].label,'Clear 12 HP, 0 Stress');
+});
