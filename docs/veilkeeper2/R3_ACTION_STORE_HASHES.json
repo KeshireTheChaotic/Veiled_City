@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/action-store.js",
+    "sha256": "252072326ff6d109609a1327f1fea2791ba4ba9492f128b5bfa23da13797288f"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-action-store.test.mjs",
+    "sha256": "54f7a886a4002e723c286253526b41c0ff302c99a31fb25c5e4157984b83e67b"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_ACTION_STORE_REPORT.md",
+    "sha256": "2ae4511d3da045c95efde7c12bad43219967470d08b568398e49f77d4c3b2977"
+  }
+]

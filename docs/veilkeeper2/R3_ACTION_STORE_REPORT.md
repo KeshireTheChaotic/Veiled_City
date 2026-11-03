@@ -1,0 +1,7 @@
+# R3 — durable action control states
+
+Added native-only immutable action identities, versioned control transitions and atomic event receipts for ordinary-roll and Hope-cost preparation. Explicit graphs require notice/owner-roll or consent windows; skipped transitions and resolved/effect states are refused. This store contains no actor patches or generic gameplay writes. Exact event replay is inert, revisions reject stale writers, and final authorization failure rolls back state plus event.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-action-store.test.mjs`. Actual outcome: 3/3 passed, zero failures/skips, 50.3716 ms. Real SQLite cases cover transition/replay, no resolved authority, skipped windows/stale revisions and atomic rollback. Native permission callbacks are injected, not live owner/Discord evidence. Unchanged suites were not rerun.
+
+The store is opt-in infrastructure, not an installed gameplay engine. Integration with source/consent/notice/roll evidence and a unified resource/outcome transaction remains required. Ready-to-resolve is not resolved; completion cannot be recorded here until real rule effects and receipts share the authority transaction. R3 and broader R0–R8 gates remain incomplete. No production change, migration, deployment or phase push occurred. Rollback leaves the store unused. Next: connect native preparation and evidence windows to these states and integrate resource/action commit atomically rather than across independent stores.
