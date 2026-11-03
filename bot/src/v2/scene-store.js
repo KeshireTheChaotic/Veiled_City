@@ -45,6 +45,10 @@ export function openSceneStore(filename=':memory:'){
         const current=read(kind,snapshot.campaignId,data.id);
         if((current?Number(current.revision):null)!==expectedRevision)throw new Error('Native scene revision conflict');
         const revision=(expectedRevision??0)+1,row={...data,revision:String(revision),...(kind==='actor'?{controlRevision:String(revision)}:{})};
+        if(kind==='scene'){
+          row.authorityRevision=current&&current.status===data.status&&current.sessionId===data.sessionId?current.authorityRevision??current.revision:String(revision);
+          row.participantRevisions=Object.fromEntries(data.participants.map(p=>{const before=current?.participants.find(v=>v.actorId===p.actorId);const unchanged=before&&before.userId===p.userId&&before.presence===p.presence;return [p.actorId,unchanged?current.participantRevisions?.[p.actorId]??current.revision:String(revision)];}));
+        }
         db.prepare('INSERT INTO vk2_scene_history VALUES(?,?,?,?,?,?)').run(snapshot.campaignId,kind,data.id,revision,JSON.stringify(row),snapshot.sourceRef);
         db.prepare('INSERT INTO vk2_scene_heads VALUES(?,?,?,?) ON CONFLICT(campaign,kind,id) DO UPDATE SET revision=excluded.revision').run(snapshot.campaignId,kind,data.id,revision);
         records.push({kind,id:data.id,revision});

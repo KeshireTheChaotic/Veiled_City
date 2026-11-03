@@ -1,0 +1,82 @@
+{
+  "distinctCompletedCases": 102,
+  "node": "v26.13.0",
+  "files": [
+    {
+      "path": "bot/src/v2/discord-session-attendance.js",
+      "sha256": "768333f90a18792dfafd0d29b25c4dfd42c7953571c6d5bb46dce2f2e1a4653a"
+    },
+    {
+      "path": "bot/src/v2/scene-store.js",
+      "sha256": "658767ce5ec867555b20a75d4210c984a73b9bf8f2d167c279e3bbd19e7ec282"
+    },
+    {
+      "path": "bot/src/v2/source-authority.js",
+      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588"
+    },
+    {
+      "path": "bot/src/v2/discord-interaction-router.js",
+      "sha256": "220a54f73cc6065e78c204e8ec2c08d36872352b918ba65aef6929c2395c6448"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-session-attendance.test.mjs",
+      "sha256": "1102d8b0408e45d26bd4803081f7862507f83088d92970565a482a0ed7531bfc"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "1b7a57575b59888ed8f68a74ecc7729ddb01ffe5c2ac63180ec4e63ae45fc993"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-source-authority.test.mjs",
+      "sha256": "a91b36d5df3c53f0338ee73566170b5f5ff19091e8285fbd82a486d6cce943aa"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-scene-store.test.mjs",
+      "sha256": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-source-registry.test.mjs",
+      "sha256": "cfe9a05daf732a35dca396e35fb6d10e25ef7017f73c05c2f93f48bbdfbb6ecb"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+      "sha256": "8a7cecd318a20de3efbfc8e2f55b45de26db3fc4736f69e36ae29111a255d34a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-discord-intake.test.mjs",
+      "sha256": "91eb3d7215a53800e575aeae46eb8ba4fa29b9ab5bb7ea8f13812d4eedd24614"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-component-choice-sources.test.mjs",
+      "sha256": "b88edf9b1cb9fa885c336e03285a404f34042a5e6633707b06271dc31c1d8a40"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-component-outcome-chain.test.mjs",
+      "sha256": "9bbf5a43a547b1339035ffc7fc8b1196a02dd22cd250df9e8e647840f1cc652f"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-native-consent-chain.test.mjs",
+      "sha256": "ec1664fdda67732317b7d298717c1abcfab4ff5d23d39b3f1111b4284a2ff448"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-death-receipt-source.test.mjs",
+      "sha256": "c360734051765137dbd8b3a0ae79f7be621ca506fa73ee9b5bc046e7d3d32765"
+    }
+  ],
+  "runs": [
+    {
+      "durationMs": 28405.0285,
+      "passed": 92
+    },
+    {
+      "durationMs": 2616.2489,
+      "passed": 10
+    },
+    {
+      "repeatedCases": 7,
+      "durationMs": 2605.1915,
+      "passed": 7
+    }
+  ],
+  "checkpoint": "R6_SESSION_ATTENDANCE"
+}

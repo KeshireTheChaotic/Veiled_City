@@ -42,9 +42,14 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
     if(receiptOnly&&(actor.kind!=='pc'||actor.controlRole!=='owner'))fail();
     const assignment=scene.participants.filter(p=>p.userId===event.userId&&p.actorId===event.actorId);
     if(assignment.length!==1||!['present','late','guest'].includes(assignment[0].presence))fail();
+    const lifecycle=scene.authorityRevision??scene.revision,attendance=scene.participantRevisions===undefined?scene.revision:Object.hasOwn(scene.participantRevisions,actor.id)?scene.participantRevisions[actor.id]:null;
+    if(!nonempty(lifecycle)||!nonempty(attendance))fail();
+    // Equal initial epochs retain the legacy proof digest. Other participants'
+    // attendance does not revoke this owner; own leave/rejoin never resurrects it.
+    const sceneAuthorityRevision=lifecycle===attendance?lifecycle:`${lifecycle}:${attendance}`;
     const recipients=[...channel.recipientIds].sort();
     const revision=digest([message.revision,channel.id,channel.revision,channel.kind,recipients,[...channel.writerIds].sort(),
-      channel.ownerUserId??null,scene.id,scene.revision,session.id,session.revision,actor.id,actor.kind,actor.controlRole,
+      channel.ownerUserId??null,scene.id,sceneAuthorityRevision,session.id,session.revision,actor.id,actor.kind,actor.controlRole,
       actor.controllerUserId,actor.ownerUserId??null,actor.controlRevision,actor.delegationRef??null,assignment[0].presence]);
     const proof={id:`source:${digest([event.campaignId,event.messageId,event.actorId])}`,principal:event.userId,
       campaign:event.campaignId,scene:scene.id,revision,actors:[actor.id],recipients,text:message.text};
