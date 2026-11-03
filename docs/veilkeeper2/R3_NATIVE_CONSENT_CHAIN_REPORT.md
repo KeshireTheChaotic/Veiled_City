@@ -1,0 +1,7 @@
+# R3 — native source-to-consent-to-outcome integration
+
+Fresh integration tests compose actual source authority, SQLite native scene records, immutable action terms, consent ingress, persisted owner decision and unified atomic Hope outcome. Distinct attempt and choice message proofs survive into the outcome receipt. Editing only the choice message invalidates its issued proof and blocks the commit while preserving both Hope and pending action state. Exact outcome replay remains inert.
+
+Command from bot: `node --test tests/veilkeeper2/r3-native-consent-chain.test.mjs`. Actual result: 2/2 passed, zero failures/skips, 65.5926 ms. Native source issuance/revalidation and storage code are real; initial native records and explicit decision reader are synthetic. No live Discord component or paid inference was used. Production code did not change, so prior passing suites were not rerun.
+
+Remaining: authenticated component/command ingestion, source-proof reconstruction after process restart, durable revocation/cancellation reconciliation, reservations, all other action/rule parity, full migration and release gates. A blocked commit currently leaves ready_to_commit for explicit reconciliation; it does not spend. R3 and the broader R0–R8 objective remain incomplete. No production change, migration, deployment or phase push occurred. Next: native transport decision verification and durable source-reference reconstruction with exact actor/audience lineage.
