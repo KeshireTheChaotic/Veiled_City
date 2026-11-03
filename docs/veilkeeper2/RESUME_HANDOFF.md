@@ -1,7 +1,8 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Refreshed 2026-11-03. The full R0–R8 implementation goal is incomplete. The user-directed pause threshold has been reached: five-hour 98% used (2% remaining), weekly 94% used. Implementation stopped; the goal is being marked paused with this checkpoint. Confirm the returned goal status and stop until explicit resume. Never infer permission from a reset or redeem credits.
+Refreshed 2026-11-03 at the usage pause point (five-hour window 93% used, weekly 13%). The R0–R8 goal is incomplete and paused here. Resume only on an explicit user request; a limit reset alone is not permission. Latest commit: a2feccb8 (owner death-prompt commands moved to `/vc-player`). Start by reading SESSION_REVIEW_2026-11-03.md, then the "Additions after the usage-pause checkpoint" section and the next actions below.
 
+Live state at pause: the native bot was left running against the test guild only, from the scratchpad script `run-native.mjs` (scratch copy of the legacy DB, ChatGPT-mode inference capped at 10 calls, administrator GM opt-in). Restarting or stopping it deletes its scratch native stores and clears the live session. Guild commands were last registered at a2feccb8. Full tests/veilkeeper2: 504/504 at a2feccb8.
 ## Workspace and binding authorization
 
 - Worktree: D:/Library/Development/Veiled_City_2/rebuild; branch rebuild/veilkeeper2-audience-first. Parent workspace: D:/Library/Development/Veiled_City_2. Deprecated D:/Library/Development/Veiled_City remains untouched.
