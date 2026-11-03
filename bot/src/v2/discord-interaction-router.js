@@ -1,21 +1,23 @@
-import {MessageFlags} from 'discord.js';
+﻿import {MessageFlags} from 'discord.js';
 import {createNativeDeathWorkflow} from './native-death-workflow.js';
 import {createDiscordDeathCommands} from './discord-death-commands.js';
 import {createDiscordSessionAttendance} from './discord-session-attendance.js';
+import {createDiscordGmSession} from './discord-gm-session.js';
 /** Owns the interaction surface on a fresh native client. The host must route
  * other native commands/components through the supplied callbacks, not install
  * additional peer listeners. Natural message intake is a separate GM surface.
  */
-export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
+export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,nativeGm=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.listenerCount!=='function'||typeof handleOtherCommand!=='function'||typeof handleOtherComponent!=='function'||typeof onError!=='function'||typeof nativeDeath?.readOwnerRoute!=='function')throw new TypeError('Exclusive native interaction router dependencies required');
   if(client.listenerCount('interactionCreate')!==0)throw new Error('Native interaction router requires an unclaimed client; do not install alongside legacy handlers');
-  let workflow,commands,attendance,closed=false;const pending=new Map(),denials=new Set(),controller=new AbortController();
+  let workflow,commands,attendance,gmSession,closed=false;const pending=new Map(),denials=new Set(),controller=new AbortController();
   const report=(error,event,stage)=>{try{onError(error,{interactionId:event?.id??null,stage});}catch{}};
   try{
     workflow=createNativeDeathWorkflow({...nativeDeath,client,onError});
     commands=createDiscordDeathCommands({...nativeDeath,client,workflow,readRoute:nativeDeath.readOwnerRoute,onError});
     if(nativeSession)attendance=createDiscordSessionAttendance({...nativeSession,client,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});
-  }catch(error){attendance?.close();commands?.close();workflow?.close();throw error;}
+    if(nativeGm)gmSession=createDiscordGmSession({...nativeGm,client,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});
+  }catch(error){gmSession?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
   async function deny(event){
     if(closed||denials.has(event.id))return;denials.add(event.id);if(denials.size>1024)denials.delete(denials.values().next().value);
     const content='This control is unavailable or needs native review. No new action was confirmed.';
@@ -31,6 +33,7 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeSession
         const claimed=commands.claimsRoute(event),handled=await commands.handle(event);
         if(handled)return;if(claimed){await deny(event);return;}
         if(attendance){const claimedAttendance=attendance.claimsRoute(event),attended=await attendance.handle(event);if(attended)return;if(claimedAttendance){await deny(event);return;}}
+        if(gmSession&&gmSession.claimsRoute(event)){await gmSession.handle(event);return;}
         if(!closed)await handleOtherCommand(event,{signal:controller.signal});
       }else if(typeof event.customId==='string'){
         if(event.customId.startsWith('vk2death:')){if(!nativeDeath.promptStore.readPrompt(event.customId))await deny(event);return;}
@@ -43,5 +46,6 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeSession
     const key=event.id,job=route(event);pending.set(key,job);void job.catch(error=>report(error,event,'routing')).finally(()=>pending.delete(key));
   };
   client.on('interactionCreate',listener);
-  return Object.freeze({async drain(){await Promise.allSettled([...pending.values()]);return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);attendance?.close();commands.close();workflow.close();}});
+  return Object.freeze({async drain(){await Promise.allSettled([...pending.values()]);return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);gmSession?.close();attendance?.close();commands.close();workflow.close();}});
 }
+
