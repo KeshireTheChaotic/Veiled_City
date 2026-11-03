@@ -4,6 +4,9 @@ Authorized scope (user decision, 2026-11-03): live qualification in the **test g
 
 Before anything: the bot token that was pasted into chat is exposed. Reset it in the Discord Developer Portal (Bot -> Reset Token) and use the new value only in your own terminal.
 
+## Prerequisite found by the first live smoke attempt (2026-11-03)
+
+A login smoke test with the legacy .env reached Discord (the token was accepted) but the gateway refused the connection: **"Used disallowed intents"**. The native client requests the privileged **Server Members Intent** because its audience check lists every guild member (who can see a channel decides who may read a message). The legacy client never requested it, so it is not enabled for this application. Before any live run, open the Discord Developer Portal -> your application -> Bot -> Privileged Gateway Intents and turn on **Server Members Intent** (Message Content must stay on). No message was sent, no command registered, no model called, and the temporary copy of the legacy database was deleted.
 ## 0. Preferred: use the legacy .env in ChatGPT mode (user instruction, 2026-11-03)
 
 The native start can load the legacy environment file by path; this repo never reads, prints or copies its values. Set only these in your terminal, then skip the secret lines in step 1:

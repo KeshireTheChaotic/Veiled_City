@@ -16,6 +16,8 @@ Update (approved publication): the turn runner now saves each draft with its del
 
 Update (legacy .env, ChatGPT mode, guild allowlist; user instruction): native-start loads VK2_ENV_FILE by path with process.loadEnvFile (values never read or printed here; existing env wins), createOpenAIProviderFromEnv uses the legacy Codex-login createChatGptClient when AI_AUTH_MODE=chatgpt (model from VK2_MODEL or OPENAI_GM_MODEL, call budget kept, no API key), and VK2_ALLOWED_GUILD_ID is now required: the router and message observer ignore every other guild without replying. Tests: r6-native-start 8, r1-discord-message-observer 5, r3 router suite 56, r6-native-root 4 (73 passed); the real .env and auth.json were not opened and no live call was made. Full suite before this change: 488/488 passed in 37.8 s.
 
+Live smoke attempt (user-authorized, test guild only, nothing sent): startNative with the legacy .env (loaded by path), a scratch copy of the legacy database and VK2_ALLOWED_GUILD_ID reached the Discord gateway but was refused with "Used disallowed intents": the native client needs the privileged Server Members Intent for its full-member audience reads and it is not enabled for this application. The legacy .env already sets DISCORD_GUILD_ID to the test guild, AI_AUTH_MODE=chatgpt and a Codex login file exists. Next live step is the user enabling the intent (runbook prerequisite) and rerunning the smoke. The scratch database copy was deleted.
+
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 
 
