@@ -6,13 +6,15 @@ export function createDeathChoiceEvidence({sourceAuthority,readActor,readEligibi
   function inspect(source,{actorId,eligibilityRef,choiceRef,rollRef}){
     const pc=readActor(source.campaign,actorId),eligible=readEligibility(source.campaign,eligibilityRef),choice=readChoice(source.campaign,choiceRef),roll=readRoll(source.campaign,rollRef),cause=readCause(source.campaign,eligible?.causeRef);
     const snapshot=JSON.stringify([pc,eligible,choice,roll,cause]);
+    const ordered=[cause?.sequence,eligible?.sequence,choice?.sequence,roll?.sequence];
+    if(!ordered.every(n=>Number.isSafeInteger(n)&&n>=0)||!ordered.every((n,i)=>i===0||n>ordered[i-1]))throw new Error('Ordered native consequence, eligibility, owner choice and dice required');
     if(!sourceAuthority.revalidate(source)||!source.actors.includes(actorId)||pc?.id!==actorId||pc.kind!=='pc'||pc.status!=='active'||pc.campaignId!==source.campaign||pc.sceneId!==source.scene
       ||pc.ownerUserId!==source.principal||pc.controllerUserId!==source.principal||pc.controlRole!=='owner'||typeof pc.controlRevision!=='string'||!pc.controlRevision
       ||eligible?.id!==eligibilityRef||eligible.status!=='eligible'||eligible.actorId!==actorId||eligible.campaignId!==source.campaign||eligible.sceneId!==source.scene||eligible.controlRevision!==pc.controlRevision
-      ||cause?.id!==eligible.causeRef||cause.campaignId!==source.campaign||cause.affectedActorId!==actorId||cause.effects_committed!==true||cause.deathEligible!==true
+      ||cause?.id!==eligible.causeRef||cause.campaignId!==source.campaign||cause.sceneId!==source.scene||cause.affectedActorId!==actorId||cause.effects_committed!==true||cause.deathEligible!==true
       ||choice?.id!==choiceRef||choice.status!=='accepted'||choice.ownerUserId!==source.principal||choice.actorId!==actorId||choice.eligibilityRef!==eligibilityRef
       ||choice.campaignId!==source.campaign||choice.sceneId!==source.scene||choice.sourceRef!==source.id||choice.sourceRevision!==source.revision||!['risk_it_all','avoid_death'].includes(choice.move)
-      ||roll?.id!==rollRef||roll.choiceRef!==choiceRef||roll.ownerUserId!==source.principal||roll.actorId!==actorId||roll.campaignId!==source.campaign||roll.authenticated!==true||roll.origin!=='owner_roll')throw new Error('Eligible native consequence and explicit owner death choice required');
+      ||roll?.id!==rollRef||roll.choiceRef!==choiceRef||roll.sceneId!==source.scene||roll.move!==choice.move||roll.ownerUserId!==source.principal||roll.actorId!==actorId||roll.campaignId!==source.campaign||roll.authenticated!==true||roll.origin!=='owner_roll')throw new Error('Eligible native consequence and explicit owner death choice required');
     let outcome;
     if(choice.move==='risk_it_all'){let n=0;const faces=[roll.hope,roll.fear],result=dualityRoll({},()=>faces[n++]);outcome={result:riskItAllOutcome(result.duality),duality:result.duality};}
     else{
