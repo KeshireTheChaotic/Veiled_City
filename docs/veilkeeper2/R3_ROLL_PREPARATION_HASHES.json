@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/ordinary-roll-preparation.js",
+    "sha256": "0020a413058d37b91a1c7933421af2905b65bb543e7d8c50f2c8a201256e6e13"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-roll-preparation.test.mjs",
+    "sha256": "cda2e99d80aa538e54054213c73909d90f3801428372f79e87ac24dd646ac377"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_ROLL_PREPARATION_REPORT.md",
+    "sha256": "8449c40700138e386e8bebc4a72b3270c34d581b0941b805d204f256d5a21cb9"
+  }
+]
