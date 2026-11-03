@@ -14,12 +14,14 @@ import {createDiscordInteractionRouter} from './discord-interaction-router.js';
 import {createDiscordMessageReader} from './discord-message-reader.js';
 import {createDiscordIntake} from './discord-intake.js';
 import {createDiscordMessageObserver} from './discord-message-observer.js';
+import {createDiscordTurnRunner} from './discord-turn-runner.js';
+import {openTurnStore} from './turn-store.js';
 /** Composes the dedicated native stores, adapters and exclusive interaction router.
  * `directory` must be a new directory for these stores, never a production database.
  * The caller supplies the client, the existing character/campaign repositories, an RNG and
  * the callbacks for commands/components the native router does not own.
  */
-export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),handleOtherCommand,handleOtherComponent,onError}){
+export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,onDraft,handleOtherCommand,handleOtherComponent,onError}){
   if(typeof directory!=='string'||!directory||typeof rng!=='function')throw new TypeError('Native store directory and RNG required');
   const opened=[];let router,observer,closed=false;
   const open=(factory,...args)=>{const store=factory(...args);opened.push(store);return store;};
@@ -34,7 +36,10 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},
       nativeGm:{readPolicy,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
       handleOtherCommand,handleOtherComponent,onError});
-    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake:createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore}),onError});
-    return Object.freeze({router,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
+    const intake=createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore}),turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null;
+    // Context is empty until GM records are composed; turns are withheld drafts and are never sent.
+    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:sceneStore.readers,records:{metadata:()=>null,readText:()=>null}}}):null;
+    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,onDraft,onError});
+    return Object.freeze({router,turns,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
 }

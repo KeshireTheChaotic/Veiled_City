@@ -8,5 +8,8 @@ Known issues: no natural-message intake, GM inference, startup session assembly 
 
 Update (message evidence): bot/src/v2/discord-message-observer.js listens for messageCreate and passes only human messages from registered native channels, by the owner of exactly one registered PC in that channel's scene, to the existing intake (evidence capture only: no reply, no inference, no authority). createNativeRoot composes message reader, intake and observer and closes the observer first (root and start tests extended: messageCreate listener present, then released). Tests: r1-discord-message-observer 3 passed, r6-native-root 2, r6-native-start 4; intake/reader suites unchanged. The intake stays simulated: no live message fetch occurred.
 
-Deferred: GM turn runner/provider composition (needs live inference authorization), live Discord/inference qualification (needs authorization), historical migration, recap/opening.
+Update (withheld GM drafts, offline-tested): createNativeRoot accepts an optional provider and opens turns.sqlite; observed owner messages then go through the turn runner and each result is a withheld draft handed to onDraft (never sent). native-start adds a second opt-in (VK2_INFERENCE=1, OPENAI_API_KEY, VK2_MODEL, VK2_MAX_TURNS 1-100 default 10) behind createCallBudget (provider-budget.js), a hard call ceiling with no retry. Context is empty (records stub) until GM records are composed. Tests: r1-provider-budget 2, r1-discord-message-observer 4, r6-native-root 4, r6-native-start 6 passed with fakes; no model call or send occurred.
+
+Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
+
 

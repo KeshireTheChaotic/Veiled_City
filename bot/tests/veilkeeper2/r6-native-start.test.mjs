@@ -20,3 +20,12 @@ test('native start composes read-only repository, root and login, then closes in
 test('a failed login closes everything it opened',async t=>{
   const s=setup(t),failing={...s.options,createClient:()=>({login:async()=>{throw new Error('bad token');},destroy:async()=>s.log.push('client-destroy')})};await assert.rejects(startNative(failing),/bad token/);assert.deepEqual(s.log,['open:true','root:true','root-close','repo-close','client-destroy']);
 });
+test('inference is a second opt-in and receives only the environment, never defaults',async t=>{
+  const s=setup(t);let seen=0,passed;const options={...s.options,createRoot:o=>{passed=o.provider;return {close(){}};},createProvider:async env=>{seen++;assert.equal(env.VK2_INFERENCE,'1');return {generate:async()=>({})};}};
+  await startNative(options).then(a=>a.close());assert.equal(seen,0);assert.equal(passed,null);
+  const b=setup(t);const on={...options,env:{...b.env,VK2_INFERENCE:'1'},createClient:b.options.createClient,openRepository:b.options.openRepository};await startNative(on).then(a=>a.close());assert.equal(seen,1);assert.equal(typeof passed.generate,'function');
+});
+test('the real provider factory refuses missing keys, models and unbounded budgets',async()=>{
+  const {createOpenAIProviderFromEnv}=await import('../../src/v2/native-start.js');
+  await assert.rejects(createOpenAIProviderFromEnv({}),/OPENAI_API_KEY and VK2_MODEL/);await assert.rejects(createOpenAIProviderFromEnv({OPENAI_API_KEY:'k',VK2_MODEL:'m',VK2_MAX_TURNS:'500'}),/VK2_MAX_TURNS/);await assert.rejects(createOpenAIProviderFromEnv({OPENAI_API_KEY:'k',VK2_MODEL:'m',VK2_MAX_TURNS:'0'}),/VK2_MAX_TURNS/);
+});

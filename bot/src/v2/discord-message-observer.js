@@ -1,9 +1,10 @@
-﻿/** Records player messages as native evidence; it never replies, infers or grants authority.
+/** Records player messages as native evidence; it never replies, infers or grants authority.
  * Only messages in channels already registered in the native scene store, from a human who
- * controls exactly one registered PC in that channel's scene, are ingested.
+ * controls exactly one registered PC in that channel's scene, are ingested. With 	urns the
+ * message also produces a withheld GM draft (passed to onDraft); nothing is ever sent here.
  */
-export function createDiscordMessageObserver({client,intake,sceneStore,readOwnerSession,onError=()=>{}}){
-  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof intake?.ingest!=='function'||typeof sceneStore?.readers?.readChannel!=='function'||typeof readOwnerSession!=='function')throw new TypeError('Native message observer dependencies required');
+export function createDiscordMessageObserver({client,intake,sceneStore,readOwnerSession,turns=null,onDraft=()=>{},onError=()=>{}}){
+  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof intake?.ingest!=='function'||typeof sceneStore?.readers?.readChannel!=='function'||typeof readOwnerSession!=='function'||turns&&typeof turns.respond!=='function')throw new TypeError('Native message observer dependencies required');
   const pending=new Set(),controller=new AbortController();let closed=false;
   const report=(error,message)=>{try{onError(error,{messageId:message?.id??null,stage:'message_intake'});}catch{}};
   function request(m){
@@ -15,7 +16,8 @@ export function createDiscordMessageObserver({client,intake,sceneStore,readOwner
   const listener=m=>{
     let req;try{req=request(m);}catch(error){report(error,m);return;}
     if(!req)return;
-    const job=intake.ingest(req,{signal:controller.signal}).catch(error=>report(error,m)).finally(()=>pending.delete(job));pending.add(job);
+    const run=turns?turns.respond(req,{signal:controller.signal}).then(result=>onDraft(result,req)):intake.ingest(req,{signal:controller.signal});
+    const job=Promise.resolve(run).catch(error=>report(error,m)).finally(()=>pending.delete(job));pending.add(job);
   };
   client.on('messageCreate',listener);
   return Object.freeze({drain:()=>Promise.allSettled([...pending]),close(){closed=true;controller.abort();client.off('messageCreate',listener);}});

@@ -24,3 +24,10 @@ test('bots, webhooks, system, unknown channels, non-owners and other scenes are 
 test('intake failures are reported, not thrown, and close detaches the observer',async t=>{
   const f=fixture(t);await f.emit(f.msg({id:'boom'}));assert.deepEqual(f.errors,['intake failed']);f.observer.close();assert.equal(f.client.listenerCount('messageCreate'),0);await f.emit(f.msg({id:'late'}));assert.equal(f.calls.length,1);
 });
+test('with a turn runner the observer produces a withheld draft through it and reports failures',async t=>{
+  const store=openSceneStore(),client=new EventEmitter(),drafts=[],errors=[];t.after(()=>store.close());
+  store.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'setup',records:[{kind:'channel',expectedRevision:null,data:{id:'ch',campaignId:'c',sceneId:'s',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']}}]},{check:()=>{}});
+  const observer=createDiscordMessageObserver({client,sceneStore:store,intake:{ingest:async()=>assert.fail('intake alone must not run')},turns:{respond:async(req,{signal})=>{assert.equal(signal.aborted,false);if(req.messageId==='boom')throw new Error('provider budget exhausted');return {publication:{id:`draft-${req.messageId}`}};}},onDraft:(result,req)=>drafts.push([result.publication.id,req.actorId]),readOwnerSession:()=>({campaignId:'c',ownerUserId:'u',actorId:'pc',sceneId:'s',sessionId:'session',gmRoleId:null}),onError:e=>errors.push(e.message)});t.after(()=>observer.close());
+  for(const id of ['m1','boom']){client.emit('messageCreate',{id,guildId:'c',channelId:'ch',author:{id:'u',bot:false},webhookId:null,system:false});await observer.drain();}
+  assert.deepEqual(drafts,[['draft-m1','pc']]);assert.deepEqual(errors,['provider budget exhausted']);
+});

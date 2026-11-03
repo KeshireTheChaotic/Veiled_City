@@ -1,4 +1,4 @@
-# Live qualification runbook — test guild only
+﻿# Live qualification runbook â€” test guild only
 
 Authorized scope (user decision, 2026-11-03): live qualification in the **test guild 1467249344947159291** only, inference spend capped at **$5 total**, source data from a **copy** of the legacy database. Never the production guild or database. The assistant does not handle secrets; you run these commands.
 
@@ -31,7 +31,22 @@ Confirm `npm run register` targets the guild given by DISCORD_GUILD_ID (guild-sc
 npm run start:v2:native
 ```
 
-What this exercises: native interaction routing (death prompts, attendance, GM session start/end, PC bootstrap preview/review, registration, rebind, reopen via `vc-roll effect` JSON) and player-message evidence capture. It does **not** yet run the GM turn runner or inference; no model calls occur, so the $5 cap is untouched until the provider is composed.
+What this exercises: native interaction routing (death prompts, attendance, GM session start/end, PC bootstrap preview/review, registration, rebind, reopen via `vc-roll effect` JSON) and player-message evidence capture. Without step 3b no model calls occur.
+
+## 3b. Optional: withheld GM drafts under the call cap
+
+A second opt-in turns player messages into **withheld GM drafts** (stored in the native turn store; never sent to Discord; the console prints only 
+ative-draft-withheld <messageId>). Context is empty for now (no GM records composed), so drafts test the provider path, not story quality.
+
+```powershell
+$env:VK2_INFERENCE = "1"
+$env:OPENAI_API_KEY = "<your key, typed by you>"
+$env:VK2_MODEL = "<model id>"
+$env:VK2_MAX_TURNS = "10"   # hard ceiling on provider calls (1-100); each call is bounded to 1024 output tokens
+npm run start:v2:native
+```
+
+The call ceiling plus the output-token bound limits spend; check your provider dashboard against the $5 cap, since tokens in are not capped by this code.
 
 ## 4. Checks to run and report back
 
@@ -46,3 +61,4 @@ Stop with Ctrl+C (graceful close). Delete `$env:VK2_NATIVE_DIR` and the DB copy 
 ## Not yet qualified
 
 Live inference, the GM turn runner, performance targets and production cutover remain open and need their own authorization.
+

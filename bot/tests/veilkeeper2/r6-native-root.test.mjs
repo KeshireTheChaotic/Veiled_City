@@ -24,3 +24,9 @@ test('owner route comes from the verified private channel of the registered PC, 
   const {revision}=r.sceneStore.readers.readChannel('c','private');r.sceneStore.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'ch2',records:[{kind:'channel',expectedRevision:Number(revision),data:{id:'private',campaignId:'c',sceneId:'s',kind:'private',permissionsVerified:true,recipientIds:['u'],writerIds:['u'],ownerUserId:'u'}}]},{check:()=>{}});
   assert.deepEqual(r.readOwnerRoute('c','pc'),{guildId:'c',channelId:'private',sceneId:'s',ownerUserId:'u'});assert.throws(()=>r.readOwnerRoute('c','missing'),/Verified owner private channel/);
 });
+test('a provider adds a durable turn store and a withheld-draft runner without changing the other stores',t=>{
+  const {r,directory}=root(t,{provider:{generate:async()=>({text:'x'})}});assert.ok(r.turns&&typeof r.turns.respond==='function');assert.ok(readdirSync(directory).includes('turns.sqlite'));
+});
+test('without a provider no turn runner or turn store exists',t=>{
+  const {r,directory}=root(t);assert.equal(r.turns,null);assert.equal(readdirSync(directory).includes('turns.sqlite'),false);
+});
