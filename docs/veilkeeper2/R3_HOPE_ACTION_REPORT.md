@@ -1,0 +1,7 @@
+# R3 — canonical action-cost replay protection
+
+Hope evidence must now identify a native action and cost slot. A unique database index enforces one committed cost per campaign/action/slot, so changing evidence IDs cannot double-spend the same obligation. The existing evidence replay check and state/receipt transaction remain. Historical receipts without action/slot metadata fail startup pending explicit reconciliation rather than silently bypassing uniqueness.
+
+Command from bot: `node --test tests/veilkeeper2/r3-hope-store.test.mjs`. Final actual outcome: 4/4 passed, zero failures/skips. Added evidence-alias double-spend case; existing cases reran because tested code changed. A preceding 4/4 run occurred before the fail-closed historical receipt startup guard was added. No production or historical database was migrated.
+
+Native action identity/slot production and owner/source/control authorization remain trusted adapter requirements; this index does not prove their authenticity. Full action/resource/outcome atomicity and production migration qualification are still open. R3 remains partial with the broader R0–R8 gates outstanding. No deployment or phase push occurred. Next: authenticated action-cost preparation and reservation in the authoritative action lifecycle. Rollback leaves the opt-in repository unused; older receipts require explicit migration before this version can open them.
