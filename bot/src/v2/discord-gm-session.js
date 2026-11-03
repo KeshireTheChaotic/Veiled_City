@@ -17,9 +17,11 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   function route(e){
     try{
       if(e?.isChatInputCommand?.()!==true)return null;
-      if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};if(sub==='reopen'){const session=e.options.getString('session',true);return {kind:'reopen',ref:`session-reopen:${session}`,raw:[session]};}}
-      if((bootstrap||characters)&&inRoll(e)&&e.options.getSubcommand()==='effect'){
+      if(e.commandName==='vc-session'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='session'){const sub=e.options.getSubcommand();if(sub==='start')return {kind:'session',ref:'session-start',raw:[e.options.getString('title')??'',e.options.getString('assembly')??'auto']};if(sub==='end')return {kind:'end',ref:'session-end',raw:[]};}
+      if(inRoll(e)&&e.options.getSubcommand()==='effect'){
         const raw=e.options.getString('json',true);if(typeof raw!=='string'||raw.length>4096)return null;const input=JSON.parse(raw);
+        if(input?.op==='session-reopen')return {kind:'reopen',ref:`session-reopen:${input.session}`,raw};
+        if(!bootstrap&&!characters)return null;
         if(characters&&(input?.op==='pc-register'||input?.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref:`:${input.actor}`,raw};
         if(!bootstrap)return null;
         if(input?.op==='pc-bootstrap-preview'||input?.op==='pc-bootstrap-review')return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref:`${input.op}:${input.actor}`,raw};

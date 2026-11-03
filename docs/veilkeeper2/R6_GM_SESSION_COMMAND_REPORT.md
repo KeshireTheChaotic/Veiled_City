@@ -16,7 +16,10 @@ Update (rebind): `vc-roll effect {op:pc-rebind,actor}` updates a registered PC's
 
 Update (router wiring test): the router now builds the GM authority itself from `nativeGm` {readPolicy, clock?, leaseMs?, bootstrap?, characters?} after its unclaimed-client check, because a pre-built authority registers an interactionCreate observer that the check rejects; the router closes it. New test in r3-discord-death-decisions (router consumer suite, now 55 passed): an observed GM `session end` ends the fixture's active session through the router with no legacy callbacks, and a non-GM is denied privately. Router wiring no longer lacks a test.
 
+Update (schema compatibility): `session reopen` is now the roll-effect JSON op `{op:session-reopen,session}` instead of a new subcommand, so every native-claimed command already exists in the registered schema (vc-session start/end/present/absent/arrive/leave; vc-roll effect json) and no legacy command schema change is needed. r6-command-schema-compat.test.mjs (2 passed) guards this against drift. Known gap it surfaced: vc-session absent/leave have no `character` option, so an owner with several PCs gets the safe ambiguous-query refusal instead of a choice; fixing it needs an additive schema change that is a registration decision. Tests re-run: r6-gm-session-command 14, r6-discord-gm-authority 14.
+
 Deferred: real campaign-policy/selection/repository adapters, session end/recap/opening, registration/rebinding, historical migration.
+
 
 
 

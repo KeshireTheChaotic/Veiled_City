@@ -62,7 +62,7 @@ test('registration needs an active scene and a GM',async t=>{
   const f=fixture(t,{withBootstrap:true});assert.equal((await f.service.handle(roll(f,'g3',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
   await f.service.handle(f.event);f.member.roles.cache.clear();assert.equal((await f.service.handle(roll(f,'g4',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
 });
-const reopenEvent=(f,id,session)=>{const e={...f.event,id,deferred:false,replied:false,options:{getSubcommand:()=> 'reopen',getSubcommandGroup:()=> 'session',getString:()=>session}};e.deferReply=async()=>{e.deferred=true;};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
+const reopenEvent=(f,id,session)=>roll(f,id,{op:'session-reopen',session});
 test('GM reopens a natively ended session with its closed scenes and refuses other cases',async t=>{
   const f=fixture(t);await f.service.handle(f.event);const sid=f.sceneStore.activeSessions('c')[0].id;
   assert.equal((await f.service.handle(reopenEvent(f,'o0',sid))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,1);
