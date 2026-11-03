@@ -5,15 +5,18 @@ import {ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.
 import {createDiscordGmAuthority} from '../../src/v2/discord-gm-authority.js';
 import {createDiscordGmSession} from '../../src/v2/discord-gm-session.js';
 import {openSceneStore} from '../../src/v2/scene-store.js';
+import {openActionStore} from '../../src/v2/rules/action-store.js';
+import {createPcBootstrapSource} from '../../src/v2/pc-bootstrap-source.js';
 import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
-function fixture(t,{id='i1'}={}){
+function fixture(t,{id='i1',withBootstrap=false}={}){
   let now=1000000;const client=new EventEmitter(),policy={campaignId:'c',revision:'1',gmRoleId:'gm-role',gmUserIds:[],allowAdministrators:false},roles=new Map([['gm-role',{}]]),guild={id:'c'},member={id:'gm',guild,user:{id:'gm',bot:false},roles:{cache:new Map([['gm-role',{}]])},permissions:new PermissionsBitField([])},channel={id:'admin',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages])};
   guild.members={fetch:async()=>member};guild.roles={fetch:async()=>roles};guild.channels={fetch:async()=>channel};client.guilds={fetch:async()=>guild};
   const gmAuthority=createDiscordGmAuthority({client,readPolicy:()=>policy,clock:()=>now}),sceneStore=openSceneStore(),interactionReceipts=openInteractionReceipts(),errors=[];
-  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,onError:e=>errors.push(e.message)});
-  t.after(()=>{service.close();gmAuthority.close();interactionReceipts.close();sceneStore.close();});
+  const actions=openActionStore(),character={id:'pc',guild_id:'c',owner_user_id:'u',status:'active',data:{level:2,resources:{hp:{current:2,max:6},armor:{current:1,max:3},stress:{current:2,max:6},hope:3,hope_max:6}}},readSource=createPcBootstrapSource({sceneStore,characterRepository:{getCharacter:()=>character}});sceneStore.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'owner-registration',records:[{kind:'actor',expectedRevision:null,data:{id:'pc',campaignId:'c',sceneId:'s',kind:'pc',status:'active',ownerUserId:'u',controllerUserId:'u',controlRole:'owner'}}]},{check:()=>{}});
+  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap:withBootstrap?{readSource,actionStore:actions}:null,onError:e=>errors.push(e.message)});
+  t.after(()=>{service.close();actions.close();gmAuthority.close();interactionReceipts.close();sceneStore.close();});
   const replies=[],event={id,client,guildId:'c',channelId:'admin',user:{id:'gm',bot:false},createdTimestamp:now,commandName:'vc-session',deferred:false,replied:false,isChatInputCommand:()=>true,options:{getSubcommand:()=> 'start',getSubcommandGroup:()=> 'session',getString:n=>n==='title'?'Night watch':n==='assembly'?'auto':null},deferReply:async o=>{event.deferred=true;replies.push(['defer',o.flags]);},editReply:async o=>{replies.push(['reply',o.content]);}};
-  client.emit('interactionCreate',event);return {client,member,sceneStore,interactionReceipts,service,event,replies,errors};
+  client.emit('interactionCreate',event);return {actions,readSource,client,member,sceneStore,interactionReceipts,service,event,replies,errors};
 }
 test('observed GM start creates the session privately and replays once',async t=>{
   const f=fixture(t),r=await f.service.handle(f.event);assert.equal(r.status,'committed');assert.equal(f.sceneStore.activeSessions('c').length,1);assert.equal(f.replies.length,2);assert.match(f.replies[1][1],/Nothing was announced/);const row=f.interactionReceipts.read('i1');assert.equal(row.processing,'committed');assert.equal(row.reply,'delivered');
@@ -27,4 +30,13 @@ test('uncertain reply delivery is recorded and not retried',async t=>{
 });
 test('unrelated and attendance subcommands are not claimed',async t=>{
   const f=fixture(t);f.event.options.getSubcommand=()=> 'present';assert.equal(f.service.claimsRoute(f.event),false);assert.equal(await f.service.handle(f.event),false);
+});
+const roll=(f,id,json)=>{const e={...f.event,id,commandName:'vc-roll',deferred:false,replied:false,options:{getSubcommand:()=> 'effect',getSubcommandGroup:()=>null,getString:()=>JSON.stringify(json)}};e.deferReply=async()=>{e.deferred=true;f.replies.push([id,'defer']);};e.editReply=async o=>{f.replies.push([id,o.content]);};f.client.emit('interactionCreate',e);return e;};
+test('GM previews a private snapshot, then exact review atomically initializes the PC once',async t=>{
+  const f=fixture(t,{withBootstrap:true}),p=roll(f,'p1',{op:'pc-bootstrap-preview',actor:'pc'});assert.equal((await f.service.handle(p)).status,'committed');const text=f.replies.find(r=>r[0]==='p1'&&r[1]!=='defer')[1],hash=text.match(/snapshotHash ([a-f0-9]{64})/)[1];assert.ok(!f.actions.readPcLife('c','pc')?.life);
+  const bad=roll(f,'r0',{op:'pc-bootstrap-review',actor:'pc',snapshotHash:'0'.repeat(64)});assert.equal((await f.service.handle(bad)).status,'native_review_required');assert.ok(!f.actions.readPcLife('c','pc')?.life);
+  const r=roll(f,'r1',{op:'pc-bootstrap-review',actor:'pc',snapshotHash:hash});assert.equal((await f.service.handle(r)).status,'committed');assert.equal(f.actions.readPcLife('c','pc').life.ownerUserId,'u');assert.equal(f.sceneStore.readers.readActor('c','pc').controllerUserId,'u');
+});
+test('bootstrap ops are unclaimed unless native bootstrap dependencies are supplied',async t=>{
+  const f=fixture(t),e=roll(f,'p2',{op:'pc-bootstrap-preview',actor:'pc'});assert.equal(f.service.claimsRoute(e),false);
 });

@@ -75,10 +75,11 @@ Dedicated v2 stores reject unrelated schemas; never point them at production. Pr
 Next actions:
 
 1. Check actual goal/usage and Git status. If paused, stop until explicit resume. Preserve README. Inspect latest report/manifest/commit and remote heads before integration. Baseline unchanged does not close R0 dynamic audit holds.
-2. Session-start routing is done (R6_GM_SESSION_COMMAND_REPORT.md, router option nativeGm). Remaining: route exact snapshot review/atomic bootstrap through the same pattern, no public private-state output, no retry after uncertain effects/replies. Root currently owns death and optional attendance only; GM factory/services are not routed yet.
+2. Session-start and PC bootstrap preview/review routing are done (R6_GM_SESSION_COMMAND_REPORT.md, router option nativeGm with bootstrap deps). Remaining: no public private-state output, no retry after uncertain effects/replies. Root currently owns death and optional attendance only; GM factory/services are not routed yet.
 3. Build real campaign-policy, current-session/character selection and repository adapters. Finish private native preview/review presentation; do not substitute role booleans or model markers for authority. Respect lease freshness.
 4. Implement session end/recap/opening occasions through the same audience writer, preserving important pending actions. Add explicit owner registration/selection/control rebinding without resetting canonical resources, fictional movement or granting PC proxies. Pre-session attendance and legacy guest/NPC delegation remain open.
 5. Migrate historical actors and pending death/Blaze/roll/Fear state with exact source/authority/knowledge lineage. Full actor-frame CAS must not be relaxed when changing projection. Old initialized or partial profiles need reviewed attestation/recovery, not re-bootstrap.
 6. Finish actual native GM/rules/encounter/range/feature/cost/PvP/team/movement/item/downtime adapters and conversational result publication/Fear continuation. Then broaden R4/R5 living-world/NPC behavior rather than stopping at controls.
 7. Close R0 dynamic contracts and every R1â€“R8 acceptance gate, independent live tests, concurrency/crash, semantic migration/rollback and performance before retiring runtime paths or declaring a major phase complete. Publish certified major phases only to origin rebuild; production remains separate.
+
 
