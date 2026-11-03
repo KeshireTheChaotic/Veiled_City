@@ -13,7 +13,7 @@ function fixture(t,{id='i1',withBootstrap=false}={}){
   guild.members={fetch:async()=>member};guild.roles={fetch:async()=>roles};guild.channels={fetch:async()=>channel};client.guilds={fetch:async()=>guild};
   const gmAuthority=createDiscordGmAuthority({client,readPolicy:()=>policy,clock:()=>now}),sceneStore=openSceneStore(),interactionReceipts=openInteractionReceipts(),errors=[];
   const actions=openActionStore(),character={id:'pc',guild_id:'c',owner_user_id:'u',status:'active',data:{level:2,resources:{hp:{current:2,max:6},armor:{current:1,max:3},stress:{current:2,max:6},hope:3,hope_max:6}}},readSource=createPcBootstrapSource({sceneStore,characterRepository:{getCharacter:()=>character}});sceneStore.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'owner-registration',records:[{kind:'actor',expectedRevision:null,data:{id:'pc',campaignId:'c',sceneId:'s',kind:'pc',status:'active',ownerUserId:'u',controllerUserId:'u',controlRole:'owner'}}]},{check:()=>{}});
-  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap:withBootstrap?{readSource,actionStore:actions}:null,onError:e=>errors.push(e.message)});
+  const service=createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap:withBootstrap?{readSource,actionStore:actions}:null,characters:withBootstrap?{getCharacter:cid=>cid==='pc3'?{id:'pc3',guild_id:'c',owner_user_id:'u3',status:'active'}:cid==='pc'?character:null}:null,onError:e=>errors.push(e.message)});
   t.after(()=>{service.close();actions.close();gmAuthority.close();interactionReceipts.close();sceneStore.close();});
   const replies=[],event={id,client,guildId:'c',channelId:'admin',user:{id:'gm',bot:false},createdTimestamp:now,commandName:'vc-session',deferred:false,replied:false,isChatInputCommand:()=>true,options:{getSubcommand:()=> 'start',getSubcommandGroup:()=> 'session',getString:n=>n==='title'?'Night watch':n==='assembly'?'auto':null},deferReply:async o=>{event.deferred=true;replies.push(['defer',o.flags]);},editReply:async o=>{replies.push(['reply',o.content]);}};
   client.emit('interactionCreate',event);return {actions,readSource,client,member,sceneStore,interactionReceipts,service,event,replies,errors};
@@ -51,4 +51,14 @@ test('GM end without exactly one active session is held and changes nothing',asy
 });
 test('a non-GM member cannot end the session',async t=>{
   const f=fixture(t);await f.service.handle(f.event);f.member.roles.cache.clear();assert.equal((await f.service.handle(endEvent(f,'e3'))).status,'native_review_required');assert.equal(f.sceneStore.activeSessions('c').length,1);
+});
+test('GM registers a character to its repository owner in the sole active scene without resources or attendance',async t=>{
+  const f=fixture(t,{withBootstrap:true});await f.service.handle(f.event);
+  const none=roll(f,'g0',{op:'pc-register',actor:'nobody'});assert.equal((await f.service.handle(none)).status,'native_review_required');
+  const reg=roll(f,'g1',{op:'pc-register',actor:'pc3'});assert.equal((await f.service.handle(reg)).status,'committed',f.errors.join('|'));const a=f.sceneStore.readers.readActor('c','pc3'),sid=f.sceneStore.activeSessions('c')[0].id;assert.equal(a.ownerUserId,'u3');assert.equal(a.controllerUserId,'u3');assert.equal(a.controlRole,'owner');assert.equal(a.sceneId,`${sid}:opening`);assert.deepEqual(f.sceneStore.readers.readScene('c',`${sid}:opening`).participants,[]);assert.ok(!f.actions.readPcLife('c','pc3')?.life);
+  const again=roll(f,'g2',{op:'pc-register',actor:'pc'});assert.equal((await f.service.handle(again)).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc').sceneId,'s');
+});
+test('registration needs an active scene and a GM',async t=>{
+  const f=fixture(t,{withBootstrap:true});assert.equal((await f.service.handle(roll(f,'g3',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
+  await f.service.handle(f.event);f.member.roles.cache.clear();assert.equal((await f.service.handle(roll(f,'g4',{op:'pc-register',actor:'pc3'}))).status,'native_review_required');assert.equal(f.sceneStore.readers.readActor('c','pc3'),null);
 });

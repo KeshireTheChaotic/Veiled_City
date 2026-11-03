@@ -8,5 +8,8 @@ Known issues: receipt binding uses synthetic sceneId `gm-operation:<id>` / actor
 
 Update (session end): `session end` (vc-session/vc session) ends the single active session and closes its active scenes atomically via native-session-setup.js end(); nothing is deleted, pending actions/rolls/prompts remain in their stores and bound proofs are withheld until native review. Added scene-store activeScenes reader and the session_end declaration. Tests: r6-gm-session-command 9 passed, r6-discord-gm-authority 14 passed, r1-scene-store 6 passed. No recap/opening prose and no reopening yet.
 
+Update (owner registration): `vc-roll effect {op:pc-register,actor}` (needs the optional `characters` repository) registers an existing native character to its repository owner as controlRole owner in the sole active scene. It sets no resources, movement, proxy or attendance, and refuses existing registrations elsewhere (rebinding needs native review) and absent/ambiguous scenes. Added the pc_register declaration. Tests: r6-gm-session-command 11 passed, r6-discord-gm-authority 14 passed.
+
 Deferred: real campaign-policy/selection/repository adapters, session end/recap/opening, registration/rebinding, historical migration.
+
 
