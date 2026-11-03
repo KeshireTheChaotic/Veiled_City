@@ -1,0 +1,7 @@
+# R3 — durable prompt to observed owner decision
+
+Connected the actual cost prompt store to the native Discord component reader in new integration tests. Pending delivery cannot grant consent. Active exact prompt tokens can authorize an observed owner's decision. Decision consumption now revalidates the original observed interaction against current prompt status and immutable terms, so revocation, expiry or revised terms after the click invalidate the cached decision. Close clears stored interactions as well as decisions.
+
+Fresh changed-code command from bot: `node --test tests/veilkeeper2/r3-prompt-decision-chain.test.mjs tests/veilkeeper2/r3-discord-cost-decisions.test.mjs`. Actual outcome: 5/5 passed, zero failures/skips, 62.0503 ms. Real SQLite prompts and decision reader compose with EventEmitter transport; no live Discord component or message send occurred. Existing decision tests reran because their implementation changed; no unrelated suite reran.
+
+Remaining: persist interaction provenance, map component choice into native source records, authenticated actual delivery, full consent/action integration and restart reconstruction. No game cost is committed by this reader. R3 and broader R0–R8 gates remain incomplete. No production change, migration, deployment or phase push occurred. Next: native component-to-source/decision persistence preserving exact owner/audience and proof freshness.

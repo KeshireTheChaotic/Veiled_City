@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/discord-cost-decisions.js",
+    "sha256": "f1ec8f1f8fa2ce8ed7ebbca7a3734b88890128bbfa1e31f355f674957c5e54ee"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-prompt-decision-chain.test.mjs",
+    "sha256": "eef3aafb050bd0b627b9c5586424459101efc7b4d039f90fdd3cd38931d40298"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-discord-cost-decisions.test.mjs",
+    "sha256": "b7adc050d64ba26d50b73cb386b760c0c330c4b859e65f0223265cb3e6e01eeb"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_PROMPT_DECISION_CHAIN_REPORT.md",
+    "sha256": "8967803c6e25e078a425ba6033f719ea82698ca64e8bbb8e163d8de37c3beb0e"
+  }
+]

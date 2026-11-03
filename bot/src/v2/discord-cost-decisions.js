@@ -3,7 +3,7 @@
  */
 export function createDiscordCostDecisions({client,readPrompt,readActionTerms}){
   if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof readPrompt!=='function'||typeof readActionTerms!=='function')throw new TypeError('Native Discord client and prompt readers required');
-  const observed=new WeakSet(),decisions=new Map();let closed=false;
+  const observed=new WeakSet(),decisions=new Map(),interactions=new Map();let closed=false;
   const listener=interaction=>{if(interaction&&typeof interaction==='object')observed.add(interaction);};
   client.on('interactionCreate',listener);
   function accept(interaction){
@@ -16,7 +16,7 @@ export function createDiscordCostDecisions({client,readPrompt,readActionTerms}){
     const record={interactionId:interaction.id,principal:interaction.user.id,campaignId:prompt.campaignId,sceneId:prompt.sceneId,channelId:interaction.channelId,
       actorId:prompt.actorId,actionRef:prompt.actionRef,termsRevision:prompt.termsRevision,amount:prompt.amount,costSlot:prompt.costSlot,decision:prompt.decision,promptRef:prompt.id};
     const old=decisions.get(interaction.id);if(old&&JSON.stringify(old)!==JSON.stringify(record))throw new Error('Component decision replay conflict');
-    decisions.set(interaction.id,Object.freeze(record));return decisions.get(interaction.id);
+    decisions.set(interaction.id,Object.freeze(record));interactions.set(interaction.id,interaction);return decisions.get(interaction.id);
   }
-  return Object.freeze({accept,readNative:id=>decisions.get(id)??null,close(){closed=true;client.off('interactionCreate',listener);decisions.clear();}});
+  return Object.freeze({accept,readNative(id){const interaction=interactions.get(id);return interaction?accept(interaction):null;},close(){closed=true;client.off('interactionCreate',listener);decisions.clear();interactions.clear();}});
 }
