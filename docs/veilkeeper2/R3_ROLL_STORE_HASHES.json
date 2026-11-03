@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/roll-store.js",
+    "sha256": "0983888c7cf41a3595abd4ad92eafe65258b191ee4c6e3052e21cc867947b004"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-roll-store.test.mjs",
+    "sha256": "8d3d934f17e78ab77c216a7e787422728c863c9a75f5f90f4f021ea05242e2f7"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_ROLL_STORE_REPORT.md",
+    "sha256": "f02b4728441431de62b93d38a8a7c87ef54038cf7b5a6b0ce6ff049ce5466516"
+  }
+]
