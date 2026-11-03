@@ -8,17 +8,17 @@ import {openFearReservations} from '../../src/v2/rules/fear-reservations.js';
 import {createFearOpportunityReader} from '../../src/v2/rules/fear-opportunity-reader.js';
 import {createPreRollFearCoordinator} from '../../src/v2/rules/pre-roll-fear-coordinator.js';
 function fixture(t,amount=1){
-  const dir=mkdtempSync(join(tmpdir(),'vk2-fear-order-'));let rolls,fear,coordinator;
+  const dir=mkdtempSync(join(tmpdir(),'vk2-fear-order-'));let rolls,fear,coordinator,reader;
   const check=()=>{},owner={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1'},npc={id:'npc',kind:'npc',status:'active',campaignId:'c',sceneId:'s',controllerUserId:null};
   function close(){rolls?.close();fear?.close();rolls=fear=null;}
   function reopen(){close();rolls=openRollStore(join(dir,'rolls.sqlite'));fear=openFearReservations(join(dir,'fear.sqlite'));
-    const reader=createFearOpportunityReader({rollStore:rolls,sourceAuthority:{inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc']})},readActor:(_c,id)=>id==='pc'?owner:npc,inspectGmDecision:(_c,q)=>({id:`decision:${q}`,status:'gm_action_ready',issuer:'native_gm_decision',campaignId:'c',sceneId:'s',requestRef:q,npcId:'npc',targetActorId:'pc',operation:'commit_adversary_attack',feature:'standard_attack',advantage:false,disadvantage:false,experienceRef:null,printedFearCost:0})});
+    reader=createFearOpportunityReader({rollStore:rolls,sourceAuthority:{inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc']})},readActor:(_c,id)=>id==='pc'?owner:npc,inspectGmDecision:(_c,q)=>({id:`decision:${q}`,status:'gm_action_ready',issuer:'native_gm_decision',campaignId:'c',sceneId:'s',requestRef:q,npcId:'npc',targetActorId:'pc',operation:'commit_adversary_attack',feature:'standard_attack',advantage:false,disadvantage:false,experienceRef:null,printedFearCost:0})});
     coordinator=createPreRollFearCoordinator({rollStore:rolls,fearStore:fear,opportunityReader:reader});
   }
   t.after(()=>{close();rmSync(dir,{recursive:true,force:true});});reopen();fear.initialize('c',amount,{check});
   function request(q){rolls.createRequest({id:q,campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',noticeRef:`notice:${q}`,stakes:'The guard hears.',difficulty:12,modifier:0,experience:0,advantage:0,disadvantage:0,sourceRef:'source',sourceRevision:'1'},{check});rolls.acknowledgeDelivery('c',q,{messageId:`message:${q}`,recipientIds:['u']},{check});}
   request('q');request('other');
-  return {get rolls(){return rolls;},get fear(){return fear;},get coordinator(){return coordinator;},reopen,check,roll(q='q'){return rolls.recordOwnerRoll('c',q,{id:`result:${q}`,ownerUserId:'u',hope:8,fear:5},{check});},publication(){return {campaignId:'c',requestRef:'q',bindingHash:fear.read('c','q').bindingHash,status:'not_started',attemptCount:0};}};
+  return {get rolls(){return rolls;},get fear(){return fear;},get reader(){return reader;},get coordinator(){return coordinator;},reopen,check,roll(q='q'){return rolls.recordOwnerRoll('c',q,{id:`result:${q}`,ownerUserId:'u',hope:8,fear:5},{check});},publication(){return {campaignId:'c',requestRef:'q',bindingHash:fear.read('c','q').bindingHash,status:'not_started',attemptCount:0};}};
 }
 test('held request stays unrolled across reopen while independent request and cancelled hold can roll',t=>{
   const f=fixture(t),r=f.coordinator.reserve('c','q',{check:f.check});assert.equal(r.status,'awaiting_announcement');
@@ -72,4 +72,27 @@ test('interruption after recovery receipt before hold release is safely resumed 
   assert.throws(()=>f.coordinator.recoverUnreserved('c','q',{...options,check(){if(++checks===3)throw new Error('Release interrupted');}}),/Release interrupted/);f.reopen();
   assert.equal(f.fear.read('c','q').status,'cancelled');assert.equal(f.rolls.readFearHold('c','q').status,'held');assert.throws(()=>f.roll(),/interruption holds/);
   f.coordinator.recoverUnreserved('c','q',options);assert.equal(f.rolls.readFearHold('c','q').status,'cancelled');assert.equal(f.roll().hope,8);
+});
+
+test('announcement lifecycle retains its roll hold through uncertain delivery and exact acknowledgement',t=>{
+  const f=fixture(t),row=f.coordinator.reserve('c','q',{check:f.check}),attempt=f.coordinator.claimAnnouncement('c','q',{check:f.check});
+  f.coordinator.markAnnouncementUncertain('c','q',attempt.attemptId,{check:f.check});f.reopen();
+  assert.throws(()=>f.roll(),/interruption holds/);assert.throws(()=>f.coordinator.claimAnnouncement('c','q',{check:f.check}),/already attempted/);
+  const notice={attemptId:attempt.attemptId,status:'delivered',kind:'pre_roll_fear',requestRef:'q',bindingHash:row.bindingHash,baseCost:1,printedFearCost:0,npcId:'npc',actorId:'pc',recipientIds:['u'],messageId:'fear-message'};
+  const result=f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>notice});f.reopen();
+  assert.equal(result.status,'announced');assert.deepEqual(f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>notice}),result);
+  assert.equal(f.rolls.readFearHold('c','q').status,'held');assert.throws(()=>f.roll(),/interruption holds/);assert.equal(f.fear.reserved('c'),1);
+});
+
+test('reservation without its matching hold cannot claim or acknowledge through the coordinator',t=>{
+  const f=fixture(t);f.fear.reserve('c','q',{readOpportunity:f.reader.read,check:f.check});
+  assert.throws(()=>f.coordinator.claimAnnouncement('c','q',{check:f.check}),/Matching active/);assert.equal(f.fear.readPublication('c','q').status,'not_started');
+  f.rolls.holdForFear('c','q','other-decision',{check:f.check});assert.throws(()=>f.coordinator.claimAnnouncement('c','q',{check:f.check}),/Matching active/);
+  assert.throws(()=>f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>null}),/Matching active/);
+});
+
+test('native hold authority revoked at the end of claim rolls publication state back',t=>{
+  const f=fixture(t);f.coordinator.reserve('c','q',{check:f.check});let checks=0;
+  assert.throws(()=>f.coordinator.claimAnnouncement('c','q',{check(){if(++checks===2)throw new Error('Authority revoked');}}),/Authority revoked/);f.reopen();
+  assert.equal(f.fear.readPublication('c','q').status,'not_started');assert.equal(f.rolls.readFearHold('c','q').status,'held');
 });

@@ -19,5 +19,14 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     const cancellation=fearStore.recoverUnreserved(c,q,{check,readReview,readPublication,readHold:rollStore.readFearHold});
     rollStore.releaseCancelledFear(c,q,{check,readCancellation:fearStore.read});return cancellation;
   }
-  return Object.freeze({reserve,cancel,recoverUnreserved});
+  function heldAuthority(c,q,check){
+    if(typeof check!=='function')throw new Error('Native Fear authority required');
+    return ()=>{check();const row=fearStore.read(c,q),hold=rollStore.readFearHold(c,q);
+      if(hold?.status!=='held'||hold.campaignId!==c||hold.requestRef!==q||row?.terms.campaignId!==c||row.terms.requestRef!==q||hold.decisionRef!==row.terms.decisionRef)throw new Error('Matching active native Fear hold required');
+    };
+  }
+  function claimAnnouncement(c,q,{check}){return fearStore.claimAnnouncement(c,q,{check:heldAuthority(c,q,check),readOpportunity:opportunityReader.read});}
+  function acknowledgeAnnouncement(c,q,{check,readNotice}){return fearStore.acknowledge(c,q,{check:heldAuthority(c,q,check),readOpportunity:opportunityReader.read,readNotice});}
+  function markAnnouncementUncertain(c,q,attemptId,{check}){return fearStore.markAnnouncementUncertain(c,q,attemptId,{check:heldAuthority(c,q,check)});}
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain});
 }
