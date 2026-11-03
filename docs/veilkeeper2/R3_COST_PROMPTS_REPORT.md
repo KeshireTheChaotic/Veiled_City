@@ -1,0 +1,7 @@
+# R3 — durable native cost prompts
+
+Added a dedicated SQLite prompt store with cryptographically random accept/reject tokens and immutable bound native action/owner/cost terms. Prompts start awaiting_delivery, become active only through native acknowledged message identity, and can be revoked. Expired tokens read as expired and cannot be newly activated. Duplicate message acknowledgement is inert; changed message identity conflicts. Issuance/ack/revocation require transaction-bound native authority callbacks. No sends, owner consent or spending occurs in this store.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-cost-prompts.test.mjs`. Final result: 3/3 passed, zero failures/skips. Cases cover opaque token pair/length, delivery/revocation, expiry/unknown tokens and rollback after final authorization failure. The suite reran after a parameter-name cleanup; tested code changed. Real SQLite with deterministic native clock/authorization doubles; no live Discord or production prompt was used.
+
+Remaining: native term issuance validation, exact delivery receipts, persisted decision/interaction linkage, reopen/process-crash and clock qualification, source/consent integration and full rule parity. These native prompt APIs must not be exposed to the model. R3 and broader R0–R8 gates remain incomplete. No production change, migration, deployment or phase push occurred. Next: integrate this store with observed Discord decisions and qualify stale/revoked prompt behavior end to end.

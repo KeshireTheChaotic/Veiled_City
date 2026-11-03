@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/cost-prompt-store.js",
+    "sha256": "f3018b8fd58d49bb46e970dedeabe6ae6f72b192f80fe9128043d6036f768c83"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-cost-prompts.test.mjs",
+    "sha256": "b944e161197a3f94bfe054021b53cdeeae6573f97503ad929aff82d09ff536a7"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_COST_PROMPTS_REPORT.md",
+    "sha256": "78623e49f6cfdf2f3ff2f55809b394340013406f777213e2f68b0857b4216108"
+  }
+]
