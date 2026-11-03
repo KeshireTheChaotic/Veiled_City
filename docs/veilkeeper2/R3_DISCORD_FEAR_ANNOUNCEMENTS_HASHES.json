@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/discord-fear-announcements.js",
+    "sha256": "43941f2eb2425e541d6fb81a8742e2360c92ab5be9209ba816532a67b942379f"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs",
+    "sha256": "ae532ca93cfeb39c3a0b291a5587a87ffbec5aa132c3390731ce025a0df266f7"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_DISCORD_FEAR_ANNOUNCEMENTS_REPORT.md",
+    "sha256": "e11d82b4009d421fec9ecff80d1312133e0def051ae0f3f398e94558c8f59a8d"
+  }
+]
