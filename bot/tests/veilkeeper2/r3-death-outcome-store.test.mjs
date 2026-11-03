@@ -94,3 +94,27 @@ test('an older persisted death outcome without the full recovery frame remains h
   const db=new DatabaseSync(f.path);try{db.prepare('UPDATE vk3_action_events SET data=? WHERE campaign=? AND source=?').run(JSON.stringify(initial),'c','incoming-death-outcome:attack');}finally{db.close();}f.reopen();
   const e=allocation(f,3,2);assert.throws(()=>f.store.allocateIncomingDeathRecovery('c','attack',{...f.options,readEvidence:()=>e}),/requires reviewed migration/);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_allocation');
 });
+
+function blazeOptions(f){
+  const initial=f.store.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('Blaze has no death dice');}}),action={id:'final-action',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'owner-final-source',sourceRevision:'1',status:'accepted',kind:'ordinary_action',parametersHash:'c'.repeat(64)};
+  const approval={id:'gm-review',revision:'1',kind:'human_gm_blaze_approval',status:'approved',campaignId:'c',sceneId:'s',requestRef:initial.requestRef,actionRef:action.id,actionRevision:action.revision,actionHash:hash(action),outcomeHash:hash(initial),reviewerUserId:'gm',rulingRef:'ruling',rulingRevision:'1',sourceRef:'gm-source',sourceRevision:'1'};
+  return {action,approval,options:{...f.options,actionRef:action.id,approvalRef:approval.id,readOwnerAction:()=>action,inspectGmApproval:()=>approval}};
+}
+test('one exact human-approved owner Blaze action gets a durable native Critical without dice or effect authority',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f);assert.throws(()=>f.store.createIncomingBlazeCritical('c','attack',b.options),/Saved native Blaze approval/);
+  const approved=f.store.approveIncomingBlaze('c','attack',b.options),critical=f.store.createIncomingBlazeCritical('c','attack',b.options);f.reopen();
+  assert.equal(approved.effectsCommitted,false);assert.equal(critical.duality,'Critical');assert.equal(critical.total,null);assert.equal(critical.rule,'srd_blaze_of_glory');assert.equal(critical.hope,undefined);assert.equal(critical.fear,undefined);assert.equal(critical.faces,undefined);assert.equal(critical.effectsCommitted,false);
+  assert.deepEqual(f.store.approveIncomingBlaze('c','attack',b.options),approved);assert.deepEqual(f.store.createIncomingBlazeCritical('c','attack',b.options),critical);assert.equal(f.store.readPcLife('c','pc').defenses.hp.current,6);assert.equal(f.store.readIncomingDeathOutcome('c','attack').status,'awaiting_final_action');
+});
+test('changed approval, other owner action or second otherwise approved action cannot replace a Blaze binding',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f);f.store.approveIncomingBlaze('c','attack',b.options);
+  b.approval.status='revoked';assert.throws(()=>f.store.createIncomingBlazeCritical('c','attack',b.options),/Authenticated human GM/);b.approval.status='approved';
+  b.action.ownerUserId='other';assert.throws(()=>f.store.createIncomingBlazeCritical('c','attack',b.options),/independently owner-authored/);b.action.ownerUserId='u';
+  const action={...b.action,id:'second-action'},approval={...b.approval,id:'second-review',actionRef:action.id,actionHash:hash(action)};
+  assert.throws(()=>f.store.approveIncomingBlaze('c','attack',{...b.options,actionRef:action.id,approvalRef:approval.id,readOwnerAction:()=>action,inspectGmApproval:()=>approval}),/One immutable Blaze final action/);assert.equal(f.store.readIncomingBlazeCritical('c','attack'),null);
+});
+test('GM approval authority rollback and changed native actor frame cannot save a Blaze action',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),b=blazeOptions(f);let checks=0;
+  assert.throws(()=>f.store.approveIncomingBlaze('c','attack',{...b.options,check(){if(++checks===2)throw new Error('GM authority changed');}}),/GM authority changed/);f.reopen();assert.equal(f.store.readIncomingBlazeApproval('c','attack'),null);
+  f.features.push('New owned feature');assert.throws(()=>f.store.approveIncomingBlaze('c','attack',b.options),/Current native Blaze actor snapshot/);assert.equal(f.store.readIncomingBlazeApproval('c','attack'),null);
+});

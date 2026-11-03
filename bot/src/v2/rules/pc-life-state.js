@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {d,dualityRoll} from './dice.js';
 import {riskItAllOutcome,avoidDeathOutcome} from './pc-death-outcomes.js';
 import {assertDeathEligibility} from './pc-death-eligibility.js';
+import {createBlazeOfGlory} from './blaze-of-glory.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex'),decode=r=>r?JSON.parse(r.data):null;
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 /** Fixed native lifecycle operations sharing the action-store transaction.
@@ -77,5 +78,6 @@ export function createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,dea
     if(hash(readActorSnapshot(c,e.actorId))!==hash(actor)||JSON.stringify(readEvidence(c,a))!==JSON.stringify(e))throw new Error('Owner recovery evidence changed');inspect();
     db.prepare('UPDATE vk3_pc_life SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(life),c,e.actorId);db.prepare('UPDATE vk3_pc_defenses SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(defenses),c,e.actorId);db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return outcome(c,a);
   });}
-  return Object.freeze({initializePcLife:initialize,readPcLife:read,resolveIncomingDeath:resolve,readIncomingDeathOutcome:outcome,allocateIncomingDeathRecovery:allocate});
+  const blaze=createBlazeOfGlory({db,tx,readPcLife:read,rawOutcome,deathEvent,damageEvent});
+  return Object.freeze({...blaze,initializePcLife:initialize,readPcLife:read,resolveIncomingDeath:resolve,readIncomingDeathOutcome:outcome,allocateIncomingDeathRecovery:allocate});
 }
