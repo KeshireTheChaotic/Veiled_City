@@ -123,7 +123,22 @@ export function openFearReservations(filename=':memory:'){
     if(hash(readCandidate(c,q))!==incoming.termsHash||JSON.stringify(readDefense(c,q))!==JSON.stringify(defense))throw new Error('Incoming execution authority changed');
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,status:'executing',incoming:{...incoming,status:roll.success?'awaiting_armor':'missed',result},history:[...row.history,{status:'executing',resultRef:result.id}]}),c,q);return result;
   });}
-  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,rollIncoming,
+  function completeIncoming(c,q,{check,readDamage,readDeathEligibility}){return tx(check,()=>{
+    const row=read(c,q),incoming=row?.incoming,r=incoming?.result,t=incoming?.terms;
+    if(row?.status==='completed')return row.completion;
+    if(row?.status!=='executing'||!r||!t||!['missed','awaiting_armor'].includes(incoming.status))throw new Error('Saved terminal native incoming outcome required');
+    let damage=null;
+    if(r.roll.success){
+      if(typeof readDamage!=='function'||typeof readDeathEligibility!=='function')throw new Error('Native damage and death eligibility readers required');
+      damage=structuredClone(readDamage(c,t.id));const a=damage?.attack;
+      if(damage?.kind!=='incoming_damage'||damage.id!==`incoming-damage:${t.id}`||damage.outcome?.effectsCommitted!==true||a?.campaignId!==c||a.id!==t.id||a.resultRef!==r.id||a.resultHash!==hash(r)||a.termsHash!==incoming.termsHash||a.actorId!==t.actorId||a.ownerUserId!==t.ownerUserId||a.controlRevision!==t.controlRevision||a.sceneId!==t.sceneId)throw new Error('Exact committed incoming damage receipt required');
+      if(damage.outcome.deathChoiceRequired||readDeathEligibility(c,t.id))throw new Error('Affected owner death choice remains pending; interruption stays held');
+      if(hash(readDamage(c,t.id))!==hash(damage)||readDeathEligibility(c,t.id))throw new Error('Incoming terminal damage evidence changed');
+    }else if(incoming.status!=='missed'||r.damage!==null)throw new Error('Exact saved native miss required');
+    const completion={campaignId:c,requestRef:q,decisionRef:t.decisionRef,resultRef:r.id,damageRef:damage?.id??null,damageHash:damage?hash(damage):null,requiresOriginalActionReview:true};
+    db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,status:'completed',incoming:{...incoming,status:r.roll.success?'resolved':'missed'},completion,history:[...row.history,{status:'completed',resultRef:r.id}]}),c,q);return completion;
+  });}
+  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,prepareIncoming,rollIncoming,completeIncoming,
     reviewIncoming:(c,q,options)=>incomingDefense(c,q,'review',options),recordIncomingDefense:(c,q,options)=>incomingDefense(c,q,'choice',options),
     read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
 }

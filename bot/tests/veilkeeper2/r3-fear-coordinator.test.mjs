@@ -192,9 +192,9 @@ test('invalid native RNG or final authorization failure rolls back both debit an
   assert.equal(f.fear.initialize('c',1,{check:f.check}),1);assert.equal(f.fear.reserved('c'),1);assert.equal(f.fear.read('c','q').incoming.status,'ready');assert.equal(f.fear.read('c','q').incoming.result,undefined);
 });
 
-function damageChain(t,f){
+function damageChain(t,f,{hpMax=6}={}){
   const options=readyAttack(f),faces=[15,2,2],result=f.coordinator.rollIncoming('c','q',{...options,rng:()=>faces.shift()}),actions=openActionStore();t.after(()=>actions.close());
-  actions.initializePcDefenses({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',hp:{current:0,max:6},armorSlots:{current:0,max:3}},{check:f.check});
+  actions.initializePcDefenses({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',hp:{current:0,max:hpMax},armorSlots:{current:0,max:3}},{check:f.check});
   const actor={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1',revision:'pc:1'},choice={id:'armor',kind:'incoming_armor_choice',campaignId:'c',sceneId:'s',attackRef:'attack',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:result.id,resultHash:createHash('sha256').update(JSON.stringify(result)).digest('hex'),termsHash:result.termsHash,sourceRef:'armor-source',sourceRevision:'1',useArmor:false};
   let corrupt=false;
   const authority=createIncomingDamageAuthority({fearStore:{read(c,q){const row=f.fear.read(c,q);if(corrupt)row.incoming.result.damage.total++;return row;}},actionStore:actions,sourceAuthority:{inspectReference(ref){if(ref==='revoked')throw new Error('Armor source revoked');return {campaign:'c',scene:'s',principal:'u',actors:['pc'],recipients:ref==='public'?['u','other']:['u']};}},readActor:()=>actor,readArmorChoice:()=>choice});
@@ -212,4 +212,19 @@ test('wrong result, public or revoked Armor source and stale target state cannot
   const f=fixture(t),chain=damageChain(t,f),original=structuredClone(chain.choice);
   for(const patch of [{resultHash:'different'},{sourceRef:'public'},{sourceRef:'revoked'},{useArmor:'yes'}]){Object.assign(chain.choice,original,patch);assert.throws(()=>chain.authority.commit('c','q','armor'));}
   Object.assign(chain.choice,original);chain.actor.revision='pc:2';assert.throws(()=>chain.authority.commit('c','q','armor'),/target revision/);assert.equal(chain.actions.readPcDefenses('c','pc').revision,1);
+});
+
+test('native miss completes its interruption once while the original action stays held for review',t=>{
+  const f=fixture(t),options=readyAttack(f);f.coordinator.rollIncoming('c','q',{...options,rng:()=>1});const completion=f.coordinator.completeIncoming('c','q',{check:f.check});f.reopen();
+  assert.equal(completion.damageRef,null);assert.equal(completion.requiresOriginalActionReview,true);assert.equal(f.fear.read('c','q').status,'completed');assert.deepEqual(f.coordinator.completeIncoming('c','q',{check:f.check}),completion);assert.equal(f.fear.read('c','q').history.filter(e=>e.status==='completed').length,1);assert.throws(()=>f.roll(),/interruption holds/);
+});
+test('committed nonlethal damage closes the interruption without repeating the PC effect or releasing its roll',t=>{
+  const f=fixture(t),chain=damageChain(t,f),damage=chain.authority.commit('c','q','armor'),options={check:f.check,readDamage:chain.actions.readIncomingDamage,readDeathEligibility:chain.actions.readIncomingDeath};
+  const completion=f.coordinator.completeIncoming('c','q',options);f.reopen();assert.equal(completion.damageRef,damage.id);assert.equal(f.fear.read('c','q').incoming.status,'resolved');assert.deepEqual(f.coordinator.completeIncoming('c','q',options),completion);assert.equal(chain.actions.readPcDefenses('c','pc').hp.current,1);assert.throws(()=>f.roll(),/interruption holds/);
+});
+test('pending owner death eligibility or mismatched damage receipt cannot close an interruption',t=>{
+  const f=fixture(t),chain=damageChain(t,f,{hpMax:1});chain.authority.commit('c','q','armor');
+  assert.throws(()=>f.coordinator.completeIncoming('c','q',{check:f.check,readDamage:chain.actions.readIncomingDamage,readDeathEligibility:chain.actions.readIncomingDeath}),/death choice remains pending/);assert.equal(f.fear.read('c','q').status,'executing');
+  const g=fixture(t),other=damageChain(t,g);const actual=other.authority.commit('c','q','armor');
+  assert.throws(()=>g.coordinator.completeIncoming('c','q',{check:g.check,readDamage:()=>({...actual,attack:{...actual.attack,resultHash:'wrong'}}),readDeathEligibility:other.actions.readIncomingDeath}),/Exact committed incoming damage/);assert.equal(g.fear.read('c','q').status,'executing');
 });

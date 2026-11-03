@@ -57,6 +57,7 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     const review=ownerEvidenceReader(readReview),choice=ownerEvidenceReader(readChoice);
     return fearStore.rollIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readDefense:(campaign,request)=>({review:review(campaign,request),choice:choice(campaign,request)}),rng});
   }
-  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,
+  function completeIncoming(c,q,{check,readDamage,readDeathEligibility}){return fearStore.completeIncoming(c,q,{check:heldAuthority(c,q,check),readDamage,readDeathEligibility});}
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,completeIncoming,
     reviewIncoming:(c,q,options)=>ownerDefense(c,q,'reviewIncoming',options),recordIncomingDefense:(c,q,options)=>ownerDefense(c,q,'recordIncomingDefense',options)});
 }
