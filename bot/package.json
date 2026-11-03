@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start:v2:offline": "node src/v2/index.js --offline",
+    "start:v2:native": "node src/v2/native-start.js",
     "test:v2:r1": "node --test tests/veilkeeper2/r1-kernel.test.mjs",
     "test:v2:context": "node --test tests/veilkeeper2/r1-source-authority.test.mjs tests/veilkeeper2/r2-context-authority.test.mjs tests/veilkeeper2/r1-rehearsal.test.mjs",
     "start": "node src/index.js",
