@@ -21,7 +21,14 @@
         "assembly_delivery",
         "assembly_delivery_metadata",
         "assembly_reconciliation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "assembly_reconciliation"
+        ],
+        "partial": true,
+        "evidence": "assembly-publications.js:103 traced; :66 job row not traced"
+      }
     },
     "bot/src/application/workflows/session-opening-recovery.js": {
       "uses": 3,
@@ -57,7 +64,14 @@
       "candidateKinds": [
         "content_package",
         "reference"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "seed_draft"
+        ],
+        "partial": true,
+        "evidence": "content-packages.js:70 spreads reviewSeedDraft result; seed_draft kind assumed from that function and not re-traced"
+      }
     },
     "bot/src/frameworks/daggerheart/condition-recovery-rules.js": {
       "uses": 1,
@@ -110,14 +124,29 @@
         "owner_action",
         "roll_operation",
         "scene_effect"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_environment_countdown",
+          "native_environment_countdown_head",
+          "native_environment_countdown_step"
+        ],
+        "partial": true,
+        "evidence": "environment-countdown-rules.js:11 KIND/STEP constants and :114 _head traced; :98 local kind is KIND or STEP, not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/environment-recording-rules.js": {
       "uses": 1,
       "candidateKinds": [
         "handout",
         "video"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_environment_recording"
+        ],
+        "evidence": "environment-recording-rules.js:5 const kind"
+      }
     },
     "bot/src/frameworks/daggerheart/environment-recovery-rules.js": {
       "uses": 1,
@@ -146,7 +175,14 @@
       "candidateKinds": [
         "gm_feature_effect_receipt",
         "native_feature_effect"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_feature_window"
+        ],
+        "partial": true,
+        "evidence": "feature-effect-rules.js:80 traced; :53 inspectFeatureWindow row not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/feature-window-rules.js": {
       "uses": 2,
@@ -160,7 +196,13 @@
         "native_feature_trigger_review",
         "native_feature_use",
         "native_feature_window"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "native_feature_window"
+        ],
+        "evidence": "feature-window-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/gm-action-review-rules.js": {
       "uses": 3,
@@ -191,7 +233,14 @@
         "gm_reaction_submission",
         "native_gm_reaction_withdrawal",
         "reaction"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "gm_action_continuation"
+        ],
+        "partial": true,
+        "evidence": "gm-execution-rules.js:76 traced; :165 request row not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/gm-ruling-rules.js": {
       "uses": 3,
@@ -231,7 +280,14 @@
         "npc",
         "pc_native_condition",
         "pc_native_condition_expiry"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "gm_group_feature_execution",
+          "native_mixed_condition"
+        ],
+        "evidence": "group-feature-execution-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/incoming-attack-rules.js": {
       "uses": 9,
@@ -283,7 +339,13 @@
         "ordinary_effect_diagnostic",
         "ordinary_effect_receipt",
         "unsupported_action"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "unsupported_action"
+        ],
+        "evidence": "ordinary-effect-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/pc-death-rules.js": {
       "uses": 3,
@@ -315,7 +377,13 @@
         "pc_healing_source_choice",
         "pc_healing_source_review",
         "reviewed_feature"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pc_effect_authority"
+        ],
+        "evidence": "pc-effect-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-agreement-rules.js": {
       "uses": 9,
@@ -352,7 +420,14 @@
         "pvp_attack_roll_receipt",
         "pvp_defense_option_receipt",
         "pvp_fear_trigger"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_attack_request"
+        ],
+        "partial": true,
+        "evidence": "pvp-attack-rules.js:237 traced; :283 proof.row not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-brawl-rules.js": {
       "uses": 10,
@@ -410,7 +485,13 @@
       "candidateKinds": [
         "pvp_exchange_gate",
         "pvp_fear_trigger"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_fear_trigger"
+        ],
+        "evidence": "pvp-fear-gate-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-fear-move-rules.js": {
       "uses": 11,
@@ -484,7 +565,13 @@
       "candidateKinds": [
         "pvp_attempt",
         "scene_window_lifecycle"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_action_window"
+        ],
+        "evidence": "pvp-terminal-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/roll-collaboration-rules.js": {
       "uses": 1,
@@ -506,7 +593,13 @@
         "provisional",
         "roll_adjudication",
         "saved_ruling"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "typed_intent"
+        ],
+        "evidence": "rules-arbitration-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/daggerheart/typed-roll-execution.js": {
       "uses": 3,
@@ -536,7 +629,13 @@
       "candidateKinds": [
         "action_continuation_signal",
         "compound_action"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "compound_action"
+        ],
+        "evidence": "action-dependency.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/intent/review-action.js": {
       "uses": 2,
@@ -593,7 +692,13 @@
         "memory_cursor",
         "npc_memory",
         "report"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "memory_cluster"
+        ],
+        "evidence": "memory-clusters.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/knowledge/memory-lifecycle.js": {
       "uses": 3,
@@ -645,7 +750,14 @@
         "arc_candidate",
         "organization_request",
         "player_statement"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "arc_beat",
+          "arc_candidate"
+        ],
+        "evidence": "personal-continuity.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/narrative/fresh-npc-authoring.js": {
       "uses": 2,
@@ -670,7 +782,14 @@
         "scene_authoring_attempt",
         "scene_authoring_hold",
         "scene_fresh_authoring"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_authoring_attempt"
+        ],
+        "partial": true,
+        "evidence": "fresh-scene-authoring.js:97 traced; :92 not traced"
+      }
     },
     "bot/src/frameworks/narrative/interpretation-context.js": {
       "uses": 1,
@@ -712,7 +831,14 @@
         "scene_fiction_draft",
         "scene_fiction_hold",
         "scene_local_detail"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_authoring_attempt"
+        ],
+        "partial": true,
+        "evidence": "scene-fiction-authority.js:82 traced; :78 not traced"
+      }
     },
     "bot/src/frameworks/npc/motivation.js": {
       "uses": 1,
@@ -723,7 +849,13 @@
         "goal_transition",
         "institution",
         "report"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "goal_transition"
+        ],
+        "evidence": "motivation.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/npc/strategy.js": {
       "uses": 3,
@@ -787,7 +919,13 @@
       "candidateKinds": [
         "negotiation",
         "obligation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "institution"
+        ],
+        "evidence": "negotiations.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/session/opening-attendance.js": {
       "uses": 3,
@@ -838,7 +976,13 @@
       "candidateKinds": [
         "arrival",
         "entry_policy"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_entry"
+        ],
+        "evidence": "scene-entry-native.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/session/scene-setup.js": {
       "uses": 2,
@@ -881,7 +1025,13 @@
         "pacing",
         "setup_payoff",
         "story_setup"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "story_setup"
+        ],
+        "evidence": "story-continuity.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/session/window-coordinator.js": {
       "uses": 3,
@@ -1001,7 +1151,13 @@
         "narrative_draft",
         "native_ai_gm",
         "native_narrative_entity"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "autonomous_entity"
+        ],
+        "evidence": "identity-rules.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/frameworks/world/infrastructure.js": {
       "uses": 2,
@@ -1083,7 +1239,13 @@
         "obligation",
         "upkeep",
         "upkeep_settlement"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "upkeep"
+        ],
+        "evidence": "upkeep.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/native-publications.js": {
       "uses": 6,
@@ -1116,7 +1278,13 @@
         "pvp_ui_checkpoint",
         "pvp_ui_delivery",
         "pvp_ui_token"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_ui_token"
+        ],
+        "evidence": "pvp-menu.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/roll-menu.js": {
       "uses": 1,
@@ -1124,7 +1292,13 @@
         "action_outcome_receipt",
         "roll_menu_token",
         "roll_operation"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "roll_menu_token"
+        ],
+        "evidence": "roll-menu.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     },
     "bot/src/state.js": {
       "uses": 1,
@@ -1133,7 +1307,13 @@
         "post_turn_review_audit",
         "pvp_campaign_review",
         "semantic_candidate_review"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_campaign_review"
+        ],
+        "evidence": "state.js source-read: spread rows are getCityRecord results of these kinds"
+      }
     }
   },
   "total": 1009,

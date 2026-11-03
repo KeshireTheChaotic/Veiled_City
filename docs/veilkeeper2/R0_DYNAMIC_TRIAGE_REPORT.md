@@ -22,7 +22,10 @@ Update (batch 4): consequences, commitments, strategy, contact-groups and openin
 
 Update (batch 5): nine more files fully resolved (gm-action-review, gm-ruling, assembly-planning, session-opening-recovery, encounter-grounding, fresh-npc-authoring, seed-drafts, owned-community, scene-setup) and five partial. Status: fully resolved 26 files/53 uses; partial 19 files/102 uses; unresolved 40 files/55 uses.
 
-Next: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+Update (batch 6): 19 more files fully resolved and 9 partial. Status: fully resolved 46 files/77 uses; partial 27 files/117 uses; unresolved 12 files/16 uses. Remaining unresolved writers are windows/narrative/typed-roll files whose rows come from helper functions or null-initialized variables and need hand tracing.
+
+Next: close the partial entries' untraced lines, resolve the last unresolved writers, then trace the 118 forwarding wrappers to real call sites. Original item: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 
