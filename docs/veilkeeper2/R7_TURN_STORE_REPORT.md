@@ -1,0 +1,7 @@
+# R7 foundation — durable turn claims and withheld drafts
+
+Implemented a dedicated native-only SQLite turn repository. One insert wins per campaign/source; duplicate claims return requires_reconciliation without a lease, and changed source revisions conflict. Saved drafts are immutable and remain awaiting_revalidation with no sent/knowledge acknowledgement. Draft writes require the winning lease and native authorization checks before and after the transaction. Interrupted claims never automatically authorize another inference.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r7-turn-store.test.mjs`. Actual outcome: 3/3 passed, zero failures/skips, 65.6397 ms. Tests cover two connections to a real SQLite file, withheld immutable draft replay, forged lease and atomic rollback on final revocation. They do not prove process-crash recovery or live delivery. No existing suite was rerun.
+
+This is a foundation used ahead of full R7, not completion of that phase or its prerequisites. Runner integration, restart reauthorization of all context dependencies, operator reconciliation, retention, transactional effects/outbox, uncertain send handling and backup/restore remain open. No production migration/deployment/push occurred. Rollback leaves the opt-in repository unused. Next: integrate durable claims into the native turn runner while keeping recovered draft content withheld until complete source/context validation. Full R0–R8 scope remains required; R3 rules parity is still outstanding.

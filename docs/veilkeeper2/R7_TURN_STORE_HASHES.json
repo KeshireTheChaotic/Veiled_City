@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/turn-store.js",
+    "sha256": "fc5e1b246a0444a596e1e6ee75fda1d969f922ce52ac45c2cb9d0dab71996086"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r7-turn-store.test.mjs",
+    "sha256": "5e9a2dd26bfb0bf06a2ec67786e59c143b8314f994e9fbb0879ada02f1e85c30"
+  },
+  {
+    "path": "docs/veilkeeper2/R7_TURN_STORE_REPORT.md",
+    "sha256": "66911c8f4ce7628d5240c02759544729a3a4d20b5dbe5aa3aa1ee681055f7405"
+  }
+]
