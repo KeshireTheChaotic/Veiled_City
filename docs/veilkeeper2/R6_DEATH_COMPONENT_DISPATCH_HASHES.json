@@ -1,0 +1,33 @@
+{
+  "newCases": 15,
+  "node": "v26.13.0",
+  "checkpoint": "R6_DEATH_COMPONENT_DISPATCH",
+  "runs": [
+    {
+      "passed": 12,
+      "durationMs": 834.5614
+    },
+    {
+      "passed": 3,
+      "durationMs": 1294.94
+    }
+  ],
+  "files": [
+    {
+      "sha256": "2fae07c555c8533c736bf22b06e02ddffa740e956072c87379db3ea752a74372",
+      "path": "bot/src/v2/interaction-receipts.js"
+    },
+    {
+      "sha256": "455634e290b7b02557d02adfebd4b9304179609c8cd196b7f908457d918fea36",
+      "path": "bot/src/v2/discord-death-dispatcher.js"
+    },
+    {
+      "sha256": "55c47525ef1220b14fec7bf66dbc693602fd8ef0a9ba299d2cba1f5adb9366ee",
+      "path": "bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs"
+    },
+    {
+      "sha256": "91862f662d428ff9684d57710b6766bfee2b871b7e04dfd0e62c64a72868f8b9",
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs"
+    }
+  ]
+}

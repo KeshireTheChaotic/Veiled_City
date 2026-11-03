@@ -13,6 +13,9 @@ import {openDeathPromptStore,deathPromptPayload} from '../../src/v2/death-prompt
 import {openComponentDecisionStore} from '../../src/v2/component-decision-store.js';
 import {createDiscordDeathDecisions} from '../../src/v2/discord-death-decisions.js';
 import {createComponentChoiceSources} from '../../src/v2/component-choice-sources.js';
+import {createDiscordDeathDispatcher} from '../../src/v2/discord-death-dispatcher.js';
+import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
+import {MessageFlags} from 'discord.js';
 
 function fixture(t,{features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-ingress-')),client=new EventEmitter();client.user={id:'bot'};
@@ -113,4 +116,23 @@ test('changed native allocation frame or other owner cannot clear resources',asy
 test('maximum native Hope budget exposes all thirteen splits in valid five-button rows',t=>{
   const store=openDeathPromptStore();t.after(()=>store.close());const terms={purpose:'death_allocation',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',requestRef:'incoming-death:attack',level:2,hopeCap:6,allowedMoves:[],budget:12,markedHp:12,markedStress:12,allowedAllocations:Array.from({length:13},(_,hp)=>({decision:`allocate:${hp}:${12-hp}`,hp,stress:12-hp}))};
   const prompt=store.issue({terms,channelId:'private',expiresAt:Date.now()+60000},{check:()=>{}});assert.equal(prompt.options.length,13);assert.deepEqual(prompt.payload.components.map(row=>row.components.length),[5,5,3]);assert.equal(prompt.options[0].label,'Clear 0 HP, 12 Stress');assert.equal(prompt.options[12].label,'Clear 12 HP, 0 Stress');
+});
+function dispatcherFixture(t,f){
+  const receipts=openInteractionReceipts(),errors=[],replies=[];let defers=0;
+  const dispatcher=createDiscordDeathDispatcher({client:f.client,promptStore:f.prompts,decisionReader:f.reader,choiceSources:f.bridge,ingress:f.ingress,receipts,onError:(error,meta)=>errors.push({error,meta})});t.after(()=>{dispatcher.close();receipts.close();});
+  async function emit(event,{failReply=false}={}){Object.assign(event.interaction,{deferred:false,replied:false,async deferReply(options){assert.equal(options.flags,MessageFlags.Ephemeral);defers++;this.deferred=true;},async editReply(options){assert.deepEqual(options.allowedMentions,{parse:[]});replies.push(options.content);if(failReply)throw new Error('Private reply transport failure');this.replied=true;}});event.observe();await dispatcher.drain();return receipts.read(event.interaction.id);}
+  return {dispatcher,receipts,emit,errors,replies,get defers(){return defers;}};
+}
+test('client listener drives real native review, choice and allocation while fate stays engine-controlled',async t=>{
+  const f=fixture(t),d=dispatcherFixture(t,f),review=f.issue();assert.equal((await d.emit(review)).processing,'committed');assert.equal(f.actions.readIncomingDeathReview('c','attack').evidence.id,review.interaction.id);assert.equal(f.actions.readIncomingDeathOutcome('c','attack'),null);
+  const choice=f.issue('death_choice','risk_it_all');assert.equal((await d.emit(choice)).processing,'committed');assert.equal(f.actions.readIncomingDeathChoice('c','attack').evidence.id,choice.interaction.id);assert.equal(f.actions.readIncomingDeathOutcome('c','attack'),null);
+  const faces=[5,1],initial=f.actions.resolveIncomingDeath('c','attack',{check:()=>{},sourceAuthority:f.sources,readActorSnapshot:f.snapshot,rng:()=>faces.shift()});assert.equal(initial.status,'awaiting_allocation');
+  const allocation=f.issue('death_allocation','allocate:3:2'),row=await d.emit(allocation);assert.equal(row.processing,'committed');assert.equal(row.reply,'delivered');const resolved=f.actions.readIncomingDeathOutcome('c','attack');assert.equal(resolved.after.defenses.hp.current,3);assert.equal(resolved.after.life.stress.current,1);assert.deepEqual(resolved.roll,initial.roll);assert.equal(d.defers,3);assert.equal(d.errors.length,0);
+  allocation.observe();await d.dispatcher.drain();assert.equal(d.defers,3);assert.deepEqual(f.actions.readIncomingDeathOutcome('c','attack'),resolved);
+});
+test('real native choice remains saved when private dispatcher confirmation fails',async t=>{
+  const f=fixture(t),d=dispatcherFixture(t,f),review=f.issue(),row=await d.emit(review,{failReply:true});assert.equal(row.processing,'committed');assert.equal(row.reply,'uncertain');assert.equal(f.actions.readIncomingDeathReview('c','attack').evidence.id,review.interaction.id);review.observe();await d.dispatcher.drain();assert.equal(d.defers,1);assert.equal(d.replies.length,1);
+});
+test('real native owner rejection produces only a private generic hold and no death evidence',async t=>{
+  const f=fixture(t),d=dispatcherFixture(t,f),review=f.issue();review.interaction.user.id='outsider';const row=await d.emit(review);assert.equal(row.processing,'held');assert.equal(f.actions.readIncomingDeathReview('c','attack'),null);assert.equal(d.replies.length,1);assert.match(d.replies[0],/native review/);assert.doesNotMatch(d.replies[0],/pc|attack|SECRET|risks required/);
 });
