@@ -1,0 +1,26 @@
+[
+  {
+    "sha256": "228054abdf42e5d7fb476c8d1068f48da256db691d02c1c7b119b21ac8b2bf44",
+    "path": "bot/src/v2/rules/fear-reservations.js"
+  },
+  {
+    "sha256": "983edd3b8736fb7412ea30d2ca45ed698c985dd15bd89efeb09402b92e538aa9",
+    "path": "bot/src/v2/rules/pre-roll-fear-coordinator.js"
+  },
+  {
+    "sha256": "1655453f8a9e9b6044608c206d46b66f0603a2cb748e3a67ee5f21dd1dd8ee6a",
+    "path": "bot/src/v2/discord-fear-announcements.js"
+  },
+  {
+    "sha256": "28c8c220c15c98a2262a50fa99fd32037bc363e447f8dd369c1e9cf6b93af129",
+    "path": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs"
+  },
+  {
+    "sha256": "75c9742ee378349327dcfe2c36d0b76bd8a6f2368cf6a09c624e4bd33f8d29dd",
+    "path": "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs"
+  },
+  {
+    "sha256": "14d112287ea256b64c0c3c5c410cb9b182e61ba2c639dcb623d4dbcaecc42bb7",
+    "path": "docs/veilkeeper2/R3_FEAR_RECONCILIATION_REPORT.md"
+  }
+]

@@ -30,10 +30,19 @@ export function openFearReservations(filename=':memory:'){
     const row=read(c,q);if(!row||row.status!=='awaiting_announcement'||!['delivering','uncertain'].includes(row.publication?.status)||row.publication.attemptId!==attemptId)throw new Error('Exact pending Fear publication attempt required');
     const publication={...row.publication,status:'uncertain'};db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,publication}),c,q);return publication;
   });}
+  function recordAnnouncementResponse(c,q,attemptId,{check,readResponse}){return tx(check,()=>{
+    const row=read(c,q);if(!row||!['delivering','uncertain','delivered'].includes(row.publication?.status)||row.publication.attemptId!==attemptId||typeof readResponse!=='function')throw new Error('Exact saved Fear publication attempt required');
+    const response=structuredClone(readResponse(c,q));
+    if(response?.campaignId!==c||response.requestRef!==q||response.attemptId!==attemptId||typeof response.channelId!=='string'||!response.channelId||typeof response.messageId!=='string'||!response.messageId||typeof response.audienceFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(response.audienceFingerprint))throw new Error('Exact native Fear send response required');
+    if(row.publication.response){if(JSON.stringify(row.publication.response)!==JSON.stringify(response))throw new Error('Immutable Fear send response conflict');return row.publication;}
+    if(JSON.stringify(readResponse(c,q))!==JSON.stringify(response))throw new Error('Fear send response changed');
+    const publication={...row.publication,response};db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify({...row,publication}),c,q);return publication;
+  });}
   function acknowledge(campaign,requestRef,{readNotice,readOpportunity,check}){return tx(check,()=>{
     const row=read(campaign,requestRef),notice=structuredClone(readNotice(campaign,requestRef));
     if(typeof readOpportunity!=='function'||!row||hash(readOpportunity(campaign,requestRef))!==row.fingerprint)throw new Error('Pending pre-roll opportunity changed');
     if(!['delivering','uncertain','delivered'].includes(row.publication?.status)||notice?.attemptId!==row.publication.attemptId)throw new Error('Exact saved Fear publication attempt required');
+    if(row.publication.response&&notice?.messageId!==row.publication.response.messageId)throw new Error('Fear notice must match saved native send response');
     if(!row||!['awaiting_announcement','announced'].includes(row.status)||notice?.status!=='delivered'||notice.kind!=='pre_roll_fear'||notice.requestRef!==requestRef||notice.bindingHash!==row.bindingHash
       ||notice.baseCost!==1||notice.printedFearCost!==0||notice.npcId!==row.terms.npcId||notice.actorId!==row.terms.actorId||!Array.isArray(notice.recipientIds)||notice.recipientIds.length!==1||notice.recipientIds[0]!==row.terms.ownerUserId||typeof notice.messageId!=='string'||!notice.messageId)throw new Error('Exact delivered owner Fear announcement required');
     if(row.notice){if(JSON.stringify(row.notice)!==JSON.stringify(notice))throw new Error('Fear notice replay conflict');return row;}
@@ -61,5 +70,5 @@ export function openFearReservations(filename=':memory:'){
     if(JSON.stringify(readHold(c,q))!==JSON.stringify(hold)||JSON.stringify(readReview(c,q))!==JSON.stringify(review)||JSON.stringify(readPublication(c,q))!==JSON.stringify(publication))throw new Error('Orphan recovery evidence changed');
     db.prepare('INSERT INTO vk3_fear_reservations VALUES(?,?,?)').run(c,q,JSON.stringify(row));return row;
   });}
-  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,acknowledge,cancel,recoverUnreserved,read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
+  return Object.freeze({initialize,reserve,claimAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,acknowledge,cancel,recoverUnreserved,read,readPublication:(c,q)=>read(c,q)?.publication??null,reserved,close:()=>db.close()});
 }

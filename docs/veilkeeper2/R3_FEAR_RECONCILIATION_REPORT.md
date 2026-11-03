@@ -1,0 +1,15 @@
+# R3 — reconcile saved announcement responses without resend (slice complete)
+
+The Fear store now saves an immutable native send response bound to campaign/request/attempt, Discord channel/message and pre-send audience fingerprint. The coordinator requires the matching roll hold while saving it. Conflicting responses, another attempt or a delivered notice naming a different message are rejected. Response data survives reopening.
+
+The Discord adapter saves this response immediately after send returns, before readback. Its new `reconcile` path uses only the stored response, force-fetches that message and refreshes the owner-only audience. Exact saved/current audience fingerprints, route, bot authorship and fixed body must match before acknowledgement. No send occurs during reconciliation. A missing response remains held; it is not permission to search by text, fabricate delivery or resend.
+
+Modified files: `rules/fear-reservations.js`, `rules/pre-roll-fear-coordinator.js`, `discord-fear-announcements.js`, and the coordinator/Discord announcement tests. This report and hash manifest record the checkpoint.
+
+Verification complete: from `bot`, `node --test tests/veilkeeper2/r3-discord-fear-announcements.test.mjs tests/veilkeeper2/r3-fear-coordinator.test.mjs tests/veilkeeper2/r3-fear-reservations.test.mjs tests/veilkeeper2/r3-fear-durability.test.mjs tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs`: 32 passed, zero failures/skips, 1189.7163 ms. Output captured in parent workspace `fear-reconciliation-test.log`. An earlier 32/32 run preceded the additional saved-message guard; the tested code then changed, justifying the final rerun. Other unchanged suites did not rerun.
+
+New evidence: a replacement transport instance resumes failed readback without another synthetic send; missing response and invalid body stay unacknowledged; actual file-backed store response persists across reopen and rejects conflicting/other-attempt identity. Native Discord operations are simulated; the replacement-instance test does not prove full process-crash transport recovery or live quality.
+
+Known holds: the send→local-response-save crash gap remains ambiguous and requires reviewed recovery; no blind retry is allowed. Exact live Discord source/route adapters, permission races and client-level retry semantics remain unqualified. Full R3 parity, atomic Fear debit/attack/death completion, migration and R0–R8 acceptance remain open.
+
+Migration/rollback: response is an optional field in existing publication records; no schema or production migration occurred. Older attempts without responses stay held. Rollback must retain response/attempt/hold records and leave this opt-in adapter uninstalled; do not erase uncertainty. No production send, deployment, legacy retirement or completed-major-phase push occurred. Next exact phase: R3 atomic native Fear spending and validated NPC attack lifecycle, with publication/cancellation process-race qualification still required. Publishing remains on `rebuild/veilkeeper2-audience-first`, never baseline.

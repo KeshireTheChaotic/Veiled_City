@@ -96,3 +96,13 @@ test('native hold authority revoked at the end of claim rolls publication state 
   assert.throws(()=>f.coordinator.claimAnnouncement('c','q',{check(){if(++checks===2)throw new Error('Authority revoked');}}),/Authority revoked/);f.reopen();
   assert.equal(f.fear.readPublication('c','q').status,'not_started');assert.equal(f.rolls.readFearHold('c','q').status,'held');
 });
+
+test('native response identity survives reopen, rejects conflicts and cannot be saved for another attempt',t=>{
+  const f=fixture(t);f.coordinator.reserve('c','q',{check:f.check});const attempt=f.coordinator.claimAnnouncement('c','q',{check:f.check}),response={campaignId:'c',requestRef:'q',attemptId:attempt.attemptId,channelId:'ch',messageId:'m',audienceFingerprint:'a'.repeat(64)};
+  const options={check:f.check,readResponse:()=>response};f.coordinator.recordAnnouncementResponse('c','q',attempt.attemptId,options);f.reopen();
+  assert.deepEqual(f.fear.readPublication('c','q').response,response);f.coordinator.recordAnnouncementResponse('c','q',attempt.attemptId,options);
+  assert.throws(()=>f.coordinator.recordAnnouncementResponse('c','q',attempt.attemptId,{...options,readResponse:()=>({...response,messageId:'other'})}),/Immutable Fear send response conflict/);
+  assert.throws(()=>f.coordinator.recordAnnouncementResponse('c','q','other',options),/saved Fear publication attempt/);
+  assert.throws(()=>f.coordinator.acknowledgeAnnouncement('c','q',{check:f.check,readNotice:()=>({attemptId:attempt.attemptId,messageId:'different'})}),/saved native send response/);
+  assert.equal(f.fear.readPublication('c','q').status,'delivering');
+});

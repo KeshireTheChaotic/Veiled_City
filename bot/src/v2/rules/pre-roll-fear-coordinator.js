@@ -28,5 +28,6 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
   function claimAnnouncement(c,q,{check}){return fearStore.claimAnnouncement(c,q,{check:heldAuthority(c,q,check),readOpportunity:opportunityReader.read});}
   function acknowledgeAnnouncement(c,q,{check,readNotice}){return fearStore.acknowledge(c,q,{check:heldAuthority(c,q,check),readOpportunity:opportunityReader.read,readNotice});}
   function markAnnouncementUncertain(c,q,attemptId,{check}){return fearStore.markAnnouncementUncertain(c,q,attemptId,{check:heldAuthority(c,q,check)});}
-  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain});
+  function recordAnnouncementResponse(c,q,attemptId,{check,readResponse}){return fearStore.recordAnnouncementResponse(c,q,attemptId,{check:heldAuthority(c,q,check),readResponse});}
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse});
 }

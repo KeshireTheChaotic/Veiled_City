@@ -16,7 +16,7 @@ function fixture(t){
   const channel={id:'ch',guildId:'g',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),send:async payload=>{calls++;assert.deepEqual(payload.allowedMentions,{parse:[]});assert.equal(payload.enforceNonce,true);assert.equal(payload.nonce.length,24);if(mode==='reject')throw new Error('Transport failed');saved={id:'fear-message',guildId:'g',channelId:'ch',author:{id:'bot',bot:true},webhookId:null,system:false,content:payload.content};if(mode==='drift'){members.set('outsider',member('outsider'));guild.memberCount=3;}return saved;},messages:{fetch:async input=>{assert.deepEqual(input,{message:'fear-message',force:true});return mode==='wrong-body'?{...saved,content:'changed'}:saved;}}};
   const guild={id:'g',memberCount:2,members:{fetch:async()=>members},roles:{fetch:async()=>new Map()},channels:{fetch:async()=>channel}},client={user:{id:'bot'},guilds:{fetch:async()=>guild}},route={guildId:'g',channelId:'ch',sceneId:'s',ownerUserId:'owner'};
   const transport=createDiscordFearAnnouncements({client,coordinator,fearStore:fear,readRoute:()=>route});
-  return {fear,rolls,check,transport,get calls(){return calls;},setMode(v){mode=v;},addOutsider(){members.set('outsider',member('outsider'));guild.memberCount=3;}};
+  return {fear,rolls,check,transport,newTransport:()=>createDiscordFearAnnouncements({client,coordinator,fearStore:fear,readRoute:()=>route}),failReadback(){channel.messages.fetch=async()=>{throw new Error('Readback interrupted');};},restoreReadback(){channel.messages.fetch=async()=>saved;},get calls(){return calls;},setMode(v){mode=v;},addOutsider(){members.set('outsider',member('outsider'));guild.memberCount=3;}};
 }
 test('native audience-scoped send is read back and acknowledged once without spending Fear or releasing dice',async t=>{
   const f=fixture(t),result=await f.transport.publish('g','q',{check:f.check});assert.equal(result.status,'announced');assert.equal(result.publication.status,'delivered');assert.equal(f.calls,1);assert.equal(f.fear.reserved('g'),1);assert.equal(f.rolls.readFearHold('g','q').status,'held');
@@ -28,4 +28,18 @@ test('unqualified owner audience cannot claim or send an announcement',async t=>
 for(const mode of ['reject','drift','wrong-body'])test(`ambiguous or invalid Discord delivery stays held without resend: ${mode}`,async t=>{
   const f=fixture(t);f.setMode(mode);await assert.rejects(f.transport.publish('g','q',{check:f.check}));assert.equal(f.calls,1);assert.equal(f.fear.readPublication('g','q').status,'uncertain');assert.equal(f.fear.read('g','q').status,'awaiting_announcement');assert.equal(f.rolls.readFearHold('g','q').status,'held');
   await assert.rejects(f.transport.publish('g','q',{check:f.check}));assert.equal(f.calls,1);
+});
+
+test('a new transport instance reconciles saved native send response without sending again',async t=>{
+  const f=fixture(t);f.failReadback();await assert.rejects(f.transport.publish('g','q',{check:f.check}),/Readback interrupted/);
+  assert.equal(f.fear.readPublication('g','q').response.messageId,'fear-message');assert.equal(f.fear.readPublication('g','q').status,'uncertain');
+  f.restoreReadback();const resumed=f.newTransport(),result=await resumed.reconcile('g','q',{check:f.check});assert.equal(result.status,'announced');assert.equal(f.calls,1);
+  assert.deepEqual(await resumed.reconcile('g','q',{check:f.check}),result);assert.equal(f.calls,1);assert.equal(f.rolls.readFearHold('g','q').status,'held');
+});
+
+test('no native response or invalid readback cannot be reconciled into acknowledged delivery',async t=>{
+  const failed=fixture(t);failed.setMode('reject');await assert.rejects(failed.transport.publish('g','q',{check:failed.check}));
+  await assert.rejects(failed.transport.reconcile('g','q',{check:failed.check}),/Durable native Fear send response/);assert.equal(failed.calls,1);
+  const altered=fixture(t);altered.setMode('wrong-body');await assert.rejects(altered.transport.publish('g','q',{check:altered.check}));
+  await assert.rejects(altered.transport.reconcile('g','q',{check:altered.check}),/reconciliation evidence/);assert.equal(altered.fear.read('g','q').status,'awaiting_announcement');assert.equal(altered.calls,1);
 });

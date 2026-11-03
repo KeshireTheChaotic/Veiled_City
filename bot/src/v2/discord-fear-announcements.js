@@ -23,6 +23,8 @@ export function createDiscordFearAnnouncements({client,coordinator,fearStore,rea
       if(fresh.fingerprint!==before.fingerprint)throw new Error('Fear announcement audience changed');
       const sent=await channel.send({content,allowedMentions:{parse:[]},nonce:createHash('sha256').update(attempt.attemptId).digest('hex').slice(0,24),enforceNonce:true});
       if(typeof sent?.id!=='string'||!sent.id)throw new Error('Native Fear send acknowledgement missing');
+      const response={campaignId:c,requestRef:q,attemptId:attempt.attemptId,channelId:route.channelId,messageId:sent.id,audienceFingerprint:before.fingerprint};
+      coordinator.recordAnnouncementResponse(c,q,attempt.attemptId,{check:current,readResponse:()=>response});
       const message=await channel.messages.fetch({message:sent.id,force:true}),after=await audiences.read(request,{signal});current();
       if(after.fingerprint!==before.fingerprint||message?.id!==sent.id||message.guildId!==c||message.channelId!==route.channelId||message.author?.id!==client.user?.id||message.author.bot!==true||message.webhookId||message.system||message.content!==content)throw new Error('Exact native Fear delivery evidence unavailable');
       const notice={attemptId:attempt.attemptId,status:'delivered',kind:'pre_roll_fear',requestRef:q,bindingHash:row.bindingHash,baseCost:1,printedFearCost:0,npcId:row.terms.npcId,actorId:row.terms.actorId,recipientIds:[route.ownerUserId],messageId:message.id};
@@ -35,5 +37,21 @@ export function createDiscordFearAnnouncements({client,coordinator,fearStore,rea
       throw error;
     }
   }
-  return Object.freeze({publish});
+  async function reconcile(c,q,{check,signal}={}){
+    if(typeof check!=='function')throw new Error('Native Fear publication authority required');
+    check();signal?.throwIfAborted();
+    const row=fearStore.read(c,q),publication=row?.publication,response=publication?.response,route=structuredClone(readRoute(c,q));
+    if(!response||!['delivering','uncertain','delivered'].includes(publication.status)||response.attemptId!==publication.attemptId||response.campaignId!==c||response.requestRef!==q)throw new Error('Durable native Fear send response required; no resend permitted');
+    if(route?.guildId!==c||route.channelId!==response.channelId||route.sceneId!==row.terms.sceneId||route.ownerUserId!==row.terms.ownerUserId)throw new Error('Exact saved Fear response route required');
+    const request={guildId:c,channelId:route.channelId,sceneId:route.sceneId,ownerUserId:route.ownerUserId,gmRoleId:route.gmRoleId??null,mode:'private'},before=await audiences.read(request,{signal});
+    const guild=await client.guilds.fetch({guild:c,force:true}),channel=await guild.channels.fetch(route.channelId,{force:true});
+    if(guild.id!==c||channel?.guildId!==c||channel.id!==route.channelId||typeof channel.messages?.fetch!=='function')throw new Error('Native Fear reconciliation channel unavailable');
+    const message=await channel.messages.fetch({message:response.messageId,force:true}),after=await audiences.read(request,{signal});
+    const current=()=>{check();signal?.throwIfAborted();if(JSON.stringify(readRoute(c,q))!==JSON.stringify(route)||JSON.stringify(fearStore.readPublication(c,q)?.response)!==JSON.stringify(response))throw new Error('Fear response or route changed');};
+    current();
+    if(before.fingerprint!==response.audienceFingerprint||before.fingerprint!==after.fingerprint||message?.id!==response.messageId||message.guildId!==c||message.channelId!==route.channelId||message.author?.id!==client.user?.id||message.author.bot!==true||message.webhookId||message.system||message.content!==content)throw new Error('Exact native Fear reconciliation evidence unavailable');
+    const notice={attemptId:publication.attemptId,status:'delivered',kind:'pre_roll_fear',requestRef:q,bindingHash:row.bindingHash,baseCost:1,printedFearCost:0,npcId:row.terms.npcId,actorId:row.terms.actorId,recipientIds:[route.ownerUserId],messageId:message.id};
+    return coordinator.acknowledgeAnnouncement(c,q,{check:current,readNotice:()=>notice});
+  }
+  return Object.freeze({publish,reconcile});
 }
