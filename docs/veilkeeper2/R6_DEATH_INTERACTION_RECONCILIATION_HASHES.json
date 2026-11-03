@@ -1,0 +1,28 @@
+{
+  "checkpoint": "R6_DEATH_INTERACTION_RECONCILIATION",
+  "node": "v26.13.0",
+  "completedCases": 46,
+  "durationMs": 17781.9787,
+  "files": [
+    {
+      "sha256": "491a496fb278822564ca87cc90541479ecf9f20723d88a4904ecf4079c08d26f",
+      "path": "bot/src/v2/death-interaction-reconciliation.js"
+    },
+    {
+      "sha256": "b2c12981e1c1bb8289dd8c22c58cc04f7f423e2f910ee1dbac1a06fe44dc588f",
+      "path": "bot/src/v2/interaction-receipts.js"
+    },
+    {
+      "sha256": "c6def0aa5ca3c7506dec956683a993bd03fd9bab8346f7a07fe1333c274790a0",
+      "path": "bot/src/v2/native-death-workflow.js"
+    },
+    {
+      "sha256": "f6e53997a21f963e12a516968bcbddd611293dc60dff7df960d9c4f1157a71d9",
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs"
+    },
+    {
+      "sha256": "55c47525ef1220b14fec7bf66dbc693602fd8ef0a9ba299d2cba1f5adb9366ee",
+      "path": "bot/tests/veilkeeper2/r6-death-dispatcher.test.mjs"
+    }
+  ]
+}

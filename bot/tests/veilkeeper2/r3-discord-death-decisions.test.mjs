@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {EventEmitter} from 'node:events';
+import {createHash} from 'node:crypto';
 import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join,resolve,sep} from 'node:path';
@@ -17,6 +18,7 @@ import {createDiscordDeathDispatcher} from '../../src/v2/discord-death-dispatche
 import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
 import {MessageFlags,ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';
 import {createNativeDeathWorkflow} from '../../src/v2/native-death-workflow.js';
+import {createDeathInteractionReconciliation} from '../../src/v2/death-interaction-reconciliation.js';
 
 function fixture(t,{features=[]}={}){
   const dir=mkdtempSync(join(tmpdir(),'vk3-death-ingress-')),client=new EventEmitter();client.user={id:'bot'};
@@ -177,4 +179,31 @@ test('failed next-prompt publication preserves committed review and holds progre
 });
 test('native workflow Critical clears HP and Stress without requesting an allocation',async t=>{
   const f=fixture(t),w=workflowFixture(t,f,{faces:[6,6]});await w.present();await w.click('reviewed');await w.click('risk_it_all');assert.equal(f.actions.readPcLife('c','pc').defenses.hp.current,0);assert.equal(f.actions.readPcLife('c','pc').life.stress.current,0);assert.equal(f.actions.readIncomingDeathOutcome('c','attack').result,'recovered');assert.equal(w.sent.length,2);assert.equal(w.draws.length,2);assert.deepEqual(w.errors,[]);
+});
+const receiptHash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
+function receiptGap(t,f,event,{ack='deferred'}={}){
+  const receipts=openInteractionReceipts(),d=f.decisions.get(event.interaction.id).record,binding={id:d.interactionId,campaignId:d.campaignId,sceneId:d.sceneId,actorId:d.actorId,principal:d.principal,channelId:d.channelId,messageId:d.messageId,promptRef:d.promptRef,tokenHash:receiptHash(event.interaction.customId)};receipts.claim(binding,{check:()=>{}});receipts.acknowledge(binding.id,ack,{check:()=>{}});receipts.hold(binding.id,'receipt',{check:()=>{}});t.after(()=>receipts.close());
+  return {receipts,reconcile:(check=()=>{})=>createDeathInteractionReconciliation({interactionReceipts:receipts,decisionStore:f.decisions,promptStore:f.prompts,actionStore:f.actions,sourceAuthority:f.sources,readActorSnapshot:f.snapshot}).reconcile(binding.id,{check})};
+}
+test('canonical review reconciliation repairs only transport bookkeeping and withholds unsent confirmation',async t=>{
+  const f=fixture(t),e=f.issue(),saved=await f.stage(e),gap=receiptGap(t,f,e),before=f.actions.readPcLife('c','pc');f.reopen();const row=gap.reconcile();assert.equal(row.processing,'committed');assert.equal(row.reply,'withheld');assert.equal(row.ack,'deferred');assert.equal(row.hold,'receipt');assert.equal(row.receipt.id,saved.id);assert.equal(row.receipt.hash,receiptHash(saved));assert.deepEqual(gap.reconcile(),row);assert.deepEqual(f.actions.readPcLife('c','pc'),before);assert.throws(()=>gap.receipts.claimReply(e.interaction.id,{check:()=>{}}));
+});
+test('canonical choice reconciliation survives native death and expiry without renewing active control',async t=>{
+  const f=fixture(t);await f.stage(f.issue());const e=f.issue('death_choice','risk_it_all');await f.stage(e);const gap=receiptGap(t,f,e),faces=[1,12];f.actions.resolveIncomingDeath('c','attack',{check:()=>{},sourceAuthority:f.sources,readActorSnapshot:f.snapshot,rng:()=>faces.shift()});f.expire();f.reopen();assert.equal(f.actions.readPcLife('c','pc').life.status,'dead');const row=gap.reconcile();assert.equal(row.processing,'committed');assert.equal(row.reply,'withheld');assert.equal(f.actions.readPcLife('c','pc').life.status,'dead');assert.throws(()=>f.sources.inspectReference(row.reconciliation.sourceRef,row.reconciliation.sourceRevision));
+});
+test('canonical allocation reconciliation preserves the exact saved split and native dice',async t=>{
+  const f=fixture(t);await pendingRecovery(f);const e=f.issue('death_allocation','allocate:3:2'),saved=await f.stage(e),gap=receiptGap(t,f,e),before=f.actions.readPcLife('c','pc');f.reopen();assert.equal(gap.reconcile().receipt.hash,receiptHash(saved));assert.deepEqual(f.actions.readPcLife('c','pc'),before);assert.deepEqual(f.actions.readIncomingDeathOutcome('c','attack').roll,saved.roll);
+});
+test('missing canonical consequence or edited owner source cannot repair an interaction gap',async t=>{
+  const f=fixture(t),e=f.issue();await f.accept(e);const missing=receiptGap(t,f,e);assert.throws(()=>missing.reconcile(),/canonical affected-owner/);assert.equal(missing.receipts.read(e.interaction.id).processing,'held');
+  const g=fixture(t),other=g.issue();await g.stage(other);const edited=receiptGap(t,g,other),{revision,...message}=g.scenes.readers.readMessage('c',other.interaction.id);g.scenes.commitSnapshot({campaignId:'c',principal:'u',sourceRef:'edit',records:[{kind:'message',data:{...message,text:'Edited owner source'},expectedRevision:Number(revision)}]},{check:()=>{}});assert.throws(()=>edited.reconcile());assert.equal(edited.receipts.read(other.interaction.id).receipt,null);
+});
+test('caller denial and final native authorization rollback leave reconciliation held',async t=>{
+  const f=fixture(t),e=f.issue();await f.stage(e);const gap=receiptGap(t,f,e);assert.throws(()=>gap.reconcile(()=>{throw new Error('Caller denied');}),/Caller denied/);let calls=0;assert.throws(()=>gap.reconcile(()=>{if(++calls===5)throw new Error('Final authorization revoked');}),/Final authorization revoked/);const row=gap.receipts.read(e.interaction.id);assert.equal(row.processing,'held');assert.equal(row.receipt,null);assert.equal(row.reconciliation,undefined);assert.equal(row.reply,'not_started');
+});
+test('canonical repair preserves uncertain acknowledgement and never permits a reply retry',async t=>{
+  const f=fixture(t),e=f.issue();await f.stage(e);const gap=receiptGap(t,f,e,{ack:'uncertain'}),row=gap.reconcile();assert.equal(row.processing,'committed');assert.equal(row.ack,'uncertain');assert.equal(row.reply,'withheld');assert.throws(()=>gap.receipts.claimReply(e.interaction.id,{check:()=>{}}));
+});
+test('composed native reconciliation rechecks caller scope after cold reopen and sends nothing',async t=>{
+  const f=fixture(t),w=workflowFixture(t,f);await w.present();const review=await w.click('reviewed');w.reopen();const count=w.sent.length;assert.throws(()=>w.workflow.reconcile(review.event.id),/caller authorization/);const row=w.workflow.reconcile(review.event.id,{check:()=>{}});assert.equal(row.processing,'committed');assert.equal(row.reply,'delivered');assert.equal(w.sent.length,count);assert.equal(w.draws.length,0);
 });

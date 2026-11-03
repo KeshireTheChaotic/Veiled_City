@@ -19,5 +19,11 @@ export function openInteractionReceipts(filename=':memory:'){
   function hold(ref,stage,{check}){return tx(check,()=>{const row=required(ref);if(!['defer','decision','source','effects','receipt','progression','closed'].includes(stage))throw new Error('Native interaction hold stage required');return save({...row,processing:row.processing==='committed'?'committed':'held',hold:stage});});}
   function claimReply(ref,{check}){return tx(check,()=>{const row=required(ref);if(row.ack!=='deferred'||!['committed','held'].includes(row.processing)||row.reply!=='not_started')throw new Error('One private interaction reply attempt required');return save({...row,reply:'attempted'});});}
   function finishReply(ref,status,{check}){return tx(check,()=>{const row=required(ref);if(row.reply!=='attempted'||!['delivered','uncertain'].includes(status))throw new Error('Saved private reply attempt required');return save({...row,reply:status});});}
-  return Object.freeze({read,claim,acknowledge,complete,hold,claimReply,finishReply,close:()=>db.close()});
+  function reconcile(ref,{check,readEvidence}){return tx(check,()=>{
+    const row=required(ref),proof=typeof readEvidence==='function'?structuredClone(readEvidence(ref)):null,b=row.binding,r=proof?.receipt;
+    if(proof?.kind!=='native_death_interaction_receipt'||proof.bindingHash!==row.bindingHash||proof.campaignId!==b.campaignId||proof.sceneId!==b.sceneId||proof.actorId!==b.actorId||proof.ownerUserId!==b.principal||!id(proof.sourceRef)||!id(proof.sourceRevision)||!r||Object.keys(r).sort().join(',')!=='hash,id'||!id(r.id)||typeof r.hash!=='string'||!/^[a-f0-9]{64}$/.test(r.hash)||row.receipt&&hash(row.receipt)!==hash(r)||row.reconciliation&&hash(row.reconciliation)!==hash(proof))throw new Error('Exact canonical native interaction receipt required');
+    if(hash(readEvidence(ref))!==hash(proof))throw new Error('Native reconciliation evidence changed');
+    return save({...row,processing:'committed',receipt:r,reconciliation:proof,reply:row.reply==='not_started'?'withheld':row.reply==='attempted'?'uncertain':row.reply});
+  });}
+  return Object.freeze({read,claim,acknowledge,complete,hold,claimReply,finishReply,reconcile,close:()=>db.close()});
 }

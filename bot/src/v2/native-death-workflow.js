@@ -6,6 +6,7 @@ import {createDeathDecisionIngress} from './rules/death-decision-ingress.js';
 import {createDiscordDeathPrompts} from './discord-death-prompts.js';
 import {createDiscordDeathDispatcher} from './discord-death-dispatcher.js';
 import {inspectOwnerReceiptSource} from './rules/owner-receipt-source.js';
+import {createDeathInteractionReconciliation} from './death-interaction-reconciliation.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Native composition only. No model capabilities, legacy routing or database
  * bootstrap. Callers supply already authenticated native stores/rule readers.
@@ -19,6 +20,7 @@ export function createNativeDeathWorkflow({client,actionStore,sceneStore,sourceA
   choiceSources=createComponentChoiceSources({decisionReader:decisions,sceneStore,sourceAuthority,audienceReader});
   const routeForPrompt=ref=>{const row=promptStore.read(ref);if(!row||!row.terms.requestRef.startsWith('incoming-death:'))throw new Error('Saved native death prompt route required');return readRoute(row.terms.campaignId,row.terms.requestRef.slice('incoming-death:'.length));};
   const publisher=createDiscordDeathPrompts({client,promptStore,readTerms:ingress.readTerms,readRoute:routeForPrompt});
+  const reconciliation=createDeathInteractionReconciliation({interactionReceipts,decisionStore,promptStore,actionStore,sourceAuthority,readActorSnapshot});
   async function present(campaignId,attackRef,{check,signal}={}){
     if(typeof check!=='function')throw new Error('Native owner workflow authorization required');
     const workSignal=signal?AbortSignal.any([signal,controller.signal]):controller.signal;
@@ -40,5 +42,5 @@ export function createNativeDeathWorkflow({client,actionStore,sceneStore,sourceA
     const check=()=>{controller.signal.throwIfAborted();signal.throwIfAborted();inspectOwnerReceiptSource(sourceAuthority,{sourceRef:source.id,sourceRevision:source.revision},scope,{privateAudience:true});};check();
     const next=await present(decision.campaignId,attackRef,{check,signal});if(next.status==='native_review_required')throw new Error('Native death prompt progression requires reconciliation');
   }});
-  return Object.freeze({present,drain:()=>dispatcher.drain(),close(){if(closed)return;closed=true;controller.abort();dispatcher.close();decisions.close();}});
+  return Object.freeze({present,reconcile(ref,{check}={}){if(typeof check!=='function')throw new Error('Native reconciliation caller authorization required');return reconciliation.reconcile(ref,{check:()=>{controller.signal.throwIfAborted();if(closed)throw new Error('Native death workflow closed');check();}});},drain:()=>dispatcher.drain(),close(){if(closed)return;closed=true;controller.abort();dispatcher.close();decisions.close();}});
 }
