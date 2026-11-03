@@ -20,7 +20,10 @@ Update (batch 3, partial): incoming-attack, native-publications, city-core, pvp-
 
 Update (batch 4): consequences, commitments, strategy, contact-groups and opening-attendance fully resolved; session-opening and memory-lifecycle partial. Status: fully resolved 17 files/31 uses; partial 14 files/87 uses; unresolved 54 files/92 uses.
 
+Update (batch 5): nine more files fully resolved (gm-action-review, gm-ruling, assembly-planning, session-opening-recovery, encounter-grounding, fresh-npc-authoring, seed-drafts, owned-community, scene-setup) and five partial. Status: fully resolved 26 files/53 uses; partial 19 files/102 uses; unresolved 40 files/55 uses.
+
 Next: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 

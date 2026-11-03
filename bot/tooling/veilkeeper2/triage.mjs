@@ -48,6 +48,20 @@ export const RESOLVED_WRITERS=Object.freeze({
   'bot/src/frameworks/session/opening-attendance.js':{kinds:['opening_attendance_registration','opening_entry_opportunity'],evidence:'opening-attendance.js:5 const KIND; :155,158 getCityRecord opening_entry_opportunity'},
   'bot/src/frameworks/session/session-opening.js':{kinds:['session_opening_job'],partial:true,evidence:'session-opening.js:4 const KIND; :34,96,155 rows come from inspectSessionOpening, not traced'},
   'bot/src/frameworks/knowledge/memory-lifecycle.js':{kinds:['memory_revision'],partial:true,evidence:'memory-lifecycle.js:107,118 traced; :82 old row origin not traced'},
+  'bot/src/frameworks/daggerheart/gm-action-review-rules.js':{kinds:['typed_intent','unsupported_action'],evidence:'gm-action-review-rules.js:64,107,109 getCityRecord rows'},
+  'bot/src/frameworks/daggerheart/gm-ruling-rules.js':{kinds:['typed_intent','unsupported_action'],evidence:'gm-ruling-rules.js:143,151,173 getCityRecord rows'},
+  'bot/src/application/workflows/assembly-planning.js':{kinds:['assembly_refresh'],evidence:'assembly-planning.js:73,92,100 getCityRecord assembly_refresh'},
+  'bot/src/application/workflows/session-opening-recovery.js':{kinds:['session_opening_precommit_review','session_opening_review'],evidence:'session-opening-recovery.js:54,99,103 getCityRecord rows'},
+  'bot/src/frameworks/daggerheart/encounter-grounding-rules.js':{kinds:['encounter_binding','encounter_proposal'],evidence:'encounter-grounding-rules.js:52,70 getCityRecord rows'},
+  'bot/src/frameworks/narrative/fresh-npc-authoring.js':{kinds:['npc_authoring_attempt'],evidence:'fresh-npc-authoring.js:135,140 getCityRecord attempt'},
+  'bot/src/frameworks/world/seed-drafts.js':{kinds:['seed_draft'],evidence:'seed-drafts.js:67,163 before=getCityRecord seed_draft'},
+  'bot/src/frameworks/knowledge/owned-community.js':{kinds:['organization_request'],evidence:'owned-community.js:58,107 getCityRecord organization_request'},
+  'bot/src/frameworks/session/scene-setup.js':{kinds:['scene_setup'],evidence:'scene-setup.js:89,103 getCityRecord scene_setup'},
+  'bot/src/frameworks/world/infrastructure.js':{kinds:['infrastructure'],partial:true,evidence:'infrastructure.js:80 traced; :63 lookup.get row not traced'},
+  'bot/src/frameworks/daggerheart/typed-roll-outcome-rules.js':{kinds:['roll_request'],partial:true,evidence:'typed-roll-outcome-rules.js:68 traced; :33,:37,:41 rows not traced'},
+  'bot/src/frameworks/daggerheart/pc-death-rules.js':{kinds:['pc_death_outcome'],partial:true,evidence:'pc-death-rules.js:96 traced; :53,:96 requestProof and :263 blazeActionAuthorization rows not traced'},
+  'bot/src/frameworks/daggerheart/pvp-round-rules.js':{kinds:['pvp_proposal','pvp_resolution_receipt'],partial:true,evidence:'pvp-round-rules.js:147 traced; :30,:37 w rows not traced'},
+  'bot/src/frameworks/intent/semantic-intake.js':{kinds:['semantic_intent_proposal'],partial:true,evidence:'semantic-intake.js:166 traced; :122,:168 rows not traced'},
   'bot/src/frameworks/operations/ai-review.js':{kinds:['ai_intent','consequence','goal_transition','group_transition','organization_request','seed_draft','strategy'],evidence:'ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks'}
 });
 /** Review aid: for a `{...name,` spread write, the nearest earlier assignment of `name` in the file.

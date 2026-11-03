@@ -7,7 +7,13 @@
         "assembly_refresh",
         "assembly_refresh_lease",
         "assembly_refresh_review"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "assembly_refresh"
+        ],
+        "evidence": "assembly-planning.js:73,92,100 getCityRecord assembly_refresh"
+      }
     },
     "bot/src/application/workflows/assembly-publications.js": {
       "uses": 2,
@@ -24,7 +30,14 @@
         "native_opening_precommit_review",
         "session_opening_precommit_review",
         "session_opening_review"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "session_opening_precommit_review",
+          "session_opening_review"
+        ],
+        "evidence": "session-opening-recovery.js:54,99,103 getCityRecord rows"
+      }
     },
     "bot/src/application/workflows/session-opening-runner.js": {
       "uses": 1,
@@ -70,7 +83,14 @@
       "candidateKinds": [
         "encounter_actor",
         "encounter_binding"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "encounter_binding",
+          "encounter_proposal"
+        ],
+        "evidence": "encounter-grounding-rules.js:52,70 getCityRecord rows"
+      }
     },
     "bot/src/frameworks/daggerheart/environment-access-rules.js": {
       "uses": 1,
@@ -150,7 +170,14 @@
         "gm_action_review_receipt",
         "ordinary_effect_review",
         "unsupported_action"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "typed_intent",
+          "unsupported_action"
+        ],
+        "evidence": "gm-action-review-rules.js:64,107,109 getCityRecord rows"
+      }
     },
     "bot/src/frameworks/daggerheart/gm-execution-rules.js": {
       "uses": 2,
@@ -172,7 +199,14 @@
         "action",
         "gm_action_ruling",
         "unsupported_action"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "typed_intent",
+          "unsupported_action"
+        ],
+        "evidence": "gm-ruling-rules.js:143,151,173 getCityRecord rows"
+      }
     },
     "bot/src/frameworks/daggerheart/group-feature-execution-rules.js": {
       "uses": 2,
@@ -261,7 +295,14 @@
         "pc_death_owner_choice",
         "pc_death_recovery_allocation",
         "pc_death_review"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pc_death_outcome"
+        ],
+        "partial": true,
+        "evidence": "pc-death-rules.js:96 traced; :53,:96 requestProof and :263 blazeActionAuthorization rows not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pc-effect-rules.js": {
       "uses": 2,
@@ -428,7 +469,15 @@
         "pvp_round_continuation",
         "pvp_round_receipt",
         "pvp_strike_receipt"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_proposal",
+          "pvp_resolution_receipt"
+        ],
+        "partial": true,
+        "evidence": "pvp-round-rules.js:147 traced; :30,:37 w rows not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-terminal-rules.js": {
       "uses": 1,
@@ -473,7 +522,14 @@
         "action_outcome_receipt",
         "compound_action",
         "native_adjudication"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "roll_request"
+        ],
+        "partial": true,
+        "evidence": "typed-roll-outcome-rules.js:68 traced; :33,:37,:41 rows not traced"
+      }
     },
     "bot/src/frameworks/intent/action-dependency.js": {
       "uses": 1,
@@ -499,7 +555,14 @@
         "semantic_intent_diagnostic",
         "semantic_intent_proposal",
         "typed_intent"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "semantic_intent_proposal"
+        ],
+        "partial": true,
+        "evidence": "semantic-intake.js:166 traced; :122,:168 rows not traced"
+      }
     },
     "bot/src/frameworks/intent/typed-intent-persistence.js": {
       "uses": 1,
@@ -566,7 +629,13 @@
         "organization_request",
         "owner_request_review",
         "property"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "organization_request"
+        ],
+        "evidence": "owned-community.js:58,107 getCityRecord organization_request"
+      }
     },
     "bot/src/frameworks/knowledge/personal-continuity.js": {
       "uses": 2,
@@ -586,7 +655,13 @@
         "npc_authoring_attempt",
         "npc_authoring_hold",
         "npc_fresh_authoring"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "npc_authoring_attempt"
+        ],
+        "evidence": "fresh-npc-authoring.js:135,140 getCityRecord attempt"
+      }
     },
     "bot/src/frameworks/narrative/fresh-scene-authoring.js": {
       "uses": 2,
@@ -773,7 +848,13 @@
         "owner_initial_scene_confirmation",
         "scene_setup",
         "scene_setup_declaration"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_setup"
+        ],
+        "evidence": "scene-setup.js:89,103 getCityRecord scene_setup"
+      }
     },
     "bot/src/frameworks/session/session-opening.js": {
       "uses": 4,
@@ -929,7 +1010,14 @@
         "connect",
         "infrastructure",
         "service"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "infrastructure"
+        ],
+        "partial": true,
+        "evidence": "infrastructure.js:80 traced; :63 lookup.get row not traced"
+      }
     },
     "bot/src/frameworks/world/long-projects.js": {
       "uses": 3,
@@ -981,7 +1069,13 @@
         "seed_reference",
         "seed_source",
         "seed_template"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "seed_draft"
+        ],
+        "evidence": "seed-drafts.js:67,163 before=getCityRecord seed_draft"
+      }
     },
     "bot/src/frameworks/world/upkeep.js": {
       "uses": 1,
