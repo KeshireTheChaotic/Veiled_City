@@ -1,0 +1,7 @@
+# R3 — durable pre-roll Fear reservations and exact notices
+
+Added dedicated native SQLite reservation state. Existing campaign Fear is capped at 12; pending/announced reservations reduce availability. One pending request binds an immutable native opportunity, owner/control, NPC decision and base cost one. Exact replay is inert. An acknowledged notice must match binding hash, owner-only recipients, target/NPC and printed/base costs; it advances to announced while funds remain reserved. Cancellation releases reservation without spending. No attack RNG, Fear debit or execution API exists.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-fear-reservations.test.mjs`. Actual result: 2/2 passed, zero failures/skips, 53.0434 ms. Real SQLite cases cover availability across competing pending requests, replay, cancellation and exact owner-only notice proof. Native opportunity/delivery authorization is injected. No live notice or attack was used; no unchanged suite reran.
+
+Remaining: canonical source ancestry, current source/scene/control readers, reservation history/reopen/crash qualification, cancellation/window policy, exact live notice acknowledgements, interruption locking and atomic Fear debit plus validated NPC attack effects. All other Fear/PvP mechanics and full R0–R8 gates remain open. No production change, migration, deployment or phase push occurred. Rollback leaves opt-in storage unused. Next: bind reservations to durable native request/decision proofs and qualify pre-roll timing before enabling execution.

@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/fear-reservations.js",
+    "sha256": "47941b13d3f0f4264fd85cd51f098cb87e07ed1ff6a6ef4c137328ba17f0cf75"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-fear-reservations.test.mjs",
+    "sha256": "1919164c850568135ca74f0980b5f82485fbdf62020ab6424a5c62b4cc372112"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_FEAR_RESERVATIONS_REPORT.md",
+    "sha256": "bfba46262f7eb6024bbe5568f746e072d8bdf607cff7e5cdc5716e6f27476b4e"
+  }
+]
