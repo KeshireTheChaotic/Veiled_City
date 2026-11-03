@@ -1,0 +1,14 @@
+[
+  {
+    "path": "bot/src/v2/rules/action-store.js",
+    "sha256": "175e4fbec022d60f469fa974e7310628d9af037e2ae6d4d162b8923a799b7ce6"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-action-durability.test.mjs",
+    "sha256": "bc9f4a48cdfecc112759e894ba2484078f5a3351d294702fd9b58e4dec5e4799"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_ACTION_STARTUP_LOCK_REPORT.md",
+    "sha256": "60d50539ca14b443dc02fddfc6bb70bb3b75692a5e0e169b46046b9223275b0c"
+  }
+]

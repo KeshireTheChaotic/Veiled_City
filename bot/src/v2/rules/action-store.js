@@ -10,8 +10,9 @@ const decode=r=>r?JSON.parse(r.data):null;
 /** Native control state only: cannot mark effects resolved or patch actor state. */
 export function openActionStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
-  try{if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents','vk3_pc_defenses','vk3_pc_life'].includes(r.name)))throw new Error('Dedicated action database required');
-    db.exec('PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS vk3_actions(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id)); CREATE TABLE IF NOT EXISTS vk3_action_events(campaign TEXT,source TEXT,data TEXT,PRIMARY KEY(campaign,source));');
+  try{db.exec('PRAGMA busy_timeout=5000;');
+    if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!['vk3_actions','vk3_action_events','vk3_action_hope','vk3_cost_terms','vk3_cost_consents','vk3_pc_defenses','vk3_pc_life'].includes(r.name)))throw new Error('Dedicated action database required');
+    db.exec('CREATE TABLE IF NOT EXISTS vk3_actions(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id)); CREATE TABLE IF NOT EXISTS vk3_action_events(campaign TEXT,source TEXT,data TEXT,PRIMARY KEY(campaign,source));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_action_hope(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor))');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_cost_terms(campaign TEXT,action TEXT,data TEXT,PRIMARY KEY(campaign,action)); CREATE TABLE IF NOT EXISTS vk3_cost_consents(campaign TEXT,id TEXT,data TEXT,PRIMARY KEY(campaign,id));');
     db.exec('CREATE TABLE IF NOT EXISTS vk3_pc_defenses(campaign TEXT,actor TEXT,data TEXT,PRIMARY KEY(campaign,actor));');
