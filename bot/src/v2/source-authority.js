@@ -15,7 +15,7 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
   const issued=new Map();
   if(sourceRegistry!==null&&(typeof sourceRegistry.get!=='function'||typeof sourceRegistry.put!=='function'))throw new TypeError('Native source registry required');
   const getIssued=id=>issued.get(id)??sourceRegistry?.get(id);
-  function inspect(event){
+  function inspect(event,{receiptOnly=false}={}){
     if(!event||Object.keys(event).sort().join(',')!=='actorId,campaignId,messageId,userId'
       ||!Object.values(event).every(nonempty))fail();
     const message=readMessage(event.campaignId,event.messageId);
@@ -34,11 +34,12 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
     const session=readSession(event.campaignId,scene.sessionId);
     if(!session||session.id!==scene.sessionId||session.campaignId!==event.campaignId||session.status!=='active'||!nonempty(session.revision))fail();
     const actor=readActor(event.campaignId,event.actorId);
-    if(!actor||actor.id!==event.actorId||actor.campaignId!==event.campaignId||actor.sceneId!==scene.id||actor.status!=='active'
+    if(!actor||actor.id!==event.actorId||actor.campaignId!==event.campaignId||actor.sceneId!==scene.id||!(receiptOnly?['active','dead'].includes(actor.status):actor.status==='active')
       ||!['pc','npc'].includes(actor.kind)||!nonempty(actor.controlRevision)||actor.controllerUserId!==event.userId
       ||!['owner','proxy'].includes(actor.controlRole))fail();
     if(actor.controlRole==='owner'&&(actor.kind!=='pc'||actor.ownerUserId!==event.userId))fail();
-    if(actor.controlRole==='proxy'&&(actor.proxyAuthorized!==true||!nonempty(actor.delegationRef)))fail();
+    if(actor.controlRole==='proxy'&&(actor.kind!=='npc'||actor.proxyAuthorized!==true||!nonempty(actor.delegationRef)))fail();
+    if(receiptOnly&&(actor.kind!=='pc'||actor.controlRole!=='owner'))fail();
     const assignment=scene.participants.filter(p=>p.userId===event.userId&&p.actorId===event.actorId);
     if(assignment.length!==1||!['present','late','guest'].includes(assignment[0].presence))fail();
     const recipients=[...channel.recipientIds].sort();
@@ -68,6 +69,14 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
   },inspectReference(ref,revision){
     const prior=getIssued(ref);if(!prior)fail();const {proof}=inspect(prior.event);
     if(proof.revision!==revision||digest(proof)!==prior.fingerprint)fail();return structuredClone(proof);
+  },inspectReceiptSource(ref,revision,scope){
+    // Native receipt ancestry only. Scope owner must come from authenticated
+    // native policy, never model/player JSON. No text or actionable proof returns.
+    if(!scope||Object.keys(scope).sort().join(',')!=='actorId,campaignId,ownerUserId,sceneId'||!Object.values(scope).every(nonempty))fail();
+    const prior=getIssued(ref);if(!prior||prior.event.campaignId!==scope.campaignId||prior.event.actorId!==scope.actorId||prior.event.userId!==scope.ownerUserId)fail();
+    const {proof}=inspect(prior.event,{receiptOnly:true});
+    if(proof.revision!==revision||proof.scene!==scope.sceneId||digest(proof)!==prior.fingerprint)fail();
+    return Object.freeze({purpose:'owner_receipt_read',sourceRef:ref,sourceRevision:revision,...scope,recipientIds:Object.freeze([...proof.recipients])});
   },inspectControl(source){
     if(!revalidate(source))fail();return Object.freeze(structuredClone(getIssued(source.id).control));
   }});

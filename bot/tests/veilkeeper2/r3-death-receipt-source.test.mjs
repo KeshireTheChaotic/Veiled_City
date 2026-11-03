@@ -1,0 +1,47 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {mkdtempSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,resolve,sep} from 'node:path';
+import {openActionStore} from '../../src/v2/rules/action-store.js';
+import {openSourceRegistry} from '../../src/v2/source-registry.js';
+import {createSourceAuthority} from '../../src/v2/source-authority.js';
+import {createKernel,createMemoryJournal,createRulesetRegistry} from '../../src/v2/kernel.js';
+const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
+function fixture(t,{move='risk_it_all'}={}){
+  const dir=mkdtempSync(join(tmpdir(),'vk3-real-death-source-'));let actions=openActionStore(join(dir,'actions.sqlite')),registry=openSourceRegistry(join(dir,'sources.sqlite')),sources;
+  t.after(()=>{actions.close();registry.close();assert.ok(resolve(dir).startsWith(resolve(tmpdir())+sep));rmSync(dir,{recursive:true,force:true});});
+  const check=()=>{};actions.initializePcDefenses({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',hp:{current:5,max:6},armorSlots:{current:0,max:3}},{check});actions.initializeHope({campaignId:'c',actorId:'pc',ownerUserId:'u',hope:3,cap:6},{check});actions.initializePcLife({campaignId:'c',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:'profile',sourceRevision:'1',level:2,stress:{current:3,max:6}},{check});
+  const messages=new Map(['attempt','armor','review','choice'].map(id=>[id,{id,campaignId:'c',userId:'u',channelId:id==='attempt'?'party':'private',revision:'1',deleted:false,text:`Native owner ${id} event`}])) ,channels=new Map([['party',{id:'party',campaignId:'c',sceneId:'s',revision:'1',kind:'party',permissionsVerified:true,recipientIds:['u','v'],writerIds:['u','v']}],['private',{id:'private',campaignId:'c',sceneId:'s',revision:'1',kind:'private',ownerUserId:'u',permissionsVerified:true,recipientIds:['u'],writerIds:['u']}]]);
+  const readers={readMessage:(_c,id)=>messages.get(id),readChannel:(_c,id)=>channels.get(id),readScene:()=>({id:'s',campaignId:'c',sessionId:'session',status:'active',revision:'1',participants:[{actorId:'pc',userId:'u',presence:'present'}]}),readSession:()=>({id:'session',campaignId:'c',status:'active',revision:'1'}),readActor:()=>{const s=actions.readPcLife('c','pc');return {id:'pc',campaignId:'c',sceneId:'s',kind:'pc',status:s.life.status,ownerUserId:s.life.ownerUserId,controllerUserId:s.life.ownerUserId,controlRole:'owner',controlRevision:s.life.controlRevision};}};
+  sources=createSourceAuthority({...readers,sourceRegistry:registry});const event=id=>({campaignId:'c',actorId:'pc',userId:'u',messageId:id}),proofs=Object.fromEntries([...messages.keys()].map(id=>[id,sources.authenticate(event(id))]));
+  const kernel=createKernel({authority:sources,journal:createMemoryJournal(),rules:createRulesetRegistry()}),handle=kernel.intake(event('choice')),capabilities=kernel.bind(handle);
+  const attack={id:'attack',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:'saved-hit',resultHash:'native-hit-hash',termsHash:'native-offer-hash',sourceRef:proofs.attempt.id,sourceRevision:proofs.attempt.revision,damage:10,major:8,severe:16,defenses:{resistance:'none',armorReduction:1,armorAllowed:true}},armor={id:'armor',kind:'incoming_armor_choice',campaignId:'c',sceneId:'s',attackRef:'attack',actorId:'pc',ownerUserId:'u',controlRevision:'1',resultRef:attack.resultRef,resultHash:attack.resultHash,termsHash:attack.termsHash,sourceRef:proofs.armor.id,sourceRevision:proofs.armor.revision,useArmor:false};
+  actions.commitIncomingDamage({campaignId:'c',attackRef:'attack',expectedRevision:1},{check,readAttack:()=>attack,readArmorChoice:()=>armor});
+  const snapshot=()=>{const {life,defenses,hope}=actions.readPcLife('c','pc');return {actorId:'pc',ownerUserId:life.ownerUserId,controlRevision:life.controlRevision,status:life.status,data:{level:life.level,death_state:life.deathState,resources:{hp:defenses.hp,armor:defenses.armorSlots,stress:life.stress,hope:hope.hope,hope_max:hope.cap},features:[]}};};
+  const eligible=actions.readIncomingDeath('c','attack'),base={campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',requestRef:eligible.id,eligibilityHash:hash(eligible),resourceRevision:2,actorSnapshotHash:hash(snapshot())};
+  actions.recordIncomingDeathReview('c','attack',{check,sourceAuthority:sources,readEvidence:()=>({...base,id:'review',kind:'incoming_death_review',sourceRef:proofs.review.id,sourceRevision:proofs.review.revision,sequence:1})});actions.recordIncomingDeathChoice('c','attack',{check,sourceAuthority:sources,readEvidence:()=>({...base,id:'choice',kind:'incoming_death_choice',sourceRef:proofs.choice.id,sourceRevision:proofs.choice.revision,reviewRef:'review',move,sequence:2})});
+  return {get actions(){return actions;},get sources(){return sources;},get options(){return {check,sourceAuthority:sources,readActorSnapshot:snapshot};},messages,channels,proofs,event,capabilities,reopen(){actions.close();registry.close();actions=openActionStore(join(dir,'actions.sqlite'));registry=openSourceRegistry(join(dir,'sources.sqlite'));sources=createSourceAuthority({...readers,sourceRegistry:registry});}};
+}
+test('real issued source proofs and canonical death permit receipt replay after reopen without restoring live capabilities',t=>{
+  const f=fixture(t),faces=[1,12],result=f.actions.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});assert.equal(result.result,'dead');f.reopen();
+  assert.equal(f.actions.readPcLife('c','pc').life.status,'dead');assert.equal(f.sources.revalidate(f.proofs.choice),false);assert.throws(()=>f.sources.authenticate(f.event('choice')));assert.throws(()=>f.sources.inspectReference(f.proofs.choice.id,f.proofs.choice.revision));
+  assert.equal(f.capabilities.context_read({topic:'conversation'}).code,'source_authority_changed');
+  const metadata=f.sources.inspectReceiptSource(f.proofs.choice.id,f.proofs.choice.revision,{campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u'});assert.equal(metadata.text,undefined);assert.equal(metadata.actors,undefined);
+  assert.deepEqual(f.actions.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('No reroll');}}),result);
+});
+test('real owner receipt checks reject other scopes and edited private choice sources after death',t=>{
+  const f=fixture(t),faces=[1,12];f.actions.resolveIncomingDeath('c','attack',{...f.options,rng:()=>faces.shift()});f.reopen();
+  assert.throws(()=>f.sources.inspectReceiptSource(f.proofs.choice.id,f.proofs.choice.revision,{campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'v'}));
+  f.messages.get('choice').text='Edited native choice';assert.throws(()=>f.actions.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('Must not roll');}}));assert.equal(f.actions.readPcLife('c','pc').life.status,'dead');assert.equal(f.actions.readIncomingDeathOutcome('c','attack').result,'dead');
+});
+
+test('completed Blaze replays through cold actual owner-source registry without granting a second action',t=>{
+  const f=fixture(t,{move:'blaze_of_glory'}),initial=f.actions.resolveIncomingDeath('c','attack',{...f.options,rng(){throw new Error('No dice');}});
+  f.messages.set('final',{id:'final',campaignId:'c',userId:'u',channelId:'party',revision:'1',deleted:false,text:'My independently authored final action.'});const finalSource=f.sources.authenticate(f.event('final'));
+  const action={id:'final-action',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',sourceRef:finalSource.id,sourceRevision:finalSource.revision,status:'accepted',kind:'ordinary_action',parametersHash:'c'.repeat(64)},approval={id:'gm-review',revision:'1',kind:'human_gm_blaze_approval',status:'approved',campaignId:'c',sceneId:'s',requestRef:initial.requestRef,actionRef:action.id,actionRevision:action.revision,actionHash:hash(action),outcomeHash:hash(initial),reviewerUserId:'gm',rulingRef:'ruling',rulingRevision:'1',sourceRef:'gm-source',sourceRevision:'1'},options={...f.options,actionRef:action.id,approvalRef:approval.id,readOwnerAction:()=>action,inspectGmApproval:()=>approval};
+  const approved=f.actions.approveIncomingBlaze('c','attack',options),critical=f.actions.createIncomingBlazeCritical('c','attack',options),proof={id:'terminal',revision:'1',campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',actionRef:action.id,actionRevision:action.revision,actionHash:hash(action),approvalRef:approved.id,approvalHash:hash(approved),criticalRef:critical.id,criticalHash:hash(critical),kind:action.kind,status:'resolved',receiptRef:'native-final',receiptHash:'d'.repeat(64),effectRef:null,effectHash:null,consentReceiptRef:null,consentReceiptHash:null,stateAfterHash:hash(f.actions.readPcLife('c','pc')),actorAfterHash:hash(f.options.readActorSnapshot())};
+  action.status='resolved';const final=f.actions.completeIncomingBlaze('c','attack',{...options,inspectTerminalAction:()=>proof});f.reopen();const replay={...options,...f.options,inspectTerminalAction:()=>proof};
+  assert.equal(f.sources.revalidate(finalSource),false);assert.deepEqual(f.actions.completeIncomingBlaze('c','attack',replay),final);assert.throws(()=>f.actions.createIncomingBlazeCritical('c','attack',replay),/already consumed/);assert.throws(()=>f.sources.authenticate(f.event('final')));assert.equal(f.actions.readPcLife('c','pc').life.status,'dead');
+});

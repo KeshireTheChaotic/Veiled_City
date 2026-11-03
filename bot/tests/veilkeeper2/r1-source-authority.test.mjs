@@ -51,3 +51,22 @@ test('native historical reference inspection rechecks issued source and revision
   const f=fixture(),proof=f.authority.authenticate(f.event);assert.deepEqual(f.authority.inspectReference(proof.id,proof.revision),proof);
   assert.throws(()=>f.authority.inspectReference(proof.id,'other'));assert.throws(()=>f.authority.inspectReference('forged',proof.revision));f.message.text='Edited decision';assert.throws(()=>f.authority.inspectReference(proof.id,proof.revision));
 });
+
+const receiptScope={campaignId:'c',sceneId:'scene',actorId:'pc',ownerUserId:'u'};
+test('dead owner can validate old receipt ancestry without text, live intake, control or active grant',()=>{
+  const f=fixture(),source=f.authority.authenticate(f.event);f.actor.status='dead';
+  const metadata=f.authority.inspectReceiptSource(source.id,source.revision,receiptScope);assert.equal(metadata.purpose,'owner_receipt_read');assert.deepEqual(metadata.recipientIds,['u','v']);assert.equal(metadata.text,undefined);assert.equal(metadata.actors,undefined);assert.equal(metadata.principal,undefined);
+  assert.equal(f.authority.revalidate(source),false);assert.equal(f.authority.revalidate(metadata),false);assert.throws(()=>f.authority.authenticate(f.event));assert.throws(()=>f.authority.inspectReference(source.id,source.revision));assert.throws(()=>f.authority.eventForReference(source.id));assert.throws(()=>f.authority.inspectControl(source));
+});
+test('receipt ancestry remains exact-owner, exact-revision and source/audience/control revocable',()=>{
+  for(const change of [f=>{f.message.text='Edited';},f=>{f.message.deleted=true;},f=>{f.channel.recipientIds.push('other');},f=>{f.channel.permissionsVerified=false;},f=>{f.actor.controlRevision='2';},f=>{f.actor.ownerUserId='other';},f=>{f.scene.participants[0].presence='absent';},f=>{f.session.status='ended';}]){
+    const f=fixture(),source=f.authority.authenticate(f.event);f.actor.status='dead';change(f);assert.throws(()=>f.authority.inspectReceiptSource(source.id,source.revision,receiptScope));
+  }
+  const f=fixture(),source=f.authority.authenticate(f.event);f.actor.status='dead';
+  for(const patch of [{campaignId:'other'},{sceneId:'other'},{actorId:'other'},{ownerUserId:'other'},{role:'gm'}])assert.throws(()=>f.authority.inspectReceiptSource(source.id,source.revision,{...receiptScope,...patch}));
+  assert.throws(()=>f.authority.inspectReceiptSource(source.id,'wrong',receiptScope));assert.throws(()=>f.authority.inspectReceiptSource('unknown',source.revision,receiptScope));
+});
+test('only NPCs may be human proxies, and their source cannot become PC-owner receipt authority',()=>{
+  const pc=fixture();Object.assign(pc.actor,{ownerUserId:'other',controlRole:'proxy',proxyAuthorized:true,delegationRef:'delegation'});assert.throws(()=>pc.authority.authenticate(pc.event));
+  const npc=fixture();Object.assign(npc.actor,{kind:'npc',ownerUserId:null,controlRole:'proxy',proxyAuthorized:true,delegationRef:'delegation'});const source=npc.authority.authenticate(npc.event);assert.equal(npc.authority.revalidate(source),true);assert.throws(()=>npc.authority.inspectReceiptSource(source.id,source.revision,receiptScope));
+});

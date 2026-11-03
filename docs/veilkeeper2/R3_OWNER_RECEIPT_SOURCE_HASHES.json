@@ -1,0 +1,34 @@
+[
+  {
+    "path": "bot/src/v2/source-authority.js",
+    "sha256": "b10c32a2f560fe26290fe4ea07fee212f5332d2342f351d32555d85d7cac5dcb"
+  },
+  {
+    "path": "bot/src/v2/rules/owner-receipt-source.js",
+    "sha256": "340c4fcb525b453a32350d030180c90b5d8aed7f5a6d5505228165406dd9cfe1"
+  },
+  {
+    "path": "bot/src/v2/rules/pc-life-state.js",
+    "sha256": "3daaa7c6be18feac2ad61864c6cf62d35c236f1cc53540d268c107e7a579ecc6"
+  },
+  {
+    "path": "bot/src/v2/rules/blaze-of-glory.js",
+    "sha256": "159512c57b25259db35dbd4af72ab7d52a74da92bc4eaeb1ca550082b03ea7f8"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r1-source-authority.test.mjs",
+    "sha256": "a91b36d5df3c53f0338ee73566170b5f5ff19091e8285fbd82a486d6cce943aa"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-death-receipt-source.test.mjs",
+    "sha256": "c360734051765137dbd8b3a0ae79f7be621ca506fa73ee9b5bc046e7d3d32765"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_OWNER_RECEIPT_SOURCE_REPORT.md",
+    "sha256": "d242f6058352daaeef01243d3908c166dcbe788b591c4b41ca046232d3d157b2"
+  },
+  {
+    "path": "docs/veilkeeper2/LEDGER.md",
+    "sha256": "251ca240615d656eb82214959e85c2cce553719c08e3b6dd89aa1e5c50698143"
+  }
+]

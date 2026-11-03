@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {createBlazeCosts} from './blaze-costs.js';
+import {inspectOwnerReceiptSource} from './owner-receipt-source.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 /** Native human review and no-dice Critical only. No effect/consent grant and
@@ -13,13 +14,16 @@ export function createBlazeOfGlory({db,tx,readPcLife,rawOutcome,deathEvent,damag
     if(!initial.actorAfter)throw new Error('Saved native Blaze frame requires reviewed migration');
     const actor=readActorSnapshot(c,e.actorId),state=readPcLife(c,e.actorId);
     if(actor?.actorId!==e.actorId||actor.ownerUserId!==e.ownerUserId||actor.controlRevision!==e.controlRevision||!terminal&&(hash(actor)!==hash(initial.actorAfter)||hash(state)!==hash(initial.after)))throw new Error('Current native Blaze actor snapshot required');
-    const original=sourceAuthority.inspectReference(cause.attack.sourceRef,cause.attack.sourceRevision);if(original.campaign!==c||original.scene!==e.sceneId||original.principal!==e.ownerUserId||!original.actors.includes(e.actorId))throw new Error('Current native Blaze cause ancestry required');
-    for(const source of [review.evidence,e]){const p=sourceAuthority.inspectReference(source.sourceRef,source.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId)||p.recipients?.length!==1||p.recipients[0]!==e.ownerUserId)throw new Error('Private owner Blaze selection source required');}
+    const receiptOnly=terminal&&Boolean(deathEvent(c,a,'blaze-final')),scope={campaignId:c,sceneId:e.sceneId,actorId:e.actorId,ownerUserId:e.ownerUserId};
+    if(receiptOnly)inspectOwnerReceiptSource(sourceAuthority,cause.attack,scope);
+    else{const original=sourceAuthority.inspectReference(cause.attack.sourceRef,cause.attack.sourceRevision);if(original.campaign!==c||original.scene!==e.sceneId||original.principal!==e.ownerUserId||!original.actors.includes(e.actorId))throw new Error('Current native Blaze cause ancestry required');}
+    for(const source of [review.evidence,e]){if(receiptOnly)inspectOwnerReceiptSource(sourceAuthority,source,scope,{privateAudience:true});else{const p=sourceAuthority.inspectReference(source.sourceRef,source.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId)||p.recipients?.length!==1||p.recipients[0]!==e.ownerUserId)throw new Error('Private owner Blaze selection source required');}}
     const actual=structuredClone(readOwnerAction(c,actionRef));
     if(!actual||!(terminal?['accepted','resolved']:['accepted']).includes(actual.status))throw new Error('Current native final action stage required');
     const raw={...actual,status:'accepted'};
     if(!raw||Object.keys(raw).sort().join(',')!=='actorId,campaignId,controlRevision,id,kind,ownerUserId,parametersHash,revision,sceneId,sourceRef,sourceRevision,status'||!Object.values(raw).every(id)||raw.id!==actionRef||raw.campaignId!==c||raw.sceneId!==e.sceneId||raw.actorId!==e.actorId||raw.ownerUserId!==e.ownerUserId||raw.controlRevision!==e.controlRevision||raw.status!=='accepted'||!['ordinary_action','pvp_attack'].includes(raw.kind)||!/^[a-f0-9]{64}$/.test(raw.parametersHash))throw new Error('Exact independently owner-authored native final action required');
-    const p=sourceAuthority.inspectReference(raw.sourceRef,raw.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId))throw new Error('Final action must retain its actual owner source');
+    if(receiptOnly)inspectOwnerReceiptSource(sourceAuthority,raw,scope);
+    else{const p=sourceAuthority.inspectReference(raw.sourceRef,raw.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId))throw new Error('Final action must retain its actual owner source');}
     const approval=structuredClone(inspectGmApproval(c,approvalRef));
     if(approval?.id!==approvalRef||approval.kind!=='human_gm_blaze_approval'||approval.status!=='approved'||approval.campaignId!==c||approval.sceneId!==e.sceneId||approval.requestRef!==initial.requestRef||approval.actionRef!==actionRef||approval.actionRevision!==raw.revision||approval.actionHash!==hash(raw)||approval.outcomeHash!==hash(initial)||!['revision','reviewerUserId','rulingRef','rulingRevision','sourceRef','sourceRevision'].every(k=>id(approval[k])))throw new Error('Authenticated human GM approval of the exact final action required');
     return {campaignId:c,sceneId:e.sceneId,requestRef:initial.requestRef,actorId:e.actorId,ownerUserId:e.ownerUserId,controlRevision:e.controlRevision,outcomeHash:hash(initial),actorSnapshotHash:hash(initial.actorAfter),stateHash:hash(initial.after),action:raw,gmApproval:approval};
