@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "5cc0f5300d87726d51cf00bf36a2da33d0aa855b90799a6c0c3c1a65f3df408c",
+    "path": "bot/src/v2/rules/pc-resources.js"
+  },
+  {
+    "sha256": "f1d437d87408840ac4ba4459b66a9f3874f1e8aa6f7a011b80901849d95328ce",
+    "path": "bot/src/v2/rules/combat.js"
+  },
+  {
+    "sha256": "03e21fa307ccd43d7a922e1dda1edb1804ff92610fee8ed0f0f80ba8fee5603a",
+    "path": "bot/tests/veilkeeper2/r3-resource-combat.test.mjs"
+  },
+  {
+    "sha256": "45d81dac9d4f367861640bed0116c444204804e0846a209b82301e2104e7aabb",
+    "path": "docs/veilkeeper2/R3_RESOURCE_COMBAT_REPORT.md"
+  }
+]

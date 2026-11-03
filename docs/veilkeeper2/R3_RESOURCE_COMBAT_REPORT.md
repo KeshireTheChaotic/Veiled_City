@@ -1,0 +1,7 @@
+# R3 — resource and combat arithmetic
+
+Ported pure PC resource/marked-slot and combat helpers into v2/rules without legacy framework imports. Valid native pool calculations, permanent Hope cap, cost overflow/insufficient Hope, adversary remaining-versus-marked HP and damage thresholds preserve pinned behavior. The new PC wrapper additionally requires a known pool (Hope/HP/Stress/Armor) and safe integer delta; malformed numbers cannot produce fractional/NaN effects. No mutation or permission is granted by these helpers.
+
+Fresh command from bot: `node --test tests/veilkeeper2/r3-resource-combat.test.mjs`. Actual result: 4/4 passed, zero failures/skips, 49.5332 ms. New cases cover cap/cost boundaries, invalid deltas/state, unchanged input, damage threshold equality/minions and adversary remaining HP. No legacy tests/fixtures were imported. Valid-domain arithmetic parity is focused evidence, not complete mechanics qualification.
+
+Native resource authority, consent and owner spending, attack success/armor/feature rules, cost reservation, transactional state+receipt consumption, full encounter construction and all remaining action parity require further work. No executable effects or AI tools were enabled. R3 remains partial; R0–R2 holds and R4–R8 gates remain open. No production change, migration, deployment or phase push occurred. Next: validated native outcome transaction with exact source/resource revisions and once-only receipt, using these calculators rather than generic patches.
