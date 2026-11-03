@@ -1,0 +1,18 @@
+[
+  {
+    "path": "bot/src/v2/component-decision-store.js",
+    "sha256": "fe00c6b6c64746176602c9d7e5c971fcb6ccf9b312d4b5e6d5341518411626d1"
+  },
+  {
+    "path": "bot/src/v2/discord-cost-decisions.js",
+    "sha256": "bbd128fcd436fc3f14d1b94f0514e6cc6c64f432345e01bf6fcf736252e2e6e4"
+  },
+  {
+    "path": "bot/tests/veilkeeper2/r3-component-decision-store.test.mjs",
+    "sha256": "c022a512e93ce555a607b6991695843c356ed69d5aff2d04294b1a75007fea4c"
+  },
+  {
+    "path": "docs/veilkeeper2/R3_COMPONENT_DECISION_STORE_REPORT.md",
+    "sha256": "941449427a5f9fceedada44acb3732e756d1e9243d7b922864b271781a174bd0"
+  }
+]
