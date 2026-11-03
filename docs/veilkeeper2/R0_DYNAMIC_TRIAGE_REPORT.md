@@ -14,7 +14,10 @@ Update (source-resolved writers): the five files with no literal candidate are r
 
 Update (8 more source-resolved writers): environment-recovery, historical-archive, encounter-activation, database.js (goal_state writer), long-projects, minor-npc-service, reviewed-authoring and session-opening-runner (partial: row origin through helpers not re-traced) are now in RESOLVED_WRITERS. Resolved: 13 files / 16 uses; unresolved: 72 files / 194 uses. IMPORTANT FINDING: the per-file literal candidate set is unreliable (wrong for environment-recovery, historical-archive, encounter-activation and database.js, where the written kind is a constant/read-spread of a different kind). Do not use candidates as resolution; only RESOLVED_WRITERS entries (source-read) close a kind set.
 
-Next: resolve the remaining 72 writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+Update (partial resolutions + review aid): spreadOrigin() in triage.mjs shows the nearest earlier assignment of a spread variable as a review aid. pvp-fear-move, pvp-brawl, pvp-agreement and scene-action-window are recorded as PARTIAL (traced kinds only; untraced lines named in the evidence). Status: fully resolved 12 files/15 uses; partial 5 files/38 uses; unresolved 68 files/157 uses. Test: r0-triage 4 passed.
+
+Next: resolve the remaining unresolved writer files' spread/variable kinds against their per-file candidates, then the 118 forwarding wrappers. Original next item: resolve the 210 city-record writers' kind sets by tracing the spread/variable source to literal kinds.
+
 
 
 

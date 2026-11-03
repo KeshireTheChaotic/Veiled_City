@@ -283,7 +283,15 @@
         "pvp_terms_offer",
         "pvp_terms_review",
         "pvp_terms_revision"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_agreement",
+          "pvp_proposal"
+        ],
+        "partial": true,
+        "evidence": "pvp-agreement-rules.js:100,170,230 traced; :232/:243/:264-298 plan/participant origins not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-attack-rules.js": {
       "uses": 2,
@@ -308,7 +316,16 @@
         "pvp_spotlight_pass",
         "pvp_spotlight_review",
         "pvp_target_lock"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_attack_request",
+          "pvp_spotlight_opportunity",
+          "pvp_target_lock"
+        ],
+        "partial": true,
+        "evidence": "pvp-brawl-rules.js:183,256,265,266,280,281 traced; :152/:155/:184/:254 w-row origins not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-damage-rules.js": {
       "uses": 6,
@@ -351,7 +368,16 @@
         "pvp_fear_selection",
         "pvp_fear_threat_progression",
         "pvp_fear_threat_progression_receipt"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "pvp_exchange_gate",
+          "pvp_fear_move_decision",
+          "pvp_fear_trigger"
+        ],
+        "partial": true,
+        "evidence": "pvp-fear-move-rules.js:535,667,705,731,733 traced; :403 kind variable, :430/:467/:484/:516/:533 row origins not traced"
+      }
     },
     "bot/src/frameworks/daggerheart/pvp-profile-rules.js": {
       "uses": 1,
@@ -669,7 +695,15 @@
         "scene_action_window",
         "scene_window_occurrence",
         "window_action_receipt"
-      ]
+      ],
+      "resolved": {
+        "kinds": [
+          "scene_action_participant",
+          "scene_action_window"
+        ],
+        "partial": true,
+        "evidence": "scene-action-window.js:82,92,116,119 traced; :146/:154/:164 plans.get origin not traced"
+      }
     },
     "bot/src/frameworks/session/scene-continuity.js": {
       "uses": 1,

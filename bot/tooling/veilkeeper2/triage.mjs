@@ -30,8 +30,19 @@ export const RESOLVED_WRITERS=Object.freeze({
   'bot/src/frameworks/world/minor-npc-service.js':{kinds:['minor_draft'],evidence:'minor-npc-service.js:30 before=getCityRecord(...,"minor_draft")'},
   'bot/src/frameworks/world/reviewed-authoring.js':{kinds:['world_draft'],evidence:'reviewed-authoring.js:60 before=getCityRecord(...,"world_draft")'},
   'bot/src/application/workflows/session-opening-runner.js':{kinds:['session_opening_job'],partial:true,evidence:'session-opening-runner.js:41,94 read session_opening_job; save() row comes from inspect/assert helpers not re-traced'},
+  'bot/src/frameworks/daggerheart/pvp-fear-move-rules.js':{kinds:['pvp_exchange_gate','pvp_fear_move_decision','pvp_fear_trigger'],partial:true,evidence:'pvp-fear-move-rules.js:535,667,705,731,733 traced; :403 kind variable, :430/:467/:484/:516/:533 row origins not traced'},
+  'bot/src/frameworks/daggerheart/pvp-brawl-rules.js':{kinds:['pvp_attack_request','pvp_spotlight_opportunity','pvp_target_lock'],partial:true,evidence:'pvp-brawl-rules.js:183,256,265,266,280,281 traced; :152/:155/:184/:254 w-row origins not traced'},
+  'bot/src/frameworks/daggerheart/pvp-agreement-rules.js':{kinds:['pvp_agreement','pvp_proposal'],partial:true,evidence:'pvp-agreement-rules.js:100,170,230 traced; :232/:243/:264-298 plan/participant origins not traced'},
+  'bot/src/frameworks/session/scene-action-window.js':{kinds:['scene_action_participant','scene_action_window'],partial:true,evidence:'scene-action-window.js:82,92,116,119 traced; :146/:154/:164 plans.get origin not traced'},
   'bot/src/frameworks/operations/ai-review.js':{kinds:['ai_intent','consequence','goal_transition','group_transition','organization_request','seed_draft','strategy'],evidence:'ai-review.js:21 REVIEW_KINDS and :38/:50 membership checks'}
 });
+/** Review aid: for a `{...name,` spread write, the nearest earlier assignment of `name` in the file.
+ * It shows where a row came from; a human still has to read it before adding a resolution.
+ */
+export function spreadOrigin(source,use){
+  const name=/\{\s*\.\.\.\s*([A-Za-z_$][\w$]*)/.exec(use.expression)?.[1];if(!name)return null;
+  const before=source.split(/\r?\n/).slice(0,use.line).join('\n'),re=new RegExp(`\\b${name.replace(/\$/g,'\\$')}\\s*=(?!=)\\s*([^;\\n]{0,200})`,'g');let last=null,m;while((m=re.exec(before)))last=m[1];return {name,assignedFrom:last};
+}
 export function triage(uses){
   const groups={};for(const use of uses){const g=classify(use);(groups[g]??={count:0,callees:{},files:{}});groups[g].count++;groups[g].callees[use.callee]=(groups[g].callees[use.callee]??0)+1;groups[g].files[use.file]=(groups[g].files[use.file]??0)+1;}
   return groups;
@@ -43,3 +54,4 @@ if(import.meta.url===new URL(`file:///${process.argv[1].replace(/\\/g,'/')}`).hr
   fs.writeFileSync(new URL('DYNAMIC_RECORD_TRIAGE.json',root),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,v.count])),null,1),report.total,Object.keys(writers).length,'writer files;',Object.values(writers).filter(w=>w.candidateKinds.length===0&&!w.resolved).length,'unresolved with no literal candidate');
 }
+

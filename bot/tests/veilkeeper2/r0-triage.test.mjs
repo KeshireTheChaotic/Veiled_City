@@ -14,3 +14,7 @@ test('every resolved writer is a real city-record writer file with a non-empty c
   const {RESOLVED_WRITERS}=await import('../../tooling/veilkeeper2/triage.mjs'),fs=await import('node:fs');
   for(const [file,r] of Object.entries(RESOLVED_WRITERS)){assert.ok(fs.existsSync(new URL('../../../'+file,import.meta.url)),file);assert.ok(r.kinds.length>0&&r.kinds.every(k=>/^[a-z_]+$/.test(k))&&r.evidence);}
 });
+test('spreadOrigin names the spread variable and its nearest earlier assignment',async()=>{
+  const {spreadOrigin}=await import('../../tooling/veilkeeper2/triage.mjs'),src='const before=db.getCityRecord(g,"long_project",k);\nconst row=other;\ndb.saveCityRecord(g,{...before,key});';
+  assert.deepEqual(spreadOrigin(src,{line:3,expression:'db.saveCityRecord(g,{...before,key})'}),{name:'before',assignedFrom:'db.getCityRecord(g,"long_project",k)'});assert.equal(spreadOrigin(src,{line:3,expression:'db.saveCityRecord(g,{kind,key})'}),null);
+});
