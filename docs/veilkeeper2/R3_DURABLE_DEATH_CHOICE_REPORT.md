@@ -1,0 +1,15 @@
+# R3 — durable private owner death review and choice (slice complete)
+
+Added fixed action-store death review/choice receipts from an actual final-HP damage cause. Current marked resources must still equal the committed damage result. Evidence binds campaign/scene, affected owner/control, eligibility hash, resource revision and native actor snapshot hash. Source authority is inspected directly for the private affected owner. Choice requires the saved current private review and a later native sequence; all three moves are preserved: Risk It All, Avoid Death and Blaze of Glory. An already saved choice cannot change or reroll.
+
+This stage only stores `choice_saved` with `effectsCommitted: false`. It does not roll dice, assign a fate, allocate recovery, author a scar or create a final action. The original death eligibility remains pending until the full native outcome lifecycle is implemented.
+
+Modified files: `rules/action-store.js`, `r3-incoming-damage-store.test.mjs`, this report and hash manifest.
+
+Verification complete, from `bot`: `node --test tests/veilkeeper2/r3-incoming-damage-store.test.mjs tests/veilkeeper2/r3-action-store.test.mjs tests/veilkeeper2/r3-action-hope.test.mjs tests/veilkeeper2/r3-action-durability.test.mjs tests/veilkeeper2/r3-atomic-hope-authority.test.mjs tests/veilkeeper2/r3-component-outcome-chain.test.mjs tests/veilkeeper2/r3-durable-cost-consent.test.mjs tests/veilkeeper2/r3-hope-consent-ingress.test.mjs tests/veilkeeper2/r3-native-consent-chain.test.mjs tests/veilkeeper2/r3-roll-action.test.mjs tests/veilkeeper2/r3-fear-coordinator.test.mjs`: 61 passed, zero failures/skips, 5939.7861 ms. Parent output: `incoming-death-choice-test.log`. New real file-backed cases cover all three moves, private review, immutable choice/reopen/replay, no resource/fate effects and invalid scope/order/revision exclusions. Changed action-store consumers reran; other unchanged suites did not.
+
+Native source inspection uses injected test authority; event-kind/sequence and full actor snapshot provenance still require native ingress/actor adapters. Tests do not establish real displayed risk text or live Discord behavior. The native adapter must derive snapshot hashes from actual current PC data, not model assertions.
+
+Migration/rollback: receipts reuse the existing action-event table; no schema or production migration. Preserve reviewed choices and final-HP causes on rollback; never reset them to select/reroll another outcome. Pinned lifecycle reference: `pc-death-rules.js:18–95`, including private review and immutable choice before native RNG.
+
+R3 and R0–R8 remain incomplete. Next exact phase: R3 native saved-choice death dice/outcomes, Hope recovery allocation and Avoid Death scars, then Blaze of Glory final action and lethal interruption settlement. Native Armor/death ingress, canonical actor migration and live/full parity qualification remain required. No production change, live send, deployment, legacy retirement or completed-major-phase push occurred. Publishing target remains the rebuild branch.

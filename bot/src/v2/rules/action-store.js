@@ -1,6 +1,8 @@
 import {DatabaseSync} from 'node:sqlite';
 import {pcEffectResource} from './pc-resources.js';
 import {incomingDamageOutcome} from './incoming-damage.js';
+import {createHash} from 'node:crypto';
+const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const graphs={ordinary_roll:{pending:['awaiting_notice','cancelled'],awaiting_notice:['awaiting_player_roll','cancelled'],awaiting_player_roll:['ready_to_resolve','cancelled'],ready_to_resolve:['cancelled']},hope_cost:{pending:['awaiting_consent','cancelled'],awaiting_consent:['ready_to_commit','cancelled'],ready_to_commit:['cancelled']}};
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const decode=r=>r?JSON.parse(r.data):null;
@@ -93,7 +95,28 @@ export function openActionStore(filename=':memory:'){
       return receipt;
     });
   }
+  const deathEvent=(c,a,kind)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death-${kind}:${a}`));
+  function recordDeathEvidence(c,a,kind,{check,readEvidence,sourceAuthority}){return tx(check,()=>{
+    if(typeof readEvidence!=='function'||typeof sourceAuthority?.inspectReference!=='function')throw new Error('Native private death evidence readers required');
+    const cause=damageEvent(c,a),eligibility=decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),state=readPcDefenses(c,cause?.attack?.actorId);
+    if(eligibility?.status!=='awaiting_owner'||cause?.outcome?.deathChoiceRequired!==true||cause.outcome.effectsCommitted!==true||eligibility.causeRef!==cause.id||!state||state.hp.current!==state.hp.max||JSON.stringify(state)!==JSON.stringify(cause.after))throw new Error('Current native final-HP death cause required');
+    const e=structuredClone(readEvidence(c,a));
+    if(e?.kind!==`incoming_death_${kind}`||e.campaignId!==c||e.sceneId!==eligibility.sceneId||e.actorId!==eligibility.actorId||e.ownerUserId!==eligibility.ownerUserId||e.controlRevision!==eligibility.controlRevision||e.requestRef!==eligibility.id||e.eligibilityHash!==hash(eligibility)||e.resourceRevision!==state.revision
+      ||!['id','sourceRef','sourceRevision'].every(k=>id(e[k]))||typeof e.actorSnapshotHash!=='string'||!/^[a-f0-9]{64}$/.test(e.actorSnapshotHash)||!Number.isSafeInteger(e.sequence)||e.sequence<1)throw new Error('Exact current affected-owner death evidence required');
+    const inspect=()=>{const p=sourceAuthority.inspectReference(e.sourceRef,e.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId)||!Array.isArray(p.recipients)||p.recipients.length!==1||p.recipients[0]!==e.ownerUserId)throw new Error('Private affected-owner death source required');};inspect();
+    if(kind==='choice'){
+      const review=deathEvent(c,a,'review');
+      if(!review||e.reviewRef!==review.evidence.id||e.sequence<=review.evidence.sequence||e.actorSnapshotHash!==review.evidence.actorSnapshotHash||!['risk_it_all','avoid_death','blaze_of_glory'].includes(e.move))throw new Error('Privately reviewed ordered owner death choice required');
+      const p=sourceAuthority.inspectReference(review.evidence.sourceRef,review.evidence.sourceRevision);if(p.campaign!==c||p.scene!==e.sceneId||p.principal!==e.ownerUserId||!p.actors.includes(e.actorId)||p.recipients?.length!==1||p.recipients[0]!==e.ownerUserId)throw new Error('Current private death review source required');
+    }
+    const old=deathEvent(c,a,kind);if(old){if(JSON.stringify(old.evidence)!==JSON.stringify(e))throw new Error('Immutable owner death evidence conflict');return old;}
+    const receipt={id:`incoming-death-${kind}:${a}`,status:kind==='review'?'reviewed':'choice_saved',requestRef:eligibility.id,causeRef:cause.id,evidence:e,effectsCommitted:false};
+    if(JSON.stringify(readEvidence(c,a))!==JSON.stringify(e))throw new Error('Owner death evidence changed');inspect();
+    db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
+  });}
   return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+    recordIncomingDeathReview:(c,a,options)=>recordDeathEvidence(c,a,'review',options),recordIncomingDeathChoice:(c,a,options)=>recordDeathEvidence(c,a,'choice',options),
+    readIncomingDeathReview:(c,a)=>deathEvent(c,a,'review'),readIncomingDeathChoice:(c,a)=>deathEvent(c,a,'choice'),
     readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),
     readOutcome:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`${a}:hope-committed`)),close:()=>db.close()});
 }

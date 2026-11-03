@@ -1,0 +1,14 @@
+[
+  {
+    "sha256": "006a4f973fbf08fc45712a788a25f8dbe606b617ba7b3cde94abd5f7044fb6d0",
+    "path": "bot/src/v2/rules/action-store.js"
+  },
+  {
+    "sha256": "954fae7502c422fb73d55e542bcd0119d5bf9611f241cb3f7670ef85e049275b",
+    "path": "bot/tests/veilkeeper2/r3-incoming-damage-store.test.mjs"
+  },
+  {
+    "sha256": "6b6463cb29d6c1b50e65b292b44d21bf5858c37d43c3fb4a5b140f8634d7d016",
+    "path": "docs/veilkeeper2/R3_DURABLE_DEATH_CHOICE_REPORT.md"
+  }
+]
