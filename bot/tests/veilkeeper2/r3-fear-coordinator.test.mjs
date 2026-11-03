@@ -12,16 +12,17 @@ import {openActionStore} from '../../src/v2/rules/action-store.js';
 import {createHash} from 'node:crypto';
 function fixture(t,amount=1){
   const dir=mkdtempSync(join(tmpdir(),'vk2-fear-order-'));let rolls,fear,coordinator,reader;
-  const check=()=>{},owner={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1'},npc={id:'npc',kind:'npc',status:'active',campaignId:'c',sceneId:'s',controllerUserId:null};
+  const check=()=>{},owner={id:'pc',kind:'pc',status:'active',campaignId:'c',sceneId:'s',ownerUserId:'u',controllerUserId:'u',controlRole:'owner',controlRevision:'1',revision:'pc:1',data:{resources:{hp:{current:0,max:6}}}},npc={id:'npc',kind:'npc',status:'active',campaignId:'c',sceneId:'s',controllerUserId:null};
+  const adjudication={campaignId:'c',sceneId:'s',actorId:'pc',sourceRef:'source',sourceRevision:'1',status:'accepted',actorRevision:'pc:1',revision:'1',ruleFingerprint:'c'.repeat(64),difficulty:12,stakes:'The guard hears.',modifier:0,experience:0,advantage:0,disadvantage:0};
   function close(){rolls?.close();fear?.close();rolls=fear=null;}
   function reopen(){close();rolls=openRollStore(join(dir,'rolls.sqlite'));fear=openFearReservations(join(dir,'fear.sqlite'));
     reader=createFearOpportunityReader({rollStore:rolls,sourceAuthority:{inspectReference:()=>({campaign:'c',scene:'s',principal:'u',actors:['pc']})},readActor:(_c,id)=>id==='pc'?owner:npc,inspectGmDecision:(_c,q)=>({id:`decision:${q}`,status:'gm_action_ready',issuer:'native_gm_decision',campaignId:'c',sceneId:'s',requestRef:q,npcId:'npc',targetActorId:'pc',operation:'commit_adversary_attack',feature:'standard_attack',advantage:false,disadvantage:false,experienceRef:null,printedFearCost:0})});
-    coordinator=createPreRollFearCoordinator({rollStore:rolls,fearStore:fear,opportunityReader:reader,sourceAuthority:{inspectReference(ref){if(ref==='revoked')throw new Error('Source revoked');return {campaign:'c',scene:'s',principal:ref==='other-owner'?'other':'u',actors:['pc'],recipients:ref==='party-source'?['u','other']:['u']};}}});
+    coordinator=createPreRollFearCoordinator({rollStore:rolls,fearStore:fear,opportunityReader:reader,readActor:(_c,id)=>id==='pc'?owner:npc,readAdjudication:(_c,id)=>({...adjudication,id}),sourceAuthority:{inspectReference(ref){if(ref==='revoked')throw new Error('Source revoked');return {campaign:'c',scene:'s',principal:ref==='other-owner'?'other':'u',actors:['pc'],recipients:ref==='party-source'?['u','other']:['u']};}}});
   }
   t.after(()=>{close();rmSync(dir,{recursive:true,force:true});});reopen();fear.initialize('c',amount,{check});
-  function request(q){rolls.createRequest({id:q,campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',noticeRef:`notice:${q}`,stakes:'The guard hears.',difficulty:12,modifier:0,experience:0,advantage:0,disadvantage:0,sourceRef:'source',sourceRevision:'1'},{check});rolls.acknowledgeDelivery('c',q,{messageId:`message:${q}`,recipientIds:['u']},{check});}
+  function request(q){rolls.createRequest({id:q,campaignId:'c',sceneId:'s',actorId:'pc',ownerUserId:'u',controlRevision:'1',noticeRef:`notice:${q}`,stakes:'The guard hears.',difficulty:12,modifier:0,experience:0,advantage:0,disadvantage:0,sourceRef:'source',sourceRevision:'1',adjudicationRef:`adjudication:${q}`,adjudicationRevision:'1'},{check});rolls.acknowledgeDelivery('c',q,{messageId:`message:${q}`,recipientIds:['u']},{check});}
   request('q');request('other');
-  return {get rolls(){return rolls;},get fear(){return fear;},get reader(){return reader;},get coordinator(){return coordinator;},reopen,check,roll(q='q'){return rolls.recordOwnerRoll('c',q,{id:`result:${q}`,ownerUserId:'u',hope:8,fear:5},{check});},publication(){return {campaignId:'c',requestRef:'q',bindingHash:fear.read('c','q').bindingHash,status:'not_started',attemptCount:0};}};
+  return {get rolls(){return rolls;},get fear(){return fear;},get reader(){return reader;},get coordinator(){return coordinator;},owner,adjudication,reopen,check,roll(q='q'){return rolls.recordOwnerRoll('c',q,{id:`result:${q}`,ownerUserId:'u',hope:8,fear:5},{check});},publication(){return {campaignId:'c',requestRef:'q',bindingHash:fear.read('c','q').bindingHash,status:'not_started',attemptCount:0};}};
 }
 test('held request stays unrolled across reopen while independent request and cancelled hold can roll',t=>{
   const f=fixture(t),r=f.coordinator.reserve('c','q',{check:f.check});assert.equal(r.status,'awaiting_announcement');
@@ -227,4 +228,20 @@ test('pending owner death eligibility or mismatched damage receipt cannot close 
   assert.throws(()=>f.coordinator.completeIncoming('c','q',{check:f.check,readDamage:chain.actions.readIncomingDamage,readDeathEligibility:chain.actions.readIncomingDeath}),/death choice remains pending/);assert.equal(f.fear.read('c','q').status,'executing');
   const g=fixture(t),other=damageChain(t,g);const actual=other.authority.commit('c','q','armor');
   assert.throws(()=>g.coordinator.completeIncoming('c','q',{check:g.check,readDamage:()=>({...actual,attack:{...actual.attack,resultHash:'wrong'}}),readDeathEligibility:other.actions.readIncomingDeath}),/Exact committed incoming damage/);assert.equal(g.fear.read('c','q').status,'executing');
+});
+
+function completeMiss(f){const options=readyAttack(f);f.coordinator.rollIncoming('c','q',{...options,rng:()=>1});f.coordinator.completeIncoming('c','q',{check:f.check});}
+test('native continuation of a completed interruption preserves original terms and is rechecked when owner dice are saved',t=>{
+  const f=fixture(t);completeMiss(f);const released=f.coordinator.resumeOriginalRoll('c','q',{check:f.check});f.reopen();assert.equal(released.status,'completed');assert.throws(()=>f.roll(),/continuation required/);
+  const result=f.rolls.recordOwnerRoll('c','q',{id:'owner-dice',ownerUserId:'u',hope:9,fear:4},{check:f.check,readContinuation:f.coordinator.inspectContinuation});assert.equal(result.hope,9);assert.equal(f.fear.initialize('c',0,{check:f.check}),0);
+});
+test('incapacitated owner or changed original Difficulty/stakes cannot resume a completed interruption',t=>{
+  const f=fixture(t);completeMiss(f);f.owner.data.resources.hp.current=6;assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check:f.check}),/current native review/);f.owner.data.resources.hp.current=0;
+  f.adjudication.difficulty=13;assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check:f.check}),/current native review/);f.adjudication.difficulty=12;f.adjudication.stakes='A new consequence.';assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check:f.check}),/current native review/);
+  assert.equal(f.rolls.readFearHold('c','q').status,'held');assert.equal(f.rolls.readResultForRequest('c','q'),null);
+});
+test('native eligibility changed after release cannot save owner dice and final authorization rollback preserves the hold',t=>{
+  const f=fixture(t);completeMiss(f);let checks=0;assert.throws(()=>f.coordinator.resumeOriginalRoll('c','q',{check(){if(++checks===2)throw new Error('Continuation authority changed');}}),/Continuation authority changed/);f.reopen();assert.equal(f.rolls.readFearHold('c','q').status,'held');
+  f.coordinator.resumeOriginalRoll('c','q',{check:f.check});f.adjudication.revision='2';
+  assert.throws(()=>f.rolls.recordOwnerRoll('c','q',{id:'owner-dice',ownerUserId:'u',hope:9,fear:4},{check:f.check,readContinuation:f.coordinator.inspectContinuation}),/continuation changed/);assert.equal(f.rolls.readResultForRequest('c','q'),null);
 });

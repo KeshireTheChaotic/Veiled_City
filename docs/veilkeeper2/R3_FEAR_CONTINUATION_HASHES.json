@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "70f2297eb93d4d15ca7d8297a6b0c18d25c9461255e6e7e09664435012249198",
+    "path": "bot/src/v2/rules/roll-store.js"
+  },
+  {
+    "sha256": "a14810f6da78d8ef4abcf104ba72d14cd335f78a5d7e5d8adf6e499c295611f0",
+    "path": "bot/src/v2/rules/pre-roll-fear-coordinator.js"
+  },
+  {
+    "sha256": "493c42b6df24ba0c0932379d5e8b3c2c9cb9ed8f03909e845a618695b7420118",
+    "path": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs"
+  },
+  {
+    "sha256": "ba4d1b4b56105f369aecf2eb35cd59ecc99f0a34294df939bf52fa44dd529f3f",
+    "path": "docs/veilkeeper2/R3_FEAR_CONTINUATION_REPORT.md"
+  }
+]

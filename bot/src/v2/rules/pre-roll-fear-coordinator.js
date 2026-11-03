@@ -1,7 +1,9 @@
+import {createHash} from 'node:crypto';
+const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 /** Native ordering across opt-in stores. A failed reservation deliberately leaves
  * a durable roll hold for reconciliation. No spending, attack or general unlock.
  */
-export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority}){
+export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication}){
   if(typeof rollStore?.holdForFear!=='function'||typeof rollStore?.releaseCancelledFear!=='function'||typeof fearStore?.reserve!=='function'||typeof opportunityReader?.read!=='function')throw new TypeError('Native pre-roll coordination dependencies required');
   function reserve(c,q,{check}){
     if(typeof check!=='function')throw new Error('Native Fear authority required');
@@ -58,6 +60,18 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     return fearStore.rollIncoming(c,q,{check:heldAuthority(c,q,check),readCandidate:candidateReader(readCandidate),readDefense:(campaign,request)=>({review:review(campaign,request),choice:choice(campaign,request)}),rng});
   }
   function completeIncoming(c,q,{check,readDamage,readDeathEligibility}){return fearStore.completeIncoming(c,q,{check:heldAuthority(c,q,check),readDamage,readDeathEligibility});}
-  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,completeIncoming,
+  function inspectContinuation(c,q){
+    if(typeof sourceAuthority?.inspectReference!=='function'||typeof readActor!=='function'||typeof readAdjudication!=='function')throw new Error('Native original-action eligibility readers required');
+    const row=fearStore.read(c,q),request=rollStore.readRequest(c,q);
+    if(row?.status!=='completed'||!row.completion||!request||!request.adjudicationRef)throw new Error('Completed interruption and pending native adjudication required');
+    const proof=sourceAuthority.inspectReference(request.sourceRef,request.sourceRevision),actor=readActor(c,request.actorId),a=readAdjudication(c,request.adjudicationRef),hp=actor?.data?.resources?.hp;
+    if(proof.campaign!==c||proof.scene!==request.sceneId||proof.principal!==request.ownerUserId||!proof.actors.includes(request.actorId)||actor?.id!==request.actorId||actor.kind!=='pc'||actor.status!=='active'||actor.campaignId!==c||actor.sceneId!==request.sceneId||actor.ownerUserId!==request.ownerUserId||actor.controllerUserId!==request.ownerUserId||actor.controlRole!=='owner'||actor.controlRevision!==request.controlRevision||typeof actor.revision!=='string'||!actor.revision
+      ||![hp?.current,hp?.max].every(Number.isSafeInteger)||hp.current<0||hp.max<1||hp.current>=hp.max
+      ||a?.id!==request.adjudicationRef||a.campaignId!==c||a.sceneId!==request.sceneId||a.actorId!==actor.id||a.sourceRef!==request.sourceRef||a.sourceRevision!==request.sourceRevision||a.status!=='accepted'||a.actorRevision!==actor.revision||typeof a.revision!=='string'||!a.revision||typeof a.ruleFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(a.ruleFingerprint)
+      ||a.difficulty!==request.difficulty||a.stakes!==request.stakes||['modifier','experience','advantage','disadvantage'].some(k=>a[k]!==request[k]))throw new Error('Original owner action requires current native review');
+    return {campaignId:c,sceneId:request.sceneId,requestRef:q,decisionRef:row.terms.decisionRef,actorId:actor.id,ownerUserId:actor.ownerUserId,controlRevision:actor.controlRevision,actorRevision:actor.revision,sourceRef:request.sourceRef,sourceRevision:request.sourceRevision,adjudicationRef:a.id,adjudicationRevision:a.revision,ruleFingerprint:a.ruleFingerprint,completionHash:hash(row.completion),status:'ready'};
+  }
+  function resumeOriginalRoll(c,q,{check}){return rollStore.releaseCompletedFear(c,q,{check,readCompletion:(campaign,request)=>{const row=fearStore.read(campaign,request);if(row?.status!=='completed')throw new Error('Completed native interruption required');return row.completion;},readContinuation:inspectContinuation});}
+  return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,completeIncoming,inspectContinuation,resumeOriginalRoll,
     reviewIncoming:(c,q,options)=>ownerDefense(c,q,'reviewIncoming',options),recordIncomingDefense:(c,q,options)=>ownerDefense(c,q,'recordIncomingDefense',options)});
 }
