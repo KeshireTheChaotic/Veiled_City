@@ -325,10 +325,11 @@
       ],
       "resolved": {
         "kinds": [
+          "npc_volley_attack",
           "pc_incoming_attack"
         ],
         "partial": true,
-        "evidence": "incoming-attack-rules.js:227,243,257,299,508 traced; :349-368 volley/context rows (inspectVolley, context) not traced"
+        "evidence": "incoming-attack-rules.js:227,243,257,299,508 traced; :349 parent.row comes from inspectVolley (:116 reads npc_volley_attack); :354 child rows are parent.children, whose kind is not traced"
       }
     },
     "bot/src/frameworks/daggerheart/mixed-condition-rules.js": {
@@ -490,7 +491,7 @@
           "typed_intent"
         ],
         "partial": true,
-        "evidence": "pvp-damage-rules.js:33,172,236,302,306 traced; :237 offer row not traced"
+        "evidence": "pvp-damage-rules.js:33,172,236,302,306 traced; :237 rewrites p.request rows (attack requests) from proof(); proof() return shape not re-read"
       }
     },
     "bot/src/frameworks/daggerheart/pvp-fear-gate-rules.js": {
