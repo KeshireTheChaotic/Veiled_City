@@ -85,3 +85,9 @@ Stop with Ctrl+C (graceful close). Delete `$env:VK2_NATIVE_DIR` and the DB copy 
 
 Live inference, the GM turn runner, performance targets and production cutover remain open and need their own authorization.
 
+
+## Private channel (corrected 2026-11-03)
+
+The legacy design is kept: the character's owner runs `/vc-player private-channel` in their own private channel. The bot checks, from two fresh Discord reads, that only that owner can see it (administrators and the GM role are observers, not recipients) and registers it for the owner's scene. There is no GM channel-id command. Order: `/vc-session start`, register the character, then the owner runs `/vc-player private-channel` in their channel, then `/vc-session present`.
+
+GM operations still travel in `/vc-roll effect` JSON for now; the user asked to stop adding operations there and moving them to typed subcommands is pending a schema decision.

@@ -22,6 +22,8 @@ Update (records plumbing): with a provider the root also opens knowledge.sqlite 
 
 Update (explicit GM configuration, from the first live commands): createCampaignGmPolicyReader accepts host-supplied gmRoleId, gmUserIds and allowAdministrators (campaign gm_role_id still wins; nothing inferred), createNativeRoot takes gmPolicy, and native-start reads VK2_GM_ROLE_ID / VK2_GM_USER_IDS / VK2_GM_ALLOW_ADMINISTRATORS=1 (digits-only ids validated). Tests: r6-campaign-adapters 4, r6-native-start 9, r6-native-root 4, r6-gm-session-command 18, r3 router suite 56 (91 passed).
 
+Update (private channel, per user direction to follow the baseline): the GM channel-register JSON op was reverted (b42070fa, 00ffde6a). discord-player-channel.js recreates the legacy `/vc-player private-channel` natively: observed owner command, durable claim, two matching audience reads (mode private, admins/GM role as observers), refuses a channel bound to another scene or owner, never grants PC control. Wired in the router with the attendance deps; the command already exists in the registered schema. Tests: r6-player-private-channel 3, r3 router suite 57, r6-gm-session-command 18, r6-command-schema-compat 2, r6-native-root 4 (all passed).
+
 Deferred: GM context/records composition, human review and publication of drafts, live Discord/inference qualification (needs authorization), historical migration, recap/opening.
 
 

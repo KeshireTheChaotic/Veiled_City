@@ -306,3 +306,9 @@ test('exclusive native root routes an observed GM session end through fresh auth
 test('exclusive native root ignores every guild outside its allowed list without replying or falling through',async t=>{
   const f=fixture(t),r=routerFixture(t,f,{allowedGuildIds:new Set(['other-guild'])});await r.emit(r.event());assert.equal(r.w.sent.length,0);assert.deepEqual(r.replies,[]);assert.deepEqual(r.otherCommands,[]);assert.deepEqual(r.errors,[]);assert.equal(f.actions.readIncomingDeathOutcome('c','attack'),null);
 });
+test('exclusive native root routes /vc-player private-channel to the owner and never to legacy callbacks',async t=>{
+  const f=fixture(t),r=routerFixture(t,f,{session:true}),before=f.scenes.history('c','channel','private').length,life=structuredClone(f.actions.readPcLife('c','pc'));
+  await r.emit(r.event({commandName:'vc-player',sub:'private-channel',group:null}));
+  assert.deepEqual(r.otherCommands,[]);assert.deepEqual(r.errors,[]);assert.match(r.replies.at(-1),/now your private GM channel/);assert.equal(f.scenes.history('c','channel','private').length,before+1);assert.equal(f.scenes.readers.readChannel('c','private').ownerUserId,'u');
+  assert.equal(r.w.sent.length,0);assert.deepEqual(f.actions.readPcLife('c','pc'),life);
+});

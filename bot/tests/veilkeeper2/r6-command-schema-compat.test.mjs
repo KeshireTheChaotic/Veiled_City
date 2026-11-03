@@ -12,6 +12,7 @@ test('the native router only claims session and roll commands that the registere
   // absent and leave accept an optional character so an owner with several PCs can choose which one.
   for(const name of ['absent','leave']){assert.ok(stringOption(sub(session,name),'mode'),`${name} mode`);assert.ok(stringOption(sub(session,name),'character'),`${name} character`);}
   assert.ok(stringOption(sub(roll,'effect'),'json'),'vc-roll effect json');
+  assert.ok(sub(byName('vc-player'),'private-channel'),'vc-player private-channel (the legacy owner command, now native)');
 });
 test('GM bootstrap, registration, rebind, reopen and death operations travel in the existing roll effect JSON (no schema additions)',()=>{
   const json=stringOption(sub(byName('vc-roll'),'effect'),'json');assert.ok(json.max_length===undefined||json.max_length>=4096,'json option must allow the 4096-char native bound');
