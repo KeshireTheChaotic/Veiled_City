@@ -1,4 +1,4 @@
-﻿import test from 'node:test';
+import test from 'node:test';
 import assert from 'node:assert/strict';
 import {EventEmitter} from 'node:events';
 import {openSceneStore} from '../../src/v2/scene-store.js';
@@ -20,6 +20,10 @@ test('bots, webhooks, system, unknown channels, non-owners and other scenes are 
   const f=fixture(t);for(const m of [f.msg({author:{id:'u',bot:true}}),f.msg({webhookId:'w'}),f.msg({system:true}),f.msg({channelId:'unknown'}),f.msg({author:{id:'stranger',bot:false}}),f.msg({guildId:'other'})])await f.emit(m);
   assert.deepEqual(f.calls,[]);assert.deepEqual(f.errors,[]);
   const g=fixture(t,{route:{campaignId:'c',ownerUserId:'u',actorId:'pc',sceneId:'elsewhere',sessionId:'session',gmRoleId:null}});await g.emit(g.msg());assert.deepEqual(g.calls,[]);
+});
+test('an allowed-guild list ignores every other guild',async t=>{
+  const f=fixture(t);f.observer.close();const g=(()=>{const store=openSceneStore(),client=new EventEmitter(),calls=[];t.after(()=>store.close());store.commitSnapshot({campaignId:'c',principal:'a',sourceRef:'s',records:[{kind:'channel',expectedRevision:null,data:{id:'ch',campaignId:'c',sceneId:'s',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']}}]},{check:()=>{}});const o=createDiscordMessageObserver({client,sceneStore:store,allowedGuildIds:new Set(['elsewhere']),intake:{ingest:async r=>calls.push(r)},readOwnerSession:()=>({campaignId:'c',ownerUserId:'u',actorId:'pc',sceneId:'s',sessionId:'x',gmRoleId:null})});t.after(()=>o.close());return {client,calls,o};})();
+  g.client.emit('messageCreate',{id:'m',guildId:'c',channelId:'ch',author:{id:'u',bot:false},webhookId:null,system:false});await g.o.drain();assert.deepEqual(g.calls,[]);
 });
 test('intake failures are reported, not thrown, and close detaches the observer',async t=>{
   const f=fixture(t);await f.emit(f.msg({id:'boom'}));assert.deepEqual(f.errors,['intake failed']);f.observer.close();assert.equal(f.client.listenerCount('messageCreate'),0);await f.emit(f.msg({id:'late'}));assert.equal(f.calls.length,1);

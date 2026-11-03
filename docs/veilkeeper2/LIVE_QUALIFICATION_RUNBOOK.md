@@ -4,6 +4,18 @@ Authorized scope (user decision, 2026-11-03): live qualification in the **test g
 
 Before anything: the bot token that was pasted into chat is exposed. Reset it in the Discord Developer Portal (Bot -> Reset Token) and use the new value only in your own terminal.
 
+## 0. Preferred: use the legacy .env in ChatGPT mode (user instruction, 2026-11-03)
+
+The native start can load the legacy environment file by path; this repo never reads, prints or copies its values. Set only these in your terminal, then skip the secret lines in step 1:
+
+```powershell
+$env:VK2_ENV_FILE = "D:\Library\Development\Veiled_City\bot\.env"   # supplies DISCORD_TOKEN (and AI_AUTH_MODE / OPENAI_GM_MODEL if set there)
+$env:AI_AUTH_MODE = "chatgpt"               # model calls use the Codex CLI ChatGPT sign-in (run `codex login` once); no API key, local testing only
+$env:VK2_MODEL = "<model id>"               # optional; otherwise OPENAI_GM_MODEL from the .env is used
+$env:VK2_ALLOWED_GUILD_ID = "1467249344947159291"   # required: the native bot ignores every other guild
+```
+
+Notes: existing terminal variables win over the file. Confirm the file's `DISCORD_GUILD_ID` is the test guild before starting; the allowed-guild setting is the enforcement, not the file. ChatGPT mode has no per-token spend, so the cap is the call budget (`VK2_MAX_TURNS`, default 10). Whether to reset the token that was pasted into chat is your call; if it is the token in this .env, resetting means updating the file.
 ## 1. Prepare (PowerShell, from D:\Library\Development\Veiled_City_2\rebuild\bot)
 
 ```powershell

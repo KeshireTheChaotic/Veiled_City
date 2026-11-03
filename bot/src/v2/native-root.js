@@ -21,7 +21,7 @@ import {openTurnStore} from './turn-store.js';
  * The caller supplies the client, the existing character/campaign repositories, an RNG and
  * the callbacks for commands/components the native router does not own.
  */
-export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,onDraft,handleOtherCommand,handleOtherComponent,onError}){
+export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,onDraft,handleOtherCommand,handleOtherComponent,onError}){
   if(typeof directory!=='string'||!directory||typeof rng!=='function')throw new TypeError('Native store directory and RNG required');
   const opened=[];let router,observer,closed=false;
   const open=(factory,...args)=>{const store=factory(...args);opened.push(store);return store;};
@@ -36,11 +36,11 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
       nativeDeath:{actionStore,sceneStore,sourceAuthority,readActorSnapshot:canonical.readActorSnapshot,readRoute:route,readOwnerRoute:route,promptStore,decisionStore,interactionReceipts,clock,rng},
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},
       nativeGm:{readPolicy,drafts:turnStore?{recent:(c,n)=>turnStore.recentDrafts(c,n),begin:(c,s,o)=>turnStore.beginPublication(c,s,o),finish:(c,s,m)=>turnStore.finishPublication(c,s,m),uncertain:(c,s,r)=>turnStore.markPublicationUncertain(c,s,r)}:null,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
-      handleOtherCommand,handleOtherComponent,onError});
+      allowedGuildIds,handleOtherCommand,handleOtherComponent,onError});
     const intake=createDiscordIntake({messageReader:createDiscordMessageReader({client}),sceneStore});
     // Context is empty until GM records are composed; turns are withheld drafts and are never sent.
     const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:sceneStore.readers,records:{metadata:()=>null,readText:()=>null}}}):null;
-    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,onDraft,onError});
+    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
     return Object.freeze({router,turns,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
 }

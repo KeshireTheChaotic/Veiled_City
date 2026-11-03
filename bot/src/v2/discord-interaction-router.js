@@ -8,7 +8,7 @@ import {createDiscordGmAuthority} from './discord-gm-authority.js';
  * other native commands/components through the supplied callbacks, not install
  * additional peer listeners. Natural message intake is a separate GM surface.
  */
-export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,nativeGm=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
+export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.listenerCount!=='function'||typeof handleOtherCommand!=='function'||typeof handleOtherComponent!=='function'||typeof onError!=='function'||typeof nativeDeath?.readOwnerRoute!=='function')throw new TypeError('Exclusive native interaction router dependencies required');
   if(client.listenerCount('interactionCreate')!==0)throw new Error('Native interaction router requires an unclaimed client; do not install alongside legacy handlers');
   let workflow,commands,attendance,gmAuthority,gmSession,closed=false;const pending=new Map(),denials=new Set(),controller=new AbortController();
@@ -28,7 +28,7 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeSession
     }catch(error){report(error,event,'private_denial');}
   }
   async function route(event){
-    if(closed||event?.client!==client||event.user?.bot!==false)return;
+    if(closed||event?.client!==client||event.user?.bot!==false||allowedGuildIds&&!allowedGuildIds.has(event.guildId))return;
     try{
       if(event.isChatInputCommand?.()===true){
         const claimed=commands.claimsRoute(event),handled=await commands.handle(event);
