@@ -15,5 +15,9 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     const cancellation=fearStore.cancel(c,q,{check,readPublication});
     rollStore.releaseCancelledFear(c,q,{check,readCancellation:fearStore.read});return cancellation;
   }
-  return Object.freeze({reserve,cancel});
+  function recoverUnreserved(c,q,{check,readReview,readPublication}){
+    const cancellation=fearStore.recoverUnreserved(c,q,{check,readReview,readPublication,readHold:rollStore.readFearHold});
+    rollStore.releaseCancelledFear(c,q,{check,readCancellation:fearStore.read});return cancellation;
+  }
+  return Object.freeze({reserve,cancel,recoverUnreserved});
 }

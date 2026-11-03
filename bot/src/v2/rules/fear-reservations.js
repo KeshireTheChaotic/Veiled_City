@@ -37,5 +37,16 @@ export function openFearReservations(filename=':memory:'){
     if(JSON.stringify(readPublication(c,q))!==JSON.stringify(publication))throw new Error('Fear publication changed during cancellation');
     db.prepare('UPDATE vk3_fear_reservations SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),c,q);return after;
   });}
-  return Object.freeze({initialize,reserve,acknowledge,cancel,read,reserved,close:()=>db.close()});
+  function recoverUnreserved(c,q,{check,readHold,readReview,readPublication}){return tx(check,()=>{
+    if([readHold,readReview,readPublication].some(f=>typeof f!=='function'))throw new Error('Native orphan hold recovery evidence required');
+    const hold=structuredClone(readHold(c,q)),review=structuredClone(readReview(c,q)),publication=structuredClone(readPublication(c,q));
+    if(hold?.campaignId!==c||hold.requestRef!==q||!['held','cancelled'].includes(hold.status)||typeof hold.decisionRef!=='string'||!hold.decisionRef)throw new Error('Exact native orphan hold required');
+    if(review?.campaignId!==c||review.requestRef!==q||review.decisionRef!==hold.decisionRef||review.status!=='approved'||review.operation!=='cancel_unreserved_fear_hold'||typeof review.id!=='string'||!review.id||typeof review.reviewerUserId!=='string'||!review.reviewerUserId)throw new Error('Inspected approved native recovery review required');
+    const old=read(c,q);if(old){if(old.recoveryKind!=='unreserved_hold'||JSON.stringify(old.review)!==JSON.stringify(review))throw new Error('Existing Fear reservation cannot use orphan recovery');return old;}
+    if(hold.status!=='held'||publication?.campaignId!==c||publication.requestRef!==q||publication.decisionRef!==hold.decisionRef||publication.status!=='not_started'||publication.attemptCount!==0)throw new Error('Unattempted orphan Fear publication required');
+    const terms={campaignId:c,requestRef:q,decisionRef:hold.decisionRef},row={terms,bindingHash:hash(terms),fingerprint:null,status:'cancelled',recoveryKind:'unreserved_hold',review,publication,history:[{status:'cancelled',reviewRef:review.id}]};
+    if(JSON.stringify(readHold(c,q))!==JSON.stringify(hold)||JSON.stringify(readReview(c,q))!==JSON.stringify(review)||JSON.stringify(readPublication(c,q))!==JSON.stringify(publication))throw new Error('Orphan recovery evidence changed');
+    db.prepare('INSERT INTO vk3_fear_reservations VALUES(?,?,?)').run(c,q,JSON.stringify(row));return row;
+  });}
+  return Object.freeze({initialize,reserve,acknowledge,cancel,recoverUnreserved,read,reserved,close:()=>db.close()});
 }

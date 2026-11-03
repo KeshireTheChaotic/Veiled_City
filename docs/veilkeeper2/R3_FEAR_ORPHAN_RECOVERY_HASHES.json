@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "27357586b519e06687adc024a3e774151e699aaa2c5916a263a00539ec79b808",
+    "path": "bot/src/v2/rules/fear-reservations.js"
+  },
+  {
+    "sha256": "ce52b0d00c2581b391035c831c177c3660986eeab50821869cf31438db1f3530",
+    "path": "bot/src/v2/rules/pre-roll-fear-coordinator.js"
+  },
+  {
+    "sha256": "1c45c7374605f68ce483fce55b6141e8af0b79eeaadeeca32d733e9416addc4d",
+    "path": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs"
+  },
+  {
+    "sha256": "294d88b50c5b7457e27f793407f12a8f57379522dee63150fb97e5a8762838e7",
+    "path": "docs/veilkeeper2/R3_FEAR_ORPHAN_RECOVERY_REPORT.md"
+  }
+]
