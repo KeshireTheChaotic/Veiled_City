@@ -47,3 +47,7 @@ test('missing reader records, ambiguous attendance and forged source proofs fail
   f.scene.participants.push({...f.scene.participants[0]});assert.throws(()=>f.authority.authenticate(f.event));
   assert.throws(()=>createSourceAuthority({}),/readers/);
 });
+test('native historical reference inspection rechecks issued source and revision',()=>{
+  const f=fixture(),proof=f.authority.authenticate(f.event);assert.deepEqual(f.authority.inspectReference(proof.id,proof.revision),proof);
+  assert.throws(()=>f.authority.inspectReference(proof.id,'other'));assert.throws(()=>f.authority.inspectReference('forged',proof.revision));f.message.text='Edited decision';assert.throws(()=>f.authority.inspectReference(proof.id,proof.revision));
+});

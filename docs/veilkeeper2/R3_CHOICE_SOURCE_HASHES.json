@@ -1,0 +1,26 @@
+[
+  {
+    "sha256": "8da0546e9ebdefdd41ca85db4728a543ddeb0a2f697a27ca4c777cff5e8e915d",
+    "path": "bot/src/v2/source-authority.js"
+  },
+  {
+    "sha256": "2fb9868d243f15077cb2ae5903f49aa8192cd967ce21fa90de6049928fcc4e57",
+    "path": "bot/src/v2/rules/hope-cost-authority.js"
+  },
+  {
+    "sha256": "23cbaf5fdae40e7bd61da6bf2c25cfcafdda0e4f4dd41d94c45d43adb20692b1",
+    "path": "bot/src/v2/rules/hope-store.js"
+  },
+  {
+    "sha256": "db40484c4a7cbe3ef5ee1f03069063b23c179358138a0b32c8593a49f720bc30",
+    "path": "bot/tests/veilkeeper2/r1-source-authority.test.mjs"
+  },
+  {
+    "sha256": "ca4d08d6154f5c4c3c73f58ad358b656f69995b53a964b7ed96b3eef78ea059e",
+    "path": "bot/tests/veilkeeper2/r3-hope-authority.test.mjs"
+  },
+  {
+    "sha256": "523c2d0113deb8ef0680c84636686b270cbf9019fe17d7f1070bf52302e31d31",
+    "path": "docs/veilkeeper2/R3_CHOICE_SOURCE_REPORT.md"
+  }
+]

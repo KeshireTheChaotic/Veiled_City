@@ -31,7 +31,7 @@ export function openHopeStore(filename=':memory:'){
       if(db.prepare("SELECT 1 FROM vk3_hope_receipts WHERE campaign=? AND json_extract(data,'$.actionRef')=? AND json_extract(data,'$.costSlot')=?").get(campaignId,e.actionRef,e.costSlot))throw new Error('Action Hope cost already committed');
       if(state.revision!==expectedRevision)throw new Error('Hope revision conflict');
       const change=pcEffectResource({resources:{hope:state.hope,hope_max:state.cap}},'hope',-e.amount),after={...state,hope:change.after,revision:state.revision+1};
-      const receipt={id:`hope-cost:${hash([campaignId,evidenceRef])}`,fingerprint,campaignId,actorId,evidenceRef,sourceRef:e.sourceRef,actionRef:e.actionRef,costSlot:e.costSlot,before:state,after,effects_committed:true};
+      const receipt={id:`hope-cost:${hash([campaignId,evidenceRef])}`,fingerprint,campaignId,actorId,evidenceRef,sourceRef:e.sourceRef,actionRef:e.actionRef,costSlot:e.costSlot,choiceSourceRef:e.choiceSourceRef??null,choiceSourceRevision:e.choiceSourceRevision??null,before:state,after,effects_committed:true};
       db.prepare('UPDATE vk3_hope SET data=? WHERE campaign=? AND actor=?').run(JSON.stringify(after),campaignId,actorId);
       db.prepare('INSERT INTO vk3_hope_receipts VALUES(?,?,?)').run(campaignId,evidenceRef,JSON.stringify(receipt));
       if(JSON.stringify(readEvidence(campaignId,evidenceRef))!==JSON.stringify(e))throw new Error('Hope cost evidence changed');return receipt;

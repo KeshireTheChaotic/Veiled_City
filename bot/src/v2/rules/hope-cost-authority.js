@@ -15,8 +15,15 @@ export function createHopeCostAuthority({sourceAuthority,readActor,readAction,re
       ||!consent||consent.campaignId!==source.campaign||consent.sceneId!==source.scene||consent.id!==parameters.consent_ref||consent.status!=='accepted'||consent.ownerUserId!==source.principal||consent.sourceRef!==source.id||consent.sourceRevision!==source.revision
       ||consent.actionRef!==action.id||consent.actionRevision!==action.revision||consent.actorId!==actorId||consent.amount!==action.cost.amount||consent.costSlot!==action.cost.slot
       ||typeof consent.revision!=='string'||!consent.revision)throw new Error('Current owner-confirmed native action cost required');
+    let choice={};
+    if(consent.choiceSourceRef!==undefined||consent.choiceSourceRevision!==undefined){
+      if(!id(consent.choiceSourceRef)||!id(consent.choiceSourceRevision)||typeof sourceAuthority.inspectReference!=='function')throw new Error('Native owner choice source proof required');
+      const proof=sourceAuthority.inspectReference(consent.choiceSourceRef,consent.choiceSourceRevision);
+      if(proof.principal!==source.principal||proof.campaign!==source.campaign||proof.scene!==source.scene||!proof.actors.includes(actorId))throw new Error('Owner choice source scope changed');
+      choice={choiceSourceRef:consent.choiceSourceRef,choiceSourceRevision:consent.choiceSourceRevision};
+    }
     return {id:consent.id,campaignId:source.campaign,actorId,ownerUserId:source.principal,status:'accepted',operation:'spend_hope',ownerConfirmed:true,
-      sourceRef:source.id,sourceRevision:source.revision,revision:consent.revision,actionRef:action.id,costSlot:action.cost.slot,amount:action.cost.amount};
+      sourceRef:source.id,sourceRevision:source.revision,revision:consent.revision,actionRef:action.id,costSlot:action.cost.slot,amount:action.cost.amount,...choice};
   }
   const definition=Object.freeze({kind:'hope_cost.prepare',version:'1',validate({source,proposal}){try{evidence(source,proposal.actorRef,proposal.parameters);return true;}catch{return false;}},prepare:()=>({status:'pending'})});
   function commit(source,actorId,parameters,expectedRevision){

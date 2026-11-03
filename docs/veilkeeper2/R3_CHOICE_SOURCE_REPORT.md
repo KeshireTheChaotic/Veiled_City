@@ -1,0 +1,7 @@
+# R3 — current native owner-choice source lineage
+
+Source authority can now inspect an issued source reference/revision by reloading current native records and verifying its original fingerprint. Hope consent with a distinct choice source requires this verifier and matching principal/campaign/scene/actor scope. Choice lineage is retained in cost evidence and receipts; changed/edited/revoked source proof blocks commit or replay. This native verifier is not an AI capability.
+
+Changed-code tests: source, Hope authority, atomic authority, durable consent, Discord chain and rehearsal: 32/32 passed. One additional lineage case then expanded the authority suite. After adding explicit choice lineage to isolated Hope receipts, the changed authority/store suites passed 9/9. Current unique focused coverage is 37 tests (28 outside authority plus 5 authority plus 4 Hope store), all passing; no whole-release claim. Each rerun followed tested source/test changes. Providers/native owner readers are synthetic except real source-authority logic and SQLite stores.
+
+Issued-reference lookup is in-memory; durable historical source grants and authenticated component/command integration remain open. Native action/resource migrations and full parity remain unqualified. No production change, migration, deployment or phase push occurred. R3 and broader R0–R8 gates remain incomplete. Next: full persisted source/consent-to-unified-outcome integration with restart qualification. Rollback leaves opt-in modules unused.
