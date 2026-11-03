@@ -16,7 +16,7 @@ export function createHopeCostAuthority({sourceAuthority,readActor,readAction,re
       ||consent.actionRef!==action.id||consent.actionRevision!==action.revision||consent.actorId!==actorId||consent.amount!==action.cost.amount||consent.costSlot!==action.cost.slot
       ||typeof consent.revision!=='string'||!consent.revision)throw new Error('Current owner-confirmed native action cost required');
     return {id:consent.id,campaignId:source.campaign,actorId,ownerUserId:source.principal,status:'accepted',operation:'spend_hope',ownerConfirmed:true,
-      sourceRef:source.id,revision:consent.revision,actionRef:action.id,costSlot:action.cost.slot,amount:action.cost.amount};
+      sourceRef:source.id,sourceRevision:source.revision,revision:consent.revision,actionRef:action.id,costSlot:action.cost.slot,amount:action.cost.amount};
   }
   const definition=Object.freeze({kind:'hope_cost.prepare',version:'1',validate({source,proposal}){try{evidence(source,proposal.actorRef,proposal.parameters);return true;}catch{return false;}},prepare:()=>({status:'pending'})});
   function commit(source,actorId,parameters,expectedRevision){
@@ -24,4 +24,23 @@ export function createHopeCostAuthority({sourceAuthority,readActor,readAction,re
     return hopeStore.spend({campaignId:source.campaign,actorId,expectedRevision,evidenceRef:initial.id},{readEvidence:()=>evidence(source,actorId,parameters),check(){if(JSON.stringify(evidence(source,actorId,parameters))!==snapshot)throw new Error('Action cost authority changed');}});
   }
   return Object.freeze({definition,commit});
+}
+
+/** Uses the unified action/resource transaction while retaining all owner proof
+ * checks. Native action terms remain separate from mutable execution status.
+ */
+export function createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms,readConsent,actionStore}){
+  if(typeof readActionTerms!=='function'||typeof actionStore?.commitHopeCost!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Unified native action cost store required');
+  function readAction(campaign,ref){
+    const state=actionStore.read(campaign,ref),terms=readActionTerms(campaign,ref);
+    if(!state||!terms||!['ready_to_commit','resolved'].includes(state.status)||state.kind!=='hope_cost'
+      ||['id','campaignId','sceneId','actorId','ownerUserId','sourceRef','sourceRevision'].some(k=>state[k]!==terms[k]))return null;
+    return {...terms,status:'awaiting_cost'};
+  }
+  const adapter={spend(input,{readEvidence,check}){
+    const cost=readEvidence(input.campaignId,input.evidenceRef),state=actionStore.read(input.campaignId,cost.actionRef),prior=actionStore.readOutcome(input.campaignId,cost.actionRef);
+    return actionStore.commitHopeCost({campaignId:input.campaignId,actionId:cost.actionRef,costRef:input.evidenceRef,
+      expectedActionRevision:prior?.request.expectedActionRevision??state.revision,expectedHopeRevision:input.expectedRevision},{readCost:readEvidence,check});
+  }};
+  return createHopeCostAuthority({sourceAuthority,readActor,readAction,readConsent,hopeStore:adapter});
 }

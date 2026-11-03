@@ -1,0 +1,26 @@
+[
+  {
+    "sha256": "5c5e7bd6d8750cfe8a8865be7aac79f767afd54e1b3e2ad0ca7476b3a5d5b6e6",
+    "path": "bot/src/v2/rules/action-store.js"
+  },
+  {
+    "sha256": "fa13f854fecc618db4eceb951638de78cc5bc098800503bb9b44f256779d6bca",
+    "path": "bot/src/v2/rules/hope-cost-authority.js"
+  },
+  {
+    "sha256": "06ee49dc1863a39ee77bc93e8744ce5909fdf3639e1bd6b7ff0b67b7397b9fe2",
+    "path": "bot/tests/veilkeeper2/r3-atomic-hope-authority.test.mjs"
+  },
+  {
+    "sha256": "dce5459d4e4af43bd77789f9c192662a1018ba80a35342060445189946294263",
+    "path": "bot/tests/veilkeeper2/r3-hope-authority.test.mjs"
+  },
+  {
+    "sha256": "5009e97267fb7cfa2a4e8ee9bc4edf705f04e51714c528c88ca8625ea1882dac",
+    "path": "bot/tests/veilkeeper2/r3-action-hope.test.mjs"
+  },
+  {
+    "sha256": "d7bb176d8e33d5f8d1278f96839bc2f3ff05ae5b1a2c30fb4536b23c268ec9bb",
+    "path": "docs/veilkeeper2/R3_ATOMIC_HOPE_AUTHORITY_REPORT.md"
+  }
+]

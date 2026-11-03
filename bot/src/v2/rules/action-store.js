@@ -45,5 +45,6 @@ export function openActionStore(filename=':memory:'){
       if(JSON.stringify(readCost(input.campaignId,input.costRef))!==JSON.stringify(cost))throw new Error('Cost evidence changed');return receipt;
     });
   }
-  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,close:()=>db.close()});
+  return Object.freeze({create,transition,read,initializeHope,readHope,commitHopeCost,
+    readOutcome:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`${a}:hope-committed`)),close:()=>db.close()});
 }
