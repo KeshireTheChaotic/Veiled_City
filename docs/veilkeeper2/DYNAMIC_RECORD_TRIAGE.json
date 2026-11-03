@@ -525,10 +525,12 @@
         "kinds": [
           "pvp_exchange_gate",
           "pvp_fear_move_decision",
+          "pvp_fear_publication",
+          "pvp_fear_threat_state",
           "pvp_fear_trigger"
         ],
         "partial": true,
-        "evidence": "pvp-fear-move-rules.js:535,667,705,731,733 traced; :403 kind variable, :430/:467/:484/:516/:533 row origins not traced"
+        "evidence": "pvp-fear-move-rules.js:535,667,705,731,733 and :403 (const kind pvp_fear_publication at :396) traced; :484 current is target() which returns pvp_fear_threat_state for npc_introduce_or_escalate but clocks/simulation entities for other move kinds (not city records); :430/:467/:533 trigger-row filters and :516 held action nodes not traced"
       }
     },
     "bot/src/frameworks/daggerheart/pvp-profile-rules.js": {
