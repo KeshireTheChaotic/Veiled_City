@@ -1,0 +1,22 @@
+[
+  {
+    "sha256": "bbae55807547ee81c12cb95214786d622f9ecbdf9a0ed37e909bfd5e559068fc",
+    "path": "bot/src/v2/component-choice-sources.js"
+  },
+  {
+    "sha256": "436c0742fefb6354c731ed9067dc868876f2d4aec221438cf27b477ff256ea17",
+    "path": "bot/src/v2/source-authority.js"
+  },
+  {
+    "sha256": "15f93bf238b3ae1a1cddf5ff13ebf4cce1c6ba872ae41cf028c075ab5f2d7890",
+    "path": "bot/src/v2/scene-store.js"
+  },
+  {
+    "sha256": "b88edf9b1cb9fa885c336e03285a404f34042a5e6633707b06271dc31c1d8a40",
+    "path": "bot/tests/veilkeeper2/r3-component-choice-sources.test.mjs"
+  },
+  {
+    "sha256": "c86485fa3cf0a8405ebacca1cad111b5ef2b029eb2a347dfc699d573284f0175",
+    "path": "docs/veilkeeper2/R3_COMPONENT_CHOICE_SOURCES_REPORT.md"
+  }
+]

@@ -3,12 +3,12 @@ import {createHash} from 'node:crypto';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const ids=v=>Array.isArray(v)&&v.length<=256&&v.every(id)&&new Set(v).size===v.length;
-const fields={message:['id','campaignId','userId','channelId','deleted','text'],channel:['id','campaignId','sceneId','kind','permissionsVerified','recipientIds','writerIds','ownerUserId'],
+const fields={message:['id','campaignId','userId','channelId','deleted','text','origin'],channel:['id','campaignId','sceneId','kind','permissionsVerified','recipientIds','writerIds','ownerUserId'],
   scene:['id','campaignId','sessionId','status','participants'],session:['id','campaignId','status'],actor:['id','campaignId','sceneId','status','kind','ownerUserId','controllerUserId','controlRole','proxyAuthorized','delegationRef','name']};
 const decode=r=>r?JSON.parse(r.data):null;
 function valid(kind,d){
   if(!d||typeof d!=='object'||Array.isArray(d)||!fields[kind]||Object.keys(d).some(k=>!fields[kind].includes(k))||!id(d.id)||!id(d.campaignId))return false;
-  if(kind==='message')return id(d.userId)&&id(d.channelId)&&typeof d.deleted==='boolean'&&typeof d.text==='string'&&d.text.length<=16000;
+  if(kind==='message')return id(d.userId)&&id(d.channelId)&&typeof d.deleted==='boolean'&&typeof d.text==='string'&&d.text.length<=16000&&(d.origin===undefined||['discord_message','discord_component'].includes(d.origin));
   if(kind==='channel')return id(d.sceneId)&&['party','private'].includes(d.kind)&&typeof d.permissionsVerified==='boolean'&&ids(d.recipientIds)&&ids(d.writerIds)&&(d.ownerUserId==null||id(d.ownerUserId));
   if(kind==='session')return ['active','ended'].includes(d.status);
   if(kind==='scene')return id(d.sessionId)&&['active','closed'].includes(d.status)&&Array.isArray(d.participants)&&d.participants.length<=256&&d.participants.every(p=>p&&Object.keys(p).sort().join(',')==='actorId,presence,userId'&&id(p.actorId)&&id(p.userId)&&['present','late','guest','absent'].includes(p.presence))&&new Set(d.participants.map(p=>p.actorId)).size===d.participants.length;

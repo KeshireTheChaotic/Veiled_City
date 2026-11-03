@@ -1,0 +1,7 @@
+# R3 — component choice to native source mapping
+
+Added native mapping from verified observed component decisions to explicitly labelled discord_component source records. It refreshes channel audience and refuses drift pending native reconciliation; current owner/scene/control are checked before source creation. Original native decision remains separate from synthetic source text, which is labelled as a native command result rather than PC dialogue. A source-reference event lookup reconstructs exact decision fields for consent ingress. Scene message schema accepts only the two explicit Discord origin labels.
+
+Changed-code tests selected component-choice sources, source authority, scene store, Discord chain and native consent chain: 24/24 passed. After canonicalizing flat audience/message comparisons to ignore property/set order, the changed two-case bridge suite passed again. No unrelated suites reran. Tests use real source/SQLite logic with injected observed-decision and live-audience readers; no live Discord component was used.
+
+Remaining: complete observed-prompt-envelope-to-source-to-consent integration, authenticated event provenance, permission refresh races, restart reconstruction and default runtime wiring. readDecision must retain current prompt/owner checks; arbitrary JSON cannot be admitted as a verified component. All phase gates remain incomplete. No production change, migration, deployment or phase push occurred. Next: end-to-end prompt/component/consent/outcome qualification and multi-store restart tests.

@@ -63,7 +63,9 @@ export function createSourceAuthority({readMessage,readSession,readScene,readAct
       return digest(proof)===prior.fingerprint&&Object.keys(proof).every(key=>JSON.stringify(proof[key])===JSON.stringify(source[key]));
     }catch{return false;}
   }
-  return Object.freeze({authenticate,revalidate,inspectReference(ref,revision){
+  return Object.freeze({authenticate,revalidate,eventForReference(ref){
+    const prior=getIssued(ref);if(!prior)fail();const {proof}=inspect(prior.event);if(digest(proof)!==prior.fingerprint)fail();return structuredClone(prior.event);
+  },inspectReference(ref,revision){
     const prior=getIssued(ref);if(!prior)fail();const {proof}=inspect(prior.event);
     if(proof.revision!==revision||digest(proof)!==prior.fingerprint)fail();return structuredClone(proof);
   },inspectControl(source){
