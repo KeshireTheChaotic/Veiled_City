@@ -1,0 +1,6 @@
+{
+  "bot/src/v2/native-private-channel-registration.js": "a75d1ad8664c4aa0f0d5f85e9893e40334d9d49fe1b58b47d988dcc6343f8294",
+  "bot/src/v2/discord-player-channel.js": "1ba9a3f614d7827b996afbc88c772aa52120997f3326793eb6f2fe7b1506750b",
+  "bot/tests/veilkeeper2/r6-player-private-channel.test.mjs": "f0ef3d3f0d4617071dddf1a6473eff0cf6f5fe1501821a9d9a6aed28dcb551ef",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923"
+}

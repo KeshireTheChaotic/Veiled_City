@@ -1,3 +1,7 @@
+## 2026-11-10: private-channel native service slice complete
+
+R6_PRIVATE_CHANNEL_REPORT.md records eight passing focused/composition checks and source/test hashes. No live operation, schema migration, major phase completion or production change. Next: native draft-publication extraction and asynchronous scope revalidation.
+
 # Veilkeeper 2.0 — current state
 
 The full R0–R8 goal remains incomplete. The user explicitly requested review and continuation on 2026-11-10. Work resumed after reviewing the current handoff and session review; no complete phase gate is claimed. Keep the 2%-remaining pause instruction for subsequent checkpoints. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch: `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6` in parent `baseline`. Deprecated checkout remains untouched. Preserve the unrelated dirty `README.md`.

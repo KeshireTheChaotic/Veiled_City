@@ -1,3 +1,7 @@
+## 2026-11-10: private-channel native service slice complete
+
+R6_PRIVATE_CHANNEL_REPORT.md records eight passing focused/composition checks and source/test hashes. No live operation, schema migration, major phase completion or production change. Next: native draft-publication extraction and asynchronous scope revalidation.
+
 # Veilkeeper 2.0 — current rebuild handoff
 
 Reviewed and continued by explicit user request on 2026-11-10. The full R0–R8 rebuild remains incomplete. Current checkpoint resolves the legacy command-schema boundary: see R6_COMMAND_BOUNDARY_REPORT.md (9 focused checks). The 504/504 result below belongs to the prior a2feccb8 checkpoint, not a new full-suite run. Preserve unrelated README.md.
