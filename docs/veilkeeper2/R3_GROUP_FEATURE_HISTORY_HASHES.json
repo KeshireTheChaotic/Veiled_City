@@ -1,0 +1,42 @@
+{
+  "node": "v26.13.0",
+  "distinct_tests": 16,
+  "final_passed": 16,
+  "initial": {
+    "tests": 16,
+    "passed": 12,
+    "failed": 4,
+    "duration_ms": 2672.7659,
+    "failure": "fixture progress source key collided with execution source key"
+  },
+  "after_fixture_fix": {
+    "tests": 4,
+    "passed": 4,
+    "duration_ms": 633.5346
+  },
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "upstream_sources": [
+    {
+      "file": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "3aad0c9e1a19b74f3ae05516a387090b3edc8a538f24a8063c200868350bc8e0"
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/mixed-condition-rules.js",
+      "sha256": "d0f671e9e04e4b39a84c38269cbd339fe4266d21f352471e870da1485aff76f4"
+    }
+  ],
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/group-feature-history.js",
+      "sha256": "f4a31a207253e4892fe4045adb2599e38a2cff28a9d2e672b99feb77c75b30c7"
+    },
+    {
+      "file": "bot/src/v2/rules/npc-condition-clear-history.js",
+      "sha256": "ff1765c620a164a5481abbd0089fc3f866cca296dce4b9e26b17a5d1b88b9bb7"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-group-feature-history.test.mjs",
+      "sha256": "096eaff534088a39eaf2a4ef49f80af1e976e6b009f8f910dff81c4675df887a"
+    }
+  ]
+}
