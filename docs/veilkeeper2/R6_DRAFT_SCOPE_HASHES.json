@@ -1,0 +1,5 @@
+{
+  "bot/src/v2/native-draft-publication.js": "34cb6fcd9e8874397fc84a7dc5a784b9f173f1b3939505e296a1577d4f0adab0",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs": "eb8863b714188d440cf1726c97836b4671bed9c5dfec4ce5445045c806abcadf",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923"
+}

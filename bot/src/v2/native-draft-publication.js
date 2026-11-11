@@ -13,6 +13,7 @@ export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audi
     const draft=row.draft,target=draft.delivery,channelRecord=target&&sceneStore.readers.readChannel(c,target.channelId);
     if(typeof draft.text!=='string'||draft.text.length>1900)throw new Error('Draft must fit one message; review needed');
     if(!channelRecord||channelRecord.permissionsVerified!==true||JSON.stringify([...channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort())||channelRecord.kind!==target.mode)throw new Error('Draft audience changed; review needed');
+    if(draft.audience?.campaign!==c||draft.audience.scene!==channelRecord.sceneId||draft.audience.source_ref!==source)throw new Error('Draft source audience does not match the destination scene');
     // Publish security: re-read the live Discord audience and the scene at send time, not only the stored record.
     const scene=sceneStore.readers.readScene(c,channelRecord.sceneId);if(scene?.status!=='active'||sceneStore.readers.readSession(c,scene.sessionId)?.status!=='active')throw new Error('Draft scene is no longer active; review needed');
     const scopeHash=hash([channelRecord,scene,sceneStore.readers.readSession(c,scene.sessionId)]);

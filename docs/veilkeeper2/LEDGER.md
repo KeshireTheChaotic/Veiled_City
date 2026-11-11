@@ -1,3 +1,7 @@
+## 2026-11-10: draft destination binding complete
+
+R6_DRAFT_SCOPE_REPORT.md: 27 passing focused/composition checks; equal recipients no longer authorize another campaign/scene/source. Current hashes recorded. Source epoch revalidation and R4 material review remain open. No live operation or phase completion.
+
 ## 2026-11-10: reviewed-draft native service slice complete
 
 R6_DRAFT_PUBLICATION_REPORT.md records 26 passing focused/composition checks and source/test hashes. Publication now refuses scene/session scope changes during Discord reads. No live operation, major phase completion or production change. Next: R4 output guarantees and validated ordinary-prose delivery integration.

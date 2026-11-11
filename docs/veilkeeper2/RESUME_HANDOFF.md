@@ -1,14 +1,6 @@
-## 2026-11-10: reviewed-draft native service slice complete
-
-R6_DRAFT_PUBLICATION_REPORT.md records 26 passing focused/composition checks and source/test hashes. Publication now refuses scene/session scope changes during Discord reads. No live operation, major phase completion or production change. Next: R4 output guarantees and validated ordinary-prose delivery integration.
-
-## 2026-11-10: private-channel native service slice complete
-
-R6_PRIVATE_CHANNEL_REPORT.md records eight passing focused/composition checks and source/test hashes. No live operation, schema migration, major phase completion or production change. Next: native draft-publication extraction and asynchronous scope revalidation.
-
 # Veilkeeper 2.0 — current rebuild handoff
 
-Reviewed and continued by explicit user request on 2026-11-10. The full R0–R8 rebuild remains incomplete. Current checkpoint resolves the legacy command-schema boundary: see R6_COMMAND_BOUNDARY_REPORT.md (9 focused checks). The 504/504 result below belongs to the prior a2feccb8 checkpoint, not a new full-suite run. Preserve unrelated README.md.
+Reviewed and continued by explicit user request on 2026-11-10. The full R0–R8 rebuild remains incomplete. Current checkpoint resolves the legacy command-schema boundary and extracts native private-channel/GM-reviewed publication services. See R6_COMMAND_BOUNDARY_REPORT.md, R6_PRIVATE_CHANNEL_REPORT.md, R6_DRAFT_PUBLICATION_REPORT.md and R6_DRAFT_SCOPE_REPORT.md for completed slices and hashes. Latest changed-dependency checks: 23 GM-command + 4 root composition passed. Next: persistent source epoch revalidation before publication, then R4 consequential prose review and autonomous delivery. No phase gate passed. The 504/504 result below belongs to the prior a2feccb8 checkpoint, not a new full-suite run. Preserve unrelated README.md.
 
 Prior live qualification (2026-11-03) used the authorized test guild and scratch copy/stores; that process has not been inspected, stopped or restarted during this review. Do not assume it is still running, and do not restart a scratch harness that deletes stores without preserving its state. No live registration, send or model call was performed during this continuation.
 
@@ -16,8 +8,8 @@ Prior live qualification (2026-11-03) used the authorized test guild and scratch
 
 - Worktree: D:/Library/Development/Veiled_City_2/rebuild; branch rebuild/veilkeeper2-audience-first. Parent workspace: D:/Library/Development/Veiled_City_2. Deprecated D:/Library/Development/Veiled_City remains untouched.
 - Preserve unrelated dirty README.md. Never stage, reset or clean it. User-authorized documentation cleanup is committed as 3ca9db9d; do not restore removed documents just to use them.
-- Frozen parent baseline checkout/branch: codex/clean-ai-gm-2026-10 at 1ba6c7e15db1a66ba34b36336f31437beffe44d6. Fresh approved git ls-remote on 2026-11-03 still matches. Rebuild origin is 7340375cf2e0596aa274f0ebc0fdfb05656553f1, verified a local ancestor. Do not infer who published it. No push/merge was run during these slices.
-- Latest prior commit is a5d9627d (observed human GM authority). The checkpoint containing R6_NATIVE_SESSION_SETUP_REPORT.md commits session creation plus this handoff; inspect git log for its exact SHA.
+- Frozen parent baseline checkout/branch: codex/clean-ai-gm-2026-10 at 1ba6c7e15db1a66ba34b36336f31437beffe44d6. Fresh approved git ls-remote on 2026-11-10 still matches. Rebuild origin was fda77bd84b216e0e883c8b1348b12e7611787388 before the current slices, verified equal to then-local HEAD. Do not infer who published it. No push/merge was run during these slices.
+- Current continuation commits: 81cc97c0 (native command boundary), d2d318b1 (private-channel native service), ffaffc99 (reviewed-draft native service and asynchronous scope checks), followed by the draft destination-binding checkpoint; inspect git log for its SHA.
 - Commit scoped phase work. Integrate/publish completed major phases only to the rebuild branch, never the baseline. This worktree already uses the integration target, so no self-merge. No complete major-phase gate has passed. Production cutover/deployment requires separate authorization.
 - No subagents authorized. Current Node v26.13.0; installed discord.js 14.27.0 and openai 6.6.0. New tests under bot/tests/veilkeeper2 are ignored: force-add exact test paths. Run explicit fresh changed-dependency suites; do not rerun passed unchanged tests or use legacy npm suites/fixtures as replacement evidence.
 

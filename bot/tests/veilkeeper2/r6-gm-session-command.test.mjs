@@ -92,7 +92,7 @@ test('GM lists withheld drafts privately, and non-GMs and unconfigured services 
 const FP='a'.repeat(64),OTHER_FP='b'.repeat(64);
 async function draftFixture(t,over={}){
   const f=fixture(t,{withBootstrap:true});await f.service.handle(f.event);const sid=f.sceneStore.activeSessions('c')[0].id;f.sceneStore.commitSnapshot({campaignId:'c',principal:'admin',sourceRef:'chan',records:[{kind:'channel',expectedRevision:null,data:{id:'admin',campaignId:'c',sceneId:`${sid}:opening`,kind:'party',permissionsVerified:true,recipientIds:['u','v'],writerIds:['u','v']}}]},{check:()=>{}});
-  f.draftRows.push({source:'src-1',fingerprint:FP,draft:{text:'The clerk waits.',audience:{recipients:['v','u']},delivery:{channelId:'admin',mode:'party',messageId:'m1'},...over}});return f;
+  f.draftRows.push({source:'src-1',fingerprint:FP,draft:{text:'The clerk waits.',audience:{campaign:'c',scene:`${sid}:opening`,source_ref:'src-1',recipients:['v','u']},delivery:{channelId:'admin',mode:'party',messageId:'m1'},...over}});return f;
 }
 test('GM approves an exact saved draft and it is sent once to its original audience without knowledge acknowledgement',async t=>{
   const f=await draftFixture(t),r=await f.service.handle(roll(f,'p0',{op:'draft-publish',source:'src-1',fingerprint:FP}));assert.equal(r.status,'committed',f.errors.join('|'));
@@ -131,4 +131,14 @@ test('a session closed during channel resolution prevents publication',async t=>
   f.liveAudience.onRead=async()=>{guild.channels.fetch=async(...args)=>{guild.channels.fetch=fetch;await f.service.handle(endEvent(f,'fetch-close'));return fetch(...args);};};
   assert.equal((await f.service.handle(roll(f,'fetch-publish',{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');
   assert.equal(f.sentMessages.length,0);assert.equal(f.draftRows[0].state,undefined);assert.match(f.errors.join('|'),/publication scope changed/);
+});
+
+test('matching recipients do not authorize a draft from another campaign, scene or source',async t=>{
+  const f=await draftFixture(t),audience=f.draftRows[0].draft.audience;
+  for(const [field,value] of [['campaign','other-campaign'],['scene','other-scene'],['source_ref','other-source']]){
+    const prior=audience[field];audience[field]=value;
+    assert.equal((await f.service.handle(roll(f,`scope-${field}`,{op:'draft-publish',source:'src-1',fingerprint:FP}))).status,'native_review_required');
+    audience[field]=prior;
+  }
+  assert.equal(f.sentMessages.length,0);assert.equal(f.draftRows[0].state,undefined);assert.match(f.errors.join('|'),/source audience does not match/);
 });
