@@ -25,6 +25,10 @@ export function openActionStore(filename=':memory:'){
     if(![campaignId,ownerUserId,sceneId].every(id))throw new Error('Native owner action scope required');
     return db.prepare("SELECT data FROM vk3_actions WHERE campaign=? AND json_extract(data,'$.ownerUserId')=? AND json_extract(data,'$.sceneId')=? AND json_extract(data,'$.kind')='hope_cost' AND json_extract(data,'$.status')='ready_to_commit' ORDER BY id LIMIT 17").all(campaignId,ownerUserId,sceneId).map(decode);
   }
+  function pendingCostMetadata(campaignId,ownerUserId,sceneId){
+    if(![campaignId,ownerUserId,sceneId].every(id))throw new Error('Native owner cost scope required');
+    return db.prepare("SELECT data FROM vk3_actions WHERE campaign=? AND json_extract(data,'$.ownerUserId')=? AND json_extract(data,'$.sceneId')=? AND json_extract(data,'$.kind')='hope_cost' AND json_extract(data,'$.status') IN ('pending','awaiting_consent') ORDER BY id LIMIT 17").all(campaignId,ownerUserId,sceneId).map(decode);
+  }
   function acceptedConsentRefs(campaignId,actionId){
     if(![campaignId,actionId].every(id))throw new Error('Native action consent scope required');
     return db.prepare("SELECT id FROM vk3_cost_consents WHERE campaign=? AND json_extract(data,'$.actionRef')=? AND json_extract(data,'$.status')='accepted' ORDER BY id LIMIT 17").all(campaignId,actionId).map(row=>row.id);
@@ -142,7 +146,7 @@ export function openActionStore(filename=':memory:'){
     db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
   });}
   const pcLife=createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,deathEvent});
-  return Object.freeze({...pcLife,...createPcBootstrap({db,tx}),create,transition,read,readyActionMetadata,acceptedConsentRefs,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+  return Object.freeze({...pcLife,...createPcBootstrap({db,tx}),create,transition,read,readyActionMetadata,pendingCostMetadata,acceptedConsentRefs,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
     recordIncomingDeathReview:(c,a,options)=>recordDeathEvidence(c,a,'review',options),recordIncomingDeathChoice:(c,a,options)=>recordDeathEvidence(c,a,'choice',options),
     readIncomingDeathReview:(c,a)=>deathEvent(c,a,'review'),readIncomingDeathChoice:(c,a)=>deathEvent(c,a,'choice'),
     readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),

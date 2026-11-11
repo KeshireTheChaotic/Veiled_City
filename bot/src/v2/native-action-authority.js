@@ -6,7 +6,7 @@ const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 /** Fixed native engine bridge. A reference is not consent, a cost, or a state patch.
  * Resource receipt projections are owner-private; public disclosure needs its own authority.
  */
-export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost}){
+export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null}){
   if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Native source, actor and action store required');
   const costs=createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms:actionStore.readActionTerms,readConsent:actionStore.readConsent,actionStore,inspectBlazeCost});
   function owner(source,action){
@@ -29,6 +29,10 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
   }
   function propose(source,input){
     privateSource(source);
+    if(input.action?.kind==='hope_cost.request_consent'){
+      const p=input.action.parameters;if(typeof requestConsent!=='function'||!p||Object.keys(p).join(',')!=='action_ref'||!id(p.action_ref))throw new Error('Native cost request reference required');
+      const action=actionStore.read(source.campaign,p.action_ref);owner(source,action);if(action.actorId!==input.actor_ref||action.sourceRef!==source.id||action.sourceRevision!==source.revision)throw new Error('Original native cost source required');return requestConsent(source,p.action_ref);
+    }
     const parameters=input.action?.parameters;
     if(input.action?.kind!=='hope_cost.commit'||!parameters||Object.keys(parameters).sort().join(',')!=='action_ref,consent_ref'||![parameters.action_ref,parameters.consent_ref].every(id))throw new Error('Native action and consent references required');
     const action=actionStore.read(source.campaign,parameters.action_ref);owner(source,action);
@@ -69,6 +73,11 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
         if(operations.length>16)throw new Error('Too many eligible native proposals');
       }
     }
+    if(requestConsent&&typeof actionStore.pendingCostMetadata==='function'){
+      const pending=actionStore.pendingCostMetadata(source.campaign,source.principal,source.scene);if(pending.length>16)throw new Error('Too many pending native costs');
+      for(const action of pending){if(action.sourceRef!==source.id||action.sourceRevision!==source.revision)continue;owner(source,action);operations.push(Object.freeze({source_ref:source.id,actor_ref:action.actorId,action:Object.freeze({kind:'hope_cost.request_consent',parameters:Object.freeze({action_ref:action.id})})}));}
+      if(operations.length>16)throw new Error('Too many eligible native proposals');
+    }
     privateSource(source);return Object.freeze({status:'available',operations:Object.freeze(operations),effects_committed:false});
   }
   // Exact factual recap only. This is not approval of arbitrary prose or a new effect.
@@ -86,5 +95,5 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
       return receipt.effects.length===1&&receipt.effects[0].kind==='resource_spent'&&receipt.effects[0].resource==='hope'&&receipt.effects[0].amount===Number(match[1]);
     }catch{return false;}
   }
-  return Object.freeze({context,authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'}]});
+  return Object.freeze({context,authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit'||typeof requestConsent==='function'&&kind==='hope_cost.request_consent',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'},...(requestConsent?[{kind:'hope_cost.request_consent',version:'1'}]:[])]});
 }

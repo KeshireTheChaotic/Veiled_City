@@ -1,5 +1,5 @@
 {
-  "head": "43bc692caafe11299cf5bb68b53d13997e3d3dd3",
+  "head": "3a760dcb36d612ec148d4608a92d9b59d7b7825a",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,13 +12,11 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 90,
-  "reachableNativeModules": 67,
+  "nativeModules": 91,
+  "reachableNativeModules": 71,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
-    "bot/src/v2/cost-prompt-store.js",
-    "bot/src/v2/discord-cost-decisions.js",
     "bot/src/v2/discord-fear-announcements.js",
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
@@ -29,7 +27,6 @@
     "bot/src/v2/rules/death-choice-evidence.js",
     "bot/src/v2/rules/fear-opportunity-reader.js",
     "bot/src/v2/rules/fear-reservations.js",
-    "bot/src/v2/rules/hope-consent-ingress.js",
     "bot/src/v2/rules/hope-store.js",
     "bot/src/v2/rules/incoming-damage-authority.js",
     "bot/src/v2/rules/ordinary-roll-preparation.js",
@@ -578,14 +575,14 @@
     },
     {
       "file": "bot/src/v2/cost-prompt-store.js",
-      "sha256": "f3018b8fd58d49bb46e970dedeabe6ae6f72b192f80fe9128043d6036f768c83",
-      "reachable": false,
+      "sha256": "e523a0c266b48e0af8bf9f26202b679760fdedeb22f32fa8ab2c6d6839f4c615",
+      "reachable": true,
       "exports": [
         {
           "line": 5,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openCostPromptStore(filename=':memory:',{clock=()=>Date.now()}={}){\n  const db=new DatabaseSync(filename);\n  try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk3_cost_prompts'))throw new Error('Dedicated cost "
+          "text": "export function openCostPromptStore(filename=':memory:',{clock=()=>Date.now()}={}){\r\n  const db=new DatabaseSync(filename);\r\n  try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk3_cost_prompts'))throw new Error('Dedicated cos"
         }
       ],
       "imports": [
@@ -604,8 +601,8 @@
           "status": "external"
         }
       ],
-      "functions": 15,
-      "sqlStatements": 7
+      "functions": 27,
+      "sqlStatements": 12
     },
     {
       "file": "bot/src/v2/death-interaction-reconciliation.js",
@@ -733,7 +730,7 @@
     {
       "file": "bot/src/v2/discord-cost-decisions.js",
       "sha256": "bbd128fcd436fc3f14d1b94f0514e6cc6c64f432345e01bf6fcf736252e2e6e4",
-      "reachable": false,
+      "reachable": true,
       "exports": [
         {
           "line": 4,
@@ -1068,61 +1065,68 @@
     },
     {
       "file": "bot/src/v2/discord-interaction-router.js",
-      "sha256": "299a6c5c94e9500241429ad3da5274b278248828d2afc81dda9b7bad3fc7a5c6",
+      "sha256": "ac04b581e78f23fc451ac23f1a9baf913e0f65d4fe6a4c3f1ab0d2a7c0c43d3e",
       "reachable": true,
       "exports": [
         {
-          "line": 12,
+          "line": 13,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.liste"
+          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||type"
         }
       ],
       "imports": [
         {
           "line": 1,
           "kind": "ImportDeclaration",
+          "specifier": "./native-cost-workflow.js",
+          "target": "bot/src/v2/native-cost-workflow.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
           "specifier": "discord.js",
           "target": null,
           "status": "external"
         },
         {
-          "line": 2,
+          "line": 3,
           "kind": "ImportDeclaration",
           "specifier": "./native-death-workflow.js",
           "target": "bot/src/v2/native-death-workflow.js",
           "status": "resolved"
         },
         {
-          "line": 3,
+          "line": 4,
           "kind": "ImportDeclaration",
           "specifier": "./discord-death-commands.js",
           "target": "bot/src/v2/discord-death-commands.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./discord-gm-session.js",
           "target": "bot/src/v2/discord-gm-session.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./discord-player-channel.js",
           "target": "bot/src/v2/discord-player-channel.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./discord-gm-authority.js",
           "target": "bot/src/v2/discord-gm-authority.js",
@@ -1545,14 +1549,14 @@
     },
     {
       "file": "bot/src/v2/native-action-authority.js",
-      "sha256": "99c51aa22d400a3fd720ee84f35d5d30e538c3bdf6156ce96a23ce9f915c6fa9",
+      "sha256": "c81ea78b7dc2a6c9b49aab9fcdd08f7f9166d6188376b481d426aa81f3894e17",
       "reachable": true,
       "exports": [
         {
           "line": 9,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='function')throw new T"
+          "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='f"
         }
       ],
       "imports": [
@@ -1618,6 +1622,72 @@
       ],
       "imports": [],
       "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-cost-workflow.js",
+      "sha256": "403fa4f4bdbdb3d1870098d25ed33d83deff4123df3197f4b1549ea14636acfe",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAuthority,readActor,readRoute,promptStore,decisionStore,interactionReceipts,nativeActions,allowedGuildIds=null,clock=()=>Date.now(),onError=()=>{}}){\r\n  if(typeof promptStore?.ensure!=='function'||typeof nativeActions?.pro"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-cost-decisions.js",
+          "target": "bot/src/v2/discord-cost-decisions.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./component-choice-sources.js",
+          "target": "bot/src/v2/component-choice-sources.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/hope-consent-ingress.js",
+          "target": "bot/src/v2/rules/hope-consent-ingress.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./death-prompts.js",
+          "target": "bot/src/v2/death-prompts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 36,
       "sqlStatements": 0
     },
     {
@@ -1750,11 +1820,11 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "fa29d172c93906d69af5c3bf6da733d6eea8eaad486fe1c18792bca703a268ab",
+      "sha256": "4667c06eaf2e778e5bb26c99d1f6b967d91a1b3d42412d1d1197140566db777a",
       "reachable": true,
       "exports": [
         {
-          "line": 27,
+          "line": 28,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
@@ -1813,103 +1883,110 @@
         {
           "line": 8,
           "kind": "ImportDeclaration",
+          "specifier": "./cost-prompt-store.js",
+          "target": "bot/src/v2/cost-prompt-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 9,
+          "kind": "ImportDeclaration",
           "specifier": "./death-prompts.js",
           "target": "bot/src/v2/death-prompts.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./component-decision-store.js",
           "target": "bot/src/v2/component-decision-store.js",
           "status": "resolved"
         },
         {
-          "line": 10,
+          "line": 11,
           "kind": "ImportDeclaration",
           "specifier": "./interaction-receipts.js",
           "target": "bot/src/v2/interaction-receipts.js",
           "status": "resolved"
         },
         {
-          "line": 11,
+          "line": 12,
           "kind": "ImportDeclaration",
           "specifier": "./canonical-actor-readers.js",
           "target": "bot/src/v2/canonical-actor-readers.js",
           "status": "resolved"
         },
         {
-          "line": 12,
+          "line": 13,
           "kind": "ImportDeclaration",
           "specifier": "./pc-bootstrap-source.js",
           "target": "bot/src/v2/pc-bootstrap-source.js",
           "status": "resolved"
         },
         {
-          "line": 13,
+          "line": 14,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 14,
+          "line": 15,
           "kind": "ImportDeclaration",
           "specifier": "./native-campaign-adapters.js",
           "target": "bot/src/v2/native-campaign-adapters.js",
           "status": "resolved"
         },
         {
-          "line": 15,
+          "line": 16,
           "kind": "ImportDeclaration",
           "specifier": "./discord-interaction-router.js",
           "target": "bot/src/v2/discord-interaction-router.js",
           "status": "resolved"
         },
         {
-          "line": 16,
+          "line": 17,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-reader.js",
           "target": "bot/src/v2/discord-message-reader.js",
           "status": "resolved"
         },
         {
-          "line": 17,
+          "line": 18,
           "kind": "ImportDeclaration",
           "specifier": "./discord-intake.js",
           "target": "bot/src/v2/discord-intake.js",
           "status": "resolved"
         },
         {
-          "line": 18,
+          "line": 19,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-observer.js",
           "target": "bot/src/v2/discord-message-observer.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 20,
           "kind": "ImportDeclaration",
           "specifier": "./discord-turn-runner.js",
           "target": "bot/src/v2/discord-turn-runner.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "ImportDeclaration",
           "specifier": "./turn-store.js",
           "target": "bot/src/v2/turn-store.js",
           "status": "resolved"
         },
         {
-          "line": 21,
+          "line": 22,
           "kind": "ImportDeclaration",
           "specifier": "./knowledge-store.js",
           "target": "bot/src/v2/knowledge-store.js",
           "status": "resolved"
         }
       ],
-      "functions": 17,
+      "functions": 18,
       "sqlStatements": 0
     },
     {
@@ -2449,7 +2526,7 @@
     },
     {
       "file": "bot/src/v2/rules/action-store.js",
-      "sha256": "6d9078057ca376f3b8d16199adc2fb58b1e6a27ade7bd14710d83731698ef684",
+      "sha256": "de05136ce4bb9e476bb106f9fd03e5ca5ca36edb83fa1cf4962efa46d0ff5344",
       "reachable": true,
       "exports": [
         {
@@ -2503,8 +2580,8 @@
           "status": "resolved"
         }
       ],
-      "functions": 51,
-      "sqlStatements": 40
+      "functions": 52,
+      "sqlStatements": 41
     },
     {
       "file": "bot/src/v2/rules/blaze-costs.js",
@@ -2789,7 +2866,7 @@
     {
       "file": "bot/src/v2/rules/hope-consent-ingress.js",
       "sha256": "ab9c211b8fa15e989d506db8896f8542523077f0561f5dbe5994e2520d12bb38",
-      "reachable": false,
+      "reachable": true,
       "exports": [
         {
           "line": 5,
