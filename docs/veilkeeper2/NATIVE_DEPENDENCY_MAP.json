@@ -1,5 +1,5 @@
 {
-  "head": "f8b51d20f0b60f307320940629e31189ff34c54d",
+  "head": "e9e7092c1ac5897b1789b53fd22f2320fe189097",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -1583,7 +1583,7 @@
     },
     {
       "file": "bot/src/v2/legacy-readonly-repository.js",
-      "sha256": "3e6b23a55631fc585fe725e4a913779a10b509b507d70e7690bcf7f348885def",
+      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52",
       "reachable": true,
       "exports": [
         {
@@ -1602,8 +1602,8 @@
           "status": "external"
         }
       ],
-      "functions": 19,
-      "sqlStatements": 9
+      "functions": 20,
+      "sqlStatements": 10
     },
     {
       "file": "bot/src/v2/model-gateway.js",
