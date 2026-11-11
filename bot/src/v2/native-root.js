@@ -1,4 +1,5 @@
 import {join} from 'node:path';
+import {createStatementLineage} from './statement-lineage.js';
 import {openRecallStore} from './recall-store.js';
 import {createRecallPlanner} from './recall-planner.js';
 import {createSceneProseReview} from './scene-prose-review.js';
@@ -40,7 +41,9 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     const conversationReaders={...canonical.readers,sourceRegistry:registry},conversationAuthority=createSourceAuthority(conversationReaders);
     const turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null,knowledgeStore=provider?open(openKnowledgeStore,join(directory,'knowledge.sqlite')):null;
     const recallStore=provider?open(openRecallStore,join(directory,'recall.sqlite')):null;
-    const conversationContext=knowledgeStore?createContextAuthority({sourceAuthority:conversationAuthority,records:knowledgeStore,readActor:conversationReaders.readActor}):null;
+    const statementLineage=createStatementLineage({sourceAuthority:conversationAuthority,sourceRegistry:registry,...sceneStore.readers});
+    const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:statementLineage.validate}:null;
+    const conversationContext=knowledgeStore?createContextAuthority({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}):null;
     const recall=recallStore?createRecallPlanner({contextAuthority:conversationContext,readCandidates:s=>knowledgeStore.candidateRefs(s.campaign,s.scene),readCauses:s=>recallStore.readCauses(s.campaign),readPins:s=>recallStore.readPins(s.campaign),readClock:recallStore.readClock}):null;
     const nativeActions=createNativeActionAuthority({sourceAuthority:conversationAuthority,readActor:conversationReaders.readActor,actionStore,requestConsent:(source,ref)=>router.costs.request(source,ref)});
     const readOwnerSession=createOwnerSessionReader({sceneStore,repository:characterRepository,readPolicy});
@@ -54,7 +57,7 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     // Weighted metadata-only recall. Gameplay cause issuers and commitment pin lifecycle remain uncomposed.
     // Entitlement includes complete ancestry before any selected body reaches inference.
     // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
-    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeStore,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>recall.select(source,{limit:64}),actionAuthority:nativeActions}}):null;
+    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeRecords,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>recall.select(source,{limit:64}),actionAuthority:nativeActions}}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
     return Object.freeze({router,costs:router.costs,turns,knowledgeStore,recallStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}

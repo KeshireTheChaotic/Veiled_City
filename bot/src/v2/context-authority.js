@@ -27,13 +27,22 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
         ||row.visibility==='recipients'&&['observed','acknowledged'].includes(row.disclosure)&&source.recipients.every(r=>row.recipientIds.includes(r)))
       &&(actorId===null||row.knownBy.includes(actorId));
   }
+  function originValid(row){
+    if(!Object.hasOwn(row,'origin'))return true;
+    try{return typeof records.validateOrigin==='function'&&records.validateOrigin(row)===true;}catch{return false;}
+  }
+  function checkOrigins(rows){
+    const checked=new Set(),visiting=new Set();
+    function visit(ref){if(checked.has(ref))return;if(visiting.has(ref))fail();const row=rows.get(ref);if(!row)fail();visiting.add(ref);for(const parent of row.sourceRefs)visit(parent);if(!originValid(row))fail();visiting.delete(ref);checked.add(ref);}
+    for(const ref of rows.keys())visit(ref);
+  }
   function closure(ref,source,actorId,metadata,visiting=new Set()){
     if(!id(ref)||visiting.has(ref)||visiting.size>=64||metadata.size>=256)return false;
     let row=metadata.get(ref);
     if(!row){row=records.metadata(source.campaign,ref);if(row)metadata.set(ref,structuredClone(row));}
     if(row?.id!==ref||!eligible(row,source,actorId))return false;
     const next=new Set([...visiting,ref]);
-    return row.sourceRefs.every(parent=>closure(parent,source,actorId,metadata,next));
+    return row.sourceRefs.every(parent=>closure(parent,source,actorId,metadata,next))&&originValid(row);
   }
   function issue(source,references,{actorId=null}={}){
     if(!sourceAuthority.revalidate(source)||!list(references)||references.length>64||actorId!==null&&!id(actorId))fail();
@@ -57,10 +66,13 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   function inspect(grant){
     const state=grant&&grants.get(grant);if(!state||!sourceAuthority.revalidate(state.source))fail();
     if(actorProof(state.source,state.actorId)!==state.actorRevision)fail();
+    const currentRows=new Map();
     for(const [ref,revision] of state.dependencies){
       const current=records.metadata(state.source.campaign,ref);
-      if(!current||hash(current)!==revision)fail();
+      if(!eligible(current,state.source,state.actorId)||hash(current)!==revision)fail();
+      currentRows.set(ref,current);
     }
+    checkOrigins(currentRows);
     return state.packet;
   }
   function audience(grant){
@@ -87,6 +99,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     const depths=new Map(),visiting=new Set();
     function depth(ref){if(visiting.has(ref))fail();if(depths.has(ref))return depths.get(ref);visiting.add(ref);const n=1+Math.max(0,...rows.get(ref).sourceRefs.map(depth));visiting.delete(ref);if(n>64)fail();depths.set(ref,n);return n;}
     for(const ref of refs)depth(ref);
+    checkOrigins(rows);
     return true;
   }
   // A model-selected reference is only a lookup candidate, never an entitlement.
