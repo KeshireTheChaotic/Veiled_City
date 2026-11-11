@@ -1,13 +1,13 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11; runtime source HEAD 43bc692c, dependency/audit commit 0866703d. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
+Checkpoint 2026-11-11; runtime source HEAD 43bc692c, dependency/audit commit 0866703d. Paused at the owner-requested 2% primary usage remaining; wait for explicit resume before implementation, tests, staging or qualification. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
 
 ## Binding workspace and owner instructions
 
 - Worktree: `D:/Library/Development/Veiled_City_2/rebuild`, branch `rebuild/veilkeeper2-audience-first`. Deprecated `D:/Library/Development/Veiled_City` is not an implementation target. Its user-authorized credential file may be loaded by path without printing/copying values.
 - Preserve unrelated dirty `README.md`; never stage/reset/clean it. No subagents authorized. New native tests under `bot/tests/veilkeeper2` are ignored: force-add exact paths. Run fresh explicit changed-dependency checks; never present simulated SDK/model checks as live quality.
 - Owner forbids computer-use until explicitly reauthorized. Do not use Windows/browser UI automation as a workaround. Autonomous bot/API and native testing are authorized.
-- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Latest measured limits were 97% primary / 61% weekly used; re-read before relying on them.
+- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Pause threshold reached: latest measured limits were 98% primary / 61% weekly used; re-read before relying on them.
 - Commit scoped phase work. Publish/integrate completed major phases only to the rebuild branch, never the baseline. Already on the integration target: no self-merge. No major phase has passed; production cutover needs separate authorization.
 - Frozen baseline `codex/clean-ai-gm-2026-10` remains `1ba6c7e15db1a66ba34b36336f31437beffe44d6`, freshly checked by git ls-remote this checkpoint. Origin rebuild remains `fda77bd84b216e0e883c8b1348b12e7611787388`; newer local slices have not been pushed. Refresh the source audit if baseline advances.
 
