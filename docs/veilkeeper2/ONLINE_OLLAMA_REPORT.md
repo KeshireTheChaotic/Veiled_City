@@ -1,4 +1,6 @@
-# R1/R4/R6 online Ollama qualification — in progress
+# R1/R4/R6 initial online Ollama qualification — historical snapshot
+
+Later source, review/repair, native engine and retrieval changes are recorded in RESUME_HANDOFF.md and the R3/R4/R7 slice reports. Statements below describe the initial run, not the current implementation. Overall live quality remains unqualified.
 
 User authorized online testing on 2026-11-10 and resumed the overall goal. Native test bot is online only in guild 1467249344947159291 with local qwen3.5:4b, a ten-call native budget and withheld drafts. Twenty-four native root commands were registered there. No production cutover or phase gate is claimed.
 

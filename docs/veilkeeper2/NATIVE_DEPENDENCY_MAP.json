@@ -1,0 +1,3380 @@
+{
+  "head": "43bc692caafe11299cf5bb68b53d13997e3d3dd3",
+  "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+  "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
+  "entries": [
+    "bot/src/v2/native-start.js",
+    "bot/src/v2/register-commands.js"
+  ],
+  "tools": [
+    "context_read",
+    "action_propose",
+    "state_inspect",
+    "knowledge_propose"
+  ],
+  "nativeModules": 90,
+  "reachableNativeModules": 67,
+  "uncomposedNativeModules": [
+    "bot/src/v2/character-package-service.js",
+    "bot/src/v2/character-packages.js",
+    "bot/src/v2/cost-prompt-store.js",
+    "bot/src/v2/discord-cost-decisions.js",
+    "bot/src/v2/discord-fear-announcements.js",
+    "bot/src/v2/gm-hook-package.js",
+    "bot/src/v2/index.js",
+    "bot/src/v2/private-hook-store.js",
+    "bot/src/v2/private-planning-repository.js",
+    "bot/src/v2/relationship-import.js",
+    "bot/src/v2/rules/combat.js",
+    "bot/src/v2/rules/death-choice-evidence.js",
+    "bot/src/v2/rules/fear-opportunity-reader.js",
+    "bot/src/v2/rules/fear-reservations.js",
+    "bot/src/v2/rules/hope-consent-ingress.js",
+    "bot/src/v2/rules/hope-store.js",
+    "bot/src/v2/rules/incoming-damage-authority.js",
+    "bot/src/v2/rules/ordinary-roll-preparation.js",
+    "bot/src/v2/rules/owner-roll-evidence.js",
+    "bot/src/v2/rules/pre-roll-fear-coordinator.js",
+    "bot/src/v2/rules/pre-roll-fear.js",
+    "bot/src/v2/rules/roll-action-lifecycle.js",
+    "bot/src/v2/rules/roll-store.js"
+  ],
+  "legacyImportClosure": [
+    "bot/src/frameworks/ai-provider/chatgpt-client.js",
+    "bot/src/frameworks/ai-provider/generation-feedback.js",
+    "bot/src/frameworks/ai-provider/model-transport.js",
+    "bot/src/frameworks/ai-provider/prompt-budget.js",
+    "bot/src/frameworks/ai-provider/public.js",
+    "bot/src/frameworks/discord/command-definitions.js",
+    "bot/src/frameworks/discord/command-schema.js"
+  ],
+  "importIssues": [],
+  "modules": [
+    {
+      "file": "bot/src/frameworks/ai-provider/chatgpt-client.js",
+      "sha256": "bbfb433e69cdccb733170ade70b0e44693e390b690f0a50b3784c442dbbc1eb8",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createChatGptClient({authPath=path.join(process.env.CODEX_HOME||path.join(os.homedir(),'.codex'),'auth.json'),\r\n  timeoutMs=60000,fetchImpl=globalThis.fetch,readFile=fs.readFileSync}={}){\r\n  function credentials(){\r\n    // Re-read per request so tokens refreshed by the Codex CLI are "
+        },
+        {
+          "line": 43,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function readStream(raw){\r\n  let response=null,deltas='';\r\n  for(const line of raw.split('\\n')){\r\n    if(!line.startsWith('data:'))continue;\r\n    let event;try{event=JSON.parse(line.slice(5));}catch{continue;}\r\n    if(event.type==='response.output_text.delta')deltas+=event.delta||'';\r\n    els"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:os",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:path",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "sha256": "19420dc146c357b2f6d92d31b43b1f070e645124e474aa056c62569432309ad0",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 2,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function beginGenerationFeedback(message,config,{schedule=setTimeout,repeat=setInterval,cancel=clearTimeout,cancelRepeat=clearInterval,onProgress=()=>{}}={}){\r\n  let stopped=false,announced=false;\r\n  const typing=()=>{if(!stopped)void Promise.resolve().then(()=>{if(!stopped)return message.cha"
+        }
+      ],
+      "imports": [],
+      "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/ai-provider/model-transport.js",
+      "sha256": "68c6a8b40f9c9637b889fb87debdce1a110b3889999aefcc867ea33ad1ab8ce3",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createModelTransport({client,config,metrics,traceForGuild=()=>null,\r\n  now=()=>performance.now(),wait=waitForRetry,randomId=randomUUID}={}){\r\n  if(!config)throw new TypeError('AI provider configuration is required.');\r\n  async function requestModel(request,{guildId,signal,retry=false"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:timers/promises",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/ai-provider/prompt-budget.js",
+      "sha256": "7ab1a102173dc817114eda23fd7ffd1f43ba04b41930f19138ac850067e02c3d",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function referenceSessionContext(session,assembly){\r\n  if(!session||typeof session.assembly_plan_json!=='string'||assembly==null)return session;\r\n  try{if(JSON.stringify(JSON.parse(session.assembly_plan_json))!==JSON.stringify(assembly))return session;}\r\n  catch{return session;}\r\n  const {ass"
+        },
+        {
+          "line": 17,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function partitionRosterContext(rows){\r\n  const background=[];\r\n  const roster=rows.map(row=>{\r\n    if(!row.character_id||!row.sheet||typeof row.sheet!=='object'||Array.isArray(row.sheet))return row;\r\n    const sheet={},refs=[];\r\n    for(const [field,value] of Object.entries(row.sheet)){\r\n   "
+        },
+        {
+          "line": 35,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function referenceContextPlan(plan,facts){\r\n  const details=new Map(facts.filter(row=>row?.id&&row.guild_id&&row.visibility)\r\n    .map(row=>[`fact:${row.id}`,JSON.stringify(row)]));\r\n  return {...plan,segments:plan.segments.map(row=>{\r\n    if(details.get(row.source)!==JSON.stringify(row.data)"
+        },
+        {
+          "line": 51,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function referenceTurnStorage(sections,{guildId,scope,factVisibleTo=()=>false}={}){\r\n  let aliases=0;\r\n  const project=value=>{\r\n    if(Array.isArray(value))return value.map(project);\r\n    if(!value||typeof value!=='object')return value;\r\n    const out=Object.fromEntries(Object.entries(value)"
+        },
+        {
+          "line": 86,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function budgetTurnPrompt(sections,{instructions=\"\",query=\"\",maxChars=120000,reserveChars=6000}={}){\r\n  const overflow=(message,diagnostic)=>{throw Object.assign(new Error(message),{code:\"CONTEXT_OVERFLOW\",diagnostic});};\r\n  const limit=maxChars-instructions.length-reserveChars;\r\n  const requ"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 36,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/ai-provider/public.js",
+      "sha256": "ecfd1f103ee0702f22ea168b991d06722c0178c09635af22bd6dcb7017c8eb3b",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 1,
+          "kind": "ExportNamedDeclaration",
+          "source": "./generation-feedback.js",
+          "text": "export {beginGenerationFeedback} from './generation-feedback.js';"
+        },
+        {
+          "line": 1,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "beginGenerationFeedback"
+        },
+        {
+          "line": 2,
+          "kind": "ExportNamedDeclaration",
+          "source": "./model-transport.js",
+          "text": "export {createModelTransport} from './model-transport.js';"
+        },
+        {
+          "line": 2,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "createModelTransport"
+        },
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": "./chatgpt-client.js",
+          "text": "export {createChatGptClient} from './chatgpt-client.js';"
+        },
+        {
+          "line": 3,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "createChatGptClient"
+        },
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": "./prompt-budget.js",
+          "text": "export {budgetTurnPrompt,referenceContextPlan,referenceSessionContext,partitionRosterContext,referenceTurnStorage} from './prompt-budget.js';"
+        },
+        {
+          "line": 4,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "budgetTurnPrompt"
+        },
+        {
+          "line": 4,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "referenceContextPlan"
+        },
+        {
+          "line": 4,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "referenceSessionContext"
+        },
+        {
+          "line": 4,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "partitionRosterContext"
+        },
+        {
+          "line": 4,
+          "kind": "ExportSpecifier",
+          "source": null,
+          "text": "referenceTurnStorage"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ExportNamedDeclaration",
+          "specifier": "./generation-feedback.js",
+          "target": "bot/src/frameworks/ai-provider/generation-feedback.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ExportNamedDeclaration",
+          "specifier": "./model-transport.js",
+          "target": "bot/src/frameworks/ai-provider/model-transport.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "specifier": "./chatgpt-client.js",
+          "target": "bot/src/frameworks/ai-provider/chatgpt-client.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "specifier": "./prompt-budget.js",
+          "target": "bot/src/frameworks/ai-provider/prompt-budget.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 0,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/discord/command-definitions.js",
+      "sha256": "7975c61ff057677f676bc41eaad8c004a1019537379f0e4c69ce26dba5640eed",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildCommands(){\n  const monolith = new SlashCommandBuilder()\n      .setName(\"vc\")\n      .setDescription(\"Veiled City multiplayer campaign commands\")\n      .addSubcommandGroup(g=>g.setName(\"campaign\").setDescription(\"Campaign setup and status\")\n        .addSubcommand(s=>s.setName(\"se"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 555,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/frameworks/discord/command-schema.js",
+      "sha256": "1549294b5e068787814bb5e61a810f998fcd36b0fe7897b2b06fcb753bbbe035",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 18,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function commandCharacterCount(command){\r\n  let total=0;\r\n  function walk(node){\r\n    if(!node||typeof node!==\"object\") return;\r\n    if(\"name\" in node) total+=longestLocalizedLength(node.name,node.name_localizations);\r\n    if(\"description\" in node) total+=longestLocalizedLength(node.descripti"
+        },
+        {
+          "line": 32,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function validateCommandSchema(commands){\r\n  const errors=[];\r\n  const pathName=(parts)=>parts.join(\" \");\r\n\r\n  function validateOptions(options=[],path=[]){\r\n    if(options.length>25) errors.push(`${pathName(path)} has ${options.length} options; Discord allows at most 25.`);\r\n\r\n    const leaf"
+        },
+        {
+          "line": 71,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function assertValidCommandSchema(commands){\r\n  const errors=validateCommandSchema(commands);\r\n  if(errors.length){\r\n    throw new Error(`Discord command schema validation failed:\\n${errors.map(e=>` - ${e}`).join(\"\\n\")}`);\r\n  }\r\n}"
+        }
+      ],
+      "imports": [],
+      "functions": 10,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/canonical-actor-readers.js",
+      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCanonicalActorReaders({sceneStore,actionStore,characterRepository}){\n  if(typeof sceneStore?.readers?.readActor!=='function'||typeof actionStore?.readPcLife!=='function'||typeof characterRepository?.getCharacter!=='function')throw new TypeError('Native scene, lifecycle and char"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 7,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/character-package-service.js",
+      "sha256": "9b1afb399336fa9ef08415d0ebb29ff94caea472c1bbd1cf7f32427b49c682b6",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 13,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCharacterPackageService({authenticate,readCharacter,readRevision,repository,hookStore=null,resolveRelationshipTarget=null}){\n  if([authenticate,readCharacter,readRevision].some(fn=>typeof fn!=='function')||!repository)throw new TypeError('Native character package dependencies r"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./character-packages.js",
+          "target": "bot/src/v2/character-packages.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./gm-hook-package.js",
+          "target": "bot/src/v2/gm-hook-package.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./relationship-import.js",
+          "target": "bot/src/v2/relationship-import.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/character-packages.js",
+      "sha256": "bf53a18dd9f98b2530fb71d9979fa302771d09b63bb22de10938ff9c6ea74a31",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 2,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function safeText(v){\r\n  return v==null?\"\":String(v);\r\n}"
+        },
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function safeStem(name){\r\n  const s=safeText(name).normalize(\"NFKD\").replace(/[^A-Za-z0-9]+/g,\"_\").replace(/^_+|_+$/g,\"\");\r\n  return s||\"Character\";\r\n}"
+        },
+        {
+          "line": 20,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function playerCharacterProjection(value){\r\n  if(Array.isArray(value))return value.map(playerCharacterProjection).filter(item=>item!==undefined);\r\n  if(!value||typeof value!=='object')return value;\r\n  if(['gm','gm_private'].includes(value.visibility)||['gm','gm_private'].includes(value.export"
+        },
+        {
+          "line": 28,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildPlayerExport(db,guildId,character){\r\n  const d=playerCharacterProjection(character.data||{});\r\n  const known=db.playerFactsFor(guildId,character.owner_user_id||\"\",{characterId:character.id,limit:200}).map(factView);\r\n  return {\r\n    ...d,\r\n    name:character.name,\r\n    export_me"
+        },
+        {
+          "line": 47,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildGmHooksExport(character,db=null,guildId=null){\r\n  const d=character.data||{};\r\n  return {\r\n    export_meta:{schema:\"veiled-city-gm-hooks-v3.3.3\",visibility:\"gm_private\",character_id:character.id,name:character.name,exported_at:new Date().toISOString()},\r\n    character:{name:char"
+        },
+        {
+          "line": 69,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildGmPrivateExport(db,guildId,character){\r\n  const owner=character.owner_user_id||\"\";\r\n  const facts=db.characterPrivateFacts(guildId,character.id,owner).map(factView);\r\n  const clocks=db.characterPrivateClocks(guildId,character.id,owner).map(clockView);\r\n  const threads=db.charact"
+        },
+        {
+          "line": 95,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildGmCanonExport(db,guildId,character){\r\n  const canon=db.listCanon(guildId,{includeGM:true,limit:1000}).filter(r=>characterCanonMatch(r,character)).map(canonView);\r\n  const keys=new Set(canon.map(r=>r.key));\r\n  const conflicts=db.listCanonConflicts(guildId).filter(r=>keys.has(r.ca"
+        }
+      ],
+      "imports": [],
+      "functions": 26,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/command-definitions.js",
+      "sha256": "9a3079c6c705048db2f815456b076fba181c76c16b7e0e25bd961c15c57622ba",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildNativeCommands(){\n  const commands=JSON.parse(JSON.stringify(buildLegacyCommands()));\n  const command=name=>{const row=commands.find(c=>c.name===name);if(!row)throw new Error(`Missing baseline command ${name}`);return row;};\n  for(const name of ['absent','leave']){\n    const row"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "../frameworks/discord/command-definitions.js",
+          "target": "bot/src/frameworks/discord/command-definitions.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "../frameworks/discord/command-schema.js",
+          "target": "bot/src/frameworks/discord/command-schema.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/component-choice-sources.js",
+      "sha256": "9ae742850d5b4a9a3c17b8e1bb776da2b364207c4e4c5bd4bfc21b9875ccb6b5",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createComponentChoiceSources({decisionReader,sceneStore,sourceAuthority,audienceReader}){\n  if(typeof decisionReader?.readNative!=='function'||typeof sceneStore?.commitSnapshot!=='function'||typeof sourceAuthority?.eventForReference!=='function'||typeof audienceReader?.read!=='functi"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-authority.js",
+          "target": "bot/src/v2/source-authority.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/component-decision-store.js",
+      "sha256": "9dabb0910dc7c0884bb228e60f0a5ec4533208df305cad5ab766541a336f45ef",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openComponentDecisionStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk3_component_decisions'))throw new Error('Dedicated component decision d"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 4
+    },
+    {
+      "file": "bot/src/v2/context-authority.js",
+      "sha256": "a18517e7bf0ee24a070d39053056b16eacb0c141f7cf0b9597127585c9fdf258",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createContextAuthority({sourceAuthority,records,readActor}){\r\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof records?.metadata!=='function'||typeof records?.readText!=='function'||typeof readActor!=='function')throw new TypeError('Native context readers required');\r\n  c"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 24,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/cost-prompt-store.js",
+      "sha256": "f3018b8fd58d49bb46e970dedeabe6ae6f72b192f80fe9128043d6036f768c83",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openCostPromptStore(filename=':memory:',{clock=()=>Date.now()}={}){\n  const db=new DatabaseSync(filename);\n  try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk3_cost_prompts'))throw new Error('Dedicated cost "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 15,
+      "sqlStatements": 7
+    },
+    {
+      "file": "bot/src/v2/death-interaction-reconciliation.js",
+      "sha256": "491a496fb278822564ca87cc90541479ecf9f20723d88a4904ecf4079c08d26f",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDeathInteractionReconciliation({interactionReceipts,decisionStore,promptStore,actionStore,sourceAuthority,readActorSnapshot}){\n  if(typeof interactionReceipts?.reconcile!=='function'||typeof decisionStore?.get!=='function'||typeof promptStore?.readPrompt!=='function'||typeof ac"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/owner-receipt-source.js",
+          "target": "bot/src/v2/rules/owner-receipt-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/death-prompts.js",
+      "sha256": "28685932c4ac42a6789a0c4458c1192ab5fdc7653806930f2787db524f7c3f09",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function deathPromptPayload(message){\n  if(typeof message?.content!=='string'||!Array.isArray(message.components)||message.embeds?.length||message.attachments?.size)throw new Error('Exact native death prompt payload required');\n  return {content:message.content,components:message.components.m"
+        },
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openDeathPromptStore(filename=':memory:',{clock=()=>Date.now()}={}){\n  const db=new DatabaseSync(filename);try{db.exec('PRAGMA busy_timeout=5000');if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk3_death_prompts"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 39,
+      "sqlStatements": 13
+    },
+    {
+      "file": "bot/src/v2/discord-audience-reader.js",
+      "sha256": "1dc9836be52285d8c744e6240284ec2790cbe95eab0eb6cd0f877235e9cc9be6",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 29,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordAudienceReader({client}){\r\n  if(typeof client?.guilds?.fetch!=='function')throw new TypeError('Native Discord client required');\r\n  async function read({guildId,channelId,sceneId,mode='party',ownerUserId=null,gmRoleId=null,participantIds=[]},{signal}={}){\r\n    signal?.th"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience.js",
+          "target": "bot/src/v2/discord-audience.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-audience.js",
+      "sha256": "0c37f7083d5a50bc9b07a2fa2ff0b494a012c75c31909c0e8c19f259214629f2",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectDiscordAudience({guild,channel,sceneId,mode='party',ownerUserId=null,gmRoleId=null,participantIds=[]}){\n  if(!id(guild?.id)||channel?.guildId!==guild.id||!id(channel?.id)||!id(sceneId)||!['party','private'].includes(mode)\n    ||!Array.isArray(participantIds)||participantIds.so"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-cost-decisions.js",
+      "sha256": "bbd128fcd436fc3f14d1b94f0514e6cc6c64f432345e01bf6fcf736252e2e6e4",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordCostDecisions({client,readPrompt,readActionTerms,decisionStore=null}){\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof readPrompt!=='function'||typeof readActionTerms!=='function')throw new TypeError('Native Discord client and prompt readers "
+        }
+      ],
+      "imports": [],
+      "functions": 5,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-death-commands.js",
+      "sha256": "d7fb17986a85c1a825fef2e5aac70fe78f6c4649fb3e9fcbe84212d76bd9e988",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordDeathCommands({client,workflow,actionStore,sceneStore,readActorSnapshot,readRoute,interactionReceipts,onError=()=>{}}){\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof workflow?.present!=='function'||typeof workflow?.reconcile!=='function'||t"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 20,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-death-decisions.js",
+      "sha256": "6c31bac8cba3f31c50bf3161687ab745ab21d8a20c55cce52bd21a29bc9fe51f",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordDeathDecisions({client,promptStore,readTerms,audienceReader,decisionStore}){\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof promptStore?.readPrompt!=='function'||typeof readTerms!=='function'||typeof audienceReader?.read!=='function'||typeof"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./death-prompts.js",
+          "target": "bot/src/v2/death-prompts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-death-dispatcher.js",
+      "sha256": "bf1cdc01f103ade2d1f6fecf438345d7c940f2d88b61888491d6071c102e9739",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordDeathDispatcher({client,promptStore,decisionReader,choiceSources,ingress,receipts,onError=()=>{},onCommitted=async()=>{}}){\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof promptStore?.readPrompt!=='function'||typeof decisionReader?.accept!=="
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 14,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-death-prompts.js",
+      "sha256": "04b947fdea0e641e8a5c5db9c132e91e73a764bd6e0384095a599958aecd8184",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordDeathPrompts({client,promptStore,readTerms,readRoute}){\n  const audiences=createDiscordAudienceReader({client});\n  if(typeof promptStore?.claim!=='function'||typeof promptStore?.acknowledge!=='function'||typeof readTerms!=='function'||typeof readRoute!=='function')throw "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./death-prompts.js",
+          "target": "bot/src/v2/death-prompts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-fear-announcements.js",
+      "sha256": "1655453f8a9e9b6044608c206d46b66f0603a2cb748e3a67ee5f21dd1dd8ee6a",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordFearAnnouncements({client,coordinator,fearStore,readRoute}){\n  const audiences=createDiscordAudienceReader({client});\n  if(typeof coordinator?.claimAnnouncement!=='function'||typeof coordinator?.acknowledgeAnnouncement!=='function'||typeof readRoute!=='function')throw ne"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-gm-authority.js",
+      "sha256": "09171631735d18cb9408bc49151860d447ca356328942d0c4e284c7633d870b2",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now(),leaseMs=15000}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.guilds?.fetch!=='function'||typeof readPolicy!=='function'||!Number.isSafeInteger(leaseMs)||leaseMs<1||leaseMs>30000"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./session-occasions.js",
+          "target": "bot/src/v2/session-occasions.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-gm-input.js",
+          "target": "bot/src/v2/discord-gm-input.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-gm-input.js",
+      "sha256": "666060bb0606aca2f44ac0a27bcb4a6853541cae1398f8de1f8a8dea1f3d481c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function gmCommandInput(e){\n  try{\n    if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-gm'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='gm'))return null;\n    const spec=SUBCOMMANDS[e.options.getSubcommand()];if(!spec)return null;\n    const input={op:spec[0]};\n    f"
+        }
+      ],
+      "imports": [],
+      "functions": 1,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-gm-session.js",
+      "sha256": "82f9207c643f79b867c6b6270f898a29ad6d81373b0b34a2eb5fae89b2919591",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 15,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.a"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-session-setup.js",
+          "target": "bot/src/v2/native-session-setup.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-draft-publication.js",
+          "target": "bot/src/v2/native-draft-publication.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-character-registration.js",
+          "target": "bot/src/v2/native-character-registration.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-gm-input.js",
+          "target": "bot/src/v2/discord-gm-input.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 18,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-intake.js",
+      "sha256": "ca3d518f2bd375dc85d75f13d86ab78ef51450417f9bf4fc95c7c88e84d11be0",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordIntake({messageReader,sceneStore}){\n  if(typeof messageReader?.read!=='function'||typeof sceneStore?.commitSnapshot!=='function')throw new TypeError('Native message reader and scene store required');\n  async function ingest(request,{signal}={}){\n    const first=await mes"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-authority.js",
+          "target": "bot/src/v2/source-authority.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-interaction-router.js",
+      "sha256": "299a6c5c94e9500241429ad3da5274b278248828d2afc81dda9b7bad3fc7a5c6",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.liste"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-death-workflow.js",
+          "target": "bot/src/v2/native-death-workflow.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-death-commands.js",
+          "target": "bot/src/v2/discord-death-commands.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-session-attendance.js",
+          "target": "bot/src/v2/discord-session-attendance.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-gm-session.js",
+          "target": "bot/src/v2/discord-gm-session.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-player-channel.js",
+          "target": "bot/src/v2/discord-player-channel.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-gm-authority.js",
+          "target": "bot/src/v2/discord-gm-authority.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-message-observer.js",
+      "sha256": "c4adc6de56026638a896dd7a1e0b20b7e065811d43078bbe23a788ef50a4d481",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordMessageObserver({client,intake,sceneStore,readOwnerSession,turns=null,allowedGuildIds=null,onDraft=()=>{},onError=()=>{}}){\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof intake?.ingest!=='function'||typeof sceneStore?.readers?.readChannel!="
+        }
+      ],
+      "imports": [],
+      "functions": 11,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-message-reader.js",
+      "sha256": "8290e6b9e092062aee4d8c2ea18bb7d447a5239c9178419051e8eefcad78cec0",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordMessageReader({client}){\n  const audiences=createDiscordAudienceReader({client});\n  async function read(request,{signal}={}){\n    signal?.throwIfAborted();\n    if(!request||![request.guildId,request.channelId,request.messageId,request.userId,request.sceneId].every(id))th"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-player-channel.js",
+      "sha256": "1ba9a3f614d7827b996afbc88c772aa52120997f3326793eb6f2fe7b1506750b",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordPlayerChannel({client,sceneStore,interactionReceipts,readOwnerSession,audienceReader=null,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof sceneStore?.commitSnapshot!=='function'||typeof interactionReceipts?.claim!=='functio"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-private-channel-registration.js",
+          "target": "bot/src/v2/native-private-channel-registration.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-session-attendance.js",
+      "sha256": "768333f90a18792dfafd0d29b25c4dfd42c7953571c6d5bb46dce2f2e1a4653a",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCharacterIdentityReader({repository}){\n  if(typeof repository?.getCharacter!=='function')throw new TypeError('Native character repository required');\n  return (campaignId,actorId)=>{const c=repository.getCharacter(actorId);return c?.id===actorId&&c.guild_id===campaignId&&id(c.o"
+        },
+        {
+          "line": 18,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordSessionAttendance({client,sceneStore,interactionReceipts,readOwnerSession,readCharacter,onError=()=>{}}){\n  if(typeof sceneStore?.commitSnapshot!=='function'||typeof interactionReceipts?.claim!=='function'||typeof readOwnerSession!=='function'||typeof readCharacter!=='fu"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 23,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-turn-runner.js",
+      "sha256": "f324f1a2165941878d28b3e3abda7fd522b0dbe2c214935dfe6f6abf75222da8",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null}){\r\n  if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='function')throw new Type"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./rehearsal.js",
+          "target": "bot/src/v2/rehearsal.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-authority.js",
+          "target": "bot/src/v2/source-authority.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 12,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/gm-hook-package.js",
+      "sha256": "202f5db9fd1921ea447411281c2b5a9a27be33ec3377cf0ef29b4b5f05722712",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function normalizeGmHookImport(packet){\r\n  if(!packet||typeof packet!=='object'||Array.isArray(packet))throw new Error('GM hook package must be an object.');\r\n  const schema=packet.schema||packet.export_meta?.schema;\r\n  if(schema&&!schemas.has(schema))throw new Error(`Unsupported GM hook sche"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/index.js",
+      "sha256": "3329bec194e7d0aa050850a2556a1971fc4a77b7b08634103850dd37fd85991a",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOfflineApplication(){\n  return createKernel({\n    authority:{authenticate:()=>null,revalidate:()=>false},\n    journal:createMemoryJournal(),rules:createRulesetRegistry()\n  });\n}"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:url",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./kernel.js",
+          "target": "bot/src/v2/kernel.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/interaction-receipts.js",
+      "sha256": "75cd9cb35f68206d7dda2791643d2a52010d4f37727615ac1b2644be664cc6d7",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openInteractionReceipts(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{db.exec('PRAGMA busy_timeout=5000');if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(row=>row.name!=='vk3_native_interactions'))throw n"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 23,
+      "sqlStatements": 6
+    },
+    {
+      "file": "bot/src/v2/kernel.js",
+      "sha256": "11f843645eb14ddf27bcf3d7cfd4339332a32e3aea32b9ce6f8441bf3bf9216c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const TOOL_NAMES=Object.freeze(['context_read','action_propose','state_inspect','knowledge_propose']);"
+        },
+        {
+          "line": 24,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRulesetRegistry(definitions=[]){\r\n  const entries=new Map();\r\n  for(const definition of definitions){\r\n    if(!definition||!text(definition.kind)||!text(definition.version)||typeof definition.validate!=='function'||typeof definition.prepare!=='function')throw new TypeError('Ver"
+        },
+        {
+          "line": 38,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createMemoryJournal(){\r\n  const sources=new Map(),receipts=new Map();\r\n  return Object.freeze({\r\n    source:id=>sources.get(id),\r\n    recordSource(source){\r\n      const value=snapshot(source),prior=sources.get(source.id);\r\n      if(prior&&hash(prior)!==hash(value))throw new Error('So"
+        },
+        {
+          "line": 64,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null,context=null,actionAuthority=null}){\r\n  if(typeof authority?.authenticate!=='function'||typeof authority?.revalidate!=='function')throw new TypeError('Native authentication and revalidation required');\r\n  if"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 41,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/knowledge-authority.js",
+      "sha256": "e04a7e34d21c6d7a6dc0781f5c40ecc40f4d7e7dc406b547e5b13e8e7c212ee0",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,readCanonRequest=()=>null}){\n  if(!store||typeof sourceAuthority?.revalidate!=='function'||typeof readEvidence!=='function'||typeof readCanonRequest!=='function')throw new TypeError('Knowledge store and native source/eviden"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./knowledge-store.js",
+          "target": "bot/src/v2/knowledge-store.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/knowledge-store.js",
+      "sha256": "88c30d886131fd767bb198ec69da5b0c72418e2e42a40afe1da1e34ff8cecb4e",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const knowledgeHash=text=>createHash('sha256').update(text).digest('hex');"
+        },
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openKnowledgeStore(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{\r\n    const tables=db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all();\r\n    if(tables.some(t=>!['vk2_knowledge_heads','vk2_knowledge_history','vk2_k"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 18,
+      "sqlStatements": 13
+    },
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "8324e3351e20241c971bf5751f31d696443ce2a139ac95401998ab7d74df7dbc",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openLegacyReadOnlyRepository(filename){\n  if(typeof filename!=='string'||!filename||filename===':memory:')throw new TypeError('Existing legacy database file required');\n  const db=new DatabaseSync(filename,{readOnly:true});\n  const character=db.prepare('SELECT * FROM characters WHERE"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 3
+    },
+    {
+      "file": "bot/src/v2/model-gateway.js",
+      "sha256": "b61adf5b3d155b1d69fce8a09408b6cfc16c690ea19ddde1f56a778f3a8abe51",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 16,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createModelGateway({contextAuthority,provider,clock=()=>performance.now()}){\r\n  if(typeof contextAuthority?.inspect!=='function'||typeof provider?.generate!=='function')throw new TypeError('Scoped context authority and model provider required');\r\n  const drafts=new WeakMap();\r\n  asyn"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:perf_hooks",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./tool-contracts.js",
+          "target": "bot/src/v2/tool-contracts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-action-authority.js",
+      "sha256": "99c51aa22d400a3fd720ee84f35d5d30e538c3bdf6156ce96a23ce9f915c6fa9",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='function')throw new T"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/hope-cost-authority.js",
+          "target": "bot/src/v2/rules/hope-cost-authority.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 12,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-campaign-adapters.js",
+      "sha256": "a11b867a956564788d9693214f8cd75bab001819153446601cf329f6a4ca3517",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCampaignGmPolicyReader({repository,gmRoleId=null,gmUserIds=[],allowAdministrators=false}){\n  if(typeof repository?.getCampaign!=='function')throw new TypeError('Campaign repository required');\n  if(!Array.isArray(gmUserIds)||gmUserIds.length>100||gmUserIds.some(u=>!id(u))||type"
+        },
+        {
+          "line": 15,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOwnerSessionReader({sceneStore,repository,readPolicy}){\n  if(typeof sceneStore?.activeSessions!=='function'||typeof repository?.listCharacters!=='function'||typeof readPolicy!=='function')throw new TypeError('Native scene store, character repository and policy required');\n  ret"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-character-registration.js",
+      "sha256": "8aca3e70c8ef1664457d80ee284f1a8df29ed9b1b76d4d7fc237c39c2f29c336",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeCharacterRegistration({sceneStore,gmAuthority}){\r\n  if(typeof sceneStore?.commitSnapshot!=='function'||typeof sceneStore?.activeScenes!=='function'||typeof gmAuthority?.check!=='function')throw new TypeError('Native scene store and human GM authority required');\r\n  /** Re"
+        }
+      ],
+      "imports": [],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-death-workflow.js",
+      "sha256": "87562ea0d783dbcc89f1ba669d5b885978a3aa85b83b842a0511aac4100718bd",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 14,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeDeathWorkflow({client,actionStore,sceneStore,sourceAuthority,readActorSnapshot,readRoute,promptStore,decisionStore,interactionReceipts,clock=()=>Date.now(),rng,onError=()=>{}}){\n  if(typeof promptStore?.ensure!=='function'||typeof actionStore?.resolveIncomingDeath!=='func"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-death-decisions.js",
+          "target": "bot/src/v2/discord-death-decisions.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./component-choice-sources.js",
+          "target": "bot/src/v2/component-choice-sources.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/death-decision-ingress.js",
+          "target": "bot/src/v2/rules/death-decision-ingress.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-death-prompts.js",
+          "target": "bot/src/v2/discord-death-prompts.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-death-dispatcher.js",
+          "target": "bot/src/v2/discord-death-dispatcher.js",
+          "status": "resolved"
+        },
+        {
+          "line": 8,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/owner-receipt-source.js",
+          "target": "bot/src/v2/rules/owner-receipt-source.js",
+          "status": "resolved"
+        },
+        {
+          "line": 9,
+          "kind": "ImportDeclaration",
+          "specifier": "./death-interaction-reconciliation.js",
+          "target": "bot/src/v2/death-interaction-reconciliation.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 20,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-draft-publication.js",
+      "sha256": "7ff78ad26a2449a44dc95c551bb010215e5040e065dd5978fd9956fdeeae700a",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audiences,resolveChannel,readGmRoleId=()=>null}){\r\n  if(typeof sceneStore?.readers?.readChannel!=='function'||typeof gmAuthority?.check!=='function'||typeof drafts?.begin!=='function'||typeof drafts?.inspectSource!=='functio"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-private-channel-registration.js",
+      "sha256": "a75d1ad8664c4aa0f0d5f85e9893e40334d9d49fe1b58b47d988dcc6343f8294",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativePrivateChannelRegistration({sceneStore,readOwnerSession,audienceReader}){\n  if(typeof sceneStore?.commitSnapshot!=='function'||typeof readOwnerSession!=='function'||typeof audienceReader?.read!=='function')throw new TypeError('Native private-channel dependencies required'"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-root.js",
+      "sha256": "fa29d172c93906d69af5c3bf6da733d6eea8eaad486fe1c18792bca703a268ab",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 27,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:path",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./scene-store.js",
+          "target": "bot/src/v2/scene-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-registry.js",
+          "target": "bot/src/v2/source-registry.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-action-authority.js",
+          "target": "bot/src/v2/native-action-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./context-authority.js",
+          "target": "bot/src/v2/context-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-authority.js",
+          "target": "bot/src/v2/source-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./rules/action-store.js",
+          "target": "bot/src/v2/rules/action-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 8,
+          "kind": "ImportDeclaration",
+          "specifier": "./death-prompts.js",
+          "target": "bot/src/v2/death-prompts.js",
+          "status": "resolved"
+        },
+        {
+          "line": 9,
+          "kind": "ImportDeclaration",
+          "specifier": "./component-decision-store.js",
+          "target": "bot/src/v2/component-decision-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 10,
+          "kind": "ImportDeclaration",
+          "specifier": "./interaction-receipts.js",
+          "target": "bot/src/v2/interaction-receipts.js",
+          "status": "resolved"
+        },
+        {
+          "line": 11,
+          "kind": "ImportDeclaration",
+          "specifier": "./canonical-actor-readers.js",
+          "target": "bot/src/v2/canonical-actor-readers.js",
+          "status": "resolved"
+        },
+        {
+          "line": 12,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-bootstrap-source.js",
+          "target": "bot/src/v2/pc-bootstrap-source.js",
+          "status": "resolved"
+        },
+        {
+          "line": 13,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-session-attendance.js",
+          "target": "bot/src/v2/discord-session-attendance.js",
+          "status": "resolved"
+        },
+        {
+          "line": 14,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-campaign-adapters.js",
+          "target": "bot/src/v2/native-campaign-adapters.js",
+          "status": "resolved"
+        },
+        {
+          "line": 15,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-interaction-router.js",
+          "target": "bot/src/v2/discord-interaction-router.js",
+          "status": "resolved"
+        },
+        {
+          "line": 16,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-message-reader.js",
+          "target": "bot/src/v2/discord-message-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 17,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-intake.js",
+          "target": "bot/src/v2/discord-intake.js",
+          "status": "resolved"
+        },
+        {
+          "line": 18,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-message-observer.js",
+          "target": "bot/src/v2/discord-message-observer.js",
+          "status": "resolved"
+        },
+        {
+          "line": 19,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-turn-runner.js",
+          "target": "bot/src/v2/discord-turn-runner.js",
+          "status": "resolved"
+        },
+        {
+          "line": 20,
+          "kind": "ImportDeclaration",
+          "specifier": "./turn-store.js",
+          "target": "bot/src/v2/turn-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 21,
+          "kind": "ImportDeclaration",
+          "specifier": "./knowledge-store.js",
+          "target": "bot/src/v2/knowledge-store.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 17,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-session-setup.js",
+      "sha256": "dca62705a0d30fdcc22db83e7ebd1469e85431edc47b396bdadb4f021edd2857",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNativeSessionSetup({sceneStore,gmAuthority}){\n  if(typeof sceneStore?.activeSessions!=='function'||typeof sceneStore?.commitSnapshot!=='function'||typeof gmAuthority?.check!=='function'||typeof gmAuthority?.readDeclaration!=='function')throw new TypeError('Native session store "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/native-start.js",
+      "sha256": "9712549ce6fe9505bf34bb2f4feb6f6b62b2501d08ddfc2ebfc7289441b9ee3c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 14,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export async function createOpenAIProviderFromEnv(env){\r\n  const chatgpt=String(env.AI_AUTH_MODE??'').trim().toLowerCase()==='chatgpt',{OPENAI_API_KEY:apiKey}=env,model=env.VK2_MODEL||(chatgpt?env.OPENAI_GM_MODEL:null),maxCalls=Number(env.VK2_MAX_TURNS??10);\r\n  if(!model||!chatgpt&&!apiKey)throw new"
+        },
+        {
+          "line": 23,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export async function createProviderFromEnv(env){\r\n  const config=JSON.parse(readFileSync(new URL('./model-config.json',import.meta.url),'utf8'));\r\n  const provider=String(env.VK2_PROVIDER??config.provider).trim().toLowerCase();\r\n  if(provider==='openai')return createOpenAIProviderFromEnv(env);\r\n  i"
+        },
+        {
+          "line": 35,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function gmPolicyFromEnv(env){\r\n  const ids=String(env.VK2_GM_USER_IDS??'').split(',').map(v=>v.trim()).filter(Boolean),role=env.VK2_GM_ROLE_ID?.trim()||null;\r\n  if(role&&!/^\\d{5,25}$/.test(role)||ids.some(v=>!/^\\d{5,25}$/.test(v)))throw new Error('VK2_GM_ROLE_ID and VK2_GM_USER_IDS must be D"
+        },
+        {
+          "line": 46,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider="
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:url",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./legacy-readonly-repository.js",
+          "target": "bot/src/v2/legacy-readonly-repository.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-root.js",
+          "target": "bot/src/v2/native-root.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./openai-provider.js",
+          "target": "bot/src/v2/openai-provider.js",
+          "status": "resolved"
+        },
+        {
+          "line": 8,
+          "kind": "ImportDeclaration",
+          "specifier": "./ollama-provider.js",
+          "target": "bot/src/v2/ollama-provider.js",
+          "status": "resolved"
+        },
+        {
+          "line": 9,
+          "kind": "ImportDeclaration",
+          "specifier": "./provider-budget.js",
+          "target": "bot/src/v2/provider-budget.js",
+          "status": "resolved"
+        },
+        {
+          "line": 19,
+          "kind": "ImportExpression",
+          "specifier": "../frameworks/ai-provider/public.js",
+          "target": "bot/src/frameworks/ai-provider/public.js",
+          "status": "resolved"
+        },
+        {
+          "line": 19,
+          "kind": "ImportExpression",
+          "specifier": "openai",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 15,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/ollama-provider.js",
+      "sha256": "936ccbf98777dacca75fee3cf0476e0f5149ca1cf5b5c4222cb36c91bbf4949d",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOllamaProvider({model,baseUrl='http://localhost:11434',fetchImpl=fetch,timeoutMs=120000,maxOutputTokens=1024}){\n  const url=new URL(baseUrl);\n  if(!['http:','https:'].includes(url.protocol)||!['localhost','127.0.0.1','[::1]'].includes(url.hostname)||url.username||url.password||"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./tool-contracts.js",
+          "target": "bot/src/v2/tool-contracts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/openai-provider.js",
+      "sha256": "6e9ea1c187d5542978dacb21830beb082d70731ab32524ad397ca30641408e6e",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOpenAIResponsesProvider({client,model,maxOutputTokens=2048,timeoutMs=60000}){\n  if(typeof client?.responses?.create!=='function'||typeof model!=='string'||!model.trim()\n    ||!Number.isSafeInteger(maxOutputTokens)||maxOutputTokens<1||maxOutputTokens>32000\n    ||!Number.isSafeIn"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./tool-contracts.js",
+          "target": "bot/src/v2/tool-contracts.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/pc-bootstrap-source.js",
+      "sha256": "43cc00281a23fc3e6edb92c1d77856d17a84de640b920622de5e7d22fc8754ab",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPcBootstrapSource({sceneStore,characterRepository}){\n  if(typeof sceneStore?.readers?.readActor!=='function'||typeof characterRepository?.getCharacter!=='function')throw new TypeError('Native actor registration and character repository required');\n  return (campaignId,actorId)="
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/private-hook-store.js",
+      "sha256": "ac46c5369574eee757c6394246e163c8663f089f2b8d61361cb01a4d60ac48b5",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openPrivateHookStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{\n    const allowed=['vk2_hook_imports','vk2_hook_history','vk2_hook_heads','vk2_hook_canon','vk2_canon_history','vk2_canon_heads','vk2_canon_reviews','vk2_relationship_history','vk2_relationship_h"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 22,
+      "sqlStatements": 29
+    },
+    {
+      "file": "bot/src/v2/private-planner.js",
+      "sha256": "f13e8980816528b40900a7a9ae16820e65978557084d9a6642fc84063551c15d",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 18,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPrivatePlanner({sourceAuthority,authorize,records,provider}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof authorize!=='function'||typeof records?.metadata!=='function'\n    ||typeof records?.readText!=='function'||typeof provider?.generate!=='function')throw new"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:perf_hooks",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/private-planning-repository.js",
+      "sha256": "99e79eba228ac0b760264103949c40d880acd50880a612d8e2fb5bd012684de5",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPrivatePlanningRepository(store){\n  if(typeof store?.readPlanningRecord!=='function')throw new TypeError('Committed private planning store required');\n  function read(campaign,ref){\n    const row=store.readPlanningRecord(campaign,ref);if(!row)return null;\n    const body=JSON.st"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 5,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/prose-material-review.js",
+      "sha256": "146c44d4aec44b22b3355328e623aadd5305c23b5577f927e33e2e6204aede99",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createProseMaterialReview({readControlledNames=()=>[],readIndependentSpeakers=()=>[],authorizeMaterial=()=>false}={}){\r\n  if(typeof readControlledNames!=='function'||typeof readIndependentSpeakers!=='function'||typeof authorizeMaterial!=='function')throw new TypeError('Native prose r"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/provider-budget.js",
+      "sha256": "be127585cc9ec25bc2e910fe6ea66856b908cffa932a0b0b2a961ce4f254b6c4",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCallBudget(provider,{maxCalls}){\n  if(typeof provider?.generate!=='function'||!Number.isSafeInteger(maxCalls)||maxCalls<1||maxCalls>1000)throw new TypeError('Provider and a bounded call budget required');\n  let used=0;\n  return Object.freeze({\n    async generate(input){if(used>"
+        }
+      ],
+      "imports": [],
+      "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/publication-queue.js",
+      "sha256": "a3357235c34034e363c3b87ed8d18bad2eaf25419ac72928770d8f755e8c96aa",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOfflinePublicationQueue({gateway,contextAuthority,materialReview=createProseMaterialReview()}){\r\n  if(typeof gateway?.inspect!=='function'||typeof contextAuthority?.audience!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof materialReview?.review!=="
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./prose-material-review.js",
+          "target": "bot/src/v2/prose-material-review.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 17,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/recall-planner.js",
+      "sha256": "33786b3967ece0addb81230cdd064991e115163d078c8be6e9a7963e00bffc21",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function decayedRecallWeight(weight,created,current){\n  if(!Number.isFinite(weight)||weight<0||!tick(created)||!tick(current)||current<created)return 0;\n  return Math.max(0,weight-Math.floor((current-created)/6));\n}"
+        },
+        {
+          "line": 15,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRecallPlanner({contextAuthority,readCandidates,readCauses,readPins,readClock}){\n  if(typeof contextAuthority?.entitled!=='function'||[readCandidates,readCauses,readPins,readClock].some(fn=>typeof fn!=='function'))throw new TypeError('Native recall readers required');\n  function"
+        }
+      ],
+      "imports": [],
+      "functions": 12,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/register-commands.js",
+      "sha256": "ca78a5274c7f2091917bf334279be09477a132a1da8c9d618f6424ab1b661bdd",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export async function registerNativeCommands({env=process.env,Rest=REST,routes=Routes,log=console.log,loadEnvFile=process.loadEnvFile.bind(process)}={}){\n  if(env.VK2_NATIVE!=='1')throw new Error('Native registration requires VK2_NATIVE=1');\n  if(env.VK2_ENV_FILE)loadEnvFile(env.VK2_ENV_FILE);\n  con"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:url",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./command-definitions.js",
+          "target": "bot/src/v2/command-definitions.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 1,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rehearsal.js",
+      "sha256": "9c7164bcf7ed33202da21041676162dc490c4335f90b78ab0288a0cb46f4d3fc",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRehearsal({readers,records,provider,selectContext=()=>[],rules=[],knowledge:knowledgeConfig=null,recall:recallConfig=null,planning=null,proseReview=null,actionAuthority=null}){\r\n  if(typeof selectContext!=='function')throw new TypeError('Native context selector required');\r\n  c"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./kernel.js",
+          "target": "bot/src/v2/kernel.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./source-authority.js",
+          "target": "bot/src/v2/source-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./context-authority.js",
+          "target": "bot/src/v2/context-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./model-gateway.js",
+          "target": "bot/src/v2/model-gateway.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./publication-queue.js",
+          "target": "bot/src/v2/publication-queue.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./prose-material-review.js",
+          "target": "bot/src/v2/prose-material-review.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./knowledge-authority.js",
+          "target": "bot/src/v2/knowledge-authority.js",
+          "status": "resolved"
+        },
+        {
+          "line": 8,
+          "kind": "ImportDeclaration",
+          "specifier": "./recall-planner.js",
+          "target": "bot/src/v2/recall-planner.js",
+          "status": "resolved"
+        },
+        {
+          "line": 9,
+          "kind": "ImportDeclaration",
+          "specifier": "./private-planner.js",
+          "target": "bot/src/v2/private-planner.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 15,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/relationship-import.js",
+      "sha256": "08c4b40c91fdd32c21d07e8d02bb96acde05de697b05cdb35b333365c244ae7c",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function prepareImportedRelationships(prepared,character,resolve){\n  const rows=[],holds=[],proofs=[];let count=0;\n  for(const [hookIndex,hook] of prepared.content.hooks.entries()){\n    if(hook.targets===undefined)continue;\n    if(!Array.isArray(hook.targets))throw new Error('Relationship tar"
+        }
+      ],
+      "imports": [],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/action-store.js",
+      "sha256": "6d9078057ca376f3b8d16199adc2fb58b1e6a27ade7bd14710d83731698ef684",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openActionStore(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{db.exec('PRAGMA busy_timeout=5000;');\r\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_actions','vk3_action_events','vk3_actio"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-resources.js",
+          "target": "bot/src/v2/rules/pc-resources.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./incoming-damage.js",
+          "target": "bot/src/v2/rules/incoming-damage.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-life-state.js",
+          "target": "bot/src/v2/rules/pc-life-state.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-bootstrap.js",
+          "target": "bot/src/v2/rules/pc-bootstrap.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 51,
+      "sqlStatements": 40
+    },
+    {
+      "file": "bot/src/v2/rules/blaze-costs.js",
+      "sha256": "64fa0b63ba0bfd67591d236f5ccdac0373afd5109c2508971deb18c8f6beb42f",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createBlazeCosts({db,tx,readPcLife,rawOutcome,deathEvent,binding}){\n  function planFor(c,b,inspectCostPlan){\n    if(typeof inspectCostPlan!=='function')throw new Error('Native Blaze cost rules inspector required');\n    const plan=structuredClone(inspectCostPlan(c,b.action.id));\n    i"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 2
+    },
+    {
+      "file": "bot/src/v2/rules/blaze-of-glory.js",
+      "sha256": "159512c57b25259db35dbd4af72ab7d52a74da92bc4eaeb1ca550082b03ea7f8",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createBlazeOfGlory({db,tx,readPcLife,rawOutcome,deathEvent,damageEvent}){\n  function binding(c,a,{sourceAuthority,readActorSnapshot,readOwnerAction,inspectGmApproval,actionRef,approvalRef},terminal=false){\n    if(typeof sourceAuthority?.inspectReference!=='function'||[readActorSnapsh"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./blaze-costs.js",
+          "target": "bot/src/v2/rules/blaze-costs.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./owner-receipt-source.js",
+          "target": "bot/src/v2/rules/owner-receipt-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 17,
+      "sqlStatements": 4
+    },
+    {
+      "file": "bot/src/v2/rules/combat.js",
+      "sha256": "f1d437d87408840ac4ba4459b66a9f3874f1e8aa6f7a011b80901849d95328ce",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function adversaryHpState(combatant){\r\n  const {hp_current:remaining,hp_max:max}=combatant||{};\r\n  if(!Number.isSafeInteger(max)||max<1||!Number.isSafeInteger(remaining)||remaining<0||remaining>max)\r\n    throw Object.assign(new Error('Verified adversary remaining HP required; PC marked HP is "
+        },
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function wouldMarkLastAdversaryHp(combatant,marks){\r\n  if(!Number.isSafeInteger(marks)||marks<0)throw Object.assign(new Error('Verified nonnegative native HP marks required.'),{code:'COMBAT_HEALTH'});\r\n  const hp=adversaryHpState(combatant);return hp.remaining>0&&marks>=hp.remaining;\r\n}"
+        },
+        {
+          "line": 16,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function buildCombatants(encounter,library){\r\n  const rows=[];\r\n  for(const item of encounter.composition||[]){\r\n    const adv=library.findAdversary(item.name); if(!adv) continue;\r\n    const count=item.type===\"Minion\"?Number(item.unit_count||item.quantity||1):Number(item.quantity||1);\r\n    co"
+        },
+        {
+          "line": 29,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function hpMarksForDamage(c,damage){\r\n  const n=Math.max(0,Number(damage)||0); if(n<=0) return 0;\r\n  if(c.role===\"Minion\") return 1;\r\n  if(c.severe_threshold!=null && n>=c.severe_threshold) return 3;\r\n  if(c.major_threshold!=null && n>=c.major_threshold) return 2;\r\n  return 1;\r\n}"
+        }
+      ],
+      "imports": [],
+      "functions": 5,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/death-choice-evidence.js",
+      "sha256": "e8a38867419a840ff5831d5ff4b99de5edfb0a74e5de7389eab09d648b94b405",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDeathChoiceEvidence({sourceAuthority,readActor,readEligibility,readCause,readChoice,readRoll}){\n  if(typeof sourceAuthority?.revalidate!=='function'||[readActor,readEligibility,readCause,readChoice,readRoll].some(f=>typeof f!=='function'))throw new TypeError('Native death evide"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-death-outcomes.js",
+          "target": "bot/src/v2/rules/pc-death-outcomes.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/death-decision-ingress.js",
+      "sha256": "1b2a7cb1a4ff57593ff3bcf295d0a50a4203e410494d933301e91f6c02cf4b33",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDeathDecisionIngress({actionStore,sourceAuthority,readActorSnapshot,readDecision}){\n  if(typeof actionStore?.recordIncomingDeathChoice!=='function'||typeof sourceAuthority?.inspectControl!=='function'||typeof readActorSnapshot!=='function'||typeof readDecision!=='function')thro"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-death-eligibility.js",
+          "target": "bot/src/v2/rules/pc-death-eligibility.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./owner-receipt-source.js",
+          "target": "bot/src/v2/rules/owner-receipt-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/dice.js",
+      "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function d(sides){ return randomInt(1,sides+1); }"
+        },
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function dualityRoll({modifier=0,experience=0,advantage=0,disadvantage=0,helperDice=[]}={},rng=d) {\r\n  if(![modifier,experience,advantage,disadvantage].every(Number.isSafeInteger)||advantage<0||disadvantage<0\r\n    ||!Array.isArray(helperDice)||helperDice.some(value=>!Number.isSafeInteger(valu"
+        },
+        {
+          "line": 25,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function diceSpec(expr=\"1d6\") {\r\n  const m=String(expr).trim().match(/^(\\d{1,2})d(\\d{1,4})([+-]\\d+)?$/i);\r\n  if(!m) throw new Error(\"Use dice notation like 2d6+3.\");\r\n  const count=Number(m[1]), sides=Number(m[2]), mod=Number(m[3]||0);\r\n  if(count<1||count>50||sides<2||sides>1000) throw new E"
+        },
+        {
+          "line": 32,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function parseDice(expr=\"1d6\",rng=d) {\r\n  const {count,sides,mod}=diceSpec(expr);\r\n  const dice=Array.from({length:count},()=>{const value=rng(sides);if(!Number.isInteger(value)||value<1||value>sides) throw new Error(\"Native die out of range.\");return value;});\r\n  return {expression:expr,dice"
+        },
+        {
+          "line": 39,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function gmD20Roll({kind='action',modifier=0,difficulty,advantage=false,disadvantage=false}={},rng=d){\r\n  if(!['action','reaction','attack'].includes(kind)||!Number.isSafeInteger(modifier)\r\n    ||!Number.isSafeInteger(difficulty)||difficulty<0||typeof advantage!=='boolean'||typeof disadvantag"
+        },
+        {
+          "line": 52,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function gmAttackDamage(roll,expression,rng=d){\r\n  if(roll?.family!=='gm_d20'||roll.kind!=='attack')throw new Error('GM attack result required, not a PC or reaction roll.');\r\n  if(!roll.success)return null;\r\n  const damage=parseDice(expression,rng),spec=diceSpec(expression);\r\n  const critical"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 11,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/fear-opportunity-reader.js",
+      "sha256": "30f339ec85aa165c17ca202975b4a5660c9646104b32fa19cc95b0ec8002e4a9",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createFearOpportunityReader({sourceAuthority,rollStore,readActor,inspectGmDecision}){\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof rollStore?.readResultForRequest!=='function'||typeof readActor!=='function'||typeof inspectGmDecision!=='function')throw new TypeEr"
+        }
+      ],
+      "imports": [],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/fear-reservations.js",
+      "sha256": "4d81fce1a3e31e179f5acff784e5b160afd43a98f127dca20556f80a73605730",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openFearReservations(filename=':memory:'){\n  const db=new DatabaseSync(filename);try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_fear_pool','vk3_fear_reservations'].includes(r.name)))throw new Error('Dedicated F"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./pre-roll-fear.js",
+          "target": "bot/src/v2/rules/pre-roll-fear.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 41,
+      "sqlStatements": 20
+    },
+    {
+      "file": "bot/src/v2/rules/hope-consent-ingress.js",
+      "sha256": "ab9c211b8fa15e989d506db8896f8542523077f0561f5dbe5994e2520d12bb38",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createHopeConsentIngress({sourceAuthority,readActor,readDecision,actionStore}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof readDecision!=='function'||typeof actionStore?.recordHopeConsent!=='function')throw new TypeError('Native consen"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/hope-cost-authority.js",
+      "sha256": "6aee7225261f65a94adf2e3dc8a20ccff538a924e16c8b985530dedc4437569f",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createHopeCostAuthority({sourceAuthority,readActor,readAction,readConsent,hopeStore}){\n  const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;\n  if(typeof sourceAuthority?.revalidate!=='function'||[readActor,readAction,readConsent].some(f=>typeof f!=='function')"
+        },
+        {
+          "line": 39,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms,readConsent,actionStore,inspectBlazeCost}){\n  if(typeof readActionTerms!=='function'||typeof actionStore?.commitHopeCost!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Unified na"
+        }
+      ],
+      "imports": [],
+      "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/hope-store.js",
+      "sha256": "23cbaf5fdae40e7bd61da6bf2c25cfcafdda0e4f4dd41d94c45d43adb20692b1",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openHopeStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_hope','vk3_hope_receipts'].includes(r.name)))throw new Error('Dedicated Hope database "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-resources.js",
+          "target": "bot/src/v2/rules/pc-resources.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 13,
+      "sqlStatements": 10
+    },
+    {
+      "file": "bot/src/v2/rules/incoming-damage-authority.js",
+      "sha256": "fdd9d790430a5dae0dcbe13867978b8580c95bf018370311168ae5803cfd5ad7",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createIncomingDamageAuthority({fearStore,actionStore,sourceAuthority,readActor,readArmorChoice}){\n  if(typeof fearStore?.read!=='function'||typeof actionStore?.commitIncomingDamage!=='function'||typeof sourceAuthority?.inspectReference!=='function'||[readActor,readArmorChoice].some(f"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/incoming-damage.js",
+      "sha256": "2a6de00380953b768fc36b257167208c0b86c1a11b077053212045be1ffc0623",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function incomingDamageOutcome({damage,major,severe,hp,armorSlots,defenses,useArmor}){\n  if(![damage,major,severe,hp?.current,hp?.max,armorSlots?.current,armorSlots?.max].every(Number.isSafeInteger)\n    ||damage<0||major<1||severe<major||hp.max<1||hp.max>12||hp.current<0||hp.current>hp.max\n  "
+        }
+      ],
+      "imports": [],
+      "functions": 1,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/ordinary-roll-preparation.js",
+      "sha256": "0020a413058d37b91a1c7933421af2905b65bb543e7d8c50f2c8a201256e6e13",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOrdinaryRollPreparation({sourceAuthority,readAdjudication,readActor,rollStore}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readAdjudication!=='function'||typeof readActor!=='function'||typeof rollStore?.createRequest!=='function')throw new TypeError('Native r"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/owner-receipt-source.js",
+      "sha256": "340c4fcb525b453a32350d030180c90b5d8aed7f5a6d5505228165406dd9cfe1",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectOwnerReceiptSource(authority,source,scope,{privateAudience=false}={}){\n  let metadata;\n  if(typeof authority?.inspectReceiptSource==='function')metadata=authority.inspectReceiptSource(source.sourceRef,source.sourceRevision,scope);\n  else{\n    if(typeof authority?.inspectRefere"
+        }
+      ],
+      "imports": [],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/owner-roll-evidence.js",
+      "sha256": "46dcc142647f21a84e91f2be8f18dddc3cdccdbed2ecde99111466df5f29c00b",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOwnerRollEvidence({sourceAuthority,readRequest,readRoll,readDelivery,readActor}){\n  if(typeof sourceAuthority?.revalidate!=='function'||[readRequest,readRoll,readDelivery,readActor].some(f=>typeof f!=='function'))throw new TypeError('Native owner roll evidence readers required'"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 5,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/pc-bootstrap.js",
+      "sha256": "538b4cfbb4d4ab900dc13c74b10b82864312b5fcffc47b0d5d08b3a542ea2a9f",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPcBootstrap({db,tx}){\n  function initialize(campaignId,actorId,{check,readSource,inspectReview}){\n    if(typeof check!=='function'||typeof readSource!=='function'||typeof inspectReview!=='function')throw new Error('Reviewed native bootstrap readers required');\n    const source="
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./incoming-damage.js",
+          "target": "bot/src/v2/rules/incoming-damage.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 6
+    },
+    {
+      "file": "bot/src/v2/rules/pc-death-eligibility.js",
+      "sha256": "a1ac2ad0d248bb37e13c06ba9669c9268900c3fbe8b999022f5ab58eaa3d8dd8",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function assertDeathEligibility(snapshot,move){\n  const data=snapshot.data,r=data?.resources;\n  if(!Number.isSafeInteger(r?.hp?.max)||r.hp.max<1||r.hp.max>12||r.hp.current!==r.hp.max||!Number.isSafeInteger(r.stress?.current)||!Number.isSafeInteger(r.stress?.max)||r.stress.max<1||r.stress.curr"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-resources.js",
+          "target": "bot/src/v2/rules/pc-resources.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/pc-death-outcomes.js",
+      "sha256": "1a991c30a26572c759049b9d18510632eb379d306477cdb0430aba4d80ee486c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function riskItAllOutcome(duality){\r\n  return duality==='Fear'?'dead':duality==='Critical'?'recovered':'allocate_recovery';\r\n}"
+        },
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function avoidDeathOutcome(data,hope,level){\r\n  const scar=hope<=level,cap=hopeCap(data),hope_max=cap-(scar?1:0);\r\n  return {scar,hope_max,result:scar&&cap===1?'journey_ended':'unconscious'};\r\n}"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-resources.js",
+          "target": "bot/src/v2/rules/pc-resources.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/pc-life-state.js",
+      "sha256": "3daaa7c6be18feac2ad61864c6cf62d35c236f1cc53540d268c107e7a579ecc6",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 12,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,deathEvent}){\n  const profile=(c,a)=>decode(db.prepare('SELECT data FROM vk3_pc_life WHERE campaign=? AND actor=?').get(c,a));\n  function read(c,a){const life=profile(c,a),defenses=readPcDefenses(c,a),hope=readHope(c,a);ret"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-death-outcomes.js",
+          "target": "bot/src/v2/rules/pc-death-outcomes.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./pc-death-eligibility.js",
+          "target": "bot/src/v2/rules/pc-death-eligibility.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./blaze-of-glory.js",
+          "target": "bot/src/v2/rules/blaze-of-glory.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./owner-receipt-source.js",
+          "target": "bot/src/v2/rules/owner-receipt-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 20,
+      "sqlStatements": 9
+    },
+    {
+      "file": "bot/src/v2/rules/pc-resources.js",
+      "sha256": "5cc0f5300d87726d51cf00bf36a2da33d0aa855b90799a6c0c3c1a65f3df408c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function hopeCap(data){const cap=data.resources?.hope_max??6;\r\n  if(!Number.isSafeInteger(cap)||cap<0||cap>6)fail(\"Verified permanent Hope-slot cap required.\");return cap;\r\n}"
+        },
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function pcEffectResource(data,resourceName,amount){\r\n  if(!['hope','hp','stress','armor'].includes(resourceName)||!Number.isSafeInteger(amount))fail('Verified native pool and integer resource delta required.');\r\n  const fail=message=>{throw Object.assign(new Error(message),{code:'PC_EFFECT_A"
+        }
+      ],
+      "imports": [],
+      "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/pre-roll-fear-coordinator.js",
+      "sha256": "b912fe3ce0ef5f4908d4942d92f0e8e6eeb3b61d3ba1badd1f41deff0e72f3fd",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication}){\n  if(typeof rollStore?.holdForFear!=='function'||typeof rollStore?.releaseCancelledFear!=='function'||typeof fearStore?.reserve!=='function'||typeof opportunityReader?.re"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 28,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/pre-roll-fear.js",
+      "sha256": "a6849006b3a3eaca1c9460f6e77488352517c5d8d4aa7c101c648ef655bb8a98",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function preRollFearTerms({campaignId,sceneId,owner,request,npc,decision,fear,reservedFear}){\n  if(!Number.isSafeInteger(fear)||fear<0||fear>12||!Number.isSafeInteger(reservedFear)||reservedFear<0||reservedFear>fear||fear-reservedFear<1)throw new Error('Existing unreserved campaign Fear requi"
+        }
+      ],
+      "imports": [],
+      "functions": 1,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/roll-action-lifecycle.js",
+      "sha256": "839a7719251d4f66455f37d9591e465e0b8ea024cb873d4900aae74e1ff26b86",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRollActionLifecycle({sourceAuthority,preparation,rollStore,actionStore,ownerInspector}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof preparation?.commitRequest!=='function'||typeof rollStore?.readRequest!=='function'||typeof actionStore?.transition!=='function'"
+        }
+      ],
+      "imports": [],
+      "functions": 10,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/roll-store.js",
+      "sha256": "70f2297eb93d4d15ca7d8297a6b0c18d25c9461255e6e7e09664435012249198",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openRollStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_requests','vk3_roll_events','vk3_roll_fear_holds'].includes(r.name)))throw new Er"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 30,
+      "sqlStatements": 12
+    },
+    {
+      "file": "bot/src/v2/scene-store.js",
+      "sha256": "be5a07f33162339b39ea6ab98c5c0b26de38347069d993c6118cf0b54845e5fb",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 22,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openSceneStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk2_scene_heads','vk2_scene_history','vk2_scene_receipts'].includes(r.name)))throw n"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./session-occasions.js",
+          "target": "bot/src/v2/session-occasions.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 27,
+      "sqlStatements": 12
+    },
+    {
+      "file": "bot/src/v2/session-occasions.js",
+      "sha256": "4c2f49cfccae9a1e7d8b6ec2a2267e6f326f27cf891b28c6fa75c08ed4069d12",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 2,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const SESSION_ASSEMBLIES=Object.freeze(['auto','already_together','shared_incident','common_client','crossed_cases','mutual_threat','faction_summons','chain_contacts','rescue','debt_favor','manual']);"
+        }
+      ],
+      "imports": [],
+      "functions": 0,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/source-authority.js",
+      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 13,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createSourceAuthority({readMessage,readSession,readScene,readActor,readChannel,sourceRegistry=null}){\n  if([readMessage,readSession,readScene,readActor,readChannel].some(fn=>typeof fn!=='function'))throw new TypeError('Complete current native readers required');\n  const issued=new Ma"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/source-registry.js",
+      "sha256": "752b87b9125c17a81d798803d6b31962fa4a7d0497acb4e79e4e1b4da94dc6c7",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openSourceRegistry(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk2_source_registry'))throw new Error('Dedicated source registry required');\n "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 5,
+      "sqlStatements": 3
+    },
+    {
+      "file": "bot/src/v2/tool-contracts.js",
+      "sha256": "40d4fc7772be99009f312e23ff75995ec7df3cc31ff3c2bd39e1bfd0d28eb064",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const GENERIC_TOOL_CONTRACTS=freeze(definitions);"
+        }
+      ],
+      "imports": [],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/turn-store.js",
+      "sha256": "20b62c00bc0283d4a3a6ccf68927a248505677aae35d75556cfd298ea9a32c9b",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openTurnStore(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{\r\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk2_turns'))throw new Error('Dedicated turn database required');\r\n    db.ex"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 30,
+      "sqlStatements": 8
+    }
+  ]
+}
