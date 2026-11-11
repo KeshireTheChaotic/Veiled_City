@@ -25,6 +25,5 @@ await registerNativeCommands({env,loadEnvFile:()=>{}});
 const client=new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]});
 client.once(Events.ClientReady,()=>console.log(JSON.stringify({event:'ready',guildId,directory,model:env.VK2_MODEL,callCap:10,storesPreservedOnClose:true})));
 const app=await startNative({env,createClient:()=>client,loadEnvFile:()=>{},createRoot:options=>createNativeRoot({...options,onDraft:(draft,request)=>console.log(JSON.stringify({event:'draft-withheld',messageId:request.messageId,publicationId:draft.publication?.id,metrics:draft.metrics}))})});
-client.on('interactionCreate',event=>{if(event.guildId===guildId&&event.isChatInputCommand?.())console.log(JSON.stringify({event:'observed-command',command:event.commandName,interactionId:event.id}));});
 console.log(JSON.stringify({event:'online-test-running',guildId,directory}));
 for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{void app.root.drain().finally(()=>app.close()).finally(()=>process.exit(0));});
