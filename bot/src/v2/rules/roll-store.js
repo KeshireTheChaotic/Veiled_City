@@ -1,3 +1,4 @@
+import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
 const decode=r=>r?JSON.parse(r.data):null;
 /** Native-only ordinary roll evidence. No RNG, AI mutation tool or effects. */
@@ -20,13 +21,15 @@ export function openRollStore(filename=':memory:'){
   function createRequest(input,{check}){
     const r=JSON.parse(JSON.stringify(input));
     if(!['id','campaignId','sceneId','actorId','ownerUserId','controlRevision','noticeRef','stakes'].every(k=>typeof r[k]==='string'&&r[k].trim())
-      ||!Number.isSafeInteger(r.difficulty)||r.difficulty<0||r.stakes.length>2000||['modifier','experience','advantage','disadvantage'].some(k=>r[k]!==0))throw new Error('Ordinary native roll terms required');
+      ||!Number.isSafeInteger(r.difficulty)||r.difficulty<0||r.stakes.length>2000||!['modifier','experience','advantage','disadvantage'].every(k=>Number.isSafeInteger(r[k]))||r.experience<0||r.advantage<0||r.disadvantage<0||!r.termProof&&['modifier','experience','advantage','disadvantage'].some(k=>r[k]!==0))throw new Error('Ordinary native roll terms required');
+    if(r.termProof){const {hash,...material}=r.termProof;if(material.version!==1||material.actorId!==r.actorId||material.ownerUserId!==r.ownerUserId||material.controlRevision!==r.controlRevision||hash!==createHash('sha256').update(JSON.stringify(material)).digest('hex'))throw new Error('Immutable native roll terms required');}
     r.status='awaiting_notice';return transact(check,()=>{const old=request(r.campaignId,r.id);if(old){if(JSON.stringify(old)!==JSON.stringify(r))throw new Error('Immutable roll request conflict');return old;}
       db.prepare('INSERT INTO vk3_requests VALUES(?,?,?)').run(r.campaignId,r.id,JSON.stringify(r));return r;});
   }
   function acknowledgeDelivery(c,q,input,{check}){return transact(check,()=>{
     const r=request(c,q);if(!r||typeof input.messageId!=='string'||!input.messageId||!Array.isArray(input.recipientIds)||!input.recipientIds.includes(r.ownerUserId)||input.recipientIds.some(x=>typeof x!=='string'||!x)||new Set(input.recipientIds).size!==input.recipientIds.length)throw new Error('Exact native delivered notice required');
-    return insert(c,q,'notice',r.noticeRef,{id:r.noticeRef,status:'delivered',requestRef:q,messageId:input.messageId,recipientIds:[...input.recipientIds].sort(),difficulty:r.difficulty,stakes:r.stakes});
+    const odds={modifier:r.modifier,experience:r.experience,advantage:r.advantage,disadvantage:r.disadvantage};if(r.termProof&&(input.termHash!==r.termProof.hash||JSON.stringify(input.odds)!==JSON.stringify(odds)))throw new Error('Exact delivered native roll odds required');
+    return insert(c,q,'notice',r.noticeRef,{id:r.noticeRef,status:'delivered',requestRef:q,messageId:input.messageId,recipientIds:[...input.recipientIds].sort(),difficulty:r.difficulty,stakes:r.stakes,...(r.termProof?{termHash:r.termProof.hash,odds}:{})});
   });}
   function recordOwnerRoll(c,q,input,{check,readContinuation}){
     if(typeof check!=='function')throw new Error('Native roll authorization required');let continuation=null;
@@ -38,7 +41,8 @@ export function openRollStore(filename=':memory:'){
       if(typeof readContinuation!=='function')throw new Error('Current native original-action continuation required');continuation=hold.continuation;
       if(JSON.stringify(readContinuation(c,q))!==JSON.stringify(continuation))throw new Error('Original action continuation changed');
     }
-    return insert(c,q,'roll',input.id,{id:input.id,campaignId:c,sceneId:r.sceneId,requestRef:q,actorId:r.actorId,ownerUserId:r.ownerUserId,authenticated:true,origin:'owner_roll',hope:input.hope,fear:input.fear});
+    const advDice=input.advDice??[];if(!Array.isArray(advDice)||advDice.length!==(r.advantage===r.disadvantage?0:1)||advDice.some(v=>!Number.isSafeInteger(v)||v<1||v>6))throw new Error('Actual native contextual d6 required');
+    return insert(c,q,'roll',input.id,{id:input.id,campaignId:c,sceneId:r.sceneId,requestRef:q,actorId:r.actorId,ownerUserId:r.ownerUserId,authenticated:true,origin:'owner_roll',hope:input.hope,fear:input.fear,...(r.termProof?{advDice:[...advDice],termHash:r.termProof.hash}:{})});
   });}
   function holdForFear(c,q,decisionRef,{check}){return transact(check,()=>{
     if(typeof decisionRef!=='string'||!decisionRef||!request(c,q)||!event(c,q,'notice')||event(c,q,'roll'))throw new Error('Unrolled delivered native request required for Fear hold');

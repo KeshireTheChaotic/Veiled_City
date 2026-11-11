@@ -1,0 +1,14 @@
+[
+  "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs",
+  "bot/tests/veilkeeper2/r3-fear-concurrency.test.mjs",
+  "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs",
+  "bot/tests/veilkeeper2/r3-fear-durability.test.mjs",
+  "bot/tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs",
+  "bot/tests/veilkeeper2/r3-owner-roll.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-action.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-lifecycle.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-preparation.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-store.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-terms.test.mjs",
+  "bot/tests/veilkeeper2/r6-session-attendance.test.mjs"
+]

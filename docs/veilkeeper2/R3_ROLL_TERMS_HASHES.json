@@ -1,0 +1,21 @@
+{
+  "bot/src/v2/rules/roll-terms.js": "2ba7b4791fe1f07c5e7c39463aaea5c8780895e17619face6d22831c6698e0a8",
+  "bot/src/v2/rules/ordinary-roll-preparation.js": "8accf18ca477d64bed53a09a42445be1aa7f0f479d2f8b8c0aeaa0dc93ea44be",
+  "bot/src/v2/rules/owner-roll-evidence.js": "545f03b6601e24783ec61b8dedd693fcc4a9ad63e373d8abff011a7c3c1ca0a8",
+  "bot/src/v2/rules/roll-store.js": "8a9ac20f1d376e449ae27a06dff3f0670df81d31bc4486af6cd24efcd9f278f4",
+  "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs": "5ebcb326dbdba6af47004dd8d617c87538615ad959685f83de22a32d2d81613d",
+  "bot/tests/veilkeeper2/r3-fear-concurrency.test.mjs": "753e2dd99d0690beb0dbe2a0cb8594456da7ce432f06bb236464c063bcdb09ed",
+  "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs": "d26d2a09d5192b98043abd6aab395643f04a80faf93e32d79761655b6175ceef",
+  "bot/tests/veilkeeper2/r3-fear-durability.test.mjs": "6918a970c605b00e0a7e9e7e609514da3379ed8ac3801ca60aac75f59ffe14b0",
+  "bot/tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs": "640bf99d3b7be9cf726df9b4be9bf5246fcc8376955dd8f908e41a00fd8098e4",
+  "bot/tests/veilkeeper2/r3-owner-roll.test.mjs": "d6bc62e06e7d8d7f38a13c2099c9501e12b199678615a287deababa567a597b3",
+  "bot/tests/veilkeeper2/r3-roll-action.test.mjs": "998f1f2140914c59b0a55467827b2e65d519030d0229d7b3c5b2555687adedd6",
+  "bot/tests/veilkeeper2/r3-roll-lifecycle.test.mjs": "cef2e2d7bb7f710d514ded6c863a20a27955069aa69510c989383a9fdca564c7",
+  "bot/tests/veilkeeper2/r3-roll-preparation.test.mjs": "cda2e99d80aa538e54054213c73909d90f3801428372f79e87ac24dd646ac377",
+  "bot/tests/veilkeeper2/r3-roll-store.test.mjs": "8d3d934f17e78ab77c216a7e787422728c863c9a75f5f90f4f021ea05242e2f7",
+  "bot/tests/veilkeeper2/r3-roll-terms.test.mjs": "1cb069a8b8608a3ecb741450ca88f0f304a8ee0e4b888961be0b8d435595ddcc",
+  "bot/tests/veilkeeper2/r6-session-attendance.test.mjs": "c3c65e2e71ab6de43adc25491f8042a2a1cd243e0e5b2244d539ea0e231fa081",
+  "docs/veilkeeper2/R3_ROLL_TERMS_REPORT.md": "6cbb37697974231d106cdebc7c36a1a732a21aa6cf95b8d99a8266c44b070e1a",
+  "docs/veilkeeper2/R3_ROLL_TERMS_AFFECTED_TESTS.json": "84f47415213ab0aadf4256cae11e6c1e35f2ef013177fd328e2f919caed99b11",
+  "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json": "c78910794bcf64c8c40af10cfa121bcd25e146387fae7e8c1b45739b4da551f1"
+}

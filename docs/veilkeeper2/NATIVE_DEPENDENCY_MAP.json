@@ -1,5 +1,5 @@
 {
-  "head": "3a760dcb36d612ec148d4608a92d9b59d7b7825a",
+  "head": "afcdc6b5c469d972df60f7d5aa117147a71589bd",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 91,
+  "nativeModules": 92,
   "reachableNativeModules": 71,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -34,7 +34,8 @@
     "bot/src/v2/rules/pre-roll-fear-coordinator.js",
     "bot/src/v2/rules/pre-roll-fear.js",
     "bot/src/v2/rules/roll-action-lifecycle.js",
-    "bot/src/v2/rules/roll-store.js"
+    "bot/src/v2/rules/roll-store.js",
+    "bot/src/v2/rules/roll-terms.js"
   ],
   "legacyImportClosure": [
     "bot/src/frameworks/ai-provider/chatgpt-client.js",
@@ -2996,14 +2997,14 @@
     },
     {
       "file": "bot/src/v2/rules/ordinary-roll-preparation.js",
-      "sha256": "0020a413058d37b91a1c7933421af2905b65bb543e7d8c50f2c8a201256e6e13",
+      "sha256": "8accf18ca477d64bed53a09a42445be1aa7f0f479d2f8b8c0aeaa0dc93ea44be",
       "reachable": false,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createOrdinaryRollPreparation({sourceAuthority,readAdjudication,readActor,rollStore}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readAdjudication!=='function'||typeof readActor!=='function'||typeof rollStore?.createRequest!=='function')throw new TypeError('Native r"
+          "text": "export function createOrdinaryRollPreparation({sourceAuthority,readAdjudication,readActor,rollStore,termReader=null}){\r\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readAdjudication!=='function'||typeof readActor!=='function'||typeof rollStore?.createRequest!=='function')throw new Ty"
         }
       ],
       "imports": [
@@ -3015,7 +3016,7 @@
           "status": "external"
         }
       ],
-      "functions": 8,
+      "functions": 9,
       "sqlStatements": 0
     },
     {
@@ -3036,14 +3037,14 @@
     },
     {
       "file": "bot/src/v2/rules/owner-roll-evidence.js",
-      "sha256": "46dcc142647f21a84e91f2be8f18dddc3cdccdbed2ecde99111466df5f29c00b",
+      "sha256": "545f03b6601e24783ec61b8dedd693fcc4a9ad63e373d8abff011a7c3c1ca0a8",
       "reachable": false,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createOwnerRollEvidence({sourceAuthority,readRequest,readRoll,readDelivery,readActor}){\n  if(typeof sourceAuthority?.revalidate!=='function'||[readRequest,readRoll,readDelivery,readActor].some(f=>typeof f!=='function'))throw new TypeError('Native owner roll evidence readers required'"
+          "text": "export function createOwnerRollEvidence({sourceAuthority,readRequest,readRoll,readDelivery,readActor,termReader=null,readAdjudication=null}){\r\n  if(typeof sourceAuthority?.revalidate!=='function'||[readRequest,readRoll,readDelivery,readActor].some(f=>typeof f!=='function'))throw new TypeError('Nativ"
         }
       ],
       "imports": [
@@ -3055,7 +3056,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 5,
+      "functions": 6,
       "sqlStatements": 0
     },
     {
@@ -3282,27 +3283,58 @@
     },
     {
       "file": "bot/src/v2/rules/roll-store.js",
-      "sha256": "70f2297eb93d4d15ca7d8297a6b0c18d25c9461255e6e7e09664435012249198",
+      "sha256": "8a9ac20f1d376e449ae27a06dff3f0670df81d31bc4486af6cd24efcd9f278f4",
       "reachable": false,
       "exports": [
         {
-          "line": 4,
+          "line": 5,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openRollStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_requests','vk3_roll_events','vk3_roll_fear_holds'].includes(r.name)))throw new Er"
+          "text": "export function openRollStore(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{\r\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_requests','vk3_roll_events','vk3_roll_fear_holds'].includes(r.name)))throw new"
         }
       ],
       "imports": [
         {
           "line": 1,
           "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
           "specifier": "node:sqlite",
           "target": null,
           "status": "external"
         }
       ],
-      "functions": 30,
+      "functions": 32,
       "sqlStatements": 12
+    },
+    {
+      "file": "bot/src/v2/rules/roll-terms.js",
+      "sha256": "2ba7b4791fe1f07c5e7c39463aaea5c8780895e17619face6d22831c6698e0a8",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRollTermsReader({readActorSnapshot,inspectModifier,readMandatoryRefs}){\r\n  if([readActorSnapshot,inspectModifier,readMandatoryRefs].some(fn=>typeof fn!=='function'))throw new TypeError('Native sheet and mandatory modifier authorities required');\r\n  function capture(source,adjud"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 16,
+      "sqlStatements": 0
     },
     {
       "file": "bot/src/v2/scene-store.js",
