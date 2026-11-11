@@ -1,5 +1,9 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
+## Latest atomic durable repair checkpoint
+
+R4_DURABLE_REPAIR_REPORT.md records source-bound native local repair persistence, exact ancestry/sibling preservation, DB-before-memory commit and 78 passing fresh behavioral checks across 13 affected files. Raw drafts stay unchanged; candidates remain private semantic-review diagnostics, not publication grants. No production or live-process change. Next: audit conversation source projection against canonical PC lifecycle/control, then receipt-backed review and durable context visibility dependencies. Full R0–R8 goal remains active and incomplete.
+
 ## Current owner constraint and autonomous testing
 
 Owner explicitly disallowed computer-use until they say otherwise. Do not use Windows/browser UI automation to bypass that constraint. Autonomous testing remains authorized through bot/API and native test paths. AUTONOMOUS_DISCORD_REPORT.md records five passing actual test-guild API checks, one retained labeled bot test message (1569931894793969685), zero model calls/game effects, and refusal of bot/substituted-human source authorship. No installable Discord plugin was returned; no new connector installation is claimed. Test process 62251 remained live; zero native interaction/turn rows at last read. Human-principal slash-command qualification remains unverified, and must not be fabricated. Next: atomic durable local repair persistence and receipt-backed review.

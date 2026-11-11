@@ -61,3 +61,11 @@ test('failure reviewing the complete repaired result preserves original fragment
   assert.throws(()=>q.repair(id,held.id,'An alternative remains open.'),/final review unavailable/);rejectRepair=false;
   const after=q.review(id);assert.equal(after.retiredCount,0);assert.equal(after.heldCount,1);assert.equal(after.segments[1].id,held.id);
 });
+
+test('failed or asynchronous native repair commits cannot replace a candidate',()=>{
+  const f=queue(),before=f.q.review(f.id),held=before.segments[1];let invoked=0;
+  assert.throws(()=>f.q.repair(f.id,held.id,'The clerk waits.',{commit:()=>{throw new Error('storage failed');}}),/storage failed/);assert.deepEqual(f.q.review(f.id),before);
+  assert.throws(()=>f.q.repair(f.id,held.id,'The clerk waits.',{commit:async()=>{invoked++;}}),/Synchronous/);assert.equal(invoked,0);
+  assert.throws(()=>f.q.repair(f.id,held.id,'The clerk waits.',{commit:()=>Promise.reject(new Error('async storage failure'))}),/Synchronous/);assert.deepEqual(f.q.review(f.id),before);
+  assert.throws(()=>f.q.repair(f.id,held.id,held.text),/current withheld/);
+});

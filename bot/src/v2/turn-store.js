@@ -33,25 +33,48 @@ export function openTurnStore(filename=':memory:'){
       check();db.exec('COMMIT');return {status:'awaiting_revalidation',sent:false,knowledgeAcknowledged:false};
     }catch(e){db.exec('ROLLBACK');throw e;}
   }
-  /** Private diagnostic snapshots, never publication grants or game-state patches. */
-  function saveReview(claim,review,{check,expectedSequence=0}){
-    if(claim?.status!=='claimed'||typeof check!=='function'||!Number.isSafeInteger(expectedSequence)||expectedSequence<0)throw new Error('Native review claim and sequence required');
+  function reviewValue(review){
     const keys=['id','status','sent','knowledgeAcknowledged','candidateText','segments','heldCount','retiredCount'];
     if(!review||Object.keys(review).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(review,k))||review.status!=='requires_semantic_review'||review.sent!==false||review.knowledgeAcknowledged!==false||typeof review.candidateText!=='string'||review.candidateText.length>20000||!Array.isArray(review.segments)||review.segments.length<1||review.segments.length>256||!Number.isSafeInteger(review.retiredCount)||review.retiredCount<0)throw new Error('Bounded unapproved native segment review required');
-    const value=JSON.parse(JSON.stringify(review)),fingerprint=hash(value);
+    return JSON.parse(JSON.stringify(review));
+  }
+  function validateReview(value,draft){
+    if(value.id!==draft.id)throw new Error('Current source-bound saved draft required');
+    for(const [index,segment] of value.segments.entries()){
+      if(Object.keys(segment).sort().join(',')!=='id,index,issues,status,text'||segment.index!==index||typeof segment.text!=='string'||!segment.text.trim()||segment.text.length>20000||!['screened','withheld'].includes(segment.status)||!Array.isArray(segment.issues)||segment.id!==`segment:${hash([draft.audience,segment.text,index])}`)throw new Error('Source-bound native review segment required');
+      if((segment.status==='withheld')!==(segment.issues.length>0)||segment.issues.some(issue=>Object.keys(issue).sort().join(',')!=='excerpt,kind,offset'||!['pc_agency','pc_inner_state','mechanical_result'].includes(issue.kind)||typeof issue.excerpt!=='string'||!issue.excerpt||!Number.isSafeInteger(issue.offset)||issue.offset<0||segment.text.slice(issue.offset,issue.offset+issue.excerpt.length)!==issue.excerpt))throw new Error('Native material review issue required');
+    }
+    if(value.segments.map(s=>s.text).join('\n\n').length>20000||value.heldCount!==value.segments.filter(s=>s.status==='withheld').length||value.candidateText!==value.segments.filter(s=>s.status==='screened').map(s=>s.text).join('\n\n'))throw new Error('Native segment review disposition mismatch');
+  }
+  const reviewTexts=value=>value.segments.map(s=>s.text);
+  function unchangedReviewText(value,prior,draft){
+    const expected=prior?reviewTexts(prior):draft.text.split(/\n[\t ]*\n+/).filter(t=>t.trim());
+    if(JSON.stringify(reviewTexts(value))!==JSON.stringify(expected)||value.retiredCount!==(prior?.retiredCount??0))throw new Error('Local repair provenance required');
+  }
+  /** Private diagnostic snapshots. repairFrom binds a replacement to one previously held paragraph. */
+  function saveReview(claim,review,{check,expectedSequence=0,repairFrom=null}){
+    if(claim?.status!=='claimed'||typeof check!=='function'||!Number.isSafeInteger(expectedSequence)||expectedSequence<0)throw new Error('Native review claim and sequence required');
+    const value=reviewValue(review),before=repairFrom?reviewValue(repairFrom):null,fingerprint=hash(value);
     db.exec('BEGIN IMMEDIATE');try{
       check();const row=read(claim.campaignId,claim.sourceRef);
-      if(row?.status!=='draft_saved'||row.token!==claim.token||row.revision!==claim.sourceRevision||value.id!==row.data.draft.id)throw new Error('Current source-bound saved draft required');
-      for(const [index,segment] of value.segments.entries()){
-        if(Object.keys(segment).sort().join(',')!=='id,index,issues,status,text'||segment.index!==index||typeof segment.text!=='string'||!segment.text.trim()||segment.text.length>20000||!['screened','withheld'].includes(segment.status)||!Array.isArray(segment.issues)||segment.id!==`segment:${hash([row.data.draft.audience,segment.text,index])}`)throw new Error('Source-bound native review segment required');
-        if((segment.status==='withheld')!==(segment.issues.length>0)||segment.issues.some(issue=>Object.keys(issue).sort().join(',')!=='excerpt,kind,offset'||!['pc_agency','pc_inner_state','mechanical_result'].includes(issue.kind)||typeof issue.excerpt!=='string'||!issue.excerpt||!Number.isSafeInteger(issue.offset)||issue.offset<0||segment.text.slice(issue.offset,issue.offset+issue.excerpt.length)!==issue.excerpt))throw new Error('Native material review issue required');
-      }
-      if(value.heldCount!==value.segments.filter(s=>s.status==='withheld').length||value.candidateText!==value.segments.filter(s=>s.status==='screened').map(s=>s.text).join('\n\n'))throw new Error('Native segment review disposition mismatch');
+      if(row?.status!=='draft_saved'||row.token!==claim.token||row.revision!==claim.sourceRevision)throw new Error('Current source-bound saved draft required');
+      validateReview(value,row.data.draft);if(before)validateReview(before,row.data.draft);
       const prior=row.data.review;
-      if(prior?.fingerprint===fingerprint){check();db.exec('COMMIT');return {sequence:prior.sequence,fingerprint,created:false};}
+      if(prior?.fingerprint===fingerprint){
+        if(before&&prior.repair?.fromFingerprint!==hash(before))throw new Error('Local repair replay conflict');
+        check();db.exec('COMMIT');return {sequence:prior.sequence,fingerprint,created:false};
+      }
       if((prior?.sequence??0)!==expectedSequence)throw new Error('Native review sequence conflict');
-      const sequence=expectedSequence+1,history=[...(row.data.reviewHistory??[]),...(prior?[prior]:[])];
-      db.prepare('UPDATE vk2_turns SET data=? WHERE campaign=? AND source=?').run(JSON.stringify({...row.data,review:{sequence,fingerprint,value},reviewHistory:history}),claim.campaignId,claim.sourceRef);
+      let repair=null;
+      if(before){
+        if(prior&&prior.fingerprint!==hash(before))throw new Error('Local repair base changed');
+        if(!prior)unchangedReviewText(before,null,row.data.draft);
+        const changed=value.segments.filter((s,i)=>JSON.stringify(s)!==JSON.stringify(before.segments[i]));
+        if(value.segments.length!==before.segments.length||changed.length!==1||before.segments[changed[0]?.index]?.status!=='withheld'||changed[0].text===before.segments[changed[0].index].text||value.retiredCount!==before.retiredCount+1)throw new Error('One withheld local repair required');
+        repair={fromFingerprint:hash(before),fromSegmentId:before.segments[changed[0].index].id,toSegmentId:changed[0].id};
+      }else unchangedReviewText(value,prior?.value,row.data.draft);
+      const sequence=expectedSequence+1,baseline=prior??(before?{sequence:0,fingerprint:hash(before),value:before}:null),history=[...(row.data.reviewHistory??[]),...(baseline?[baseline]:[])];
+      db.prepare('UPDATE vk2_turns SET data=? WHERE campaign=? AND source=?').run(JSON.stringify({...row.data,review:{sequence,fingerprint,value,...(repair?{repair}:{})},reviewHistory:history}),claim.campaignId,claim.sourceRef);
       check();db.exec('COMMIT');return {sequence,fingerprint,created:true};
     }catch(error){db.exec('ROLLBACK');throw error;}
   }

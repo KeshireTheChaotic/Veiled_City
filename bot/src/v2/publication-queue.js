@@ -29,13 +29,17 @@ export function createOfflinePublicationQueue({gateway,contextAuthority,material
   function review(id){
     inspect(id);const row=rows.get(id);return evaluate(id,row.fragments,row.retired.length);
   }
-  function repair(id,segmentId,replacement){
+  function repair(id,segmentId,replacement,{commit=()=>{}}={}){
+    if(typeof commit!=='function'||['AsyncFunction','AsyncGeneratorFunction','GeneratorFunction'].includes(commit.constructor.name))throw new Error('Synchronous native repair commit required');
     const current=review(id),segment=current.segments.find(s=>s.id===segmentId);
-    if(!segment||segment.status!=='withheld'||typeof replacement!=='string'||!replacement.trim()||replacement.length>20000||/\n[\t ]*\n/.test(replacement))throw new Error('One current withheld segment and bounded local replacement required');
+    if(!segment||segment.status!=='withheld'||replacement===segment.text||typeof replacement!=='string'||!replacement.trim()||replacement.length>20000||/\n[\t ]*\n/.test(replacement))throw new Error('One current withheld segment and bounded local replacement required');
     const row=rows.get(id),next=[...row.fragments];next[segment.index]=replacement;
     if(next.join('\n\n').length>20000)throw new Error('Repaired prose exceeds draft bound');
     // Review first; a failed or revoked repair leaves the original segment untouched.
     const result=evaluate(id,next,row.retired.length+1);
+    const check=()=>{if(JSON.stringify(evaluate(id,next,row.retired.length+1))!==JSON.stringify(result))throw new Error('Prepared local repair changed');};
+    const saved=commit(result,{check});
+    if(saved&&typeof saved.then==='function'){Promise.resolve(saved).catch(()=>{});throw new Error('Synchronous native repair commit required');}
     row.retired.push(segment);row.fragments=next;return result;
   }
   return Object.freeze({queue,inspect,review,repair});

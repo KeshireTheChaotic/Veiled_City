@@ -36,5 +36,16 @@ export function createDiscordTurnRunner({intake,provider,applicationOptions,crea
     }
     return review;
   }
-  return Object.freeze({respond,inspectPublication,reviewPublication});
+  async function repairPublication(id,segmentId,replacement,{signal}={}){
+    const entry=pending.get(id);if(!entry)throw new Error('Publication not available');
+    await intake.ingest(entry.request,{signal});signal?.throwIfAborted();entry.validate();
+    const before=entry.app.reviewPublication(id);let saved;
+    const result=entry.app.repairPublication(id,segmentId,replacement,{commit:(after,{check})=>{
+      const current=()=>{signal?.throwIfAborted();entry.validate();check();if(JSON.stringify(entry.app.reviewPublication(id))!==JSON.stringify(before))throw new Error('Local repair base changed');};
+      if(entry.claim)saved=turnStore.saveReview(entry.claim,after,{repairFrom:before,expectedSequence:entry.reviewSequence,check:current});else current();
+    }});
+    if(saved)entry.reviewSequence=saved.sequence;
+    return result;
+  }
+  return Object.freeze({respond,inspectPublication,reviewPublication,repairPublication});
 }
