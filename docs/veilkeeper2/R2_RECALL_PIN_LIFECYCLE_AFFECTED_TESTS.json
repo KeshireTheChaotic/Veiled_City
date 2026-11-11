@@ -1,0 +1,12 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+  "bot/tests/veilkeeper2/r2-recall-pin-lifecycle.test.mjs",
+  "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+  "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs"
+]

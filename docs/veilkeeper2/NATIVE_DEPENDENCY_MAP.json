@@ -1,5 +1,5 @@
 {
-  "head": "acbf9239fb41ed3241060d0750ef1597495ef48c",
+  "head": "5cb35f61cf77709742afb8a0ae2036c8f74bce1e",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -2532,14 +2532,14 @@
     },
     {
       "file": "bot/src/v2/recall-store.js",
-      "sha256": "370c71a844b9f7d57f4b51e145e6f1be60d8e1eed11b3a336733d2101e3a314c",
+      "sha256": "456ab30fb7052378bcd1a84a150532a1dbba986cd61a94915f9cf7e529ddcdc4",
       "reachable": true,
       "exports": [
         {
-          "line": 4,
+          "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openRecallStore(filename=':memory:'){\n const db=new DatabaseSync(filename);try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk2_recall'))throw new Error('Dedicated recall store required');db.exec('CREATE TABLE"
+          "text": "export function openRecallStore(filename=':memory:'){\r\n const db=new DatabaseSync(filename);try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk2_recall'))throw new Error('Dedicated recall store required');db.exec('CREATE TABL"
         }
       ],
       "imports": [
@@ -2549,10 +2549,17 @@
           "specifier": "node:sqlite",
           "target": null,
           "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
         }
       ],
-      "functions": 19,
-      "sqlStatements": 6
+      "functions": 24,
+      "sqlStatements": 7
     },
     {
       "file": "bot/src/v2/register-commands.js",
