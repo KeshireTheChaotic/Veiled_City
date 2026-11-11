@@ -103,7 +103,7 @@ test('optional private planning stays separate and is not invoked for ordinary a
 
 test('provider retrieval retains extra source grants through queued publication inspection',async()=>{
   let f;f=fixture({failSelection:true,providerResult:request=>request.history.length===0?{toolCalls:[{id:'lookup',name:'context_read',arguments:{topic:'knowledge',focus:'rumor'}}]}:{text:'The clerk repeats the rumor.'}});
-  const result=await f.app.respond(f.event);assert.equal(result.metrics.modelCalls,2);assert.equal(result.metrics.toolCalls,1);
+  const result=await f.app.respond(f.event);assert.equal(result.metrics.modelCalls,2);assert.equal(result.metrics.toolCalls,1);const lineage=f.app.inspectPublication(result.publication.id).contextDependencies;assert.equal(lineage.length,2);assert.deepEqual(lineage[0].records,[]);assert.equal(lineage[1].records[0].ref,'rumor');
   assert.equal(f.requests[1].history[0].toolResults[0].result.records[0].kind,'testimony');assert.deepEqual(f.requests[0].context.records,[]);
   f.sources.get('rumor').revision='2';assert.throws(()=>f.app.inspectPublication(result.publication.id),/authority/);
 });
@@ -129,4 +129,9 @@ test('rehearsal actually applies its supplied native control, speaker and materi
   let checks=0;const proseReview=createProseMaterialReview({readControlledNames:()=>['Mercer','Rook'],readIndependentSpeakers:()=>['The clerk','Rook'],authorizeMaterial:c=>{checks++;return c.kind==='mechanical_result'&&c.excerpt==='take 3 damage';}});
   const f=fixture({proseReview,providerResult:()=>({text:'Mercer obeys.\n\nThe clerk claims, “You agreed to pay.”\n\nRook says, “I accept.”\n\nYou take 3 damage.'})}),turn=await f.app.respond(f.event),review=f.app.reviewPublication(turn.publication.id);
   assert.deepEqual(review.segments.map(s=>s.status),['withheld','screened','withheld','screened']);assert.ok(checks>=3);assert.equal(review.status,'requires_semantic_review');assert.equal(review.sent,false);assert.equal(f.requests.length,1);
+});
+
+test('identical prose with changed context lineage receives a new publication identity',async()=>{
+  const f=fixture({providerResult:()=>({text:'The clerk waits.'})}),first=await f.app.respond(f.event);f.sources.get('rumor').revision='2';
+  const second=await f.app.respond(f.event);assert.notEqual(second.publication.id,first.publication.id);assert.equal(f.requests.length,2);assert.throws(()=>f.app.inspectPublication(first.publication.id),/authority/);assert.equal(f.app.inspectPublication(second.publication.id).text,'The clerk waits.');
 });

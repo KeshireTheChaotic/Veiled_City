@@ -67,6 +67,28 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     inspect(grant);const {source}=grants.get(grant);
     return freeze({campaign:source.campaign,scene:source.scene,source_ref:source.id,recipients:[...source.recipients],revision:source.revision});
   }
+  /** Native durable lineage only: hashes and references, never record bodies or a disclosure grant. */
+  function dependencyManifest(grant){
+    inspect(grant);const state=grants.get(grant),source=state.source;
+    return freeze({version:1,campaignId:source.campaign,sceneId:source.scene,sourceRef:source.id,sourceRevision:source.revision,recipientIds:[...source.recipients],actorId:state.actorId,actorRevision:state.actorRevision,records:[...state.dependencies].map(([ref,metadataHash])=>({ref,metadataHash}))});
+  }
+  function verifyDependencies(source,manifest){
+    const keys=['version','campaignId','sceneId','sourceRef','sourceRevision','recipientIds','actorId','actorRevision','records'];
+    if(!sourceAuthority.revalidate(source)||!manifest||Object.keys(manifest).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(manifest,k))||manifest.version!==1||manifest.campaignId!==source.campaign||manifest.sceneId!==source.scene||manifest.sourceRef!==source.id||manifest.sourceRevision!==source.revision||!list(manifest.recipientIds)||JSON.stringify(manifest.recipientIds)!==JSON.stringify(source.recipients)||manifest.actorId!==null&&!id(manifest.actorId)||!Array.isArray(manifest.records)||manifest.records.length>16384)fail();
+    if(actorProof(source,manifest.actorId)!==manifest.actorRevision)fail();
+    const refs=new Set();
+    for(const entry of manifest.records){if(!entry||Object.keys(entry).sort().join(',')!=='metadataHash,ref'||!id(entry.ref)||typeof entry.metadataHash!=='string'||!/^[a-f0-9]{64}$/.test(entry.metadataHash)||refs.has(entry.ref))fail();refs.add(entry.ref);}
+    const rows=new Map();
+    for(const entry of manifest.records){
+      const row=records.metadata(source.campaign,entry.ref);
+      if(!eligible(row,source,manifest.actorId)||hash(row)!==entry.metadataHash||row.sourceRefs.some(ref=>!refs.has(ref)))fail();
+      rows.set(entry.ref,row);
+    }
+    const depths=new Map(),visiting=new Set();
+    function depth(ref){if(visiting.has(ref))fail();if(depths.has(ref))return depths.get(ref);visiting.add(ref);const n=1+Math.max(0,...rows.get(ref).sourceRefs.map(depth));visiting.delete(ref);if(n>64)fail();depths.set(ref,n);return n;}
+    for(const ref of refs)depth(ref);
+    return true;
+  }
   // A model-selected reference is only a lookup candidate, never an entitlement.
   function read(source,reference){return inspect(issue(source,[reference]));}
   function entitled(source,reference,{actorId=null}={}){
@@ -74,5 +96,5 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     actorProof(source,actorId);
     return closure(reference,source,actorId,new Map());
   }
-  return Object.freeze({issue,inspect,audience,read,entitled});
+  return Object.freeze({issue,inspect,audience,read,entitled,dependencyManifest,verifyDependencies});
 }

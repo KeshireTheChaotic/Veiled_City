@@ -1,0 +1,21 @@
+[
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r1-rehearsal.test.mjs",
+  "bot/tests/veilkeeper2/r1-scene-store.test.mjs",
+  "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+  "bot/tests/veilkeeper2/r2-planning-repository.test.mjs",
+  "bot/tests/veilkeeper2/r2-private-planner.test.mjs",
+  "bot/tests/veilkeeper2/r2-recall.test.mjs",
+  "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+  "bot/tests/veilkeeper2/r4-prose-material-review.test.mjs",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-context-lineage.test.mjs",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs",
+  "bot/tests/veilkeeper2/r7-segment-review-store.test.mjs",
+  "bot/tests/veilkeeper2/r7-source-bound-repair.test.mjs"
+]

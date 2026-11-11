@@ -6,6 +6,7 @@ import {join,resolve,sep} from 'node:path';
 import {openSceneStore} from '../../src/v2/scene-store.js';
 import {openSourceRegistry} from '../../src/v2/source-registry.js';
 import {openTurnStore} from '../../src/v2/turn-store.js';
+import {createContextAuthority} from '../../src/v2/context-authority.js';
 import {createSourceAuthority} from '../../src/v2/source-authority.js';
 import {createDiscordTurnRunner} from '../../src/v2/discord-turn-runner.js';
 import {createDiscordIntake} from '../../src/v2/discord-intake.js';
@@ -37,6 +38,7 @@ async function fixture(t){
   assert.deepEqual(turns.inspectNative('c',saved.source).data.review.value,reviewed);
   const authority=createSourceAuthority({...scenes.readers,sourceRegistry:registry}),sent=[];
   const publication=createNativeDraftPublication({sceneStore:scenes,gmAuthority:{check:()=>{}},drafts:{
+    inspectContext:(c,s,r,manifests)=>{if(!Array.isArray(manifests)||!manifests.length)throw new Error('Saved context lineage required');const context=createContextAuthority({sourceAuthority:authority,readActor:scenes.readers.readActor,records:{metadata:()=>null,readText:()=>null}});for(const manifest of manifests)context.verifyDependencies(authority.inspectReference(s,r),manifest);},
     refreshSource:async(c,s,r,{signal})=>{const event=authority.eventForReference(s);await intake.ingest({guildId:c,channelId:'channel',sceneId:'scene',messageId:event.messageId,userId:event.userId,actorId:event.actorId,mode:'private',ownerUserId:event.userId},{signal});},
     inspectSource:(c,s,r)=>authority.inspectReference(s,r),recent:(c,n)=>turns.recentDrafts(c,n),begin:(c,s,o)=>turns.beginPublication(c,s,o),finish:(c,s,m)=>turns.finishPublication(c,s,m),uncertain:(c,s,r)=>turns.markPublicationUncertain(c,s,r)
   },audiences:{read:async()=>({channelRecord:scenes.readers.readChannel('c','channel')})},resolveChannel:async()=>({id:'channel',guildId:'c',send:async payload=>{sent.push(payload);return {id:'sent'};}})});

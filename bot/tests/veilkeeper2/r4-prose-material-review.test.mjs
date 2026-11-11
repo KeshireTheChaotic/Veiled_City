@@ -32,7 +32,7 @@ test('each material assertion needs its own native authorization; thrown and asy
 
 function queue(){
   let current=true;const draft={},native={grant:{},text:'Rain taps the glass.\n\nYou agree to pay.\n\nThe clerk waits.',traceId:'trace'};
-  const q=createOfflinePublicationQueue({gateway:{inspect:()=>{if(!current)throw new Error('source revoked');return native;}},contextAuthority:{audience:()=>audience},materialReview:policy()});
+  const q=createOfflinePublicationQueue({gateway:{inspect:()=>{if(!current)throw new Error('source revoked');return native;}},contextAuthority:{audience:()=>audience,dependencyManifest:()=>({version:1,campaignId:audience.campaign,sceneId:audience.scene,sourceRef:audience.source_ref,sourceRevision:audience.revision,recipientIds:audience.recipients,actorId:null,actorRevision:null,records:[]})},materialReview:policy()});
   return {q,id:q.queue(draft).id,revoke:()=>{current=false;}};
 }
 
@@ -56,7 +56,7 @@ test('revoked audiences cannot inspect or repair segments and unresolved replace
 
 test('failure reviewing the complete repaired result preserves original fragments and retirement history',()=>{
   let rejectRepair=true;const native=policy(),text='Rain taps the glass.\n\nYou agree to pay.\n\nThe clerk waits.';
-  const q=createOfflinePublicationQueue({gateway:{inspect:()=>({grant:{},text,traceId:'t'})},contextAuthority:{audience:()=>audience},materialReview:{review:(body,scope)=>{if(rejectRepair&&body.startsWith('Rain')&&body.includes('An alternative'))throw new Error('final review unavailable');return native.review(body,scope);}}});
+  const q=createOfflinePublicationQueue({gateway:{inspect:()=>({grant:{},text,traceId:'t'})},contextAuthority:{audience:()=>audience,dependencyManifest:()=>({version:1,campaignId:audience.campaign,sceneId:audience.scene,sourceRef:audience.source_ref,sourceRevision:audience.revision,recipientIds:audience.recipients,actorId:null,actorRevision:null,records:[]})},materialReview:{review:(body,scope)=>{if(rejectRepair&&body.startsWith('Rain')&&body.includes('An alternative'))throw new Error('final review unavailable');return native.review(body,scope);}}});
   const id=q.queue({}).id,held=q.review(id).segments[1];
   assert.throws(()=>q.repair(id,held.id,'An alternative remains open.'),/final review unavailable/);rejectRepair=false;
   const after=q.review(id);assert.equal(after.retiredCount,0);assert.equal(after.heldCount,1);assert.equal(after.segments[1].id,held.id);

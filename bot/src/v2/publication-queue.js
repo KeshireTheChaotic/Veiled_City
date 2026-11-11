@@ -3,20 +3,22 @@ import {createProseMaterialReview} from './prose-material-review.js';
 
 /** R1 no-send outbox. Queued prose remains unreviewed and cannot update recipient knowledge. */
 export function createOfflinePublicationQueue({gateway,contextAuthority,materialReview=createProseMaterialReview()}){
-  if(typeof gateway?.inspect!=='function'||typeof contextAuthority?.audience!=='function'||typeof materialReview?.review!=='function')throw new TypeError('Draft and audience authorities required');
+  if(typeof gateway?.inspect!=='function'||typeof contextAuthority?.audience!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof materialReview?.review!=='function')throw new TypeError('Draft and audience authorities required');
   const rows=new Map();
-  function queue(draft){
+  function queue(draft,{additionalGrants=[]}={}){
+    if(!Array.isArray(additionalGrants)||additionalGrants.length>16)throw new Error('Bounded native context grants required');
     const value=gateway.inspect(draft),audience=contextAuthority.audience(value.grant);
-    const fingerprint=JSON.stringify([audience,value.text]);
+    const contextDependencies=Object.freeze([value.grant,...additionalGrants].map(grant=>contextAuthority.dependencyManifest(grant)));
+    const fingerprint=JSON.stringify([audience,value.text,contextDependencies]);
     const id=`publication:${createHash('sha256').update(fingerprint).digest('hex')}`;
-    if(!rows.has(id))rows.set(id,{draft,audience,text:value.text,traceId:value.traceId,fragments:value.text.split(/\n[\t ]*\n+/).filter(t=>t.trim()),retired:[]});
+    if(!rows.has(id))rows.set(id,{draft,audience,text:value.text,traceId:value.traceId,contextDependencies,fragments:value.text.split(/\n[\t ]*\n+/).filter(t=>t.trim()),retired:[]});
     return Object.freeze({id,status:'awaiting_review',sent:false,knowledgeAcknowledged:false});
   }
   function inspect(id){
     const row=rows.get(id);if(!row)throw new Error('Publication not available');
     const current=gateway.inspect(row.draft);contextAuthority.audience(current.grant);
     return Object.freeze({id,status:'awaiting_review',sent:false,knowledgeAcknowledged:false,
-      text:row.text,audience:row.audience,traceId:row.traceId});
+      text:row.text,audience:row.audience,traceId:row.traceId,contextDependencies:row.contextDependencies});
   }
   // Native diagnostic/review surface only. "screened" is not a publication grant.
   function evaluate(id,fragments,retiredCount){

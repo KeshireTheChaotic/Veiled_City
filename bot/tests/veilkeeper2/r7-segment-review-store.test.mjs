@@ -10,7 +10,7 @@ function fixture(t){
   const directory=mkdtempSync(join(tmpdir(),'vk2-review-store-')),path=join(directory,'turn.sqlite'),store=openTurnStore(path);
   t.after(()=>{store.close();assert.ok(resolve(directory).startsWith(resolve(tmpdir())+sep));rmSync(directory,{recursive:true,force:true});});
   const audience={campaign:'c',scene:'s',source_ref:'source',revision:'1',recipients:['u']},text='Rain taps the glass.\n\nYou agree to pay.';
-  const queue=createOfflinePublicationQueue({gateway:{inspect:()=>({grant:{},text,traceId:'t'})},contextAuthority:{audience:()=>audience}}),id=queue.queue({}).id;
+  const queue=createOfflinePublicationQueue({gateway:{inspect:()=>({grant:{},text,traceId:'t'})},contextAuthority:{audience:()=>audience,dependencyManifest:()=>({version:1,campaignId:audience.campaign,sceneId:audience.scene,sourceRef:audience.source_ref,sourceRevision:audience.revision,recipientIds:audience.recipients,actorId:null,actorRevision:null,records:[]})}}),id=queue.queue({}).id;
   const claim=store.claim({campaignId:'c',sourceRef:'source',sourceRevision:'1'}),draft={...queue.inspect(id),delivery:{channelId:'ch',mode:'party',messageId:'m'}};
   store.saveDraft(claim,draft,{check:()=>{}});
   return {store,path,claim,queue,id,review:queue.review(id),check:()=>{}};

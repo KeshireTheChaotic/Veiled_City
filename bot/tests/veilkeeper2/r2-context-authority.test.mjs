@@ -58,3 +58,21 @@ test('human-controlled NPC source refs remain protected rather than becoming an 
   const f=fixture();f.source.actors=['human-proxy'];const packet=f.authority.inspect(f.authority.issue(f.source,[]));assert.deepEqual(packet.human_controlled_actor_refs,['human-proxy']);assert.equal(packet.portrayal.kind,'gm');
   f.source.actors=['pc','pc'];assert.throws(()=>f.authority.issue(f.source,[]),/authority/);
 });
+
+test('durable dependency manifests contain complete ancestry hashes and revalidate without body reads',()=>{
+  const f=fixture();f.add('base');f.add('child',{sourceRefs:['base']});const grant=f.authority.issue(f.source,['child']),manifest=JSON.parse(JSON.stringify(f.authority.dependencyManifest(grant))),reads=f.reads.length;
+  assert.deepEqual(manifest.records.map(r=>r.ref).sort(),['base','child']);assert.equal(JSON.stringify(manifest).includes('body:'),false);assert.equal(f.authority.verifyDependencies(f.source,manifest),true);assert.equal(f.reads.length,reads);
+  assert.throws(()=>f.authority.verifyDependencies(f.source,{...manifest,records:manifest.records.filter(r=>r.ref!=='base')}));
+  f.rows.get('base').visibility='gm';assert.throws(()=>f.authority.verifyDependencies(f.source,manifest));assert.equal(f.reads.length,reads);
+});
+
+test('persisted context lineage cannot change source/recipients or portray a newly human-controlled NPC',()=>{
+  const f=fixture();f.add('known');const manifest=f.authority.dependencyManifest(f.authority.issue(f.source,['known'],{actorId:'npc'}));
+  for(const patch of [{sourceRevision:'other'},{campaignId:'other'},{recipientIds:['u']},{records:[...manifest.records,...manifest.records]}])assert.throws(()=>f.authority.verifyDependencies(f.source,{...manifest,...patch}));
+  f.actor.controllerUserId='human';assert.throws(()=>f.authority.verifyDependencies(f.source,manifest));
+});
+
+test('forged cyclic lineage is rejected even when its metadata hashes and ACLs are current',()=>{
+  const f=fixture();f.add('cycle',{sourceRefs:['cycle']});const empty=f.authority.dependencyManifest(f.authority.issue(f.source,[])),record=f.rows.get('cycle');
+  assert.throws(()=>f.authority.verifyDependencies(f.source,{...empty,records:[{ref:'cycle',metadataHash:createHash('sha256').update(JSON.stringify(record)).digest('hex')}]}));assert.deepEqual(f.reads,[]);
+});
