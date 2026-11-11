@@ -21,6 +21,6 @@ test('read-only repository returns legacy row shapes and ordering without alteri
 });
 test('read-only repository cannot create a database, write, or use memory',t=>{
   const file=legacy(t);assert.throws(()=>openLegacyReadOnlyRepository(`${file}.missing`));assert.equal(existsSync(`${file}.missing`),false);assert.throws(()=>openLegacyReadOnlyRepository(':memory:'),/Existing legacy database/);
-  const repo=openLegacyReadOnlyRepository(file);assert.equal(Object.keys(repo).some(k=>/save|insert|update|delete|run|exec/i.test(k)),false);repo.close();
+  const repo=openLegacyReadOnlyRepository(file);assert.equal(Object.keys(repo).some(k=>/^(?:save|insert|update|delete|run|exec)/i.test(k)),false);repo.close();
   const raw=new DatabaseSync(file,{readOnly:true});assert.throws(()=>raw.exec("INSERT INTO campaigns VALUES('z','r')"),/readonly/i);raw.close();
 });

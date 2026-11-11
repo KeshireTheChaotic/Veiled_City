@@ -1,0 +1,64 @@
+{
+  "node": "v26.13.0",
+  "distinct_tests": 72,
+  "final_passed": 72,
+  "focused": {
+    "tests": 2,
+    "passed": 2,
+    "duration_ms": 117.8166
+  },
+  "dependency_initial": {
+    "tests": 70,
+    "passed": 69,
+    "failed": 1,
+    "duration_ms": 6999.8921,
+    "failure": "write-method substring test incorrectly matched read-only getSavedRoll"
+  },
+  "failed_check_after_test_fix": {
+    "tests": 1,
+    "passed": 1,
+    "duration_ms": 83.2645
+  },
+  "inputs": [
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-committed-gm-decision.test.mjs",
+      "sha256": "20dc132ed387254fc4a90a35acf85026280ce68b13d112902b85ccba0c0ec779"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-clear-history.test.mjs",
+      "sha256": "cbcb127fb8cb535df1364830d9e67a69c315ac3cb778586b43ef5bbd13eb1a79"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-expiry-history.test.mjs",
+      "sha256": "a1fd525e6edea45e1bc18400a539f34e09a388e49ce9110088ab4aa754851466"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-legacy-condition-source.test.mjs",
+      "sha256": "3a36bcf6fa92da2de92c3e76dfb033ed81850b559fa487fbdbbc31b3b8513ae2"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-saved-roll-source.test.mjs",
+      "sha256": "bc32a9244b47acba31808438a9383d8d2886736dba228f9584f61747aeea415c"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-legacy-readonly-repository.test.mjs",
+      "sha256": "cb27e24dab17ae434b8078baa7345a591b90b5c0fff7480e5e37a64abb866f0e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}

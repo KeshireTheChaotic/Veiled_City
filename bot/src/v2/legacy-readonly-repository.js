@@ -41,6 +41,11 @@ export function openLegacyReadOnlyRepository(filename){
     ownerAuthoredSource(guildId,key,user){
       required(guildId,key,user);return !!db.prepare("SELECT 1 FROM mutation_ledger WHERE guild_id=? AND source_layer='city' AND mutation_type='world_event_index' AND entity_key=? AND actor_id=? LIMIT 1").get(guildId,key,user);
     },
+    getSavedRoll(guildId,key){
+      required(guildId);if(!(typeof key==='string'&&key||Number.isSafeInteger(key)))throw new TypeError('Native saved roll identity required');
+      const row=db.prepare('SELECT * FROM rolls WHERE guild_id=? AND id=?').get(guildId,key);
+      return row?{...row,payload:JSON.parse(row.payload_json)}:null;
+    },
     readPcConditionRefs(guildId,actorId){
       required(guildId,actorId);
       // Include every status: an unproven clear/expiry must not hide a condition.
