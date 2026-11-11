@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11, implementation HEAD **30e74973**. Goal active; **R0-R8 are all incomplete**. Latest observed usage: **97% primary / 92% weekly**; standing pause threshold is 98% on either window. Computer use remains forbidden. No major-phase merge/push, production cutover, provider/Discord call or new launcher occurred in this checkpoint.
+Checkpoint 2026-11-11, implementation HEAD **30e74973**. Goal paused at the owner-requested usage threshold; **R0-R8 are all incomplete**. Latest observed usage: **99% primary / 92% weekly**; standing pause threshold is 98% on either window. Computer use remains forbidden. No major-phase merge/push, production cutover, provider/Discord call or new launcher occurred in this checkpoint.
 
 Latest **30e74973** adds the source-owned Jinx baseline requirements and pure outcome planning in domain-feature-rules.js. Six checks passed (68.4912ms); its expanded changed-source/extra-cost-metadata case passed alone (69.8598ms). R3_DOMAIN_FEATURE_RULES_REPORT/HASHES/AFFECTED_TESTS and PIN_EVIDENCE record the results. The Jinx entry exactly matches mandatory pin1ba6c7e15db1a66ba34b36336f31437beffe44d6, card hash237ac94aa6cbf6d23f72e954fdc0c958947d33dca427664295985b2a1b2829bd. The definition preserves adversary/Close/actor-target-scene limit, target Difficulty source, subclass trait and Vulnerable duration, with no activation/effects authority. No current target/usage/cost/house-rule readiness is inferred.
 
@@ -19,7 +19,7 @@ Prior **f22e0788** added minimal recalled-human-statement authorship; its one re
 - Preserve unrelated dirty **README.md**. `bot/src/v2/rules/hope-consent-ingress.js` also shows dirty but no textual diff in this run (earlier byte/line-ending restoration); do not stage/reset/clean it opportunistically. Stage exact owned paths only.
 - Owner authorizes scoped commits and integration/push after each completed major phase **only to the rebuild branch**, never baseline. Already on that branch, so no self-merge. No major phase is qualified; no push performed.
 - Online testing only guild **1467249344947159291**, legacy database copies. External inference cap previously $5; current default is local Ollama. No Discord plugin/connector was downloaded; existing discord.js/API was used. Never fabricate human interactions or call mocked transport live quality.
-- At 98% used / 2% remaining on either window: finish current-state handoff, set goal paused, stop until explicit resume. Do not redeem credits. Goal remains the full R0–R8 rebuild; do not mark it complete for a slice.
+- At 98% used / 2% remaining on either window: finish current-state handoff, set goal paused, stop until explicit resume. Do not redeem credits. Goal remains the full R0–R8 rebuild; do not mark it complete for a slice. Paused at 99% primary usage on 2026-11-11; resume only after explicit owner instruction.
 - Fresh changed-import-dependent native tests only; no polling/watch test loops. Do not rerun completed unchanged suites. New `bot/tests/veilkeeper2` files are ignored; force-add exact test/helper files. Reports distinguish native SQLite, simulated SDK/provider, actual REST and human acceptance. No legacy test/fixture reuse or old-runtime retirement without replacement coverage.
 
 ## Governing sources and remote audit
