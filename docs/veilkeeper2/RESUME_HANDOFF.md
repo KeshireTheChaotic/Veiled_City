@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11, implementation HEAD **7eb06969**. Current-state handoff refresh complete; **R0–R8 are all incomplete**. Latest work is implemented/tested native receipt-backed recall engagement, not phase certification. Read actual Git, usage limits and process handles before resuming. Goal paused at owner usage threshold. Latest measurement after writing the handoff: 99% primary / 77% weekly used (previous check was 97%); owner requires a pause at 98%. Stop all implementation/testing/staging beyond this pause bookkeeping until explicit resume. No phase was merged/pushed and production was not cut over.
+Checkpoint 2026-11-11, implementation HEAD **de5fa87e**. Explicitly resumed by the owner after the primary usage window reset (0% primary / 77% weekly observed). Goal active; **R0�R8 are all incomplete**. Latest slice fixes private statement and causal-weight exposure between two PCs owned by one account: 170 affected checks passed; see R2_PRIVATE_ACTOR_VIEW_REPORT/HASHES/AFFECTED_TESTS. No major phase merge/push or production cutover. Keep the standing 98% usage pause threshold; inspect actual limits before relying on this snapshot.
 
 ## Binding instructions and workspace
 
@@ -44,6 +44,7 @@ Each slice has matching report/hash/affected-test artifacts under docs/veilkeepe
 | 1931d840 | Historical Discord origin refresh around inference/tools/review/publication | 94 / 15 files |
 | a345f5ed | Automatic authenticated player-statement capture, current utterance excluded from own packet | 98 / 16 files |
 | 7eb06969 | Real committed Hope receipts issue private canonical recall interaction causes | 102 / 14 files |
+| de5fa87e | Private statement/causal views isolated between same-account PCs; explicit native actor-view scopes | 170 / 25 files |
 
 Latest dependency log: `../r2-receipt-recall-dependency-tests-20261111.txt` (98 remaining checks, 15873.3057 ms); four focused checks passed separately. R2_RECEIPT_RECALL_REPORT/HASHES/AFFECTED files describe actual native root/SQLite expense, OOC/decline exclusion, optional-storage failure, replay after fictional time and forged receipt rejection. No pending test process or source edits remain from that slice.
 
@@ -61,7 +62,7 @@ Runtime resume uses runtime.sqlite manifest, exact legacy source identity, nativ
 
 ## Actual online state — revalidate before use
 
-Specific exec handle **92647** was just polled successfully and remains live, no new output. PID observed at launch **22720**; verify before PID operations. Source snapshot **678d10a2**, **not current Git**. Directory `.reports/online-7d5a6467-69fe-4adf-930f-d196b2579865`; legacy copy plus nine native game stores and runtime manifest. Latest read-only counts: turns=0, native interactions=0, source registry=0. No human flow or current-code live qualification occurred. Never start a second client against this guild while it is alive.
+Exec handle **92647** is now missing. Sanitized Win32 process inspection found no online-qualification/native-start Node launcher; no replacement was started. This is not a global bot-exclusivity claim. Old PID **22720** is historical and must not be acted on without fresh identity evidence. Source snapshot **678d10a2**, **not current Git**. Directory `.reports/online-7d5a6467-69fe-4adf-930f-d196b2579865`; legacy copy plus nine native game stores and runtime manifest. Last retained read-only counts at the prior checkpoint: turns=0, native interactions=0, source registry=0; not re-counted on this resume. No human flow or current-code live qualification occurred. Before any startup, recheck native processes/global guild ownership, preserved stores and manifest compatibility; never infer exclusivity solely from missing handles.
 
 Actual prior checks: Ready event, guild-only 24-root registration, new cost-reconcile optional string leaf readback and absence from dice commands. Combined readback script then exited1 because live runtime manifest was correctly exclusively locked: preserve this partial result, not green the whole script. qualification.json/report retain evidence. Running launcher still has the now-removed extra diagnostic event listener and emitted one 11-listener warning; next launch uses corrected source. Do not restart solely to remove that harmless log listener.
 
@@ -71,7 +72,7 @@ Old session62251 no longer exists. Historical `.reports/online-6b8c5ce9-2c6b-472
 
 - **R0:** pinned inventory and newer source audit exist; dynamic/function binding, 34 partial writer files, public mechanic/command/schema/import destinations and removal proofs remain incomplete. Upstream changed references/parity must not be ignored.
 - **R1:** bootable opt-in four-tool runtime and scoped adapters exist; full architectural/gateway/outbox acceptance is not certified.
-- **R2:** native entitlement, source closure, knowledge proposals, weighted retrieval and private statement/receipt causes now operate in composed tests. Remaining: full cause/commitment/time issuers, complete semantic relevance and alias identity proof, large-history retrieval beyond 256 candidates/64 selected and 4096 evidence, NPC cognition/perception, correction/retraction, protected canon and real imports/exports. Historical channel reassignment can conservatively hold old origins until reviewed reconciliation.
+- **R2:** native entitlement, source closure, knowledge proposals, weighted retrieval and private statement/receipt causes now operate in composed tests. Remaining: private recipient-only import/legacy actor-view mapping and party witness/perception, full cause/commitment/time issuers, complete semantic relevance and alias identity proof, large-history retrieval beyond 256 candidates/64 selected and 4096 evidence, NPC cognition/perception, correction/retraction, protected canon and real imports/exports. Historical channel reassignment can conservatively hold old origins until reviewed reconciliation.
 - **R3:** Hope consent/expense and extensive damage/death/Fear/roll foundations exist; full Daggerheart 2.0/house-rule parity, source adapters, owner roll controls, helper/Tag Team/PvP, features, movement, inventory/economy/downtime and migration remain open.
 - **R4:** one-call draft, paragraph screening/local repair and exact native cost recap exist. Full agency/grounding/quality/material semantics and automatic durable delivery are not qualified. Native PC names protect more cases but regex is not semantic proof.
 - **R5:** genuine private fictional-pressure scheduler, independent NPC/faction decisions/resources/voices/failures, attention fairness and pending response opportunities remain mostly unimplemented.
