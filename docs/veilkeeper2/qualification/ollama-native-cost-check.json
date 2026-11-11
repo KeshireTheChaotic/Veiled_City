@@ -1,0 +1,24 @@
+{
+  "model": "qwen3.5:4b",
+  "ownerConsent": "synthetic-native-fixture",
+  "discordMessages": 0,
+  "realCampaignEffects": 0,
+  "modelCalls": 1,
+  "metrics": {
+    "traceId": "86b0ce23-049d-4298-bb89-d3c6828ccb36",
+    "modelCalls": 1,
+    "toolCalls": 0,
+    "elapsedMs": 9238.6312,
+    "usage": {
+      "inputTokens": 1056,
+      "outputTokens": 337
+    }
+  },
+  "elapsedMs": 9245,
+  "output": "The sky above the transit hub is a bruised purple, the color of an evening that refuses to come. You stand on the observation deck of the waiting vehicle, your fingers hovering over the console where the transaction log glows faintly with pending entries. The synthetic transport system hums in the background, a low thrum that vibrates through soles of your boots and into the floor beneath you. It's quiet here, save for the wind whistling through the open side of the carriage.\n\nThe holographic interface flickers to life as you approach the console. The text displays clearly: *Pending native cost commitment: Hope_Cost*. There are two identifiers waiting there—*test-cost* and *test-consent*—ready to be processed into a formal action proposal. The system awaits your command, not just for the transport's sake, but to acknowledge the validity of that already accepted cost within this session.\n\nYou reach out to the interface, bringing up the *action_propose* dialog. It waits, patient and silent, for the final parameters to be locked in: the specific source reference for this context, the actor reference marked as \"pc\", and the action itself, kind of *hope_cost.commit*, with its requisite parameters already set to *test-cost* and *consent_ref test-consent*. There is no room for improvisation here; the request is precise, stripped down to its logical core.\n\nWhat you say next will be the final word in this transaction's formal record. The system does not question your intent, but it demands a declaration. Speak your command into the console, and let the numbers settle into reality.",
+  "receiptDependencies": [],
+  "sent": false,
+  "fixtureHopeAfter": 3,
+  "engineCommitted": false,
+  "engineOrchestrationPassed": false
+}

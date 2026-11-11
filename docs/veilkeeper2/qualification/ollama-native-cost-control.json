@@ -1,0 +1,84 @@
+{
+  "variant": "transport-control",
+  "model": "qwen3.5:4b",
+  "ownerConsent": "synthetic-native-fixture",
+  "discordMessages": 0,
+  "realCampaignEffects": 0,
+  "toolTrace": [
+    {
+      "calls": [
+        {
+          "id": "ollama:0:0",
+          "name": "action_propose",
+          "arguments": {
+            "source_ref": "source:e28f111d59bea8999eceeb2add7458aa992731fe4633ccb248e3df9cc64aefb5",
+            "actor_ref": "pc",
+            "action": {
+              "kind": "hope_cost.commit",
+              "parameters": {
+                "action_ref": "test-cost",
+                "consent_ref": "test-consent"
+              }
+            }
+          }
+        }
+      ],
+      "previousNativeResults": []
+    },
+    {
+      "calls": [],
+      "previousNativeResults": [
+        {
+          "id": "ollama:0:0",
+          "name": "action_propose",
+          "result": {
+            "receipt_ref": "test-cost",
+            "receipt_hash": "fd1c2aac6f1306246301be05fd4dab2ef49b41a061bb0eac891224e7add6c5a8",
+            "status": "resolved",
+            "operation": "hope_cost",
+            "actor_ref": "pc",
+            "source_ref": "source:5bae2a30a011632cebccef59b63de6a8cc5afd0e093a082dbd61c163a490d74d",
+            "source_revision": "314e4b997ac1dd45bc4b564cd1d86c8d0e4e29f258e51d06213fb580570a4fab",
+            "effects_committed": true,
+            "disclosure": {
+              "recipient_ids": [
+                "fixture-owner"
+              ],
+              "npc_knowledge": false
+            },
+            "effects": [
+              {
+                "kind": "resource_spent",
+                "resource": "hope",
+                "amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "modelCalls": 2,
+  "metrics": {
+    "traceId": "ab3c4abb-ba45-40a2-8690-3623f889e649",
+    "modelCalls": 2,
+    "toolCalls": 1,
+    "elapsedMs": 2128.2379,
+    "usage": {
+      "inputTokens": 2231,
+      "outputTokens": 141
+    }
+  },
+  "elapsedMs": 2140,
+  "output": "Action proposed successfully with status resolved.",
+  "receiptDependencies": [
+    {
+      "receiptRef": "test-cost",
+      "receiptHash": "fd1c2aac6f1306246301be05fd4dab2ef49b41a061bb0eac891224e7add6c5a8"
+    }
+  ],
+  "sent": false,
+  "fixtureHopeAfter": 1,
+  "engineCommitted": true,
+  "engineOrchestrationPassed": true
+}

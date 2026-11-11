@@ -1,0 +1,62 @@
+{
+  "variant": "transport-control",
+  "model": "qwen3.5:4b",
+  "ownerConsent": "synthetic-native-fixture",
+  "discordMessages": 0,
+  "realCampaignEffects": 0,
+  "toolTrace": [
+    {
+      "calls": [
+        {
+          "id": "ollama:0:0",
+          "name": "action_propose",
+          "arguments": {
+            "source_ref": "source:e28f111d59bea8999eceeb2add7458aa992731fe4633ccb248e3df9cc64aefb5",
+            "actor_ref": "pc",
+            "action": {
+              "kind": "hope_cost.commit",
+              "parameters": {
+                "action_ref": "test-cost",
+                "consent_ref": "test-consent"
+              }
+            },
+            "expected_revision": "string",
+            "reason": "Synthetic transport test"
+          }
+        }
+      ],
+      "previousNativeResults": []
+    },
+    {
+      "calls": [],
+      "previousNativeResults": [
+        {
+          "id": "ollama:0:0",
+          "name": "action_propose",
+          "result": {
+            "status": "blocked",
+            "code": "stale_revision"
+          }
+        }
+      ]
+    }
+  ],
+  "modelCalls": 2,
+  "metrics": {
+    "traceId": "9ed4e99b-5e45-4b20-b24b-033d8d702c6d",
+    "modelCalls": 2,
+    "toolCalls": 1,
+    "elapsedMs": 2321.4346,
+    "usage": {
+      "inputTokens": 2001,
+      "outputTokens": 173
+    }
+  },
+  "elapsedMs": 2328,
+  "output": "The action proposal was blocked due to a stale revision.",
+  "receiptDependencies": [],
+  "sent": false,
+  "fixtureHopeAfter": 3,
+  "engineCommitted": false,
+  "engineOrchestrationPassed": false
+}

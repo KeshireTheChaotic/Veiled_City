@@ -38,6 +38,7 @@ async function fixture(t){
   assert.deepEqual(turns.inspectNative('c',saved.source).data.review.value,reviewed);
   const authority=createSourceAuthority({...scenes.readers,sourceRegistry:registry}),sent=[];
   const publication=createNativeDraftPublication({sceneStore:scenes,gmAuthority:{check:()=>{}},drafts:{
+    inspectReceipts:(c,s,r,entries)=>{if(!Array.isArray(entries)||entries.length)throw new Error('Unexpected native receipt lineage');},
     inspectContext:(c,s,r,manifests)=>{if(!Array.isArray(manifests)||!manifests.length)throw new Error('Saved context lineage required');const context=createContextAuthority({sourceAuthority:authority,readActor:scenes.readers.readActor,records:{metadata:()=>null,readText:()=>null}});for(const manifest of manifests)context.verifyDependencies(authority.inspectReference(s,r),manifest);},
     refreshSource:async(c,s,r,{signal})=>{const event=authority.eventForReference(s);await intake.ingest({guildId:c,channelId:'channel',sceneId:'scene',messageId:event.messageId,userId:event.userId,actorId:event.actorId,mode:'private',ownerUserId:event.userId},{signal});},
     inspectSource:(c,s,r)=>authority.inspectReference(s,r),recent:(c,n)=>turns.recentDrafts(c,n),begin:(c,s,o)=>turns.beginPublication(c,s,o),finish:(c,s,m)=>turns.finishPublication(c,s,m),uncertain:(c,s,r)=>turns.markPublicationUncertain(c,s,r)

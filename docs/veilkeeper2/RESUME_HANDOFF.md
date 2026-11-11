@@ -7,7 +7,7 @@ Current-state review complete for this checkpoint; the full R0–R8 implementati
 - Worktree: `D:/Library/Development/Veiled_City_2/rebuild`, branch `rebuild/veilkeeper2-audience-first`. Deprecated `D:/Library/Development/Veiled_City` is not an implementation target. Its user-authorized credential file may be loaded by path without printing/copying values.
 - Preserve unrelated dirty `README.md`; never stage/reset/clean it. No subagents authorized. New native tests under `bot/tests/veilkeeper2` are ignored: force-add exact paths. Run fresh explicit changed-dependency checks; never present simulated SDK/model checks as live quality.
 - Owner forbids computer-use until explicitly reauthorized. Do not use Windows/browser UI automation as a workaround. Autonomous bot/API and native testing are authorized.
-- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Latest measured limits were 66% primary / 56% weekly used; re-read before relying on them.
+- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Latest measured limits were 87% primary / 59% weekly used; re-read before relying on them.
 - Commit scoped phase work. Publish/integrate completed major phases only to the rebuild branch, never the baseline. Already on the integration target: no self-merge. No major phase has passed; production cutover needs separate authorization.
 - Frozen baseline `codex/clean-ai-gm-2026-10` remains `1ba6c7e15db1a66ba34b36336f31437beffe44d6`, freshly checked by git ls-remote this checkpoint. Origin rebuild remains `fda77bd84b216e0e883c8b1348b12e7611787388`; newer local slices have not been pushed. Refresh the source audit if baseline advances.
 
@@ -27,7 +27,7 @@ All GM operations use typed `/vc-gm`; owner death commands use typed `/vc-player
 
 Canonical actor readers join registered control, legacy identity and native HP/Armor/Hope/lifecycle. Missing/incompatible migration has no healthy fallback. Both death and conversation source readers now use that projection. Session start/end/reopen, character register/rebind, reviewed bootstrap, offscreen owner attendance and private-channel registration are implemented subsets. Most commands and playable opening/late entry remain incomplete.
 
-Source/scene authority binds exact recipients/writers, source revision, actor control and attendance epochs. Another owner's late entry preserves pending owner proofs; own absence/rejoin or lifecycle closure never revives old proofs. Receipt-only ancestry is metadata for already-issued outcomes, not new PC control. Death choices/recovery allocations require actual owner evidence; engine dice/outcomes and uncertainty receipts are durable. Full SRD/house-rule parity and real execution adapters remain incomplete.
+Source/scene authority binds exact recipients/writers, source revision, actor control and attendance epochs. Another owner's late entry preserves pending owner proofs; own absence/rejoin or lifecycle closure never revives old proofs. Receipt-only ancestry is metadata for already-issued outcomes, not new PC control. Death choices/recovery allocations require actual owner evidence; engine dice/outcomes and uncertainty receipts are durable. The generic tool bridge now executes the fixed, already-consented Hope cost through the existing atomic native authority and exposes owner-private immutable receipt projections. Other execution adapters and full SRD/house-rule parity remain incomplete.
 
 ## Latest implemented slices and evidence
 
@@ -40,6 +40,8 @@ Source/scene authority binds exact recipients/writers, source revision, actor co
 - R7_CONTEXT_LINEAGE_REPORT.md (current checkpoint): durable metadata-hash ancestry for initial/tool context, cold ACL/source/NPC revalidation before publish, no body rereads, context-bound publication IDs and historical missing-lineage holds. 184 passing affected behavioral checks across 19 files. Source/test hashes and exact scopes are in the matching manifests.
 
 Historical reports cover native ordinary rolls, Hope/Fear, damage/death/Blaze, consent, bootstrap and receipt repair. Read their source hashes before relying on old counts. Completed changed slices do not establish a full fresh suite, phase or live quality gate.
+
+- R3_GENERIC_ENGINE_REPORT.md (current checkpoint): fixed Hope-cost generic engine bridge, current owner-private consent/source checks, replay/rollback, immutable tool-observed receipt lineage and cold publication verification. 198 passing affected checks across 21 files. Local GM prompt failed tool selection/agency; corrected explicit transport control committed synthetic Hope 3→1. No human consent or semantic-quality claim.
 
 ## Live test state — preserve it
 
@@ -56,7 +58,7 @@ ONLINE_OLLAMA_REPORT.md and qualification/ retain actual synthetic local-model e
 - R0 partial: static inventory 1,077 modules / 4,224 exports / 219 routes / 55 tables / 456 literal kinds; dynamic record/writer contracts and semantic migration/removal proof remain open. Read current audit JSON before relying on historical hold counts.
 - R1 partial: native opt-in startup, four-capability kernel/provider and scoped ingestion exist; full replacement/startup/operational qualification incomplete.
 - R2 partial: source closure, actor-known context, private planning separation, weighted recall, private packages/canon foundations and durable context lineage exist. Real recall/identity/import/export/perception composition and migration incomplete.
-- R3 partial: substantial native mechanics/receipts, explicit owner death/recovery/Blaze and reviewed bootstrap exist. Full SRD/house-rule parity, generic tool-to-actual-executor composition, all features/costs/PvP/team/movement/items/economy/downtime and historical pending-state migration remain open.
+- R3 partial: substantial native mechanics/receipts, explicit owner death/recovery/Blaze and reviewed bootstrap exist. Full SRD/house-rule parity, remaining generic tool-to-actual-executor composition, all features/costs/PvP/team/movement/items/economy/downtime and historical pending-state migration remain open.
 - R4 partial: one-call ordinary generation and native segment/review/repair foundations exist. Receipt-backed semantic/agency validation, exact candidate approval/outbox, local writer repair and useful autonomous delivery remain incomplete; current model quality failed.
 - R5 incomplete: private fictional-time scheduling, independent NPC cognition/actions/plans/fairness and source-bound observable beats remain largely open.
 - R6 partial: typed subset, owner/private/session/death/root foundations exist. Full command/import/export/voice/multiplayer/guest/proxy/opening/late-entry flows and human-principal live acceptance remain open.
@@ -65,6 +67,6 @@ ONLINE_OLLAMA_REPORT.md and qualification/ retain actual synthetic local-model e
 
 ## Next exact work and rollback
 
-Connect actual native action/consent/death receipts to scope-bound consequential material review and generic consequence orchestration. Preserve one-call ordinary prose and engine-owned outcomes; never mint mechanical authority from review JSON. Then implement independently validated repaired-candidate publication/ack and close R4–R8 gates. Context manifests do not yet encode every effect/current-state/consent dependency.
+Connect actual native action/consent/death receipts to scope-bound consequential material review and generic consequence orchestration. Preserve one-call ordinary prose and engine-owned outcomes; never mint mechanical authority from review JSON. Then implement independently validated repaired-candidate publication/ack and close R4–R8 gates. Observed native Hope receipts now have durable hash dependencies checked before publication. Other effect families/current-state dependencies and receipt-backed semantic assertion review remain open.
 
 Preserve all native stores, source/control epochs, choices, rolls, uncertain attempts and publication receipts. No reset/clean or deletion to make older code run. Use preserved copies and explicit reviewed migrations for rollback; disable publication before downgrading safeguards. Production/deployment remains unchanged and requires separate authorization.

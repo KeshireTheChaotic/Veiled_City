@@ -5,20 +5,22 @@ import {createProseMaterialReview} from './prose-material-review.js';
 export function createOfflinePublicationQueue({gateway,contextAuthority,materialReview=createProseMaterialReview()}){
   if(typeof gateway?.inspect!=='function'||typeof contextAuthority?.audience!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof materialReview?.review!=='function')throw new TypeError('Draft and audience authorities required');
   const rows=new Map();
-  function queue(draft,{additionalGrants=[]}={}){
+  function queue(draft,{additionalGrants=[],receiptDependencies=[]}={}){
     if(!Array.isArray(additionalGrants)||additionalGrants.length>16)throw new Error('Bounded native context grants required');
+    if(!Array.isArray(receiptDependencies)||receiptDependencies.length>16||receiptDependencies.some(r=>!r||Object.keys(r).sort().join(',')!=='receiptHash,receiptRef'||typeof r.receiptRef!=='string'||!r.receiptRef||typeof r.receiptHash!=='string'||!/^[a-f0-9]{64}$/.test(r.receiptHash)))throw new Error('Bounded native receipt dependencies required');
+    const receipts=Object.freeze(receiptDependencies.map(r=>Object.freeze({...r})));
     const value=gateway.inspect(draft),audience=contextAuthority.audience(value.grant);
     const contextDependencies=Object.freeze([value.grant,...additionalGrants].map(grant=>contextAuthority.dependencyManifest(grant)));
-    const fingerprint=JSON.stringify([audience,value.text,contextDependencies]);
+    const fingerprint=JSON.stringify([audience,value.text,contextDependencies,receipts]);
     const id=`publication:${createHash('sha256').update(fingerprint).digest('hex')}`;
-    if(!rows.has(id))rows.set(id,{draft,audience,text:value.text,traceId:value.traceId,contextDependencies,fragments:value.text.split(/\n[\t ]*\n+/).filter(t=>t.trim()),retired:[]});
+    if(!rows.has(id))rows.set(id,{draft,audience,text:value.text,traceId:value.traceId,contextDependencies,receiptDependencies:receipts,fragments:value.text.split(/\n[\t ]*\n+/).filter(t=>t.trim()),retired:[]});
     return Object.freeze({id,status:'awaiting_review',sent:false,knowledgeAcknowledged:false});
   }
   function inspect(id){
     const row=rows.get(id);if(!row)throw new Error('Publication not available');
     const current=gateway.inspect(row.draft);contextAuthority.audience(current.grant);
     return Object.freeze({id,status:'awaiting_review',sent:false,knowledgeAcknowledged:false,
-      text:row.text,audience:row.audience,traceId:row.traceId,contextDependencies:row.contextDependencies});
+      text:row.text,audience:row.audience,traceId:row.traceId,contextDependencies:row.contextDependencies,receiptDependencies:row.receiptDependencies});
   }
   // Native diagnostic/review surface only. "screened" is not a publication grant.
   function evaluate(id,fragments,retiredCount){

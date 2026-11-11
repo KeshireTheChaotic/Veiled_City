@@ -56,15 +56,17 @@ export function createMemoryJournal(){
 }
 
 /**
- * New generic boundary, currently preparation-only. Native intake and revalidation
- * are supplied by the trusted application, never by model arguments. No effect,
- * dice, publication, database patch or protected knowledge commit exists here.
+ * Generic boundary: preparation-only unless a fixed native action authority is installed. Native intake and revalidation
+ * are supplied by the trusted application, never by model arguments. Fixed native
+ * effects require an installed engine authority; rules cannot mint resolution JSON.
+ * No generic database patch, publication or fabricated dice is available.
  */
-export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null,context=null}){
+export function createKernel({authority,journal,rules=createRulesetRegistry(),knowledge=null,context=null,actionAuthority=null}){
   if(typeof authority?.authenticate!=='function'||typeof authority?.revalidate!=='function')throw new TypeError('Native authentication and revalidation required');
   if(!['source','recordSource','receipt','recordReceipt'].every(k=>typeof journal?.[k]==='function'))throw new TypeError('Source and receipt repository required');
   if(knowledge!==null&&typeof knowledge.propose!=='function')throw new TypeError('Native knowledge proposal authority required');
   if(context!==null&&typeof context.read!=='function')throw new TypeError('Native scoped context reader required');
+  if(actionAuthority!==null&&!['supports','propose','inspect','describe'].every(k=>typeof actionAuthority[k]==='function'))throw new TypeError('Code-owned native action authority required');
   const handles=new WeakMap();
   function intake(event){
     const proof=authority.authenticate(event);
@@ -105,6 +107,7 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
         if(input.source_ref!==source.id)return blocked('source_mismatch');
         if(!source.actors.includes(input.actor_ref))return blocked('actor_not_controlled');
         if(input.expected_revision!==undefined&&input.expected_revision!==source.revision)return blocked('stale_revision');
+        if(actionAuthority?.supports(input.action.kind)){try{const result=actionAuthority.propose(source,input);if(result&&typeof result.then==='function'){Promise.resolve(result).catch(()=>{});return blocked('asynchronous_native_handler');}return snapshot(result);}catch{return blocked('native_action_failed');}}
         const rule=rules.get(input.action.kind);
         if(!rule)return blocked('unknown_operation');
         const proposal=snapshot({sourceRef:source.id,actorRef:input.actor_ref,kind:input.action.kind,parameters:input.action.parameters,revision:source.revision,ruleVersion:rule.version});
@@ -128,6 +131,7 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
       state_inspect:check(input=>{
         if(!closed(input,['receipt_ref'])||!text(input.receipt_ref))return blocked('invalid_receipt_query');
         const receipt=journal.receipt(input.receipt_ref);
+        if(!receipt&&actionAuthority){try{const result=actionAuthority.inspect(source,input.receipt_ref);if(result&&typeof result.then==='function'){Promise.resolve(result).catch(()=>{});return blocked('asynchronous_native_handler');}return snapshot(result);}catch{return blocked('receipt_not_available');}}
         if(!receipt||receipt.sourceRef!==source.id||receipt.principal!==source.principal||receipt.campaign!==source.campaign||receipt.scene!==source.scene||receipt.revision!==source.revision)return blocked('receipt_not_available');
         return snapshot({receipt_ref:receipt.id,status:receipt.status,rule_version:receipt.ruleVersion,effects_committed:false,trace_id:receipt.traceId});
       }),
@@ -139,5 +143,5 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
       })
     });
   }
-  return Object.freeze({intake,bind,describe:()=>snapshot({mode:'offline',effectExecution:false,publication:false,tools:[...TOOL_NAMES],rules:rules.describe()})});
+  return Object.freeze({intake,bind,describe:()=>snapshot({mode:actionAuthority?'native':'offline',effectExecution:Boolean(actionAuthority),publication:false,tools:[...TOOL_NAMES],rules:[...rules.describe(),...(actionAuthority? actionAuthority.describe():[])]})});
 }
