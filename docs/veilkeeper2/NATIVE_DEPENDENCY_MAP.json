@@ -1,5 +1,5 @@
 {
-  "head": "c760941f6dcdba2c16d2c75b6d6494bf9937870b",
+  "head": "99bbd06d45a510f7d84cb17bdc891e31a3af69f3",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -2987,7 +2987,7 @@
     },
     {
       "file": "bot/src/v2/rules/condition-history.js",
-      "sha256": "0f6080082ab08f1d10c22ffcffb6574ca5ea473639fbce549659b407efafa00b",
+      "sha256": "9930746ab9fadb3bdfd40a6aa7630ba075325f8339f5fd4c440614f5b1593764",
       "reachable": false,
       "exports": [
         {
@@ -3048,7 +3048,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 34,
+      "functions": 39,
       "sqlStatements": 0
     },
     {
@@ -4001,14 +4001,14 @@
     },
     {
       "file": "bot/src/v2/rules/roll-adjudications.js",
-      "sha256": "1fb6b239ea051ad969c15cded89f69e83f38f880f898249b816df2b0ec557b5e",
+      "sha256": "59713ae9c7994b613542ff314bce2ad23b5a6d81acec572063746d4ea0e079fa",
       "reachable": false,
       "exports": [
         {
-          "line": 7,
+          "line": 8,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openRollAdjudications(filename=':memory:'){\n const db=new DatabaseSync(filename);\n try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(t=>t.name!=='vk3_roll_adjudications'))throw new Error('Dedicated roll adjudication store r"
+          "text": "export function openRollAdjudications(filename=':memory:',{catalog=null,readActorSnapshot=null}={}){\n if((catalog!==null||readActorSnapshot!==null)&&(typeof catalog?.findDomainCard!=='function'||typeof readActorSnapshot!=='function'))throw new TypeError('Complete native Spellcast identity sources re"
         }
       ],
       "imports": [
@@ -4025,10 +4025,17 @@
           "specifier": "node:crypto",
           "target": null,
           "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./feature-roll-source.js",
+          "target": "bot/src/v2/rules/feature-roll-source.js",
+          "status": "resolved"
         }
       ],
-      "functions": 10,
-      "sqlStatements": 4
+      "functions": 14,
+      "sqlStatements": 8
     },
     {
       "file": "bot/src/v2/rules/roll-store.js",
@@ -4087,14 +4094,20 @@
     },
     {
       "file": "bot/src/v2/rules/spellcast-condition-modifiers.js",
-      "sha256": "5a86acc16a5e6952a7c17673ec7cf3d4894d8878b6c1be21b5eaed428721de6e",
+      "sha256": "0eaa1f14ceb35f65fa8acf92faafd31891f11219e376854db327a5343b3dbad2",
       "reachable": false,
       "exports": [
         {
-          "line": 7,
+          "line": 8,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createSpellcastConditionModifiers({catalog,readRollIdentity,readConditionRefs,inspectCondition}){\n if(typeof catalog?.findDomainCard!=='function'||[readRollIdentity,readConditionRefs,inspectCondition].some(f=>typeof f!=='function'))throw new TypeError('Native card, roll identity and "
+          "text": "export function createSpellcastConditionModifiers({catalog,readRollIdentity,readConditionRefs,inspectCondition,readConditionWindow=null}){\n if(typeof catalog?.findDomainCard!=='function'||typeof readRollIdentity!=='function'||(readConditionWindow===null?[readConditionRefs,inspectCondition].some(f=>t"
+        },
+        {
+          "line": 37,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createLegacySpellcastConditionModifiers({repository,catalog,adjudications,sourceAuthority,readActorSnapshot}){\n if(typeof adjudications?.readRollIdentity!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActorSnapshot!=='function')throw new TypeError('Native p"
         }
       ],
       "imports": [
@@ -4111,9 +4124,16 @@
           "specifier": "./feature-roll-source.js",
           "target": "bot/src/v2/rules/feature-roll-source.js",
           "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./condition-history.js",
+          "target": "bot/src/v2/rules/condition-history.js",
+          "status": "resolved"
         }
       ],
-      "functions": 10,
+      "functions": 19,
       "sqlStatements": 0
     },
     {
