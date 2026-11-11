@@ -25,7 +25,12 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
       &&list(row.sourceRefs)&&list(row.recipientIds)&&list(row.knownBy)
       &&(row.visibility==='public'&&row.disclosure==='public'
         ||row.visibility==='recipients'&&['observed','acknowledged'].includes(row.disclosure)&&source.recipients.every(r=>row.recipientIds.includes(r)))
-      &&(actorId===null||row.knownBy.includes(actorId));
+      &&(!Object.hasOwn(row,'viewActorIds')||list(row.viewActorIds)&&row.viewActorIds.length>0&&row.viewActorIds.length<=256&&Array.isArray(source.actors)&&source.actors.some(actor=>row.viewActorIds.includes(actor)))
+      &&(actorId===null||row.knownBy.includes(actorId))&&originEntitled(row,source);
+  }
+  function originEntitled(row,source){
+    if(!Object.hasOwn(row,'origin'))return true;
+    try{return typeof records.entitledOrigin==='function'&&records.entitledOrigin(row,source)===true;}catch{return false;}
   }
   function originValid(row){
     if(!Object.hasOwn(row,'origin'))return true;

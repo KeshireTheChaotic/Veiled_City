@@ -1,5 +1,5 @@
 {
-  "head": "a345f5eddb314208f74e9da4fd961f699cc380a2",
+  "head": "985228f07d39b2285ad7a1859eff259e53a47b0a",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -556,7 +556,7 @@
     },
     {
       "file": "bot/src/v2/context-authority.js",
-      "sha256": "cc471bb8a4754f9d8ee897ab7ff830faeb545084275ffd0b281ba61032cbbbe7",
+      "sha256": "40d4b4e642482a70a18bec1e4c3e3b68897a057c0cd0ca68c02eb41009c25bcf",
       "reachable": true,
       "exports": [
         {
@@ -575,7 +575,7 @@
           "status": "external"
         }
       ],
-      "functions": 27,
+      "functions": 29,
       "sqlStatements": 0
     },
     {
@@ -1932,7 +1932,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "3220e447298e4bedad553cd928787453fe1b30762bd858f3ca8ab0f0eda66e2f",
+      "sha256": "725c486e0ededa7af31d744f9e0a01724ea33748c9395cd2e09cc25d0065bb4e",
       "reachable": true,
       "exports": [
         {
@@ -3854,7 +3854,7 @@
     },
     {
       "file": "bot/src/v2/statement-lineage.js",
-      "sha256": "75ab8d74b42494fdb40fc61e566995ac4b2247a0313f839801c6c5e474470b48",
+      "sha256": "81801aa071640c5904aaa503cf9c13d4d87ac620a0b1f4a2ea0b767a3b32c24e",
       "reachable": true,
       "exports": [
         {
@@ -3879,7 +3879,7 @@
           "status": "external"
         }
       ],
-      "functions": 8,
+      "functions": 9,
       "sqlStatements": 0
     },
     {

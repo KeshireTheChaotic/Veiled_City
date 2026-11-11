@@ -4,6 +4,13 @@ export const statementReference=source=>`statement:${hash([source.campaign,sourc
 /** Historical statement evidence only. No present actor control or truth/canon authority. */
 export function createStatementLineage({sourceAuthority,sourceRegistry,readMessage,readChannel}){
  if(typeof sourceAuthority?.revalidate!=='function'||typeof sourceRegistry?.get!=='function'||[readMessage,readChannel].some(f=>typeof f!=='function'))throw new TypeError('Native statement lineage readers required');
+ function entitled(row,source){
+  try{
+   const o=row.origin,event=o&&sourceRegistry.get(o.sourceRef)?.event,channel=o&&readChannel(row.campaignId,o.channelId);
+   if(!event||event.campaignId!==row.campaignId||!channel||channel.campaignId!==row.campaignId||channel.id!==o.channelId||channel.sceneId!==o.sceneId||channel.revision!==o.channelRevision||channel.permissionsVerified!==true||row.kind!=='testimony'||row.visibility!=='recipients'||row.disclosure!=='observed'||!Array.isArray(row.recipientIds)||JSON.stringify([...row.recipientIds].sort())!==JSON.stringify([...channel.recipientIds].sort()))return false;
+   return channel.kind==='party'||channel.kind==='private'&&source.principal===event.userId&&Array.isArray(source.actors)&&source.actors.includes(event.actorId);
+  }catch{return false;}
+ }
  function validate(row){
   try{
    const o=row.origin;if(!o||Object.keys(o).sort().join(',')!=='channelId,channelRevision,messageId,messageRevision,sceneId,sourceRef,sourceRevision')return false;
@@ -23,5 +30,5 @@ export function createStatementLineage({sourceAuthority,sourceRegistry,readMessa
   const metadata={status:'active',kind:'testimony',scope:'campaign',visibility:'recipients',disclosure:'observed',recipientIds:[...source.recipients],knownBy:[],sourceRefs:[],origin:{sourceRef:source.id,sourceRevision:source.revision,messageId:message.id,messageRevision:message.revision,channelId:channel.id,channelRevision:channel.revision,sceneId:source.scene}};
   if(!validate({...metadata,campaignId:source.campaign,contentHash:textHash(source.text)}))throw new Error('Statement source lineage changed');return {metadata,body:source.text};
  }
- return Object.freeze({capture,validate});
+ return Object.freeze({capture,validate,entitled});
 }

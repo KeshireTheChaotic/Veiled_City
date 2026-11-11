@@ -44,7 +44,7 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     const turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null,knowledgeStore=provider?open(openKnowledgeStore,join(directory,'knowledge.sqlite')):null;
     const recallStore=provider?open(openRecallStore,join(directory,'recall.sqlite')):null;
     const statementLineage=createStatementLineage({sourceAuthority:conversationAuthority,sourceRegistry:registry,...sceneStore.readers});
-    const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:statementLineage.validate}:null;
+    const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:statementLineage.validate,entitledOrigin:statementLineage.entitled}:null;
     const conversationContext=knowledgeStore?createContextAuthority({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}):null;
     const recall=recallStore?createRecallPlanner({contextAuthority:conversationContext,readCandidates:s=>knowledgeStore.candidateRefs(s.campaign,s.scene).filter(ref=>ref!==statementReference(s)),readCauses:s=>recallStore.readCauses(s.campaign),readPins:s=>recallStore.readPins(s.campaign),readClock:recallStore.readClock}):null;
     const receiptRecall=recallStore?createReceiptRecall({sourceAuthority:conversationAuthority,statementLineage,knowledgeStore,recallStore,inspectReceipt:(source,ref)=>nativeActions.inspect(source,ref)}):null;
