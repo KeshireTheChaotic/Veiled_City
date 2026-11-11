@@ -1,0 +1,11 @@
+import {createProviderFromEnv} from '../../src/v2/native-start.js';
+import {GENERIC_TOOL_CONTRACTS} from '../../src/v2/tool-contracts.js';
+const provider=await createProviderFromEnv({VK2_PROVIDER:'ollama',VK2_MODEL:'qwen3.5:4b',VK2_MAX_TURNS:'3'});
+const request={instructions:'This is a local tool transport test, not gameplay. First call state_inspect with receipt_ref "online-check". After receiving the tool result, explain its status in one short sentence. Never invent a successful effect.',context:{utterance:'Inspect the online-check receipt.'},tools:GENERIC_TOOL_CONTRACTS};
+let response=await provider.generate(request);
+console.log(JSON.stringify({stage:'initial',toolCalls:response.toolCalls??[],text:response.text??null}));
+if(!response.toolCalls?.length)throw new Error('Model did not issue the requested native tool call');
+const results=response.toolCalls.map(call=>({id:call.id,name:call.name,result:{status:'blocked',code:call.name==='state_inspect'?'receipt_not_available':'unsupported_test_operation'}}));
+response=await provider.generate({...request,history:[{toolCalls:response.toolCalls,toolResults:results}],continuation:response.continuation});
+console.log(JSON.stringify({stage:'continuation',text:response.text??null,toolCalls:response.toolCalls??[],callsUsed:provider.used}));
+if(!response.text?.trim()||response.toolCalls?.length)throw new Error('Model did not finish the tool continuation');

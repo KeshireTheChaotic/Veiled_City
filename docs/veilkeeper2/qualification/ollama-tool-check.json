@@ -1,0 +1,24 @@
+{
+  "model": "qwen3.5:4b",
+  "initial": {
+    "toolCalls": [
+      {
+        "id": "ollama:0:0",
+        "name": "state_inspect",
+        "arguments": {
+          "receipt_ref": "online-check"
+        }
+      }
+    ]
+  },
+  "nativeTestResult": {
+    "status": "blocked",
+    "code": "receipt_not_available"
+  },
+  "continuation": {
+    "text": "The online-check receipt is not available.",
+    "toolCalls": []
+  },
+  "callsUsed": 2,
+  "effectsCommitted": false
+}

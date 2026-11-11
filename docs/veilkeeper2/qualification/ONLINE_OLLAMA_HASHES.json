@@ -1,0 +1,16 @@
+{
+  "bot/scripts/veilkeeper2/online-qualification.mjs": "5907937198af226ca8550bdc1c23b7bf10a608d1f54a9b7fb9206a69cf1b7b02",
+  "bot/scripts/veilkeeper2/online-model-checks.mjs": "8bc86516a85dddd0cf43fc925ce3fb6d565d1ef6bd511ed5bacbda9b6ec1b0fa",
+  "bot/scripts/veilkeeper2/online-tool-check.mjs": "f2f682ff3b18c30224099ab0d5f23a2386a10623eea2b635ea3260c82ce41b1c",
+  "bot/src/v2/ollama-provider.js": "936ccbf98777dacca75fee3cf0476e0f5149ca1cf5b5c4222cb36c91bbf4949d",
+  "bot/src/v2/model-config.json": "91dd07073371b7bb98ec99a456dd5a3ec3683a0aaccf1086939f062025865627",
+  "bot/src/v2/native-start.js": "9712549ce6fe9505bf34bb2f4feb6f6b62b2501d08ddfc2ebfc7289441b9ee3c",
+  "bot/src/v2/model-gateway.js": "77ffbe3a4787a8cb81e5c0c024f7820f6a1b537f6486433f02b8855fd8817e3f",
+  "bot/src/v2/rehearsal.js": "3a514922a29f48f4b9d605b6f1cc047ecfee342d2aba54f5fbdc3dd6d7e56509",
+  "bot/src/v2/publication-queue.js": "6a17159fb96a8c6ecafb7304e377a92fffbe1c76c2e106661c5daf7b4489e2fc",
+  "bot/src/v2/prose-material-review.js": "75d4657b2d017f718867cb58f7c6a8bf72f805f50ada5b536cbd3ba5cf0fd6a6",
+  "docs/veilkeeper2/qualification/ollama-npc-viewpoint-probe.json": "71aa1d3ec27e7e0da9a3cef37f647671b9382a5631350579eb4163745845ffa0",
+  "docs/veilkeeper2/qualification/ollama-online-checks.json": "1ce0e8c7c88ef72944b22fa9daee300f134fc0bd0b903f0496a0f33725331ed4",
+  "docs/veilkeeper2/qualification/ollama-prompt-probe.json": "9d7d3ee3a3b9131de252fc813291ee802f6b38d2b8a71134491bf324e684bed7",
+  "docs/veilkeeper2/qualification/ollama-tool-check.json": "7b57266e2a2e651cb0a7bd296b3f8b9f430cbfd7e2c8d9d711a6c9c51dda697c"
+}

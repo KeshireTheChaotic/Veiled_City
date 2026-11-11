@@ -1,0 +1,24 @@
+{
+  "model": "qwen3.5:4b",
+  "callsUsed": 3,
+  "results": [
+    {
+      "utterance": "Interesting.",
+      "text": "\"Only if you can produce proof that the light beneath that door has a purpose beyond decoration. I don't have a budget for nothing.\"",
+      "toolCalls": [],
+      "elapsedMs": 743
+    },
+    {
+      "utterance": "I can't afford this rent.",
+      "text": "\"Rent? You mean for a space you haven't even entered, sir?\" I adjust my uniform, eyes fixed on the rain-streaked glass. \"There's no invoice, and there's no lease to break up, let alone pay off.\"",
+      "toolCalls": [],
+      "elapsedMs": 927
+    },
+    {
+      "utterance": "What is behind the locked office door?",
+      "text": "\"That's just a trick of the lamplight, sir.\"",
+      "toolCalls": [],
+      "elapsedMs": 583
+    }
+  ]
+}

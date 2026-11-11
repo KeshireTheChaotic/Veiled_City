@@ -1,0 +1,64 @@
+{
+  "variant": "compact-probe",
+  "model": "qwen3.5:4b",
+  "callsUsed": 3,
+  "results": [
+    {
+      "id": "C01",
+      "input": "Interesting.",
+      "output": "Mercer's curiosity isn't buying him rent. If he wants the room, he needs to offer something the clerk will accept.",
+      "metrics": {
+        "traceId": "17463141-3ead-4c45-8a64-e95a581cba06",
+        "modelCalls": 1,
+        "toolCalls": 0,
+        "elapsedMs": 880.5513,
+        "usage": {
+          "inputTokens": 1089,
+          "outputTokens": 27
+        }
+      },
+      "elapsedMs": 883,
+      "privateBodyRead": false,
+      "packetLeaked": false,
+      "sent": false
+    },
+    {
+      "id": "C02",
+      "input": "I can't afford this rent.",
+      "output": "Mercer leans back in the creaking chair, watching the rain blur against the window as the clerk shifts a stack of ledgers. \"The rate's fixed for the week,\" he says, tapping the desk, though his eyes flick to the dim hallway where shadows gather near the locked office door. \"But I could work with you on the deposit if we can get somewhere closer to the front.\"",
+      "metrics": {
+        "traceId": "10ad95d2-bdd7-485b-92e8-759484e24920",
+        "modelCalls": 1,
+        "toolCalls": 0,
+        "elapsedMs": 1365.0003000000002,
+        "usage": {
+          "inputTokens": 1092,
+          "outputTokens": 82
+        }
+      },
+      "elapsedMs": 1365,
+      "privateBodyRead": false,
+      "packetLeaked": false,
+      "sent": false
+    },
+    {
+      "id": "C05",
+      "input": "What is behind the locked office door?",
+      "output": "Mercer asks what is behind the locked office door. The clerk checks her knowledge and responds, \\\"It's usually just the night manager's private office,\\\" or \\\"That part of the floor tends to be... quieter,\\\" but she leaves the door locked and offers no key.",
+      "metrics": {
+        "traceId": "3f354f13-4e1c-4fc3-964e-451a871eeba3",
+        "modelCalls": 1,
+        "toolCalls": 0,
+        "elapsedMs": 1127.8769000000002,
+        "usage": {
+          "inputTokens": 1092,
+          "outputTokens": 56
+        }
+      },
+      "elapsedMs": 1128,
+      "privateBodyRead": false,
+      "packetLeaked": false,
+      "sent": false
+    }
+  ]
+}
