@@ -1,6 +1,10 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11: R4 conversational work paused at the owner-requested threshold, **34% primary / 98% weekly**. **All R0-R8 phases remain incomplete.** Computer use remains forbidden; no major-phase merge/push or production change. Latest source and test bytes are recorded in R4_CONVERSATION_HASHES.json.
+Checkpoint 2026-11-11: paused after the owner-requested 27B rerun. All eight requested cases finished; seven returned prose and one failed after90018ms. Runtime code/configuration unchanged. **All R0-R8 phases remain incomplete.** Computer use remains forbidden. See 27B_RESPONSE_LOG_20261111_202433.md plus matching JSON/CSV.
+
+## Latest owner-requested 27B rerun — complete; paused
+
+The owner explicitly requested one repeat of the27B test, a log of responses and times, then pause. Completed the eight development scenarios with the current feasibility/addressing prompt, qwen3.5:27b, thinking=true, maxOutputTokens4096, timeout90000ms, one call per case and zero retries. Unique artifact: .reports/conversation-27b-owner-rerun-20261111-202433/result.json; console capture alongside it. Exec29251 finished exit1 because one case failed; it is terminal, not a running evaluation. Seven responses took41490-78582ms, median60477ms; bargain failed without prose at90018ms. The full log, source hashes and model metadata are committed in matching Markdown/JSON/CSV files under docs/veilkeeper2. Export validation confirmed all eight rows, exact response text and millisecond values. No native suite was rerun and no runtime/config/schema change, Discord send, cloud inference, major-phase push or production action occurred. This test does not qualify R4 or human/live quality. Do not rerun it unchanged; wait for explicit owner resume.
 
 ## Conversational GM work resumed — 2026-11-11
 
