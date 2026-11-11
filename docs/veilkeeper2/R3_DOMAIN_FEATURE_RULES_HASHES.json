@@ -1,0 +1,39 @@
+{
+  "node": "v26.13.0",
+  "tests": 6,
+  "passed": 6,
+  "duration_ms": 68.4912,
+  "initial": {
+    "tests": 6,
+    "passed": 5,
+    "failed": 1,
+    "reason": "Tamper fixture assumed a case-sensitive domain key instead of the actual catalog domain; corrected."
+  },
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/domain-feature-rules.js",
+      "sha256": "bf0e1416d832c67d5b9963e0ff21541c6a7ee16b5010c5a201f2534be277ddfa"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-roll-source.js",
+      "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c"
+    },
+    {
+      "file": "bot/src/v2/rules/domain-card-catalog.js",
+      "sha256": "7aa52821655c224fade244c333f62c6c7aa5109eec9a5f9b05c72fb630a74477"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-domain-feature-rules.test.mjs",
+      "sha256": "3b86da25ed254798af3c5437ed81ca7a1786f91c6dd709eae13878127171a78e"
+    },
+    {
+      "file": "content/CARDS/domain_cards.json",
+      "sha256": "611d7fa95e037c3458522935fa1baee1b08c9bed0a9e0bfc0fde1be5030cd2d7"
+    }
+  ],
+  "expanded_source_guard_case": {
+    "tests": 1,
+    "passed": 1,
+    "duration_ms": 69.8598
+  }
+}

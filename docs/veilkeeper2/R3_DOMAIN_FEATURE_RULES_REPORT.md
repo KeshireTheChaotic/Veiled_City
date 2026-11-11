@@ -1,0 +1,17 @@
+# R3 — source-owned domain feature requirements
+
+Implementation slice complete. All R0–R8 acceptance gates remain incomplete.
+
+Added domain-feature-rules.js with the actual packaged Jinx baseline definition and pure consequence planning. It qualifies current owned/active card and explicit subclass Spellcast trait through the existing native source reader, then checks exact card metadata/text. Target is an adversary within Close; Difficulty comes from the target adversary; usage is one per actor/target/scene; success plans Vulnerable until that target succeeds on an action against caster or ally. Failure plans no condition. Active-card recall cost1 remains distinct from printed activation costs. Definitions are deeply frozen, source-hashed and baselineOnly, activationAuthorized:false/effectsCommitted:false.
+
+This is a rules definition, not readiness or a generic effect patch. It explicitly requires current control/card/target/presence/range/difficulty, native usage, applicable house rules, complete owner-confirmed action terms and native execution readiness. It does not resolve those facts, consume usage, spend costs, roll dice or apply conditions. Outcome planning takes a separately verified success/failure; that boolean does not itself prove a roll. Unsupported cards, changed text or unknown metadata hold rather than being interpreted as unrestricted effects. This module is not root-composed or AI-callable.
+
+Six fresh native checks passed, Node v26.13.0, 68.4912 ms. Initial 5/6 had a fixture error assuming a case-sensitive domain key; the fixture now uses the actual catalog domain. The final run followed code changes adding a closed card shape and explicit actor/target/scene usage scope. The expanded changed-source case also rejects new activation-cost metadata with a fresh hash; only that changed case was rerun (69.8598 ms). Static import closure selects only the new test; unchanged passing tests were not rerun. Hashes/affected list accompany this report.
+
+Coverage: actual packaged constraints/duration/target Difficulty source, subclass-dependent trait, recall versus activation cost, immutable non-authorizing definitions, success/failure plans with no actor writes, unowned/inactive/unknown/stale sources, and changed printed range with a refreshed self-hash. The source definition is the current packaged content/CARDS/domain_cards.json Jinx entry; its exact hash is recorded. This is not independent full SRD parity, actual target/range/frequency validation, live Discord, inference or human approval evidence.
+
+Modified files: new native domain-feature-rules.js; r3-domain-feature-rules.test.mjs; this report and hashes/affected list. No state/schema/data migration, legacy retirement, production mutation, provider/Discord call or major-phase merge/push. Rollback removes an unused pure definition without changing stored gameplay.
+
+Known holds: remaining card definitions, house-rule override application, native target identity/knowledge/presence/range and usage proof/commit, complete action/cost/target confirmation, actual adjudication/readiness/activation, native effect duration from real target/ally events, root controller and full R0–R8 acceptance. Do not authorize Jinx from this definition or prior owner roll-choice evidence alone.
+
+Next exact R3 work: build full native action terms and actual target/usage/cost/readiness validation against these source requirements, bind explicit owner confirmation, then compose dice/Fear/settlement. Continue the full rebuild; computer use remains forbidden.
