@@ -1,0 +1,48 @@
+{
+  "node": "v26.13.0",
+  "tests": 44,
+  "passed": 44,
+  "focused": {
+    "tests": 14,
+    "duration_ms": 1378.9984
+  },
+  "dependencies": {
+    "tests": 30,
+    "duration_ms": 3027.9754
+  },
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "inputs": [
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "3e6b23a55631fc585fe725e4a913779a10b509b507d70e7690bcf7f348885def"
+    },
+    {
+      "file": "bot/src/v2/rules/condition-clear-history.js",
+      "sha256": "74e9e72ea24e2aba1928a627a1aabd1a5b82ce64b10f538b6336f09fbf4fe0c1"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-clear-history.test.mjs",
+      "sha256": "cbcb127fb8cb535df1364830d9e67a69c315ac3cb778586b43ef5bbd13eb1a79"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-legacy-condition-source.test.mjs",
+      "sha256": "3a36bcf6fa92da2de92c3e76dfb033ed81850b559fa487fbdbbc31b3b8513ae2"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-legacy-readonly-repository.test.mjs",
+      "sha256": "b30f1c7d3243e2040e156b6908a3da3817d994bf72fd2ffe0adff37d1b30522f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}

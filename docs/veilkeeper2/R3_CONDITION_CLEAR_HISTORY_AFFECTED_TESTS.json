@@ -1,0 +1,8 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r3-condition-clear-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-legacy-condition-source.test.mjs",
+  "bot/tests/veilkeeper2/r6-legacy-readonly-repository.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs"
+]
