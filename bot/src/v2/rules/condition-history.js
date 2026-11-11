@@ -180,6 +180,14 @@ function validateNativeCondition(db,guild,key){
   return Object.freeze({
     inspectPcCondition(guild,key){return db.withValidationSnapshot(()=>validateNativeCondition(db,guild,key));},
     inspectMixedCondition(guild,key){return db.withValidationSnapshot(()=>inspectMixedCondition(db,guild,key));},
-    inspectReactionEffect(guild,key){return db.withValidationSnapshot(()=>validateGroupReactionEffect(db,guild,key));}
+    inspectReactionEffect(guild,key){return db.withValidationSnapshot(()=>validateGroupReactionEffect(db,guild,key));},
+    inspectPcConditionWindow(guild,actor){return db.withValidationSnapshot(()=>{
+      if(typeof db.readPcConditionRefs!=='function')throw new Error('Complete native condition discovery required');
+      const listing=db.readPcConditionRefs(guild,actor);
+      if(listing?.complete!==true||!Array.isArray(listing.refs)||listing.refs.length>256||listing.refs.some(ref=>typeof ref!=='string'||!ref||ref.length>256)||new Set(listing.refs).size!==listing.refs.length)throw new Error('Complete native condition discovery required');
+      const conditions=listing.refs.map(ref=>validateNativeCondition(db,guild,ref));
+      if(conditions.some(row=>row.subject_key!==actor||row.actor_key!==actor))throw new Error('Exact native condition actor required');
+      return {family:'pc_native_condition',complete:true,refs:listing.refs,conditions};
+    });}
   });
 }

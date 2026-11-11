@@ -1,0 +1,5 @@
+[
+  "bot/tests/veilkeeper2/r3-condition-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-native-spellcast-conditions.test.mjs",
+  "bot/tests/veilkeeper2/r3-spellcast-condition-modifiers.test.mjs"
+]

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {conditionFixture,attachOwnerClear} from './helpers/condition-history-fixture.mjs';
 import {fileHash,hash} from './helpers/group-feature-history-fixture.mjs';
 import {LANES,FLASH,REGENT} from '../../src/v2/rules/group-feature-rules.js';
+import {createHistoricalConditionReader} from '../../src/v2/rules/condition-history.js';
 
 test('original active condition composes committed parent, owner dice/effect, ledger and exact source without writes',t=>{const f=conditionFixture(t),before=fileHash(f.file);assert.equal(f.readCondition().status,'active');assert.equal(f.readCondition().data.condition,'Vulnerable');assert.equal(f.readEffect().data.stress,1);assert.equal(fileHash(f.file),before);});
 test('All Lanes Stop original condition and later paid duration expiry compose without current owner state',t=>{for(const expired of [false,true]){const f=conditionFixture(t,{feature:LANES,stress:0,conditionName:'Movement limited',expired});assert.equal(f.readCondition().status,expired?'expired':'active');assert.equal(f.readCondition().data.cast_spotlight,1);}});
@@ -49,4 +50,9 @@ test('clearing a condition cannot hide broken original effect ancestry',t=>{
 });
 test('original active and cleared NPC conditions compose actual native failure and complete mixed-source ledger',t=>{
   for(const npcCleared of [false,true]){const f=conditionFixture(t,{area:true,npcFailure:true,npcCleared,ordinary:npcCleared,stress:0,conditionName:'Restrained'});const read=()=>f.reader.inspectMixedCondition('g',f.npcConditionRef);const c=read();assert.equal(c.status,npcCleared?'cleared':'active');assert.equal(c.data.target.kind,'npc');assert.equal(c.data.cause.spellcast_disadvantage,true);f.db.exec("UPDATE mutation_ledger SET after_json='[]' WHERE id=20");assert.throws(read,/mutation_source/);}
+});
+test('complete condition window uses one actual SQLite snapshot across discovery and an external WAL source change',t=>{
+  const f=conditionFixture(t,{area:true,stress:0,conditionName:'Restrained'});f.db.exec('PRAGMA journal_mode=WAL');let changed=false;
+  const reader=createHistoricalConditionReader({...f.repo,readPcConditionRefs(guild,actor){const refs=f.repo.readPcConditionRefs(guild,actor);if(!changed){changed=true;f.db.exec("UPDATE world_events SET status='revoked' WHERE event_key='request:source'");}return refs;}});
+  const window=reader.inspectPcConditionWindow('g','pc');assert.equal(window.family,'pc_native_condition');assert.equal(window.complete,true);assert.deepEqual(window.refs,[f.conditionRef]);assert.equal(window.conditions[0].status,'active');assert.equal(f.db.prepare("SELECT status FROM world_events WHERE event_key='request:source'").get().status,'revoked');assert.throws(()=>reader.inspectPcConditionWindow('g','pc'),/actual_owner_reaction/);
 });

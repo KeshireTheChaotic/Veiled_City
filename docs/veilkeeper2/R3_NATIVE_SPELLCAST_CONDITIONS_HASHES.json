@@ -1,0 +1,82 @@
+{
+  "node": "v26.13.0",
+  "distinct_tests": 26,
+  "passed": 26,
+  "new_integration": {
+    "tests": 5,
+    "passed": 5,
+    "duration_ms": 2739.7642
+  },
+  "remaining_dependencies": {
+    "tests": 21,
+    "passed": 21,
+    "duration_ms": 6923.4474,
+    "log": ".reports/r3-native-spellcast-conditions-dependencies-20261111.txt"
+  },
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/spellcast-condition-modifiers.js",
+      "sha256": "0eaa1f14ceb35f65fa8acf92faafd31891f11219e376854db327a5343b3dbad2"
+    },
+    {
+      "file": "bot/src/v2/rules/condition-history.js",
+      "sha256": "9930746ab9fadb3bdfd40a6aa7630ba075325f8339f5fd4c440614f5b1593764"
+    },
+    {
+      "file": "bot/src/v2/rules/roll-adjudications.js",
+      "sha256": "59713ae9c7994b613542ff314bce2ad23b5a6d81acec572063746d4ea0e079fa"
+    },
+    {
+      "file": "bot/src/v2/rules/roll-terms.js",
+      "sha256": "2ba7b4791fe1f07c5e7c39463aaea5c8780895e17619face6d22831c6698e0a8"
+    },
+    {
+      "file": "bot/src/v2/rules/ordinary-roll-preparation.js",
+      "sha256": "8accf18ca477d64bed53a09a42445be1aa7f0f479d2f8b8c0aeaa0dc93ea44be"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-roll-source.js",
+      "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c"
+    },
+    {
+      "file": "bot/src/v2/rules/domain-card-catalog.js",
+      "sha256": "7aa52821655c224fade244c333f62c6c7aa5109eec9a5f9b05c72fb630a74477"
+    },
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52"
+    },
+    {
+      "file": "bot/src/v2/canonical-actor-readers.js",
+      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a"
+    },
+    {
+      "file": "bot/src/v2/source-authority.js",
+      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-spellcast-conditions.test.mjs",
+      "sha256": "36d04b7300f7c80d3ec97781881556261d2fa1eb900348fcae165242df219141"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-history.test.mjs",
+      "sha256": "ec7f9f1755049874589701f540428b088763516064290beccfec4136fca27e98"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-spellcast-condition-modifiers.test.mjs",
+      "sha256": "b29f59867e96755574d57a684e652647e55df3ed32fab04f81bcbb988b742be4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/condition-history-fixture.mjs",
+      "sha256": "d5ac536c232eab38665fac84ff34e165bef6fdfb5e7972c7c539b205ff48e966"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/group-feature-history-fixture.mjs",
+      "sha256": "5f17d425abdc484a8335ee8919fd8e2ee3614b38f1fc3be44b2d75ca2ab2afa1"
+    },
+    {
+      "file": "content/CARDS/domain_cards.json",
+      "sha256": "611d7fa95e037c3458522935fa1baee1b08c9bed0a9e0bfc0fde1be5030cd2d7"
+    }
+  ]
+}
