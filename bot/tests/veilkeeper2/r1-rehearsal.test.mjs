@@ -114,3 +114,12 @@ test('extra lookup is revalidated after tool continuation and never grants hidde
   }});
   await assert.rejects(f.app.respond(f.event),/authority/);assert.deepEqual(f.textReads,['rumor']);
 });
+
+test('native segment review and local repair preserve one inference and never grant publication',async()=>{
+  const f=fixture({providerResult:()=>({text:'Rain taps the glass.\n\nYou agree to pay.\n\nThe clerk waits.'})}),turn=await f.app.respond(f.event);
+  const review=f.app.reviewPublication(turn.publication.id);assert.equal(review.heldCount,1);assert.equal(f.requests.length,1);
+  const fixed=f.app.repairPublication(turn.publication.id,review.segments[1].id,'The clerk offers an alternative.');
+  assert.equal(fixed.heldCount,0);assert.equal(fixed.status,'requires_semantic_review');assert.equal(fixed.sent,false);assert.equal(f.requests.length,1);
+  assert.deepEqual(Object.keys(f.app.capabilities(turn.sourceHandle)),['context_read','action_propose','state_inspect','knowledge_propose']);
+  f.channel.revision='2';assert.throws(()=>f.app.reviewPublication(turn.publication.id),/authority/);
+});

@@ -1,0 +1,12 @@
+[
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r1-rehearsal.test.mjs",
+  "bot/tests/veilkeeper2/r1-scene-store.test.mjs",
+  "bot/tests/veilkeeper2/r2-private-planner.test.mjs",
+  "bot/tests/veilkeeper2/r4-prose-material-review.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs"
+]

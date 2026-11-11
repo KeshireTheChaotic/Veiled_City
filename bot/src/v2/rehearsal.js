@@ -8,7 +8,7 @@ import {createRecallPlanner} from './recall-planner.js';
 import {createPrivatePlanner} from './private-planner.js';
 
 /** Explicit no-send composition. Providers/readers are native dependencies, never model-supplied. */
-export function createRehearsal({readers,records,provider,selectContext=()=>[],rules=[],knowledge:knowledgeConfig=null,recall:recallConfig=null,planning=null}){
+export function createRehearsal({readers,records,provider,selectContext=()=>[],rules=[],knowledge:knowledgeConfig=null,recall:recallConfig=null,planning=null,proseReview=null}){
   if(typeof selectContext!=='function')throw new TypeError('Native context selector required');
   const authority=createSourceAuthority(readers),journal=createMemoryJournal();
   const context=createContextAuthority({sourceAuthority:authority,records:records??knowledgeConfig?.store,readActor:readers.readActor});
@@ -38,5 +38,5 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
     return Object.freeze({publication,sourceHandle:handle,metrics:Object.freeze({traceId,modelCalls,toolCalls,elapsedMs,usage})});
   }
   return Object.freeze({respond,plan,inspectPlan:handle=>{if(!planner)throw new Error('Private planner not installed');return planner.inspect(handle);},
-    inspectPublication:publications.inspect,capabilities:kernel.bind,describe:kernel.describe});
+    inspectPublication:publications.inspect,reviewPublication:publications.review,repairPublication:publications.repair,capabilities:kernel.bind,describe:kernel.describe});
 }

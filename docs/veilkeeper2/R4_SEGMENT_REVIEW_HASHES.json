@@ -1,0 +1,15 @@
+{
+  "bot/src/v2/prose-material-review.js": "af2e351f191f56ad2215b9587dbdce9430007a7e28994e3a7417fe34e5086656",
+  "bot/src/v2/publication-queue.js": "c0a7338f25c7658fae19338ae07b1b6e609324a12132a5cf7e55c96565a0f287",
+  "bot/src/v2/rehearsal.js": "3a514922a29f48f4b9d605b6f1cc047ecfee342d2aba54f5fbdc3dd6d7e56509",
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs": "bd810a148828bf8a7e961fa728d44561f18255a45c2df586e6980a0ced874a10",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs": "da476e2a0b8274fa839c5e0abb458a15abd7af050fea91b84f1ee383b6d7ec0e",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r1-rehearsal.test.mjs": "cabfaafc79d9fa6090a96549fb1d5694740712d5df7bca17267bce5aa8f52830",
+  "bot/tests/veilkeeper2/r1-scene-store.test.mjs": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c",
+  "bot/tests/veilkeeper2/r2-private-planner.test.mjs": "4d46fb01bd9c7cb649def7e2b2ec88790e5741183ffa960e15e6e58fecddaf0b",
+  "bot/tests/veilkeeper2/r4-prose-material-review.test.mjs": "d6fe770a9463086671bc001c05b55cfc3122fb557f87e1c96427bd8a1f36f014",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "8a95f4f7400855730fd8cabca9f00c0b256c044ac78c6f949dfd5d758868df96",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs": "8669827ed38c27d73d9799b2ca950ab2d440109a24b2030fc80c123166f490b2"
+}
