@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
+import {dualityRoll,d} from './dice.js';
 const decode=r=>r?JSON.parse(r.data):null;
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
@@ -66,6 +67,27 @@ export function openRollStore(filename=':memory:'){
     const advDice=input.advDice??[];if(!Array.isArray(advDice)||advDice.length!==(r.advantage===r.disadvantage?0:1)||advDice.some(v=>!Number.isSafeInteger(v)||v<1||v>6))throw new Error('Actual native contextual d6 required');
     return insert(c,q,'roll',input.id,{id:input.id,campaignId:c,sceneId:r.sceneId,requestRef:q,actorId:r.actorId,ownerUserId:r.ownerUserId,authenticated:true,origin:'owner_roll',hope:input.hope,fear:input.fear,...(r.termProof?{advDice:[...advDice],termHash:r.termProof.hash}:{})});
   });}
+  /** Native RNG is evaluated after persisted notice/Fear gates. The caller's check must
+   * prove full mechanical readiness; a recorded owner choice or card identity alone cannot do so. */
+  function generateOwnerRoll(c,q,input,{check,rng=d,readContinuation}={}){
+    if(!input||Object.keys(input).sort().join(',')!=='bindingHash,interactionId,ownerUserId'||!id(input.interactionId)||input.interactionId.length>200||!id(input.ownerUserId)||typeof input.bindingHash!=='string'||!/^[a-f0-9]{64}$/.test(input.bindingHash)||typeof check!=='function'||typeof rng!=='function')throw new Error('Native owner interaction binding required');
+    let continuation=null;
+    const current=()=>{check();if(continuation&&JSON.stringify(readContinuation(c,q))!==JSON.stringify(continuation))throw new Error('Original action continuation changed');};
+    return transact(current,()=>{
+      const r=request(c,q),notice=event(c,q,'notice'),p=publication(c,q),prior=event(c,q,'roll');
+      if(!r||r.ownerUserId!==input.ownerUserId||!r.termProof||!notice||p?.status!=='delivered'||p.id!==notice.publicationRef||p.response?.messageId!==notice.messageId||notice.termHash!==r.termProof.hash||p.requestHash!==hash(r))throw new Error('Exact published qualified owner request required');
+      if(prior){if(!prior.interactionId||!prior.interactionBindingHash||prior.requestHash!==hash(r)||prior.deliveryHash!==hash(notice))throw new Error('Saved owner dice need reconciliation; no reroll');return prior;}
+      const hold=fearHold(c,q);
+      if(hold&&(hold.campaignId!==c||hold.requestRef!==q||!id(hold.decisionRef)||!['held','cancelled','completed'].includes(hold.status)))throw new Error('Native Fear state requires reconciliation');
+      if(hold?.status==='held')throw new Error('Native Fear interruption holds this owner roll');
+      if(hold?.status==='completed'){
+        if(typeof readContinuation!=='function')throw new Error('Current native original-action continuation required');continuation=hold.continuation;
+        if(!continuation||JSON.stringify(readContinuation(c,q))!==JSON.stringify(continuation))throw new Error('Original action continuation changed');
+      }
+      const result=dualityRoll({modifier:r.modifier,experience:r.experience,advantage:r.advantage,disadvantage:r.disadvantage},rng);
+      return insert(c,q,'roll',`owner-roll:${input.interactionId}`,{id:`owner-roll:${input.interactionId}`,campaignId:c,sceneId:r.sceneId,requestRef:q,actorId:r.actorId,ownerUserId:r.ownerUserId,authenticated:true,origin:'owner_roll',hope:result.hope,fear:result.fear,advDice:result.adv_dice,termHash:r.termProof.hash,interactionId:input.interactionId,interactionBindingHash:input.bindingHash,requestHash:hash(r),deliveryHash:hash(notice),sourceRef:r.sourceRef,sourceRevision:r.sourceRevision});
+    });
+  }
   function holdForFear(c,q,decisionRef,{check}){return transact(check,()=>{
     if(typeof decisionRef!=='string'||!decisionRef||!request(c,q)||!event(c,q,'notice')||event(c,q,'roll'))throw new Error('Unrolled delivered native request required for Fear hold');
     const old=fearHold(c,q);if(old){if(old.decisionRef!==decisionRef)throw new Error('Immutable Fear hold conflict');return old;}
@@ -88,7 +110,7 @@ export function openRollStore(filename=':memory:'){
     if(JSON.stringify(readCompletion(c,q))!==JSON.stringify(completion)||JSON.stringify(readContinuation(c,q))!==JSON.stringify(continuation))throw new Error('Original action continuation changed');
     const after={...row,status:'completed',completion,continuation};db.prepare('UPDATE vk3_roll_fear_holds SET data=? WHERE campaign=? AND request=?').run(JSON.stringify(after),c,q);return after;
   });}
-  return Object.freeze({createRequest,claimNotice,recordNoticeResponse,markNoticeUncertain,readNoticePublication:publication,acknowledgeDelivery,recordOwnerRoll,holdForFear,releaseCancelledFear,releaseCompletedFear,readFearHold:fearHold,
+  return Object.freeze({createRequest,claimNotice,recordNoticeResponse,markNoticeUncertain,readNoticePublication:publication,acknowledgeDelivery,recordOwnerRoll,generateOwnerRoll,holdForFear,releaseCancelledFear,releaseCompletedFear,readFearHold:fearHold,
     readResultForRequest:(c,q)=>event(c,q,'roll'),
     readRequest(c,q){const r=request(c,q);return r?{...r,status:event(c,q,'notice')?'awaiting_player_roll':'awaiting_notice'}:null;},
     readDelivery(c,id){const r=db.prepare("SELECT request FROM vk3_roll_events WHERE campaign=? AND id=? AND kind='notice'").get(c,id);return r?event(c,r.request,'notice'):null;},

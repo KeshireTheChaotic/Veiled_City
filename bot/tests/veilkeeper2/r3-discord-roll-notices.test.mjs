@@ -1,18 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';
-import {nativeSpellcastFixture} from './helpers/native-spellcast-fixture.mjs';
+import {PermissionsBitField} from 'discord.js';
+import {nativeRollNoticeFixture as fixture} from './helpers/native-roll-notice-fixture.mjs';
 import {attachOwnerClear} from './helpers/condition-history-fixture.mjs';
-import {createDiscordRollNotices,ownerRollNoticeContent} from '../../src/v2/discord-roll-notices.js';
-
-function fixture(t){
-  const f=nativeSpellcastFixture(t);f.decision.modifierRefs=f.modifiers.previewMandatoryRefs(f.source,f.decision,f.locator);f.adjudications.save(f.source,f.decision,{check:f.check,spellcast:f.locator});const request=f.prepare().commitRequest(f.source,'pc',{adjudication_ref:'spellcast'});
-  const sent=[],messages=new Map(),members=new Map(['bot','historical-owner'].map(id=>[id,{id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}])),original={id:'new-attempt',guildId:'g',channelId:'private',author:{id:'historical-owner',bot:false},content:f.source.text,webhookId:null,system:false};let onSend=null,readbackFail=false;
-  const channel={id:'private',guildId:'g',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),messages:{async fetch({message}){if(message==='new-attempt')return original;if(readbackFail)throw new Error('Readback temporarily unavailable');const row=messages.get(message);if(!row)throw new Error('Message missing');return row;}},async send(body){const result={...structuredClone(body),id:'notice-'+(sent.length+1),guildId:'g',channelId:'private',author:{id:'bot',bot:true},webhookId:null,system:false};sent.push(result);messages.set(result.id,result);if(onSend)await onSend(result);return result;}};
-  const guild={id:'g',get memberCount(){return members.size;},members:{list:async()=>members},roles:{fetch:async()=>new Map()},channels:{fetch:async()=>channel}},client={user:{id:'bot'},guilds:{fetch:async()=>guild}};
-  const publisher=()=>createDiscordRollNotices({client,sceneStore:f.scenes,sourceAuthority:f.authority,rollStore:f.rolls,preparation:f.prepare()});
-  return {...f,request,sent,messages,members,original,publisher,onSend(fn){onSend=fn;},failReadback(value){readbackFail=value;},get rolls(){return f.rolls;},reopen(){f.reopenRolls();f.reopen();}};
-}
+import {ownerRollNoticeContent} from '../../src/v2/discord-roll-notices.js';
 test('native roll notice publishes exact qualified stakes/odds once to its actual source audience',async t=>{
   const f=fixture(t),before=f.actions.readHope('g','pc'),notice=await f.publisher().publish(f.source,f.request.id);
   assert.equal(f.sent.length,1);assert.equal(f.sent[0].content,ownerRollNoticeContent(f.request));assert.match(f.sent[0].content,/Disadvantage applies/);assert.doesNotMatch(f.sent[0].content,/native-only-condition-canary/);assert.deepEqual(f.sent[0].allowedMentions,{parse:[]});assert.equal(f.sent[0].enforceNonce,true);

@@ -1,0 +1,168 @@
+{
+  "node": "v26.13.0",
+  "distinct_tests": 275,
+  "passed": 275,
+  "affected_run": {
+    "tests": 275,
+    "passed": 275,
+    "duration_ms": 57972.1368,
+    "test_concurrency": 4,
+    "log": ".reports/r3-owner-roll-choices-dependencies-20261111.txt"
+  },
+  "expanded_owner_gate_case": {
+    "tests": 1,
+    "passed": 1,
+    "duration_ms": 2008.9472
+  },
+  "scope": "Native observation, persistence and atomic RNG primitive; not feature activation/readiness, live SDK/human approval or complete owner workflow.",
+  "inputs": [
+    {
+      "file": "bot/src/v2/discord-owner-roll-choices.js",
+      "sha256": "bff32151486a1a58ef7335fca4fadab6aa90366b174c2a2053a42153a12ed1f0"
+    },
+    {
+      "file": "bot/src/v2/component-decision-store.js",
+      "sha256": "00a12ccc82129715018ccdda446bd9daccf9246b0bce8fc290246a14c6d64513"
+    },
+    {
+      "file": "bot/src/v2/rules/roll-store.js",
+      "sha256": "6ecadfc7f5facc4cc344d338a35f3d1940fe0c875d17970978b6a06b6b2c793f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/native-roll-notice-fixture.mjs",
+      "sha256": "a961ec00bac83e7f1850f2d7a97cd233dc098f19847d7310551a22311f61514f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/native-spellcast-fixture.mjs",
+      "sha256": "ca3e65cf2579aa017dbca9ccec36bbe44c6154b492663cabb616e66586fee900"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs",
+      "sha256": "62ee35c453a94b5c0028cf08be10b8f0f44095b3e60dc40ce4dbce43553d606a"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-receipt-recall.test.mjs",
+      "sha256": "8f6e2c708c6189ae24ba0ac9948aef1be3091f0f24b8474c3a3fd390d10e12b8"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-authorship.test.mjs",
+      "sha256": "ea757b4b52f17acd2f60ebe6b025516678777ef8942efe537588c3cad130fdf6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+      "sha256": "5ebaf1688762c67c44ff0164ab46e0709cdd3312069db9cc45f3a4502b480a21"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+      "sha256": "add83da2ea2d431175a7fd490a5f3cd898d54b6b931643b65aba721eaa460374"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-component-decision-store.test.mjs",
+      "sha256": "c022a512e93ce555a607b6991695843c356ed69d5aff2d04294b1a75007fea4c"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-component-outcome-chain.test.mjs",
+      "sha256": "9bbf5a43a547b1339035ffc7fc8b1196a02dd22cd250df9e8e647840f1cc652f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "9e4d17ae28da2fbbb195ac7c507195e19bc9b2e2ec3a2d32097585a44f105d19"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs",
+      "sha256": "ee5d743edda4f0c6a8fe61fd7e61aec7f5a6ad96a03a9b0c9a59b655d513ef31"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs",
+      "sha256": "5ebcb326dbdba6af47004dd8d617c87538615ad959685f83de22a32d2d81613d"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-discord-roll-notices.test.mjs",
+      "sha256": "fac3ef042bac00178cb9ba2863219ebf396b6cee01c5fdc666abf7218fff1954"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-fear-concurrency.test.mjs",
+      "sha256": "753e2dd99d0690beb0dbe2a0cb8594456da7ce432f06bb236464c063bcdb09ed"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs",
+      "sha256": "d26d2a09d5192b98043abd6aab395643f04a80faf93e32d79761655b6175ceef"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-fear-durability.test.mjs",
+      "sha256": "6918a970c605b00e0a7e9e7e609514da3379ed8ac3801ca60aac75f59ffe14b0"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-fear-opportunity-reader.test.mjs",
+      "sha256": "640bf99d3b7be9cf726df9b4be9bf5246fcc8376955dd8f908e41a00fd8098e4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-spellcast-conditions.test.mjs",
+      "sha256": "f6915103525a177147a14952ef98f4babeefa1363518dd5900dee86340db4823"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-owner-roll-choices.test.mjs",
+      "sha256": "6ac51cfdc2ea58590d86652d0dc77fc7f21e5089e9e51331634ea287b012c1da"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-qualified-fear-continuation.test.mjs",
+      "sha256": "02a200a6a16b1cb08f30d32d37b05454a890060ea2d9347e9a391b328f59c2cf"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-action.test.mjs",
+      "sha256": "998f1f2140914c59b0a55467827b2e65d519030d0229d7b3c5b2555687adedd6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-lifecycle.test.mjs",
+      "sha256": "cef2e2d7bb7f710d514ded6c863a20a27955069aa69510c989383a9fdca564c7"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-preparation.test.mjs",
+      "sha256": "cda2e99d80aa538e54054213c73909d90f3801428372f79e87ac24dd646ac377"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-store.test.mjs",
+      "sha256": "8d3d934f17e78ab77c216a7e787422728c863c9a75f5f90f4f021ea05242e2f7"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-terms.test.mjs",
+      "sha256": "1cb069a8b8608a3ecb741450ca88f0f304a8ee0e4b888961be0b8d435595ddcc"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "81265e5953a3622bd4295e86933f2dc9ec624ea0edc5c83106bfb89e780a28a4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-session-attendance.test.mjs",
+      "sha256": "c3c65e2e71ab6de43adc25491f8042a2a1cd243e0e5b2244d539ea0e231fa081"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}
