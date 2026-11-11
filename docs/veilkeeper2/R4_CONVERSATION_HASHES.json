@@ -8,7 +8,7 @@
     },
     {
       "path": "bot/src/v2/conversation-instructions.js",
-      "sha256": "3be28fdfa987fa2029478f032215201b430707b78c6b985f3f09c1a9f995fb8f"
+      "sha256": "b2b6e153a4c5e8205cef073d1b63cf9f977e004e6c8a151c23eb756b423c4416"
     },
     {
       "path": "bot/src/v2/model-gateway.js",
@@ -24,7 +24,7 @@
     },
     {
       "path": "bot/src/v2/prose-material-review.js",
-      "sha256": "f02f2c5ce07eef007e1e7357795fb498a92baac8eb868cbb8256a009caf3d447"
+      "sha256": "6e37773e3f0080ab095d04a8b8fe8217d70212fdcb12a62aec576b9d5b7bbd8c"
     },
     {
       "path": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
@@ -92,7 +92,7 @@
     },
     {
       "path": "bot/tests/veilkeeper2/r4-conversation-path.test.mjs",
-      "sha256": "4dd5a72bd6081740ed39154921c05d3dc273e6bf5d6896bf3c227ecb0b0d4c79"
+      "sha256": "c6a459b5c26b04e9d4d08c91f70919d43d5e55bfe99921387e0dfd5284887fd1"
     },
     {
       "path": "bot/tests/veilkeeper2/r4-ollama-thinking.test.mjs",
@@ -160,15 +160,15 @@
     },
     {
       "path": "docs/veilkeeper2/R4_CONVERSATION_REPORT.md",
-      "sha256": "1aa48bfb95a8c40e9b518d29e7a6aed80386ea6a7bdea305ffeb3674bb20d819"
+      "sha256": "6835c5031538c957d05dd4b12e722a9393ae63468e8ba6a8652517a1cb7f9e10"
     },
     {
       "path": "docs/veilkeeper2/R4_CONVERSATION_REVIEW.md",
-      "sha256": "c2423bd5135a0b2a4870f2a8f5115b63579a78cd6edd183d2eeee1acda4a4a5a"
+      "sha256": "167617a55d78ab76c441de3c9eaeb810a3edf61ae02d97e4a1c6abad2269d624"
     },
     {
       "path": "docs/veilkeeper2/R4_CONVERSATION_MODEL_EVIDENCE.json",
-      "sha256": "bc76241a1380b565e8a6204f5affea2d9f34b61b7ddb67aea2f0d9165b263c10"
+      "sha256": "9785707654f8c98958fad22c8ebcafb2d158696223294237ca9acbd305db8829"
     },
     {
       "path": "docs/veilkeeper2/R4_CONVERSATION_AFFECTED_TESTS.json",
@@ -176,7 +176,7 @@
     },
     {
       "path": "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json",
-      "sha256": "4f5f60633426a99d9a693e30e60f69dbd1d1faaba989bcc1c04f1004a21506e0"
+      "sha256": "ec07941be81b0a3f107cc08d815d0bdde9c59f0d81be5586ed30bc1208396244"
     }
   ],
   "nativeValidation": {
@@ -185,10 +185,10 @@
     "tests": 185,
     "pass": 185,
     "fail": 0,
-    "durationMs": 29083.5922,
+    "durationMs": 28508.8545,
     "concurrency": 4,
-    "log": ".reports/r4-conversation-addressing-tests-20261111.txt",
-    "logHash": "9d3ad14bd2662b3cbce00d5803ea8f504c22ccb5a2d1c789277551fc94d0410d",
+    "log": ".reports/r4-conversation-feasibility-tests-20261111.txt",
+    "logHash": "f9924f5ad2f2efd45aff4178e5176d310fdf4bc84f8cdad57d5a377fc046687e",
     "command": "node --test --test-concurrency=4 <every path in R4_CONVERSATION_AFFECTED_TESTS.json>"
   },
   "migration": {

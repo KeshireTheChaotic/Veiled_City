@@ -1,5 +1,5 @@
 {
-  "head": "d598b04ea76f3382422d62e9c399a6d854428c73",
+  "head": "cc98a24d908e361ebdc7ad5d14ba067c9ad26dfb",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -610,14 +610,14 @@
     },
     {
       "file": "bot/src/v2/conversation-instructions.js",
-      "sha256": "3be28fdfa987fa2029478f032215201b430707b78c6b985f3f09c1a9f995fb8f",
+      "sha256": "b2b6e153a4c5e8205cef073d1b63cf9f977e004e6c8a151c23eb756b423c4416",
       "reachable": true,
       "exports": [
         {
           "line": 2,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export const GM_CONVERSATION_INSTRUCTIONS=`You are Veilkeeper, an inventive, impartial tabletop GM. Respond to the current player message, using only the audience-scoped scene notes.\n\nPlay independent NPCs and the surroundings. NEVER write the player's side: no new PC movement, gesture, posture, wor"
+          "text": "export const GM_CONVERSATION_INSTRUCTIONS=`You are Veilkeeper, an inventive, impartial tabletop GM. Respond to the current player message, using only the audience-scoped scene notes.\r\n\r\nPlay independent NPCs and the surroundings. NEVER write the player's side: no new PC movement, gesture, posture, w"
         }
       ],
       "imports": [],
@@ -2616,7 +2616,7 @@
     },
     {
       "file": "bot/src/v2/prose-material-review.js",
-      "sha256": "f02f2c5ce07eef007e1e7357795fb498a92baac8eb868cbb8256a009caf3d447",
+      "sha256": "6e37773e3f0080ab095d04a8b8fe8217d70212fdcb12a62aec576b9d5b7bbd8c",
       "reachable": true,
       "exports": [
         {

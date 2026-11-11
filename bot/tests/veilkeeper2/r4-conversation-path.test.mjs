@@ -36,7 +36,7 @@ test('source revocation still rejects a fluent conversation draft',async()=>{
 const review=createProseMaterialReview({readControlledNames:()=>['Mira','Rook'],readIndependentSpeakers:()=>['Iona','Venn']});
 const audience={campaign:'c',scene:'s',recipients:['u']};
 test('observed unsupported PC and proxy blocking and emotion are held; harmless siblings survive',async()=>{
-  for(const text of ['You kneel beside the puddle.','You stand back up.','You step forward, crossing your arms.','Mira leans over the counter.','Rook nods.','Mira looks at the door.','You are frustrated.']){
+  for(const text of ['You crouch to eye level with the puddle.','You kneel beside the puddle.','You stand back up.','You step forward, crossing your arms.','Mira leans over the counter.','Rook nods.','Mira looks at the door.','You are frustrated.']){
     const result=review.review(text+'\n\nRain taps the glass.',audience);
     assert.equal(result[0].status,'withheld',text);assert.equal(result[1].status,'screened',text);
   }
