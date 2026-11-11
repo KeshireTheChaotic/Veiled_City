@@ -1,5 +1,5 @@
 {
-  "head": "6b51d6829a15b59990f002a72ec15ac8aa1ee0be",
+  "head": "6b5102270d4f0471767e560c6ee081fddd2f5279",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 103,
-  "reachableNativeModules": 78,
+  "nativeModules": 104,
+  "reachableNativeModules": 79,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
@@ -1355,14 +1355,14 @@
     },
     {
       "file": "bot/src/v2/discord-turn-runner.js",
-      "sha256": "f324f1a2165941878d28b3e3abda7fd522b0dbe2c214935dfe6f6abf75222da8",
+      "sha256": "fa4405ad804e487d510a2ff1076012787f520ea34b73553eccd65f10fc035f8c",
       "reachable": true,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null}){\r\n  if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='function')throw new Type"
+          "text": "export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null,refreshContext=null}){\r\n  if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='func"
         }
       ],
       "imports": [
@@ -1381,7 +1381,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 12,
+      "functions": 22,
       "sqlStatements": 0
     },
     {
@@ -1932,11 +1932,11 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "d8aa50f332a670cd271ee5de66e3c1de28249771744d6a134b56f2d2f8083ae3",
+      "sha256": "7e22f23ba742bfcd9de70129dc0248856526dc068c81e50ba05b6812ca9f2a06",
       "reachable": true,
       "exports": [
         {
-          "line": 32,
+          "line": 33,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
@@ -1953,180 +1953,187 @@
         {
           "line": 2,
           "kind": "ImportDeclaration",
+          "specifier": "./statement-origin-refresh.js",
+          "target": "bot/src/v2/statement-origin-refresh.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
           "specifier": "./statement-lineage.js",
           "target": "bot/src/v2/statement-lineage.js",
           "status": "resolved"
         },
         {
-          "line": 3,
+          "line": 4,
           "kind": "ImportDeclaration",
           "specifier": "./recall-store.js",
           "target": "bot/src/v2/recall-store.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./recall-planner.js",
           "target": "bot/src/v2/recall-planner.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./scene-prose-review.js",
           "target": "bot/src/v2/scene-prose-review.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./scene-store.js",
           "target": "bot/src/v2/scene-store.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./source-registry.js",
           "target": "bot/src/v2/source-registry.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./native-action-authority.js",
           "target": "bot/src/v2/native-action-authority.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./context-authority.js",
           "target": "bot/src/v2/context-authority.js",
           "status": "resolved"
         },
         {
-          "line": 10,
+          "line": 11,
           "kind": "ImportDeclaration",
           "specifier": "./source-authority.js",
           "target": "bot/src/v2/source-authority.js",
           "status": "resolved"
         },
         {
-          "line": 11,
+          "line": 12,
           "kind": "ImportDeclaration",
           "specifier": "./rules/action-store.js",
           "target": "bot/src/v2/rules/action-store.js",
           "status": "resolved"
         },
         {
-          "line": 12,
+          "line": 13,
           "kind": "ImportDeclaration",
           "specifier": "./cost-prompt-store.js",
           "target": "bot/src/v2/cost-prompt-store.js",
           "status": "resolved"
         },
         {
-          "line": 13,
+          "line": 14,
           "kind": "ImportDeclaration",
           "specifier": "./death-prompts.js",
           "target": "bot/src/v2/death-prompts.js",
           "status": "resolved"
         },
         {
-          "line": 14,
+          "line": 15,
           "kind": "ImportDeclaration",
           "specifier": "./component-decision-store.js",
           "target": "bot/src/v2/component-decision-store.js",
           "status": "resolved"
         },
         {
-          "line": 15,
+          "line": 16,
           "kind": "ImportDeclaration",
           "specifier": "./interaction-receipts.js",
           "target": "bot/src/v2/interaction-receipts.js",
           "status": "resolved"
         },
         {
-          "line": 16,
+          "line": 17,
           "kind": "ImportDeclaration",
           "specifier": "./canonical-actor-readers.js",
           "target": "bot/src/v2/canonical-actor-readers.js",
           "status": "resolved"
         },
         {
-          "line": 17,
+          "line": 18,
           "kind": "ImportDeclaration",
           "specifier": "./pc-bootstrap-source.js",
           "target": "bot/src/v2/pc-bootstrap-source.js",
           "status": "resolved"
         },
         {
-          "line": 18,
+          "line": 19,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 20,
           "kind": "ImportDeclaration",
           "specifier": "./native-campaign-adapters.js",
           "target": "bot/src/v2/native-campaign-adapters.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "ImportDeclaration",
           "specifier": "./discord-interaction-router.js",
           "target": "bot/src/v2/discord-interaction-router.js",
           "status": "resolved"
         },
         {
-          "line": 21,
+          "line": 22,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-reader.js",
           "target": "bot/src/v2/discord-message-reader.js",
           "status": "resolved"
         },
         {
-          "line": 22,
+          "line": 23,
           "kind": "ImportDeclaration",
           "specifier": "./discord-intake.js",
           "target": "bot/src/v2/discord-intake.js",
           "status": "resolved"
         },
         {
-          "line": 23,
+          "line": 24,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-observer.js",
           "target": "bot/src/v2/discord-message-observer.js",
           "status": "resolved"
         },
         {
-          "line": 24,
+          "line": 25,
           "kind": "ImportDeclaration",
           "specifier": "./discord-turn-runner.js",
           "target": "bot/src/v2/discord-turn-runner.js",
           "status": "resolved"
         },
         {
-          "line": 25,
+          "line": 26,
           "kind": "ImportDeclaration",
           "specifier": "./turn-store.js",
           "target": "bot/src/v2/turn-store.js",
           "status": "resolved"
         },
         {
-          "line": 26,
+          "line": 27,
           "kind": "ImportDeclaration",
           "specifier": "./knowledge-store.js",
           "target": "bot/src/v2/knowledge-store.js",
           "status": "resolved"
         }
       ],
-      "functions": 22,
+      "functions": 27,
       "sqlStatements": 0
     },
     {
@@ -3829,6 +3836,22 @@
         }
       ],
       "functions": 7,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/statement-origin-refresh.js",
+      "sha256": "8062996c879698238c3606110bc3ad13c0546ac32801780369faad780d6a6144",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 3,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createStatementOriginRefresh({contextAuthority,records,sourceRegistry,sceneStore,messageReader,readGmRoleId}){\r\n if(typeof contextAuthority?.entitled!=='function'||typeof records?.metadata!=='function'||typeof sourceRegistry?.get!=='function'||typeof sceneStore?.readers?.readChannel!"
+        }
+      ],
+      "imports": [],
+      "functions": 9,
       "sqlStatements": 0
     },
     {
