@@ -10,14 +10,14 @@ import {createNativeRoot} from '../../src/v2/native-root.js';
 import {createSourceAuthority} from '../../src/v2/source-authority.js';
 import {createCanonicalActorReaders} from '../../src/v2/canonical-actor-readers.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
-function fixture(t,{bootstrap=true}={}){
+function fixture(t,{bootstrap=true,proposeKnowledge=false}={}){
   const directory=mkdtempSync(join(tmpdir(),'vk2-conversation-life-')),client=new EventEmitter(),packets=[];
   const character={id:'pc',guild_id:'c',owner_user_id:'u',name:'Mercer',status:'active',data:{level:2,resources:{hp:{current:0,max:6},armor:{current:3,max:3},stress:{current:0,max:6},hope:3,hope_max:6},gm_private:'private-hook-must-not-reach-inference'}};
   const repository={getCharacter:()=>structuredClone(character),listCharacters:()=>[structuredClone(character)]},members=new Map(['bot','u'].map(id=>[id,{id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}]));
   const channel={id:'private',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),messages:{fetch:async({message})=>({id:message,guildId:'c',channelId:'private',author:{id:'u',bot:false},webhookId:null,system:false,content:'Interesting.',editedTimestamp:null})}};
   const guild={id:'c',memberCount:2,members:{list:async()=>members},roles:{fetch:async()=>new Map([['gm',{}]])},channels:{fetch:async()=>channel}};
   client.user={id:'bot'};client.guilds={fetch:async()=>guild};
-  const root=createNativeRoot({client,directory,characterRepository:repository,campaignRepository:{getCampaign:()=>({guild_id:'c',gm_role_id:'gm'})},rng:()=>1,provider:{generate:async input=>{packets.push(input);return {text:'The clerk waits for your answer.'};}}});
+  const root=createNativeRoot({client,directory,characterRepository:repository,campaignRepository:{getCampaign:()=>({guild_id:'c',gm_role_id:'gm'})},rng:()=>1,provider:{generate:async input=>{packets.push(input);if(proposeKnowledge&&!input.history.length)return {toolCalls:[{id:'testimony',name:'knowledge_propose',arguments:{source_ref:input.context.source_ref,kind:'testimony',claim:'The clerk claims the tunnel is haunted.'}},{id:'canon',name:'knowledge_propose',arguments:{source_ref:input.context.source_ref,kind:'canon_proposal',claim:'The tunnel is haunted.'}}]};return {text:'The clerk waits for your answer.'};}}});
   t.after(()=>{root.close();assert.ok(resolve(directory).startsWith(resolve(tmpdir())+sep));rmSync(directory,{recursive:true,force:true});});
   root.sceneStore.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'setup',records:[
     {kind:'session',data:{id:'session',campaignId:'c',status:'active'}},
@@ -60,4 +60,11 @@ test('native root selects entitled established knowledge with testimony labels a
   add('gm','gm-secret-canary',{visibility:'gm',disclosure:'private'});add('other-owner','other-owner-canary',{visibility:'recipients',recipientIds:['v'],disclosure:'observed'});add('blocked-parent','ancestry-secret-canary',{sourceRefs:['gm']});add('other-scene','other-scene-canary',{sceneId:'elsewhere'});add('pending','pending-delivery-canary',{visibility:'recipients',recipientIds:['u'],disclosure:'pending'});
   const turn=await f.root.turns.respond(f.request('knowledge-speech')),packet=f.packets[0].context;
   assert.deepEqual(packet.records.map(r=>r.ref),['private','public','rumor']);assert.equal(packet.records.find(r=>r.ref==='rumor').kind,'testimony');assert.equal(JSON.stringify(f.packets).includes('canary'),false);assert.equal(JSON.stringify(f.packets).includes('private-hook'),false);assert.equal(turn.metrics.modelCalls,1);assert.equal((await f.root.turns.inspectPublication(turn.publication.id)).sent,false);
+});
+
+
+test('native root retains model testimony proposals privately without truth promotion or unauthorized canon',async t=>{
+  const f=fixture(t,{proposeKnowledge:true}),turn=await f.root.turns.respond(f.request('proposal-speech')),results=f.packets[1].history[0].toolResults;
+  assert.equal(results[0].result.status,'proposed');assert.equal(results[0].result.effects_committed,false);assert.equal(results[1].result.code,'explicit_private_owner_request_required');
+  const proposal=f.root.knowledgeStore.proposal('c',results[0].result.proposal_ref);assert.equal(proposal.claim,'The clerk claims the tunnel is haunted.');assert.equal(proposal.authorship,'model_proposal');assert.equal(proposal.status,'proposed');assert.equal(proposal.visibility,'gm');assert.equal(proposal.principal,'u');assert.equal(proposal.sourceRef,f.packets[0].context.source_ref);assert.equal(f.root.knowledgeStore.metadata('c',proposal.id),null);assert.deepEqual(f.root.knowledgeStore.candidateRefs('c','s'),[]);assert.equal(turn.metrics.modelCalls,2);assert.equal((await f.root.turns.inspectPublication(turn.publication.id)).sent,false);
 });

@@ -1,0 +1,6 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs"
+]

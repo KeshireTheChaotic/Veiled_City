@@ -1,0 +1,9 @@
+{
+  "bot/src/v2/native-root.js": "fa29d172c93906d69af5c3bf6da733d6eea8eaad486fe1c18792bca703a268ab",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs": "00283e2322af342bb5ac1fef7858c0723285f2618045b65e1c2d710fe95b1ee0",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "8a95f4f7400855730fd8cabca9f00c0b256c044ac78c6f949dfd5d758868df96",
+  "docs/veilkeeper2/R2_NATIVE_PROPOSALS_REPORT.md": "c6a011eb1d20660485c5b441efc59b5f9c75c62c9d3718619a58fc2fb96bb67f",
+  "docs/veilkeeper2/R2_NATIVE_PROPOSALS_AFFECTED_TESTS.json": "cc403159d141ad178e1257dc5ff84c4518a980874986675dffaff5d2a981cd8c"
+}

@@ -46,7 +46,8 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
       allowedGuildIds,handleOtherCommand,handleOtherComponent,onError});
     // Bounded metadata-only default retrieval. Full weighted causes/pins remain uncomposed.
     // Entitlement includes complete ancestry before any selected body reaches inference.
-    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,records:knowledgeStore,selectContext:source=>knowledgeStore.candidateRefs(source.campaign,source.scene).filter(ref=>conversationContext.entitled(source,ref)).slice(0,64),actionAuthority:nativeActions}}):null;
+    // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
+    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,records:knowledgeStore,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>knowledgeStore.candidateRefs(source.campaign,source.scene).filter(ref=>conversationContext.entitled(source,ref)).slice(0,64),actionAuthority:nativeActions}}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
     return Object.freeze({router,turns,knowledgeStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}

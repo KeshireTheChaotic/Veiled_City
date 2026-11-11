@@ -1,0 +1,11 @@
+# R2/R6 native knowledge proposal retention — slice complete
+
+The native root now supplies its real knowledge store to the existing knowledge authority, enabling knowledge_propose to retain model suggestions as private proposals. They preserve source/revision, principal, model authorship, kind and claim. They do not become established records, active recall candidates, actor knowledge, effects or canon. The root deliberately supplies no establishment evidence adapter; a proposed statement never supplies its own native evidence. Canon suggestions still require the separate explicit private-owner request adapter, which is not yet composed, and are held rather than inferred from speech.
+
+Changed files: native-root.js; expanded r6-conversation-lifecycle.test.mjs; affected-test/SHA-256 manifests, this report and current handoff. No new tools, SQL schema, truth promotion, migrations or legacy changes.
+
+Verification complete on Node v26.13.0: 21/21 affected behavioral checks across four files. Focused 4/4 passed in 1705.9686 ms; remaining 17/17 passed in 997.1321 ms. The actual SQLite/native-root flow receives the generic model testimony proposal, retains it with GM visibility and source identity, refuses unauthorized canon, confirms no established metadata or recall candidate, and leaves the draft unsent. Model/Discord transport is simulated here; no online call, real human consent, live quality or production effect is claimed.
+
+Migration/rollback: existing proposal table and immutable conflict behavior are reused. Preserve all proposals and source/turn stores; reverting composition disables new proposals without deleting existing data. No production/running test bot restart or major-phase push. Full proposal review, accepted native fact/identity/perception evidence ingestion, canon request/GM review, actor cognition and weighted recall composition remain open.
+
+Next exact R2/R4 work: add native source-bound observation/testimony ingestion and authored ordinary-world identity evidence without laundering model claims into truth; compose authenticated weighted causes and actor knowledge. Continue full generic rules/consent and semantic-quality gates; all R0–R8 phases remain incomplete.
