@@ -1,5 +1,5 @@
 {
-  "head": "21d408a7fd293b27d360a76da6ca03cb146b0bcd",
+  "head": "1de7852dbb64e6ea1aa795813f492cb2756da011",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -3452,11 +3452,11 @@
     },
     {
       "file": "bot/src/v2/runtime-directory.js",
-      "sha256": "c79037602749e3a5435ded083a275f2e51fbbfa940694afa32aaf820ba9e8cd5",
+      "sha256": "264ee20560f9882406ed54d303f2fbe703481f6bda795700575c25450fc69f67",
       "reachable": true,
       "exports": [
         {
-          "line": 27,
+          "line": 31,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false}){\r\n  const target=resolve(directory),source=sourceIdentity(legacyDb),rel=relative(target,source.path);\r\n  if(rel===''||!rel.startsWith('..')&&!isAbsolute(rel))throw new Error('Legacy source must be separate from native"
@@ -3492,7 +3492,7 @@
           "status": "external"
         }
       ],
-      "functions": 19,
+      "functions": 20,
       "sqlStatements": 5
     },
     {

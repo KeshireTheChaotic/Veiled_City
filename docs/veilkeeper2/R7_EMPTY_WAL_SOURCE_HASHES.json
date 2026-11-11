@@ -1,0 +1,24 @@
+{
+  "node": "v26.13.0",
+  "tests": 23,
+  "passed": 23,
+  "durationMs": 2817.4042,
+  "inputs": [
+    {
+      "file": "bot/src/v2/runtime-directory.js",
+      "sha256": "264ee20560f9882406ed54d303f2fbe703481f6bda795700575c25450fc69f67"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    }
+  ]
+}

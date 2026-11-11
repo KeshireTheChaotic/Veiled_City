@@ -69,3 +69,13 @@ test('whole-host resume preserves issued owner proofs, exact native consent and 
  const receipt=createNativeActionAuthority({...a,actionStore:root.actionStore}).propose(choice,proposal);assert.equal(root.actionStore.readHope(f.gid,'pc').hope,1);a.close();await first.close();
  const second=await startNative({...f.options,env:{...f.env,VK2_RESUME:'1'}});a=adapters(second.root);try{const native=createNativeActionAuthority({...a,actionStore:second.root.actionStore});assert.deepEqual(a.sourceAuthority.inspectReference(source.id,source.revision),source);assert.deepEqual(a.sourceAuthority.inspectReference(choice.id,choice.revision),choice);assert.deepEqual(second.root.actionStore.readConsent(f.gid,consent.id),consent);assert.deepEqual(native.propose(choice,proposal),receipt);assert.equal(second.root.actionStore.readHope(f.gid,'pc').hope,1);assert.equal(second.root.actionStore.readHope(f.gid,'pc').revision,2);}finally{a.close();await second.close();}
 });
+
+test('read-only opening of a WAL-mode legacy copy may create empty sidecars without changing its source',async t=>{
+ const f=fixture(t),db=new DatabaseSync(f.legacyDb);db.exec('PRAGMA journal_mode=WAL');db.close();
+ assert.equal(existsSync(f.legacyDb+'-wal'),false);const app=await startNative(f.options);const runId=app.runId;await app.close();assert.equal(f.log.filter(x=>x==='login').length,1);
+ const resumed=await startNative({...f.options,env:{...f.env,VK2_RESUME:'1'}});try{assert.equal(resumed.runId,runId);}finally{await resumed.close();}
+});
+
+test('nonempty legacy WAL evidence still prevents startup sealing and never reaches login',async t=>{
+ const f=fixture(t);await assert.rejects(startNative({...f.options,createProvider:async()=>{writeFileSync(f.legacyDb+'-wal','nonempty changed source');return {};},env:{...f.env,VK2_INFERENCE:'1'},createRoot:()=>({close(){}})}),/source changed during startup/);assert.equal(f.log.includes('login'),false);
+});

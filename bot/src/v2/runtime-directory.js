@@ -6,7 +6,11 @@ const hash=value=>createHash('sha256').update(value).digest('hex');
 const stores=['actions.sqlite','cost-prompts.sqlite','decisions.sqlite','interactions.sqlite','knowledge.sqlite','prompts.sqlite','scenes.sqlite','sources.sqlite','turns.sqlite'];
 const STATE='runtime.sqlite',FORMAT='veilkeeper2-native-v1';
 function sourceIdentity(filename){
-  const path=realpathSync(filename);if(!statSync(path).isFile())throw new Error('Existing read-only legacy source file required');return {path,sha256:hash(readFileSync(path)),walHash:existsSync(path+'-wal')?hash(readFileSync(path+'-wal')):null,journalHash:existsSync(path+'-journal')?hash(readFileSync(path+'-journal')):null};
+  const path=realpathSync(filename);if(!statSync(path).isFile())throw new Error('Existing read-only legacy source file required');
+  // Read-only WAL connections may create empty sidecars. Zero bytes contain no
+  // transaction; all nonempty WAL/journal bytes remain part of source identity.
+  const sidecar=suffix=>{const file=path+suffix;if(!existsSync(file))return null;const bytes=readFileSync(file);return bytes.length?hash(bytes):null;};
+  return {path,sha256:hash(readFileSync(path)),walHash:sidecar('-wal'),journalHash:sidecar('-journal')};
 }
 function storeSnapshot(directory){
   return stores.filter(name=>existsSync(join(directory,name))).map(name=>{
