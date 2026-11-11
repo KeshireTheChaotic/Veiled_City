@@ -1,6 +1,10 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-## Latest atomic durable repair checkpoint
+## Latest canonical conversation source checkpoint
+
+R6_CONVERSATION_LIFECYCLE_REPORT.md: conversation sources now use canonical PC lifecycle/ownership projection, closing a demonstrated stale-alive grant gap. Nineteen fresh affected checks passed; the prior wiring failed both new regression cases. Canonical migration/bootstrap remains required, with no healthy defaults or full private sheet in inference. No live restart or production changes. Next: receipt-backed material validation and durable context dependencies before repaired/autonomous publication. All major phase gates remain open.
+
+## Earlier atomic durable repair checkpoint
 
 R4_DURABLE_REPAIR_REPORT.md records source-bound native local repair persistence, exact ancestry/sibling preservation, DB-before-memory commit and 78 passing fresh behavioral checks across 13 affected files. Raw drafts stay unchanged; candidates remain private semantic-review diagnostics, not publication grants. No production or live-process change. Next: audit conversation source projection against canonical PC lifecycle/control, then receipt-backed review and durable context visibility dependencies. Full R0–R8 goal remains active and incomplete.
 

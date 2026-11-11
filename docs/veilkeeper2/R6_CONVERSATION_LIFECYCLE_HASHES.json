@@ -1,0 +1,8 @@
+{
+  "bot/src/v2/native-root.js": "9f664f2198471e01915e3033fed1ac9e53c1b1dbc540696fdd31749518b7bcba",
+  "bot/src/v2/canonical-actor-readers.js": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs": "ff3b091116f53ccfa92a2d11f08761099d0bee88696bb1105086fa4f7023e77f",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "8a95f4f7400855730fd8cabca9f00c0b256c044ac78c6f949dfd5d758868df96"
+}
