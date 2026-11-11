@@ -25,5 +25,13 @@ export function createOrdinaryRollPreparation({sourceAuthority,readAdjudication,
     const request=terms(source,actorId,parameters),fingerprint=hash(request);
     return rollStore.createRequest(request,{check(){if(hash(terms(source,actorId,parameters))!==fingerprint)throw new Error('Roll adjudication changed');}});
   }
-  return Object.freeze({definition,commitRequest});
+  function inspectRequest(source,requestRef){
+    if(typeof rollStore.readRequest!=='function')throw new Error('Native saved roll request reader required');
+    const request=rollStore.readRequest(source.campaign,requestRef);
+    if(!request||request.id!==requestRef||!['awaiting_notice','awaiting_player_roll'].includes(request.status))throw new Error('Current saved native roll request required');
+    const {status,...saved}=request,expected=terms(source,request.actorId,{adjudication_ref:request.adjudicationRef});
+    if(hash(saved)!==hash(expected)||!sourceAuthority.revalidate(source)||hash(rollStore.readRequest(source.campaign,requestRef))!==hash(request))throw new Error('Native request differs from its approved adjudication or current terms');
+    return Object.freeze(structuredClone(request));
+  }
+  return Object.freeze({definition,commitRequest,inspectRequest});
 }

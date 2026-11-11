@@ -1,35 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {join,dirname} from 'node:path';
-import {conditionFixture,attachOwnerClear} from './helpers/condition-history-fixture.mjs';
-import {openSceneStore} from '../../src/v2/scene-store.js';
-import {openActionStore} from '../../src/v2/rules/action-store.js';
-import {createCanonicalActorReaders} from '../../src/v2/canonical-actor-readers.js';
-import {createSourceAuthority} from '../../src/v2/source-authority.js';
-import {createDomainCardCatalog} from '../../src/v2/rules/domain-card-catalog.js';
-import {openRollAdjudications} from '../../src/v2/rules/roll-adjudications.js';
-import {createLegacySpellcastConditionModifiers} from '../../src/v2/rules/spellcast-condition-modifiers.js';
-import {createRollTermsReader} from '../../src/v2/rules/roll-terms.js';
-import {createOrdinaryRollPreparation} from '../../src/v2/rules/ordinary-roll-preparation.js';
-import {openRollStore} from '../../src/v2/rules/roll-store.js';
-function fixture(t){
-  let adjudications,actions,scenes,rolls;t.after(()=>{rolls?.close();adjudications?.close();actions?.close();scenes?.close();});
-  const f=conditionFixture(t,{area:true,stress:0,conditionName:'Restrained'});
-  f.db.exec('ALTER TABLE characters ADD COLUMN name TEXT;ALTER TABLE characters ADD COLUMN status TEXT;');
-  const data={class:'Witch',subclass:'Hedge',level:1,domains:['Hex'],domain_cards:[{name:'Jinx',active:true}],traits:{Knowledge:2},resources:{hp:{current:0,max:6},armor:{current:0,max:3},stress:{current:0,max:6},hope:4,hope_max:6},conditions:f.readCondition().data.after,gm_private:'native-only-condition-canary'};
-  f.db.prepare('INSERT INTO characters(id,guild_id,owner_user_id,character_json,name,status) VALUES(?,?,?,?,?,?)').run('pc','g','historical-owner',JSON.stringify(data),'PC','active');
-  scenes=openSceneStore();actions=openActionStore();rolls=openRollStore();
-  const records=[{kind:'session',data:{id:'now-session',campaignId:'g',status:'active'}},{kind:'scene',data:{id:'now',campaignId:'g',sessionId:'now-session',status:'active',participants:[{userId:'historical-owner',actorId:'pc',presence:'present'}]}},{kind:'actor',data:{id:'pc',campaignId:'g',sceneId:'now',kind:'pc',status:'active',ownerUserId:'historical-owner',controllerUserId:'historical-owner',controlRole:'owner'}},{kind:'channel',data:{id:'private',campaignId:'g',sceneId:'now',kind:'private',ownerUserId:'historical-owner',permissionsVerified:true,recipientIds:['historical-owner'],writerIds:['historical-owner']}},{kind:'message',data:{id:'new-attempt',campaignId:'g',channelId:'private',userId:'historical-owner',deleted:false,text:'I cast Jinx.'}}];
-  scenes.commitSnapshot({campaignId:'g',principal:'native-setup',sourceRef:'new-scene',records:records.map(r=>({...r,expectedRevision:null}))},{check(){}});
-  actions.initializeHope({campaignId:'g',actorId:'pc',ownerUserId:'historical-owner',hope:4,cap:6},{check(){}});actions.initializePcDefenses({campaignId:'g',actorId:'pc',ownerUserId:'historical-owner',controlRevision:'1',hp:{current:0,max:6},armorSlots:{current:0,max:3}},{check(){}});actions.initializePcLife({campaignId:'g',actorId:'pc',ownerUserId:'historical-owner',controlRevision:'1',sourceRef:'native-profile',sourceRevision:'1',level:1,stress:{current:0,max:6}},{check(){}});
-  const canonical=createCanonicalActorReaders({sceneStore:scenes,actionStore:actions,characterRepository:f.repo}),authority=createSourceAuthority(canonical.readers),source=authority.authenticate({campaignId:'g',messageId:'new-attempt',userId:'historical-owner',actorId:'pc'}),catalog=createDomainCardCatalog(new URL('../../../content/CARDS/domain_cards.json',import.meta.url)),file=join(dirname(f.file),'adjudications.sqlite');
-  const options={catalog,readActorSnapshot:canonical.readActorSnapshot};adjudications=openRollAdjudications(file,options);
-  const locator={feature:'domain:hex:jinx',slot:'base',source_hash:catalog.findDomainCard('domain:hex:jinx').source_hash},decision={id:'spellcast',revision:'1',campaignId:'g',sceneId:'now',actorId:'pc',sourceRef:source.id,sourceRevision:source.revision,status:'accepted',difficulty:14,stakes:'The target resists.',trait:'Knowledge',modifierRefs:[]};
-  const makeModifiers=()=>createLegacySpellcastConditionModifiers({repository:f.repo,catalog,adjudications,sourceAuthority:authority,readActorSnapshot:canonical.readActorSnapshot});let modifiers=makeModifiers();
-  const check=()=>{if(!authority.revalidate(source))throw new Error('Native source changed');};
-  const makeTerms=()=>createRollTermsReader({readActorSnapshot:canonical.readActorSnapshot,...modifiers});
-  return {...f,source,decision,locator,canonical,scenes,actions,rolls,check,get adjudications(){return adjudications;},get modifiers(){return modifiers;},get terms(){return makeTerms();},reopen(){adjudications.close();adjudications=openRollAdjudications(file,options);modifiers=makeModifiers();},prepare(){return createOrdinaryRollPreparation({sourceAuthority:authority,readAdjudication:adjudications.read,readActor:canonical.readActor,rollStore:rolls,termReader:makeTerms()});}};
-}
+import {nativeSpellcastFixture as fixture} from './helpers/native-spellcast-fixture.mjs';
+import {attachOwnerClear} from './helpers/condition-history-fixture.mjs';
 test('real condition window and durable identity supply compulsory nonstacking Spellcast disadvantage after cold reopen',t=>{
   const f=fixture(t),before=f.actions.readHope('g','pc');f.decision.modifierRefs=f.modifiers.previewMandatoryRefs(f.source,f.decision,f.locator);assert.equal(f.decision.modifierRefs.length,1);assert.equal(f.adjudications.read('g','spellcast'),null);assert.throws(()=>f.terms.inspect(f.source,f.decision),/reviewed native Spellcast/);
   f.adjudications.save(f.source,f.decision,{check:f.check,spellcast:f.locator});f.reopen();const terms=f.terms.inspect(f.source,f.adjudications.read('g','spellcast'));assert.equal(terms.modifier,2);assert.equal(terms.disadvantage,1);assert.equal(terms.termProof.modifiers.length,1);assert.equal(JSON.stringify(terms).includes('native-only-condition-canary'),false);

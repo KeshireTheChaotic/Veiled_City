@@ -26,3 +26,10 @@ test('changing Discord evidence during verification aborts without partial intak
   const f=fixture(t);f.state.onRead=n=>{if(n===2)f.evidence.fingerprint='changed';};await assert.rejects(f.intake.ingest(f.request),/evidence changed/);
   assert.equal(f.store.readers.readMessage('c','m'),null);assert.equal(f.store.readers.readChannel('c','ch'),null);
 });
+
+test('equivalent JSON property order preserves issued sources while changed audience still revokes them',async t=>{
+  const f=fixture(t),event=await f.intake.ingest(f.request),authority=createSourceAuthority(f.store.readers),source=authority.authenticate(event);
+  f.evidence.audience.channelRecord=Object.fromEntries(Object.entries(f.evidence.audience.channelRecord).reverse());f.evidence.messageRecord=Object.fromEntries(Object.entries(f.evidence.messageRecord).reverse());
+  await f.intake.ingest(f.request);assert.equal(f.store.history('c','channel','ch').length,1);assert.equal(f.store.history('c','message','m').length,1);assert.equal(authority.revalidate(source),true);
+  f.evidence.audience.channelRecord.recipientIds.push('v');f.evidence.audience.channelRecord.writerIds.push('v');f.evidence.fingerprint='new-audience';await f.intake.ingest(f.request);assert.equal(f.store.history('c','channel','ch').length,2);assert.equal(authority.revalidate(source),false);
+});

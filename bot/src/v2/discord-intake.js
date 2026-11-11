@@ -1,4 +1,5 @@
 import {createSourceAuthority} from './source-authority.js';
+import {isDeepStrictEqual} from 'node:util';
 const withoutRevision=row=>{if(!row)return null;const {revision,...data}=row;return data;};
 /** Native ingress only. Transport supplies request IDs; no model capability can
  * call this adapter. Scene/session/control must already be provisioned natively.
@@ -17,7 +18,7 @@ export function createDiscordIntake({messageReader,sceneStore}){
     const records=[];
     for(const [kind,data,read] of [['channel',first.audience.channelRecord,sceneStore.readers.readChannel],['message',first.messageRecord,sceneStore.readers.readMessage]]){
       const current=read(event.campaignId,data.id);
-      if(JSON.stringify(withoutRevision(current))!==JSON.stringify(data))records.push({kind,data,expectedRevision:current?Number(current.revision):null});
+      if(!isDeepStrictEqual(withoutRevision(current),data))records.push({kind,data,expectedRevision:current?Number(current.revision):null});
     }
     const second=await messageReader.read(request,{signal});signal?.throwIfAborted();
     if(second.fingerprint!==first.fingerprint)throw new Error('Discord evidence changed during intake');
