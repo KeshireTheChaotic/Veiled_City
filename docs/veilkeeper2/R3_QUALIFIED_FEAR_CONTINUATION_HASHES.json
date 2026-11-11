@@ -1,0 +1,23 @@
+{
+  "node": "v26.13.0",
+  "checks": 47,
+  "passed": 47,
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/pre-roll-fear-coordinator.js",
+      "sha256": "41bd0a548eb2bfd7ebc9439db48ef5dbc955b3c14de5b60a8d29418865e2a97b"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-qualified-fear-continuation.test.mjs",
+      "sha256": "02a200a6a16b1cb08f30d32d37b05454a890060ea2d9347e9a391b328f59c2cf"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-fear-coordinator.test.mjs",
+      "sha256": "d26d2a09d5192b98043abd6aab395643f04a80faf93e32d79761655b6175ceef"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs",
+      "sha256": "5ebcb326dbdba6af47004dd8d617c87538615ad959685f83de22a32d2d81613d"
+    }
+  ]
+}

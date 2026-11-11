@@ -3,7 +3,7 @@ const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 /** Native ordering across opt-in stores. A failed reservation deliberately leaves
  * a durable roll hold for reconciliation. No spending, attack or general unlock.
  */
-export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication}){
+export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication,termReader=null,readContinuationReview=null}){
   if(typeof rollStore?.holdForFear!=='function'||typeof rollStore?.releaseCancelledFear!=='function'||typeof fearStore?.reserve!=='function'||typeof opportunityReader?.read!=='function')throw new TypeError('Native pre-roll coordination dependencies required');
   function reserve(c,q,{check}){
     if(typeof check!=='function')throw new Error('Native Fear authority required');
@@ -66,11 +66,18 @@ export function createPreRollFearCoordinator({rollStore,fearStore,opportunityRea
     if(row?.status!=='completed'||!row.completion||!request||!request.adjudicationRef)throw new Error('Completed interruption and pending native adjudication required');
     if(row.completion.originalActionBlocked===true)throw new Error('Resolved death outcome requires native recovery or a fresh owner declaration');
     const proof=sourceAuthority.inspectReference(request.sourceRef,request.sourceRevision),actor=readActor(c,request.actorId),a=readAdjudication(c,request.adjudicationRef),hp=actor?.data?.resources?.hp;
+    let qualified=null;
+    if(request.termProof){
+      if(typeof termReader?.inspect!=='function'||typeof readContinuationReview!=='function')throw new Error('Qualified original action requires native terms and fresh continuation review');
+      const values=termReader.inspect({...proof,id:request.sourceRef,revision:request.sourceRevision},a),review=readContinuationReview(c,q);
+      if(JSON.stringify(values.termProof)!==JSON.stringify(request.termProof)||['modifier','experience','advantage','disadvantage'].some(k=>values[k]!==request[k])||!review||Object.keys(review).sort().join(',')!=='actorHash,adjudicationHash,completionHash,id,requestHash,revision,ruleFingerprint,status,termHash'||review.status!=='accepted'||typeof review.id!=='string'||!review.id||typeof review.revision!=='string'||!review.revision||review.requestHash!==hash(request)||review.actorHash!==hash(actor)||review.adjudicationHash!==hash(a)||review.completionHash!==hash(row.completion)||review.termHash!==request.termProof.hash||typeof review.ruleFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(review.ruleFingerprint))throw new Error('Qualified original action requires current native review');
+      qualified={reviewRef:review.id,reviewRevision:review.revision,reviewHash:hash(review),termHash:review.termHash,ruleFingerprint:review.ruleFingerprint};
+    }
     if(proof.campaign!==c||proof.scene!==request.sceneId||proof.principal!==request.ownerUserId||!proof.actors.includes(request.actorId)||actor?.id!==request.actorId||actor.kind!=='pc'||actor.status!=='active'||actor.campaignId!==c||actor.sceneId!==request.sceneId||actor.ownerUserId!==request.ownerUserId||actor.controllerUserId!==request.ownerUserId||actor.controlRole!=='owner'||actor.controlRevision!==request.controlRevision||typeof actor.revision!=='string'||!actor.revision
       ||![hp?.current,hp?.max].every(Number.isSafeInteger)||hp.current<0||hp.max<1||hp.current>=hp.max
-      ||a?.id!==request.adjudicationRef||a.campaignId!==c||a.sceneId!==request.sceneId||a.actorId!==actor.id||a.sourceRef!==request.sourceRef||a.sourceRevision!==request.sourceRevision||a.status!=='accepted'||a.actorRevision!==actor.revision||typeof a.revision!=='string'||!a.revision||typeof a.ruleFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(a.ruleFingerprint)
-      ||a.difficulty!==request.difficulty||a.stakes!==request.stakes||['modifier','experience','advantage','disadvantage'].some(k=>a[k]!==request[k]))throw new Error('Original owner action requires current native review');
-    return {campaignId:c,sceneId:request.sceneId,requestRef:q,decisionRef:row.terms.decisionRef,actorId:actor.id,ownerUserId:actor.ownerUserId,controlRevision:actor.controlRevision,actorRevision:actor.revision,sourceRef:request.sourceRef,sourceRevision:request.sourceRevision,adjudicationRef:a.id,adjudicationRevision:a.revision,ruleFingerprint:a.ruleFingerprint,completionHash:hash(row.completion),status:'ready'};
+      ||a?.id!==request.adjudicationRef||a.campaignId!==c||a.sceneId!==request.sceneId||a.actorId!==actor.id||a.sourceRef!==request.sourceRef||a.sourceRevision!==request.sourceRevision||a.status!=='accepted'||!qualified&&a.actorRevision!==actor.revision||typeof a.revision!=='string'||!a.revision||!qualified&&(typeof a.ruleFingerprint!=='string'||!/^[a-f0-9]{64}$/.test(a.ruleFingerprint))
+      ||a.difficulty!==request.difficulty||a.stakes!==request.stakes||!qualified&&['modifier','experience','advantage','disadvantage'].some(k=>a[k]!==request[k]))throw new Error('Original owner action requires current native review');
+    return {campaignId:c,sceneId:request.sceneId,requestRef:q,decisionRef:row.terms.decisionRef,actorId:actor.id,ownerUserId:actor.ownerUserId,controlRevision:actor.controlRevision,actorRevision:actor.revision,sourceRef:request.sourceRef,sourceRevision:request.sourceRevision,adjudicationRef:a.id,adjudicationRevision:a.revision,ruleFingerprint:qualified?qualified.ruleFingerprint:a.ruleFingerprint,...(qualified?{qualified}:{}),completionHash:hash(row.completion),status:'ready'};
   }
   function resumeOriginalRoll(c,q,{check}){return rollStore.releaseCompletedFear(c,q,{check,readCompletion:(campaign,request)=>{const row=fearStore.read(campaign,request);if(row?.status!=='completed')throw new Error('Completed native interruption required');return row.completion;},readContinuation:inspectContinuation});}
   return Object.freeze({reserve,cancel,recoverUnreserved,claimAnnouncement,acknowledgeAnnouncement,markAnnouncementUncertain,recordAnnouncementResponse,prepareIncoming,rollIncoming,completeIncoming,inspectContinuation,resumeOriginalRoll,

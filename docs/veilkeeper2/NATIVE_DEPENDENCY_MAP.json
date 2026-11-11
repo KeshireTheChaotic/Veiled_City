@@ -1,5 +1,5 @@
 {
-  "head": "a3342f0aa3a0d886c783e763a7d3157d662ba1aa",
+  "head": "6a50535986a94f96ce6be1d849ace9a928945388",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -3342,14 +3342,14 @@
     },
     {
       "file": "bot/src/v2/rules/pre-roll-fear-coordinator.js",
-      "sha256": "b912fe3ce0ef5f4908d4942d92f0e8e6eeb3b61d3ba1badd1f41deff0e72f3fd",
+      "sha256": "41bd0a548eb2bfd7ebc9439db48ef5dbc955b3c14de5b60a8d29418865e2a97b",
       "reachable": false,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication}){\n  if(typeof rollStore?.holdForFear!=='function'||typeof rollStore?.releaseCancelledFear!=='function'||typeof fearStore?.reserve!=='function'||typeof opportunityReader?.re"
+          "text": "export function createPreRollFearCoordinator({rollStore,fearStore,opportunityReader,sourceAuthority,readActor,readAdjudication,termReader=null,readContinuationReview=null}){\r\n  if(typeof rollStore?.holdForFear!=='function'||typeof rollStore?.releaseCancelledFear!=='function'||typeof fearStore?.reser"
         }
       ],
       "imports": [
@@ -3361,7 +3361,7 @@
           "status": "external"
         }
       ],
-      "functions": 28,
+      "functions": 29,
       "sqlStatements": 0
     },
     {
