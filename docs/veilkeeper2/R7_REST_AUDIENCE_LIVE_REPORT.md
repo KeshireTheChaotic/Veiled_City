@@ -1,0 +1,11 @@
+# R7 test-guild REST audience read — bounded live check complete
+
+A separate read-only Discord client logged in with Guilds and GuildMembers intents and measured two consecutive native audience reads in the authorized test guild 1467249344947159291. Actual results: 7 members, 5 recipients, matching audience fingerprints, 858.05 ms and 563.66 ms. The machine-readable observation and source hashes are attached in R7_REST_AUDIENCE_LIVE_RESULT.json and R7_REST_AUDIENCE_LIVE_HASHES.json.
+
+The script imports only the Discord SDK and audience reader. It opens no database or native runtime root, registers no commands, calls no model and sends no message. It reads guild/channel/member/role metadata only, prints counts/timings/IDs without names, messages or credentials and destroys its client. Credentials are loaded by the user-authorized environment-file path; none were printed/copied/committed. The read-only scope needs no campaign DB copy because no database is opened. The previous scratch harness/stores were not started, stopped, deleted or modified.
+
+Execution evidence: sandbox network attempt failed ENOTFOUND and produced no measurement. The same read-only script then completed with approved network access, exit 0. A detailed process query was denied by the environment; Get-Process showed no visible Node processes. This does not establish the prior harness's durable state. No automatic approval review rejection occurred.
+
+Changed files: bot/scripts/veilkeeper2/r7-rest-audience-smoke.mjs, result/hash/report files, current handoff, ledger, session review and live runbook. No production changes, schema migration or inference spend. Rollback: remove the optional script/report artifacts; nothing needs data rollback.
+
+Limits: this validates a single small guild/text channel and fresh roster permission projection. It does not qualify private-channel registration, private delivery, owner attendance, reviewed publication, human-GM lease expiry, large-guild pagination latency, concurrency, narrative quality or any full R0–R8 gate. R4 autonomous prose still requires consequence/agency validation and local segment repair. Next exact work: implement R4 targeted consequential material review with independent segment disposition and safe creative prose, then integrate validated delivery; keep live end-to-end and larger-guild gates open.

@@ -1,0 +1,5 @@
+{
+  "bot/scripts/veilkeeper2/r7-rest-audience-smoke.mjs": "f1ed8076aa1742dc689fda0432c2f14e5fd9f93ab3a0967c76b63d4a2380290a",
+  "bot/src/v2/discord-audience-reader.js": "1dc9836be52285d8c744e6240284ec2790cbe95eab0eb6cd0f877235e9cc9be6",
+  "docs/veilkeeper2/R7_REST_AUDIENCE_LIVE_RESULT.json": "6cc386776f8490ddcc7275c621f9fb3ee83bf34abda3259ac63311f31382278d"
+}

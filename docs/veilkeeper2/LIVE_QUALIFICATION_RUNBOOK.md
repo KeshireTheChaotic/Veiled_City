@@ -4,6 +4,10 @@ Authorized scope (user decision, 2026-11-03): live qualification in the **test g
 
 Before anything: the bot token that was pasted into chat is exposed. Reset it in the Discord Developer Portal (Bot -> Reset Token) and use the new value only in your own terminal.
 
+## Current bounded observation, 2026-11-10
+
+R7_REST_AUDIENCE_LIVE_REPORT.md records a separate read-only test-guild connection: two native REST roster reads at 858.05/563.66 ms, matching fingerprints, seven members. No command registration, database, inference or send. Previous scratch state was not modified. End-to-end/private/GM lease qualification remains open.
+
 ## Live status log
 
 - 2026-11-03: Server Members Intent enabled by the user; login smoke passed (ready, exactly one guild, the allowed test guild, router and message observer attached, clean close). The prerequisite above is satisfied.
@@ -83,7 +87,7 @@ The call ceiling plus the output-token bound limits spend; check your provider d
 2. `/vc-gm register-character character:<character id>`, then `/vc-gm bootstrap-preview character:<id>`, then `/vc-gm bootstrap-review character:<id> snapshot:<hash shown by the preview>`.
 3. `vc-session present|absent|arrive|leave` as an owner (absent/leave accept the new optional `character`).
 4. A player message in a registered channel (evidence capture only).
-5. `vc-session end`, then `{"op":"session-reopen","session":"<id>"}`.
+5. `/vc-session end`, then `/vc-gm session-reopen session:<id>`.
 6. With step 3b running: after a player message, `/vc-gm drafts` as a GM privately lists up to five withheld drafts (source id, fingerprint and first 180 characters; nothing is sent to players).
 7. To send one reviewed draft: `/vc-gm publish-draft source:<source id> fingerprint:<64-hex fingerprint from the list>` as a GM. It re-checks the GM role and the original channel audience, sends the text once (no mentions, one message, up to 1,900 characters) and records no knowledge or canon acknowledgement. A send that cannot be confirmed is held as `publication_uncertain` and is never retried.
 

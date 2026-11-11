@@ -1,0 +1,14 @@
+{
+  "guildId": "1467249344947159291",
+  "channelId": "1467249346054721558",
+  "memberCount": 7,
+  "recipientCount": 5,
+  "readMilliseconds": [
+    858.05,
+    563.66
+  ],
+  "matchingFingerprints": true,
+  "modelCalls": 0,
+  "messagesSent": 0,
+  "databaseOpened": false
+}
