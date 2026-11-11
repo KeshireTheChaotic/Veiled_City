@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex'),textHash=v=>createHash('sha256').update(v).digest('hex');
+export const statementReference=source=>`statement:${hash([source.campaign,source.id,source.revision])}`;
 /** Historical statement evidence only. No present actor control or truth/canon authority. */
 export function createStatementLineage({sourceAuthority,sourceRegistry,readMessage,readChannel}){
  if(typeof sourceAuthority?.revalidate!=='function'||typeof sourceRegistry?.get!=='function'||[readMessage,readChannel].some(f=>typeof f!=='function'))throw new TypeError('Native statement lineage readers required');

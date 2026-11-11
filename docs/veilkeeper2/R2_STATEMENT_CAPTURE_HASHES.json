@@ -1,0 +1,83 @@
+{
+  "node": "v26.13.0",
+  "tests": 98,
+  "passed": 98,
+  "inputs": [
+    {
+      "file": "bot/src/v2/native-root.js",
+      "sha256": "a3c47b859d4702561695fafcdb86c597089684a6d8b4426b8333ead25421cb20"
+    },
+    {
+      "file": "bot/src/v2/discord-turn-runner.js",
+      "sha256": "479c77217229f8bcebe999593d9014801993dd8653a4bf1bbe90c8daea8eaaec"
+    },
+    {
+      "file": "bot/src/v2/statement-lineage.js",
+      "sha256": "75ab8d74b42494fdb40fc61e566995ac4b2247a0313f839801c6c5e474470b48"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+      "sha256": "bd810a148828bf8a7e961fa728d44561f18255a45c2df586e6980a0ced874a10"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs",
+      "sha256": "a799e595785d5a7e465a1bbd35895c9339a0581172cb022f78b5b699a168017a"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+      "sha256": "5ebaf1688762c67c44ff0164ab46e0709cdd3312069db9cc45f3a4502b480a21"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+      "sha256": "2d97ac0ddc47c2d259ae23380a4e61e8af310bbb294d28e742d195748aa62668"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+      "sha256": "8669206715c0d7cbac8ab41393c46d9f6b6c89dcdac272da9119d817907b922a"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "81265e5953a3622bd4295e86933f2dc9ec624ea0edc5c83106bfb89e780a28a4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-context-lineage.test.mjs",
+      "sha256": "a45f761447153822ab657108bbafc85e3a449084734749ac03bc3e5acbf6a463"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs",
+      "sha256": "1683bba052489154bbc6a3e0f9d4e4af83d9c943514557743807d84a812d20d2"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-source-bound-repair.test.mjs",
+      "sha256": "cd063008b088c63c4c9cdc2874c3c243a474797873ff728e86c7ffc13782d2c7"
+    }
+  ]
+}

@@ -3,9 +3,10 @@ import {createSourceAuthority} from './source-authority.js';
 /** Native no-send orchestration. Every turn owns its audience application;
  * only async refreshed inspection is exposed for its publication.
  */
-export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null,refreshContext=null}){
+export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null,refreshContext=null,onSource=null}){
   if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='function')throw new TypeError('Native intake, provider and application required');
   if(refreshContext!==null&&typeof refreshContext!=='function')throw new TypeError('Native context refresh required');
+  if(onSource!==null&&typeof onSource!=='function')throw new TypeError('Native source observer required');
   const pending=new Map();
   const manifestRefs=p=>(p.contextDependencies??[]).flatMap(m=>m.records.map(r=>r.ref));
   const inputRefs=input=>[...new Set([...(input.context.records??[]).map(r=>r.ref),...(input.history??[]).flatMap(h=>(h.toolResults??[]).filter(t=>t.result?.source_ref===input.context.source_ref).flatMap(t=>(t.result.records??[]).map(r=>r.ref)))])];
@@ -16,6 +17,7 @@ export function createDiscordTurnRunner({intake,provider,applicationOptions,crea
     const validate=()=>{if(!authority.revalidate(source))throw new Error('Native turn source authority revoked');};
     const claim=turnStore?.claim({campaignId:source.campaign,sourceRef:source.id,sourceRevision:source.revision});
     if(claim&&claim.status!=='claimed')return Object.freeze(claim);
+    if(onSource){await onSource(source,{signal});signal?.throwIfAborted();validate();}
     const refresh=()=>intake.ingest(nativeRequest,{signal});
     const app=createApplication({...applicationOptions,provider:{async generate(input){
       const refs=refreshContext?inputRefs(input):[];await refresh();validate();await refreshContext?.(source,refs,{signal});validate();const result=await provider.generate(input);await refresh();validate();await refreshContext?.(source,refs,{signal});validate();return result;

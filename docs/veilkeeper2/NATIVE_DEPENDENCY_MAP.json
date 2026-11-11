@@ -1,5 +1,5 @@
 {
-  "head": "6b5102270d4f0471767e560c6ee081fddd2f5279",
+  "head": "1931d8406458f6a10a124e7a35dd98ce3e2efcad",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -1355,14 +1355,14 @@
     },
     {
       "file": "bot/src/v2/discord-turn-runner.js",
-      "sha256": "fa4405ad804e487d510a2ff1076012787f520ea34b73553eccd65f10fc035f8c",
+      "sha256": "479c77217229f8bcebe999593d9014801993dd8653a4bf1bbe90c8daea8eaaec",
       "reachable": true,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null,refreshContext=null}){\r\n  if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createApplication!=='func"
+          "text": "export function createDiscordTurnRunner({intake,provider,applicationOptions,createApplication=createRehearsal,createAuthority=createSourceAuthority,turnStore=null,refreshContext=null,onSource=null}){\r\n  if(typeof intake?.ingest!=='function'||typeof provider?.generate!=='function'||typeof createAppli"
         }
       ],
       "imports": [
@@ -1932,7 +1932,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "7e22f23ba742bfcd9de70129dc0248856526dc068c81e50ba05b6812ca9f2a06",
+      "sha256": "a3c47b859d4702561695fafcdb86c597089684a6d8b4426b8333ead25421cb20",
       "reachable": true,
       "exports": [
         {
@@ -2133,7 +2133,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 27,
+      "functions": 29,
       "sqlStatements": 0
     },
     {
@@ -3816,14 +3816,20 @@
     },
     {
       "file": "bot/src/v2/statement-lineage.js",
-      "sha256": "a5f622eebd82e89eaa2ea06027851f5ccd301bab2ea6a284c2b40324e0dc2d3d",
+      "sha256": "75ab8d74b42494fdb40fc61e566995ac4b2247a0313f839801c6c5e474470b48",
       "reachable": true,
       "exports": [
         {
-          "line": 4,
+          "line": 3,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createStatementLineage({sourceAuthority,sourceRegistry,readMessage,readChannel}){\n if(typeof sourceAuthority?.revalidate!=='function'||typeof sourceRegistry?.get!=='function'||[readMessage,readChannel].some(f=>typeof f!=='function'))throw new TypeError('Native statement lineage reade"
+          "text": "export const statementReference=source=>`statement:${hash([source.campaign,source.id,source.revision])}`;"
+        },
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createStatementLineage({sourceAuthority,sourceRegistry,readMessage,readChannel}){\r\n if(typeof sourceAuthority?.revalidate!=='function'||typeof sourceRegistry?.get!=='function'||[readMessage,readChannel].some(f=>typeof f!=='function'))throw new TypeError('Native statement lineage read"
         }
       ],
       "imports": [
@@ -3835,7 +3841,7 @@
           "status": "external"
         }
       ],
-      "functions": 7,
+      "functions": 8,
       "sqlStatements": 0
     },
     {
