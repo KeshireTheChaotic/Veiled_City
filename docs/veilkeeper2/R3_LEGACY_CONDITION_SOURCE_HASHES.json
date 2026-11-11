@@ -1,0 +1,31 @@
+{
+  "node": "v26.13.0",
+  "tests": 30,
+  "passed": 30,
+  "inputs": [
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "98b4957b856cbc48b79f398948515e28f8a7ca4e2115bd98667a3246f2247a1f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-legacy-condition-source.test.mjs",
+      "sha256": "3a36bcf6fa92da2de92c3e76dfb033ed81850b559fa487fbdbbc31b3b8513ae2"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-legacy-readonly-repository.test.mjs",
+      "sha256": "b30f1c7d3243e2040e156b6908a3da3817d994bf72fd2ffe0adff37d1b30522f"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}

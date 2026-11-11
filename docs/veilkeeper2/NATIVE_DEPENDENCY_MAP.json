@@ -1,5 +1,5 @@
 {
-  "head": "edebd7c08b449069917323d4682501cb407e9011",
+  "head": "f22e078801e35b15b97d74d36726b6c5edfbba54",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -1575,14 +1575,14 @@
     },
     {
       "file": "bot/src/v2/legacy-readonly-repository.js",
-      "sha256": "8324e3351e20241c971bf5751f31d696443ce2a139ac95401998ab7d74df7dbc",
+      "sha256": "98b4957b856cbc48b79f398948515e28f8a7ca4e2115bd98667a3246f2247a1f",
       "reachable": true,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openLegacyReadOnlyRepository(filename){\n  if(typeof filename!=='string'||!filename||filename===':memory:')throw new TypeError('Existing legacy database file required');\n  const db=new DatabaseSync(filename,{readOnly:true});\n  const character=db.prepare('SELECT * FROM characters WHERE"
+          "text": "export function openLegacyReadOnlyRepository(filename){\r\n  if(typeof filename!=='string'||!filename||filename===':memory:')throw new TypeError('Existing legacy database file required');\r\n  const db=new DatabaseSync(filename,{readOnly:true});\r\n  const character=db.prepare('SELECT * FROM characters WH"
         }
       ],
       "imports": [
@@ -1594,8 +1594,8 @@
           "status": "external"
         }
       ],
-      "functions": 6,
-      "sqlStatements": 3
+      "functions": 17,
+      "sqlStatements": 7
     },
     {
       "file": "bot/src/v2/model-gateway.js",

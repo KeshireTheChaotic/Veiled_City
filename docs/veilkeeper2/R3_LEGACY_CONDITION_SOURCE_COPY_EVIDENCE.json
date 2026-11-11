@@ -1,0 +1,11 @@
+{
+  "scope": "Read-only authorized historical test-copy metadata, not live mechanics validation",
+  "file": ".reports/online-7d5a6467-69fe-4adf-930f-d196b2579865/legacy-copy.sqlite",
+  "before": "0fe6f5c91a2df83aa7bfb92eb816630a110dfe435c8c1bc66065eea7361513bf",
+  "after": "0fe6f5c91a2df83aa7bfb92eb816630a110dfe435c8c1bc66065eea7361513bf",
+  "unchanged": true,
+  "result": {
+    "complete": true,
+    "referenceCount": 0
+  }
+}
