@@ -50,5 +50,20 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
     }
     return true;
   }
-  return Object.freeze({verifyDependencies,supports:kind=>kind==='hope_cost.commit',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'}]});
+  // Exact factual recap only. This is not approval of arbitrary prose or a new effect.
+  function authorizeMaterial(candidate){
+    try{
+      if(!['pc_agency','mechanical_result'].includes(candidate?.kind)||typeof candidate.text!=='string')return false;
+      const match=/^You spent ([1-9]\d*) Hope\.$/.exec(candidate.text);
+      if(!match||!Number.isSafeInteger(Number(match[1])))return false;
+      const {audience,receiptDependencies}=candidate;
+      if(!audience||!Array.isArray(receiptDependencies)||receiptDependencies.length!==1)return false;
+      const source=sourceAuthority.inspectReference(audience.source_ref,audience.revision);
+      if(source.campaign!==audience.campaign||source.scene!==audience.scene||JSON.stringify(source.recipients)!==JSON.stringify(audience.recipients))return false;
+      verifyDependencies(source,receiptDependencies);
+      const receipt=inspect(source,receiptDependencies[0].receiptRef);
+      return receipt.effects.length===1&&receipt.effects[0].kind==='resource_spent'&&receipt.effects[0].resource==='hope'&&receipt.effects[0].amount===Number(match[1]);
+    }catch{return false;}
+  }
+  return Object.freeze({authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'}]});
 }

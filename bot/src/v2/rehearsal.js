@@ -3,6 +3,7 @@ import {createSourceAuthority} from './source-authority.js';
 import {createContextAuthority} from './context-authority.js';
 import {createModelGateway} from './model-gateway.js';
 import {createOfflinePublicationQueue} from './publication-queue.js';
+import {createProseMaterialReview} from './prose-material-review.js';
 import {createKnowledgeAuthority} from './knowledge-authority.js';
 import {createRecallPlanner} from './recall-planner.js';
 import {createPrivatePlanner} from './private-planner.js';
@@ -32,7 +33,7 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
   }
   const kernel=createKernel({authority,journal,rules:createRulesetRegistry(rules),context,knowledge,actionAuthority:nativeActions});
   const gateway=createModelGateway({contextAuthority:context,provider});
-  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context,...(proseReview?{materialReview:proseReview}:{})});
+  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context,materialReview:proseReview??createProseMaterialReview({authorizeMaterial:candidate=>actionAuthority?.authorizeMaterial?.(candidate)===true})});
   const planner=planning?createPrivatePlanner({...planning,sourceAuthority:authority}):null;
   async function plan(event,{signal}={}){
     if(!planner)throw new Error('Private planner not installed');

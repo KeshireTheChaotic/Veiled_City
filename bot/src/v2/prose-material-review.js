@@ -8,7 +8,7 @@ const escape=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
  */
 export function createProseMaterialReview({readControlledNames=()=>[],readIndependentSpeakers=()=>[],authorizeMaterial=()=>false}={}){
   if(typeof readControlledNames!=='function'||typeof readIndependentSpeakers!=='function'||typeof authorizeMaterial!=='function')throw new TypeError('Native prose review dependencies required');
-  function review(text,audience){
+  function review(text,audience,{receiptDependencies=[]}={}){
     if(typeof text!=='string'||!text.trim()||text.length>20000)throw new Error('Bounded prose required');
     const names=readControlledNames(audience);
     if(!Array.isArray(names)||names.length>128||names.some(n=>typeof n!=='string'||!n.trim()||n.length>256))throw new Error('Native controlled character names required');
@@ -33,7 +33,7 @@ export function createProseMaterialReview({readControlledNames=()=>[],readIndepe
         }
       }
       const issues=candidates.filter(candidate=>{
-        try{const decision=authorizeMaterial(Object.freeze({...candidate,text:body,audience}));if(decision&&typeof decision.then==='function'){Promise.resolve(decision).catch(()=>{});return true;}return decision!==true;}catch{return true;}
+        try{const decision=authorizeMaterial(Object.freeze({...candidate,text:body,audience,receiptDependencies}));if(decision&&typeof decision.then==='function'){Promise.resolve(decision).catch(()=>{});return true;}return decision!==true;}catch{return true;}
       });
       return Object.freeze({id:`segment:${hash([audience,body,index])}`,index,text:body,status:issues.length?'withheld':'screened',issues:Object.freeze(issues)});
     }));

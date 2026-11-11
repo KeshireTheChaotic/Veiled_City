@@ -96,3 +96,22 @@ test('receipt-proof drift during continuation holds prose but preserves the alre
   const app=createRehearsal({readers:f.readers,records:{metadata:()=>null,readText:()=>null},actionAuthority:native,provider:{generate:async input=>{calls++;if(!input.history.length)return {toolCalls:[{id:'commit',name:'action_propose',arguments:{...f.proposal,source_ref:input.context.source_ref}}]};drift=true;return {text:'A draft that must remain held.'};}}});
   await assert.rejects(app.respond(f.event('choice')),/receipt dependency changed/);assert.equal(calls,2);assert.equal(f.actions.readHope('c','pc').hope,1);assert.equal(f.actions.readOutcome('c','a').effectsCommitted,true);
 });
+
+
+test('only an exact private Hope recap backed by this draft tool receipt clears material screening',async t=>{
+  const f=fixture(t),app=createRehearsal({readers:f.readers,records:{metadata:()=>null,readText:()=>null},actionAuthority:f.native,provider:{generate:async input=>!input.history.length?{toolCalls:[{id:'cost',name:'action_propose',arguments:{...f.proposal,source_ref:input.context.source_ref}}]}:{text:'You spent 2 Hope.\n\nYou spend 3 Hope.\n\nYou spent 2 Hope and swore loyalty.\n\nThe clerk waits.'}}});
+  const turn=await app.respond(f.event('choice')),review=app.reviewPublication(turn.publication.id);
+  assert.equal(review.segments[0].status,'screened');assert.equal(review.segments[1].status,'withheld');assert.equal(review.segments[2].status,'withheld');assert.equal(review.segments[3].status,'screened');assert.equal(review.heldCount,2);assert.equal(review.status,'requires_semantic_review');assert.equal(review.sent,false);assert.equal(review.knowledgeAcknowledged,false);assert.equal(f.actions.readHope('c','pc').hope,1);
+});
+
+test('native factual authorization rejects absent, forged, duplicated, wrong-scope or mismatched receipt evidence',t=>{
+  const f=fixture(t,{partyOriginal:true}),receipt=f.tools.action_propose(f.proposal),entry={receiptRef:'a',receiptHash:receipt.receipt_hash},audience={campaign:'c',scene:'s',source_ref:f.choice.id,revision:f.choice.revision,recipients:['u']},candidate={kind:'mechanical_result',text:'You spent 2 Hope.',audience,receiptDependencies:[entry]};
+  assert.equal(f.native.authorizeMaterial(candidate),true);
+  for(const altered of [{receiptDependencies:[]},{receiptDependencies:[entry,entry]},{receiptDependencies:[{...entry,receiptHash:'0'.repeat(64)}]},{audience:{...audience,campaign:'other'}},{audience:{...audience,recipients:['u','v']}},{audience:{...audience,source_ref:f.origin.id,revision:f.origin.revision,recipients:['u','v']}},{kind:'pc_inner_state'},{text:'You spent 3 Hope.'},{text:'You spent 2 Hope. You agree.'},{text:'You spent 2 Hope?'}])assert.equal(f.native.authorizeMaterial({...candidate,...altered}),false,JSON.stringify(altered));
+  const old=f.scenes.readers.readMessage('c','choice');f.scenes.commitSnapshot({campaignId:'c',principal:'u',sourceRef:'edited',records:[{kind:'message',expectedRevision:Number(old.revision),data:{id:'choice',campaignId:'c',channelId:'private',userId:'u',deleted:false,text:'Edited owner message'}}]},{check:()=>{}});assert.equal(f.native.authorizeMaterial(candidate),false);assert.equal(f.actions.readHope('c','pc').hope,1);
+});
+
+test('a true historical spend that was not observed by this draft tools grants no material authorization',async t=>{
+  const f=fixture(t);f.tools.action_propose(f.proposal);const app=createRehearsal({readers:f.readers,records:{metadata:()=>null,readText:()=>null},actionAuthority:f.native,provider:{generate:async()=>({text:'You spent 2 Hope.'})}}),turn=await app.respond(f.event('choice')),review=app.reviewPublication(turn.publication.id);
+  assert.deepEqual(app.inspectPublication(turn.publication.id).receiptDependencies,[]);assert.equal(review.heldCount,1);assert.equal(review.segments[0].status,'withheld');assert.equal(turn.metrics.modelCalls,1);assert.equal(f.actions.readHope('c','pc').hope,1);
+});

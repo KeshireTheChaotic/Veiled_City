@@ -7,7 +7,7 @@ Current-state review complete for this checkpoint; the full R0–R8 implementati
 - Worktree: `D:/Library/Development/Veiled_City_2/rebuild`, branch `rebuild/veilkeeper2-audience-first`. Deprecated `D:/Library/Development/Veiled_City` is not an implementation target. Its user-authorized credential file may be loaded by path without printing/copying values.
 - Preserve unrelated dirty `README.md`; never stage/reset/clean it. No subagents authorized. New native tests under `bot/tests/veilkeeper2` are ignored: force-add exact paths. Run fresh explicit changed-dependency checks; never present simulated SDK/model checks as live quality.
 - Owner forbids computer-use until explicitly reauthorized. Do not use Windows/browser UI automation as a workaround. Autonomous bot/API and native testing are authorized.
-- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Latest measured limits were 87% primary / 59% weekly used; re-read before relying on them.
+- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. Latest measured limits were 89% primary / 60% weekly used; re-read before relying on them.
 - Commit scoped phase work. Publish/integrate completed major phases only to the rebuild branch, never the baseline. Already on the integration target: no self-merge. No major phase has passed; production cutover needs separate authorization.
 - Frozen baseline `codex/clean-ai-gm-2026-10` remains `1ba6c7e15db1a66ba34b36336f31437beffe44d6`, freshly checked by git ls-remote this checkpoint. Origin rebuild remains `fda77bd84b216e0e883c8b1348b12e7611787388`; newer local slices have not been pushed. Refresh the source audit if baseline advances.
 
@@ -43,6 +43,8 @@ Historical reports cover native ordinary rolls, Hope/Fear, damage/death/Blaze, c
 
 - R3_GENERIC_ENGINE_REPORT.md (current checkpoint): fixed Hope-cost generic engine bridge, current owner-private consent/source checks, replay/rollback, immutable tool-observed receipt lineage and cold publication verification. 198 passing affected checks across 21 files. Local GM prompt failed tool selection/agency; corrected explicit transport control committed synthetic Hope 3→1. No human consent or semantic-quality claim.
 
+- R4_RECEIPT_RECAP_REPORT.md (current checkpoint): observed native Hope receipt can authorize only an exact private whole-paragraph factual recap during screening. Wrong amount/scope/hash/extra choices remain held. 95 passing affected checks across 15 files. Still requires_semantic_review, no publication.
+
 ## Live test state — preserve it
 
 Online testing is authorized only in guild 1467249344947159291, against a legacy DB copy; earlier external-inference cap was $5. Current tests use local Ollama with separate bounded call budgets. Process handle 62251 runs online-qualification.mjs from an earlier source snapshot. Verify the handle before claiming liveness; it has not been hot-reloaded with subsequent fixes.
@@ -67,6 +69,6 @@ ONLINE_OLLAMA_REPORT.md and qualification/ retain actual synthetic local-model e
 
 ## Next exact work and rollback
 
-Connect actual native action/consent/death receipts to scope-bound consequential material review and generic consequence orchestration. Preserve one-call ordinary prose and engine-owned outcomes; never mint mechanical authority from review JSON. Then implement independently validated repaired-candidate publication/ack and close R4–R8 gates. Observed native Hope receipts now have durable hash dependencies checked before publication. Other effect families/current-state dependencies and receipt-backed semantic assertion review remain open.
+The fixed Hope-cost tool bridge and exact private recap check are implemented. Next provide code-owned audience-authorized operation discovery and native consent workflow composition, then connect the remaining action/consent/death receipts to broader consequential review and generic orchestration. Preserve one-call ordinary prose and engine-owned outcomes; never mint mechanical authority from review JSON. Then implement independently validated repaired-candidate publication/ack and close R4–R8 gates. Observed native Hope receipts now have durable hash dependencies checked before publication. Other effect families/current-state dependencies and receipt-backed semantic assertion review remain open.
 
 Preserve all native stores, source/control epochs, choices, rolls, uncertain attempts and publication receipts. No reset/clean or deletion to make older code run. Use preserved copies and explicit reviewed migrations for rollback; disable publication before downgrading safeguards. Production/deployment remains unchanged and requires separate authorization.

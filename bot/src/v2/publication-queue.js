@@ -24,7 +24,7 @@ export function createOfflinePublicationQueue({gateway,contextAuthority,material
   }
   // Native diagnostic/review surface only. "screened" is not a publication grant.
   function evaluate(id,fragments,retiredCount){
-    inspect(id);const row=rows.get(id),segments=materialReview.review(fragments.join('\n\n'),row.audience);
+    inspect(id);const row=rows.get(id),segments=materialReview.review(fragments.join('\n\n'),row.audience,{receiptDependencies:row.receiptDependencies});
     inspect(id);
     return Object.freeze({id,status:'requires_semantic_review',sent:false,knowledgeAcknowledged:false,
       candidateText:segments.filter(s=>s.status==='screened').map(s=>s.text).join('\n\n'),
