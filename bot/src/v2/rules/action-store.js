@@ -146,7 +146,7 @@ export function openActionStore(filename=':memory:'){
     db.prepare('INSERT INTO vk3_action_events VALUES(?,?,?)').run(c,receipt.id,JSON.stringify(receipt));return receipt;
   });}
   const pcLife=createPcLifeState({db,tx,readPcDefenses,readHope,damageEvent,deathEvent});
-  return Object.freeze({...pcLife,...createPcBootstrap({db,tx}),create,transition,read,readyActionMetadata,pendingCostMetadata,acceptedConsentRefs,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
+  return Object.freeze({...pcLife,...createPcBootstrap({db,tx}),create,transition,read,readyActionMetadata,pendingCostMetadata,acceptedConsentRefs,initializeHope,readHope,commitHopeCost,registerHopeTerms,recordHopeConsent,readActionTerms,readConsent,readConsentsForAction:(c,ref)=>db.prepare("SELECT data FROM vk3_cost_consents WHERE campaign=? AND json_extract(data,'$.actionRef')=? LIMIT 2").all(c,ref).map(decode),initializePcDefenses,readPcDefenses,commitIncomingDamage,readIncomingDamage:damageEvent,
     recordIncomingDeathReview:(c,a,options)=>recordDeathEvidence(c,a,'review',options),recordIncomingDeathChoice:(c,a,options)=>recordDeathEvidence(c,a,'choice',options),
     readIncomingDeathReview:(c,a)=>deathEvent(c,a,'review'),readIncomingDeathChoice:(c,a)=>deathEvent(c,a,'choice'),
     readIncomingDeath:(c,a)=>decode(db.prepare('SELECT data FROM vk3_action_events WHERE campaign=? AND source=?').get(c,`incoming-death:${a}`)),

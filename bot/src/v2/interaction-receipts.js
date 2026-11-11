@@ -22,9 +22,12 @@ export function openInteractionReceipts(filename=':memory:'){
   function finishReply(ref,status,{check}){return tx(check,()=>{const row=required(ref);if(row.reply!=='attempted'||!['delivered','uncertain'].includes(status))throw new Error('Saved private reply attempt required');return save({...row,reply:status});});}
   function reconcile(ref,{check,readEvidence}){return tx(check,()=>{
     const row=required(ref),proof=typeof readEvidence==='function'?structuredClone(readEvidence(ref)):null,b=row.binding,r=proof?.receipt;
-    if(proof?.kind!=='native_death_interaction_receipt'||proof.bindingHash!==row.bindingHash||proof.campaignId!==b.campaignId||proof.sceneId!==b.sceneId||proof.actorId!==b.actorId||proof.ownerUserId!==b.principal||!id(proof.sourceRef)||!id(proof.sourceRevision)||!r||Object.keys(r).sort().join(',')!=='hash,id'||!id(r.id)||typeof r.hash!=='string'||!/^[a-f0-9]{64}$/.test(r.hash)||row.receipt&&hash(row.receipt)!==hash(r)||row.reconciliation&&hash(row.reconciliation)!==hash(proof))throw new Error('Exact canonical native interaction receipt required');
+    if(!['native_death_interaction_receipt','native_cost_interaction_receipt'].includes(proof?.kind)||proof.bindingHash!==row.bindingHash||proof.campaignId!==b.campaignId||proof.sceneId!==b.sceneId||proof.actorId!==b.actorId||proof.ownerUserId!==b.principal||!id(proof.sourceRef)||!id(proof.sourceRevision)||!r||Object.keys(r).sort().join(',')!=='hash,id'||!id(r.id)||typeof r.hash!=='string'||!/^[a-f0-9]{64}$/.test(r.hash)||row.receipt&&hash(row.receipt)!==hash(r)||row.reconciliation&&hash(row.reconciliation)!==hash(proof))throw new Error('Exact canonical native interaction receipt required');
     if(hash(readEvidence(ref))!==hash(proof))throw new Error('Native reconciliation evidence changed');
     return save({...row,processing:'committed',receipt:r,reconciliation:proof,reply:row.reply==='not_started'?'withheld':row.reply==='attempted'?'uncertain':row.reply});
   });}
-  return Object.freeze({read,claim,acknowledge,complete,hold,claimReply,finishReply,reconcile,close:()=>db.close()});
+  return Object.freeze({read,recentUncertain(campaignId,principal,channelId){
+    if(![campaignId,principal,channelId].every(id))throw new Error('Native owner interaction scope required');
+    return db.prepare("SELECT data FROM vk3_native_interactions WHERE json_extract(data,'$.binding.campaignId')=? AND json_extract(data,'$.binding.principal')=? AND json_extract(data,'$.binding.channelId')=? AND (json_extract(data,'$.processing')='held' OR json_extract(data,'$.reply') IN ('attempted','uncertain') OR json_extract(data,'$.ack')='uncertain') ORDER BY rowid DESC LIMIT 101").all(campaignId,principal,channelId).map(r=>JSON.parse(r.data));
+  },claim,acknowledge,complete,hold,claimReply,finishReply,reconcile,close:()=>db.close()});
 }

@@ -6,7 +6,7 @@ import {buildNativeCommands} from '../../src/v2/command-definitions.js';
 import {registerNativeCommands} from '../../src/v2/register-commands.js';
 const legacy=()=>JSON.parse(JSON.stringify(buildCommands()));
 test('native overlay retains every baseline declaration except its explicitly added fields',()=>{
-  const base=legacy(),native=buildNativeCommands(),gm=new Set(['session-reopen','register-character','rebind-character','bootstrap-preview','bootstrap-review','drafts','publish-draft']),player=new Set(['death-review','death-refresh','death-reconcile']);
+  const base=legacy(),native=buildNativeCommands(),gm=new Set(['session-reopen','register-character','rebind-character','bootstrap-preview','bootstrap-review','drafts','publish-draft']),player=new Set(['death-review','death-refresh','death-reconcile','cost-reconcile']);
   assert.deepEqual(validateCommandSchema(native),[]);assert.equal(native.length,base.length);
   for(const command of native){
     if(command.name==='vc-session')for(const sub of command.options)if(['absent','leave'].includes(sub.name))sub.options=sub.options.filter(o=>o.name!=='character');

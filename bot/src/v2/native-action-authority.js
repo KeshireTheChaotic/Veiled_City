@@ -1,6 +1,5 @@
-import {createHash} from 'node:crypto';
+import {inspectHopeReceipt} from './native-hope-receipt.js';
 import {createAtomicHopeCostAuthority} from './rules/hope-cost-authority.js';
-const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 
 /** Fixed native engine bridge. A reference is not consent, a cost, or a state patch.
@@ -18,14 +17,8 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
   function inspect(source,ref){
     privateSource(source);if(!id(ref))throw new Error('Native receipt reference required');
     const action=actionStore.read(source.campaign,ref);owner(source,action);
-    const receipt=actionStore.readOutcome(source.campaign,ref),terms=actionStore.readActionTerms(source.campaign,ref),consent=receipt&&actionStore.readConsent(source.campaign,receipt.cost?.id);
-    if(action.status!=='resolved'||action.effectsCommitted!==true||receipt?.effectsCommitted!==true||JSON.stringify(receipt.afterAction)!==JSON.stringify(action)||receipt.request?.actionId!==ref||receipt.request.campaignId!==source.campaign||!terms||!consent||consent.status!=='accepted'||receipt.cost?.ownerConfirmed!==true)throw new Error('Committed native action receipt required');
-    for(const key of ['id','campaignId','sceneId','actorId','ownerUserId','sourceRef','sourceRevision'])if(terms[key]!==action[key])throw new Error('Native receipt identity mismatch');
-    for(const key of ['campaignId','sceneId','actorId','ownerUserId','sourceRef','sourceRevision'])if(consent[key]!==action[key]||key!=='sceneId'&&receipt.cost[key]!==action[key])throw new Error('Native consent identity mismatch');
-    if(consent.actionRevision!==terms.revision||receipt.cost.revision!==consent.revision||receipt.cost.operation!=='spend_hope'||receipt.cost.status!=='accepted'||receipt.cost.choiceSourceRef!==consent.choiceSourceRef||receipt.cost.choiceSourceRevision!==consent.choiceSourceRevision)throw new Error('Native consent lineage mismatch');
-    if(terms.cost?.resource!=='hope'||!Number.isSafeInteger(terms.cost.amount)||terms.cost.amount<1||consent.actionRef!==ref||consent.amount!==terms.cost.amount||consent.costSlot!==terms.cost.slot||receipt.cost.amount!==terms.cost.amount||receipt.cost.actionRef!==ref||receipt.cost.costSlot!==terms.cost.slot||receipt.cost.ownerUserId!==action.ownerUserId||receipt.beforeHope?.actorId!==action.actorId||receipt.afterHope?.actorId!==action.actorId||receipt.beforeHope.ownerUserId!==action.ownerUserId||receipt.afterHope.ownerUserId!==action.ownerUserId||receipt.afterHope.hope!==receipt.beforeHope.hope-terms.cost.amount||receipt.afterHope.revision!==receipt.beforeHope.revision+1)throw new Error('Exact native Hope outcome required');
-    privateSource(source);
-    return Object.freeze({receipt_ref:ref,receipt_hash:hash([action,receipt,terms,consent]),status:'resolved',operation:'hope_cost',actor_ref:action.actorId,source_ref:action.sourceRef,source_revision:action.sourceRevision,effects_committed:true,disclosure:Object.freeze({recipient_ids:Object.freeze([source.principal]),npc_knowledge:false}),effects:Object.freeze([Object.freeze({kind:'resource_spent',resource:'hope',amount:terms.cost.amount})])});
+    const result=inspectHopeReceipt({actionStore,campaignId:source.campaign,actionRef:ref,actorId:action.actorId,ownerUserId:source.principal,sceneId:action.sceneId});
+    privateSource(source);return result;
   }
   function propose(source,input){
     privateSource(source);

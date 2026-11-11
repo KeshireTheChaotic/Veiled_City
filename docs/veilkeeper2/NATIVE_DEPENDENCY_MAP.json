@@ -1,5 +1,5 @@
 {
-  "head": "c58b8e310e06c3df04e49e96ab8c6775956b2e5d",
+  "head": "21d408a7fd293b27d360a76da6ca03cb146b0bcd",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 93,
-  "reachableNativeModules": 72,
+  "nativeModules": 96,
+  "reachableNativeModules": 75,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
@@ -473,14 +473,14 @@
     },
     {
       "file": "bot/src/v2/command-definitions.js",
-      "sha256": "9a3079c6c705048db2f815456b076fba181c76c16b7e0e25bd961c15c57622ba",
+      "sha256": "ccb00dc38ed6ef3cc2187a7566ca2431e14feeaf19773664f91222a67bf4498d",
       "reachable": true,
       "exports": [
         {
           "line": 7,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function buildNativeCommands(){\n  const commands=JSON.parse(JSON.stringify(buildLegacyCommands()));\n  const command=name=>{const row=commands.find(c=>c.name===name);if(!row)throw new Error(`Missing baseline command ${name}`);return row;};\n  for(const name of ['absent','leave']){\n    const row"
+          "text": "export function buildNativeCommands(){\r\n  const commands=JSON.parse(JSON.stringify(buildLegacyCommands()));\r\n  const command=name=>{const row=commands.find(c=>c.name===name);if(!row)throw new Error(`Missing baseline command ${name}`);return row;};\r\n  for(const name of ['absent','leave']){\r\n    const"
         }
       ],
       "imports": [
@@ -572,6 +572,37 @@
         }
       ],
       "functions": 24,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/cost-interaction-reconciliation.js",
+      "sha256": "a5bda133263587ab8d9a5bccc2695e5da624f86a05d43a56e259ccc29d169dd4",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createCostInteractionReconciliation({interactionReceipts,decisionStore,promptStore,actionStore,sourceRegistry}){\r\n  if(typeof actionStore?.readConsentsForAction!=='function'||typeof sourceRegistry?.get!=='function'||typeof interactionReceipts?.reconcile!=='function')throw new TypeErr"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-hope-receipt.js",
+          "target": "bot/src/v2/native-hope-receipt.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 6,
       "sqlStatements": 0
     },
     {
@@ -726,6 +757,44 @@
         }
       ],
       "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-cost-commands.js",
+      "sha256": "6fbe1b178b49e96adf9eb13f141efd4704b81d4aebcf54af067328f043b181d5",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordCostCommands({client,workflow,sceneStore,readGmRoleId=()=>null,interactionReceipts,onError=()=>{}}){\r\n  if(typeof workflow?.reconcileInteraction!=='function'||typeof workflow?.latestUncertain!=='function'||typeof readGmRoleId!=='function')throw new TypeError('Native owne"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 23,
       "sqlStatements": 0
     },
     {
@@ -1066,11 +1135,11 @@
     },
     {
       "file": "bot/src/v2/discord-interaction-router.js",
-      "sha256": "ac04b581e78f23fc451ac23f1a9baf913e0f65d4fe6a4c3f1ab0d2a7c0c43d3e",
+      "sha256": "86ddf4df7d27c286b61c98e5cdd723c027dba6f0151e30677dff6cdb3bf7d41a",
       "reachable": true,
       "exports": [
         {
-          "line": 13,
+          "line": 14,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||type"
@@ -1080,54 +1149,61 @@
         {
           "line": 1,
           "kind": "ImportDeclaration",
+          "specifier": "./discord-cost-commands.js",
+          "target": "bot/src/v2/discord-cost-commands.js",
+          "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
           "specifier": "./native-cost-workflow.js",
           "target": "bot/src/v2/native-cost-workflow.js",
           "status": "resolved"
         },
         {
-          "line": 2,
+          "line": 3,
           "kind": "ImportDeclaration",
           "specifier": "discord.js",
           "target": null,
           "status": "external"
         },
         {
-          "line": 3,
+          "line": 4,
           "kind": "ImportDeclaration",
           "specifier": "./native-death-workflow.js",
           "target": "bot/src/v2/native-death-workflow.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./discord-death-commands.js",
           "target": "bot/src/v2/discord-death-commands.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./discord-gm-session.js",
           "target": "bot/src/v2/discord-gm-session.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./discord-player-channel.js",
           "target": "bot/src/v2/discord-player-channel.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./discord-gm-authority.js",
           "target": "bot/src/v2/discord-gm-authority.js",
@@ -1361,14 +1437,14 @@
     },
     {
       "file": "bot/src/v2/interaction-receipts.js",
-      "sha256": "75cd9cb35f68206d7dda2791643d2a52010d4f37727615ac1b2644be664cc6d7",
+      "sha256": "4ae378f7ed4ddcae47f6cac9de45d4a8c6e695e483b16923cc44926ba86c0326",
       "reachable": true,
       "exports": [
         {
           "line": 6,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openInteractionReceipts(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{db.exec('PRAGMA busy_timeout=5000');if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(row=>row.name!=='vk3_native_interactions'))throw n"
+          "text": "export function openInteractionReceipts(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{db.exec('PRAGMA busy_timeout=5000');if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(row=>row.name!=='vk3_native_interactions'))throw"
         }
       ],
       "imports": [
@@ -1387,8 +1463,8 @@
           "status": "external"
         }
       ],
-      "functions": 23,
-      "sqlStatements": 6
+      "functions": 25,
+      "sqlStatements": 7
     },
     {
       "file": "bot/src/v2/kernel.js",
@@ -1550,11 +1626,11 @@
     },
     {
       "file": "bot/src/v2/native-action-authority.js",
-      "sha256": "c81ea78b7dc2a6c9b49aab9fcdd08f7f9166d6188376b481d426aa81f3894e17",
+      "sha256": "37c7d66dd4611057dd1c8aedd687f17919ac56e32f7fd74553b429b2b3d5d9b3",
       "reachable": true,
       "exports": [
         {
-          "line": 9,
+          "line": 8,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='f"
@@ -1564,9 +1640,9 @@
         {
           "line": 1,
           "kind": "ImportDeclaration",
-          "specifier": "node:crypto",
-          "target": null,
-          "status": "external"
+          "specifier": "./native-hope-receipt.js",
+          "target": "bot/src/v2/native-hope-receipt.js",
+          "status": "resolved"
         },
         {
           "line": 2,
@@ -1576,7 +1652,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 12,
+      "functions": 11,
       "sqlStatements": 0
     },
     {
@@ -1627,68 +1703,75 @@
     },
     {
       "file": "bot/src/v2/native-cost-workflow.js",
-      "sha256": "403fa4f4bdbdb3d1870098d25ed33d83deff4123df3197f4b1549ea14636acfe",
+      "sha256": "7d92b98e56b2493d9b92092b4f161633c0c7075587562a9c95521937bc5989fb",
       "reachable": true,
       "exports": [
         {
-          "line": 11,
+          "line": 12,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAuthority,readActor,readRoute,promptStore,decisionStore,interactionReceipts,nativeActions,allowedGuildIds=null,clock=()=>Date.now(),onError=()=>{}}){\r\n  if(typeof promptStore?.ensure!=='function'||typeof nativeActions?.pro"
+          "text": "export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAuthority,sourceRegistry,readActor,readRoute,promptStore,decisionStore,interactionReceipts,nativeActions,allowedGuildIds=null,clock=()=>Date.now(),onError=()=>{}}){\r\n  if(typeof promptStore?.ensure!=='function'||typeof nat"
         }
       ],
       "imports": [
         {
           "line": 1,
           "kind": "ImportDeclaration",
-          "specifier": "node:crypto",
-          "target": null,
-          "status": "external"
+          "specifier": "./cost-interaction-reconciliation.js",
+          "target": "bot/src/v2/cost-interaction-reconciliation.js",
+          "status": "resolved"
         },
         {
           "line": 2,
           "kind": "ImportDeclaration",
-          "specifier": "discord.js",
+          "specifier": "node:crypto",
           "target": null,
           "status": "external"
         },
         {
           "line": 3,
           "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
           "specifier": "./discord-audience-reader.js",
           "target": "bot/src/v2/discord-audience-reader.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./discord-cost-decisions.js",
           "target": "bot/src/v2/discord-cost-decisions.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./component-choice-sources.js",
           "target": "bot/src/v2/component-choice-sources.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./rules/hope-consent-ingress.js",
           "target": "bot/src/v2/rules/hope-consent-ingress.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./death-prompts.js",
           "target": "bot/src/v2/death-prompts.js",
           "status": "resolved"
         }
       ],
-      "functions": 36,
+      "functions": 40,
       "sqlStatements": 0
     },
     {
@@ -1796,6 +1879,30 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/native-hope-receipt.js",
+      "sha256": "1fdfb64ce378bfd7884c9e639164bb87d60449266408ac97d7671bc307bafa72",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectHopeReceipt({actionStore,campaignId,actionRef,actorId,ownerUserId,sceneId}){\r\n  const ref=actionRef,action=actionStore.read(campaignId,ref);\r\n  if(!action||action.kind!=='hope_cost'||action.campaignId!==campaignId||action.actorId!==actorId||action.ownerUserId!==ownerUserId||ac"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/native-private-channel-registration.js",
       "sha256": "a75d1ad8664c4aa0f0d5f85e9893e40334d9d49fe1b58b47d988dcc6343f8294",
       "reachable": true,
@@ -1821,7 +1928,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "4667c06eaf2e778e5bb26c99d1f6b967d91a1b3d42412d1d1197140566db777a",
+      "sha256": "0c12a7d90ca9de45ac3de4b19157e346bed02046d7cd429217ea78a03aee1a4f",
       "reachable": true,
       "exports": [
         {
@@ -1987,7 +2094,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 18,
+      "functions": 19,
       "sqlStatements": 0
     },
     {
@@ -2534,7 +2641,7 @@
     },
     {
       "file": "bot/src/v2/rules/action-store.js",
-      "sha256": "de05136ce4bb9e476bb106f9fd03e5ca5ca36edb83fa1cf4962efa46d0ff5344",
+      "sha256": "cf49aead626f698c3ce738d7e23c7c7c783fe02f2ffa49c6287350b30485c72c",
       "reachable": true,
       "exports": [
         {
@@ -2588,8 +2695,8 @@
           "status": "resolved"
         }
       ],
-      "functions": 52,
-      "sqlStatements": 41
+      "functions": 53,
+      "sqlStatements": 42
     },
     {
       "file": "bot/src/v2/rules/blaze-costs.js",
@@ -2873,14 +2980,14 @@
     },
     {
       "file": "bot/src/v2/rules/hope-consent-ingress.js",
-      "sha256": "ab9c211b8fa15e989d506db8896f8542523077f0561f5dbe5994e2520d12bb38",
+      "sha256": "0808188c24a4fe54e1e614101c351b113ace07466a4fcdc1c0df0b6e22e221f8",
       "reachable": true,
       "exports": [
         {
           "line": 5,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createHopeConsentIngress({sourceAuthority,readActor,readDecision,actionStore}){\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof readDecision!=='function'||typeof actionStore?.recordHopeConsent!=='function')throw new TypeError('Native consen"
+          "text": "export function createHopeConsentIngress({sourceAuthority,readActor,readDecision,actionStore}){\r\n  if(typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof readDecision!=='function'||typeof actionStore?.recordHopeConsent!=='function')throw new TypeError('Native conse"
         }
       ],
       "imports": [

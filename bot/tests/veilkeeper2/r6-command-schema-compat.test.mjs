@@ -23,3 +23,7 @@ test('every native GM operation is a typed /vc-gm subcommand and /vc-roll stays 
   const player=byName('vc-player'),spec={'death-review':['request'],'death-refresh':['prompt','request'],'death-reconcile':['interaction']};
   for(const [name,opts] of Object.entries(spec)){const s=sub(player,name);assert.ok(s,`vc-player ${name}`);assert.deepEqual((s.options??[]).map(o=>o.name).sort(),opts);for(const o of s.options)assert.equal(o.required,true);assert.equal(sub(byName('vc-roll'),name),undefined);}
 });
+
+test('owner cost reconciliation has an optional bounded typed reference and leaves dice commands unchanged',()=>{
+ const cost=sub(byName('vc-player'),'cost-reconcile');assert.ok(cost);assert.equal(cost.options.length,1);const reference=stringOption(cost,'interaction');assert.ok(reference);assert.equal(reference.required,false);assert.equal(sub(byName('vc-roll'),'cost-reconcile'),undefined);
+});

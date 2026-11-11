@@ -1,3 +1,4 @@
+import {createCostInteractionReconciliation} from './cost-interaction-reconciliation.js';
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createDiscordAudienceReader} from './discord-audience-reader.js';
@@ -8,9 +9,10 @@ import {deathPromptPayload as buttonPayload} from './death-prompts.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const payload=row=>({content:`This action costs ${row.amount} Hope. Spend it? Declining cancels this action.`,components:[{type:1,components:[{type:2,style:1,label:`Spend ${row.amount} Hope`,custom_id:row.acceptToken},{type:2,style:2,label:'Decline',custom_id:row.rejectToken}]}]});
 /** Native owner consent and fixed cost execution. No model text can set terms or accept a prompt. */
-export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAuthority,readActor,readRoute,promptStore,decisionStore,interactionReceipts,nativeActions,allowedGuildIds=null,clock=()=>Date.now(),onError=()=>{}}){
+export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAuthority,sourceRegistry,readActor,readRoute,promptStore,decisionStore,interactionReceipts,nativeActions,allowedGuildIds=null,clock=()=>Date.now(),onError=()=>{}}){
   if(typeof promptStore?.ensure!=='function'||typeof nativeActions?.propose!=='function'||typeof readRoute!=='function'||typeof readActor!=='function')throw new TypeError('Native cost workflow dependencies required');
   const audiences=createDiscordAudienceReader({client}),decisions=createDiscordCostDecisions({client,readPrompt:promptStore.readPrompt,readActionTerms:actionStore.readActionTerms,decisionStore}),sources=createComponentChoiceSources({decisionReader:decisions,sceneStore,sourceAuthority,audienceReader:audiences}),ingress=createHopeConsentIngress({sourceAuthority,readActor,readDecision:sources.readDecision,actionStore});
+  const reconciliation=createCostInteractionReconciliation({interactionReceipts,decisionStore,promptStore,actionStore,sourceRegistry});
   const pending=new Set(),publications=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
   function inspect(source,actionRef){
@@ -73,5 +75,10 @@ export function createNativeCostWorkflow({client,actionStore,sceneStore,sourceAu
     }catch(error){report(error,event.id,stage);if(claimed){try{const row=interactionReceipts.read(event.id);if(row.ack==='claimed')interactionReceipts.acknowledge(event.id,'uncertain',{check:()=>{}});const held=interactionReceipts.hold(event.id,stage,{check:()=>{}});if(!closed&&held.ack==='deferred'&&held.reply==='not_started'){interactionReceipts.claimReply(event.id,{check:()=>{}});try{await event.editReply({content:'This control needs native review. Check the saved action before trying again.',allowedMentions:{parse:[]}});interactionReceipts.finishReply(event.id,'delivered',{check:()=>{}});}catch(replyError){interactionReceipts.finishReply(event.id,'uncertain',{check:()=>{}});report(replyError,event.id,'reply');}}}catch(storageError){report(storageError,event.id,'receipt');}}}
   }
   const listener=event=>{if(closed||event?.client!==client||event.user?.bot!==false||event.isButton?.()!==true||typeof event.id!=='string'||allowedGuildIds&&!allowedGuildIds.has(event.guildId)||!/^vk2cost:[a-f0-9]{48}$/.test(event.customId??''))return;const prompt=promptStore.readPrompt(event.customId);if(prompt)track(process(event,prompt));};client.on('interactionCreate',listener);
-  return Object.freeze({request,async present(source,actionRef){const result=request(source,actionRef);await publications.get(result.request_ref);return {result,prompt:promptStore.read(result.request_ref)};},reconcile:ref=>track(publish(ref)),async drain(){while(pending.size)await Promise.allSettled([...pending]);},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);decisions.close();}});
+  function latestUncertain({campaignId,principal,channelId}){
+    const rows=interactionReceipts.recentUncertain(campaignId,principal,channelId);if(rows.length>100)throw new Error('Choose a specific saved cost interaction');
+    const eligible=rows.filter(row=>{const b=row.binding;if(typeof b?.promptRef!=='string')return false;const p=promptStore.read(b.promptRef);if(!p||p.campaignId!==campaignId||p.ownerUserId!==principal||p.actorId!==b.actorId||p.channelId!==channelId)return false;return true;});
+    const unresolved=eligible.filter(row=>!row.reconciliation),chosen=unresolved.length?unresolved:eligible.slice(0,1);if(chosen.length!==1)throw new Error('Choose the specific saved cost interaction to check');return chosen[0].binding.id;
+  }
+  return Object.freeze({request,latestUncertain,reconcileInteraction:(ref,options)=>reconciliation.reconcile(ref,options),async present(source,actionRef){const result=request(source,actionRef);await publications.get(result.request_ref);return {result,prompt:promptStore.read(result.request_ref)};},reconcile:ref=>track(publish(ref)),async drain(){while(pending.size)await Promise.allSettled([...pending]);},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);decisions.close();}});
 }

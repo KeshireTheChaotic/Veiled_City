@@ -17,7 +17,8 @@ export function buildNativeCommands(){
   player.options.splice(privateIndex+1,0,
     sub('death-review',"Privately review your character's death choice for a pending incoming attack",string('request','Death request id from the prompt (incoming-death:...)')),
     sub('death-refresh','Replace your expired death-choice controls; saved choices are kept',string('request','Death request id from the prompt (incoming-death:...)'),string('prompt','Prompt id of the expired controls')),
-    sub('death-reconcile','Check the saved outcome of a death-choice click that showed no confirmation',string('interaction','Interaction id of that click')));
+    sub('death-reconcile','Check the saved outcome of a death-choice click that showed no confirmation',string('interaction','Interaction id of that click')),
+    sub('cost-reconcile','Check a saved cost decision after an uncertain confirmation',string('interaction','Saved interaction id; defaults to your only unresolved cost in this channel',false)));
   command('vc-gm').options.push(
     sub('session-reopen','Reopen a session that was ended with /vc-session end',string('session','Session id')),
     sub('register-character','Register an existing character to its owner in the active scene',string('character','Character id')),
