@@ -1,0 +1,89 @@
+{
+  "node": "v26.13.0",
+  "tests": 30,
+  "passed": 30,
+  "duration_ms": 12458.4766,
+  "log": ".reports/r3-condition-history-final-20261111.txt",
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "source_projection": "historical=true branches, direct native readers, composed expiry inspector, additional snapshot and cycle/depth guard",
+  "upstream_sources": [
+    {
+      "file": "bot/src/frameworks/daggerheart/group-feature-execution-rules.js",
+      "sha256": "3aad0c9e1a19b74f3ae05516a387090b3edc8a538f24a8063c200868350bc8e0"
+    },
+    {
+      "file": "bot/src/frameworks/daggerheart/mixed-condition-rules.js",
+      "sha256": "d0f671e9e04e4b39a84c38269cbd339fe4266d21f352471e870da1485aff76f4"
+    }
+  ],
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/condition-history.js",
+      "sha256": "0f6080082ab08f1d10c22ffcffb6574ca5ea473639fbce549659b407efafa00b"
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-history.js",
+      "sha256": "f4a31a207253e4892fe4045adb2599e38a2cff28a9d2e672b99feb77c75b30c7"
+    },
+    {
+      "file": "bot/src/v2/rules/committed-gm-decision.js",
+      "sha256": "d484fcc81f245bffaa46da1f54feca47a7f208a7b4271bfe501b0296bd65046e"
+    },
+    {
+      "file": "bot/src/v2/rules/npc-reaction-proof.js",
+      "sha256": "8b7a0e3c07920e7fb7c1128b2ef3a3ed2e0274f6bd986d1306332c879cd85c8c"
+    },
+    {
+      "file": "bot/src/v2/rules/npc-condition-clear-history.js",
+      "sha256": "ff1765c620a164a5481abbd0089fc3f866cca296dce4b9e26b17a5d1b88b9bb7"
+    },
+    {
+      "file": "bot/src/v2/rules/condition-clear-history.js",
+      "sha256": "74e9e72ea24e2aba1928a627a1aabd1a5b82ce64b10f538b6336f09fbf4fe0c1"
+    },
+    {
+      "file": "bot/src/v2/rules/condition-expiry-history.js",
+      "sha256": "ae200054c3971b83acba24510531bd153d26e90061d79a22a5c4533358e55ecf"
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-rules.js",
+      "sha256": "1b92fe5acec7264cd838aa85c4b24b612b474b6591f5f79acbc4fd0146989cdc"
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-outcomes.js",
+      "sha256": "a6463168431ae9e5fcd39c432184d6417150e1d74f938064aac29a010f5afa5d"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-cost-plan.js",
+      "sha256": "795c9276ad760dfa7c6ce41f68afd760290bb203c3d8583b2a9cfefd43856dde"
+    },
+    {
+      "file": "bot/src/v2/rules/native-resource-plan.js",
+      "sha256": "031649fdd290bb64b6c1f54b4d4d4e29ef553ae3226005e8ce3c605ce52dfd53"
+    },
+    {
+      "file": "bot/src/v2/rules/dice.js",
+      "sha256": "6534195eb0441d0c9982616a5d79e71f5067ddc863883a4cabda17072b6c865c"
+    },
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-history.test.mjs",
+      "sha256": "e5f8c9ea6b6f2492ac108f8333683084966f7ab05f317cb5699b89c072b50f7b"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-group-feature-history.test.mjs",
+      "sha256": "260beb64b44221fe45eb47aecf9b08d964cfcff24f89501e6ef10236547b6936"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/condition-history-fixture.mjs",
+      "sha256": "d5ac536c232eab38665fac84ff34e165bef6fdfb5e7972c7c539b205ff48e966"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/helpers/group-feature-history-fixture.mjs",
+      "sha256": "5f17d425abdc484a8335ee8919fd8e2ee3614b38f1fc3be44b2d75ca2ab2afa1"
+    }
+  ]
+}
