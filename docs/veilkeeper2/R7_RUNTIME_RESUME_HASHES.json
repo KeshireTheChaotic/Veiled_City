@@ -1,0 +1,10 @@
+{
+  "bot/src/v2/runtime-directory.js": "c79037602749e3a5435ded083a275f2e51fbbfa940694afa32aaf820ba9e8cd5",
+  "bot/src/v2/native-start.js": "4f7819042ce58db1e6f43ec6c5f49b5d98dc1ed8d3231eb9cfc178a71f7ba113",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs": "9b36027bc89c0cd3a2b19b7321d9cb443a5fe3e8a9999dce67e819696fda8e1f",
+  "docs/veilkeeper2/R7_RUNTIME_RESUME_REPORT.md": "277a64482fbdd97d5e4ed227d3ac3e2358234b46512041a1cad23f5982202d66",
+  "docs/veilkeeper2/R7_RUNTIME_RESUME_AFFECTED_TESTS.json": "a438c518f97b90af592762b45e95f9fb50acb0e4744d63026e2d3878d05466be",
+  "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json": "f2cba9f71716c34b238ef299613bf350483a1cb97ef5c6ba6d162ee663c1d888"
+}

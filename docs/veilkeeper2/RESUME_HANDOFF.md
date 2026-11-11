@@ -1,13 +1,13 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11; native owner cost workflow committed at bb808ada; upstream source audit refreshed for 15a8f446. Resumed by the owner on 2026-11-11. The full goal remains active. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
+Checkpoint 2026-11-11; cost workflow bb808ada, roll terms c58b8e31 and upstream refresh afcdc6b5 are committed. Verified runtime resume is the latest tested slice. Resumed by the owner on 2026-11-11. The full goal remains active. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
 
 ## Binding workspace and owner instructions
 
 - Worktree: `D:/Library/Development/Veiled_City_2/rebuild`, branch `rebuild/veilkeeper2-audience-first`. Deprecated `D:/Library/Development/Veiled_City` is not an implementation target. Its user-authorized credential file may be loaded by path without printing/copying values.
 - Preserve unrelated dirty `README.md`; never stage/reset/clean it. No subagents authorized. New native tests under `bot/tests/veilkeeper2` are ignored: force-add exact paths. Run fresh explicit changed-dependency checks; never present simulated SDK/model checks as live quality.
 - Owner forbids computer-use until explicitly reauthorized. Do not use Windows/browser UI automation as a workaround. Autonomous bot/API and native testing are authorized.
-- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. The previous primary window reached 98%; latest resumed measurement is 22% primary / 65% weekly used; re-read before relying on them.
+- At 98% used / 2% remaining on either usage window: create a thorough current handoff, pause the goal and stop until resume. Do not redeem credits. The previous primary window reached 98%; latest resumed measurement is 29% primary / 66% weekly used; re-read before relying on them.
 - Commit scoped phase work. Publish/integrate completed major phases only to the rebuild branch, never the baseline. Already on the integration target: no self-merge. No major phase has passed; production cutover needs separate authorization.
 - Mandatory audit pin stays `1ba6c7e15db1a66ba34b36336f31437beffe44d6`, but remote baseline `codex/clean-ai-gm-2026-10` has advanced to `15a8f44671f227c6bec69bf30744e03c5692809b`. It was fetched for the source-delta audit without merging; see UPSTREAM_15A8F_SOURCE_AUDIT.json. Origin rebuild remains `fda77bd84b216e0e883c8b1348b12e7611787388`; newer local slices have not been pushed. Refresh the source audit if baseline advances.
 
@@ -19,7 +19,7 @@ Exactly four AI capabilities: context_read, action_propose, state_inspect, knowl
 
 ## Current runtime
 
-Legacy default start is unchanged. The opt-in native root opens dedicated scene/source/action/prompt/decision/interaction stores, plus knowledge/turn stores with a provider. Legacy character/campaign data is read-only. Native-start still requires a new/empty native store directory; do not restart an existing run against its nonempty stores by deleting them.
+Legacy default start is unchanged. The opt-in native root opens dedicated scene/source/action/prompt/decision/interaction stores, plus knowledge/turn stores with a provider. Legacy character/campaign data is read-only. Native-start now requires a new/empty directory or explicit VK2_RESUME=1 against a verified runtime.sqlite manifest. It preserves native source/file/schema identity and holds a process-lifetime SQLite lock per directory. Pre-manifest stores need reviewed adoption; never delete state to make startup pass.
 
 Rebuild inference defaults to local Ollama qwen3.5:4b at localhost:11434, enabled only by VK2_INFERENCE=1 and bounded by VK2_MAX_TURNS (1–100, default 10). VK2_PROVIDER=openai explicitly restores the existing remote/ChatGPT path. Source/actor/audience metadata and context lineage are native. Raw outputs remain withheld; manual GM draft publication is a qualification harness, not the R4 target delivery design.
 
@@ -58,6 +58,8 @@ Historical reports cover native ordinary rolls, Hope/Fear, damage/death/Blaze, c
 - UPSTREAM_15A8F_REPORT.md: baseline advanced; new supplemental source/AST/hash/reference audit (1,101 modules, 68 runtime changes, 14 cited ranges changed, 17 old ranges invalid). Original pin retained, no merge. Export implementations moved; new source-qualified roll-condition and paid NPC release behavior adds explicit parity/migration holds. Seven native legacy imports unchanged.
 
 - R3_ROLL_TERMS_REPORT.md (current checkpoint): ordinary roll preparation/inspection supports native trait/modifier term proofs, complete mandatory refs, distinct Experiences, exact notice odds and stored contextual d6. 91 passing affected checks across 12 files, including 2,016 fixed-face vectors. Required source validators are fixture-tested interfaces, not yet root adapters. No gameplay effects or live owner roll claim. Closure now 92 native / 71 reachable / 21 uncomposed.
+
+- R7_RUNTIME_RESUME_REPORT.md (current checkpoint): explicit verified manifest resume, per-directory exclusive process-lifetime lock and retained native state/proofs/one expense after restart. 21 passing affected checks across three files, including actual owned-process kill. No live client restart; old pre-manifest run still held for adoption. Closure now 93 native / 72 reachable / 21 uncomposed.
 
 ## Live test state — preserve it
 
@@ -103,7 +105,7 @@ New retained actual local-model evidence in docs/veilkeeper2/qualification/: oll
 
 The test bot's execution handle 62251 was polled and remained running without new output at this checkpoint. Read-only SQLite counts freshly confirmed vk2_turns=0 and vk3_native_interactions=0. The retained prior Discord API message is still the only send from the autonomous API check; its journal forbids repeats. Do not infer human gameplay or current loaded source from the live client's presence.
 
-The source-delta audit is committed at afcdc6b5. Qualified roll-term work is the latest tested slice; unrelated README.md remains dirty. No implementation changes or tests are left uncommitted. Preserve that README diff exactly. Remote baseline advanced to 15a8f446; the required pin remains 1ba6c7e. Origin rebuild is still fda77bd8. No merges/pushes occurred because no major phase passed; we are already on the requested rebuild integration branch.
+The source-delta audit is committed at afcdc6b5; qualified roll terms at c58b8e31. Verified runtime resume is the latest tested slice; unrelated README.md remains dirty. No implementation changes or tests are left uncommitted. Preserve that README diff exactly. Remote baseline advanced to 15a8f446; the required pin remains 1ba6c7e. Origin rebuild is still fda77bd8. No merges/pushes occurred because no major phase passed; we are already on the requested rebuild integration branch.
 
 Resume procedure: verify usage and explicit user resume if the goal is paused; inspect git status/worktree/branch and the preserved process before edits. Read AGENTS.md and this handoff, then the exact next module/report dependencies. Source-linked removed core specs remain available through git show at the pinned commit under docs/Implementation_Plans/. Do not restore removed docs merely to read them. Refresh the pinned audit only if the baseline advances. Computer-use stays forbidden unless the user explicitly reverses that instruction.
 

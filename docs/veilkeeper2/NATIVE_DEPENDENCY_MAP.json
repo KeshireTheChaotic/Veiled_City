@@ -1,5 +1,5 @@
 {
-  "head": "afcdc6b5c469d972df60f7d5aa117147a71589bd",
+  "head": "c58b8e310e06c3df04e49e96ab8c6775956b2e5d",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 92,
-  "reachableNativeModules": 71,
+  "nativeModules": 93,
+  "reachableNativeModules": 72,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
@@ -2016,29 +2016,29 @@
     },
     {
       "file": "bot/src/v2/native-start.js",
-      "sha256": "9712549ce6fe9505bf34bb2f4feb6f6b62b2501d08ddfc2ebfc7289441b9ee3c",
+      "sha256": "4f7819042ce58db1e6f43ec6c5f49b5d98dc1ed8d3231eb9cfc178a71f7ba113",
       "reachable": true,
       "exports": [
         {
-          "line": 14,
+          "line": 15,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function createOpenAIProviderFromEnv(env){\r\n  const chatgpt=String(env.AI_AUTH_MODE??'').trim().toLowerCase()==='chatgpt',{OPENAI_API_KEY:apiKey}=env,model=env.VK2_MODEL||(chatgpt?env.OPENAI_GM_MODEL:null),maxCalls=Number(env.VK2_MAX_TURNS??10);\r\n  if(!model||!chatgpt&&!apiKey)throw new"
         },
         {
-          "line": 23,
+          "line": 24,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function createProviderFromEnv(env){\r\n  const config=JSON.parse(readFileSync(new URL('./model-config.json',import.meta.url),'utf8'));\r\n  const provider=String(env.VK2_PROVIDER??config.provider).trim().toLowerCase();\r\n  if(provider==='openai')return createOpenAIProviderFromEnv(env);\r\n  i"
         },
         {
-          "line": 35,
+          "line": 36,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function gmPolicyFromEnv(env){\r\n  const ids=String(env.VK2_GM_USER_IDS??'').split(',').map(v=>v.trim()).filter(Boolean),role=env.VK2_GM_ROLE_ID?.trim()||null;\r\n  if(role&&!/^\\d{5,25}$/.test(role)||ids.some(v=>!/^\\d{5,25}$/.test(v)))throw new Error('VK2_GM_ROLE_ID and VK2_GM_USER_IDS must be D"
         },
         {
-          "line": 46,
+          "line": 47,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider="
@@ -2062,68 +2062,75 @@
         {
           "line": 3,
           "kind": "ImportDeclaration",
-          "specifier": "node:crypto",
-          "target": null,
-          "status": "external"
+          "specifier": "./runtime-directory.js",
+          "target": "bot/src/v2/runtime-directory.js",
+          "status": "resolved"
         },
         {
           "line": 4,
           "kind": "ImportDeclaration",
-          "specifier": "discord.js",
+          "specifier": "node:crypto",
           "target": null,
           "status": "external"
         },
         {
           "line": 5,
           "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
           "specifier": "./legacy-readonly-repository.js",
           "target": "bot/src/v2/legacy-readonly-repository.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./native-root.js",
           "target": "bot/src/v2/native-root.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./openai-provider.js",
           "target": "bot/src/v2/openai-provider.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./ollama-provider.js",
           "target": "bot/src/v2/ollama-provider.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./provider-budget.js",
           "target": "bot/src/v2/provider-budget.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 20,
           "kind": "ImportExpression",
           "specifier": "../frameworks/ai-provider/public.js",
           "target": "bot/src/frameworks/ai-provider/public.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 20,
           "kind": "ImportExpression",
           "specifier": "openai",
           "target": null,
           "status": "external"
         }
       ],
-      "functions": 15,
+      "functions": 16,
       "sqlStatements": 0
     },
     {
@@ -3335,6 +3342,51 @@
       ],
       "functions": 16,
       "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/runtime-directory.js",
+      "sha256": "c79037602749e3a5435ded083a275f2e51fbbfa940694afa32aaf820ba9e8cd5",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 27,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false}){\r\n  const target=resolve(directory),source=sourceIdentity(legacyDb),rel=relative(target,source.path);\r\n  if(rel===''||!rel.startsWith('..')&&!isAbsolute(rel))throw new Error('Legacy source must be separate from native"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "node:path",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 19,
+      "sqlStatements": 5
     },
     {
       "file": "bot/src/v2/scene-store.js",

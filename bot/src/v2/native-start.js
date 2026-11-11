@@ -1,5 +1,6 @@
 import {pathToFileURL} from 'node:url';
-import {existsSync,mkdirSync,readdirSync,readFileSync} from 'node:fs';
+import {readFileSync} from 'node:fs';
+import {prepareRuntimeDirectory} from './runtime-directory.js';
 import {randomInt} from 'node:crypto';
 import {Client,GatewayIntentBits} from 'discord.js';
 import {openLegacyReadOnlyRepository} from './legacy-readonly-repository.js';
@@ -38,7 +39,7 @@ export function gmPolicyFromEnv(env){
   return {gmRoleId:role,gmUserIds:ids,allowAdministrators:env.VK2_GM_ALLOW_ADMINISTRATORS==='1'};
 }
 /** Explicit opt-in native start. It never touches the legacy runtime: the legacy database is opened
- * read-only and the native stores must live in a new or empty directory.
+ * read-only. Stores start in a new/empty directory; VK2_RESUME=1 verifies an existing native manifest.
  * Required: VK2_NATIVE=1, VK2_NATIVE_DIR, VK2_LEGACY_DB, DISCORD_TOKEN (may come from the legacy .env named by
  * VK2_ENV_FILE) and VK2_ALLOWED_GUILD_ID: events from any other guild are ignored.
  * Optional natural-message inference produces withheld drafts; publication is separate.
@@ -50,16 +51,17 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   const {VK2_NATIVE_DIR:directory,VK2_LEGACY_DB:legacyDb,DISCORD_TOKEN:token,VK2_ALLOWED_GUILD_ID:guildId}=env;
   if(!directory||!legacyDb||!token)throw new Error('VK2_NATIVE_DIR, VK2_LEGACY_DB and DISCORD_TOKEN are required');
   if(!/^\d{5,25}$/.test(guildId??''))throw new Error('VK2_ALLOWED_GUILD_ID (the single guild to serve) is required');
-  if(existsSync(directory)&&readdirSync(directory).length)throw new Error('Native stores need a new or empty directory, never an existing database');
-  mkdirSync(directory,{recursive:true});
-  const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
-  const repository=openRepository(legacyDb),client=createClient();let root;
+  const runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});
+  let repository,client,root;
+  async function closeResources(){try{root?.close();}finally{try{repository?.close();}finally{try{await client?.destroy?.();}finally{runtime.close();}}}}
   try{
-    root=createRoot({client,directory,characterRepository:repository,campaignRepository:repository,rng,provider,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
-    await client.login(token);
-  }catch(error){root?.close();repository.close();client.destroy?.();throw error;}
+    const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
+    repository=openRepository(legacyDb);client=createClient();
+    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
+    runtime.seal();await client.login(token);
+  }catch(error){await closeResources();throw error;}
   let closed=false;
-  return Object.freeze({client,root,async close(){if(closed)return;closed=true;root.close();repository.close();await client.destroy?.();}});
+  return Object.freeze({client,root,runId:runtime.runId,async close(){if(closed)return;closed=true;await closeResources();}});
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const app=await startNative();
