@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildCommands} from '../../src/frameworks/discord/command-definitions.js';
-const commands=buildCommands().map(c=>c.toJSON?c.toJSON():c),byName=name=>commands.find(c=>c.name===name);
+import {buildNativeCommands} from '../../src/v2/command-definitions.js';
+const commands=buildNativeCommands(),byName=name=>commands.find(c=>c.name===name);
 const sub=(cmd,name)=>(cmd?.options??[]).find(o=>o.name===name&&o.type===1);
 const stringOption=(s,name)=>(s?.options??[]).find(o=>o.name===name&&o.type===3);
 test('the native router only claims session and roll commands that the registered schema defines',()=>{

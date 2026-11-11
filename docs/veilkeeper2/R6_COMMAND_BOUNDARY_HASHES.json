@@ -1,0 +1,32 @@
+{
+  "node": "v26.13.0",
+  "durationMs": 622.9016,
+  "files": [
+    {
+      "path": "bot/src/v2/command-definitions.js",
+      "sha256": "9a3079c6c705048db2f815456b076fba181c76c16b7e0e25bd961c15c57622ba"
+    },
+    {
+      "path": "bot/src/v2/register-commands.js",
+      "sha256": "ca78a5274c7f2091917bf334279be09477a132a1da8c9d618f6424ab1b661bdd"
+    },
+    {
+      "path": "bot/src/frameworks/discord/command-definitions.js",
+      "sha256": "7975c61ff057677f676bc41eaad8c004a1019537379f0e4c69ce26dba5640eed"
+    },
+    {
+      "path": "bot/package.json",
+      "sha256": "e6ce2bfd419a5ed764a5e8a68c6f8140d56cdb49c8372cfbee8eee22497d1a12"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-command-schema-compat.test.mjs",
+      "sha256": "24999231c8b170674f724c56f8cdcd7551247acbfd77eda1ffc23d57943d9933"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-command-boundary.test.mjs",
+      "sha256": "959de88eb8aa8aa41d608c5411b8780fee32d411a5288f07b942d6df3f62da8b"
+    }
+  ],
+  "checkpoint": "R6_COMMAND_BOUNDARY",
+  "completedCases": 9
+}

@@ -1,8 +1,9 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Refreshed 2026-11-03 at the usage pause point (five-hour window 93% used, weekly 13%). The R0–R8 goal is incomplete and paused here. Resume only on an explicit user request; a limit reset alone is not permission. Latest commit: a2feccb8 (owner death-prompt commands moved to `/vc-player`). Start by reading SESSION_REVIEW_2026-11-03.md, then the "Additions after the usage-pause checkpoint" section and the next actions below.
+Reviewed and continued by explicit user request on 2026-11-10. The full R0–R8 rebuild remains incomplete. Current checkpoint resolves the legacy command-schema boundary: see R6_COMMAND_BOUNDARY_REPORT.md (9 focused checks). The 504/504 result below belongs to the prior a2feccb8 checkpoint, not a new full-suite run. Preserve unrelated README.md.
 
-Live state at pause: the native bot was left running against the test guild only, from the scratchpad script `run-native.mjs` (scratch copy of the legacy DB, ChatGPT-mode inference capped at 10 calls, administrator GM opt-in). Restarting or stopping it deletes its scratch native stores and clears the live session. Guild commands were last registered at a2feccb8. Full tests/veilkeeper2: 504/504 at a2feccb8.
+Prior live qualification (2026-11-03) used the authorized test guild and scratch copy/stores; that process has not been inspected, stopped or restarted during this review. Do not assume it is still running, and do not restart a scratch harness that deletes stores without preserving its state. No live registration, send or model call was performed during this continuation.
+
 ## Workspace and binding authorization
 
 - Worktree: D:/Library/Development/Veiled_City_2/rebuild; branch rebuild/veilkeeper2-audience-first. Parent workspace: D:/Library/Development/Veiled_City_2. Deprecated D:/Library/Development/Veiled_City remains untouched.
@@ -88,7 +89,7 @@ Next actions:
 
 1. Check goal/usage and git status. Preserve README.md (unrelated dirty). Do not rerun passed unchanged suites. Read SESSION_REVIEW_2026-11-03.md first: it lists the open findings from the spec review.
 2. Live qualification in test guild 1467249344947159291 (LIVE_QUALIFICATION_RUNBOOK.md, status log at the top). Done live: login, guild command registration, session start, character registration. Pending: `/vc-player private-channel` (now waits out Discord's member-listing rate limit), attendance, bootstrap preview/review, drafts and publish. The native bot is started from a scratchpad script with a scratch copy of the legacy DB; restarting it clears the native session.
-3. Review findings to resolve: (2) the per-draft human approval gate is a harness, R4 must publish validated ordinary prose autonomously; (3) move draft publication and private-channel registration out of the Discord adapters (registration already moved); (4) replace the edited legacy command-definitions.js with a v2-owned command overlay and v2 registration entry; (6) performance design for full member listing before R7/R8.
+3. Review findings to resolve (command-schema finding 4 was resolved on 2026-11-10; native registration now uses register:v2:native): (2) the per-draft human approval gate is a harness, R4 must publish validated ordinary prose autonomously; (3) move draft publication and private-channel registration out of the Discord adapters (registration already moved); (6) performance design for full member listing before R7/R8.
 4. Compose GM context for drafts: knowledge store is wired as records; add selectContext/recall and GM-record authoring; then recap/opening occasions through the same exactly-once publication path. Party channel registration is still missing.
 5. Close the 32 partial R0 writer entries, then prove typed projections per kind before releasing any hold; audit keyed reads and world-event writes the same way.
 6. Migrate historical actors and pending death/Blaze/roll/Fear state with exact lineage; then remaining rules adapters (encounter, range, features, costs, PvP, movement, items, downtime) and R4/R5 living-world behavior.

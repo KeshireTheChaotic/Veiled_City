@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current state
 
-The full R0–R8 goal remains incomplete. The user-directed 2%-remaining threshold was reached on 2026-11-03 (five-hour 98% used, weekly 94% used); implementation stopped and the goal is being marked paused with the RESUME_HANDOFF.md checkpoint. Do not continue until explicit resume; verify actual goal status. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch: `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6` in parent `baseline`. Deprecated checkout remains untouched. Preserve the unrelated dirty `README.md`.
+The full R0–R8 goal remains incomplete. The user explicitly requested review and continuation on 2026-11-10. Work resumed after reviewing the current handoff and session review; no complete phase gate is claimed. Keep the 2%-remaining pause instruction for subsequent checkpoints. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch: `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6` in parent `baseline`. Deprecated checkout remains untouched. Preserve the unrelated dirty `README.md`.
 
 ## Binding requirements
 
@@ -20,7 +20,9 @@ After completed major phases, integrate and publish to origin's rebuild branch, 
 | R3 partial | Ordinary requests/notices/owner dice, action windows, unified atomic Hope costs, native component consent chain, deterministic dice/resource/combat/death primitives, Fear reservations/holds/announcement transport and readback reconciliation. Native Fear debit/attack RNG, private owner defense/Armor damage, nonlethal completion and original-action continuation are implemented as opt-in slices. Private death review/choice, once-only death outcomes, critical recovery and Avoid Death scars/Hope cap now persist in canonical native tables. Explicit owner Hope recovery allocation is implemented with exact budget and immutable replay; Blaze exact human approval and saved native automatic Critical are implemented; verified-terminal completion now saves final death/consumption; exact planned/consented Hope costs now have a native exception; real final-action execution, other feature costs and adapters remain open. Full modifiers/team/PvP/features, native adapters, canonical actor migration and parity remain open. |
 | R4–R8 incomplete | Full prose consequence review, proactive living actors, Discord command/session migration, durable world migration/publication and independent live qualification remain required. R7 has opt-in turn claims/withheld drafts; it is not qualified recovery or delivery. |
 
-## Current R3 evidence
+## Current evidence
+
+Latest completed review slice: R6_COMMAND_BOUNDARY_REPORT.md — legacy declarations restored exactly to the pinned blob, native schema moved to an overlay, and guild-only native registration added (9 focused checks; no live registration).
 
 Completed suites are recorded in checkpoint reports. Rerun only when tested code changes; no focused result establishes whole-phase or live quality.
 

@@ -10,6 +10,7 @@ Status: offline-tested and running in the authorized test guild only; no phase g
 - `discord-message-observer.js`: owner messages in registered channels become native evidence; with a provider each becomes a withheld draft (empty GM context; nothing sent).
 - Draft review: `/vc-gm drafts` lists withheld drafts privately; `/vc-gm publish-draft` sends one approved draft once after re-reading the live audience and scene, records no knowledge or canon, and holds an unconfirmed send as `publication_uncertain` without retry. This is a qualification harness, not the target delivery path (review finding 2).
 - `discord-audience-reader.js`: on Discord's member-listing rate limit it waits the stated delay once (up to 60 s) and retries with a fresh read.
+- Native command schema/registration: `command-definitions.js` overlays only native additions onto unchanged baseline metadata; `register:v2:native` is explicitly opted in and guild-only. The legacy command file is restored to its pinned version. See R6_COMMAND_BOUNDARY_REPORT.md (9 focused checks; no live registration).
 
 ## Tests (latest runs, all fakes; no live send claimed by tests)
 
@@ -21,4 +22,4 @@ Server Members Intent had to be enabled; the campaign record has no GM role (adm
 
 ## Open
 
-GM context and recall for drafts; autonomous validated publication (R4); thin adapters (finding 3); v2 command overlay (finding 4); party channel registration; historical migration; performance design for audience reads.
+GM context and recall for drafts; autonomous validated publication (R4); thin adapters (finding 3); party channel registration; historical migration; performance design for audience reads. Command overlay finding 4 is resolved; runtime compatibility for all legacy commands is still open.
