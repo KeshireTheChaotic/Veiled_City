@@ -1,5 +1,5 @@
 {
-  "head": "ab226803d193b19f0e78613d0862a48e0a84440e",
+  "head": "30e74973c1c0cd4d2b80eaae7ae1a94a21401ed5",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 118,
+  "nativeModules": 119,
   "reachableNativeModules": 80,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -32,6 +32,7 @@
     "bot/src/v2/rules/condition-history.js",
     "bot/src/v2/rules/death-choice-evidence.js",
     "bot/src/v2/rules/domain-card-catalog.js",
+    "bot/src/v2/rules/domain-feature-rules.js",
     "bot/src/v2/rules/fear-opportunity-reader.js",
     "bot/src/v2/rules/fear-reservations.js",
     "bot/src/v2/rules/feature-cost-plan.js",
@@ -3294,6 +3295,43 @@
         }
       ],
       "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/domain-feature-rules.js",
+      "sha256": "bf0e1416d832c67d5b9963e0ff21541c6a7ee16b5010c5a201f2534be277ddfa",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function domainFeatureRule(catalog,pc,locator){\n  const identity=featureRollSource(catalog,pc,locator),source=catalog.findDomainCard(locator.feature),card=source?.card;\n  if(identity.feature!==JINX||source.feature!==JINX||source.source_hash!==identity.source_hash||hash(card)!==identity.source"
+        },
+        {
+          "line": 24,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function domainFeatureOutcome(catalog,pc,locator,{success}={}){\n  if(typeof success!=='boolean')throw new Error('Verified native feature success/failure required');\n  const definition=domainFeatureRule(catalog,pc,locator),branch=success?definition.rule.success:definition.rule.failure;\n  retur"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./feature-roll-source.js",
+          "target": "bot/src/v2/rules/feature-roll-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 4,
       "sqlStatements": 0
     },
     {
