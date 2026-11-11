@@ -1,0 +1,58 @@
+{
+  "node": "v26.13.0",
+  "distinct_tests": 11,
+  "passed": 11,
+  "new_checks": {
+    "tests": 7,
+    "passed": 7,
+    "duration_ms": 637.8256
+  },
+  "expanded_control_case": {
+    "tests": 1,
+    "passed": 1,
+    "duration_ms": 194.4434
+  },
+  "existing_dependencies": {
+    "tests": 4,
+    "passed": 4,
+    "duration_ms": 66.2698
+  },
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/roll-adjudications.js",
+      "sha256": "59713ae9c7994b613542ff314bce2ad23b5a6d81acec572063746d4ea0e079fa"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-roll-source.js",
+      "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c"
+    },
+    {
+      "file": "bot/src/v2/rules/domain-card-catalog.js",
+      "sha256": "7aa52821655c224fade244c333f62c6c7aa5109eec9a5f9b05c72fb630a74477"
+    },
+    {
+      "file": "bot/src/v2/canonical-actor-readers.js",
+      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a"
+    },
+    {
+      "file": "bot/src/v2/source-authority.js",
+      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588"
+    },
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-identity-store.test.mjs",
+      "sha256": "71c1c77e1db63f8b5effe59fdd420ea4783afad488a05d17d3e5dd78c492f0ac"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-adjudications.test.mjs",
+      "sha256": "15ed4037066b8cba618b124710d9b19577eff6d1ca039e43b0c8d0c8fbb364b9"
+    },
+    {
+      "file": "content/CARDS/domain_cards.json",
+      "sha256": "611d7fa95e037c3458522935fa1baee1b08c9bed0a9e0bfc0fde1be5030cd2d7"
+    }
+  ]
+}

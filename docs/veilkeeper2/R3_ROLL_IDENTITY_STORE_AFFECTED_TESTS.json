@@ -1,0 +1,4 @@
+[
+  "bot/tests/veilkeeper2/r3-roll-adjudications.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-identity-store.test.mjs"
+]
