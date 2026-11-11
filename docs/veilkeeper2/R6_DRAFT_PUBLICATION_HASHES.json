@@ -1,0 +1,6 @@
+{
+  "bot/src/v2/native-draft-publication.js": "7e51e0abbfea7a923d2c7c8a96f7b797dfdeda1b58d8053be3a625c621c6c990",
+  "bot/src/v2/discord-gm-session.js": "82f9207c643f79b867c6b6270f898a29ad6d81373b0b34a2eb5fae89b2919591",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs": "776882598b28b5719ee6c4d4ad7cd1976e02089d6d573c4e756290a50cd54f1b",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923"
+}

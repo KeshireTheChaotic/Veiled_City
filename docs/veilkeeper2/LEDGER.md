@@ -1,3 +1,7 @@
+## 2026-11-10: reviewed-draft native service slice complete
+
+R6_DRAFT_PUBLICATION_REPORT.md records 26 passing focused/composition checks and source/test hashes. Publication now refuses scene/session scope changes during Discord reads. No live operation, major phase completion or production change. Next: R4 output guarantees and validated ordinary-prose delivery integration.
+
 ## 2026-11-10: private-channel native service slice complete
 
 R6_PRIVATE_CHANNEL_REPORT.md records eight passing focused/composition checks and source/test hashes. No live operation, schema migration, major phase completion or production change. Next: native draft-publication extraction and asynchronous scope revalidation.

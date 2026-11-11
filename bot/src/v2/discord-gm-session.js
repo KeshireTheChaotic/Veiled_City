@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
+import {createNativeDraftPublication} from './native-draft-publication.js';
 import {createNativeCharacterRegistration} from './native-character-registration.js';
 import {gmCommandInput} from './discord-gm-input.js';
 import {createDiscordAudienceReader} from './discord-audience-reader.js';
@@ -14,6 +15,7 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
 export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
   const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),registration=createNativeCharacterRegistration({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
+  const publication=drafts?createNativeDraftPublication({sceneStore,gmAuthority,drafts,audiences,readGmRoleId,resolveChannel:async(c,id)=>{const guild=await client.guilds.fetch({guild:c,force:true});return guild.channels.fetch(id,{force:true});}}):null;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
     /** Returns {kind, ref} for a claimed GM command, else null. */
   function route(e){
@@ -34,25 +36,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
   }
   async function reply(e,content,check){const id=e.id;interactionReceipts.claimReply(id,{check});try{await e.editReply({content,allowedMentions:{parse:[]}});interactionReceipts.finishReply(id,'delivered',{check});}catch(error){interactionReceipts.finishReply(id,'uncertain',{check});report(error,id,'reply');}}
   const describe=s=>`PC ${s.actorId} (owner ${s.ownerUserId}), level ${s.level}: HP ${s.hp.current}/${s.hp.max}, Armor ${s.armorSlots.current}/${s.armorSlots.max}, Stress ${s.stress.current}/${s.stress.max}, Hope ${s.hope}/${s.hopeCap}. snapshotHash ${hash(s)}`;
-  /** Sends one GM-approved saved draft to its original audience, at most once.
-   * It records no knowledge acknowledgement: published narration is not objective truth.
-   */
-  async function publishDraft(proof,declaration){
-    const c=proof.campaignId,source=proof.targetRef,input=declaration,fingerprint=input.fingerprint;
-    const row=drafts.recent(c,20).find(d=>d.source===source);if(!row||row.fingerprint!==fingerprint)throw new Error('Approved draft is not a current saved draft');
-    const draft=row.draft,target=draft.delivery,channelRecord=target&&sceneStore.readers.readChannel(c,target.channelId);
-    if(typeof draft.text!=='string'||draft.text.length>1900)throw new Error('Draft must fit one message; review needed');
-    if(!channelRecord||channelRecord.permissionsVerified!==true||JSON.stringify([...channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort())||channelRecord.kind!==target.mode)throw new Error('Draft audience changed; review needed');
-    // Publish security: re-read the live Discord audience and the scene at send time, not only the stored record.
-    const scene=sceneStore.readers.readScene(c,channelRecord.sceneId);if(scene?.status!=='active'||sceneStore.readers.readSession(c,scene.sessionId)?.status!=='active')throw new Error('Draft scene is no longer active; review needed');
-    const live=await audiences.read({guildId:c,channelId:target.channelId,sceneId:channelRecord.sceneId,mode:channelRecord.kind,ownerUserId:channelRecord.ownerUserId??null,gmRoleId:readGmRoleId(c)??null,participantIds:channelRecord.kind==='party'?[...channelRecord.recipientIds]:[]},{signal:controller.signal});
-    if(JSON.stringify([...live.channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort()))throw new Error('Live Discord audience differs from the draft audience; review needed');
-    const guild=await client.guilds.fetch({guild:c,force:true}),channel=await guild.channels.fetch(target.channelId,{force:true});
-    if(channel?.guildId!==c||channel.id!==target.channelId||typeof channel.send!=='function')throw new Error('Draft channel unavailable');
-    drafts.begin(c,source,{approvedFingerprint:fingerprint,approval:{principal:proof.principal,sourceRef:proof.sourceRef,sourceRevision:proof.sourceRevision},check:()=>gmAuthority.check(proof)});
-    let sent;try{sent=await channel.send({content:draft.text,allowedMentions:{parse:[]},enforceNonce:true,nonce:source.slice(-20)});}catch(error){drafts.uncertain(c,source,error?.message??'send failed');throw new Error('Send was not confirmed; the draft is held and will not be retried');}
-    drafts.finish(c,source,sent.id);return {messageId:sent.id};
-  }
   async function execute(e,r){
     const id=e.id,bookkeeping=()=>{},alive=()=>{controller.signal.throwIfAborted();if(closed||e.client!==client||e.user?.bot!==false)throw new Error('Native GM command closed');};
     const binding={id,kind:'discord_command',campaignId:String(e.guildId),sceneId:`gm-operation:${id}`,actorId:`human-gm:${e.user?.id}`,principal:String(e.user?.id),channelId:String(e.channelId),requestRef:r.ref,commandHash:hash([e.commandName,r.raw])};
@@ -63,7 +46,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
-      else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publishDraft(proof,r.raw);text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
+      else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publication.publish(proof,r.raw,{signal:controller.signal});text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
       else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Send one with /vc-gm publish-draft (source and fingerprint):\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
