@@ -1,5 +1,5 @@
 {
-  "head": "f22e078801e35b15b97d74d36726b6c5edfbba54",
+  "head": "f8b51d20f0b60f307320940629e31189ff34c54d",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 105,
+  "nativeModules": 113,
   "reachableNativeModules": 80,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -24,13 +24,21 @@
     "bot/src/v2/private-planning-repository.js",
     "bot/src/v2/relationship-import.js",
     "bot/src/v2/rules/combat.js",
+    "bot/src/v2/rules/committed-gm-decision.js",
+    "bot/src/v2/rules/condition-clear-history.js",
+    "bot/src/v2/rules/condition-expiry-history.js",
     "bot/src/v2/rules/death-choice-evidence.js",
     "bot/src/v2/rules/domain-card-catalog.js",
     "bot/src/v2/rules/fear-opportunity-reader.js",
     "bot/src/v2/rules/fear-reservations.js",
+    "bot/src/v2/rules/feature-cost-plan.js",
     "bot/src/v2/rules/feature-roll-source.js",
+    "bot/src/v2/rules/group-feature-outcomes.js",
+    "bot/src/v2/rules/group-feature-rules.js",
     "bot/src/v2/rules/hope-store.js",
     "bot/src/v2/rules/incoming-damage-authority.js",
+    "bot/src/v2/rules/native-resource-plan.js",
+    "bot/src/v2/rules/npc-reaction-proof.js",
     "bot/src/v2/rules/ordinary-roll-preparation.js",
     "bot/src/v2/rules/owner-roll-evidence.js",
     "bot/src/v2/rules/pre-roll-fear-coordinator.js",
@@ -1575,7 +1583,7 @@
     },
     {
       "file": "bot/src/v2/legacy-readonly-repository.js",
-      "sha256": "98b4957b856cbc48b79f398948515e28f8a7ca4e2115bd98667a3246f2247a1f",
+      "sha256": "3e6b23a55631fc585fe725e4a913779a10b509b507d70e7690bcf7f348885def",
       "reachable": true,
       "exports": [
         {
@@ -1594,8 +1602,8 @@
           "status": "external"
         }
       ],
-      "functions": 17,
-      "sqlStatements": 7
+      "functions": 19,
+      "sqlStatements": 9
     },
     {
       "file": "bot/src/v2/model-gateway.js",
@@ -2903,6 +2911,78 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/rules/committed-gm-decision.js",
+      "sha256": "d484fcc81f245bffaa46da1f54feca47a7f208a7b4271bfe501b0296bd65046e",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectCommittedGmDecision(db,guild,key){\n  const row=db.getCityRecord(guild,'gm_arbitration_decision',key),d=row?.data,source=row&&db.getWorldEvent(guild,row.source_event),\n    board=d&&db.getCityRecord(guild,'scene_intent_board',d.board),boardSource=board&&db.getWorldEvent(guild,bo"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/condition-clear-history.js",
+      "sha256": "74e9e72ea24e2aba1928a627a1aabd1a5b82ce64b10f538b6336f09fbf4fe0c1",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectNativeConditionClearAncestry(db,guild,condition){\r\n  const actual=condition&&db.getCityRecord(guild,'pc_native_condition',condition.record_key),\r\n    receipt=actual&&db.getCityRecord(guild,'pc_native_condition_clear',clearKey(actual.record_key)),d=receipt?.data,\r\n    source=re"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/condition-expiry-history.js",
+      "sha256": "ae200054c3971b83acba24510531bd153d26e90061d79a22a5c4533358e55ecf",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectNativeConditionExpiryAncestry(db,guild,condition){\n  const key=condition?.record_key,row=key&&db.getCityRecord(guild,'pc_native_condition',key),v=row?.data;\n  if(!row||row.status!=='expired'||hash(row)!==hash(condition))throw new Error('native_condition_expiry_identity');\n  co"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/rules/death-choice-evidence.js",
       "sha256": "e8a38867419a840ff5831d5ff4b99de5edfb0a74e5de7389eab09d648b94b405",
       "reachable": false,
@@ -3118,6 +3198,30 @@
       "sqlStatements": 20
     },
     {
+      "file": "bot/src/v2/rules/feature-cost-plan.js",
+      "sha256": "795c9276ad760dfa7c6ce41f68afd760290bb203c3d8583b2a9cfefd43856dde",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function featureCostPlan(feature,{timing,additionalSpotlight=false,experience=false,fear,stress,stressMax}){\r\n  if(!['spotlight_action','reaction','passive'].includes(timing)||typeof additionalSpotlight!=='boolean'||typeof experience!=='boolean'\r\n    ||timing!=='spotlight_action'&&additionalS"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./native-resource-plan.js",
+          "target": "bot/src/v2/rules/native-resource-plan.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/rules/feature-roll-source.js",
       "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c",
       "reachable": false,
@@ -3145,6 +3249,126 @@
         }
       ],
       "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-outcomes.js",
+      "sha256": "a6463168431ae9e5fcd39c432184d6417150e1d74f938064aac29a010f5afa5d",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function groupFeatureOutcome(feature,{success,critical=false,choice=null}={}){\r\n  if(!Object.hasOwn(groupFeatureEffects,feature)||typeof success!=='boolean'||typeof critical!=='boolean')\r\n    throw nativeArbitrationFailure('group_feature_outcome_evidence');\r\n  const requiredChoice=groupNeedsC"
+        }
+      ],
+      "imports": [
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./group-feature-rules.js",
+          "target": "bot/src/v2/rules/group-feature-rules.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 2,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-rules.js",
+      "sha256": "1b92fe5acec7264cd838aa85c4b24b612b474b6591f5f79acbc4fd0146989cdc",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const LANES='adversary:traffic-saint:all-lanes-stop';"
+        },
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const FLASH='adversary:aster-vale-contractor:flashbang';"
+        },
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const REGENT='adversary:pale-regent:command-the-blood';"
+        },
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const FOAM='adversary:ritual-enforcement-team:null-foam';"
+        },
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const groupFeatureEffects=Object.freeze({\r\n  [LANES]:Object.freeze({choice_on:null,failure:Object.freeze({stress:0,hope:0,condition:true}),success:Object.freeze({stress:0,hope:0,condition:false})}),\r\n  [FLASH]:Object.freeze({choice_on:'success',failure:Object.freeze({stress:1,hope:0,condition"
+        },
+        {
+          "line": 17,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const groupFeaturePolicies=Object.freeze({\r\n  [FOAM]:Object.freeze({trait:'Agility',difficulty:14,range:'Close',all:true,area:true,stress_when_tracked:true,condition:'Restrained',expiry:'until_freed',spellcast_disadvantage:true}),\r\n  [LANES]:Object.freeze({trait:'Instinct',difficulty:14,range"
+        },
+        {
+          "line": 23,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const isGroupFeature=key=>Object.hasOwn(groupFeaturePolicies,key);"
+        },
+        {
+          "line": 25,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function groupFeatureCostPlan(feature,combatant,options){\r\n  if(!isGroupFeature(feature?.feature_key))throw nativeArbitrationFailure('group_feature_cost_source');\r\n  const source=groupFeaturePolicies[feature.feature_key].stress_when_tracked&&combatant?.stress_max===0\r\n    ?{...feature,costs:f"
+        },
+        {
+          "line": 31,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function groupReactionRules(key){\r\n  const policy=groupFeaturePolicies[key];if(!policy)throw nativeArbitrationFailure('group_feature_fixed_rules');\r\n  return Object.freeze({trait:policy.trait,difficulty:policy.difficulty});\r\n}"
+        },
+        {
+          "line": 35,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function validateGroupFeatureProposal(entry,p,feature){\r\n  const policy=groupFeaturePolicies[feature?.feature_key];\r\n  if(!policy||entry.actor.type!=='npc'||entry.operation!=='feature'||p.disposition!=='native_feature_resolution'||p.stakes_kind!=='native_feature'\r\n    ||p.trait!==policy.trait"
+        },
+        {
+          "line": 42,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const groupNeedsChoice=(feature,success,critical=false)=>!critical&&groupFeatureEffects[feature]?.choice_on===(success?'success':'failure');"
+        },
+        {
+          "line": 43,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export const groupReactionOptions=feature=>Object.keys(groupFeatureEffects[feature]?.choices||{});"
+        },
+        {
+          "line": 44,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function groupFeatureStakes(key){\r\n  if(key===FOAM)return 'Everyone in the designated area makes an independent Agility Reaction Roll (14). Failure causes Restrained and disadvantage on Spellcast Rolls until freed. Each PC owner controls their reaction; silence is pending.';\r\n  if(key===LANES"
+        }
+      ],
+      "imports": [
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./feature-cost-plan.js",
+          "target": "bot/src/v2/rules/feature-cost-plan.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 9,
       "sqlStatements": 0
     },
     {
@@ -3276,6 +3500,65 @@
       ],
       "imports": [],
       "functions": 1,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/native-resource-plan.js",
+      "sha256": "031649fdd290bb64b6c1f54b4d4d4e29ef553ae3226005e8ce3c605ce52dfd53",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function nativeResourcePlan(balance,delta,{overflow='hold'}={}){\r\n  if(!exact(balance,'current,max')||![balance.current,balance.max,delta].every(Number.isSafeInteger)\r\n    ||balance.max<0||balance.current<0||balance.current>balance.max||!['hold','cap'].includes(overflow))throw fail('native_re"
+        }
+      ],
+      "imports": [],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/npc-reaction-proof.js",
+      "sha256": "8b7a0e3c07920e7fb7c1128b2ef3a3ed2e0274f6bd986d1306332c879cd85c8c",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function splitMixedReactionCohort(targets){\r\n  if(!Array.isArray(targets)||!targets.length)throw fail('mixed_reaction_cohort');\r\n  const keys=new Set();\r\n  for(const target of targets){\r\n    if(!target||!['character','npc'].includes(target.kind)||typeof target.key!=='string'||!target.key\r\n   "
+        },
+        {
+          "line": 22,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function rollNativeNpcReaction({target,combatant=null,template=null,profile=null,experienceName=null,difficulty,rng}){\r\n  const ordinary=profile!==null;\r\n  if(target?.kind!=='npc'||target.owner||!target.presence_hash||!target.control_hash\r\n    ||(ordinary?combatant!==null||template!==null||pr"
+        },
+        {
+          "line": 44,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectNativeNpcReaction(receipt){\r\n  const {receipt_hash,...data}=receipt||{},r=data.result,templateHash=data.target?.template_hash;\r\n  if(![1,2].includes(data.version)||data.target?.kind!=='npc'||!data.target.key||!data.target.presence_hash||!data.target.control_hash\r\n    ||!templa"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./dice.js",
+          "target": "bot/src/v2/rules/dice.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 11,
       "sqlStatements": 0
     },
     {
