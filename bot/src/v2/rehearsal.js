@@ -16,7 +16,7 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
   const knowledge=knowledgeConfig?createKnowledgeAuthority({...knowledgeConfig,sourceAuthority:authority}):null;
   const kernel=createKernel({authority,journal,rules:createRulesetRegistry(rules),context,knowledge});
   const gateway=createModelGateway({contextAuthority:context,provider});
-  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context});
+  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context,...(proseReview?{materialReview:proseReview}:{})});
   const planner=planning?createPrivatePlanner({...planning,sourceAuthority:authority}):null;
   async function plan(event,{signal}={}){
     if(!planner)throw new Error('Private planner not installed');

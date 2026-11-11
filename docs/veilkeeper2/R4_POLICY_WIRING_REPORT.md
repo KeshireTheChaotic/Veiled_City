@@ -1,0 +1,9 @@
+# R4 native review-policy wiring — complete
+
+Rehearsal previously accepted proseReview but failed to forward it to its publication queue. Native controlled names, independent speakers and material-evidence callbacks were therefore silently ignored. The queue now receives the exact native policy. The integration case distinguishes named PC agency, independent testimony, a human-controlled proxy and an explicitly supported numeric result while retaining requires_semantic_review, no send and one inference.
+
+Files: rehearsal.js, r1-rehearsal.test.mjs, this report/hash manifest and resume handoff. Fresh checks (Node v26.13.0): 13/13 rehearsal checks passed (82.3142 ms) plus 41/41 import-affected checks (1223.0263 ms). The first new integration run failed because the fixture itself did not forward the policy; correcting that fixture then exercised the actual production wiring and all checks passed. The unchanged standalone material-review suite was not rerun. No live bot restart, model call or Discord send.
+
+Migration/rollback: no schema change; revert the one-line composition fix to restore earlier behavior (which ignores configured policy). Existing raw drafts and stores are unchanged. Source/test hashes attached. The already-running online process retains its loaded previous code; no hot reload is claimed.
+
+Known holds: diagnostic screening is not semantic authorization; native live control/speaker/evidence readers and durable review/repair records are not yet composed. Online model agency/grounding failures remain open. No major phase gate passed. Next: native authorship/portrayal metadata in audience packets, then persistent source-bound segment review/repair and receipt-backed validation. Actual human Discord command receipts remain pending; preserve the running test and its stores.

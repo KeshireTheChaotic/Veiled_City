@@ -1,5 +1,9 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
+## Latest R4 continuation
+
+Native proseReview policy forwarding is fixed (R4_POLICY_WIRING_REPORT.md; 13+41 fresh checks passed). Next: native authorship/portrayal metadata in audience packets, then persistent source-bound segment reviews/repairs and receipt-backed validation. Live process 62251 remains on its loaded earlier code; human command events remain pending.
+
 ## Online test continuation, 2026-11-10
 
 User authorized online testing and set the overall goal active. See ONLINE_OLLAMA_REPORT.md for actual results: native test-guild bot online (execution session 62251), qwen3.5:4b, ten-call native cap, preserved `.reports/online-6b8c5ce9-2c6b-4725-9bd5-fb6eb2b5ef56`. Human command receipts were zero at the last read; async command-test request is pending. Fifteen separate synthetic local calls tested conversation/tools/prompt variants: provider transport and private-canary exclusion worked, but agency/grounding quality failed. Nothing was automatically published. Do not mistake these for gameplay acceptance. The native source uses the default prompt; experimental prompts were not applied. The R4 foundation is now a separate scoped checkpoint; unrelated README.md remains dirty and preserved. The running online process retains earlier loaded modules; do not claim new fixes are live. Next: inspect human command receipts; R4 atomic repair/asynchronous callback handling is fixed with 61 passing focused/dependency checks (R4_SEGMENT_REVIEW_REPORT.md). Next: audience-safe portrayal/control context and native receipt-backed review, addressing observed agency failures before any autonomous delivery.

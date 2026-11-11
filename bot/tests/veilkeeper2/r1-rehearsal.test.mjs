@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createRehearsal} from '../../src/v2/rehearsal.js';
+import {createProseMaterialReview} from '../../src/v2/prose-material-review.js';
 import {openKnowledgeStore} from '../../src/v2/knowledge-store.js';
 import {createKnowledgeAuthority} from '../../src/v2/knowledge-authority.js';
 
-function fixture({failSelection=false,providerResult,knowledgeStore,recall,planning}={}){
+function fixture({failSelection=false,providerResult,knowledgeStore,recall,planning,proseReview}={}){
   const event={campaignId:'c',messageId:'m',userId:'u',actorId:'pc'};
   const message={id:'m',campaignId:'c',userId:'u',channelId:'ch',revision:'1',deleted:false,text:'Interesting.'};
   const channel={id:'ch',campaignId:'c',sceneId:'scene',revision:'1',kind:'party',permissionsVerified:true,recipientIds:['u'],writerIds:['u']};
@@ -16,7 +17,7 @@ function fixture({failSelection=false,providerResult,knowledgeStore,recall,plann
     readScene:()=>({id:'scene',campaignId:'c',sessionId:'session',revision:'1',status:'active',participants:[{userId:'u',actorId:'pc',presence:'present'}]}),
     readSession:()=>({id:'session',campaignId:'c',revision:'1',status:'active'})},
     records:knowledgeStore?undefined:{metadata:(_c,ref)=>sources.get(ref),readText:(_c,ref,revision)=>{textReads.push(ref);return {revision,text:ref==='secret'?'GM-only culprit':'The clerk claims a tunnel exists.'};}},
-    knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,recall,planning,
+    knowledge:knowledgeStore?{store:knowledgeStore,readEvidence:()=>null}:null,recall,planning,proseReview,
     selectContext:()=>{if(failSelection)throw new Error('Optional memory unavailable');return ['rumor','secret'];},
     provider:{generate:async request=>{requests.push(request);return providerResult?providerResult(request):{text:'“Mercer, interesting usually means trouble,” the clerk says.',usage:{inputTokens:42,outputTokens:12}};}}});
   return {app,event,channel,actor,sources,requests,textReads};
@@ -122,4 +123,10 @@ test('native segment review and local repair preserve one inference and never gr
   assert.equal(fixed.heldCount,0);assert.equal(fixed.status,'requires_semantic_review');assert.equal(fixed.sent,false);assert.equal(f.requests.length,1);
   assert.deepEqual(Object.keys(f.app.capabilities(turn.sourceHandle)),['context_read','action_propose','state_inspect','knowledge_propose']);
   f.channel.revision='2';assert.throws(()=>f.app.reviewPublication(turn.publication.id),/authority/);
+});
+
+test('rehearsal actually applies its supplied native control, speaker and material policy',async()=>{
+  let checks=0;const proseReview=createProseMaterialReview({readControlledNames:()=>['Mercer','Rook'],readIndependentSpeakers:()=>['The clerk','Rook'],authorizeMaterial:c=>{checks++;return c.kind==='mechanical_result'&&c.excerpt==='take 3 damage';}});
+  const f=fixture({proseReview,providerResult:()=>({text:'Mercer obeys.\n\nThe clerk claims, “You agreed to pay.”\n\nRook says, “I accept.”\n\nYou take 3 damage.'})}),turn=await f.app.respond(f.event),review=f.app.reviewPublication(turn.publication.id);
+  assert.deepEqual(review.segments.map(s=>s.status),['withheld','screened','withheld','screened']);assert.ok(checks>=3);assert.equal(review.status,'requires_semantic_review');assert.equal(review.sent,false);assert.equal(f.requests.length,1);
 });
