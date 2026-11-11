@@ -50,6 +50,27 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
     }
     return true;
   }
+  function context(source){
+    privateSource(source);
+    if(typeof actionStore.readyActionMetadata!=='function'||typeof actionStore.acceptedConsentRefs!=='function')throw new Error('Native action discovery unavailable');
+    const rows=actionStore.readyActionMetadata(source.campaign,source.principal,source.scene);
+    if(rows.length>16)throw new Error('Too many ready native actions');
+    const operations=[];
+    for(const action of rows){
+      owner(source,action);
+      const refs=actionStore.acceptedConsentRefs(source.campaign,action.id);
+      if(refs.length>16)throw new Error('Too many native consent references');
+      for(const consentRef of refs){
+        const consent=actionStore.readConsent(source.campaign,consentRef);
+        if(!consent||(source.id!==action.sourceRef||source.revision!==action.sourceRevision)&&(source.id!==consent.choiceSourceRef||source.revision!==consent.choiceSourceRevision))continue;
+        const original=sourceAuthority.inspectReference(action.sourceRef,action.sourceRevision),parameters={action_ref:action.id,consent_ref:consentRef};
+        if(costs.definition.validate({source:original,proposal:{actorRef:action.actorId,parameters}})!==true)continue;
+        operations.push(Object.freeze({source_ref:source.id,actor_ref:action.actorId,action:Object.freeze({kind:'hope_cost.commit',parameters:Object.freeze(parameters)})}));
+        if(operations.length>16)throw new Error('Too many eligible native proposals');
+      }
+    }
+    privateSource(source);return Object.freeze({status:'available',operations:Object.freeze(operations),effects_committed:false});
+  }
   // Exact factual recap only. This is not approval of arbitrary prose or a new effect.
   function authorizeMaterial(candidate){
     try{
@@ -65,5 +86,5 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
       return receipt.effects.length===1&&receipt.effects[0].kind==='resource_spent'&&receipt.effects[0].resource==='hope'&&receipt.effects[0].amount===Number(match[1]);
     }catch{return false;}
   }
-  return Object.freeze({authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'}]});
+  return Object.freeze({context,authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'}]});
 }

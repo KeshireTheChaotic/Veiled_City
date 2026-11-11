@@ -1,0 +1,119 @@
+{
+  "variant": "native-discovery-control",
+  "model": "qwen3.5:4b",
+  "ownerConsent": "synthetic-native-fixture",
+  "discordMessages": 0,
+  "realCampaignEffects": 0,
+  "toolTrace": [
+    {
+      "calls": [
+        {
+          "id": "ollama:0:0",
+          "name": "context_read",
+          "arguments": {
+            "topic": "actions"
+          }
+        }
+      ],
+      "previousNativeResults": []
+    },
+    {
+      "calls": [
+        {
+          "id": "ollama:1:0",
+          "name": "action_propose",
+          "arguments": {
+            "source_ref": "source:e28f111d59bea8999eceeb2add7458aa992731fe4633ccb248e3df9cc64aefb5",
+            "actor_ref": "pc",
+            "action": {
+              "kind": "hope_cost.commit",
+              "parameters": {
+                "action_ref": "test-cost",
+                "consent_ref": "test-consent"
+              }
+            },
+            "reason": "User request to process accepted Hope cost."
+          }
+        }
+      ],
+      "previousNativeResults": [
+        {
+          "id": "ollama:0:0",
+          "name": "context_read",
+          "result": {
+            "status": "available",
+            "operations": [
+              {
+                "source_ref": "source:e28f111d59bea8999eceeb2add7458aa992731fe4633ccb248e3df9cc64aefb5",
+                "actor_ref": "pc",
+                "action": {
+                  "kind": "hope_cost.commit",
+                  "parameters": {
+                    "action_ref": "test-cost",
+                    "consent_ref": "test-consent"
+                  }
+                }
+              }
+            ],
+            "effects_committed": false
+          }
+        }
+      ]
+    },
+    {
+      "calls": [],
+      "previousNativeResults": [
+        {
+          "id": "ollama:1:0",
+          "name": "action_propose",
+          "result": {
+            "receipt_ref": "test-cost",
+            "receipt_hash": "fd1c2aac6f1306246301be05fd4dab2ef49b41a061bb0eac891224e7add6c5a8",
+            "status": "resolved",
+            "operation": "hope_cost",
+            "actor_ref": "pc",
+            "source_ref": "source:5bae2a30a011632cebccef59b63de6a8cc5afd0e093a082dbd61c163a490d74d",
+            "source_revision": "314e4b997ac1dd45bc4b564cd1d86c8d0e4e29f258e51d06213fb580570a4fab",
+            "effects_committed": true,
+            "disclosure": {
+              "recipient_ids": [
+                "fixture-owner"
+              ],
+              "npc_knowledge": false
+            },
+            "effects": [
+              {
+                "kind": "resource_spent",
+                "resource": "hope",
+                "amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "modelCalls": 3,
+  "metrics": {
+    "traceId": "67b2a547-d54b-47ad-8ad7-6699afc1d9aa",
+    "modelCalls": 3,
+    "toolCalls": 2,
+    "elapsedMs": 2785.1176,
+    "usage": {
+      "inputTokens": 3278,
+      "outputTokens": 194
+    }
+  },
+  "elapsedMs": 2796,
+  "output": "The Hope cost processing was resolved with 2 units spent, effects committed.",
+  "receiptDependencies": [
+    {
+      "receiptRef": "test-cost",
+      "receiptHash": "fd1c2aac6f1306246301be05fd4dab2ef49b41a061bb0eac891224e7add6c5a8"
+    }
+  ],
+  "sent": false,
+  "fixtureHopeAfter": 1,
+  "engineCommitted": true,
+  "engineOrchestrationPassed": true
+}

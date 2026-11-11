@@ -25,7 +25,7 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
     }
     return result;
   }
-  const nativeActions=actionAuthority?{supports:kind=>actionAuthority.supports(kind),describe:()=>actionAuthority.describe(),propose:(source,input)=>rememberReceipt(source,actionAuthority.propose(source,input)),inspect:(source,ref)=>rememberReceipt(source,actionAuthority.inspect(source,ref))}:null;
+  const nativeActions=actionAuthority?{...(typeof actionAuthority.context==='function'?{context:source=>actionAuthority.context(source)}:{}),supports:kind=>actionAuthority.supports(kind),describe:()=>actionAuthority.describe(),propose:(source,input)=>rememberReceipt(source,actionAuthority.propose(source,input)),inspect:(source,ref)=>rememberReceipt(source,actionAuthority.inspect(source,ref))}:null;
   function receiptDependencies(source){
     const result=[];
     for(const [receiptRef,receiptHash] of receiptReads.get(JSON.stringify([source.id,source.revision]))??[]){if(actionAuthority.inspect(source,receiptRef).receipt_hash!==receiptHash)throw new Error('Native receipt dependency changed');result.push({receiptRef,receiptHash});}

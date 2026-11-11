@@ -115,3 +115,27 @@ test('a true historical spend that was not observed by this draft tools grants n
   const f=fixture(t);f.tools.action_propose(f.proposal);const app=createRehearsal({readers:f.readers,records:{metadata:()=>null,readText:()=>null},actionAuthority:f.native,provider:{generate:async()=>({text:'You spent 2 Hope.'})}}),turn=await app.respond(f.event('choice')),review=app.reviewPublication(turn.publication.id);
   assert.deepEqual(app.inspectPublication(turn.publication.id).receiptDependencies,[]);assert.equal(review.heldCount,1);assert.equal(review.segments[0].status,'withheld');assert.equal(turn.metrics.modelCalls,1);assert.equal(f.actions.readHope('c','pc').hope,1);
 });
+
+
+test('generic context discovery returns only exact current owner-consented proposals and never spends',t=>{
+  const f=fixture(t,{partyOriginal:true}),result=f.tools.context_read({topic:'actions'});
+  assert.equal(result.status,'available');assert.equal(result.effects_committed,false);assert.deepEqual(result.operations,[f.proposal]);assert.equal(f.actions.readHope('c','pc').hope,3);assert.equal(JSON.stringify(result).includes('hidden-native-hook'),false);
+  const party=f.kernel.bind(f.kernel.intake(f.event('attempt')));assert.equal(party.context_read({topic:'actions'}).code,'context_not_available');assert.equal(f.tools.context_read({topic:'actions',focus:'other'}).code,'invalid_context_query');
+  assert.equal(f.tools.action_propose(result.operations[0]).effects_committed,true);assert.deepEqual(f.tools.context_read({topic:'actions'}).operations,[]);assert.equal(f.actions.readHope('c','pc').hope,1);
+});
+
+test('ready discovery excludes rejected, unrelated-owner and other-source actions before private terms access',t=>{
+  const f=fixture(t),rejected=fixture(t,{decision:'reject'});assert.deepEqual(rejected.tools.context_read({topic:'actions'}).operations,[]);
+  f.actions.create({id:'other',kind:'hope_cost',campaignId:'c',sceneId:'s',actorId:'other-pc',ownerUserId:'v',sourceRef:'other-source',sourceRevision:'1'},{check:()=>{}});
+  f.actions.transition({campaignId:'c',actionId:'other',sourceRef:'other-notice',expectedRevision:1,to:'awaiting_consent'},{check:()=>{}});f.actions.transition({campaignId:'c',actionId:'other',sourceRef:'other-ready',expectedRevision:2,to:'ready_to_commit'},{check:()=>{}});
+  let privateReads=0;const native=createNativeActionAuthority({sourceAuthority:f.authority,readActor:f.canonical.readActor,actionStore:{...f.actions,readActionTerms:(c,a)=>{if(a==='other')privateReads++;return f.actions.readActionTerms(c,a);}}});
+  assert.equal(native.context(f.choice).operations.length,1);assert.equal(privateReads,0);assert.equal(f.actions.readHope('c','pc').hope,3);
+});
+
+test('natural consequence speech can discover and execute a native proposal without internal player references',async t=>{
+  const f=fixture(t);let calls=0;const app=createRehearsal({readers:f.readers,records:{metadata:()=>null,readText:()=>null},actionAuthority:f.native,provider:{generate:async input=>{
+    calls++;if(calls===1)return {toolCalls:[{id:'discover',name:'context_read',arguments:{topic:'actions'}}]};
+    if(calls===2){const result=input.history[0].toolResults[0].result;assert.equal(f.actions.readHope('c','pc').hope,3);return {toolCalls:[{id:'execute',name:'action_propose',arguments:result.operations[0]}]};}
+    return {text:'You spent 2 Hope.'};
+  }}}),turn=await app.respond(f.event('choice'));assert.equal(calls,3);assert.equal(turn.metrics.toolCalls,2);assert.equal(f.actions.readHope('c','pc').hope,1);assert.equal(app.reviewPublication(turn.publication.id).heldCount,0);assert.equal(app.inspectPublication(turn.publication.id).sent,false);
+});

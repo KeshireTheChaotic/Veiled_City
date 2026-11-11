@@ -1,0 +1,31 @@
+{
+  "variant": "native-discovery",
+  "model": "qwen3.5:4b",
+  "ownerConsent": "synthetic-native-fixture",
+  "discordMessages": 0,
+  "realCampaignEffects": 0,
+  "toolTrace": [
+    {
+      "calls": [],
+      "previousNativeResults": []
+    }
+  ],
+  "modelCalls": 1,
+  "metrics": {
+    "traceId": "01ae17ce-4e23-42f3-aa5a-dfd492a68473",
+    "modelCalls": 1,
+    "toolCalls": 0,
+    "elapsedMs": 5767.0939,
+    "usage": {
+      "inputTokens": 1096,
+      "outputTokens": 133
+    }
+  },
+  "elapsedMs": 5774,
+  "output": "The currency in this realm doesn't flow in cash, but in the tangible weight of your resolve and the quiet moments you give to yourself. To ask for processed \"Hope cost\" is a request for validation, not payment.\n\nI cannot process a cost that hasn't been incurred yet. Hope isn't spent by asking; it's accrued by facing what is feared, acting when words fail, and choosing one path over another despite knowing the future is unwritten.\n\nYou have already accepted this burden. That acceptance itself was the transaction. I see no ledger item for a \"cost\" to process, only the record of your resolve standing firm in place.",
+  "receiptDependencies": [],
+  "sent": false,
+  "fixtureHopeAfter": 3,
+  "engineCommitted": false,
+  "engineOrchestrationPassed": false
+}

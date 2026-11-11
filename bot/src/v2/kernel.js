@@ -93,6 +93,10 @@ export function createKernel({authority,journal,rules=createRulesetRegistry(),kn
       context_read:check(input=>{
         if(!closed(input,['topic'],['focus','cursor'])||!text(input.topic)||('focus'in input&&!text(input.focus))||('cursor'in input&&!text(input.cursor)))return blocked('invalid_context_query');
         if(input.cursor)return blocked('context_not_available');
+        if(input.topic==='actions'&&actionAuthority?.context){
+          if(input.focus)return blocked('invalid_context_query');
+          try{return snapshot(actionAuthority.context(source));}catch{return blocked('context_not_available');}
+        }
         if(input.topic==='knowledge'&&contextReader){
           if(!input.focus)return blocked('invalid_context_query');
           try{return snapshot(contextReader.read(source,input.focus));}catch{return blocked('context_not_available');}
