@@ -1,0 +1,17 @@
+{
+  "node": "v26.13.0",
+  "tests": 8,
+  "passed": 8,
+  "duration_ms": 54.8725,
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/npc-reaction-proof.js",
+      "sha256": "8b7a0e3c07920e7fb7c1128b2ef3a3ed2e0274f6bd986d1306332c879cd85c8c"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-npc-reaction-proof.test.mjs",
+      "sha256": "082e9962cb25d943e611b995ca903508ea4ed4e1f6f83998e14a3c267d80288c"
+    }
+  ]
+}
