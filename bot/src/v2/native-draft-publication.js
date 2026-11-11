@@ -2,7 +2,7 @@ import {createHash} from 'node:crypto';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Fixed publication of a reviewed draft; no knowledge or canon mutation. Transport is injected. */
 export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audiences,resolveChannel,readGmRoleId=()=>null}){
-  if(typeof sceneStore?.readers?.readChannel!=='function'||typeof gmAuthority?.check!=='function'||typeof drafts?.begin!=='function'||typeof audiences?.read!=='function'||typeof resolveChannel!=='function')throw new TypeError('Native draft publication dependencies required');
+  if(typeof sceneStore?.readers?.readChannel!=='function'||typeof gmAuthority?.check!=='function'||typeof drafts?.begin!=='function'||typeof drafts?.inspectSource!=='function'||typeof audiences?.read!=='function'||typeof resolveChannel!=='function')throw new TypeError('Native draft publication dependencies required');
   /** Sends one GM-approved saved draft to its original audience, at most once.
    * It records no knowledge acknowledgement: published narration is not objective truth.
    */
@@ -17,7 +17,7 @@ export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audi
     // Publish security: re-read the live Discord audience and the scene at send time, not only the stored record.
     const scene=sceneStore.readers.readScene(c,channelRecord.sceneId);if(scene?.status!=='active'||sceneStore.readers.readSession(c,scene.sessionId)?.status!=='active')throw new Error('Draft scene is no longer active; review needed');
     const scopeHash=hash([channelRecord,scene,sceneStore.readers.readSession(c,scene.sessionId)]);
-    const current=()=>{signal?.throwIfAborted();gmAuthority.check(proof);const ch=sceneStore.readers.readChannel(c,target.channelId),sc=ch&&sceneStore.readers.readScene(c,ch.sceneId),session=sc&&sceneStore.readers.readSession(c,sc.sessionId);if(sc?.status!=='active'||session?.status!=='active'||hash([ch,sc,session])!==scopeHash)throw new Error('Draft publication scope changed; review needed');};
+    const current=()=>{signal?.throwIfAborted();gmAuthority.check(proof);const sourceProof=drafts.inspectSource(c,source,draft.audience.revision);if(sourceProof?.campaign!==c||sourceProof.id!==source||sourceProof.scene!==draft.audience.scene||JSON.stringify([...sourceProof.recipients].sort())!==JSON.stringify([...draft.audience.recipients].sort()))throw new Error('Draft source authority changed; review needed');const ch=sceneStore.readers.readChannel(c,target.channelId),sc=ch&&sceneStore.readers.readScene(c,ch.sceneId),session=sc&&sceneStore.readers.readSession(c,sc.sessionId);if(sc?.status!=='active'||session?.status!=='active'||hash([ch,sc,session])!==scopeHash)throw new Error('Draft publication scope changed; review needed');};
     current();
     const live=await audiences.read({guildId:c,channelId:target.channelId,sceneId:channelRecord.sceneId,mode:channelRecord.kind,ownerUserId:channelRecord.ownerUserId??null,gmRoleId:readGmRoleId(c)??null,participantIds:channelRecord.kind==='party'?[...channelRecord.recipientIds]:[]},{signal:signal});
     if(JSON.stringify([...live.channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort()))throw new Error('Live Discord audience differs from the draft audience; review needed');

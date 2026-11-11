@@ -1,15 +1,3 @@
-## 2026-11-10: draft destination binding complete
-
-R6_DRAFT_SCOPE_REPORT.md: 27 passing focused/composition checks; equal recipients no longer authorize another campaign/scene/source. Current hashes recorded. Source epoch revalidation and R4 material review remain open. No live operation or phase completion.
-
-## 2026-11-10: reviewed-draft native service slice complete
-
-R6_DRAFT_PUBLICATION_REPORT.md records 26 passing focused/composition checks and source/test hashes. Publication now refuses scene/session scope changes during Discord reads. No live operation, major phase completion or production change. Next: R4 output guarantees and validated ordinary-prose delivery integration.
-
-## 2026-11-10: private-channel native service slice complete
-
-R6_PRIVATE_CHANNEL_REPORT.md records eight passing focused/composition checks and source/test hashes. No live operation, schema migration, major phase completion or production change. Next: native draft-publication extraction and asynchronous scope revalidation.
-
 # Veilkeeper 2.0 — current state
 
 The full R0–R8 goal remains incomplete. The user explicitly requested review and continuation on 2026-11-10. Work resumed after reviewing the current handoff and session review; no complete phase gate is claimed. Keep the 2%-remaining pause instruction for subsequent checkpoints. Worktree: `D:\Library\Development\Veiled_City_2\rebuild`; branch: `rebuild/veilkeeper2-audience-first`. Frozen baseline: `1ba6c7e15db1a66ba34b36336f31437beffe44d6` in parent `baseline`. Deprecated checkout remains untouched. Preserve the unrelated dirty `README.md`.
@@ -33,6 +21,9 @@ After completed major phases, integrate and publish to origin's rebuild branch, 
 | R4–R8 incomplete | Full prose consequence review, proactive living actors, Discord command/session migration, durable world migration/publication and independent live qualification remain required. R7 has opt-in turn claims/withheld drafts; it is not qualified recovery or delivery. |
 
 ## Current evidence
+
+2026-11-10 completed slices: native command boundary (81cc97c0), private-channel service (d2d318b1), reviewed-draft service (ffaffc99), destination binding (0547df2d), and durable original-source authorization (current checkpoint). Reports and source/test hashes: R6_COMMAND_BOUNDARY, R6_PRIVATE_CHANNEL, R6_DRAFT_PUBLICATION, R6_DRAFT_SCOPE and R7_DRAFT_SOURCE. Latest fresh changed-dependency result: 31/31 plus 2 SQLite integration checks. Older counts below are historical. No live operation or major phase completion. Next: fresh original Discord-message intake before publication, then R4 material review.
+
 
 Latest completed review slice: R6_COMMAND_BOUNDARY_REPORT.md — legacy declarations restored exactly to the pinned blob, native schema moved to an overlay, and guild-only native registration added (9 focused checks; no live registration).
 

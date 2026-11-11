@@ -1,0 +1,11 @@
+# R7 durable draft-source authorization — slice complete
+
+Native conversation turns now share the durable source registry through their native readers. Reviewed-draft publication requires an original source inspection at its saved revision, matching campaign, source, scene and recipients. It rechecks this inside the transaction claiming publication and after asynchronous delivery preparation. Human GM approval is not a substitute for the original player's current source authority.
+
+Modified implementation: native-root.js and native-draft-publication.js. Changed tests: r6-gm-session-command.test.mjs; new r7-draft-source-publication.test.mjs. Documentation: this report, SHA-256 manifest, ledger and resume handoff.
+
+Fresh tests (Node v26.13.0, 2026-11-10): 31/31 changed-dependency checks passed (975.554 ms): 24 GM commands, 4 native-root composition and 3 turn-runner. Two additional real SQLite integration tests passed (522.1487 ms). They generate one draft with one fake inference, close/reopen scene, source and turn databases, publish once, and reject later native message edits, ownership changes, absence and scene close/reopen without claiming or sending the draft. A source revocation during channel lookup is also refused. Actual model/Discord quality is untested; no live calls or sends performed.
+
+Migration: no SQL schema change. New drafts save original source identities; prior native drafts without registry entries stay withheld for review, never silently re-authorized or inferred again. Registry entries contain immutable event fingerprints and control metadata, not utterance text. Rollback: revert implementation; existing registry entries may remain inert; no production database touched.
+
+Known holds: native source inspection detects changes recorded in native stores. Publication still needs fresh live original-message intake to detect Discord edits/deletions not yet observed locally. Full R7 crash/concurrency/migration recovery and R4 consequential prose/agency review, segment repair and autonomous publication remain open. No major phase gate passed. Next exact slice: refresh original Discord source through native intake before publication, then review R4 material validation. Production unchanged.

@@ -1,0 +1,8 @@
+{
+  "bot/src/v2/native-draft-publication.js": "df8abc0e39c0dad51532433d922bb07f94873f01c9e42c0c34d18a816f6a95d4",
+  "bot/src/v2/native-root.js": "90b628d3797e408b129e3dabc19e1ccc5a37f71d26ca8b78cc2a0b2f9a08c450",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs": "387ef54dfb3467724db03e407ad578ccea4d2ef150c3f366e8b4cd39f371e80c",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs": "aa749d9662e4753e3a453ce1c4f5200798577e576df3af905c9981d873188946",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs": "da476e2a0b8274fa839c5e0abb458a15abd7af050fea91b84f1ee383b6d7ec0e",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923"
+}
