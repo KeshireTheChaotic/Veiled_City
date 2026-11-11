@@ -1,0 +1,15 @@
+{
+  "node": "v26.13.0",
+  "tests": 4,
+  "passed": 4,
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/roll-adjudications.js",
+      "sha256": "1fb6b239ea051ad969c15cded89f69e83f38f880f898249b816df2b0ec557b5e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-roll-adjudications.test.mjs",
+      "sha256": "15ed4037066b8cba618b124710d9b19577eff6d1ca039e43b0c8d0c8fbb364b9"
+    }
+  ]
+}

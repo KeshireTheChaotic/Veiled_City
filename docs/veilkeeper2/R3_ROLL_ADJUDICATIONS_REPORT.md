@@ -1,0 +1,11 @@
+# R3 — immutable roll adjudication persistence
+
+Implementation slice complete; R3 and R0–R8 remain incomplete.
+
+Added rules/roll-adjudications.js and r3-roll-adjudications.test.mjs. Dedicated SQLite storage preserves exact accepted source/campaign/scene/actor-bound qualified adjudications. Identity is immutable, repeated identical persistence is idempotent, foreign scope/scalar bonus patches are rejected, and native caller checks run inside the transaction before and after persistence. Source/decision changes roll back. Reading is campaign-scoped. This is native storage, not an approval authority, disclosure grant, AI tool or generic state patch.
+
+Four new checks passed, Node v26.13.0: first three in 66.9715 ms; added integration check alone in 53.3971 ms. Actual SQLite cold reopen/conflict/rollback and the actual roll terms/preparation/store modules were exercised. Sheet and authorization callbacks were deterministic native fixtures; no live GM approval, condition adapter, Experience payment, Discord or model quality is established. Existing unchanged suites were not rerun. No existing runtime import changed; the new module remains uncomposed.
+
+Migration/rollback: new dedicated table vk3_roll_adjudications; no existing gameplay database modified. No old rows backfilled or tests/runtime retired. This file is not yet included in native-start's store manifest allowlist: root composition requires an explicit runtime manifest migration rather than putting it into existing live directories. Preserve immutable records on rollback; do not repurpose a campaign database as this store.
+
+Known integration holds: pre-roll Fear continuation currently requires actorRevision/ruleFingerprint and scalar bonuses, while qualified roll terms require a closed reference-based schema. This mismatch was verified in current source and must be resolved with fresh native review/term validation before composing continuation. Actual source-authorized adjudication issuer, mandatory conditions/paid modifiers, notices/owner dice, atomic consequences, root integration and parity remain open. Next exact R3 work: unify source-bound continuation review with qualified terms, then implement real condition/modifier adapters and root/Discord integration. No major-phase merge/push or production change.

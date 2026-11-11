@@ -1,5 +1,5 @@
 {
-  "head": "1de7852dbb64e6ea1aa795813f492cb2756da011",
+  "head": "a3342f0aa3a0d886c783e763a7d3157d662ba1aa",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 96,
+  "nativeModules": 97,
   "reachableNativeModules": 75,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -34,6 +34,7 @@
     "bot/src/v2/rules/pre-roll-fear-coordinator.js",
     "bot/src/v2/rules/pre-roll-fear.js",
     "bot/src/v2/rules/roll-action-lifecycle.js",
+    "bot/src/v2/rules/roll-adjudications.js",
     "bot/src/v2/rules/roll-store.js",
     "bot/src/v2/rules/roll-terms.js"
   ],
@@ -3394,6 +3395,37 @@
       "imports": [],
       "functions": 10,
       "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/roll-adjudications.js",
+      "sha256": "1fb6b239ea051ad969c15cded89f69e83f38f880f898249b816df2b0ec557b5e",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openRollAdjudications(filename=':memory:'){\n const db=new DatabaseSync(filename);\n try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(t=>t.name!=='vk3_roll_adjudications'))throw new Error('Dedicated roll adjudication store r"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 10,
+      "sqlStatements": 4
     },
     {
       "file": "bot/src/v2/rules/roll-store.js",
