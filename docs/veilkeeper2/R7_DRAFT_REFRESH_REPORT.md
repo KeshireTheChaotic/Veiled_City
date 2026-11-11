@@ -1,0 +1,11 @@
+# R7 fresh original-source intake — slice complete
+
+Before claiming a reviewed draft for delivery, the native publication service now requires an asynchronous original-source refresh. Native root resolves the immutable source event, reconstructs its registered channel/owner/scene route and uses the existing two-read Discord intake. Original native source revision and publication scope are rechecked after that refresh and within the transactional send claim. No second inference is made.
+
+Files: native-root.js, native-draft-publication.js, two focused test files, this report and SHA-256 manifest, ledger and resume handoff. Source identity/authorization remains native-only; no GM-private context is passed to inference.
+
+Fresh changed-dependency validation (Node v26.13.0, 2026-11-10): 32/32 passed, 1031.5231 ms: 25 GM-command, 4 native-root and 3 SQLite/intake integration tests. The integration uses real scene/source/turn databases, native turn runner, native source authority, native intake and native publication, with fake model and Discord reads/send. It verifies one inference, successful one-time delivery after reopening stores, refusal after native source/authority changes, and unobserved live message edit/deletion/unavailability. No live call or Discord send; these results do not prove live quality/performance.
+
+Migration: no schema change. Publication now requires the refresh callback; native root supplies it, standalone callers missing it fail during construction. Legacy unregistered sources remain held under the prior slice. Rollback: revert this slice with no data rollback. Production unchanged.
+
+Known holds: every refresh still lists the full guild membership; long waits can expire the short human-GM lease and conservatively refuse publication. No latency improvement claimed. Material prose/agency validation, local segment repair and autonomous R4 delivery remain unfinished, as do full R7 recovery and phase gates. Next exact work: replace the rate-limited gateway roster retrieval with a complete fresh REST roster where supported, verify audience parity, then continue R4 validation and delivery. Do not bypass source/audience checks or lengthen authority leases as a performance shortcut.

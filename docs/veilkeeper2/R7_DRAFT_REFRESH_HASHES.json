@@ -1,0 +1,7 @@
+{
+  "bot/src/v2/native-draft-publication.js": "eeebf6ab4eca370927f9e6448e25dad28fa5761caa2c8229cf4a4a4e1482901a",
+  "bot/src/v2/native-root.js": "33292bb1ce53a07cdf72d50cd7f85c846b1ba4a9e6b9ed20e01709c748868e44",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs": "7e57b55d889dd3f61263f63309eb4ea2913e60b73a912a2418b2793467c84479",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs": "8669827ed38c27d73d9799b2ca950ab2d440109a24b2030fc80c123166f490b2",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923"
+}

@@ -2,7 +2,7 @@ import {createHash} from 'node:crypto';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Fixed publication of a reviewed draft; no knowledge or canon mutation. Transport is injected. */
 export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audiences,resolveChannel,readGmRoleId=()=>null}){
-  if(typeof sceneStore?.readers?.readChannel!=='function'||typeof gmAuthority?.check!=='function'||typeof drafts?.begin!=='function'||typeof drafts?.inspectSource!=='function'||typeof audiences?.read!=='function'||typeof resolveChannel!=='function')throw new TypeError('Native draft publication dependencies required');
+  if(typeof sceneStore?.readers?.readChannel!=='function'||typeof gmAuthority?.check!=='function'||typeof drafts?.begin!=='function'||typeof drafts?.inspectSource!=='function'||typeof drafts?.refreshSource!=='function'||typeof audiences?.read!=='function'||typeof resolveChannel!=='function')throw new TypeError('Native draft publication dependencies required');
   /** Sends one GM-approved saved draft to its original audience, at most once.
    * It records no knowledge acknowledgement: published narration is not objective truth.
    */
@@ -23,6 +23,7 @@ export function createNativeDraftPublication({sceneStore,gmAuthority,drafts,audi
     if(JSON.stringify([...live.channelRecord.recipientIds].sort())!==JSON.stringify([...draft.audience.recipients].sort()))throw new Error('Live Discord audience differs from the draft audience; review needed');
     const channel=await resolveChannel(c,target.channelId);
     if(channel?.guildId!==c||channel.id!==target.channelId||typeof channel.send!=='function')throw new Error('Draft channel unavailable');
+    await drafts.refreshSource(c,source,draft.audience.revision,{signal});
     current();
     drafts.begin(c,source,{approvedFingerprint:fingerprint,approval:{principal:proof.principal,sourceRef:proof.sourceRef,sourceRevision:proof.sourceRevision},check:current});
     let sent;try{sent=await channel.send({content:draft.text,allowedMentions:{parse:[]},enforceNonce:true,nonce:source.slice(-20)});}catch(error){drafts.uncertain(c,source,error?.message??'send failed');throw new Error('Send was not confirmed; the draft is held and will not be retried');}
