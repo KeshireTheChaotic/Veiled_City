@@ -1,5 +1,5 @@
 {
-  "head": "985228f07d39b2285ad7a1859eff259e53a47b0a",
+  "head": "edebd7c08b449069917323d4682501cb407e9011",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -556,7 +556,7 @@
     },
     {
       "file": "bot/src/v2/context-authority.js",
-      "sha256": "40d4b4e642482a70a18bec1e4c3e3b68897a057c0cd0ca68c02eb41009c25bcf",
+      "sha256": "fea9c627edfb6516af8cd51542b1dee1bd0b8b234fb429af4fa6bc3de33f3dba",
       "reachable": true,
       "exports": [
         {
@@ -575,7 +575,7 @@
           "status": "external"
         }
       ],
-      "functions": 29,
+      "functions": 30,
       "sqlStatements": 0
     },
     {
@@ -1599,7 +1599,7 @@
     },
     {
       "file": "bot/src/v2/model-gateway.js",
-      "sha256": "b61adf5b3d155b1d69fce8a09408b6cfc16c690ea19ddde1f56a778f3a8abe51",
+      "sha256": "4c2e015984f20295be00bbc7b64e096ec36d2fbf9ef924f2f29767347b52fbda",
       "reachable": true,
       "exports": [
         {
@@ -1932,7 +1932,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "725c486e0ededa7af31d744f9e0a01724ea33748c9395cd2e09cc25d0065bb4e",
+      "sha256": "7fcda402799ba414835d422d689ea1f52d6653b5118e4d175c2d49f78d7616fa",
       "reachable": true,
       "exports": [
         {
@@ -3854,7 +3854,7 @@
     },
     {
       "file": "bot/src/v2/statement-lineage.js",
-      "sha256": "81801aa071640c5904aaa503cf9c13d4d87ac620a0b1f4a2ea0b767a3b32c24e",
+      "sha256": "b3b81237806efff7a21c60332b82452c7c8dfea3983ff952446970c7cee34e95",
       "reachable": true,
       "exports": [
         {
@@ -3879,7 +3879,7 @@
           "status": "external"
         }
       ],
-      "functions": 9,
+      "functions": 10,
       "sqlStatements": 0
     },
     {

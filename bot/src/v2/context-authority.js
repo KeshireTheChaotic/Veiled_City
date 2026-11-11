@@ -32,6 +32,12 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     if(!Object.hasOwn(row,'origin'))return true;
     try{return typeof records.entitledOrigin==='function'&&records.entitledOrigin(row,source)===true;}catch{return false;}
   }
+  function authorship(row,source){
+    if(!Object.hasOwn(row,'origin'))return null;
+    const value=typeof records.describeOrigin==='function'?records.describeOrigin(row,source):null;
+    if(!value||Object.keys(value).sort().join(',')!=='kind,same_controller_view'||value.kind!=='human_statement'||typeof value.same_controller_view!=='boolean')fail();
+    return {kind:value.kind,same_controller_view:value.same_controller_view};
+  }
   function originValid(row){
     if(!Object.hasOwn(row,'origin'))return true;
     try{return typeof records.validateOrigin==='function'&&records.validateOrigin(row)===true;}catch{return false;}
@@ -57,10 +63,10 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     for(const ref of references){
       const metadata=new Map();
       if(!closure(ref,nativeSource,actorId,metadata))continue;
-      const row=metadata.get(ref),body=records.readText(nativeSource.campaign,ref,row.revision);
+      const row=metadata.get(ref),attribution=authorship(row,nativeSource),body=records.readText(nativeSource.campaign,ref,row.revision);
       if(!body||body.revision!==row.revision||typeof body.text!=='string'||body.text.length>16000||textHash(body.text)!==row.contentHash)fail();
       for(const [key,value] of metadata)dependencies.set(key,hash(value));
-      selected.push({ref,revision:row.revision,kind:row.kind,text:body.text});
+      selected.push({ref,revision:row.revision,kind:row.kind,text:body.text,...(attribution?{authorship:attribution}:{})});
     }
     const packet=freeze({source_ref:nativeSource.id,scene:nativeSource.scene,utterance:nativeSource.text,
       actor_ref:actorId,human_controlled_actor_refs:[...(nativeSource.actors??[])],portrayal:{kind:actorId===null?'gm':'independent_npc',actor_ref:actorId},records:selected,trace_id:nativeSource.traceId??nativeSource.id});
