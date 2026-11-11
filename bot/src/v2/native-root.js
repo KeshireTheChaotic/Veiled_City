@@ -1,4 +1,5 @@
 import {join} from 'node:path';
+import {createSceneProseReview} from './scene-prose-review.js';
 import {openSceneStore} from './scene-store.js';
 import {openSourceRegistry} from './source-registry.js';
 import {createNativeActionAuthority} from './native-action-authority.js';
@@ -49,7 +50,7 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     // Bounded metadata-only default retrieval. Full weighted causes/pins remain uncomposed.
     // Entitlement includes complete ancestry before any selected body reaches inference.
     // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
-    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,records:knowledgeStore,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>knowledgeStore.candidateRefs(source.campaign,source.scene).filter(ref=>conversationContext.entitled(source,ref)).slice(0,64),actionAuthority:nativeActions}}):null;
+    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeStore,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>knowledgeStore.candidateRefs(source.campaign,source.scene).filter(ref=>conversationContext.entitled(source,ref)).slice(0,64),actionAuthority:nativeActions}}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
     return Object.freeze({router,costs:router.costs,turns,knowledgeStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}

@@ -10,9 +10,10 @@ import {createNativeRoot} from '../../../src/v2/native-root.js';
 import {openSourceRegistry} from '../../../src/v2/source-registry.js';
 import {createSourceAuthority} from '../../../src/v2/source-authority.js';
 import {createCanonicalActorReaders} from '../../../src/v2/canonical-actor-readers.js';
-export async function nativeCostFixture(t,{sendFailure=false,readbackTamper=false,provider=null,hope=3}={}){
+export async function nativeCostFixture(t,{sendFailure=false,readbackTamper=false,provider=null,hope=3,characterName=null}={}){
   const directory=mkdtempSync(join(tmpdir(),'vk2-root-cost-')),client=new EventEmitter(),errors=[],sent=[],replies=[],members=new Map(['bot','u'].map(id=>[id,{id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}]));
   const character={id:'pc',guild_id:'c',owner_user_id:'u',status:'active',data:{level:2,resources:{hp:{current:0,max:6},armor:{current:3,max:3},stress:{current:0,max:6},hope,hope_max:6},gm_private:'cost-hook-canary'}};
+  if(characterName!==null)character.name=characterName;
   const sourceMessage={id:'attempt',guildId:'c',channelId:'private',author:{id:'u',bot:false},content:'I use the ability.',webhookId:null,system:false};
   const channel={id:'private',guildId:'c',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),messages:{fetch:async({message})=>{if(message==='attempt')return sourceMessage;const value=sent.find(m=>m.id===message);if(!value)throw new Error('Unknown message');return readbackTamper?{...value,content:'It costs 1 Hope.'}:value;}},send:async body=>{const message={...structuredClone(body),id:'notice-'+(sent.length+1),guildId:'c',channelId:'private',author:{id:'bot',bot:true},webhookId:null,system:false};sent.push(message);if(sendFailure)throw new Error('Response lost after send');return message;}};
   const guild={id:'c',memberCount:2,members:{list:async()=>members},roles:{fetch:async()=>new Map([['gm',{}]])},channels:{fetch:async()=>channel}};client.user={id:'bot'};client.guilds={fetch:async()=>guild};
