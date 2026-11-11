@@ -1,5 +1,5 @@
 {
-  "head": "e9e7092c1ac5897b1789b53fd22f2320fe189097",
+  "head": "c760941f6dcdba2c16d2c75b6d6494bf9937870b",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 113,
+  "nativeModules": 116,
   "reachableNativeModules": 80,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -27,17 +27,20 @@
     "bot/src/v2/rules/committed-gm-decision.js",
     "bot/src/v2/rules/condition-clear-history.js",
     "bot/src/v2/rules/condition-expiry-history.js",
+    "bot/src/v2/rules/condition-history.js",
     "bot/src/v2/rules/death-choice-evidence.js",
     "bot/src/v2/rules/domain-card-catalog.js",
     "bot/src/v2/rules/fear-opportunity-reader.js",
     "bot/src/v2/rules/fear-reservations.js",
     "bot/src/v2/rules/feature-cost-plan.js",
     "bot/src/v2/rules/feature-roll-source.js",
+    "bot/src/v2/rules/group-feature-history.js",
     "bot/src/v2/rules/group-feature-outcomes.js",
     "bot/src/v2/rules/group-feature-rules.js",
     "bot/src/v2/rules/hope-store.js",
     "bot/src/v2/rules/incoming-damage-authority.js",
     "bot/src/v2/rules/native-resource-plan.js",
+    "bot/src/v2/rules/npc-condition-clear-history.js",
     "bot/src/v2/rules/npc-reaction-proof.js",
     "bot/src/v2/rules/ordinary-roll-preparation.js",
     "bot/src/v2/rules/owner-roll-evidence.js",
@@ -2983,6 +2986,72 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/rules/condition-history.js",
+      "sha256": "0f6080082ab08f1d10c22ffcffb6574ca5ea473639fbce549659b407efafa00b",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 15,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createHistoricalConditionReader(db){\r\n  if(['getCityRecord','getWorldEvent','getMutation','getSavedRoll','ownerAuthoredSource','withValidationSnapshot'].some(k=>typeof db?.[k]!=='function'))throw new TypeError('Complete native historical source repository required');\r\n  const path=ne"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./group-feature-history.js",
+          "target": "bot/src/v2/rules/group-feature-history.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-condition-clear-history.js",
+          "target": "bot/src/v2/rules/npc-condition-clear-history.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./condition-clear-history.js",
+          "target": "bot/src/v2/rules/condition-clear-history.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./condition-expiry-history.js",
+          "target": "bot/src/v2/rules/condition-expiry-history.js",
+          "status": "resolved"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
+          "specifier": "./group-feature-rules.js",
+          "target": "bot/src/v2/rules/group-feature-rules.js",
+          "status": "resolved"
+        },
+        {
+          "line": 8,
+          "kind": "ImportDeclaration",
+          "specifier": "./group-feature-outcomes.js",
+          "target": "bot/src/v2/rules/group-feature-outcomes.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 34,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/rules/death-choice-evidence.js",
       "sha256": "e8a38867419a840ff5831d5ff4b99de5edfb0a74e5de7389eab09d648b94b405",
       "reachable": false,
@@ -3252,6 +3321,58 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/rules/group-feature-history.js",
+      "sha256": "f4a31a207253e4892fe4045adb2599e38a2cff28a9d2e672b99feb77c75b30c7",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectGroupFeature(db,guild,key){\r\n  const execution=db.getCityRecord(guild,'gm_group_feature_execution',key),v=execution?.data,event=execution&&db.getWorldEvent(guild,execution.source_event),\r\n    parent=v&&inspectCommittedGmDecision(db,guild,v.decision),n=parent?.row.data.native,c"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./committed-gm-decision.js",
+          "target": "bot/src/v2/rules/committed-gm-decision.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-reaction-proof.js",
+          "target": "bot/src/v2/rules/npc-reaction-proof.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-condition-clear-history.js",
+          "target": "bot/src/v2/rules/npc-condition-clear-history.js",
+          "status": "resolved"
+        },
+        {
+          "line": 6,
+          "kind": "ImportDeclaration",
+          "specifier": "./group-feature-rules.js",
+          "target": "bot/src/v2/rules/group-feature-rules.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 11,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/rules/group-feature-outcomes.js",
       "sha256": "a6463168431ae9e5fcd39c432184d6417150e1d74f938064aac29a010f5afa5d",
       "reachable": false,
@@ -3516,6 +3637,37 @@
       ],
       "imports": [],
       "functions": 3,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/npc-condition-clear-history.js",
+      "sha256": "ff1765c620a164a5481abbd0089fc3f866cca296dce4b9e26b17a5d1b88b9bb7",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 32,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectMixedConditionClear(db,guild,condition){\r\n  const row=condition&&db.getCityRecord(guild,'native_mixed_condition',condition.record_key),\r\n    receipt=row&&db.getCityRecord(guild,'native_mixed_condition_clear',clearKey(row.record_key)),d=receipt?.data,\r\n    event=receipt&&db.get"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./committed-gm-decision.js",
+          "target": "bot/src/v2/rules/committed-gm-decision.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
       "sqlStatements": 0
     },
     {
