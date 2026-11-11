@@ -1,5 +1,5 @@
 {
-  "head": "2db1287d075e722634a23b36ff8a510aaab9f7ab",
+  "head": "98c1b86b2d9ef2b713d0df5f9b88d53c0245944b",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 99,
+  "nativeModules": 100,
   "reachableNativeModules": 75,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -38,7 +38,8 @@
     "bot/src/v2/rules/roll-action-lifecycle.js",
     "bot/src/v2/rules/roll-adjudications.js",
     "bot/src/v2/rules/roll-store.js",
-    "bot/src/v2/rules/roll-terms.js"
+    "bot/src/v2/rules/roll-terms.js",
+    "bot/src/v2/rules/spellcast-condition-modifiers.js"
   ],
   "legacyImportClosure": [
     "bot/src/frameworks/ai-provider/chatgpt-client.js",
@@ -3543,6 +3544,37 @@
         }
       ],
       "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/rules/spellcast-condition-modifiers.js",
+      "sha256": "5a86acc16a5e6952a7c17673ec7cf3d4894d8878b6c1be21b5eaed428721de6e",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createSpellcastConditionModifiers({catalog,readRollIdentity,readConditionRefs,inspectCondition}){\n if(typeof catalog?.findDomainCard!=='function'||[readRollIdentity,readConditionRefs,inspectCondition].some(f=>typeof f!=='function'))throw new TypeError('Native card, roll identity and "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./feature-roll-source.js",
+          "target": "bot/src/v2/rules/feature-roll-source.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 10,
       "sqlStatements": 0
     },
     {
