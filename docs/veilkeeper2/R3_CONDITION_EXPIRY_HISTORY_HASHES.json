@@ -1,0 +1,17 @@
+{
+  "node": "v26.13.0",
+  "tests": 14,
+  "passed": 14,
+  "duration_ms": 1044.1281,
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/condition-expiry-history.js",
+      "sha256": "ae200054c3971b83acba24510531bd153d26e90061d79a22a5c4533358e55ecf"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-condition-expiry-history.test.mjs",
+      "sha256": "a1fd525e6edea45e1bc18400a539f34e09a388e49ce9110088ab4aa754851466"
+    }
+  ]
+}
