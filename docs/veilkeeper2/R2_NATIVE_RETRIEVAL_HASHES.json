@@ -1,0 +1,19 @@
+{
+  "bot/src/v2/knowledge-store.js": "88c30d886131fd767bb198ec69da5b0c72418e2e42a40afe1da1e34ff8cecb4e",
+  "bot/src/v2/native-root.js": "75dab0508032ef23c3db09f94997afecea05afa05a12774adb2f1e6a392f666b",
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs": "bd810a148828bf8a7e961fa728d44561f18255a45c2df586e6980a0ced874a10",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs": "a799e595785d5a7e465a1bbd35895c9339a0581172cb022f78b5b699a168017a",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r1-rehearsal.test.mjs": "0862a2aae5f2817dbecefdd59056ee3f8747eed4e996fe6c66fdecee2c935c35",
+  "bot/tests/veilkeeper2/r1-scene-store.test.mjs": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c",
+  "bot/tests/veilkeeper2/r2-knowledge.test.mjs": "ec3dee2b9f0a9a38257c40aadfa4f0441d2b16e5201ce988f9f6f0094ec7adac",
+  "bot/tests/veilkeeper2/r3-native-action-authority.test.mjs": "ded29d235f42df7da057ca29ed4eb2973b90a74a2d16f56303472da7bced76b4",
+  "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs": "832a3fdcd690a077a3877c0e9ec43a071d4d745faedfcb8b2a09df9d3deca37a",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs": "dc7bb4ba60ed415a8671963f168c36c2414095e987006bbbe421432d80129923",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "8a95f4f7400855730fd8cabca9f00c0b256c044ac78c6f949dfd5d758868df96",
+  "bot/tests/veilkeeper2/r7-context-lineage.test.mjs": "a45f761447153822ab657108bbafc85e3a449084734749ac03bc3e5acbf6a463",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs": "1683bba052489154bbc6a3e0f9d4e4af83d9c943514557743807d84a812d20d2",
+  "bot/tests/veilkeeper2/r7-source-bound-repair.test.mjs": "cd063008b088c63c4c9cdc2874c3c243a474797873ff728e86c7ffc13782d2c7",
+  "docs/veilkeeper2/R2_NATIVE_RETRIEVAL_REPORT.md": "b72ef190812e8813826c5e452e9434daadc45a95602319c71ce367cc107cf63f",
+  "docs/veilkeeper2/R2_NATIVE_RETRIEVAL_AFFECTED_TESTS.json": "ba3d15e21fe138dd16a2bf04fe3652ac321ab76050e42d580133706cdfb4fc95"
+}

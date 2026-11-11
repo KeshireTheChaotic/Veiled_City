@@ -35,6 +35,11 @@ export function openKnowledgeStore(filename=':memory:'){
     });
   }
   return Object.freeze({metadata,append,
+    candidateRefs(campaign,scene){
+      if(typeof campaign!=='string'||!campaign||typeof scene!=='string'||!scene)throw new Error('Native knowledge candidate scope required');
+      // Metadata references only. Entitlement/complete ancestry must still precede every body read.
+      return db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND json_extract(r.data,'$.visibility') IN ('public','recipients') AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) ORDER BY r.id LIMIT 256").all(campaign,scene).map(row=>row.id);
+    },
     evidence(campaign,ref){return decode(db.prepare('SELECT data FROM vk2_knowledge_history WHERE campaign=? AND evidence_ref=?').get(campaign,ref));},
     readText(campaign,id,revision){
       const row=db.prepare('SELECT r.body FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND r.id=? AND r.revision=?').get(campaign,id,Number(revision));

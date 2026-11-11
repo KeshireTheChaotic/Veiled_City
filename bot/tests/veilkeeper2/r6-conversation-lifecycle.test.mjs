@@ -51,3 +51,13 @@ test('missing canonical migration and changed repository owner cannot create con
   const missing=fixture(t,{bootstrap:false});await assert.rejects(missing.root.turns.respond(missing.request('speech')),/no healthy defaults/);assert.equal(missing.packets.length,0);
   const changed=fixture(t);await changed.root.turns.respond(changed.request('speech'));changed.character.owner_user_id='other';await assert.rejects(changed.root.turns.respond(changed.request('changed-owner')),/migration or identity/);assert.equal(changed.packets.length,1);
 });
+
+
+test('native root selects entitled established knowledge with testimony labels and excludes private ancestry before bodies',async t=>{
+  const f=fixture(t),store=f.root.knowledgeStore;
+  function add(id,body,over={}){store.append({campaignId:'c',id,expectedRevision:null,evidenceRef:'fixture-'+id,metadata:{kind:'observation',status:'active',scope:'scene',sceneId:'s',visibility:'public',recipientIds:[],knownBy:[],sourceRefs:[],disclosure:'public',...over},body});}
+  add('public','The clerk is behind the rain-streaked counter.');add('rumor','The clerk claims the tunnel is haunted.',{kind:'testimony'});add('private','The owner knows a private address.',{visibility:'recipients',recipientIds:['u'],disclosure:'observed'});
+  add('gm','gm-secret-canary',{visibility:'gm',disclosure:'private'});add('other-owner','other-owner-canary',{visibility:'recipients',recipientIds:['v'],disclosure:'observed'});add('blocked-parent','ancestry-secret-canary',{sourceRefs:['gm']});add('other-scene','other-scene-canary',{sceneId:'elsewhere'});add('pending','pending-delivery-canary',{visibility:'recipients',recipientIds:['u'],disclosure:'pending'});
+  const turn=await f.root.turns.respond(f.request('knowledge-speech')),packet=f.packets[0].context;
+  assert.deepEqual(packet.records.map(r=>r.ref),['private','public','rumor']);assert.equal(packet.records.find(r=>r.ref==='rumor').kind,'testimony');assert.equal(JSON.stringify(f.packets).includes('canary'),false);assert.equal(JSON.stringify(f.packets).includes('private-hook'),false);assert.equal(turn.metrics.modelCalls,1);assert.equal((await f.root.turns.inspectPublication(turn.publication.id)).sent,false);
+});
