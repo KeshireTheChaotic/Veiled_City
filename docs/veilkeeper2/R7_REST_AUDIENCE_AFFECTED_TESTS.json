@@ -1,0 +1,13 @@
+[
+  "bot/tests/veilkeeper2/r1-discord-audience-reader.test.mjs",
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+  "bot/tests/veilkeeper2/r1-discord-message-reader.test.mjs",
+  "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+  "bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs",
+  "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs",
+  "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r6-player-private-channel.test.mjs",
+  "bot/tests/veilkeeper2/r6-session-attendance.test.mjs"
+]

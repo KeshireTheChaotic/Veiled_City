@@ -6,7 +6,7 @@ function fixture(){
   const members=new Map(['bot','u'].map(id=>[id,{id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}]));
   const message={id:'m',guildId:'g',channelId:'ch',author:{id:'u',bot:false},webhookId:null,system:false,content:'Interesting.',editedTimestamp:null};
   const channel={id:'ch',guildId:'g',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField([P.ViewChannel,P.SendMessages]),messages:{fetch:async options=>{assert.deepEqual(options,{message:'m',force:true});return message;}}};
-  const guild={id:'g',memberCount:2,channels:{fetch:async()=>channel},members:{fetch:async()=>members},roles:{fetch:async()=>new Map()}};
+  const guild={id:'g',memberCount:2,channels:{fetch:async()=>channel},members:{list:async()=>members},roles:{fetch:async()=>new Map()}};
   const reader=createDiscordMessageReader({client:{user:{id:'bot'},guilds:{fetch:async()=>guild}}});
   return {reader,message,channel,args:{guildId:'g',channelId:'ch',messageId:'m',userId:'u',sceneId:'s'}};
 }

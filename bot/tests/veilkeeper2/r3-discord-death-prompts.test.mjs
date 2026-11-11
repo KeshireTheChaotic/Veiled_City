@@ -23,7 +23,7 @@ function fixture(t,{allocation=false}={}){
     if(mode==='stale-terms')terms.level=3;
     return saved;
   },messages:{fetch:async input=>{assert.deepEqual(input,{message:'death-message',force:true});if(mode==='read-fails')throw new Error('Readback interrupted');if(mode==='wrong-body')return {...saved,content:'Changed risks'};if(mode==='wrong-bot')return {...saved,author:{id:'other',bot:true}};if(mode==='webhook')return {...saved,webhookId:'webhook'};if(mode==='wrong-components')return {...saved,components:[]};return saved;}}};
-  const guild={id:'g',memberCount:2,members:{fetch:async()=>members},roles:{fetch:async()=>new Map([['gm',{}]])},channels:{fetch:async()=>channel}},client=Object.assign(new EventEmitter(),{user:{id:'bot'},guilds:{fetch:async()=>guild}});
+  const guild={id:'g',memberCount:2,members:{list:async()=>members,fetch:async()=>members},roles:{fetch:async()=>new Map([['gm',{}]])},channels:{fetch:async()=>channel}},client=Object.assign(new EventEmitter(),{user:{id:'bot'},guilds:{fetch:async()=>guild}});
   const transport=()=>createDiscordDeathPrompts({client,promptStore:store,readTerms:()=>terms,readRoute:()=>route});
   t.after(()=>{store.close();assert.ok(resolve(dir).startsWith(resolve(tmpdir())+sep));rmSync(dir,{recursive:true,force:true});});
   return {row,terms,route,check,client,get saved(){return saved;},get store(){return store;},get calls(){return calls;},transport,setMode(value){mode=value;},addOutsider(){members.set('outsider',member('outsider'));guild.memberCount=members.size;},addObserver(){const gm=member('gm-user');gm.roles.cache.set('gm',{});members.set(gm.id,gm);guild.memberCount=members.size;},reopen(){store.close();store=openDeathPromptStore(filename);}};

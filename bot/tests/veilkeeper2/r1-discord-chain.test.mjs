@@ -17,7 +17,7 @@ function fixture(t,{durable=false}={}){
   const members=new Map(['bot','u','outsider'].map(id=>[id,{id,permissions:new PermissionsBitField([]),roles:{cache:new Map()}}]));
   const message={id:'m',guildId:'g',channelId:'ch',author:{id:'u',bot:false},system:false,webhookId:null,content:'Interesting.'};
   const channel={id:'ch',guildId:'g',type:ChannelType.GuildText,messages:{fetch:async()=>message},permissionsFor:m=>new PermissionsBitField(m.id==='outsider'&&!state.outsider?[]:[P.ViewChannel,P.SendMessages])};
-  const guild={id:'g',memberCount:3,channels:{fetch:async()=>channel},members:{fetch:async()=>members},roles:{fetch:async()=>new Map()}};
+  const guild={id:'g',memberCount:3,channels:{fetch:async()=>channel},members:{list:async()=>members,fetch:async()=>members},roles:{fetch:async()=>new Map()}};
   const native=createDiscordMessageReader({client:{user:{id:'bot'},guilds:{fetch:async()=>guild}}});
   const intake=createDiscordIntake({sceneStore:store,messageReader:{read:async(...args)=>{state.onRead(++state.reads);return native.read(...args);}}});
   const turnStore=durable?openTurnStore():null;if(turnStore)t.after(()=>turnStore.close());

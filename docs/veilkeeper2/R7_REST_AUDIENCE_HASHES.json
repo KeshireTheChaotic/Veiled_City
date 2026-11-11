@@ -1,0 +1,10 @@
+{
+  "bot/src/v2/discord-audience-reader.js": "1dc9836be52285d8c744e6240284ec2790cbe95eab0eb6cd0f877235e9cc9be6",
+  "bot/tests/veilkeeper2/r1-discord-audience-reader.test.mjs": "c2cec998a1957f4df72fe1e0c780454ffa888faa67fbe3d6204d5ad6b7945cef",
+  "bot/tests/veilkeeper2/r1-discord-message-reader.test.mjs": "a86e696c1fe72c020ecbc9bb3097395b0094b0adf6ceb1d396c0cae18f8967d7",
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs": "bd810a148828bf8a7e961fa728d44561f18255a45c2df586e6980a0ced874a10",
+  "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs": "9e4d17ae28da2fbbb195ac7c507195e19bc9b2e2ec3a2d32097585a44f105d19",
+  "bot/tests/veilkeeper2/r3-discord-death-prompts.test.mjs": "ee5d743edda4f0c6a8fe61fd7e61aec7f5a6ad96a03a9b0c9a59b655d513ef31",
+  "bot/tests/veilkeeper2/r3-discord-fear-announcements.test.mjs": "5ebcb326dbdba6af47004dd8d617c87538615ad959685f83de22a32d2d81613d",
+  "bot/tests/veilkeeper2/r6-session-attendance.test.mjs": "c3c65e2e71ab6de43adc25491f8042a2a1cd243e0e5b2244d539ea0e231fa081"
+}
