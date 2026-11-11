@@ -3,7 +3,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {existsSync,mkdirSync,readdirSync,readFileSync,lstatSync,statSync,realpathSync} from 'node:fs';
 import {resolve,join,relative,isAbsolute} from 'node:path';
 const hash=value=>createHash('sha256').update(value).digest('hex');
-const stores=['actions.sqlite','cost-prompts.sqlite','decisions.sqlite','interactions.sqlite','knowledge.sqlite','prompts.sqlite','scenes.sqlite','sources.sqlite','turns.sqlite'];
+const stores=['actions.sqlite','cost-prompts.sqlite','decisions.sqlite','interactions.sqlite','knowledge.sqlite','recall.sqlite','prompts.sqlite','scenes.sqlite','sources.sqlite','turns.sqlite'];
 const STATE='runtime.sqlite',FORMAT='veilkeeper2-native-v1';
 function sourceIdentity(filename){
   const path=realpathSync(filename);if(!statSync(path).isFile())throw new Error('Existing read-only legacy source file required');

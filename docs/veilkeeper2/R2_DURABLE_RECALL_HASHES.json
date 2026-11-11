@@ -1,0 +1,59 @@
+{
+  "node": "v26.13.0",
+  "tests": 59,
+  "passed": 59,
+  "inputs": [
+    {
+      "file": "bot/src/v2/recall-store.js",
+      "sha256": "370c71a844b9f7d57f4b51e145e6f1be60d8e1eed11b3a336733d2101e3a314c"
+    },
+    {
+      "file": "bot/src/v2/recall-planner.js",
+      "sha256": "33786b3967ece0addb81230cdd064991e115163d078c8be6e9a7963e00bffc21"
+    },
+    {
+      "file": "bot/src/v2/native-root.js",
+      "sha256": "5157202a74a6951145e56015c85302cc0dd8e3fd6932e43787dc6b485d239d5d"
+    },
+    {
+      "file": "bot/src/v2/runtime-directory.js",
+      "sha256": "c8bc208bc42dba60d4887864d73d292e79dc26a76c29c85f05f75d4dc457c845"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+      "sha256": "8669206715c0d7cbac8ab41393c46d9f6b6c89dcdac272da9119d817907b922a"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "00283e2322af342bb5ac1fef7858c0723285f2618045b65e1c2d710fe95b1ee0"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}

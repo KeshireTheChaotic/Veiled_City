@@ -1,5 +1,5 @@
 {
-  "head": "4aa2c8138a8e2eb1af6436a68509c9aa020dec48",
+  "head": "acbf9239fb41ed3241060d0750ef1597495ef48c",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 101,
-  "reachableNativeModules": 76,
+  "nativeModules": 102,
+  "reachableNativeModules": 77,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
@@ -1932,11 +1932,11 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "d74e3b23071929dbdf8fc8b4fde6314a72c09d3bb12455147dd8b9a44f8bd40a",
+      "sha256": "5157202a74a6951145e56015c85302cc0dd8e3fd6932e43787dc6b485d239d5d",
       "reachable": true,
       "exports": [
         {
-          "line": 29,
+          "line": 31,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
@@ -1953,159 +1953,173 @@
         {
           "line": 2,
           "kind": "ImportDeclaration",
+          "specifier": "./recall-store.js",
+          "target": "bot/src/v2/recall-store.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./recall-planner.js",
+          "target": "bot/src/v2/recall-planner.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
           "specifier": "./scene-prose-review.js",
           "target": "bot/src/v2/scene-prose-review.js",
           "status": "resolved"
         },
         {
-          "line": 3,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./scene-store.js",
           "target": "bot/src/v2/scene-store.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./source-registry.js",
           "target": "bot/src/v2/source-registry.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./native-action-authority.js",
           "target": "bot/src/v2/native-action-authority.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./context-authority.js",
           "target": "bot/src/v2/context-authority.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./source-authority.js",
           "target": "bot/src/v2/source-authority.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./rules/action-store.js",
           "target": "bot/src/v2/rules/action-store.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 11,
           "kind": "ImportDeclaration",
           "specifier": "./cost-prompt-store.js",
           "target": "bot/src/v2/cost-prompt-store.js",
           "status": "resolved"
         },
         {
-          "line": 10,
+          "line": 12,
           "kind": "ImportDeclaration",
           "specifier": "./death-prompts.js",
           "target": "bot/src/v2/death-prompts.js",
           "status": "resolved"
         },
         {
-          "line": 11,
+          "line": 13,
           "kind": "ImportDeclaration",
           "specifier": "./component-decision-store.js",
           "target": "bot/src/v2/component-decision-store.js",
           "status": "resolved"
         },
         {
-          "line": 12,
+          "line": 14,
           "kind": "ImportDeclaration",
           "specifier": "./interaction-receipts.js",
           "target": "bot/src/v2/interaction-receipts.js",
           "status": "resolved"
         },
         {
-          "line": 13,
+          "line": 15,
           "kind": "ImportDeclaration",
           "specifier": "./canonical-actor-readers.js",
           "target": "bot/src/v2/canonical-actor-readers.js",
           "status": "resolved"
         },
         {
-          "line": 14,
+          "line": 16,
           "kind": "ImportDeclaration",
           "specifier": "./pc-bootstrap-source.js",
           "target": "bot/src/v2/pc-bootstrap-source.js",
           "status": "resolved"
         },
         {
-          "line": 15,
+          "line": 17,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 16,
+          "line": 18,
           "kind": "ImportDeclaration",
           "specifier": "./native-campaign-adapters.js",
           "target": "bot/src/v2/native-campaign-adapters.js",
           "status": "resolved"
         },
         {
-          "line": 17,
+          "line": 19,
           "kind": "ImportDeclaration",
           "specifier": "./discord-interaction-router.js",
           "target": "bot/src/v2/discord-interaction-router.js",
           "status": "resolved"
         },
         {
-          "line": 18,
+          "line": 20,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-reader.js",
           "target": "bot/src/v2/discord-message-reader.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 21,
           "kind": "ImportDeclaration",
           "specifier": "./discord-intake.js",
           "target": "bot/src/v2/discord-intake.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 22,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-observer.js",
           "target": "bot/src/v2/discord-message-observer.js",
           "status": "resolved"
         },
         {
-          "line": 21,
+          "line": 23,
           "kind": "ImportDeclaration",
           "specifier": "./discord-turn-runner.js",
           "target": "bot/src/v2/discord-turn-runner.js",
           "status": "resolved"
         },
         {
-          "line": 22,
+          "line": 24,
           "kind": "ImportDeclaration",
           "specifier": "./turn-store.js",
           "target": "bot/src/v2/turn-store.js",
           "status": "resolved"
         },
         {
-          "line": 23,
+          "line": 25,
           "kind": "ImportDeclaration",
           "specifier": "./knowledge-store.js",
           "target": "bot/src/v2/knowledge-store.js",
           "status": "resolved"
         }
       ],
-      "functions": 20,
+      "functions": 22,
       "sqlStatements": 0
     },
     {
@@ -2515,6 +2529,30 @@
       "imports": [],
       "functions": 12,
       "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/recall-store.js",
+      "sha256": "370c71a844b9f7d57f4b51e145e6f1be60d8e1eed11b3a336733d2101e3a314c",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function openRecallStore(filename=':memory:'){\n const db=new DatabaseSync(filename);try{if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>r.name!=='vk2_recall'))throw new Error('Dedicated recall store required');db.exec('CREATE TABLE"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 19,
+      "sqlStatements": 6
     },
     {
       "file": "bot/src/v2/register-commands.js",
@@ -3586,7 +3624,7 @@
     },
     {
       "file": "bot/src/v2/runtime-directory.js",
-      "sha256": "264ee20560f9882406ed54d303f2fbe703481f6bda795700575c25450fc69f67",
+      "sha256": "c8bc208bc42dba60d4887864d73d292e79dc26a76c29c85f05f75d4dc457c845",
       "reachable": true,
       "exports": [
         {
