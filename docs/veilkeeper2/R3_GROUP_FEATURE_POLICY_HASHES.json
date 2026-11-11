@@ -1,0 +1,29 @@
+{
+  "node": "v26.13.0",
+  "tests": 10,
+  "passed": 10,
+  "duration_ms": 67.1756,
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/native-resource-plan.js",
+      "sha256": "031649fdd290bb64b6c1f54b4d4d4e29ef553ae3226005e8ce3c605ce52dfd53"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-cost-plan.js",
+      "sha256": "795c9276ad760dfa7c6ce41f68afd760290bb203c3d8583b2a9cfefd43856dde"
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-rules.js",
+      "sha256": "1b92fe5acec7264cd838aa85c4b24b612b474b6591f5f79acbc4fd0146989cdc"
+    },
+    {
+      "file": "bot/src/v2/rules/group-feature-outcomes.js",
+      "sha256": "a6463168431ae9e5fcd39c432184d6417150e1d74f938064aac29a010f5afa5d"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-group-feature-policy.test.mjs",
+      "sha256": "84da4a00f40ef6e410a19e62c6e2a3ad64a399e44f9c265c561dce6440141d7e"
+    }
+  ]
+}
