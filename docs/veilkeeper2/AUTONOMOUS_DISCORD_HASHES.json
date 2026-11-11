@@ -1,0 +1,6 @@
+{
+  "bot/scripts/veilkeeper2/autonomous-discord-checks.mjs": "67e8a576a3274305177017c822f10c817b9345525c4dcc4bf4af3e0ede9785ee",
+  "bot/src/v2/discord-audience-reader.js": "1dc9836be52285d8c744e6240284ec2790cbe95eab0eb6cd0f877235e9cc9be6",
+  "bot/src/v2/discord-message-reader.js": "8290e6b9e092062aee4d8c2ea18bb7d447a5239c9178419051e8eefcad78cec0",
+  "docs/veilkeeper2/qualification/autonomous-discord-checks.json": "aa959a7c1b834e5c40bcc6bf9cb96d76fdb4edc08f96ac51cee7c85d58d3e81c"
+}

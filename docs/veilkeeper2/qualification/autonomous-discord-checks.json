@@ -1,0 +1,35 @@
+{
+  "guildId": "1467249344947159291",
+  "channelId": "1467249346054721558",
+  "nonce": "c27fa790de26462e9033",
+  "stage": "completed",
+  "checks": [
+    {
+      "name": "live-native-command-schema",
+      "status": "passed",
+      "rootCount": 24
+    },
+    {
+      "name": "fresh-exact-audience",
+      "status": "passed",
+      "memberCount": 7,
+      "recipientCount": 5,
+      "twoReadMilliseconds": 660
+    },
+    {
+      "name": "shared-channel-refused-as-private",
+      "status": "passed"
+    },
+    {
+      "name": "real-bot-send-and-readback",
+      "status": "passed",
+      "messageId": "1569931894793969685"
+    },
+    {
+      "name": "bot-and-substituted-human-source-refused",
+      "status": "passed"
+    }
+  ],
+  "modelCalls": 0,
+  "messageId": "1569931894793969685"
+}

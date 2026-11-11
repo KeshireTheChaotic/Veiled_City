@@ -1,5 +1,10 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
+## Current owner constraint and autonomous testing
+
+Owner explicitly disallowed computer-use until they say otherwise. Do not use Windows/browser UI automation to bypass that constraint. Autonomous testing remains authorized through bot/API and native test paths. AUTONOMOUS_DISCORD_REPORT.md records five passing actual test-guild API checks, one retained labeled bot test message (1569931894793969685), zero model calls/game effects, and refusal of bot/substituted-human source authorship. No installable Discord plugin was returned; no new connector installation is claimed. Test process 62251 remained live; zero native interaction/turn rows at last read. Human-principal slash-command qualification remains unverified, and must not be fabricated. Next: atomic durable local repair persistence and receipt-backed review.
+
+
 ## Latest R4/R7 private review persistence
 
 Source-bound private review snapshots now persist via native turn runner/store (R7_SEGMENT_REVIEW_REPORT.md; 38 behavioral checks passed). Original raw draft/fingerprint and withheld publication status are unchanged. This is diagnostic persistence, not approval. Next: transactional local repair persistence and exact replacement candidate identity, then native receipt-backed review. Human Discord tests remain pending; live process 62251 retains earlier code and stores. No major phase passed or production change.
