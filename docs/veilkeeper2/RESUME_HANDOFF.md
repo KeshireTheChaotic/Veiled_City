@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Checkpoint 2026-11-11, source HEAD 43bc692c before the documentation/audit commit. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
+Checkpoint 2026-11-11; runtime source HEAD 43bc692c, dependency/audit commit 0866703d. Current-state review complete for this checkpoint; the full R0–R8 implementation remains active and incomplete. Slice reports below record tested work, not phase certification. Inspect Git and live handles before relying on this snapshot.
 
 ## Binding workspace and owner instructions
 
@@ -74,6 +74,35 @@ ONLINE_OLLAMA_REPORT.md and qualification/ retain actual synthetic local-model e
 - R6 partial: typed subset, owner/private/session/death/root foundations exist. Full command/import/export/voice/multiplayer/guest/proxy/opening/late-entry flows and human-principal live acceptance remain open.
 - R7 partial: claims, source/epoch/uncertainty receipts, context dependencies and private review/repair persistence exist. Full durable publication/ack, recovery/migration/rollback, all crash/concurrency cases and performance qualification remain open.
 - R8 incomplete: independent full behavioral/parity/privacy/fault/quality gates and separately authorized production cutover have not passed. No old runtime or legacy tests retired without migration/replacement proof.
+
+## Latest checkpoint commits and reproducible evidence
+
+All following commits are local on the rebuild integration branch. Counts overlap across slices; do not add them into a full-suite total. No major phase is certified.
+
+| Commit | Delivered slice | Completed affected verification |
+| --- | --- | --- |
+| a0c31341 | Generic native Hope execution, owner-private receipt projection and durable receipt dependencies | 198 checks / 21 files |
+| db94c98c | Exact private Hope factual recap backed by an observed receipt | 95 checks / 15 files |
+| aec28b48 | Native ready-operation discovery through context_read topic actions | 334 checks / 37 files |
+| 57af21c3 | Native root metadata/ancestry-first selection from established knowledge | 87 checks / 13 files |
+| 43bc692c | Private model proposal retention without truth/canon promotion | 21 checks / four files |
+| 0866703d | Current AST dependency map and condensed audit documentation | Generation exit 0; no behavioral reruns |
+
+Reports named above have adjacent *_HASHES.json and *_AFFECTED_TESTS.json where behavioral tests apply. Hashes record tested source/test bytes at that slice; later dependency changes supersede earlier qualification for those files. NATIVE_DEPENDENCY_MAP.json captures all 90 native module source hashes at 43bc692c, including uncomposed modules, plus the literal legacy entry closure. No runtime code changed after that map. The documentation commit is its snapshot, not a new behavioral baseline.
+
+Local logs one directory above the worktree: r3-generic-engine-dependency-tests-20261110.txt (186 checks plus separate focused 12); r4-receipt-recap-dependency-tests-20261110.txt (80 plus focused 15); r3-action-discovery-dependency-tests-20261110.txt (316 plus focused 18); r2-native-retrieval-dependency-tests-20261110.txt (84 plus focused three); r2-native-proposals-dependency-tests-20261111.txt (17 plus focused four). The corresponding manifests identify exact commands' test paths. Do not rerun unchanged completed suites; calculate changed-import dependents first and run explicit paths from the repository root with node --test.
+
+New retained actual local-model evidence in docs/veilkeeper2/qualification/: ollama-native-cost-check.json (GM prompt failed, no tool, Hope unchanged); ollama-native-cost-control-stale-revision.json (literal placeholder revision refused); ollama-native-cost-control.json (corrected explicit transport control, real synthetic cost committed); ollama-native-cost-discovery.json (natural request failed, no tools); ollama-native-cost-discovery-control.json (three-call discovery/commit control passed). These use synthetic owner decisions and actual local qwen3.5:4b/native validators, not live human consent. No messages were sent by these probes. Never overwrite failure receipts to present a passing aggregate. Diagnostic prompts were not applied to the running bot.
+
+The test bot's execution handle 62251 was polled and remained running without new output at this checkpoint. Read-only SQLite counts freshly confirmed vk2_turns=0 and vk3_native_interactions=0. The retained prior Discord API message is still the only send from the autonomous API check; its journal forbids repeats. Do not infer human gameplay or current loaded source from the live client's presence.
+
+Git status after 0866703d: only unrelated README.md is dirty. No implementation changes or tests are left uncommitted. Preserve that README diff exactly. The baseline and origin rebuild refs were freshly checked this checkpoint and remain the pinned and fda77bd8 refs above. No merges/pushes occurred because no major phase passed; we are already on the requested rebuild integration branch.
+
+Resume procedure: verify usage and explicit user resume if the goal is paused; inspect git status/worktree/branch and the preserved process before edits. Read AGENTS.md and this handoff, then the exact next module/report dependencies. Source-linked removed core specs remain available through git show at the pinned commit under docs/Implementation_Plans/. Do not restore removed docs merely to read them. Refresh the pinned audit only if the baseline advances. Computer-use stays forbidden unless the user explicitly reverses that instruction.
+
+The next implementation slice should compose the existing cost-prompt-store.js, discord-cost-decisions.js and rules/hope-consent-ingress.js with the native interaction router/root, using actual owner evidence and source-bound native terms. Discovery currently assumes those accepted terms/consents already exist and does not create them. Do not mint acceptance from model prose or a fabricated human SDK event. Then connect ordinary-roll-preparation.js, roll-action-lifecycle.js, owner-roll-evidence.js, roll-store.js and pre-roll Fear coordination through the same generic boundary, retaining native dice, notice delivery, owner roll evidence and full modifiers/house rules. Current ordinary preparation intentionally supports only zero modifiers and is not full parity. Use NATIVE_DEPENDENCY_MAP.json to distinguish composed production candidates from isolated tested services.
+
+In parallel scope only when authorized, R2 still needs authenticated observations, actor knowledge, world identity reuse and recall causes/pins/fictional time; readEvidence currently returns null in native root and deliberately prevents establishment from model proposals. No NPC autonomous source/scheduler exists in the composed root. The current 256-candidate/64-record default selector is bounded deterministic retrieval, not weighted attention. R4 still needs independently validated broader semantic/agency quality, approved repaired-candidate delivery and actual acknowledgements. Current exact recap is a narrow diagnostic exception, not a general authorization engine.
 
 ## Next exact work and rollback
 
