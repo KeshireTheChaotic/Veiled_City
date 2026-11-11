@@ -1,0 +1,9 @@
+{
+  "bot/src/v2/context-authority.js": "bbab41e420d5d906deeb613ab30f6f2851205d7e134990c1514ac28e4d01ecf1",
+  "bot/src/v2/model-gateway.js": "c595d17056aaf9061ae0fe7806367219e360f70d57950dc8fa4ecbc8efc5b3bc",
+  "bot/tests/veilkeeper2/r2-context-authority.test.mjs": "6610e57bf906542fdaedafae4f081fdd9096f25d792b481fc05bec24ad9173d7",
+  "bot/tests/veilkeeper2/r1-rehearsal.test.mjs": "2df68a9aea777ac79b73adf7da765ab8f298c268b23c4f431ac11f58291fa1d6",
+  "bot/scripts/veilkeeper2/online-model-checks.mjs": "be3b336ca31f0ef409bcb1f5938e42b6a221cbdf51dded67ba2290ebd26906a9",
+  "docs/veilkeeper2/qualification/ollama-authorship-packet-checks.json": "588ca4d2a4d0bcf2a57c7e5bc5acccc725f75946eabff2494f1fd573bd248cb3",
+  "docs/veilkeeper2/qualification/ollama-thinking-probe.json": "bfff980fdee06d63c461cb4c65d479118dff9f9558abce3051065a58d82c83b1"
+}

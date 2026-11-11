@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {createContextAuthority} from '../../src/v2/context-authority.js';
 
 function fixture(){
-  const source={id:'s',campaign:'c',scene:'scene',recipients:['u','v'],text:'Interesting.',traceId:'trace',revision:'1'};
+  const source={id:'s',campaign:'c',scene:'scene',actors:['pc'],recipients:['u','v'],text:'Interesting.',traceId:'trace',revision:'1'};
   const rows=new Map(),bodies=new Map(),reads=[];
   let active=true;
   const actor={id:'npc',campaignId:'c',sceneId:'scene',kind:'npc',status:'active',controllerUserId:null,controlRevision:'1'};
@@ -45,4 +45,16 @@ test('testimony stays testimony and forged or edited capabilities cannot supply 
 test('stale or substituted body under a current revision cannot enter a prompt packet',()=>{
   const f=fixture();f.add('record');f.bodies.set('record','An unrelated private cache entry');
   assert.throws(()=>f.authority.issue(f.source,['record']),/authority/);
+});
+
+test('audience packets explicitly separate human-controlled roles from native NPC portrayal without full actor data',()=>{
+  const f=fixture(),gm=f.authority.inspect(f.authority.issue(f.source,[]));assert.deepEqual(gm.human_controlled_actor_refs,['pc']);assert.deepEqual(gm.portrayal,{kind:'gm',actor_ref:null});
+  const npc=f.authority.inspect(f.authority.issue(f.source,[],{actorId:'npc'}));assert.deepEqual(npc.human_controlled_actor_refs,['pc']);assert.deepEqual(npc.portrayal,{kind:'independent_npc',actor_ref:'npc'});assert.equal(Object.hasOwn(npc,'ownerUserId'),false);assert.equal(Object.hasOwn(npc,'character'),false);assert.deepEqual(f.reads,[]);
+  assert.throws(()=>{npc.human_controlled_actor_refs.push('other');});assert.throws(()=>{npc.portrayal.kind='player';});
+  f.actor.controllerUserId='human-proxy';assert.throws(()=>f.authority.issue(f.source,[],{actorId:'npc'}));
+});
+
+test('human-controlled NPC source refs remain protected rather than becoming an independent portrayal grant',()=>{
+  const f=fixture();f.source.actors=['human-proxy'];const packet=f.authority.inspect(f.authority.issue(f.source,[]));assert.deepEqual(packet.human_controlled_actor_refs,['human-proxy']);assert.equal(packet.portrayal.kind,'gm');
+  f.source.actors=['pc','pc'];assert.throws(()=>f.authority.issue(f.source,[]),/authority/);
 });

@@ -1,6 +1,10 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-## Latest R4 continuation
+## Latest R2/R4 authorship continuation
+
+Native human-control and GM/NPC portrayal metadata is implemented (R4_AUTHORSHIP_REPORT.md), with 83 fresh affected checks passed. Seven actual local comparisons and a three-case reasoning-mode probe still fail agency/grounding quality; no automatic publication or production change. Current synthetic evidence is committed separately from earlier baseline. Running Discord process 62251 retains its earlier loaded code and test stores. Next: persistent source-bound segment review/repair diagnostics with draft identity and concurrency guards, then native receipt-based material validation. Human command test remains pending.
+
+## Earlier R4 continuation
 
 Native proseReview policy forwarding is fixed (R4_POLICY_WIRING_REPORT.md; 13+41 fresh checks passed). Next: native authorship/portrayal metadata in audience packets, then persistent source-bound segment reviews/repairs and receipt-backed validation. Live process 62251 remains on its loaded earlier code; human command events remain pending.
 

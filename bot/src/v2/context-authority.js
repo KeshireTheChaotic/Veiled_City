@@ -37,6 +37,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   }
   function issue(source,references,{actorId=null}={}){
     if(!sourceAuthority.revalidate(source)||!list(references)||references.length>64||actorId!==null&&!id(actorId))fail();
+    if(source.actors!==undefined&&!list(source.actors))fail();
     const nativeSource=structuredClone(source),actorRevision=actorProof(nativeSource,actorId);
     const dependencies=new Map(),selected=[];
     for(const ref of references){
@@ -48,7 +49,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
       selected.push({ref,revision:row.revision,kind:row.kind,text:body.text});
     }
     const packet=freeze({source_ref:nativeSource.id,scene:nativeSource.scene,utterance:nativeSource.text,
-      actor_ref:actorId,records:selected,trace_id:nativeSource.traceId??nativeSource.id});
+      actor_ref:actorId,human_controlled_actor_refs:[...(nativeSource.actors??[])],portrayal:{kind:actorId===null?'gm':'independent_npc',actor_ref:actorId},records:selected,trace_id:nativeSource.traceId??nativeSource.id});
     const grant=Object.freeze(Object.create(null));
     grants.set(grant,{source:nativeSource,actorId,actorRevision,dependencies,packet});
     inspect(grant);return grant;
