@@ -69,6 +69,8 @@ What this exercises: native interaction routing (death prompts, attendance, GM s
 
 ## 3b. Optional: withheld GM drafts under the call cap
 
+**Current default (2026-11-10):** the rebuild now uses local Ollama `qwen3.5:4b` at `http://localhost:11434`. Set `VK2_INFERENCE=1`; no API key or ChatGPT login is needed. See OLLAMA_BACKEND.md. The API-key/ChatGPT examples below apply only with explicit `VK2_PROVIDER=openai`. Existing `VK2_MODEL` values override the checked-in model, so remove stale remote-model overrides when using Ollama.
+
 A second opt-in turns player messages into **withheld GM drafts** (stored in the native turn store; never sent to Discord; the console prints only `native-draft-withheld <messageId>`). Context is empty for now (no GM records composed), so drafts test the provider path, not story quality.
 
 ```powershell

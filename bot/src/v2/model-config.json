@@ -1,0 +1,5 @@
+{
+  "provider": "ollama",
+  "model": "qwen3.5:4b",
+  "baseUrl": "http://localhost:11434"
+}

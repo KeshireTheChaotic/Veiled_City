@@ -1,0 +1,7 @@
+{
+  "bot/src/v2/ollama-provider.js": "936ccbf98777dacca75fee3cf0476e0f5149ca1cf5b5c4222cb36c91bbf4949d",
+  "bot/src/v2/model-config.json": "91dd07073371b7bb98ec99a456dd5a3ec3683a0aaccf1086939f062025865627",
+  "bot/src/v2/native-start.js": "9712549ce6fe9505bf34bb2f4feb6f6b62b2501d08ddfc2ebfc7289441b9ee3c",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs": "8a95f4f7400855730fd8cabca9f00c0b256c044ac78c6f949dfd5d758868df96"
+}

@@ -1,13 +1,15 @@
 import {pathToFileURL} from 'node:url';
-import {existsSync,mkdirSync,readdirSync} from 'node:fs';
+import {existsSync,mkdirSync,readdirSync,readFileSync} from 'node:fs';
 import {randomInt} from 'node:crypto';
 import {Client,GatewayIntentBits} from 'discord.js';
 import {openLegacyReadOnlyRepository} from './legacy-readonly-repository.js';
 import {createNativeRoot} from './native-root.js';
 import {createOpenAIResponsesProvider} from './openai-provider.js';
+import {createOllamaProvider} from './ollama-provider.js';
 import {createCallBudget} from './provider-budget.js';
-/** Inference is a second opt-in: VK2_INFERENCE=1 with OPENAI_API_KEY, VK2_MODEL and VK2_MAX_TURNS
- * (1-100, default 10). Turns become withheld drafts; nothing is sent to Discord.
+/** Inference is a second opt-in: VK2_INFERENCE=1; model-config.json defaults to local Ollama.
+ * VK2_PROVIDER=openai explicitly selects the existing remote/ChatGPT path. Both retain
+ * VK2_MAX_TURNS (1-100, default 10). Turns become withheld drafts; nothing is sent to Discord.
  */
 export async function createOpenAIProviderFromEnv(env){
   const chatgpt=String(env.AI_AUTH_MODE??'').trim().toLowerCase()==='chatgpt',{OPENAI_API_KEY:apiKey}=env,model=env.VK2_MODEL||(chatgpt?env.OPENAI_GM_MODEL:null),maxCalls=Number(env.VK2_MAX_TURNS??10);
@@ -16,6 +18,16 @@ export async function createOpenAIProviderFromEnv(env){
   // ChatGPT mode reuses the legacy Codex-login client: local testing only, no API key or spend.
   const client=chatgpt?(await import('../frameworks/ai-provider/public.js')).createChatGptClient({timeoutMs:60000}):new (await import('openai')).default({apiKey});
   return createCallBudget(createOpenAIResponsesProvider({client,model,maxOutputTokens:1024,timeoutMs:60000}),{maxCalls});
+}
+/** Rebuild default is the locally configured Ollama model; remote providers require explicit selection. */
+export async function createProviderFromEnv(env){
+  const config=JSON.parse(readFileSync(new URL('./model-config.json',import.meta.url),'utf8'));
+  const provider=String(env.VK2_PROVIDER??config.provider).trim().toLowerCase();
+  if(provider==='openai')return createOpenAIProviderFromEnv(env);
+  if(provider!=='ollama')throw new Error('VK2_PROVIDER must be ollama or openai');
+  const maxCalls=Number(env.VK2_MAX_TURNS??10);
+  if(!Number.isSafeInteger(maxCalls)||maxCalls<1||maxCalls>100)throw new Error('VK2_MAX_TURNS must be 1-100');
+  return createCallBudget(createOllamaProvider({model:env.VK2_MODEL||env.OLLAMA_MODEL||config.model,baseUrl:env.OLLAMA_HOST||config.baseUrl}),{maxCalls});
 }
 /** Explicit GM configuration for campaigns whose record names no GM role: VK2_GM_ROLE_ID, VK2_GM_USER_IDS
  * (comma-separated user ids) and/or VK2_GM_ALLOW_ADMINISTRATORS=1. All are opt-in; none is inferred.
@@ -29,9 +41,9 @@ export function gmPolicyFromEnv(env){
  * read-only and the native stores must live in a new or empty directory.
  * Required: VK2_NATIVE=1, VK2_NATIVE_DIR, VK2_LEGACY_DB, DISCORD_TOKEN (may come from the legacy .env named by
  * VK2_ENV_FILE) and VK2_ALLOWED_GUILD_ID: events from any other guild are ignored.
- * Natural-message intake and live inference are not part of this entry point yet.
+ * Optional natural-message inference produces withheld drafts; publication is separate.
  */
-export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider=createOpenAIProviderFromEnv,loadEnvFile=process.loadEnvFile.bind(process),rng=sides=>randomInt(1,sides+1),onError=error=>console.error('native-error',error?.message)}={}){
+export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider=createProviderFromEnv,loadEnvFile=process.loadEnvFile.bind(process),rng=sides=>randomInt(1,sides+1),onError=error=>console.error('native-error',error?.message)}={}){
   if(env.VK2_NATIVE!=='1')throw new Error('Native start requires VK2_NATIVE=1; the legacy runtime is unchanged');
   // Optional legacy .env: loaded by path, never read, printed or copied; existing environment values win.
   if(env.VK2_ENV_FILE)loadEnvFile(env.VK2_ENV_FILE);
