@@ -1,5 +1,5 @@
 {
-  "head": "99bbd06d45a510f7d84cb17bdc891e31a3af69f3",
+  "head": "f44b8a7cc433a3e040a97462a3a9b5552edb15a1",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,12 +12,13 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 116,
+  "nativeModules": 117,
   "reachableNativeModules": 80,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
     "bot/src/v2/discord-fear-announcements.js",
+    "bot/src/v2/discord-roll-notices.js",
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
     "bot/src/v2/private-hook-store.js",
@@ -1126,11 +1127,11 @@
     },
     {
       "file": "bot/src/v2/discord-intake.js",
-      "sha256": "ca3d518f2bd375dc85d75f13d86ab78ef51450417f9bf4fc95c7c88e84d11be0",
+      "sha256": "570f3615606b84915074494b44cff3208a9c05bbff65f7da7b8062d90042c63a",
       "reachable": true,
       "exports": [
         {
-          "line": 6,
+          "line": 7,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createDiscordIntake({messageReader,sceneStore}){\n  if(typeof messageReader?.read!=='function'||typeof sceneStore?.commitSnapshot!=='function')throw new TypeError('Native message reader and scene store required');\n  async function ingest(request,{signal}={}){\n    const first=await mes"
@@ -1143,6 +1144,13 @@
           "specifier": "./source-authority.js",
           "target": "bot/src/v2/source-authority.js",
           "status": "resolved"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:util",
+          "target": null,
+          "status": "external"
         }
       ],
       "functions": 8,
@@ -1318,6 +1326,57 @@
         }
       ],
       "functions": 13,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-roll-notices.js",
+      "sha256": "e6a6ed1f6b8c4b35e2a0fd5d9381c16329078266c61379c352c7dd8f25b89f48",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function ownerRollNoticeContent(request){\n  const trait=request?.termProof?.trait?.name;\n  if(typeof trait!=='string'||!trait||!Number.isSafeInteger(request.difficulty)||request.difficulty<0||typeof request.stakes!=='string'||!request.stakes.trim()||!Object.values(odds(request)).every(Number."
+        },
+        {
+          "line": 22,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordRollNotices({client,sceneStore,sourceAuthority,rollStore,preparation,readGmRoleId=()=>null}){\n  if(typeof client?.guilds?.fetch!=='function'||typeof client.user?.id!=='string'||typeof sceneStore?.readers?.readChannel!=='function'||typeof sceneStore?.commitSnapshot!=='fun"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-audience-reader.js",
+          "target": "bot/src/v2/discord-audience-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-message-reader.js",
+          "target": "bot/src/v2/discord-message-reader.js",
+          "status": "resolved"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-intake.js",
+          "target": "bot/src/v2/discord-intake.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 21,
       "sqlStatements": 0
     },
     {
@@ -3715,7 +3774,7 @@
     },
     {
       "file": "bot/src/v2/rules/ordinary-roll-preparation.js",
-      "sha256": "8accf18ca477d64bed53a09a42445be1aa7f0f479d2f8b8c0aeaa0dc93ea44be",
+      "sha256": "2086a3044f92037aee76a5fb190365f800b3b268bac440009e8d47fd50b4a577",
       "reachable": false,
       "exports": [
         {
@@ -3734,7 +3793,7 @@
           "status": "external"
         }
       ],
-      "functions": 9,
+      "functions": 10,
       "sqlStatements": 0
     },
     {
@@ -4039,11 +4098,11 @@
     },
     {
       "file": "bot/src/v2/rules/roll-store.js",
-      "sha256": "8a9ac20f1d376e449ae27a06dff3f0670df81d31bc4486af6cd24efcd9f278f4",
+      "sha256": "f8a20296159e3822e53a41886f3e31bd09176e0fed23d85501a54937dc649700",
       "reachable": false,
       "exports": [
         {
-          "line": 5,
+          "line": 7,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function openRollStore(filename=':memory:'){\r\n  const db=new DatabaseSync(filename);\r\n  try{\r\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk3_requests','vk3_roll_events','vk3_roll_fear_holds'].includes(r.name)))throw new"
@@ -4065,8 +4124,8 @@
           "status": "external"
         }
       ],
-      "functions": 32,
-      "sqlStatements": 12
+      "functions": 44,
+      "sqlStatements": 13
     },
     {
       "file": "bot/src/v2/rules/roll-terms.js",
