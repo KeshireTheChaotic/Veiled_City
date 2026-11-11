@@ -1,0 +1,30 @@
+{
+  "node": "v26.13.0",
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "ruleBodyEquality": true,
+  "tests": 5,
+  "passed": 5,
+  "durationMs": 63.8898,
+  "inputs": [
+    {
+      "file": ".reports/upstream-15a8f-source/bot/src/frameworks/daggerheart/feature-roll-source-rules.js",
+      "sha256": "01ff272034d0f0d3f3eb45b9b31813a504913e9afcfa7823ae7245b1f868f80b"
+    },
+    {
+      "file": "bot/src/v2/rules/feature-roll-source.js",
+      "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c"
+    },
+    {
+      "file": "bot/src/v2/rules/domain-card-catalog.js",
+      "sha256": "7aa52821655c224fade244c333f62c6c7aa5109eec9a5f9b05c72fb630a74477"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-feature-roll-source.test.mjs",
+      "sha256": "21909c6662a21e34f8ef4e0836d1b67b843591d64b320c16046ea9e8f3ae5bee"
+    },
+    {
+      "file": "content/CARDS/domain_cards.json",
+      "sha256": "611d7fa95e037c3458522935fa1baee1b08c9bed0a9e0bfc0fde1be5030cd2d7"
+    }
+  ]
+}

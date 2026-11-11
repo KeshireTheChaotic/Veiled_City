@@ -1,5 +1,5 @@
 {
-  "head": "6a50535986a94f96ce6be1d849ace9a928945388",
+  "head": "2db1287d075e722634a23b36ff8a510aaab9f7ab",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 97,
+  "nativeModules": 99,
   "reachableNativeModules": 75,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -25,8 +25,10 @@
     "bot/src/v2/relationship-import.js",
     "bot/src/v2/rules/combat.js",
     "bot/src/v2/rules/death-choice-evidence.js",
+    "bot/src/v2/rules/domain-card-catalog.js",
     "bot/src/v2/rules/fear-opportunity-reader.js",
     "bot/src/v2/rules/fear-reservations.js",
+    "bot/src/v2/rules/feature-roll-source.js",
     "bot/src/v2/rules/hope-store.js",
     "bot/src/v2/rules/incoming-damage-authority.js",
     "bot/src/v2/rules/ordinary-roll-preparation.js",
@@ -2919,6 +2921,37 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/rules/domain-card-catalog.js",
+      "sha256": "7aa52821655c224fade244c333f62c6c7aa5109eec9a5f9b05c72fb630a74477",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDomainCardCatalog(filename){\n return Object.freeze({findDomainCard(ref){\n  if(typeof ref!=='string'||!ref.startsWith('domain:')||ref.length>200)return null;\n  const domains=JSON.parse(readFileSync(filename,'utf8')),matches=[];\n  for(const [domain,cards] of Object.entries(domain"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 3,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/rules/fear-opportunity-reader.js",
       "sha256": "30f339ec85aa165c17ca202975b4a5660c9646104b32fa19cc95b0ec8002e4a9",
       "reachable": false,
@@ -2978,6 +3011,36 @@
       ],
       "functions": 41,
       "sqlStatements": 20
+    },
+    {
+      "file": "bot/src/v2/rules/feature-roll-source.js",
+      "sha256": "57e74bc26fc6c35258327f035e2c1589cd7577021f3a0f5a8c58e48e8b665f4c",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 23,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function spellcastTraitSource(data,{slot='base'}={}){\r\n  if(!['base','multiclass'].includes(slot))throw fail('spellcast_subclass_slot');\r\n  const role=slot==='base'?data:data?.multiclass,\r\n    source=subclasses.find(([cls,sub])=>normalize(cls)===normalize(role?.class)&&normalize(sub)===normal"
+        },
+        {
+          "line": 32,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function featureRollSource(library,pc,input){\r\n  if(!input||Object.keys(input).sort().join()!=='feature,slot,source_hash'||typeof input.feature!=='string'\r\n    ||typeof library?.findDomainCard!=='function')throw fail('feature_roll_source_locators');\r\n  if(!Array.isArray(pc?.data?.domain_cards"
+        }
+      ],
+      "imports": [
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
     },
     {
       "file": "bot/src/v2/rules/hope-consent-ingress.js",
