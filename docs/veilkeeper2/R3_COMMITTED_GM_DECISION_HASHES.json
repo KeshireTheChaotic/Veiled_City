@@ -1,0 +1,19 @@
+{
+  "node": "v26.13.0",
+  "tests": 12,
+  "passed": 12,
+  "duration_ms": 859.0007,
+  "upstream": "15a8f44671f227c6bec69bf30744e03c5692809b",
+  "source_file": "bot/src/frameworks/daggerheart/gm-capability-rules.js",
+  "upstream_source_sha256": "178dd1abb6c7af629f81c8ee1914ad3ce0bae1a82154dfe70412d1c203bf7214",
+  "inputs": [
+    {
+      "file": "bot/src/v2/rules/committed-gm-decision.js",
+      "sha256": "d484fcc81f245bffaa46da1f54feca47a7f208a7b4271bfe501b0296bd65046e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-committed-gm-decision.test.mjs",
+      "sha256": "20dc132ed387254fc4a90a35acf85026280ce68b13d112902b85ccba0c0ec779"
+    }
+  ]
+}
