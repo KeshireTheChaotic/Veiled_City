@@ -1,4 +1,5 @@
 import {join} from 'node:path';
+import {createReceiptRecall} from './receipt-recall.js';
 import {createStatementOriginRefresh} from './statement-origin-refresh.js';
 import {createStatementLineage,statementReference} from './statement-lineage.js';
 import {openRecallStore} from './recall-store.js';
@@ -46,7 +47,8 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:statementLineage.validate}:null;
     const conversationContext=knowledgeStore?createContextAuthority({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}):null;
     const recall=recallStore?createRecallPlanner({contextAuthority:conversationContext,readCandidates:s=>knowledgeStore.candidateRefs(s.campaign,s.scene).filter(ref=>ref!==statementReference(s)),readCauses:s=>recallStore.readCauses(s.campaign),readPins:s=>recallStore.readPins(s.campaign),readClock:recallStore.readClock}):null;
-    const nativeActions=createNativeActionAuthority({sourceAuthority:conversationAuthority,readActor:conversationReaders.readActor,actionStore,requestConsent:(source,ref)=>router.costs.request(source,ref)});
+    const receiptRecall=recallStore?createReceiptRecall({sourceAuthority:conversationAuthority,statementLineage,knowledgeStore,recallStore,inspectReceipt:(source,ref)=>nativeActions.inspect(source,ref)}):null;
+    const nativeActions=createNativeActionAuthority({sourceAuthority:conversationAuthority,readActor:conversationReaders.readActor,actionStore,requestConsent:(source,ref)=>router.costs.request(source,ref),onCommittedReceipt:receiptRecall?(source,receipt)=>receiptRecall.record(source,receipt):null,onRecallError:error=>onError?.(error,{stage:'native_receipt_recall'})});
     const readOwnerSession=createOwnerSessionReader({sceneStore,repository:characterRepository,readPolicy});
     const messageReader=createDiscordMessageReader({client}),intake=createDiscordIntake({messageReader,sceneStore});
     const originRefresh=knowledgeStore?createStatementOriginRefresh({contextAuthority:conversationContext,records:knowledgeRecords,sourceRegistry:registry,sceneStore,messageReader,readGmRoleId:c=>readPolicy(c).gmRoleId}):null;

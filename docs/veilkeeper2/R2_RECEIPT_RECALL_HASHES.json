@@ -1,0 +1,79 @@
+{
+  "node": "v26.13.0",
+  "tests": 102,
+  "passed": 102,
+  "inputs": [
+    {
+      "file": "bot/src/v2/native-root.js",
+      "sha256": "3220e447298e4bedad553cd928787453fe1b30762bd858f3ca8ab0f0eda66e2f"
+    },
+    {
+      "file": "bot/src/v2/native-action-authority.js",
+      "sha256": "0e5210e81b5fecb1374f166908d5df74fb18b0ec8e96993519c73c7521d0ea7c"
+    },
+    {
+      "file": "bot/src/v2/receipt-recall.js",
+      "sha256": "9fd822e89ccb8b0d6a63da728610b28540d512980eda123113671e1049920e4d"
+    },
+    {
+      "file": "bot/src/v2/recall-store.js",
+      "sha256": "d4287d1b3405ba4bffec9362bf57e2b7480ca6679ae90040507ba25a2d2faeaa"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "647e51d3df73855a7a212e7f8964c6f002319661d22fa9c0889ea69a9eea7f90"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-recall-pin-lifecycle.test.mjs",
+      "sha256": "4d46b36ce4271aeef6cc45576091975f522ce949605ee80a24747ad4516183a0"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-receipt-recall.test.mjs",
+      "sha256": "8f6e2c708c6189ae24ba0ac9948aef1be3091f0f24b8474c3a3fd390d10e12b8"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+      "sha256": "5ebaf1688762c67c44ff0164ab46e0709cdd3312069db9cc45f3a4502b480a21"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+      "sha256": "2d97ac0ddc47c2d259ae23380a4e61e8af310bbb294d28e742d195748aa62668"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-action-authority.test.mjs",
+      "sha256": "ded29d235f42df7da057ca29ed4eb2973b90a74a2d16f56303472da7bced76b4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+      "sha256": "8669206715c0d7cbac8ab41393c46d9f6b6c89dcdac272da9119d817907b922a"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "81265e5953a3622bd4295e86933f2dc9ec624ea0edc5c83106bfb89e780a28a4"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "file": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    }
+  ]
+}

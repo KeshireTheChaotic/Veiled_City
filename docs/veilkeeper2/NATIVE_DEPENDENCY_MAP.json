@@ -1,5 +1,5 @@
 {
-  "head": "1931d8406458f6a10a124e7a35dd98ce3e2efcad",
+  "head": "a345f5eddb314208f74e9da4fd961f699cc380a2",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 104,
-  "reachableNativeModules": 79,
+  "nativeModules": 105,
+  "reachableNativeModules": 80,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/character-packages.js",
@@ -1630,14 +1630,14 @@
     },
     {
       "file": "bot/src/v2/native-action-authority.js",
-      "sha256": "37c7d66dd4611057dd1c8aedd687f17919ac56e32f7fd74553b429b2b3d5d9b3",
+      "sha256": "0e5210e81b5fecb1374f166908d5df74fb18b0ec8e96993519c73c7521d0ea7c",
       "reachable": true,
       "exports": [
         {
           "line": 8,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='f"
+          "text": "export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null,onCommittedReceipt=null,onRecallError=()=>{}}){\r\n  if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='fu"
         }
       ],
       "imports": [
@@ -1656,7 +1656,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 11,
+      "functions": 13,
       "sqlStatements": 0
     },
     {
@@ -1932,11 +1932,11 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "a3c47b859d4702561695fafcdb86c597089684a6d8b4426b8333ead25421cb20",
+      "sha256": "3220e447298e4bedad553cd928787453fe1b30762bd858f3ca8ab0f0eda66e2f",
       "reachable": true,
       "exports": [
         {
-          "line": 33,
+          "line": 34,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
@@ -1953,187 +1953,194 @@
         {
           "line": 2,
           "kind": "ImportDeclaration",
+          "specifier": "./receipt-recall.js",
+          "target": "bot/src/v2/receipt-recall.js",
+          "status": "resolved"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
           "specifier": "./statement-origin-refresh.js",
           "target": "bot/src/v2/statement-origin-refresh.js",
           "status": "resolved"
         },
         {
-          "line": 3,
+          "line": 4,
           "kind": "ImportDeclaration",
           "specifier": "./statement-lineage.js",
           "target": "bot/src/v2/statement-lineage.js",
           "status": "resolved"
         },
         {
-          "line": 4,
+          "line": 5,
           "kind": "ImportDeclaration",
           "specifier": "./recall-store.js",
           "target": "bot/src/v2/recall-store.js",
           "status": "resolved"
         },
         {
-          "line": 5,
+          "line": 6,
           "kind": "ImportDeclaration",
           "specifier": "./recall-planner.js",
           "target": "bot/src/v2/recall-planner.js",
           "status": "resolved"
         },
         {
-          "line": 6,
+          "line": 7,
           "kind": "ImportDeclaration",
           "specifier": "./scene-prose-review.js",
           "target": "bot/src/v2/scene-prose-review.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./scene-store.js",
           "target": "bot/src/v2/scene-store.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./source-registry.js",
           "target": "bot/src/v2/source-registry.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./native-action-authority.js",
           "target": "bot/src/v2/native-action-authority.js",
           "status": "resolved"
         },
         {
-          "line": 10,
+          "line": 11,
           "kind": "ImportDeclaration",
           "specifier": "./context-authority.js",
           "target": "bot/src/v2/context-authority.js",
           "status": "resolved"
         },
         {
-          "line": 11,
+          "line": 12,
           "kind": "ImportDeclaration",
           "specifier": "./source-authority.js",
           "target": "bot/src/v2/source-authority.js",
           "status": "resolved"
         },
         {
-          "line": 12,
+          "line": 13,
           "kind": "ImportDeclaration",
           "specifier": "./rules/action-store.js",
           "target": "bot/src/v2/rules/action-store.js",
           "status": "resolved"
         },
         {
-          "line": 13,
+          "line": 14,
           "kind": "ImportDeclaration",
           "specifier": "./cost-prompt-store.js",
           "target": "bot/src/v2/cost-prompt-store.js",
           "status": "resolved"
         },
         {
-          "line": 14,
+          "line": 15,
           "kind": "ImportDeclaration",
           "specifier": "./death-prompts.js",
           "target": "bot/src/v2/death-prompts.js",
           "status": "resolved"
         },
         {
-          "line": 15,
+          "line": 16,
           "kind": "ImportDeclaration",
           "specifier": "./component-decision-store.js",
           "target": "bot/src/v2/component-decision-store.js",
           "status": "resolved"
         },
         {
-          "line": 16,
+          "line": 17,
           "kind": "ImportDeclaration",
           "specifier": "./interaction-receipts.js",
           "target": "bot/src/v2/interaction-receipts.js",
           "status": "resolved"
         },
         {
-          "line": 17,
+          "line": 18,
           "kind": "ImportDeclaration",
           "specifier": "./canonical-actor-readers.js",
           "target": "bot/src/v2/canonical-actor-readers.js",
           "status": "resolved"
         },
         {
-          "line": 18,
+          "line": 19,
           "kind": "ImportDeclaration",
           "specifier": "./pc-bootstrap-source.js",
           "target": "bot/src/v2/pc-bootstrap-source.js",
           "status": "resolved"
         },
         {
-          "line": 19,
+          "line": 20,
           "kind": "ImportDeclaration",
           "specifier": "./discord-session-attendance.js",
           "target": "bot/src/v2/discord-session-attendance.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "ImportDeclaration",
           "specifier": "./native-campaign-adapters.js",
           "target": "bot/src/v2/native-campaign-adapters.js",
           "status": "resolved"
         },
         {
-          "line": 21,
+          "line": 22,
           "kind": "ImportDeclaration",
           "specifier": "./discord-interaction-router.js",
           "target": "bot/src/v2/discord-interaction-router.js",
           "status": "resolved"
         },
         {
-          "line": 22,
+          "line": 23,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-reader.js",
           "target": "bot/src/v2/discord-message-reader.js",
           "status": "resolved"
         },
         {
-          "line": 23,
+          "line": 24,
           "kind": "ImportDeclaration",
           "specifier": "./discord-intake.js",
           "target": "bot/src/v2/discord-intake.js",
           "status": "resolved"
         },
         {
-          "line": 24,
+          "line": 25,
           "kind": "ImportDeclaration",
           "specifier": "./discord-message-observer.js",
           "target": "bot/src/v2/discord-message-observer.js",
           "status": "resolved"
         },
         {
-          "line": 25,
+          "line": 26,
           "kind": "ImportDeclaration",
           "specifier": "./discord-turn-runner.js",
           "target": "bot/src/v2/discord-turn-runner.js",
           "status": "resolved"
         },
         {
-          "line": 26,
+          "line": 27,
           "kind": "ImportDeclaration",
           "specifier": "./turn-store.js",
           "target": "bot/src/v2/turn-store.js",
           "status": "resolved"
         },
         {
-          "line": 27,
+          "line": 28,
           "kind": "ImportDeclaration",
           "specifier": "./knowledge-store.js",
           "target": "bot/src/v2/knowledge-store.js",
           "status": "resolved"
         }
       ],
-      "functions": 29,
+      "functions": 32,
       "sqlStatements": 0
     },
     {
@@ -2546,7 +2553,7 @@
     },
     {
       "file": "bot/src/v2/recall-store.js",
-      "sha256": "456ab30fb7052378bcd1a84a150532a1dbba986cd61a94915f9cf7e529ddcdc4",
+      "sha256": "d4287d1b3405ba4bffec9362bf57e2b7480ca6679ae90040507ba25a2d2faeaa",
       "reachable": true,
       "exports": [
         {
@@ -2572,8 +2579,39 @@
           "status": "external"
         }
       ],
-      "functions": 24,
+      "functions": 25,
       "sqlStatements": 7
+    },
+    {
+      "file": "bot/src/v2/receipt-recall.js",
+      "sha256": "9fd822e89ccb8b0d6a63da728610b28540d512980eda123113671e1049920e4d",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createReceiptRecall({sourceAuthority,statementLineage,knowledgeStore,recallStore,inspectReceipt}){\n if(typeof sourceAuthority?.revalidate!=='function'||typeof statementLineage?.capture!=='function'||typeof knowledgeStore?.append!=='function'||typeof recallStore?.readCause!=='function"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./statement-lineage.js",
+          "target": "bot/src/v2/statement-lineage.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 4,
+      "sqlStatements": 0
     },
     {
       "file": "bot/src/v2/register-commands.js",

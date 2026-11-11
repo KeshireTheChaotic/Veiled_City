@@ -5,8 +5,9 @@ const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 /** Fixed native engine bridge. A reference is not consent, a cost, or a state patch.
  * Resource receipt projections are owner-private; public disclosure needs its own authority.
  */
-export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null}){
+export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null,onCommittedReceipt=null,onRecallError=()=>{}}){
   if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Native source, actor and action store required');
+  if(onCommittedReceipt!==null&&typeof onCommittedReceipt!=='function'||typeof onRecallError!=='function')throw new TypeError('Native receipt observer required');
   const costs=createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms:actionStore.readActionTerms,readConsent:actionStore.readConsent,actionStore,inspectBlazeCost});
   function owner(source,action){
     if(!sourceAuthority.revalidate(source)||source.recipients.length!==1||source.recipients[0]!==source.principal||!action||action.campaignId!==source.campaign||action.ownerUserId!==source.principal||!source.actors.includes(action.actorId)||action.kind!=='hope_cost')throw new Error('Current owner-private native action required');
@@ -36,7 +37,9 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
     if(original.campaign!==source.campaign||original.scene!==source.scene||original.principal!==source.principal||!original.actors.includes(action.actorId))throw new Error('Current native original action required');
     const prior=actionStore.readOutcome(source.campaign,action.id),revision=prior?.request.expectedHopeRevision??actionStore.readHope(source.campaign,action.actorId)?.revision;
     costs.commit(original,action.actorId,parameters,revision);
-    return inspect(source,action.id);
+    const result=inspect(source,action.id);
+    if(onCommittedReceipt)try{const observed=onCommittedReceipt(original,result);if(observed&&typeof observed.then==='function')Promise.resolve(observed).catch(error=>{try{onRecallError(error);}catch{}});}catch(error){try{onRecallError(error);}catch{}}
+    return result;
   }
   function verifyDependencies(source,entries){
     if(!sourceAuthority.revalidate(source)||!Array.isArray(entries)||entries.length>16)throw new Error('Saved native receipt lineage required');
