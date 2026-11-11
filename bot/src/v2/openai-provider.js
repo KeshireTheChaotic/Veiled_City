@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';
 import {GENERIC_TOOL_CONTRACTS} from './tool-contracts.js';
+import {conversationInput} from './conversation-input.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const error=code=>Object.assign(new Error(code),{code});
 
@@ -16,7 +17,7 @@ export function createOpenAIResponsesProvider({client,model,maxOutputTokens=2048
     if(typeof instructions!=='string'||!context||!Array.isArray(history)||history.length>5
       ||!Array.isArray(tools)||tools.length&&JSON.stringify(tools)!==JSON.stringify(GENERIC_TOOL_CONTRACTS))throw error('invalid_provider_request');
     const binding=hash([instructions,context,tools]),previous=continuation&&continuations.get(continuation);
-    let input=[{role:'user',content:JSON.stringify(context)}];
+    let input=[{role:'user',content:conversationInput(context)}];
     if(continuation){
       if(!previous||previous.binding!==binding||history.length!==previous.historyLength+1||hash(history.slice(0,-1))!==previous.historyHash)throw error('invalid_provider_continuation');
       const step=history.at(-1);

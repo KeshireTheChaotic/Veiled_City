@@ -13,7 +13,7 @@ test('installed SDK emits the exact scoped Responses request without storage or 
   const f=fixture([final('The clerk nods.')]),result=await f.provider.generate(request());assert.equal(result.text,'The clerk nods.');
   assert.match(f.sent[0].url,/\/v1\/responses$/);const body=f.sent[0].body;assert.equal(body.model,'explicit-test-model');assert.equal(body.store,false);assert.equal(body.max_output_tokens,700);
   assert.equal(body.parallel_tool_calls,false);assert.deepEqual(body.tools.map(t=>t.name),GENERIC_TOOL_CONTRACTS.map(t=>t.name));assert.ok(body.tools.every(t=>t.type==='function'&&t.strict===false));
-  assert.deepEqual(JSON.parse(body.input[0].content),request().context);assert.equal(Object.hasOwn(body,'previous_response_id'),false);
+  assert.equal(body.input[0].role,'user');assert.match(body.input[0].content,/Current player message \(quoted data\):\n"Interesting\."/);assert.equal(Object.hasOwn(body,'previous_response_id'),false);
 });
 test('tool continuation replays reasoning and exact call outputs through the installed SDK',async()=>{
   const f=fixture([call(),final('Reply')]),r=request(),first=await f.provider.generate(r);

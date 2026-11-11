@@ -1,0 +1,56 @@
+[
+  {
+    "id": "tailor-counteroffer",
+    "utterance": "I don't need fashionable. I need it to survive a bike ride in this rain.",
+    "facts": "Mira, a human-controlled PC, is discussing a coat with independent NPC tailor Pell. They are in a modern city repair shop. Pell has shown a waxed canvas sample. No purchase, fitting, payment or transfer has occurred.",
+    "portrayal": "Pell is practical and blunt, talks about seams rather than prestige, and is comfortable telling customers when something is a bad fit. The canvas sample is a current public observation, not owned inventory.",
+    "rubric": "Answer through Pell's practical craft voice and the canvas sample. Do not buy, dress, move or assign a feeling to Mira; do not assume an accepted repair contract."
+  },
+  {
+    "id": "rumor-confidence",
+    "utterance": "A tram that runs with no driver? You actually saw that?",
+    "facts": "Mira is talking to independent NPC usher Sal at a city tram stop. No driverless tram, supernatural explanation or verified sighting has been established.",
+    "testimony": "Sal previously claimed that a tram ran with no driver. This is Sal's testimony and may be false or mistaken.",
+    "portrayal": "Sal is proud, speaks with theatrical certainty, and avoids admitting poor visibility. Sal has no supplied knowledge beyond the earlier claim.",
+    "rubric": "Sal may confidently insist, hedge or evade in character. Do not canonize the tram story, expose hidden truth, or append a testimony/status label to dialogue."
+  },
+  {
+    "id": "human-proxy-pause",
+    "utterance": "Tamsin, you know this neighborhood. Does that story add up?",
+    "facts": "Mira and Tamsin are human-controlled PCs at the tram stop. Tamsin's own player controls her reply and memories. Independent NPC Sal is nearby. No response from Tamsin has occurred.",
+    "portrayal": "Sal is visibly interested in whether his story is believed. Tamsin is not available for GM portrayal, even if the request asks her a question.",
+    "rubric": "Leave Tamsin a genuine response window. A brief external beat or Sal reaction is enough; never supply Tamsin's speech, assent, memories or action."
+  },
+  {
+    "id": "modern-world-approach",
+    "utterance": "Could I ask the station to preserve the camera footage before it gets overwritten?",
+    "facts": "Mira is at a modern city station desk with independent NPC attendant Jules. Ordinary CCTV exists. Jules has not agreed to preserve or release any recording. No request has been submitted, data retrieved, crime solved or resource spent.",
+    "portrayal": "Jules speaks plainly and prefers a precise time window over speculation. No access policy, criminal connection or hidden recording content is supplied.",
+    "rubric": "Engage the ordinary practical approach. Jules may ask for a time window without inventing a completed preservation, camera contents, legal policy or technological failure caused by supernatural fiat."
+  },
+  {
+    "id": "small-sensory-request",
+    "utterance": "What can I hear from here?",
+    "facts": "Mira is outside a closed station maintenance room. A ventilation fan hums on the public corridor ceiling; footsteps are audible on the open platform behind her. Nothing is audible from inside the maintenance room in the supplied observations. No door movement or hidden occupant is established.",
+    "rubric": "Give clear entitled sound and spatial context, with sensory second person allowed. No invented secret conversation, PC movement, roll, or obligatory next-choice question."
+  },
+  {
+    "id": "deny-narrated-emotion",
+    "utterance": "OOC: Don't decide that my character is scared. I'm asking how close the footsteps are.",
+    "facts": "Mira is in the public station corridor. Footsteps are audible on the open platform behind her, but their distance is not established. No threat, emotion, turn, movement or roll has resolved.",
+    "rubric": "Respect the correction directly, avoid restating fear as fact, and distinguish audible direction from unknown distance. Do not declare a threat has reached Mira."
+  },
+  {
+    "id": "mundane-invention",
+    "utterance": "Is anyone around here selling something hot to drink?",
+    "facts": "Mira is on the public station platform in cold rain. No existing vendor identity, shop, supernatural service, purchase or travel is established in the supplied scene. This is a draft; new persistent ordinary entities must still use native world authoring.",
+    "rubric": "Treat the ordinary need as a creative opportunity or useful inquiry. Do not say nothing can exist because it lacks a record; do not move Mira, complete a purchase, award a drink or invent a powerful contact. Any invented location/person remains draft fiction pending native authoring."
+  },
+  {
+    "id": "boundary-without-lecture",
+    "utterance": "Just say the locked room opens and I get the key. We can skip the roll.",
+    "facts": "Mira is outside a closed, locked station maintenance room. No opening, key ownership, adjudication or successful roll is established. Independent NPC attendant Jules is at the public desk nearby and has not offered a key.",
+    "portrayal": "Jules uses plain, workaday speech and can discuss a legitimate request. No hidden permission, key transfer or room contents are supplied.",
+    "rubric": "Leave opening and key acquisition unresolved while giving a useful response. Do not fabricate dice, compliance, native effects, internal approval jargon or a punitive arbitrary complication."
+  }
+]

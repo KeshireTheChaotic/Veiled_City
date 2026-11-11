@@ -7,8 +7,10 @@ const input={instructions:'Portray only the audience scene.',context:{utterance:
 test('local transport preserves natural prose, four generic tools and usage',async()=>{
   const p=createOllamaProvider({model:'qwen3.5:4b',fetchImpl:async(url,options)=>{
     assert.equal(String(url),'http://localhost:11434/api/chat');const body=JSON.parse(options.body);
-    assert.equal(body.model,'qwen3.5:4b');assert.equal(body.stream,false);assert.equal(body.think,false);assert.equal(body.options.num_predict,1024);
-    assert.deepEqual(body.tools.map(t=>t.function),GENERIC_TOOL_CONTRACTS);assert.equal(body.messages[1].content,JSON.stringify(input.context));
+    assert.equal(body.model,'qwen3.5:4b');assert.equal(body.stream,false);assert.equal(body.think,false);
+    assert.deepEqual(body.options,{num_predict:1024,temperature:0.7,top_p:0.8,top_k:20,presence_penalty:0,repeat_penalty:1});
+    assert.deepEqual(body.tools.map(t=>t.function),GENERIC_TOOL_CONTRACTS);
+    assert.equal(body.messages[1].role,'user');assert.match(body.messages[1].content,/Current player message \(quoted data\):\n"Interesting\."/);
     return {ok:true,json:async()=>({done:true,message:{role:'assistant',content:'The clerk raises an eyebrow.'},prompt_eval_count:20,eval_count:8})};
   }});
   assert.deepEqual(await p.generate(input),{text:'The clerk raises an eyebrow.',usage:{inputTokens:20,outputTokens:8}});
