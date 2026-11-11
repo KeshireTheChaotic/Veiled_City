@@ -19,11 +19,22 @@ export function createDiscordTurnRunner({intake,provider,applicationOptions,crea
     const result=await app.respond(event,{signal});
     await refresh();const publication=app.inspectPublication(result.publication.id);
     if(claim)turnStore.saveDraft(claim,{...publication,delivery:{channelId:nativeRequest.channelId,messageId:nativeRequest.messageId,mode:nativeRequest.mode}},{check:()=>{validate();app.inspectPublication(result.publication.id);}});
-    pending.set(result.publication.id,{app,request:nativeRequest});return result;
+    pending.set(result.publication.id,{app,request:nativeRequest,claim,validate,reviewSequence:0});return result;
   }
   async function inspectPublication(id,{signal}={}){
     const entry=pending.get(id);if(!entry)throw new Error('Publication not available');
     await intake.ingest(entry.request,{signal});return entry.app.inspectPublication(id);
   }
-  return Object.freeze({respond,inspectPublication});
+  async function reviewPublication(id,{signal}={}){
+    const entry=pending.get(id);if(!entry)throw new Error('Publication not available');
+    await intake.ingest(entry.request,{signal});signal?.throwIfAborted();entry.validate();
+    const review=entry.app.reviewPublication(id);
+    if(entry.claim){
+      const saved=turnStore.saveReview(entry.claim,review,{expectedSequence:entry.reviewSequence,check:()=>{
+        entry.validate();if(JSON.stringify(entry.app.reviewPublication(id))!==JSON.stringify(review))throw new Error('Native publication review changed');
+      }});entry.reviewSequence=saved.sequence;
+    }
+    return review;
+  }
+  return Object.freeze({respond,inspectPublication,reviewPublication});
 }

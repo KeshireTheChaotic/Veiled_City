@@ -25,14 +25,16 @@ async function fixture(t){
   scenes.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'setup',records:records.map(r=>({...r,expectedRevision:null}))},{check:()=>{}});
   let calls=0;const event={campaignId:'c',messageId:'message',userId:'u',actorId:'pc'};
   const runner=createDiscordTurnRunner({intake:{ingest:async()=>event},provider:{generate:async()=>{calls++;return {text:'The clerk raises an eyebrow.'};}},turnStore:turns,applicationOptions:{readers:{...scenes.readers,sourceRegistry:registry},records:{metadata:()=>null,readText:()=>null}}});
-  await runner.respond({guildId:'c',channelId:'channel',messageId:'message',mode:'private'});
+  const generated=await runner.respond({guildId:'c',channelId:'channel',messageId:'message',mode:'private'});
+  const reviewed=await runner.reviewPublication(generated.publication.id);assert.equal(reviewed.status,'requires_semantic_review');assert.equal(reviewed.sent,false);
   assert.equal(calls,1);
-  const saved=turns.recentDrafts('c')[0];assert.ok(registry.get(saved.source));
+  const saved=turns.recentDrafts('c')[0];assert.deepEqual(turns.inspectNative('c',saved.source).data.review.value,reviewed);assert.ok(registry.get(saved.source));
   assert.equal(JSON.stringify(registry.get(saved.source)).includes('Interesting.'),false);
   turns.close();registry.close();scenes.close();
   scenes=openSceneStore(join(directory,'scenes.sqlite'));registry=openSourceRegistry(join(directory,'sources.sqlite'));turns=openTurnStore(join(directory,'turns.sqlite'));
   const live={message:{...records.find(r=>r.kind==='message').data},reads:0};
   const intake=createDiscordIntake({sceneStore:scenes,messageReader:{read:async()=>{live.reads++;if(live.error)throw new Error(live.error);return {messageRecord:live.message,audience:{channelRecord:records.find(r=>r.kind==='channel').data,fingerprint:'live-channel'},fingerprint:'live-message'};}}});
+  assert.deepEqual(turns.inspectNative('c',saved.source).data.review.value,reviewed);
   const authority=createSourceAuthority({...scenes.readers,sourceRegistry:registry}),sent=[];
   const publication=createNativeDraftPublication({sceneStore:scenes,gmAuthority:{check:()=>{}},drafts:{
     refreshSource:async(c,s,r,{signal})=>{const event=authority.eventForReference(s);await intake.ingest({guildId:c,channelId:'channel',sceneId:'scene',messageId:event.messageId,userId:event.userId,actorId:event.actorId,mode:'private',ownerUserId:event.userId},{signal});},

@@ -1,6 +1,10 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-## Latest R2/R4 authorship continuation
+## Latest R4/R7 private review persistence
+
+Source-bound private review snapshots now persist via native turn runner/store (R7_SEGMENT_REVIEW_REPORT.md; 38 behavioral checks passed). Original raw draft/fingerprint and withheld publication status are unchanged. This is diagnostic persistence, not approval. Next: transactional local repair persistence and exact replacement candidate identity, then native receipt-backed review. Human Discord tests remain pending; live process 62251 retains earlier code and stores. No major phase passed or production change.
+
+## Earlier R2/R4 authorship continuation
 
 Native human-control and GM/NPC portrayal metadata is implemented (R4_AUTHORSHIP_REPORT.md), with 83 fresh affected checks passed. Seven actual local comparisons and a three-case reasoning-mode probe still fail agency/grounding quality; no automatic publication or production change. Current synthetic evidence is committed separately from earlier baseline. Running Discord process 62251 retains its earlier loaded code and test stores. Next: persistent source-bound segment review/repair diagnostics with draft identity and concurrency guards, then native receipt-based material validation. Human command test remains pending.
 

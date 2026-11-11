@@ -1,0 +1,10 @@
+[
+  "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+  "bot/tests/veilkeeper2/r1-discord-turn-runner.test.mjs",
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs",
+  "bot/tests/veilkeeper2/r7-segment-review-store.test.mjs",
+  "bot/tests/veilkeeper2/r7-turn-store.test.mjs"
+]

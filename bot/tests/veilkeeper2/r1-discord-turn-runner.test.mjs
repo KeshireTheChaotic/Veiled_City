@@ -19,3 +19,8 @@ test('later permission changes invalidate inspection and unknown publications ca
   const f=fixture();await assert.rejects(f.runner.inspectPublication('unknown'));assert.deepEqual(f.calls,[]);
   await f.runner.respond({id:'m'});f.state.changeAt=5;await assert.rejects(f.runner.inspectPublication('p'),/revoked/);
 });
+
+test('unknown or revoked publications cannot produce native review diagnostics',async()=>{
+  const f=fixture();await assert.rejects(f.runner.reviewPublication('unknown'),/not available/);assert.deepEqual(f.calls,[]);
+  await f.runner.respond({id:'m'});f.state.changeAt=5;await assert.rejects(f.runner.reviewPublication('p'),/revoked/);assert.equal(f.state.refreshes,5);assert.equal(f.calls.filter(c=>c==='provider').length,1);
+});
