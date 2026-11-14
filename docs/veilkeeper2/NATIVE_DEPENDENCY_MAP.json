@@ -1,5 +1,5 @@
 {
-  "head": "b79e761b300b3904fe41a33de1dbaecbacb833fb",
+  "head": "c5b45d69ae417aa74e96a8866496182876db5ddb",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 128,
-  "reachableNativeModules": 89,
+  "nativeModules": 129,
+  "reachableNativeModules": 90,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
@@ -1758,6 +1758,57 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/guild-runtime-lease.js",
+      "sha256": "a4eb52dd550ea6eb481c532b3469b6f59e0939f598a5af122ae983888802c391",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function defaultGuildLeaseDirectory(repositoryRoot=fileURLToPath(new URL('../../../',import.meta.url))){\n try{\n const marker=join(resolve(repositoryRoot),'.git');let gitDirectory;\n if(lstatSync(marker).isDirectory())gitDirectory=realpathSync(marker);\n else{const match=/^gitdir: ([^\\r\\n]+)\\r?\\"
+        },
+        {
+          "line": 22,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function acquireGuildRuntimeLease({guildId,directory}){\n if(!/^\\d{5,25}$/.test(guildId??'')||typeof directory!=='string'||!directory)throw new TypeError('Exact native guild lease scope required');\n mkdirSync(resolve(directory),{recursive:true});const folder=realpathSync(directory),file=join(f"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:sqlite",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:path",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:url",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 4,
+      "sqlStatements": 5
+    },
+    {
       "file": "bot/src/v2/index.js",
       "sha256": "3329bec194e7d0aa050850a2556a1971fc4a77b7b08634103850dd37fd85991a",
       "reachable": false,
@@ -2548,29 +2599,29 @@
     },
     {
       "file": "bot/src/v2/native-start.js",
-      "sha256": "c32a1913bd037abe59aabbf57f5545b8b0c7a6fc00d07ea98fe7d61a49d542eb",
+      "sha256": "d18929fbbea744972f70b6152dcb2736c816958497f7dcc7df74f2b90793b19e",
       "reachable": true,
       "exports": [
         {
-          "line": 15,
+          "line": 16,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function createOpenAIProviderFromEnv(env){\r\n  const chatgpt=String(env.AI_AUTH_MODE??'').trim().toLowerCase()==='chatgpt',{OPENAI_API_KEY:apiKey}=env,model=env.VK2_MODEL||(chatgpt?env.OPENAI_GM_MODEL:null),maxCalls=Number(env.VK2_MAX_TURNS??10);\r\n  if(!model||!chatgpt&&!apiKey)throw new"
         },
         {
-          "line": 24,
+          "line": 25,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function createProviderFromEnv(env){\r\n  const config=JSON.parse(readFileSync(new URL('./model-config.json',import.meta.url),'utf8'));\r\n  const provider=String(env.VK2_PROVIDER??config.provider).trim().toLowerCase();\r\n  if(provider==='openai')return createOpenAIProviderFromEnv(env);\r\n  i"
         },
         {
-          "line": 36,
+          "line": 37,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function gmPolicyFromEnv(env){\r\n  const ids=String(env.VK2_GM_USER_IDS??'').split(',').map(v=>v.trim()).filter(Boolean),role=env.VK2_GM_ROLE_ID?.trim()||null;\r\n  if(role&&!/^\\d{5,25}$/.test(role)||ids.some(v=>!/^\\d{5,25}$/.test(v)))throw new Error('VK2_GM_ROLE_ID and VK2_GM_USER_IDS must be D"
         },
         {
-          "line": 47,
+          "line": 50,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider="
@@ -2601,61 +2652,68 @@
         {
           "line": 4,
           "kind": "ImportDeclaration",
-          "specifier": "node:crypto",
-          "target": null,
-          "status": "external"
+          "specifier": "./guild-runtime-lease.js",
+          "target": "bot/src/v2/guild-runtime-lease.js",
+          "status": "resolved"
         },
         {
           "line": 5,
           "kind": "ImportDeclaration",
-          "specifier": "discord.js",
+          "specifier": "node:crypto",
           "target": null,
           "status": "external"
         },
         {
           "line": 6,
           "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 7,
+          "kind": "ImportDeclaration",
           "specifier": "./legacy-readonly-repository.js",
           "target": "bot/src/v2/legacy-readonly-repository.js",
           "status": "resolved"
         },
         {
-          "line": 7,
+          "line": 8,
           "kind": "ImportDeclaration",
           "specifier": "./native-root.js",
           "target": "bot/src/v2/native-root.js",
           "status": "resolved"
         },
         {
-          "line": 8,
+          "line": 9,
           "kind": "ImportDeclaration",
           "specifier": "./openai-provider.js",
           "target": "bot/src/v2/openai-provider.js",
           "status": "resolved"
         },
         {
-          "line": 9,
+          "line": 10,
           "kind": "ImportDeclaration",
           "specifier": "./ollama-provider.js",
           "target": "bot/src/v2/ollama-provider.js",
           "status": "resolved"
         },
         {
-          "line": 10,
+          "line": 11,
           "kind": "ImportDeclaration",
           "specifier": "./provider-budget.js",
           "target": "bot/src/v2/provider-budget.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "ImportExpression",
           "specifier": "../frameworks/ai-provider/public.js",
           "target": "bot/src/frameworks/ai-provider/public.js",
           "status": "resolved"
         },
         {
-          "line": 20,
+          "line": 21,
           "kind": "ImportExpression",
           "specifier": "openai",
           "target": null,

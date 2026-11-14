@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve,sep} from 'node:path';
 import {startNative} from '../../src/v2/native-start.js';
 function setup(t){const base=mkdtempSync(join(tmpdir(),'vk3-start-')),log=[];t.after(()=>{assert.ok(resolve(base).startsWith(resolve(tmpdir())+sep));rmSync(base,{recursive:true,force:true});});
-  const env={VK2_NATIVE:'1',VK2_NATIVE_DIR:join(base,'native'),VK2_LEGACY_DB:join(base,'legacy.sqlite'),DISCORD_TOKEN:'token',VK2_ALLOWED_GUILD_ID:'1467249344947159291'};
+  const env={VK2_NATIVE:'1',VK2_NATIVE_DIR:join(base,'native'),VK2_GUILD_LEASE_DIR:join(base,'guild-leases'),VK2_LEGACY_DB:join(base,'legacy.sqlite'),DISCORD_TOKEN:'token',VK2_ALLOWED_GUILD_ID:'1467249344947159291'};
   writeFileSync(env.VK2_LEGACY_DB,'native-start-fixture-source');
   const repository={close:()=>log.push('repo-close')},client={login:async tk=>log.push(`login:${tk}`),destroy:async()=>log.push('client-destroy')};
   return {base,env,log,options:{env,createClient:()=>client,openRepository:f=>{log.push(`open:${f===env.VK2_LEGACY_DB}`);return repository;},createRoot:o=>{log.push(`root:${o.characterRepository===repository}`);return {close:()=>log.push('root-close')};},onError:()=>{}}};}

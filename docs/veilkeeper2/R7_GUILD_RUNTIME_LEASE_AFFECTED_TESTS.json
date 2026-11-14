@@ -1,0 +1,6 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-guild-runtime-lease.test.mjs",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs"
+]

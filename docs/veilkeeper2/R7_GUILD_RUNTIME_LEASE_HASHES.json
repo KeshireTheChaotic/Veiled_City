@@ -1,0 +1,45 @@
+{
+  "scope": "Exact source/test bytes for local native guild exclusion; SQLite/subprocess evidence, simulated Discord startup, no live or major-phase acceptance.",
+  "files": [
+    {
+      "path": "bot/src/v2/guild-runtime-lease.js",
+      "sha256": "a4eb52dd550ea6eb481c532b3469b6f59e0939f598a5af122ae983888802c391"
+    },
+    {
+      "path": "bot/src/v2/native-start.js",
+      "sha256": "d18929fbbea744972f70b6152dcb2736c816958497f7dcc7df74f2b90793b19e"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-guild-runtime-lease.test.mjs",
+      "sha256": "af09569d20dc1053a64d331bcdf9caeedd0808bd999e2fa8837865c75d94b096"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "d4d37e13afb9e432e84721dd44ebf6a229e40127949a448a1c54e92b21a984e5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "f832ecbfe8837e2598c5890b04700d294305244a46fef475d8bcdfd07e6dbb45"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "f70f65d1cbc14d29ee3be6aa0c8ca48addc5e502de12dca021c1d4acfdb01aa5"
+    },
+    {
+      "path": "docs/veilkeeper2/R7_GUILD_RUNTIME_LEASE_REPORT.md",
+      "sha256": "35808fc7dce789b4bdafc51200cc2dc3566939f4459563ca77329bcb1dd7b36d"
+    },
+    {
+      "path": "docs/veilkeeper2/R7_GUILD_RUNTIME_LEASE_AFFECTED_TESTS.json",
+      "sha256": "9bf1eb5499e6e031ba40ed9a5ef7c6a30bbe471da73d900801320f991dad0b9c"
+    },
+    {
+      "path": "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json",
+      "sha256": "602520062cc399ffbf164ee84436ec4090eec02e2399a38cf60117e31707bc4c"
+    },
+    {
+      "path": ".reports/guild-lease-default-20261113.json",
+      "sha256": "56f66d8425e64c6af302498159238c1c814fe4febb94400d4c400c89f091fe3b"
+    }
+  ]
+}

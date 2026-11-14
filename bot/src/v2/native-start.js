@@ -1,6 +1,7 @@
 import {pathToFileURL} from 'node:url';
 import {readFileSync} from 'node:fs';
 import {prepareRuntimeDirectory} from './runtime-directory.js';
+import {acquireGuildRuntimeLease,defaultGuildLeaseDirectory} from './guild-runtime-lease.js';
 import {randomInt} from 'node:crypto';
 import {Client,GatewayIntentBits} from 'discord.js';
 import {openLegacyReadOnlyRepository} from './legacy-readonly-repository.js';
@@ -43,6 +44,8 @@ export function gmPolicyFromEnv(env){
  * Required: VK2_NATIVE=1, VK2_NATIVE_DIR, VK2_LEGACY_DB, DISCORD_TOKEN (may come from the legacy .env named by
  * VK2_ENV_FILE) and VK2_ALLOWED_GUILD_ID: events from any other guild are ignored.
  * Optional natural-message inference produces withheld drafts; publication is separate.
+ * Native launchers share a local guild lease across worktrees/data directories.
+ * Packaged/custom layouts require VK2_GUILD_LEASE_DIR, identical for all launchers.
  */
 export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider=createProviderFromEnv,loadEnvFile=process.loadEnvFile.bind(process),rng=sides=>randomInt(1,sides+1),onError=error=>console.error('native-error',error?.message)}={}){
   if(env.VK2_NATIVE!=='1')throw new Error('Native start requires VK2_NATIVE=1; the legacy runtime is unchanged');
@@ -51,9 +54,10 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   const {VK2_NATIVE_DIR:directory,VK2_LEGACY_DB:legacyDb,DISCORD_TOKEN:token,VK2_ALLOWED_GUILD_ID:guildId}=env;
   if(!directory||!legacyDb||!token)throw new Error('VK2_NATIVE_DIR, VK2_LEGACY_DB and DISCORD_TOKEN are required');
   if(!/^\d{5,25}$/.test(guildId??''))throw new Error('VK2_ALLOWED_GUILD_ID (the single guild to serve) is required');
-  const runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});
+  const guildLease=acquireGuildRuntimeLease({guildId,directory:env.VK2_GUILD_LEASE_DIR??defaultGuildLeaseDirectory()});let runtime;
+  try{runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});}catch(error){guildLease.close();throw error;}
   let repository,client,root;
-  async function closeResources(){try{root?.close();}finally{try{repository?.close();}finally{try{await client?.destroy?.();}finally{runtime.close();}}}}
+  async function closeResources(){try{root?.close();}finally{try{repository?.close();}finally{try{await client?.destroy?.();}finally{try{runtime.close();}finally{guildLease.close();}}}}}
   try{
     const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
     repository=openRepository(legacyDb);client=createClient();

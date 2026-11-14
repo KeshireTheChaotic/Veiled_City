@@ -18,7 +18,7 @@ import {prepareRuntimeDirectory} from '../../src/v2/runtime-directory.js';
 function fixture(t){
  const base=mkdtempSync(join(tmpdir(),'vk2-runtime-resume-')),legacyDb=join(base,'legacy.sqlite'),directory=join(base,'native'),gid='1467249344947159291',log=[];
  const db=new DatabaseSync(legacyDb);db.exec('CREATE TABLE characters(id TEXT,guild_id TEXT,owner_user_id TEXT,name TEXT,status TEXT,character_json TEXT); CREATE TABLE campaigns(guild_id TEXT,gm_role_id TEXT);');db.close();
- const env={VK2_NATIVE:'1',VK2_NATIVE_DIR:directory,VK2_LEGACY_DB:legacyDb,VK2_ALLOWED_GUILD_ID:gid,DISCORD_TOKEN:'synthetic-test-token'},clients=[];
+ const env={VK2_NATIVE:'1',VK2_NATIVE_DIR:directory,VK2_GUILD_LEASE_DIR:join(base,'guild-leases'),VK2_LEGACY_DB:legacyDb,VK2_ALLOWED_GUILD_ID:gid,DISCORD_TOKEN:'synthetic-test-token'},clients=[];
  const options={env,createClient:()=>{const client=Object.assign(new EventEmitter(),{user:{id:'test-bot'},guilds:{fetch:async()=>{throw new Error('No live requests in this fixture');}},login:async()=>{log.push('login');},destroy:async()=>{log.push('destroy');}});clients.push(client);return client;},onError:()=>{}};
  t.after(()=>{assert.ok(resolve(base).startsWith(resolve(tmpdir())+sep));rmSync(base,{recursive:true,force:true});});return {base,legacyDb,directory,gid,env,options,log,clients};
 }
