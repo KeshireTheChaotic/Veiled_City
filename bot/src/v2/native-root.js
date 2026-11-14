@@ -26,6 +26,8 @@ import {createDiscordMessageObserver} from './discord-message-observer.js';
 import {createDiscordTurnRunner} from './discord-turn-runner.js';
 import {openTurnStore} from './turn-store.js';
 import {openKnowledgeStore} from './knowledge-store.js';
+import {createNpcPrivateContext} from './npc-private-context.js';
+import {createNpcPlanningService} from './npc-planning-service.js';
 /** Composes the dedicated native stores, adapters and exclusive interaction router.
  * `directory` must be a new directory for these stores, never a production database.
  * The caller supplies the client, the existing character/campaign repositories, an RNG and
@@ -33,7 +35,7 @@ import {openKnowledgeStore} from './knowledge-store.js';
  */
 export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){
   if(typeof directory!=='string'||!directory||typeof rng!=='function')throw new TypeError('Native store directory and RNG required');
-  const opened=[];let router,observer,closed=false;
+  const opened=[];let router,observer,npcPlanning,closed=false;
   const open=(factory,...args)=>{const store=factory(...args);opened.push(store);return store;};
   try{
     const sceneStore=open(openSceneStore,join(directory,'scenes.sqlite')),registry=open(openSourceRegistry,join(directory,'sources.sqlite')),actionStore=open(openActionStore,join(directory,'actions.sqlite')),
@@ -64,7 +66,8 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     // Entitlement includes complete ancestry before any selected body reaches inference.
     // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
     const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,onSource:source=>{const statement=statementLineage.capture(source),ref=statementReference(source);knowledgeStore.append({campaignId:source.campaign,id:ref,expectedRevision:null,evidenceRef:ref,...statement});if(!conversationAuthority.revalidate(source))throw new Error('Statement source changed during capture');},refreshContext:(source,refs,options)=>originRefresh.refresh(source,refs,options),applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeRecords,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>recall.select(source,{limit:64}),actionAuthority:nativeActions}}):null;
+    npcPlanning=provider?createNpcPlanningService({intake,provider,store:knowledgeStore,sourceAuthority:conversationAuthority,contextAuthority:createNpcPrivateContext({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}),allowedGuildIds}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
-    return Object.freeze({router,costs:router.costs,turns,knowledgeStore,recallStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();for(const store of opened.reverse())store.close();}});
-  }catch(error){observer?.close();router?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
+    return Object.freeze({router,costs:router.costs,turns,npcPlanning,knowledgeStore,recallStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();await npcPlanning?.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();npcPlanning?.close();for(const store of opened.reverse())store.close();}});
+  }catch(error){observer?.close();router?.close();npcPlanning?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
 }

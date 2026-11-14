@@ -1,5 +1,5 @@
 {
-  "head": "cd9fdbdc5156c9e3e3412c0e92949740999131e9",
+  "head": "7c767b314458caba0242864d0604aa490b25af22",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -13,8 +13,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 131,
-  "reachableNativeModules": 91,
+  "nativeModules": 132,
+  "reachableNativeModules": 94,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
@@ -22,8 +22,6 @@
     "bot/src/v2/discord-roll-notices.js",
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
-    "bot/src/v2/npc-decision-planner.js",
-    "bot/src/v2/npc-private-context.js",
     "bot/src/v2/private-hook-store.js",
     "bot/src/v2/private-planning-repository.js",
     "bot/src/v2/relationship-import.js",
@@ -2364,11 +2362,11 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "cc45c89cc2102470fbd1c4bf58436277c40111fb0c21d91d875118429b021802",
+      "sha256": "17a3281d8150f33314f66e2dbb814285d9be003356c0452b981f8e5d8d5a823a",
       "reachable": true,
       "exports": [
         {
-          "line": 34,
+          "line": 36,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
@@ -2570,6 +2568,20 @@
           "specifier": "./knowledge-store.js",
           "target": "bot/src/v2/knowledge-store.js",
           "status": "resolved"
+        },
+        {
+          "line": 29,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-private-context.js",
+          "target": "bot/src/v2/npc-private-context.js",
+          "status": "resolved"
+        },
+        {
+          "line": 30,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-planning-service.js",
+          "target": "bot/src/v2/npc-planning-service.js",
+          "status": "resolved"
         }
       ],
       "functions": 34,
@@ -2727,11 +2739,11 @@
     },
     {
       "file": "bot/src/v2/npc-decision-planner.js",
-      "sha256": "bf84ec391edb8d36223167d84c132e27b0b5582cf0725d2cd04da21ffc211230",
-      "reachable": false,
+      "sha256": "f03d47a8b73a8dd3334a44fdf30bf653e0ea9d5471aa44b710a72db729b7e4b8",
+      "reachable": true,
       "exports": [
         {
-          "line": 14,
+          "line": 15,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNpcDecisionPlanner({contextAuthority,provider}){\n if(typeof contextAuthority?.inspect!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof provider?.generate!=='function')throw new TypeError('Native NPC decision context and provider required');\n const "
@@ -2757,9 +2769,33 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/npc-planning-service.js",
+      "sha256": "8258eb47678f0328218293d0a7445a4e171dfe6561f4b53e8ad73c1a19d9a165",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNpcPlanningService({intake,sourceAuthority,contextAuthority,provider,store,allowedGuildIds=null}){\n if(typeof intake?.ingest!=='function'||typeof sourceAuthority?.authenticate!=='function'||['issue','inspect','dependencyManifest'].some(k=>typeof contextAuthority?.[k]!=='functio"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-decision-planner.js",
+          "target": "bot/src/v2/npc-decision-planner.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 15,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/npc-private-context.js",
       "sha256": "3a2c86de2e359285221758b5f1b1844a9bd0881a3bc189b695e9aede4a98cd4d",
-      "reachable": false,
+      "reachable": true,
       "exports": [
         {
           "line": 10,
