@@ -1,0 +1,49 @@
+{
+  "scope": "Static source identity with BOM/CRLF normalized function hashes; no legacy runtime or fixture execution. Native narrative helper preserves normalization/128KiB behavior with separate fresh tests; body formatting differs.",
+  "sources": [
+    {
+      "hook": {
+        "commit": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+        "path": "bot/src/frameworks/narrative/gm-hook-import.js",
+        "wholeFileSha256": "14fbf825b4c2d40e8ffcb5159fd1da27849d27076bc747520cd5645aa33808d9",
+        "name": "normalizeGmHookImport",
+        "line": 5,
+        "endLine": 32,
+        "bodySha256": "4d80b9890a6f4a047bf68d65503bb4473200aa7793918d4df72f5157ecec9534"
+      },
+      "narrative": {
+        "commit": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+        "path": "bot/src/frameworks/character/narrative-text.js",
+        "wholeFileSha256": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8",
+        "name": "normalizeNarrativeMarkdown",
+        "line": 3,
+        "endLine": 8,
+        "bodySha256": "b9f0cc96cb4e42621d03fec3bd6f60f2ed36d239441fc62db2d5800df297becc"
+      }
+    },
+    {
+      "hook": {
+        "commit": "15a8f44671f227c6bec69bf30744e03c5692809b",
+        "path": "bot/src/frameworks/narrative/gm-hook-import.js",
+        "wholeFileSha256": "14fbf825b4c2d40e8ffcb5159fd1da27849d27076bc747520cd5645aa33808d9",
+        "name": "normalizeGmHookImport",
+        "line": 5,
+        "endLine": 32,
+        "bodySha256": "4d80b9890a6f4a047bf68d65503bb4473200aa7793918d4df72f5157ecec9534"
+      },
+      "narrative": {
+        "commit": "15a8f44671f227c6bec69bf30744e03c5692809b",
+        "path": "bot/src/frameworks/character/narrative-text.js",
+        "wholeFileSha256": "9fed4b8713e360e7883f01d0a9bcae5ca00f3e00fd9e12d5e498d0e0373e0ca8",
+        "name": "normalizeNarrativeMarkdown",
+        "line": 3,
+        "endLine": 8,
+        "bodySha256": "b9f0cc96cb4e42621d03fec3bd6f60f2ed36d239441fc62db2d5800df297becc"
+      }
+    }
+  ],
+  "hookUnchanged": true,
+  "narrativeUnchanged": true,
+  "nativeHookBodySha256": "4d80b9890a6f4a047bf68d65503bb4473200aa7793918d4df72f5157ecec9534",
+  "nativeHookExact": true
+}

@@ -1,5 +1,5 @@
 {
-  "head": "fc679143b53b9e2c31797af89fec72062373db30",
+  "head": "12320bba777c70fcc756f81c81d79375e14c12e6",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -13,13 +13,14 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 133,
-  "reachableNativeModules": 95,
+  "nativeModules": 135,
+  "reachableNativeModules": 96,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
     "bot/src/v2/discord-owner-roll-choices.js",
     "bot/src/v2/discord-roll-notices.js",
+    "bot/src/v2/gm-hook-attachment-reader.js",
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
     "bot/src/v2/private-hook-store.js",
@@ -1158,11 +1159,11 @@
     },
     {
       "file": "bot/src/v2/discord-gm-authority.js",
-      "sha256": "06484668e9e868c897580a821edfd6062aa375bb457ee16a2b2bd271a2e5ac1a",
+      "sha256": "324e2f10468e10d96aee92f853e86bcc446a067f203f62a26520502c94b078c8",
       "reachable": true,
       "exports": [
         {
-          "line": 12,
+          "line": 13,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now(),leaseMs=15000}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.guilds?.fetch!=='function'||typeof readPolicy!=='function'||!Number.isSafeInteger(leaseMs)||leaseMs<1||leaseMs>30000"
@@ -1195,6 +1196,13 @@
           "kind": "ImportDeclaration",
           "specifier": "./discord-gm-input.js",
           "target": "bot/src/v2/discord-gm-input.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./gm-hook-import-input.js",
+          "target": "bot/src/v2/gm-hook-import-input.js",
           "status": "resolved"
         }
       ],
@@ -1731,6 +1739,66 @@
         }
       ],
       "functions": 20,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/gm-hook-attachment-reader.js",
+      "sha256": "8d4f93c086d0ecc8b145f5996fff1b46a8b50257144098649636c008296b1f54",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function normalizeGmNarrative(text){const out=String(text??'').replace(/^\\uFEFF/,'').replace(/\\r\\n?/g,'\\n').trimEnd()+'\\n';if(!out.trim())throw new Error('Narrative Markdown cannot be empty.');if(Buffer.byteLength(out,'utf8')>128*1024)throw new Error('Narrative Markdown is too large; maximum "
+        },
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createGmHookAttachmentReader({gmAuthority,fetchImpl=fetch,timeoutMs=10000}){\n if(['authorize','check','refresh','readDeclaration'].some(k=>typeof gmAuthority?.[k]!=='function')||typeof fetchImpl!=='function'||!Number.isSafeInteger(timeoutMs)||timeoutMs<1||timeoutMs>15000)throw new Ty"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./gm-hook-import-input.js",
+          "target": "bot/src/v2/gm-hook-import-input.js",
+          "status": "resolved"
+        },
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./gm-hook-package.js",
+          "target": "bot/src/v2/gm-hook-package.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 8,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/gm-hook-import-input.js",
+      "sha256": "1e1a15bd3d6aa9474824e8a521bd8ef43ddd140d2478f862e25575fd94eaa4c5",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 5,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function gmHookImportInput(e){\n if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-character'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='character')||e.options.getSubcommand()!=='import-gm-hooks')return null;\n function attachment(value,extension,maximum){\n  if(!valu"
+        }
+      ],
+      "imports": [],
+      "functions": 3,
       "sqlStatements": 0
     },
     {

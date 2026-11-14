@@ -1,0 +1,15 @@
+# R6 — authorized GM hook attachment preparation
+
+Completed preparation slice, 2026-11-14. R6 and all other major phases remain incomplete.
+
+New `gm-hook-import-input.js` binds the existing `/vc-character import-gm-hooks` and compatibility route to its optional character override, JSON attachment and optional private Markdown. `discord-gm-authority.js` recognizes that exact operation using the existing observed-human/fresh campaign policy, member, role and channel authority. Attachment URLs must be HTTPS Discord CDN/media URLs with matching command channel and attachment IDs; redirects, credentials and unrelated hosts are rejected.
+
+New `gm-hook-attachment-reader.js` authorizes before any CDN read, checks the declaration during download, refreshes GM authority between files and before returning, bounds streamed bytes to declared sizes and a2MB combined limit, and rejects truncation, overflow, malformed JSON and invalid UTF8. Markdown keeps the original BOM/newline normalization and128KiB limit. Prepared values are immutable and always private, with content hashes and no execution, disclosure or canon authority. Returned JSON remains the validated raw package, avoiding double-normalization of legacy unkeyed hooks during future native commit.
+
+252 distinct checks across26 affected files pass: six fresh attachment cases (999.5413ms) and246 dependent checks (53069.7953ms, concurrency4). Tests use real GM authority logic with simulated SDK/CDN responses. They cover pre-download authorization, role/declaration revocation, host/channel/ID/redirect restrictions, streamed byte limits, invalid content, private narrative normalization and raw-package preservation. No live Discord/CDN/model calls or writes occurred.
+
+PIN_EVIDENCE independently hashes original hook and narrative normalization functions at mandatory pin1ba6c7e15db1a66ba34b36336f31437beffe44d6 and upstream15a8f44671f227c6bec69bf30744e03c5692809b. Both are unchanged; the previously ported native hook normalizer matches exactly after BOM/CRLF normalization. The new narrative helper preserves the original behavior through fresh vectors; formatting differs. No legacy runtime or fixtures were executed.
+
+Static graph:135 native modules,96 reachable,39 uncomposed,eight legacy imports,zero missing imports and four generic AI capabilities. The reader remains uncomposed in the command router; this slice does not claim that the import command commits data. The caller must privately defer before invoking the reader and separately validate/commit the selected campaign character and private store.
+
+Next R6: compose transactional private hook/relationship/narrative persistence, pending canon suggestions, durable interaction replay/recovery and GM export inclusion. Introduce the dedicated private store only through explicit native initialization/reviewed migration, including snapshot/restore coverage. Keep sheet/rules import and canon approval separate. No schema migration, legacy removal, major-phase push or production action occurred. Rollback removes the new declaration/preparation path; no campaign data was changed.

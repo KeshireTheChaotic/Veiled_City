@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {ChannelType,PermissionFlagsBits as P} from 'discord.js';
 import {SESSION_ASSEMBLIES} from './session-occasions.js';
 import {gmCommandInput} from './discord-gm-input.js';
+import {gmHookImportInput} from './gm-hook-import-input.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 const assemblies=new Set(SESSION_ASSEMBLIES);
@@ -23,6 +24,7 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
     if((e.commandName==='vc-character'||e.commandName==='vc'&&group==='character')&&sub==='export-gm'){
       const character=e.options.getString('character',true),format=e.options.getString('format')??'all';if(!id(character)||!['json','markdown','docx','all'].includes(format))throw new Error('Exact GM character export selection required');const payload={character,format};return {operation:'gm_character_export',targetRef:`character-export:${hash(payload)}`,snapshotHash:hash(payload),payload};
     }
+    const hookImport=gmHookImportInput(e);if(hookImport)return {operation:'gm_hook_import',targetRef:'gm-hook-import:'+hash(hookImport),snapshotHash:hash(hookImport),payload:hookImport};
     const input=gmCommandInput(e);if(input){
 
       if(input?.op==='draft-publish'&&Object.keys(input).sort().join(',')==='fingerprint,op,source'&&id(input.source)&&/^[a-f0-9]{64}$/.test(input.fingerprint))return {operation:'draft_publish',targetRef:input.source,snapshotHash:hash(input)};

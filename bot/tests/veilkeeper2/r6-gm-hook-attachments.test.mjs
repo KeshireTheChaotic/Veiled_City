@@ -1,0 +1,31 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {EventEmitter} from 'node:events';import {createHash} from 'node:crypto';
+import {ChannelType,PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';import {createDiscordGmAuthority} from '../../src/v2/discord-gm-authority.js';import {createGmHookAttachmentReader,normalizeGmNarrative} from '../../src/v2/gm-hook-attachment-reader.js';import {normalizeGmHookImport} from '../../src/v2/gm-hook-package.js';
+function fixture(t,{packet={character_name:'Mira',hooks:[{title:'A debt',premise:'A private optional seed.'}],canon_suggestions:[{key:'mira.claim',value:'Unreviewed idea'}]},markdown=null,observed=true}={}){
+ const client=new EventEmitter(),body=Buffer.from(JSON.stringify(packet)),md=markdown===null?null:Buffer.from(markdown),member={id:'22222',guild:{id:'11111'},user:{id:'22222',bot:false},roles:{cache:new Map([['role',{}]])},permissions:new PermissionsBitField(0n)},channel={id:'33333',guildId:'11111',type:ChannelType.GuildText,permissionsFor:()=>new PermissionsBitField(P.ViewChannel|P.SendMessages)};let reads=0,memberHook=null,revision='1';
+ const guild={id:'11111',members:{fetch:async()=>{reads++;memberHook?.(reads);return member;}},roles:{fetch:async()=>new Map([['role',{}]])},channels:{fetch:async()=>channel}};client.guilds={fetch:async()=>guild};
+ const file={id:'44444',name:'GM_HOOKS_Mira.json',size:body.length,url:'https://cdn.discordapp.com/attachments/33333/44444/GM_HOOKS_Mira.json'},narrative=md?{id:'44445',name:'Mira.md',size:md.length,url:'https://cdn.discordapp.com/attachments/33333/44445/Mira.md'}:null;
+ const event={id:'55555',client,guildId:'11111',channelId:'33333',user:{id:'22222',bot:false},createdTimestamp:Date.now(),commandName:'vc-character',isChatInputCommand:()=>true,options:{getSubcommand:()=> 'import-gm-hooks',getString:()=>null,getAttachment:k=>k==='file'?file:narrative}},authority=createDiscordGmAuthority({client,readPolicy:()=>({campaignId:'11111',revision,gmRoleId:'role',gmUserIds:[],allowAdministrators:false})});if(observed)client.emit('interactionCreate',event);t.after(()=>authority.close());
+ return {event,file,narrative,body,md,member,authority,get reads(){return reads;},memberHook(fn){memberHook=fn;},revokePolicy(){revision='2';},reader(fetchImpl){return createGmHookAttachmentReader({gmAuthority:authority,fetchImpl});}};
+}
+test('observed current GM prepares exact private JSON and optional Markdown with hashes, never canon or character authority',async t=>{
+ const f=fixture(t,{markdown:'\uFEFF# Hidden\r\nPrivate seed.  \r\n'}),calls=[];const result=await f.reader(async(url,options)=>{calls.push({url,...options});return new Response(url.includes('/44445/')?f.md:f.body);}).read(f.event);
+ assert.equal(result.character,'Mira');assert.equal(result.visibility,'gm_private');assert.equal(result.narrative,'# Hidden\nPrivate seed.\n');assert.equal(result.packet.canon_suggestions[0].value,'Unreviewed idea');assert.equal(result.attachments[0].sha256,createHash('sha256').update(f.body).digest('hex'));assert.equal(result.executionAuthority,false);assert.equal(result.publicationAuthority,false);assert.equal(result.canonAuthority,false);assert.equal(f.reads,3);assert.ok(calls.every(c=>c.redirect==='error'&&c.method==='GET'));assert.ok(Object.isFrozen(result.packet));result.check();f.revokePolicy();assert.throws(result.check,/policy|revoked/);
+});
+test('unobserved events and missing current GM membership cannot cause a CDN read',async t=>{
+ for(const mode of ['unobserved','not-gm']){const f=fixture(t,{observed:mode!=='unobserved'});if(mode==='not-gm')f.member.roles.cache.clear();let fetches=0;await assert.rejects(f.reader(async()=>{fetches++;return new Response(f.body);}).read(f.event));assert.equal(fetches,0);}
+});
+test('metadata substitution or revoked role during download suppresses prepared output',async t=>{
+ for(const mode of ['metadata','role']){const f=fixture(t);if(mode==='role')f.memberHook(n=>{if(n===2)f.member.roles.cache.clear();});await assert.rejects(f.reader(async()=>{if(mode==='metadata')f.file.name='Different.json';return new Response(f.body);}).read(f.event));}
+});
+test('foreign URLs, mismatched channel/attachment IDs, credentials and redirects are held',async t=>{
+ for(const url of ['http://cdn.discordapp.com/attachments/33333/44444/a.json','https://localhost/attachments/33333/44444/a.json','https://cdn.discordapp.com/attachments/99999/44444/a.json','https://cdn.discordapp.com/attachments/33333/99999/a.json','https://u:p@cdn.discordapp.com/attachments/33333/44444/a.json']){const f=fixture(t);f.file.url=url;let fetches=0;await assert.rejects(f.reader(async()=>{fetches++;return new Response(f.body);}).read(f.event));assert.equal(fetches,0);}
+ const f=fixture(t);await assert.rejects(f.reader(async()=>{const response=new Response(f.body);Object.defineProperty(response,'redirected',{value:true});return response;}).read(f.event),/exact GM attachment/);
+});
+test('declared limits, streamed overflow/truncation, invalid UTF8 and malformed JSON do not produce an import',async t=>{
+ for(const mode of ['metadata','overflow','short','utf8','json']){const f=fixture(t);if(mode==='metadata')f.file.size=2_000_001;let data=mode==='overflow'?Buffer.concat([f.body,Buffer.from('x')]):mode==='short'?f.body.subarray(0,f.body.length-1):mode==='utf8'?Buffer.from([0xff]):mode==='json'?Buffer.from('{'):f.body;if(['utf8','json'].includes(mode))f.file.size=data.length;await assert.rejects(f.reader(async()=>new Response(data)).read(f.event));}
+ assert.throws(()=>normalizeGmNarrative('   '),/empty/);assert.throws(()=>normalizeGmNarrative('x'.repeat(128*1024)),/128 KiB/);
+});
+test('validated raw unkeyed imports are not double-normalized, and unsupported schemas/missing names hold',async t=>{
+ const f=fixture(t,{packet:{character_name:'Mira',imported_gm_hooks:[{premise:'Unkeyed private seed'}]}}),result=await f.reader(async()=>new Response(f.body)).read(f.event);assert.equal(result.packet.hooks,undefined);assert.equal(normalizeGmHookImport(result.packet).hooks.length,1);
+ for(const packet of [{character_name:'Mira',schema:'unsupported',hooks:[{premise:'x'}]},{hooks:[{premise:'x'}]}]){const invalid=fixture(t,{packet});await assert.rejects(invalid.reader(async()=>new Response(invalid.body)).read(invalid.event));}
+});
