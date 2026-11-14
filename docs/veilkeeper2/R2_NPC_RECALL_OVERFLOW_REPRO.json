@@ -1,0 +1,32 @@
+{
+  "scope": "Actual isolated native root/SQLite; synthetic provider/Discord; reproduce long-history NPC planning failure, not acceptance.",
+  "knownRecords": 70,
+  "modelCalls": 0,
+  "liveDiscordCalls": 0,
+  "status": "planning_failed_before_inference",
+  "error": "NPC private context requires native curation",
+  "elapsedMs": 1.8423999999999978,
+  "retainedRecordCount": 0,
+  "sdkSends": 0,
+  "hope": 3,
+  "acceptancePassed": false,
+  "sourceCommit": "a7d912271929677db4425bcb3bee826dd87cdf42",
+  "sourceHashes": [
+    {
+      "path": "bot/src/v2/knowledge-store.js",
+      "sha256": "e869a883af9392751f627a9f466dfb563990c4eddf6efad27d4ff8237805a965"
+    },
+    {
+      "path": "bot/src/v2/scene-opening-director.js",
+      "sha256": "62ab86c0cb9f5bf019b11f4ae514832beaab67a62f464e76a024852a8d5963be"
+    },
+    {
+      "path": "bot/src/v2/npc-private-context.js",
+      "sha256": "bd951d250d3fbcc9fdea73760ea5d4f339d5b7f325bb26c31375573a7e503b42"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/helpers/native-cost-root-fixture.mjs",
+      "sha256": "033e32e1ae27294d28abee5f4ac838e00a8639700ee4fb7ef661054ce71cc8ea"
+    }
+  ]
+}
