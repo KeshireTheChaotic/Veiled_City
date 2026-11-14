@@ -1,0 +1,13 @@
+# R3/R7 — read-only legacy encounter sources
+
+Implementation slice complete; R3 readiness, R7 populated migration and all major phase gates remain incomplete.
+
+Added campaign-scoped session, active-session-pointer, encounter, current-encounter and complete bounded combatant readers to legacy-readonly-repository.js. Active encounters precede planned ones. Duplicate active encounters, tied newest plans, cross-indexed/orphaned rows, missing/malformed JSON and more than256 combatants hold for reconciliation rather than supplying healthy defaults or truncated rosters. Removed combatants remain available through an explicit native option. Raw notes and mechanics are native validation input, never an audience inference projection or a target/readiness grant.
+
+Seven fresh SQLite checks passed (709.1777ms): campaign and active-pointer scope, materialized row shapes, removed/missing records, unchanged main-file hash, ambiguity, malformed data, wrong indexes, overflow and coherent encounter/combatant reads across an actual external WAL write. The fourteen remaining changed-import dependent files passed129/129 checks in43019.0876ms with concurrency4, Node v26.13.0. The five already-passing provider checks were not repeated; the combined selection totals141 distinct checks across16 files. This is native/SQLite and simulated SDK validation, not live Discord or complete parity.
+
+Original database methods were independently located and hashed at mandatory pin1ba6c7e15db1a66ba34b36336f31437beffe44d6 and current upstream15a8f44671f227c6bec69bf30744e03c5692809b. All five methods are unchanged; exact line references and hashes are in PIN_EVIDENCE. Deliberate reconciliation holds differ from legacy fallback JSON defaults and are migration limitations, not claims of equivalent behavior for corrupt/nullable old rows.
+
+Files: legacy-readonly-repository.js, r3-legacy-encounter-readers.test.mjs and accompanying selected-path/hash/pin evidence. No table was created in an existing campaign, no old migration/runtime/test was executed or retired, and no production database was opened. Rollback removes unused read methods without altering gameplay. The existing SQLite validation snapshot composes the new methods without a second connection or nested transaction.
+
+Next: validate source-bound scene/session correspondence, actual adversary binding/template/control and entitled target identity before deriving feature action terms. Descriptive scene occupancy is not authoritative range evidence. These readers do not prove range, feature usage, owner confirmation, house-rule eligibility or current execution readiness; do not enable rolls from this slice alone. Full R0–R8 work remains active.

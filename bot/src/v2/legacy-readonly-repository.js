@@ -10,9 +10,39 @@ export function openLegacyReadOnlyRepository(filename){
   const parse=row=>row?{...row,data:JSON.parse(row.character_json)}:null;
   let inSnapshot=false;
   const required=(...values)=>{if(values.some(v=>typeof v!=='string'||!v))throw new TypeError('Native legacy source identity required');};
+  function encounter(row){
+    if(!row)return null;
+    if(!db.prepare('SELECT 1 FROM sessions WHERE guild_id=? AND id=?').get(row.guild_id,row.session_id))throw new Error('Legacy encounter session scope requires reconciliation');
+    const value={...row,composition:JSON.parse(row.composition_json),adjustments:JSON.parse(row.adjustment_json),combat_state:JSON.parse(row.combat_state_json),pc_start_state:JSON.parse(row.pc_start_state_json)};
+    if(![value.composition,value.adjustments,value.pc_start_state].every(Array.isArray)||!value.combat_state||typeof value.combat_state!=='object'||Array.isArray(value.combat_state))throw new Error('Explicit legacy encounter JSON requires reconciliation');
+    return value;
+  }
   return Object.freeze({
     getCharacter:id=>parse(character.get(id)),
     getCampaign:guildId=>campaign.get(guildId)??null,
+    getSession(guildId,sessionId){
+      required(guildId,sessionId);return db.prepare('SELECT * FROM sessions WHERE guild_id=? AND id=?').get(guildId,sessionId)??null;
+    },
+    getActiveSession(guildId){
+      required(guildId);return db.prepare("SELECT s.* FROM sessions s JOIN campaigns c ON c.active_session_id=s.id WHERE c.guild_id=? AND s.guild_id=? AND s.status='active'").get(guildId,guildId)??null;
+    },
+    getEncounter(guildId,encounterId){
+      required(guildId,encounterId);return encounter(db.prepare('SELECT * FROM encounters WHERE guild_id=? AND id=?').get(guildId,encounterId));
+    },
+    getCurrentEncounter(guildId,sessionId){
+      required(guildId,sessionId);
+      const rows=db.prepare("SELECT * FROM encounters WHERE guild_id=? AND session_id=? AND status IN ('active','planned') ORDER BY CASE status WHEN 'active' THEN 0 ELSE 1 END,encounter_number DESC LIMIT 2").all(guildId,sessionId);
+      if(rows.length===2&&(rows.every(row=>row.status==='active')||rows.every(row=>row.status==='planned')&&rows[0].encounter_number===rows[1].encounter_number))throw new Error('Ambiguous active/planned legacy encounters require reconciliation');
+      return encounter(rows[0]);
+    },
+    listCombatants(guildId,encounterId,{includeRemoved=false}={}){
+      required(guildId,encounterId);if(typeof includeRemoved!=='boolean')throw new TypeError('Explicit native combatant status filter required');
+      const owner=db.prepare('SELECT session_id FROM encounters WHERE guild_id=? AND id=?').get(guildId,encounterId);if(!owner)return [];
+      if(!db.prepare('SELECT 1 FROM sessions WHERE guild_id=? AND id=?').get(guildId,owner.session_id)||db.prepare('SELECT 1 FROM encounter_combatants WHERE encounter_id=? AND guild_id<>? LIMIT 1').get(encounterId,guildId))throw new Error('Legacy combatant campaign/session scope requires reconciliation');
+      const rows=db.prepare(`SELECT * FROM encounter_combatants WHERE guild_id=? AND encounter_id=?${includeRemoved?'':" AND status!='removed'"} ORDER BY base_name,instance_index,id LIMIT 257`).all(guildId,encounterId);
+      if(rows.length>256||rows.some(row=>row.session_id!==owner.session_id))throw new Error('Complete legacy combatant window requires reconciliation');
+      return rows.map(row=>{const conditions=JSON.parse(row.conditions_json);if(!Array.isArray(conditions))throw new Error('Explicit legacy combatant conditions required');return {...row,conditions};});
+    },
     listCharacters(guildId,ownerUserId,{includeClosed=true}={}){
       const sql=`SELECT * FROM characters WHERE guild_id=? AND owner_user_id=?${includeClosed?'':" AND status IN ('active','reserve','guest')"} ORDER BY CASE status WHEN 'active' THEN 0 WHEN 'reserve' THEN 1 WHEN 'guest' THEN 2 ELSE 3 END,name`;
       return db.prepare(sql).all(guildId,ownerUserId).map(parse);

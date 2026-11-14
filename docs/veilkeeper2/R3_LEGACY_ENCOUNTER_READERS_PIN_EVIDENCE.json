@@ -1,0 +1,78 @@
+{
+  "scope": "Static source identity, not runtime parity or readiness. Native readers deliberately hold malformed/missing JSON and ambiguous/cross-indexed state instead of applying legacy fallback defaults.",
+  "baseline": {
+    "commit": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "file": "bot/src/frameworks/persistence/database.js",
+    "fileHash": "49d75ce6f0dc30998b68846bab7f4ccd81a53eff240d33dbdfe0384bced3b47d",
+    "methods": [
+      {
+        "name": "getSession",
+        "line": 877,
+        "endLine": 877,
+        "sha256": "f6c55c5389cf895b74cc22020d75e2da801e1ae0442ae45d30aa3948baebdbbf"
+      },
+      {
+        "name": "getActiveSession",
+        "line": 879,
+        "endLine": 884,
+        "sha256": "975236a1ad28af47bc4964b1327ceffd3347d3f8e850e3a0bd5f9de778dce313"
+      },
+      {
+        "name": "getEncounter",
+        "line": 1882,
+        "endLine": 1885,
+        "sha256": "e4c707b46afe261a019d699868a85ed2eaf0167829f0794037805b9d15d45a4e"
+      },
+      {
+        "name": "getCurrentEncounter",
+        "line": 1887,
+        "endLine": 1890,
+        "sha256": "2fcb822a52344c56cb9616b39d27622e405b9e9853b7f7932cc008e1a0e1d218"
+      },
+      {
+        "name": "listCombatants",
+        "line": 2016,
+        "endLine": 2019,
+        "sha256": "230ce34bad2f9113a0575a07de6ad1aefd9c5382d327efb4833e24677fb0ba9c"
+      }
+    ]
+  },
+  "current": {
+    "commit": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "file": "bot/src/frameworks/persistence/database.js",
+    "fileHash": "4733d1884ee20f5548a518a15299b077253b3cb952ac70af1388a7d66ee5827f",
+    "methods": [
+      {
+        "name": "getSession",
+        "line": 878,
+        "endLine": 878,
+        "sha256": "f6c55c5389cf895b74cc22020d75e2da801e1ae0442ae45d30aa3948baebdbbf"
+      },
+      {
+        "name": "getActiveSession",
+        "line": 880,
+        "endLine": 885,
+        "sha256": "975236a1ad28af47bc4964b1327ceffd3347d3f8e850e3a0bd5f9de778dce313"
+      },
+      {
+        "name": "getEncounter",
+        "line": 1879,
+        "endLine": 1882,
+        "sha256": "e4c707b46afe261a019d699868a85ed2eaf0167829f0794037805b9d15d45a4e"
+      },
+      {
+        "name": "getCurrentEncounter",
+        "line": 1884,
+        "endLine": 1887,
+        "sha256": "2fcb822a52344c56cb9616b39d27622e405b9e9853b7f7932cc008e1a0e1d218"
+      },
+      {
+        "name": "listCombatants",
+        "line": 2013,
+        "endLine": 2016,
+        "sha256": "230ce34bad2f9113a0575a07de6ad1aefd9c5382d327efb4833e24677fb0ba9c"
+      }
+    ]
+  },
+  "unchanged": true
+}

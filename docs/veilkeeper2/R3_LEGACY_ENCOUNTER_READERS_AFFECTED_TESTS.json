@@ -1,0 +1,18 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r3-committed-gm-decision.test.mjs",
+  "bot/tests/veilkeeper2/r3-condition-clear-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-condition-expiry-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-condition-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-discord-roll-notices.test.mjs",
+  "bot/tests/veilkeeper2/r3-group-feature-history.test.mjs",
+  "bot/tests/veilkeeper2/r3-legacy-condition-source.test.mjs",
+  "bot/tests/veilkeeper2/r3-legacy-encounter-readers.test.mjs",
+  "bot/tests/veilkeeper2/r3-native-spellcast-conditions.test.mjs",
+  "bot/tests/veilkeeper2/r3-owner-roll-choices.test.mjs",
+  "bot/tests/veilkeeper2/r3-roll-identity-store.test.mjs",
+  "bot/tests/veilkeeper2/r3-saved-roll-source.test.mjs",
+  "bot/tests/veilkeeper2/r6-legacy-readonly-repository.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs"
+]
