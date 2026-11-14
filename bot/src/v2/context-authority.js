@@ -68,7 +68,9 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
       for(const [key,value] of metadata)dependencies.set(key,hash(value));
       selected.push({ref,revision:row.revision,kind:row.kind,text:body.text,...(attribution?{authorship:attribution}:{})});
     }
-    const packet=freeze({source_ref:nativeSource.id,scene:nativeSource.scene,utterance:nativeSource.text,
+    // A player's current message is GM input, not evidence that this NPC heard
+    // in-character speech. Actor portrayal receives only known, entitled records.
+    const packet=freeze({source_ref:nativeSource.id,scene:nativeSource.scene,utterance:actorId===null?nativeSource.text:'',
       actor_ref:actorId,human_controlled_actor_refs:[...(nativeSource.actors??[])],portrayal:{kind:actorId===null?'gm':'independent_npc',actor_ref:actorId},records:selected,trace_id:nativeSource.traceId??nativeSource.id});
     const grant=Object.freeze(Object.create(null));
     grants.set(grant,{source:nativeSource,actorId,actorRevision,dependencies,packet});
@@ -93,11 +95,11 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   /** Native durable lineage only: hashes and references, never record bodies or a disclosure grant. */
   function dependencyManifest(grant){
     inspect(grant);const state=grants.get(grant),source=state.source;
-    return freeze({version:1,campaignId:source.campaign,sceneId:source.scene,sourceRef:source.id,sourceRevision:source.revision,recipientIds:[...source.recipients],actorId:state.actorId,actorRevision:state.actorRevision,records:[...state.dependencies].map(([ref,metadataHash])=>({ref,metadataHash}))});
+    return freeze({version:state.actorId===null?1:2,campaignId:source.campaign,sceneId:source.scene,sourceRef:source.id,sourceRevision:source.revision,recipientIds:[...source.recipients],actorId:state.actorId,actorRevision:state.actorRevision,records:[...state.dependencies].map(([ref,metadataHash])=>({ref,metadataHash}))});
   }
   function verifyDependencies(source,manifest){
     const keys=['version','campaignId','sceneId','sourceRef','sourceRevision','recipientIds','actorId','actorRevision','records'];
-    if(!sourceAuthority.revalidate(source)||!manifest||Object.keys(manifest).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(manifest,k))||manifest.version!==1||manifest.campaignId!==source.campaign||manifest.sceneId!==source.scene||manifest.sourceRef!==source.id||manifest.sourceRevision!==source.revision||!list(manifest.recipientIds)||JSON.stringify(manifest.recipientIds)!==JSON.stringify(source.recipients)||manifest.actorId!==null&&!id(manifest.actorId)||!Array.isArray(manifest.records)||manifest.records.length>16384)fail();
+    if(!sourceAuthority.revalidate(source)||!manifest||Object.keys(manifest).some(k=>!keys.includes(k))||keys.some(k=>!Object.hasOwn(manifest,k))||manifest.version!==(manifest.actorId===null?1:2)||manifest.campaignId!==source.campaign||manifest.sceneId!==source.scene||manifest.sourceRef!==source.id||manifest.sourceRevision!==source.revision||!list(manifest.recipientIds)||JSON.stringify(manifest.recipientIds)!==JSON.stringify(source.recipients)||manifest.actorId!==null&&!id(manifest.actorId)||!Array.isArray(manifest.records)||manifest.records.length>16384)fail();
     if(actorProof(source,manifest.actorId)!==manifest.actorRevision)fail();
     const refs=new Set();
     for(const entry of manifest.records){if(!entry||Object.keys(entry).sort().join(',')!=='metadataHash,ref'||!id(entry.ref)||typeof entry.metadataHash!=='string'||!/^[a-f0-9]{64}$/.test(entry.metadataHash)||refs.has(entry.ref))fail();refs.add(entry.ref);}

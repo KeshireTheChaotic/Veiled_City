@@ -31,6 +31,13 @@ test('NPC knowledge intersects audience entitlement, and human proxy portrayal i
   const grant=f.authority.issue(f.source,['known','unknown'],{actorId:'npc'});assert.deepEqual(f.authority.inspect(grant).records.map(r=>r.ref),['known']);
   f.actor.controllerUserId='human';assert.throws(()=>f.authority.inspect(grant),/authority/);assert.throws(()=>f.authority.issue(f.source,['known'],{actorId:'npc'}));
 });
+test('current GM-directed speech is not NPC hearing, including a private thought or OOC secret',()=>{
+ const f=fixture();f.source.text='OOC: My PC secretly suspects the clerk. PRIVATE-CURRENT-CANARY';f.add('heard',{kind:'testimony'});
+ const npc=f.authority.inspect(f.authority.issue(f.source,['heard'],{actorId:'npc'}));assert.equal(npc.utterance,'');assert.equal(JSON.stringify(npc).includes('PRIVATE-CURRENT-CANARY'),false);assert.equal(npc.records[0].kind,'testimony');
+ const gm=f.authority.inspect(f.authority.issue(f.source,[]));assert.equal(gm.utterance,f.source.text);
+ const manifest=f.authority.dependencyManifest(f.authority.issue(f.source,['heard'],{actorId:'npc'}));assert.equal(manifest.version,2);assert.equal(f.authority.verifyDependencies(f.source,manifest),true);assert.throws(()=>f.authority.verifyDependencies(f.source,{...manifest,version:1}));
+ const gmManifest=f.authority.dependencyManifest(f.authority.issue(f.source,[]));assert.equal(gmManifest.version,1);assert.equal(f.authority.verifyDependencies(f.source,gmManifest),true);
+});
 test('revoked source, changed ancestors and changed actor control invalidate issued packets',()=>{
   const f=fixture();f.add('base');f.add('child',{sourceRefs:['base']});const grant=f.authority.issue(f.source,['child']);
   f.rows.get('base').status='retracted';assert.throws(()=>f.authority.inspect(grant));

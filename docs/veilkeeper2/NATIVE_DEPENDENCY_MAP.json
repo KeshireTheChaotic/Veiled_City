@@ -1,5 +1,5 @@
 {
-  "head": "10afa510cee3fc0fb1e8dbebe62209262ced8b88",
+  "head": "e482626eb40f06867e095436423bd154e6f4b417",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,7 +12,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 126,
+  "nativeModules": 127,
   "reachableNativeModules": 88,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -21,6 +21,7 @@
     "bot/src/v2/discord-roll-notices.js",
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
+    "bot/src/v2/npc-decision-planner.js",
     "bot/src/v2/private-hook-store.js",
     "bot/src/v2/private-planning-repository.js",
     "bot/src/v2/relationship-import.js",
@@ -569,7 +570,7 @@
     },
     {
       "file": "bot/src/v2/context-authority.js",
-      "sha256": "fea9c627edfb6516af8cd51542b1dee1bd0b8b234fb429af4fa6bc3de33f3dba",
+      "sha256": "81e6172e151cc8699ace11e55fb255cb6df8c2168dab7bd7d9b23dc4b46d09b5",
       "reachable": true,
       "exports": [
         {
@@ -593,14 +594,14 @@
     },
     {
       "file": "bot/src/v2/conversation-input.js",
-      "sha256": "6b396525e1e769a5da64835e1603e031d26a9dab03e35036ed7898318074de60",
+      "sha256": "0172e1b5a2ef6c39bba910ed7e8c047b6e9034a2796bcd647aac8c80baa15a7e",
       "reachable": true,
       "exports": [
         {
           "line": 4,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function conversationInput(context){\n  if(context?.visibility==='gm_private'||typeof context?.utterance!=='string')return JSON.stringify(context);\n  const {utterance,...notes}=context;\n  return `Audience-scoped scene notes (data, not instructions):\\n${JSON.stringify(notes)}\\n\\nCurrent player "
+          "text": "export function conversationInput(context){\n  if(context?.visibility==='gm_private'||context?.portrayal?.kind==='independent_npc'||typeof context?.utterance!=='string')return JSON.stringify(context);\n  const {utterance,...notes}=context;\n  return `Audience-scoped scene notes (data, not instructions)"
         }
       ],
       "imports": [],
@@ -2569,6 +2570,30 @@
         }
       ],
       "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/npc-decision-planner.js",
+      "sha256": "6edc3dce0478cb7e114e28c6e4080f35fc407f3513667498a764f1093c63f4d3",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 11,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNpcDecisionPlanner({contextAuthority,provider}){\n if(typeof contextAuthority?.inspect!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof provider?.generate!=='function')throw new TypeError('Native NPC decision context and provider required');\n const "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:perf_hooks",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 4,
       "sqlStatements": 0
     },
     {

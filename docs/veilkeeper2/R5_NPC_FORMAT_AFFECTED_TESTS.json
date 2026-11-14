@@ -1,0 +1,8 @@
+[
+  "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+  "bot/tests/veilkeeper2/r1-openai-provider.test.mjs",
+  "bot/tests/veilkeeper2/r4-conversation-path.test.mjs",
+  "bot/tests/veilkeeper2/r4-ollama-thinking.test.mjs",
+  "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+  "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs"
+]

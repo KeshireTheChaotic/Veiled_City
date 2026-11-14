@@ -26,6 +26,8 @@ test('formatting preserves exact untrusted content in user data without fabricat
   assert.equal(JSON.stringify(packet),frozen);assert.equal(conversationInput({records:[]}),'{"records":[]}');
   const privatePlan={visibility:'gm_private',utterance:'Plan privately',records:[{text:'PRIVATE-PLAN'}]};
   assert.equal(conversationInput(privatePlan),JSON.stringify(privatePlan));
+  const actorPlan={utterance:'',portrayal:{kind:'independent_npc',actor_ref:'clerk'},records:[{text:'Actor-known testimony'}]};
+  assert.equal(conversationInput(actorPlan),JSON.stringify(actorPlan));assert.equal(conversationInput(actorPlan).includes('Respond as the GM'),false);
 });
 
 test('source revocation still rejects a fluent conversation draft',async()=>{
