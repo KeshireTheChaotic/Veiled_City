@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "sha256": "d0008c046c3e922d0842b9c075ebf75626c03ffc5c70be80b6e45d65207b2c47",
+      "path": "bot/src/v2/private-hook-store.js"
+    },
+    {
+      "sha256": "cb7d598c224b5ea5d818796fab35494e2e0a21d67fdcac89acd06a151d6764be",
+      "path": "bot/src/v2/character-package-service.js"
+    },
+    {
+      "sha256": "e478f897716bff0cc4d99bc049251c1e7d08fca117a17824f5b6d90fc4bb0f5b",
+      "path": "bot/tests/veilkeeper2/r6-private-narrative-import.test.mjs"
+    },
+    {
+      "sha256": "ad1a681b8e63bf73b3dcd1ede57362929bb64c781de2a084d3a44f1a51cc3a57",
+      "path": "bot/tests/veilkeeper2/r2-private-hooks.test.mjs"
+    },
+    {
+      "sha256": "379897479dcf56590cbff8e7272a1bd3f74151ea0ededaa1d13368f73988f0e4",
+      "path": "bot/tests/veilkeeper2/r2-character-packages.test.mjs"
+    },
+    {
+      "sha256": "cf209c1ba16a2e0e75592ef170b8b7c3f9bb2b33bfab8f35d5c22a3ebea24204",
+      "path": "bot/tests/veilkeeper2/r2-canon-review.test.mjs"
+    },
+    {
+      "sha256": "7010c212c84f7db66b62f3c79005d4bc5d77f4afc09134445d572df64fa00fe0",
+      "path": "bot/tests/veilkeeper2/r2-planning-repository.test.mjs"
+    },
+    {
+      "sha256": "99594cdef17fdaa78b2c87065cdf34d1c7d4a97a4caaba247921edcceb511358",
+      "path": "bot/tests/veilkeeper2/r2-relationship-import.test.mjs"
+    }
+  ],
+  "scope": "Atomic private narrative persistence; actual SQLite, no Discord or inference",
+  "focused": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 350.1159,
+    "tests": 5
+  },
+  "affected": {
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 139.4636,
+    "tests": 29
+  }
+}

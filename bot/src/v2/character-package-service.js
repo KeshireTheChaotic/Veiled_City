@@ -54,12 +54,12 @@ export function createCharacterPackageService({authenticate,readCharacter,readRe
       executionAuthority:false,publicationAuthority:false,canonAuthority:false};
     result.id=`character-import:${hash(result)}`;access.check();return result;
   }
-  function importHooks(event,{characterId,payload}){
+  function importHooks(event,{characterId,payload,narrative=null}){
     if(typeof hookStore?.commitImport!=='function')throw new Error('Private hook storage not installed');
     const access=authorize(event,characterId,'hooks','import');
     const prepared=prepareImport(event,{characterId,scope:'hooks',payload});
     const relationships=prepareImportedRelationships(prepared,access.character,resolveRelationshipTarget);
-    return hookStore.commitImport(prepared,{relationships:relationships.rows,relationshipHolds:relationships.holds,check(){access.check();relationships.check();}});
+    return hookStore.commitImport(prepared,{relationships:relationships.rows,relationshipHolds:relationships.holds,narrative,check(){access.check();relationships.check();}});
   }
   function reviewCanon(event,input){
     if(!input||Object.keys(input).some(k=>!['characterId','proposalId','resolution','visibility','expectedRevision','replaceExisting','customValue','note'].includes(k)))throw new Error('Closed canon review request required');

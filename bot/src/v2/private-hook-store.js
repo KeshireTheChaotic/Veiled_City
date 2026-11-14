@@ -8,8 +8,9 @@ const key=(h,i)=>String(h.key||h.title||`imported-${i}`).trim().toLowerCase().re
 export function openPrivateHookStore(filename=':memory:'){
   const db=new DatabaseSync(filename);
   try{
-    const allowed=['vk2_hook_imports','vk2_hook_history','vk2_hook_heads','vk2_hook_canon','vk2_canon_history','vk2_canon_heads','vk2_canon_reviews','vk2_relationship_history','vk2_relationship_heads'];
-    if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().some(r=>!allowed.includes(r.name)))throw new Error('Dedicated private hook database required');
+    const allowed=['vk2_hook_imports','vk2_hook_history','vk2_hook_heads','vk2_hook_canon','vk2_canon_history','vk2_canon_heads','vk2_canon_reviews','vk2_relationship_history','vk2_relationship_heads','vk2_private_narratives'],tables=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all();
+    if(tables.some(r=>!allowed.includes(r.name)))throw new Error('Dedicated private hook database required');
+    if(tables.length&&allowed.some(name=>!tables.some(t=>t.name===name)))throw new Error('Private hook schema requires reviewed migration; existing data was not changed');
     db.exec(`PRAGMA busy_timeout=5000;
       CREATE TABLE IF NOT EXISTS vk2_hook_imports(campaign TEXT,source TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,source));
       CREATE TABLE IF NOT EXISTS vk2_hook_history(campaign TEXT,character TEXT,key TEXT,revision INTEGER,data TEXT NOT NULL,PRIMARY KEY(campaign,character,key,revision));
@@ -19,12 +20,14 @@ export function openPrivateHookStore(filename=':memory:'){
       CREATE TABLE IF NOT EXISTS vk2_canon_heads(campaign TEXT,key TEXT,revision INTEGER,PRIMARY KEY(campaign,key));
       CREATE TABLE IF NOT EXISTS vk2_canon_reviews(campaign TEXT,source TEXT,data TEXT NOT NULL,PRIMARY KEY(campaign,source));
       CREATE TABLE IF NOT EXISTS vk2_relationship_history(campaign TEXT,id TEXT,revision INTEGER,data TEXT NOT NULL,PRIMARY KEY(campaign,id,revision));
-      CREATE TABLE IF NOT EXISTS vk2_relationship_heads(campaign TEXT,id TEXT,revision INTEGER,PRIMARY KEY(campaign,id));`);
+      CREATE TABLE IF NOT EXISTS vk2_relationship_heads(campaign TEXT,id TEXT,revision INTEGER,PRIMARY KEY(campaign,id));
+      CREATE TABLE IF NOT EXISTS vk2_private_narratives(campaign TEXT,character TEXT,revision INTEGER,data TEXT NOT NULL,PRIMARY KEY(campaign,character,revision));`);
   }catch(error){db.close();throw error;}
-  function commitImport(prepared,{check,relationships=[],relationshipHolds=[]}){
+  function commitImport(prepared,{check,relationships=[],relationshipHolds=[],narrative=null}){
     if(typeof check!=='function'||prepared.scope!=='hooks'||prepared.visibility!=='gm'||prepared.status!=='awaiting_native_validation'
       ||prepared.executionAuthority!==false||prepared.publicationAuthority!==false||prepared.canonAuthority!==false)throw new Error('Native private import preparation required');
-    const input=JSON.parse(JSON.stringify(prepared)),edges=JSON.parse(JSON.stringify(relationships)),holds=JSON.parse(JSON.stringify(relationshipHolds)),fingerprint=hash(input),{campaignId:campaign,characterId:character,sourceRef:source}=input;
+    if(narrative!==null&&(!narrative||Object.keys(narrative).sort().join(',')!=='attachmentId,sha256,sourceFilename,text'||typeof narrative.text!=='string'||!narrative.text.trim()||Buffer.byteLength(narrative.text,'utf8')>128*1024||typeof narrative.sourceFilename!=='string'||!narrative.sourceFilename.toLowerCase().endsWith('.md')||narrative.sourceFilename.length>256||typeof narrative.attachmentId!=='string'||!narrative.attachmentId||typeof narrative.sha256!=='string'||!/^[a-f0-9]{64}$/.test(narrative.sha256)))throw new Error('Bounded source-bound GM private narrative required');
+    const input=JSON.parse(JSON.stringify(prepared)),edges=JSON.parse(JSON.stringify(relationships)),holds=JSON.parse(JSON.stringify(relationshipHolds)),document=narrative===null?null:structuredClone(narrative),fingerprint=hash(document===null?input:{prepared:input,narrative:document}),{campaignId:campaign,characterId:character,sourceRef:source}=input;
     if(![campaign,character,source,input.importedBy,input.sourceRevision].every(v=>typeof v==='string'&&v.length>0))throw new Error('Native import provenance required');
     db.exec('BEGIN IMMEDIATE');
     try{
@@ -64,7 +67,9 @@ export function openPrivateHookStore(filename=':memory:'){
         db.prepare('INSERT INTO vk2_relationship_history VALUES(?,?,?,?)').run(campaign,edgeId,revision,JSON.stringify({...edge,id:edgeId,guild_id:campaign,revision}));
         db.prepare('INSERT INTO vk2_relationship_heads VALUES(?,?,?) ON CONFLICT(campaign,id) DO UPDATE SET revision=excluded.revision').run(campaign,edgeId,revision);
       }
-      const receipt={id:input.id,campaignId:campaign,characterId:character,sourceRef:source,fingerprint,status:'imported_private',hooks:hooks.length,canonSuggestions:proposals,
+      let narrativeRevision=null;
+      if(document){const previous=readNarrative(campaign,character);narrativeRevision=(previous?.revision??0)+1;const row={...document,campaignId:campaign,characterId:character,revision:narrativeRevision,visibility:'gm',sourceRef:source,sourceRevision:input.sourceRevision,importedBy:input.importedBy,executionAuthority:false,publicationAuthority:false,canonAuthority:false};db.prepare('INSERT INTO vk2_private_narratives VALUES(?,?,?,?)').run(campaign,character,narrativeRevision,JSON.stringify(row));}
+      const receipt={id:input.id,campaignId:campaign,characterId:character,sourceRef:source,fingerprint,status:'imported_private',hooks:hooks.length,canonSuggestions:proposals,narrativeRevision,
         relationshipsApplied:distinct.size,relationshipHolds:holds,executionAuthority:false,publicationAuthority:false,canonAuthority:false,prepared:input};
       db.prepare('INSERT INTO vk2_hook_imports VALUES(?,?,?)').run(campaign,source,JSON.stringify(receipt));
       check();db.exec('COMMIT');return receipt;
@@ -74,6 +79,7 @@ export function openPrivateHookStore(filename=':memory:'){
     return db.prepare('SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND r.character=? ORDER BY r.key').all(campaign,character).map(decode)
       .filter(r=>(includeResolved||r.status==='active')&&(includeCanonSuggestions||r.hook_type!=='canon_suggestion'));
   }
+  function readNarrative(campaign,character){return decode(db.prepare('SELECT data FROM vk2_private_narratives WHERE campaign=? AND character=? ORDER BY revision DESC LIMIT 1').get(campaign,character));}
   function currentCanon(campaign,key){return decode(db.prepare('SELECT r.data FROM vk2_canon_history r JOIN vk2_canon_heads h USING(campaign,key,revision) WHERE r.campaign=? AND r.key=?').get(campaign,key));}
   function reviewCanon(request,{check}){
     const r=JSON.parse(JSON.stringify(request)),fingerprint=hash(r);
@@ -112,7 +118,7 @@ export function openPrivateHookStore(filename=':memory:'){
       check();db.exec('COMMIT');return receipt;
     }catch(error){db.exec('ROLLBACK');throw error;}
   }
-  return Object.freeze({commitImport,listCharacterGmHooks,reviewCanon,currentCanon,
+  return Object.freeze({commitImport,listCharacterGmHooks,reviewCanon,currentCanon,readNarrative,narrativeHistory:(campaign,character)=>db.prepare('SELECT data FROM vk2_private_narratives WHERE campaign=? AND character=? ORDER BY revision').all(campaign,character).map(decode),
     readPlanningRecord(campaign,ref){
       // Only current committed rows. Proposals and historical versions are excluded.
       const hook=decode(db.prepare("SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND json_extract(r.data,'$.id')=?").get(campaign,ref));
