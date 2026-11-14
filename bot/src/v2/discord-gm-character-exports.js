@@ -5,9 +5,9 @@ const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 /** GM export. Human GM authority is refreshed around source
  * preparation. Export receipts never become gameplay or knowledge authority.
  */
-export function createDiscordGmCharacterExports({client,repository,readCharacter,gmAuthority,interactionReceipts,onError=()=>{}}){
+export function createDiscordGmCharacterExports({client,repository,readCharacter,hookStore=null,gmAuthority,interactionReceipts,onError=()=>{}}){
  if(typeof repository?.findExportCharacter!=='function'||typeof gmAuthority?.authorize!=='function'||typeof gmAuthority?.refresh!=='function'||typeof gmAuthority?.check!=='function'||typeof interactionReceipts?.claim!=='function')throw new TypeError('Native GM export dependencies required');
- const exports=createGmCharacterExport({repository,...(readCharacter?{readCharacter}:{})}),pending=new Map(),controller=new AbortController();let closed=false;
+ const exports=createGmCharacterExport({repository,hookStore,...(readCharacter?{readCharacter}:{})}),pending=new Map(),controller=new AbortController();let closed=false;
  const report=(error,e,stage)=>{try{onError(error,{interactionId:e.id,stage});}catch{}};
  function parse(e){try{if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-character'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='character')||e.options.getSubcommand()!=='export-gm')return null;const character=e.options.getString('character',true),format=e.options.getString('format')??'all';return typeof character==='string'&&character.length>0&&character.length<=256&&['json','markdown','docx','all'].includes(format)?{character,format}:null;}catch{return null;}}
  async function execute(e,parsed){

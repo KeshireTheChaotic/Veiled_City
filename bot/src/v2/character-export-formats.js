@@ -91,6 +91,7 @@ export function gmPrivateMarkdown(payload){
   return [
     `# GM PRIVATE — ${payload.export_meta?.name||"Character"}`,
     `**GM PRIVATE — do not share with the player unless revealed in play.**`,"",
+    ...(payload.private_narrative?[`## Private Narrative`,payload.private_narrative.text,""]:[]),
     section("Private Facts",(payload.private_facts||[]).map(x=>`[${x.visibility}] ${x.key}: ${x.content}`)),
     section("Private Clocks",(payload.private_clocks||[]).map(x=>`${x.label}: ${x.value}/${x.max_value} [${x.visibility}]`)),
     section("Private Threads",(payload.private_threads||[]).map(x=>`${x.label} — ${x.status}: ${x.notes||""}`)),
@@ -103,6 +104,7 @@ export function gmCanonMarkdown(payload){
   return [
     `# GM CANON — ${payload.export_meta?.name||"Character"}`,
     `**GM PRIVATE — authoritative canon associated with this character.**`,"",
+    ...(payload.native_canon?.length?[section("Native Reviewed Canon",payload.native_canon.map(x=>`[${x.visibility}] ${x.canon_key}: ${x.value} (review ${x.source_ref})`))]:[]),
     section("Current Canon",(payload.canon||[]).map(x=>`\`${x.key}\` = ${x.value} [${x.visibility}]`)),
     section("Imported Canon Proposals",(payload.canon_proposals||[]).map(x=>`\`${x.id.slice(0,8)}\` ${x.status.toUpperCase()} ${x.key}: proposed=${x.proposed_value}${x.resolution_value?`; resolution=${x.resolution_value}`:""}`)),
     section("Pending Canon Conflicts",(payload.pending_conflicts||[]).map(x=>`\`${x.id.slice(0,8)}\` ${x.key}: existing=${x.existing_value}; proposed=${x.proposed_value}`))

@@ -16,7 +16,7 @@ function relationshipView(row){return {id:row.id,from_type:row.from_type,from_ke
 
 // These are GM infrastructure fields, not player-authored background or sheet mechanics.
 const gmOnlyFields=new Set(['gm_hooks','imported_gm_hooks','gm_private','gm_secrets','hidden_hooks',
-  'gm_relationships','hidden_relationships','canon_suggestions','canon_proposals','pending_conflicts']);
+  'gm_relationships','hidden_relationships','canon_suggestions','canon_proposals','pending_conflicts','private_narrative','native_canon']);
 export function playerCharacterProjection(value){
   if(Array.isArray(value))return value.map(playerCharacterProjection).filter(item=>item!==undefined);
   if(!value||typeof value!=='object')return value;

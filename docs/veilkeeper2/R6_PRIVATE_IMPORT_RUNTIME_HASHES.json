@@ -1,0 +1,176 @@
+{
+  "files": [
+    {
+      "path": ".reports/private-import-affected.mjs",
+      "sha256": "896b6a2f4c8804b27a44182a767989726a8d8ce1c1b4a99d156f09b28aa21e9c"
+    },
+    {
+      "path": ".reports/private-import-dependent-tests.txt",
+      "sha256": "3c269f67c0524927f078727300f01913111706fd0c77c7889f8d4781c1d68465"
+    },
+    {
+      "path": "bot/src/v2/character-export-formats.js",
+      "sha256": "4146c68afd854e6e35ea6867a6329a95ea4c459134f6be341fc880f6df47109f"
+    },
+    {
+      "path": "bot/src/v2/character-packages.js",
+      "sha256": "45a15e81131a7c0742eb364216d49f415bbbd8dba21874dbaa838351c5a77603"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-character-exports.js",
+      "sha256": "aeaf0f32cb23cd9aa759fba51f1fca1b4a02dfdf14880fcbcb9754ec4dd8572d"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-hook-imports.js",
+      "sha256": "ee3adf1e4ea6b67e2636cbea7f6f8cb0a0ce7f57367757ed8556fb8adea86b66"
+    },
+    {
+      "path": "bot/src/v2/discord-interaction-router.js",
+      "sha256": "e40e0ea917a4cadf7ba7afb7cb64ccc0a19df6e0b5844ce91e08b95433aa0f29"
+    },
+    {
+      "path": "bot/src/v2/gm-character-export.js",
+      "sha256": "0273c050d281331bf4a84a39644410d58e8351c54d9ad40825a2600ad1ca0031"
+    },
+    {
+      "path": "bot/src/v2/native-root.js",
+      "sha256": "46c92250331a1985fd2de398fa6f409ad62ccb4dace918a02eee957c5b3a887f"
+    },
+    {
+      "path": "bot/src/v2/native-start.js",
+      "sha256": "6990dfd9fab4a68527aced8288896e44355f3d7eca74ae38b205965531fba48b"
+    },
+    {
+      "path": "bot/src/v2/runtime-directory.js",
+      "sha256": "7ed012f70bbe0e913ddd2e3087f2528b8a616fc6e1bd17b056bf38b1b85c7405"
+    },
+    {
+      "path": "bot/src/v2/runtime-snapshots.js",
+      "sha256": "a48d1d057643ce449b9862c042d62071f147804aa9dd067e6b652893916dc169"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "f70f65d1cbc14d29ee3be6aa0c8ca48addc5e502de12dca021c1d4acfdb01aa5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-canon-review.test.mjs",
+      "sha256": "cf209c1ba16a2e0e75592ef170b8b7c3f9bb2b33bfab8f35d5c22a3ebea24204"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-character-packages.test.mjs",
+      "sha256": "379897479dcf56590cbff8e7272a1bd3f74151ea0ededaa1d13368f73988f0e4"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-planning-repository.test.mjs",
+      "sha256": "7010c212c84f7db66b62f3c79005d4bc5d77f4afc09134445d572df64fa00fe0"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs",
+      "sha256": "62ee35c453a94b5c0028cf08be10b8f0f44095b3e60dc40ce4dbce43553d606a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-private-hooks.test.mjs",
+      "sha256": "ad1a681b8e63bf73b3dcd1ede57362929bb64c781de2a084d3a44f1a51cc3a57"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-receipt-recall.test.mjs",
+      "sha256": "8f6e2c708c6189ae24ba0ac9948aef1be3091f0f24b8474c3a3fd390d10e12b8"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-relationship-import.test.mjs",
+      "sha256": "99594cdef17fdaa78b2c87065cdf34d1c7d4a97a4caaba247921edcceb511358"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-authorship.test.mjs",
+      "sha256": "ad5d1323da0ffb45cc6ea9020a0e4bbf50f0eefe559215eed8b27e6dd5bdfa8a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+      "sha256": "5ebaf1688762c67c44ff0164ab46e0709cdd3312069db9cc45f3a4502b480a21"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+      "sha256": "add83da2ea2d431175a7fd490a5f3cd898d54b6b931643b65aba721eaa460374"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "9e4d17ae28da2fbbb195ac7c507195e19bc9b2e2ec3a2d32097585a44f105d19"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+      "sha256": "8669206715c0d7cbac8ab41393c46d9f6b6c89dcdac272da9119d817907b922a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r5-native-npc-planning.test.mjs",
+      "sha256": "15fbde3575300528bf8514671920daa2fa84b9e8085d272123b66853d8c03364"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r5-scene-opening-director.test.mjs",
+      "sha256": "083f5cd711981489e17740bd319615b0370f6c8822671b7eb36de2fef0dd1612"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-character-export-formats.test.mjs",
+      "sha256": "463f76a58dfc98c54d0a09d2bffe471d2e8e0b3513864dc748c08404ee7d84d6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-character-exports.test.mjs",
+      "sha256": "1b6c42d0ebfee22d215edc2cf58cb9d0f05f594d128467344e4c33eb0a83b2c7"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "81265e5953a3622bd4295e86933f2dc9ec624ea0edc5c83106bfb89e780a28a4"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-discord-gm-hook-imports.test.mjs",
+      "sha256": "01d10973a29eb0485fc67aee4cc84a74a8b97fedf49ab0e5242a1b431a53de0c"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-gm-character-exports.test.mjs",
+      "sha256": "33bca39365a7050816efd72f2135f4062e5410d9409f0ae3a0555312e5816b2f"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "928ffd4804d71c2dc2ccc948c7458910408afe55d5284593c0c174e4e1c98c19"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-private-import-runtime.test.mjs",
+      "sha256": "a0b7e6c7af369ed7b6f0f7539a66559bc96d6419e5f73fea5fbb3e5261c18737"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-private-narrative-import.test.mjs",
+      "sha256": "e478f897716bff0cc4d99bc049251c1e7d08fca117a17824f5b6d90fc4bb0f5b"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-guild-runtime-lease.test.mjs",
+      "sha256": "af09569d20dc1053a64d331bcdf9caeedd0808bd999e2fa8837865c75d94b096"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "f832ecbfe8837e2598c5890b04700d294305244a46fef475d8bcdfd07e6dbb45"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-snapshots.test.mjs",
+      "sha256": "6817aa3f2f686cab51d1e63f17596e318836ff5621362d3d0f985966f6271689"
+    }
+  ],
+  "skipped": 0,
+  "scope": "Composed private imports, real SQLite and simulated transport; no live acceptance",
+  "tests": 244,
+  "failed": 0
+}

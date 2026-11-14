@@ -46,6 +46,8 @@ export function gmPolicyFromEnv(env){
  * Optional natural-message inference produces withheld drafts; publication is separate.
  * Native launchers share a local guild lease across worktrees/data directories.
  * Packaged/custom layouts require VK2_GUILD_LEASE_DIR, identical for all launchers.
+ * VK2_PRIVATE_IMPORTS=1 initializes a private hook/narrative store on a fresh run.
+ * Existing manifested stores reopen automatically; adding one on resume requires migration.
  */
 export async function startNative({env=process.env,createClient=()=>new Client({intents:[GatewayIntentBits.Guilds,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent]}),openRepository=openLegacyReadOnlyRepository,createRoot=createNativeRoot,createProvider=createProviderFromEnv,loadEnvFile=process.loadEnvFile.bind(process),rng=sides=>randomInt(1,sides+1),onError=error=>console.error('native-error',error?.message)}={}){
   if(env.VK2_NATIVE!=='1')throw new Error('Native start requires VK2_NATIVE=1; the legacy runtime is unchanged');
@@ -54,14 +56,14 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   const {VK2_NATIVE_DIR:directory,VK2_LEGACY_DB:legacyDb,DISCORD_TOKEN:token,VK2_ALLOWED_GUILD_ID:guildId}=env;
   if(!directory||!legacyDb||!token)throw new Error('VK2_NATIVE_DIR, VK2_LEGACY_DB and DISCORD_TOKEN are required');
   if(!/^\d{5,25}$/.test(guildId??''))throw new Error('VK2_ALLOWED_GUILD_ID (the single guild to serve) is required');
-  const guildLease=acquireGuildRuntimeLease({guildId,directory:env.VK2_GUILD_LEASE_DIR??defaultGuildLeaseDirectory()});let runtime;
-  try{runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});const restored=runtime.inspectManifest().restoration;if(restored&&env.VK2_RESTORED_SNAPSHOT_HASH!==restored.snapshotHash)throw new Error('Restored runtime requires explicit VK2_RESTORED_SNAPSHOT_HASH review before login');}catch(error){try{runtime?.close();}finally{guildLease.close();}throw error;}
+  const guildLease=acquireGuildRuntimeLease({guildId,directory:env.VK2_GUILD_LEASE_DIR??defaultGuildLeaseDirectory()});let runtime,privateImportsEnabled=false;
+  try{runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});const manifest=runtime.inspectManifest(),restored=manifest.restoration;privateImportsEnabled=manifest.stores.some(s=>s.name==='private-hooks.sqlite');if(env.VK2_PRIVATE_IMPORTS==='1'){if(manifest.phase==='ready'&&!privateImportsEnabled)throw new Error('Existing runtime requires reviewed private import store migration');privateImportsEnabled=true;}if(restored&&env.VK2_RESTORED_SNAPSHOT_HASH!==restored.snapshotHash)throw new Error('Restored runtime requires explicit VK2_RESTORED_SNAPSHOT_HASH review before login');}catch(error){try{runtime?.close();}finally{guildLease.close();}throw error;}
   let repository,client,root;
   async function closeResources(){try{root?.close();}finally{try{repository?.close();}finally{try{await client?.destroy?.();}finally{try{runtime.close();}finally{guildLease.close();}}}}}
   try{
     const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
     repository=openRepository(legacyDb);client=createClient();
-    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,directorEnabled:env.VK2_DIRECTOR==='1',allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
+    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,directorEnabled:env.VK2_DIRECTOR==='1',privateImportsEnabled,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
     runtime.seal();await client.login(token);
   }catch(error){await closeResources();throw error;}
   let closed=false;
