@@ -28,7 +28,8 @@ function entries(directory){
  * SQLite owns the process-lifetime lock, including release after a crash. Schema changes require
  * a reviewed manifest version/migration; missing/foreign stores are not replaced with empty state.
  */
-export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false}){
+export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false,restoreSnapshotHash}){
+  if(restoreSnapshotHash!==undefined&&(resume||typeof restoreSnapshotHash!=='string'||!/^[a-f0-9]{64}$/.test(restoreSnapshotHash)))throw new Error('Fresh explicit offline restoration hash required');
   const target=resolve(directory),source=sourceIdentity(legacyDb),rel=relative(target,source.path);
   if(rel===''||!rel.startsWith('..')&&!isAbsolute(rel))throw new Error('Legacy source must be separate from native stores');
   if(existsSync(target)&&readdirSync(target).length&&!resume)throw new Error('Native stores need a new or empty directory, or explicit VK2_RESUME=1');
@@ -42,14 +43,25 @@ export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false
     if(resume){
       const row=mutex.prepare("SELECT data FROM vk2_runtime_manifest WHERE id='runtime'").get();if(!row)throw new Error('Native runtime manifest requires review');manifest=JSON.parse(row.data);
       if(manifest.format!==FORMAT||typeof manifest.runId!=='string'||manifest.guildId!==guildId||JSON.stringify(manifest.source)!==JSON.stringify(source)||!Array.isArray(manifest.stores)||!['initializing','ready'].includes(manifest.phase))throw new Error('Native manifest source, guild or version mismatch');
+      if(manifest.restorationPending)throw new Error('Incomplete offline restoration requires review; native startup is held');
       const actual=storeSnapshot(target);
       if(manifest.phase==='initializing'&&actual.length||manifest.phase==='ready'&&manifest.stores.some(expected=>!actual.some(current=>JSON.stringify(current)===JSON.stringify(expected)))||actual.some(current=>!manifest.stores.some(expected=>expected.name===current.name)))throw new Error('Native store identity/schema changed; explicit migration required');
     }else{
       mutex.exec('CREATE TABLE vk2_runtime_manifest(id TEXT PRIMARY KEY,data TEXT NOT NULL)');
-      manifest={format:FORMAT,runId:randomUUID(),guildId,source,phase:'initializing',stores:[]};save(manifest);
+      manifest={format:FORMAT,runId:randomUUID(),guildId,source,phase:'initializing',stores:[],...(restoreSnapshotHash?{restorationPending:{snapshotHash:restoreSnapshotHash}}:{})};save(manifest);
     }
   }catch(error){try{mutex.exec('ROLLBACK');}catch{}mutex.close();throw error;}
-  return Object.freeze({directory:target,runId:manifest.runId,seal(){
+  return Object.freeze({directory:target,get runId(){return manifest.runId;},inspectManifest(){
+    if(closed||JSON.stringify(sourceIdentity(legacyDb))!==JSON.stringify(source))throw new Error('Runtime snapshot source changed');entries(target);
+    if(JSON.stringify(storeSnapshot(target))!==JSON.stringify(manifest.stores))throw new Error('Runtime snapshot store identity/schema changed');return structuredClone(manifest);
+  },adoptOfflineSnapshot(original,{snapshotHash}){
+    if(closed||resume||manifest.phase!=='initializing'||manifest.stores.length||manifest.restorationPending?.snapshotHash!==snapshotHash||!original||original.restorationPending||original.format!==FORMAT||original.phase!=='ready'||original.guildId!==guildId||typeof original.runId!=='string'||!original.runId||!Array.isArray(original.stores)||typeof snapshotHash!=='string'||!/^[a-f0-9]{64}$/.test(snapshotHash))throw new Error('Fresh reviewed offline snapshot restoration required');
+    const {path:oldPath,...oldSource}=original.source??{},{path:newPath,...newSource}=source;
+    if(JSON.stringify(oldSource)!==JSON.stringify(newSource)||JSON.stringify(sourceIdentity(legacyDb))!==JSON.stringify(source))throw new Error('Restored legacy source content does not match the snapshot');
+    entries(target);const actual=storeSnapshot(target);
+    if(actual.length!==original.stores.length||new Set(original.stores.map(s=>s.name)).size!==original.stores.length||actual.some(s=>!original.stores.some(old=>old.name===s.name&&old.schemaHash===s.schemaHash)))throw new Error('Restored native schema/file set does not match the snapshot');
+    manifest={...structuredClone(original),source,stores:actual,restoration:{snapshotHash,previousRunId:original.runId,previousSourcePath:oldPath,sourcePath:newPath,previousRestoration:original.restoration??null}};save(manifest);return structuredClone(manifest);
+  },seal(){
     if(closed||JSON.stringify(sourceIdentity(legacyDb))!==JSON.stringify(source))throw new Error('Native runtime source changed during startup');
     entries(target);const actual=storeSnapshot(target);
     if(manifest.stores.some(expected=>!actual.some(current=>JSON.stringify(current)===JSON.stringify(expected))))throw new Error('Native startup changed an existing store schema or identity');

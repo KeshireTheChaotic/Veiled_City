@@ -1,0 +1,21 @@
+{
+  "scope": "Actual authorized historical test-copy CLI snapshot/inspect/restore. Aggregate counts and exact data hashes only; no bodies or player identities logged, no startup or live qualification.",
+  "root": ".reports/runtime-snapshot-probe-20261114-f5894402-e5d8-4137-af17-148f59e1c1e5",
+  "snapshotHash": "40a4cab883017fc77fe54011d2936f33c8807b317b15d6e0b80ba23a6a8088a9",
+  "runIdPreserved": true,
+  "archiveFiles": 11,
+  "nativeDataFilesVerified": 9,
+  "legacyMainSha256": "0fe6f5c91a2df83aa7bfb92eb816630a110dfe435c8c1bc66065eea7361513bf",
+  "legacyCountsPreserved": {
+    "characters": 1,
+    "facts": 0,
+    "rolls": 2,
+    "relationships": 10,
+    "character_gm_hooks": 9,
+    "canon_proposals": 2
+  },
+  "discordCalls": 0,
+  "inferenceCalls": 0,
+  "sends": 0,
+  "originalDataOverwrites": 0
+}

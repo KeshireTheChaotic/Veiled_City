@@ -55,7 +55,7 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   if(!directory||!legacyDb||!token)throw new Error('VK2_NATIVE_DIR, VK2_LEGACY_DB and DISCORD_TOKEN are required');
   if(!/^\d{5,25}$/.test(guildId??''))throw new Error('VK2_ALLOWED_GUILD_ID (the single guild to serve) is required');
   const guildLease=acquireGuildRuntimeLease({guildId,directory:env.VK2_GUILD_LEASE_DIR??defaultGuildLeaseDirectory()});let runtime;
-  try{runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});}catch(error){guildLease.close();throw error;}
+  try{runtime=prepareRuntimeDirectory({directory,legacyDb,guildId,resume:env.VK2_RESUME==='1'});const restored=runtime.inspectManifest().restoration;if(restored&&env.VK2_RESTORED_SNAPSHOT_HASH!==restored.snapshotHash)throw new Error('Restored runtime requires explicit VK2_RESTORED_SNAPSHOT_HASH review before login');}catch(error){try{runtime?.close();}finally{guildLease.close();}throw error;}
   let repository,client,root;
   async function closeResources(){try{root?.close();}finally{try{repository?.close();}finally{try{await client?.destroy?.();}finally{try{runtime.close();}finally{guildLease.close();}}}}}
   try{

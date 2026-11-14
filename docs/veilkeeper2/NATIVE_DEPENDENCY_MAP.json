@@ -1,10 +1,11 @@
 {
-  "head": "c5b45d69ae417aa74e96a8866496182876db5ddb",
+  "head": "d22a36d284236bf9d2dc2415284288a3bb64b2fd",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
     "bot/src/v2/native-start.js",
-    "bot/src/v2/register-commands.js"
+    "bot/src/v2/register-commands.js",
+    "bot/tooling/veilkeeper2/runtime-snapshot.mjs"
   ],
   "tools": [
     "context_read",
@@ -12,8 +13,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 129,
-  "reachableNativeModules": 90,
+  "nativeModules": 130,
+  "reachableNativeModules": 91,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
@@ -2599,7 +2600,7 @@
     },
     {
       "file": "bot/src/v2/native-start.js",
-      "sha256": "d18929fbbea744972f70b6152dcb2736c816958497f7dcc7df74f2b90793b19e",
+      "sha256": "ae9193db040860af49e3d3b0045f56e77a68feecd2a3c5ef3a4e0a715956f331",
       "reachable": true,
       "exports": [
         {
@@ -4684,14 +4685,14 @@
     },
     {
       "file": "bot/src/v2/runtime-directory.js",
-      "sha256": "c8bc208bc42dba60d4887864d73d292e79dc26a76c29c85f05f75d4dc457c845",
+      "sha256": "b25ddea30f2f506199f43a2fd757fb28b4ead53ea484a00eca5d00ecc466fd43",
       "reachable": true,
       "exports": [
         {
           "line": 31,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false}){\r\n  const target=resolve(directory),source=sourceIdentity(legacyDb),rel=relative(target,source.path);\r\n  if(rel===''||!rel.startsWith('..')&&!isAbsolute(rel))throw new Error('Legacy source must be separate from native"
+          "text": "export function prepareRuntimeDirectory({directory,legacyDb,guildId,resume=false,restoreSnapshotHash}){\r\n  if(restoreSnapshotHash!==undefined&&(resume||typeof restoreSnapshotHash!=='string'||!/^[a-f0-9]{64}$/.test(restoreSnapshotHash)))throw new Error('Fresh explicit offline restoration hash require"
         }
       ],
       "imports": [
@@ -4724,8 +4725,72 @@
           "status": "external"
         }
       ],
-      "functions": 20,
+      "functions": 26,
       "sqlStatements": 5
+    },
+    {
+      "file": "bot/src/v2/runtime-snapshots.js",
+      "sha256": "ffd48bba9700e9b5ce61908ec9af094543f8967fe095d8271d442919dcceae27",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 18,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createRuntimeSnapshot({directory,legacyDb,guildId,leaseDirectory=defaultGuildLeaseDirectory(),destination}){\n separate(directory,destination);separate(destination,directory);separate(destination,legacyDb);\n const lease=acquireGuildRuntimeLease({guildId,directory:leaseDirectory});let "
+        },
+        {
+          "line": 34,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function inspectRuntimeSnapshot(directory,{expectedHash}={}){\n const folder=realpathSync(directory),bytes=readFileSync(join(folder,sealName));if(bytes.length>2_000_000)throw new Error('Bounded offline snapshot seal required');\n const value=JSON.parse(bytes),{snapshotHash,...content}=value;\n i"
+        },
+        {
+          "line": 46,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function restoreRuntimeSnapshot({snapshotDirectory,expectedHash,destination,leaseDirectory=defaultGuildLeaseDirectory()}){\n if(typeof expectedHash!=='string'||!/^[a-f0-9]{64}$/.test(expectedHash))throw new Error('Explicit reviewed snapshot hash required');\n separate(snapshotDirectory,destinat"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:fs",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "node:path",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 4,
+          "kind": "ImportDeclaration",
+          "specifier": "./guild-runtime-lease.js",
+          "target": "bot/src/v2/guild-runtime-lease.js",
+          "status": "resolved"
+        },
+        {
+          "line": 5,
+          "kind": "ImportDeclaration",
+          "specifier": "./runtime-directory.js",
+          "target": "bot/src/v2/runtime-directory.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 22,
+      "sqlStatements": 0
     },
     {
       "file": "bot/src/v2/scene-prose-review.js",
@@ -4945,6 +5010,23 @@
       ],
       "functions": 30,
       "sqlStatements": 8
+    },
+    {
+      "file": "bot/tooling/veilkeeper2/runtime-snapshot.mjs",
+      "sha256": "a217647d943f6f667f86a13cb412099f59da309b4e71c840b8727d1d7a3aa40d",
+      "reachable": true,
+      "exports": [],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "../../src/v2/runtime-snapshots.js",
+          "target": "bot/src/v2/runtime-snapshots.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 1,
+      "sqlStatements": 0
     }
   ]
 }

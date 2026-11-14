@@ -1,0 +1,65 @@
+{
+  "scope": "Exact offline native snapshot/restore source and check bytes. Real SQLite/filesystem preservation with simulated transport; actual historical-copy CLI, no live startup or release qualification.",
+  "files": [
+    {
+      "path": ".reports/runtime-snapshots-dependent-tests-20261114.txt",
+      "sha256": "53397a37abc9ebafb60062839d52c9a28015228134b0f8e025695b84eb38e133"
+    },
+    {
+      "path": "bot/src/v2/native-start.js",
+      "sha256": "ae9193db040860af49e3d3b0045f56e77a68feecd2a3c5ef3a4e0a715956f331"
+    },
+    {
+      "path": "bot/src/v2/runtime-directory.js",
+      "sha256": "b25ddea30f2f506199f43a2fd757fb28b4ead53ea484a00eca5d00ecc466fd43"
+    },
+    {
+      "path": "bot/src/v2/runtime-snapshots.js",
+      "sha256": "ffd48bba9700e9b5ce61908ec9af094543f8967fe095d8271d442919dcceae27"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "f70f65d1cbc14d29ee3be6aa0c8ca48addc5e502de12dca021c1d4acfdb01aa5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "d4d37e13afb9e432e84721dd44ebf6a229e40127949a448a1c54e92b21a984e5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-guild-runtime-lease.test.mjs",
+      "sha256": "af09569d20dc1053a64d331bcdf9caeedd0808bd999e2fa8837865c75d94b096"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "f832ecbfe8837e2598c5890b04700d294305244a46fef475d8bcdfd07e6dbb45"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-snapshots.test.mjs",
+      "sha256": "6817aa3f2f686cab51d1e63f17596e318836ff5621362d3d0f985966f6271689"
+    },
+    {
+      "path": "bot/tooling/veilkeeper2/native-closure.mjs",
+      "sha256": "49eb89d86701d34250c4266cacd6d812916881f7bbda183be6f74e4758c31d72"
+    },
+    {
+      "path": "bot/tooling/veilkeeper2/runtime-snapshot.mjs",
+      "sha256": "a217647d943f6f667f86a13cb412099f59da309b4e71c840b8727d1d7a3aa40d"
+    },
+    {
+      "path": "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json",
+      "sha256": "7e2145defaefdcc3188322e92151df7ed79faf9f8a2379f2220249538cdb1198"
+    },
+    {
+      "path": "docs/veilkeeper2/R7_RUNTIME_SNAPSHOTS_AFFECTED_TESTS.json",
+      "sha256": "79f7a1ba96cf12b39ac08e0984faa041da9a8e11d8f234d34513472a7d1a559b"
+    },
+    {
+      "path": "docs/veilkeeper2/R7_RUNTIME_SNAPSHOTS_PROBE.json",
+      "sha256": "dd4352f077e97765482c76128141368cf931b40bcb2e536249337e520903a162"
+    },
+    {
+      "path": "docs/veilkeeper2/R7_RUNTIME_SNAPSHOTS_REPORT.md",
+      "sha256": "94150750bf6563813c3ff550bd18423c12e87a95084bff0b420a60cdaf6c2004"
+    }
+  ]
+}
