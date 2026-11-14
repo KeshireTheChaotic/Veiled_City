@@ -1,5 +1,7 @@
 # VEILKEEPER 2.0 — ASTRA 6 GROUND-UP REBUILD HANDOFF
 
+Owner clarification2026-11-14: [AI-GM Autonomy](AI_GM_AUTONOMY_SPEC.md) governs narrative operation. Remove Human-GM narrative review/approval routes. The AI-GM makes temporary calls for unknown/conflicting Daggerheart mechanics, with reconciliation after the session. Original pinned source references remain historical audit anchors.
+
 **Status:** implementation specification / architectural proposal, **not an implemented change**  
 **Repository:** https://github.com/KeshireTheChaotic/Veiled_City  
 **Baseline branch:** `codex/clean-ai-gm-2026-10`  

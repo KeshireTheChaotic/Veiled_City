@@ -27,8 +27,6 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
     const hookImport=gmHookImportInput(e);if(hookImport)return {operation:'gm_hook_import',targetRef:'gm-hook-import:'+hash(hookImport),snapshotHash:hash(hookImport),payload:hookImport};
     const input=gmCommandInput(e);if(input){
 
-      if(input?.op==='draft-publish'&&Object.keys(input).sort().join(',')==='fingerprint,op,source'&&id(input.source)&&/^[a-f0-9]{64}$/.test(input.fingerprint))return {operation:'draft_publish',targetRef:input.source,snapshotHash:hash(input)};
-      if(input?.op==='draft-list'&&Object.keys(input).join(',')==='op')return {operation:'draft_list',targetRef:'drafts',snapshotHash:hash(input)};
       if(input?.op==='session-reopen'&&Object.keys(input).sort().join(',')==='op,session'&&id(input.session)){const payload={session:input.session};return {operation:'session_reopen',targetRef:input.session,snapshotHash:hash(payload),payload};}
       if(input?.op==='pc-rebind'&&Object.keys(input).sort().join(',')==='actor,op'&&id(input.actor))return {operation:'pc_rebind',targetRef:input.actor,snapshotHash:hash(input)};
       if(input?.op==='pc-register'&&Object.keys(input).sort().join(',')==='actor,op'&&id(input.actor))return {operation:'pc_register',targetRef:input.actor,snapshotHash:hash(input)};

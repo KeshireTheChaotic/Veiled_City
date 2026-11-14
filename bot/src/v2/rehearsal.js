@@ -33,7 +33,7 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
   }
   const kernel=createKernel({authority,journal,rules:createRulesetRegistry(rules),context,knowledge,actionAuthority:nativeActions});
   const gateway=createModelGateway({contextAuthority:context,provider});
-  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context,materialReview:proseReview??createProseMaterialReview({authorizeMaterial:candidate=>actionAuthority?.authorizeMaterial?.(candidate)===true})});
+  const publications=createOfflinePublicationQueue({gateway,contextAuthority:context,repairProvider:provider,materialReview:proseReview??createProseMaterialReview({authorizeMaterial:candidate=>actionAuthority?.authorizeMaterial?.(candidate)===true})});
   const planner=planning?createPrivatePlanner({...planning,sourceAuthority:authority}):null;
   async function plan(event,{signal}={}){
     if(!planner)throw new Error('Private planner not installed');
@@ -55,5 +55,5 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
     return Object.freeze({publication,sourceHandle:handle,metrics:Object.freeze({traceId,modelCalls,toolCalls,elapsedMs,usage})});
   }
   return Object.freeze({respond,plan,inspectPlan:handle=>{if(!planner)throw new Error('Private planner not installed');return planner.inspect(handle);},
-    inspectPublication:publications.inspect,reviewPublication:publications.review,repairPublication:publications.repair,capabilities:kernel.bind,describe:kernel.describe});
+    inspectPublication:publications.inspect,reviewPublication:publications.review,repairPublication:publications.repair,proposeRepairPublication:publications.proposeRepair,capabilities:kernel.bind,describe:kernel.describe});
 }

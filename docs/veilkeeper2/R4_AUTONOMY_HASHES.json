@@ -1,0 +1,191 @@
+{
+  "scope": "Exact checkout bytes for owned changes; manifest excludes itself. Git may normalize LF/CRLF at commit.",
+  "parent": "c01481604841bd7b98cf09b488042f73c8010152",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "54ec198393dcef382069dacdc4be080639bddd4a45c5d32e66976b195abc159c"
+    },
+    {
+      "path": "bot/src/v2/autonomous-publication.js",
+      "sha256": "c4b6660cb3745fc5f673bec8a1945e1337ac470f257b32025a57892669940b1f"
+    },
+    {
+      "path": "bot/src/v2/command-definitions.js",
+      "sha256": "6e65a2a706fd142bf060f2e49e9aea02644f4b4e56d92514995b7ca74f3fa4d0"
+    },
+    {
+      "path": "bot/src/v2/conversation-instructions.js",
+      "sha256": "92f93eaeb44f775dd5f41fdd028bd558e29d666b1c88b77961bb2d886bed79f6"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-authority.js",
+      "sha256": "57a6723256eb12d364416d9442e73ea4de8cf10ae20a486cd60a1f2ac869a7d9"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-input.js",
+      "sha256": "a69b33851d0a031faa9e6f9ecb54ff228e599c671b947fc3d67aa69a46c784bc"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-session.js",
+      "sha256": "4d99267fab17dbf129b7c40a85a0bfde854d98be2b808e33c3e9f3dee269ae61"
+    },
+    {
+      "path": "bot/src/v2/discord-message-observer.js",
+      "sha256": "e89de5bbd4fb95af00ce2ba074fc8e53a757c7afd69bbb226082d018d0eaa063"
+    },
+    {
+      "path": "bot/src/v2/discord-turn-runner.js",
+      "sha256": "02220c29affed0a4e0001ae83d328c1858692aa0606ba42b1331b3770c855b38"
+    },
+    {
+      "path": "bot/src/v2/knowledge-store.js",
+      "sha256": "e869a883af9392751f627a9f466dfb563990c4eddf6efad27d4ff8237805a965"
+    },
+    {
+      "path": "bot/src/v2/native-action-authority.js",
+      "sha256": "16d9c8bbcdea8c15d19c4e45813b00273a963f7ccb130b9046eabd7e416c0ef6"
+    },
+    {
+      "path": "bot/src/v2/native-draft-publication.js",
+      "deleted": true,
+      "priorGitBlob": "5bd47d0ab713e13124f71a50d0fe788911f05aa2"
+    },
+    {
+      "path": "bot/src/v2/native-root.js",
+      "sha256": "843689f3374defc1e462844542a69b8253f36ae1c395b340aebe48276ec9935a"
+    },
+    {
+      "path": "bot/src/v2/native-start.js",
+      "sha256": "83dcd174d3a84f72d0ebbeb686c77d498bbfbdf7e82630ceeb8762cbb9e33cd0"
+    },
+    {
+      "path": "bot/src/v2/provisional-rulings.js",
+      "sha256": "f3fe5114b84163b5bc687f7e1a10eb8174464fffd0c0dacf7d79ddbf8e1543ed"
+    },
+    {
+      "path": "bot/src/v2/publication-queue.js",
+      "sha256": "118c487d2cf7a2726f26ae41781fd1e6d5e7b3dcf94e433853f68a441bf1165d"
+    },
+    {
+      "path": "bot/src/v2/rehearsal.js",
+      "sha256": "078f7ab45af6770f9f3e6776e7951e75d8407795d52e8e2c87468f60eac4e41a"
+    },
+    {
+      "path": "bot/src/v2/scene-prose-review.js",
+      "sha256": "66d5844d626ec0195e89d9172d377f4b2304f27848563b3eb142c3aaae7f4251"
+    },
+    {
+      "path": "bot/src/v2/tool-contracts.js",
+      "sha256": "d494cb075c3640cebe1714a092d4bb62dfba5c8646ed7c3abf75440609425f02"
+    },
+    {
+      "path": "bot/src/v2/turn-store.js",
+      "sha256": "3d9abecdab185ffcfd2ed1691e77783dbf131235f5e76b840b5225b22b37d7bb"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/helpers/native-cost-root-fixture.mjs",
+      "sha256": "033e32e1ae27294d28abee5f4ac838e00a8639700ee4fb7ef661054ce71cc8ea"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+      "sha256": "be26431ed505e0d0de8b82c6cb0bdaaf32ad0ad085c69b4bbbffdba4212d6141"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-provisional-rulings.test.mjs",
+      "sha256": "d6c75c5d34133d26da086d85fd43ed0239266173945b0fd165428d859e0bc0ab"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r4-autonomous-publication.test.mjs",
+      "sha256": "d5831b80d307da4ca4b033473d38d0fa73016f2dcae42ac64dcc00bab000b8ed"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-command-schema-compat.test.mjs",
+      "sha256": "d60394da304633f58bb45056c4de8d03db16221e3c004a546259cee27d6fdea8"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-discord-gm-authority.test.mjs",
+      "sha256": "2947353b3b8e0a7d7c92ad44247af22a2507cd17a3b1512a9ca8712c7f7dbdce"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs",
+      "sha256": "816dbf89cc8d04eab0f929582308b8775cac91fdc4d04c822fc0c73903d08694"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-command-boundary.test.mjs",
+      "sha256": "607e1762e4657df2b8e291ee73f706b9c8337c40f688c2f456d51643a830510f"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-context-lineage.test.mjs",
+      "sha256": "ca3d65bd4b5fd0fc2afc1944e08d015c3a1e18a16f875859a995151441436b80"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-draft-source-publication.test.mjs",
+      "sha256": "00505928a7f955933a540833e672672e7bc5cab3e305c5086cdb027ab9083105"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-segment-review-store.test.mjs",
+      "sha256": "95b859171e2930775341f50434ec78892d03ea768566560d35c275523379719f"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-turn-store.test.mjs",
+      "sha256": "07ff3f50f510b0ba4959cc7103cc77e71997d3b26f37574e10be35a96e3bd2a8"
+    },
+    {
+      "path": "docs/AI_GM_AUTONOMY_SPEC.md",
+      "sha256": "9af10e831a96d660d269ccf52ea20b1c7227b74573aeb9327d69dd6cff41b4d6"
+    },
+    {
+      "path": "docs/CREATIVE_FIRST_SPEC.md",
+      "sha256": "49f2c80b47744496f7b12fd14318780a60cd22df4d105d8d6910e3ff25a9cb55"
+    },
+    {
+      "path": "docs/VEILKEEPER_2_ASTRA6_REBUILD_HANDOFF.md",
+      "sha256": "0d95cdc59fcfcf9ed7818666a1981ecb82826e02c65a3a5cf09e3d748a781dfd"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "03641fb7ef9cd7232407fd5e4035419384bea8e3a027bdf795e53c25f2fba15e"
+    },
+    {
+      "path": "docs/veilkeeper2/PHASE_STATUS.md",
+      "sha256": "98cc0045b2ada72936ca0c7251fb27e69b1756f097d77e84c5e0db8592cdda97"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_REMAINING_WORK.md",
+      "sha256": "9acef76b16d5f0694c441809179768bc6983da45187952ddcd95057032dacaff"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_27B_RESPONSE.json",
+      "sha256": "d23a3f3636b507a326c98db0465bf976c708befbd530dc8ad4c40971e9f9d8cf"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_ACCEPTANCE.json",
+      "sha256": "8a8fabe3c729fe130ff16992f9605872f728620b3d742af11fcb0dd9a6f60804"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_AFFECTED_TESTS.json",
+      "sha256": "9b8ed2ad71c1827ab88bb5f9252674a3395b895636aae9d9a989088389ed3fce"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_DEPENDENT_TEST_LOG.txt",
+      "sha256": "e76314bc1c42c42d6aef8165e56f37461817a2c940fe7aabbd8623fa6fd49292"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_DISCORD_COMMANDS.json",
+      "sha256": "8931dfc0efe7bed79ee50a873d6f8d8e0d730028bd458542192db444a622a590"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_REPORT.md",
+      "sha256": "223f621ffa9794df9d59adfedd68023ddbdb9ee104a33860b43b5949bac308b4"
+    },
+    {
+      "path": "docs/veilkeeper2/R4_AUTONOMY_RETIREMENT.json",
+      "sha256": "7227499d97eeb855764b6d26d5eeb9e4f064ed78d4ab04756b73edfd4dceb896"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "b9ba7aac7382e963ecda74f48103c513479017b0daa8c9da1ad563756e7b6db6"
+    }
+  ]
+}

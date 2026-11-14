@@ -71,6 +71,7 @@ export function openKnowledgeStore(filename=':memory:'){
       },check);
     },
     proposal(campaign,id){return decode(db.prepare('SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND id=?').get(campaign,id));},
+    sessionRulings(campaign,session){if([campaign,session].some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Exact native ruling session required');const rows=db.prepare("SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND json_extract(data,'$.kind')='native_provisional_ruling' AND json_extract(data,'$.sessionId')=? ORDER BY id LIMIT 257").all(campaign,session);if(rows.length>256)throw new Error('Session ruling journal requires curation');return rows.map(decode);},
     close:()=>db.close()
   });
 }

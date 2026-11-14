@@ -78,22 +78,33 @@ export function openTurnStore(filename=':memory:'){
       check();db.exec('COMMIT');return {sequence,fingerprint,created:true};
     }catch(error){db.exec('ROLLBACK');throw error;}
   }
-  /** Newest saved drafts for GM review only; drafts are unreviewed and never player-visible. */
+  /** Native journal inspection/recovery only; no Human-GM narrative approval. */
   const recentDrafts=(campaignId,limit=5)=>{if(!id(campaignId)||!Number.isSafeInteger(limit)||limit<1||limit>20)throw new Error('Campaign and bounded draft count required');return db.prepare("SELECT source,revision,data FROM vk2_turns WHERE campaign=? AND status='draft_saved' ORDER BY rowid DESC LIMIT ?").all(campaignId,limit).map(r=>{const d=JSON.parse(r.data);return {source:r.source,revision:r.revision,fingerprint:d.fingerprint,draft:d.draft};});};
   /** Exactly-once publication states. A started publication is never retried: an interrupted or
    * failed send becomes publication_uncertain and needs native review.
    */
   const draftRow=(campaignId,source)=>{const row=read(campaignId,source);return row?.status==='draft_saved'?row:null;};
-  function beginPublication(campaignId,source,{approvedFingerprint,approval,check}){
-    if(![campaignId,source,approvedFingerprint].every(id)||typeof check!=='function'||!approval||typeof approval!=='object')throw new Error('Exact approved native draft required');
+  function beginPublication(campaignId,source,{expectedFingerprint,authorization,check}){
+    if(![campaignId,source,expectedFingerprint].every(id)||typeof check!=='function'||authorization?.authority!=='native_ai_gm'||Object.keys(authorization).sort().join(',')!=='authority,kind,parts,reviewHash,sourceRef,sourceRevision,textHash,traceId'||!['narrative','system_notice'].includes(authorization.kind)||authorization.sourceRef!==source||![authorization.sourceRevision,authorization.traceId].every(id)||!['reviewHash','textHash'].every(k=>/^[a-f0-9]{64}$/.test(authorization[k]))||!Array.isArray(authorization.parts)||!authorization.parts.length||authorization.parts.length>32||authorization.parts.some(p=>typeof p!=='string'||!p.length||p.length>1900)||hash(authorization.parts.join(''))!==authorization.textHash)throw new Error('Exact autonomous native publication required');
     db.exec('BEGIN IMMEDIATE');try{
-      check();const row=draftRow(campaignId,source);if(!row||row.data.fingerprint!==approvedFingerprint)throw new Error('Approved draft is not the current saved draft');
-      db.prepare("UPDATE vk2_turns SET status='publishing',data=? WHERE campaign=? AND source=?").run(JSON.stringify({...row.data,approval:JSON.parse(JSON.stringify(approval))}),campaignId,source);
+      check();const row=draftRow(campaignId,source);if(!row||row.data.fingerprint!==expectedFingerprint||row.revision!==authorization.sourceRevision||row.data.review?.fingerprint!==authorization.reviewHash||hash(row.data.review.value)!==authorization.reviewHash||authorization.kind==='narrative'&&(row.data.review.value.heldCount!==0||row.data.review.value.candidateText!==authorization.parts.join('')))throw new Error('Publication is not the current saved draft');
+      db.prepare("UPDATE vk2_turns SET status='publishing',data=? WHERE campaign=? AND source=?").run(JSON.stringify({...row.data,authorization:structuredClone(authorization),deliveredParts:[]}),campaignId,source);
       check();db.exec('COMMIT');return row.data.draft;
     }catch(e){db.exec('ROLLBACK');throw e;}
   }
   const settle=(campaignId,source,status,extra)=>{db.exec('BEGIN IMMEDIATE');try{const row=read(campaignId,source);if(row?.status!=='publishing')throw new Error('A started publication is required');db.prepare('UPDATE vk2_turns SET status=?,data=? WHERE campaign=? AND source=?').run(status,JSON.stringify({...row.data,...extra}),campaignId,source);db.exec('COMMIT');return status;}catch(e){db.exec('ROLLBACK');throw e;}};
-  const finishPublication=(campaignId,source,messageId)=>{if(!id(messageId))throw new Error('Sent message id required');return settle(campaignId,source,'published',{published:{messageId}});};
-  const markPublicationUncertain=(campaignId,source,reason)=>settle(campaignId,source,'publication_uncertain',{uncertain:{reason:String(reason).slice(0,200)}});
-  return Object.freeze({claim,saveDraft,saveReview,recentDrafts,beginPublication,finishPublication,markPublicationUncertain,inspectNative:read,close:()=>db.close()});
+  function recordPublicationPart(campaignId,source,{index,messageId},{check}){
+    if(typeof check!=='function'||!Number.isSafeInteger(index)||index<0||!id(messageId))throw new Error('Exact native publication part required');
+    db.exec('BEGIN IMMEDIATE');try{check();const row=read(campaignId,source),parts=row?.data?.authorization?.parts,delivered=row?.data?.deliveredParts;if(row?.status!=='publishing'||!Array.isArray(parts)||!Array.isArray(delivered)||index!==delivered.length||index>=parts.length)throw new Error('Current undelivered publication part required');
+      const next=[...delivered,{index,messageId,textHash:hash(parts[index])}];db.prepare('UPDATE vk2_turns SET data=? WHERE campaign=? AND source=?').run(JSON.stringify({...row.data,deliveredParts:next}),campaignId,source);check();db.exec('COMMIT');return next[index];
+    }catch(error){db.exec('ROLLBACK');throw error;}
+  }
+  function finishPublication(campaignId,source,{check}){
+    if(typeof check!=='function')throw new Error('Current native publication authority required');db.exec('BEGIN IMMEDIATE');try{check();const row=read(campaignId,source),parts=row?.data?.authorization?.parts,delivered=row?.data?.deliveredParts;
+      if(row?.status!=='publishing'||!Array.isArray(parts)||!Array.isArray(delivered)||!parts.length||parts.length!==delivered.length||delivered.some((p,i)=>p.index!==i||!id(p.messageId)||p.textHash!==hash(parts[i])))throw new Error('All exact publication parts must be delivered');
+      db.prepare("UPDATE vk2_turns SET status='published',data=? WHERE campaign=? AND source=?").run(JSON.stringify({...row.data,published:{messageId:delivered[0].messageId,messageIds:delivered.map(p=>p.messageId)}}),campaignId,source);check();db.exec('COMMIT');return 'published';
+    }catch(error){db.exec('ROLLBACK');throw error;}
+  }
+  const markPublicationUncertain=(campaignId,source,reason,observedParts=[])=>{if(!Array.isArray(observedParts)||observedParts.length>32||observedParts.some(p=>!Number.isSafeInteger(p.index)||p.index<0||!id(p.messageId)))throw new Error('Bounded observed publication receipts required');return settle(campaignId,source,'publication_uncertain',{uncertain:{reason:String(reason).slice(0,200),observedParts:structuredClone(observedParts)}});};
+  return Object.freeze({claim,saveDraft,saveReview,recentDrafts,beginPublication,recordPublicationPart,finishPublication,markPublicationUncertain,inspectNative:read,close:()=>db.close()});
 }

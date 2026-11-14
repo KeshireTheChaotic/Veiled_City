@@ -1,0 +1,68 @@
+{
+  "scope": "Autonomy correction, not whole R3/R4/R6/R7 acceptance. Native SQLite with synthetic providers/SDK except separately labeled local model and test-guild command readback.",
+  "distinctChecks": 419,
+  "distinctFiles": 55,
+  "outcome": "pass after stale expectation/fixture corrections",
+  "runs": [
+    {
+      "scope": "49 affected suites",
+      "tests": 368,
+      "pass": 367,
+      "fail": 1,
+      "durationMs": 59531.7004,
+      "log": ".reports/autonomy-dependent-tests.txt"
+    },
+    {
+      "scope": "R1 cold replay corrected shared persistent source fixture and autonomous expected status",
+      "tests": 6,
+      "pass": 6,
+      "fail": 0,
+      "durationMs": 631.0189
+    },
+    {
+      "scope": "four changed R6 command/admin suites",
+      "tests": 41,
+      "pass": 40,
+      "fail": 1,
+      "durationMs": 590.8493
+    },
+    {
+      "scope": "R6 stale retired-command expectation corrected; failing case only",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "durationMs": 511.335
+    },
+    {
+      "scope": "R7 native turn journal",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "durationMs": 77.6724
+    },
+    {
+      "scope": "R7 segment review journal",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "durationMs": 181.8914
+    }
+  ],
+  "online": {
+    "guildId": "1467249344947159291",
+    "beforeRootCount": 24,
+    "afterRootCount": 24,
+    "retiredNarrativeOptionsAbsent": true,
+    "messagesSent": 0,
+    "globalRegistration": false,
+    "productionLogin": false
+  },
+  "holds": [
+    "Full mechanics parity/controller and temporary ruling execution adapters",
+    "Uncomposed human-specific Blaze adjudication replacement",
+    "Full semantic agency/privacy/grounding acceptance",
+    "Generation failure operational notice and invalid cold-draft AI repair improvement",
+    "NPC hearing/autonomous native world authorship and historical learning",
+    "Full crash/external uncertain-send reconciliation and populated legacy migration"
+  ]
+}

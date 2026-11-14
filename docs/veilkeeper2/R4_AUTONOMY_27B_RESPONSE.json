@@ -1,0 +1,41 @@
+{
+  "scope": "Actual local 27B inference and real native SQLite/root with synthetic Discord transport. No live Discord sends or human quality qualification.",
+  "model": "qwen3.5:27b",
+  "thinking": true,
+  "maxOutputTokens": 4096,
+  "timeoutMs": 90000,
+  "retries": 0,
+  "status": "published_to_synthetic_sdk",
+  "totalElapsedMs": 62087.8528,
+  "errors": [],
+  "hope": 3,
+  "liveDiscordCalls": 0,
+  "calls": [
+    {
+      "requestSha256": "ed6a37336533b036e9874b25a3164c3c4ed8975678571eb0072b5bf71768369c",
+      "elapsedMs": 61839.096099999995,
+      "response": {
+        "model": "qwen3.5:27b",
+        "created_at": "2026-11-14T17:41:29.8583818Z",
+        "message": {
+          "role": "assistant",
+          "content": "The desk is bare save for a single inkwell, its contents long dried into a black crust. Something's scratched into the underside of the tabletop—faint, deliberate grooves forming what might be initials or a cipher. Outside, the rain drums harder against the glass, and for a moment you catch your own reflection in the dark window, superimposed over the storm. Mira's shadow stretches across the floorboards, still as a statue.",
+          "thinking": "The player is asking what catches their character's attention in the room. They've described the room has a rain-streaked window and an empty desk, with Mira staying by the doorway. They want to know what catches their attention - this is asking for sensory details or observations about the scene.\n\nAs Veilkeeper GM, I should provide atmospheric, sensory details about what's in the room that might catch attention. I need to:\n1. Stay in character as GM\n2. Not write PC actions/thoughts/movements\n3. Provide concrete sensory details\n4. Keep it natural and brief\n5. Not fabricate dice, success, or resource changes\n6. Leave room for player choices\n\nThe scene notes show this is a GM portrayal with no specific records or trace data to reference. I should create fitting atmospheric details that answer what catches attention without resolving any mystery or forcing action.\n\nLet me provide sensory observations about the room - what's there, what might be notable, keeping it to 1-4 sentences with concrete details."
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 61822682000,
+        "load_duration": 13804444100,
+        "prompt_eval_count": 1584,
+        "prompt_eval_cached_count": 0,
+        "prompt_eval_duration": 6710802000,
+        "eval_count": 309,
+        "eval_duration": 41289747000
+      }
+    }
+  ],
+  "publishedText": [
+    "The desk is bare save for a single inkwell, its contents long dried into a black crust. Something's scratched into the underside of the tabletop—faint, deliberate grooves forming what might be initials or a cipher. Outside, the rain drums harder against the glass, and for a moment you catch your own reflection in the dark window, superimposed over the storm. Mira's shadow stretches across the floorboards, still as a statue."
+  ],
+  "assessment": "Operational autonomy demonstrated in one synthetic-SDK sample; grounding failure: invented inkwell/cipher despite an empty desk. No human or release quality acceptance."
+}

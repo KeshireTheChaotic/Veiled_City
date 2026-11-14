@@ -1,0 +1,12 @@
+# AI-GM autonomy — owner clarification
+
+Governing clarification2026-11-14, from the project owner's direct instruction. Apply with Audience-First, Creative-First, Agency-Preserving and Weighted Lore. This supersedes runtime plans that require Human-GM approval of generated narrative.
+
+- Veilkeeper autonomously authors and publishes narrative, dialogue and ordinary world portrayal through native source, audience, agency and consequence validation. There are no Human-GM narrative review, draft-approval or publish controls.
+- Ordinary conversation takes one audience-scoped model call. A detected material error may trigger bounded AI correction in the same authorized context. Persistent material-validation failure produces an honest operational notice when the destination remains authorized; it never asks a human to approve narration or invents a result. Generation/transport failures remain operational errors and preserve durable uncertainty.
+- For an unknown or conflicting Daggerheart mechanics rule, the AI-GM makes a reasonable temporary call, records the issue/basis/decision for the current session, and continues play. Reconciliation can occur after the session. An unimplemented native handler is an implementation gap and must not be represented as an unknown game rule.
+- Native rules still own calculations, dice, costs, consent and committed outcomes. A provisional interpretation cannot grant arbitrary state patches, fabricate rolls, force PC choices, rewrite protected canon or waive known ownership/privacy constraints. The native mechanical controller must execute consequential interpretations through supported validators.
+- PCs and human-controlled proxies remain exclusively player-controlled. NPC testimony remains attributed testimony. Canon/source administration, character imports, session configuration and deployment retain their legitimate administrative authority; those controls must not become gates on ordinary narrative.
+- Explicit offline/shadow/no-send mode remains available for testing. Live narrative operation is autonomous. Production deployment and cutover still require separate owner authorization.
+
+The previous human-reviewed publication path and proposed human-reviewed NPC testimony annotations are superseded. Preserve historical receipts and uncertain delivery states without resending them. Release/human quality acceptance remains a testing gate, not an approval prompt shown for each live narrative turn.

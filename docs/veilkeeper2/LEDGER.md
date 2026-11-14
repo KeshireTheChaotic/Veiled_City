@@ -2,7 +2,7 @@
 
 Updated2026-11-14. R0 and R1 are complete within their specified inventory/disposition and offline skeleton gates. R2–R8 and the overall rebuild remain incomplete. See PHASE_STATUS.md, R0_PHASE_REPORT.md and R1_PHASE_REPORT.md for evidence and exact limits.
 
-Working tree: D:/Library/Development/Veiled_City_2/rebuild; branch rebuild/veilkeeper2-audience-first. Frozen audit pin1ba6c7e15db1a66ba34b36336f31437beffe44d6; latest verified baseline15a8f44671f227c6bec69bf30744e03c5692809b. Production unchanged. No legacy runtime/tests retired.
+Working tree: D:/Library/Development/Veiled_City_2/rebuild; branch rebuild/veilkeeper2-audience-first. Frozen audit pin1ba6c7e15db1a66ba34b36336f31437beffe44d6; latest verified baseline15a8f44671f227c6bec69bf30744e03c5692809b. Production unchanged. Legacy production runtime/tests remain; superseded rebuild narrative approval code/tests are replaced as documented in R4_AUTONOMY_REPORT.md.
 
 R0 now inventories both revisions, assigns exact source-preservation destinations and records every opaque record/injected contract as an adoption/removal blocker. R1's actual offline composition rejects unknown operations, forged actor/source and stale revisions, preserves traces, reads only accepted packets and cannot execute gameplay through prose. Early phase completion does not qualify live gameplay or release those blockers.
 
@@ -11,3 +11,5 @@ Recent implemented slices include all player/GM export formats, authenticated du
 Binding constraints: exactly four generic AI capabilities; native rules own consequences; players own PCs/proxies; GM-private never enters audience inference. qwen3.5:27b is accepted for continued testing, not release. Computer use and subagents remain disallowed. Preserve unrelated dirty README.md and bot/src/v2/rules/hope-consent-ingress.js. Fresh changed-code/dependency tests only; never rerun an unchanged passed suite or resend an uncertain operation blindly.
 
 After qualified major phases, publish only the rebuild branch; no self-merge is needed in this worktree. Never merge into codex/clean-ai-gm-2026-10 or deploy production without separate authorization. At98% usage on either window, create a thorough handoff, set the active goal paused and stop until explicit resume. Full current handoff: RESUME_HANDOFF.md.
+
+Autonomy correction complete as a scoped R3/R4/R6/R7 slice: automatic validated publication, bounded scoped AI repair, durable part receipts/cold recovery, no Human-GM narrative commands, and provisional session mechanics journal. See R4_AUTONOMY_REPORT.md for actual test/model/online evidence and remaining holds; no additional whole phase completed.

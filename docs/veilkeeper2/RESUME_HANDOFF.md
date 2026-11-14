@@ -1,6 +1,6 @@
 # Veilkeeper 2.0 — current rebuild handoff
 
-Active checkpoint2026-11-14. R0 inventory/disposition and R1 offline-skeleton gates are complete. R2–R8 and the full goal remain incomplete. Completion is scoped to the exact early phase gates, not release or live game quality. Production unchanged.
+Active checkpoint2026-11-14. Latest owner clarification: ../AI_GM_AUTONOMY_SPEC.md; no Human-GM narrative approval. R0 inventory/disposition and R1 offline-skeleton gates are complete. R2–R8 and the full goal remain incomplete. Completion is scoped to the exact early phase gates, not release or live game quality. Production unchanged.
 
 ## Workspace and binding instructions
 
@@ -63,10 +63,22 @@ R2 next: see R2_REMAINING_WORK.md. Source-backed NPC perception/IC-speech/witnes
 
 R3: full current action terms/target/range/usage/cost/condition/owner readiness, Daggerheart2.0/house-rule parity and complete action controller. Root ordinary rolls remain disabled. Owner roll-choice evidence has executionAuthority:false. No supplied dice faces, invented target/range or scene-ID equivalence. Native UUID and legacy scene-composite mapping remains reviewed-migration work; scenePresence is descriptive, authoritative encounter ranges control rules.
 
-R4: sustained creative human-quality conversation, semantic agency/privacy/grounding and qualified publication. Local regex/repair and synthetic green checks are not semantic proof. Existing reviewed draft publication requires explicit fresh human-GM approval and exact source/audience/receipt revalidation; automatic prose remains unqualified.
+R4: sustained creative human-quality conversation, semantic agency/privacy/grounding and qualified publication. Local regex/repair and synthetic green checks are not semantic proof. Native narrative now publishes autonomously after exact source/audience/context/receipt validation, with bounded AI repair and durable recovery. Human-GM narrative approval is removed; sustained semantic quality remains unqualified. See R4_AUTONOMY_REPORT.md.
 
 R5: meaningful independent NPC/faction actions and resources, other fictional events/time opportunities, pending player response windows, presence/witness/disclosure and fair long continuity. Current Director retains private intentions only.
 
 R6: remaining sheet imports and commands, setup/late arrivals/proxies/private multiplayer/voice and human acceptance. Private import legacy campaign snapshot/GM-log parity and uncertain transport reconciliation remain holds.
 
 R7: populated legacy/pre-manifest conversion, external publication reconciliation, legacy/cross-machine writer exclusion and complete crash/fault/performance/revocation acceptance. R8: independent parity/privacy/quality/migration/human release and separately authorized production cutover. Do not mark full goal complete for R0/R1 or other slices.
+
+## Current autonomy correction
+
+R4_AUTONOMY_REPORT.md, R4_AUTONOMY_ACCEPTANCE.json and R4_AUTONOMY_HASHES.json record the scoped implementation and exact source/test snapshot. Narrative draft-list/publish commands and their native approval module are retired after replacement checks. Explicit VK2_NO_SEND=1 is shadow testing only. Fresh checked native drafts publish without human approval; invalid fragments get at most two scoped AI repairs, then an honest system notice. Actual inference failure preserves a claim/error rather than retrying. Cold never-sent drafts revalidate complete lineage; publishing/uncertain/published rows never blindly resend. Independent NPC attribution includes native sceneNpcRefs; no autonomous hearing/canon promotion is invented.
+
+Unknown/conflicting mechanics use action_propose rules.provisional: session-scoped immutable AI-GM decision, pending post-session reconciliation, no arbitrary effect authority. Four generic capabilities unchanged. Full R3 action execution, rulings-to-validator composition, and retirement/replacement of uncomposed human-specific Blaze adjudication remain required before full gameplay. Character/canon administration is separate from ordinary narrative and must not become an approval gate.
+
+419 distinct checks in55 files pass after two stale test failures were corrected (see report for initial failures/reruns). New real 27B thinking probe made one call:61839.0961ms transport,62087.8528ms whole turn, published through synthetic SDK, zero live Discord messages. It invented an inkwell and possible cipher despite an empty desk; retain as grounding failure. Original first probe failed before model access while Ollama was stopped. Installed Ollama serve was started hidden for the informative attempt, PID9464 at launch; do not target without fresh identity verification.
+
+Actual Discord test guild1467249344947159291 command registration/readback succeeded:24 roots, no drafts/publish-draft options; previous schema retained in ignored .reports/autonomy-discord-commands-before.json. No global registration or production login. Authorized credential file loaded by path only. Historical one-send message must still never be resent. New raw model directory .reports/autonomy-27b-bc361f18-2bb0-49f5-ac6d-c704f2cf6209; failed connection directory .reports/autonomy-27b-14865826-4e9f-4fc0-817a-ada8bfa59040; no automatic retries.
+
+Next exact work: continue R2 autonomous speech/perception and separate historical cognition, not the superseded manual NPC annotation candidate. Finish world knowledge/canon authority and long-history weighting. Then R3 native action/ruling execution and full parity; R4 grounding/semantic agency/continuity plus lower latency; R7 complete crash/external reconciliation. No phase beyond R1 is complete. Keep production unchanged; publish only qualified major phases to rebuild branch. Preserve unrelated README and hope-consent ingress edits. Check account usage and honor the standing98% pause/handoff rule.

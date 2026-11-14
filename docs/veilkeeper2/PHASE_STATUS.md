@@ -7,11 +7,13 @@ Updated2026-11-14. Production unchanged. Completed early gates do not qualify th
 | R0 | Complete | R0_PHASE_REPORT.md; exhaustive inventory/dispositions at pin and current upstream. Opaque contracts remain explicit adoption/removal blockers; zero deletions. |
 | R1 | Complete | R1_PHASE_REPORT.md; offline boot, authenticated/scoped composition, four generic capabilities, native registry, gateway and no-send outbox. |
 | R2 | Incomplete | Commit-time correction/proposal authority slice complete; remaining blockers and acceptance work: R2_REMAINING_WORK.md. |
-| R3 | Incomplete | Full Daggerheart/house-rule parity and authoritative action controller; ordinary rolls disabled. |
-| R4 | Incomplete | Sustained grounded human-quality conversation, independent evaluation and qualified publication. |
+| R3 | Incomplete | Temporary unknown/conflicting-rule journal implemented; full Daggerheart/house-rule parity and authoritative action controller remain; ordinary rolls disabled. |
+| R4 | Incomplete | Autonomous publication/repair and session ruling journal implemented; sustained grounded human-quality conversation and independent evaluation remain. |
 | R5 | Incomplete | NPC/faction consequences, response opportunities, world pressure and sustained continuity. |
 | R6 | Incomplete | Remaining commands/imports/setup/late arrivals/private multiplayer/voice and human acceptance. |
 | R7 | Incomplete | Populated legacy migration, uncertain external delivery reconciliation and complete fault/performance acceptance. |
 | R8 | Incomplete | Independent parity/privacy/quality/migration/human release and separately authorized cutover. |
 
 Current implementation details, constraints, evidence and next exact steps: RESUME_HANDOFF.md. Earlier slice reports are historical; their former whole-phase holds are superseded only by the specific completed phase gates above. Full R0–R8 objective remains active and incomplete.
+
+Owner autonomy clarification: ../AI_GM_AUTONOMY_SPEC.md. R4_AUTONOMY_REPORT.md supersedes former Human-GM narrative approval plans. Narrative is autonomous; mechanical consequences remain native.

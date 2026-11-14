@@ -8,6 +8,8 @@ These four specifications are the core values of the project and override any ot
 [Agency-Preserving Specification](AGENCY_PRESERVING_SPEC.md).
 [Weighted-Lore Specification](WEIGHTED_LORE_FRAMEWORK.md).
 
+Owner clarification2026-11-14: narrative is autonomous and has no Human-GM review/approval options. Unknown or conflicting Daggerheart mechanics receive a temporary AI-GM ruling and post-session reconciliation. See [AI-GM Autonomy](docs/AI_GM_AUTONOMY_SPEC.md); preserve native consequences, player ownership and audience privacy.
+
 
 
 ## Coding rules

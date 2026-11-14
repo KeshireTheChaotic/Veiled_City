@@ -11,7 +11,7 @@ import {createOllamaProvider} from './ollama-provider.js';
 import {createCallBudget} from './provider-budget.js';
 /** Inference is a second opt-in: VK2_INFERENCE=1; model-config.json defaults to local Ollama.
  * VK2_PROVIDER=openai explicitly selects the existing remote/ChatGPT path. Both retain
- * VK2_MAX_TURNS (1-100, default 10). Turns become withheld drafts; nothing is sent to Discord.
+ * VK2_MAX_TURNS (1-100, default 10). Live turns publish autonomously; VK2_NO_SEND=1 is shadow mode.
  */
 export async function createOpenAIProviderFromEnv(env){
   const chatgpt=String(env.AI_AUTH_MODE??'').trim().toLowerCase()==='chatgpt',{OPENAI_API_KEY:apiKey}=env,model=env.VK2_MODEL||(chatgpt?env.OPENAI_GM_MODEL:null),maxCalls=Number(env.VK2_MAX_TURNS??10);
@@ -43,7 +43,8 @@ export function gmPolicyFromEnv(env){
  * read-only. Stores start in a new/empty directory; VK2_RESUME=1 verifies an existing native manifest.
  * Required: VK2_NATIVE=1, VK2_NATIVE_DIR, VK2_LEGACY_DB, DISCORD_TOKEN (may come from the legacy .env named by
  * VK2_ENV_FILE) and VK2_ALLOWED_GUILD_ID: events from any other guild are ignored.
- * Optional natural-message inference produces withheld drafts; publication is separate.
+ * Natural-message inference publishes autonomously after native validation.
+ * VK2_NO_SEND=1 selects explicit shadow testing; it is not a Human-GM approval mode.
  * Native launchers share a local guild lease across worktrees/data directories.
  * Packaged/custom layouts require VK2_GUILD_LEASE_DIR, identical for all launchers.
  * VK2_PRIVATE_IMPORTS=1 initializes a private hook/narrative store on a fresh run.
@@ -63,7 +64,7 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   try{
     const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
     repository=openRepository(legacyDb);client=createClient();
-    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,directorEnabled:env.VK2_DIRECTOR==='1',privateImportsEnabled,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
+    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,directorEnabled:env.VK2_DIRECTOR==='1',publicationEnabled:env.VK2_NO_SEND!=='1',privateImportsEnabled,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(turn,request)=>console.log('native-turn',request.messageId,turn.delivery?.status??'shadow_no_send'),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
     runtime.seal();await client.login(token);
   }catch(error){await closeResources();throw error;}
   let closed=false;

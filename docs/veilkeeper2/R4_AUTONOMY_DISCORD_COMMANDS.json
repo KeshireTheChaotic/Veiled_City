@@ -1,0 +1,10 @@
+{
+  "guildId": "1467249344947159291",
+  "scope": "Test guild command schema only; no bot login, gameplay, global registration or messages.",
+  "beforeCount": 24,
+  "afterCount": 24,
+  "retiredNarrativeOptionsAbsent": true,
+  "commandSchemaSha256": "6857ef53cf17a231e123eb80687f082f63273db1320165a9962c264c991403e6",
+  "priorSchemaSha256": "e0a963f59680ba04d293a5cbb2b16d56073cf65f93d1b1f4cf60cc73c9d649d6",
+  "readbackRecordSha256": "267e12b34b60ad3149c697bd1f3434a5c29e4684fecbc0638d8f2e3944a4dba2"
+}

@@ -1,0 +1,18 @@
+{
+  "source": "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs",
+  "removed": [
+    "GM lists withheld drafts privately, and non-GMs and unconfigured services get nothing",
+    "GM approves an exact saved draft and it is sent once to its original audience without knowledge acknowledgement",
+    "a wrong fingerprint, changed audience, oversize text or non-GM sends nothing",
+    "an unconfirmed send holds the draft as uncertain and is never retried",
+    "publish-draft re-reads the live audience and scene at send time and sends nothing if either changed",
+    "a scene closed while awaiting publication audience reads prevents a send claim",
+    "a session closed during channel resolution prevents publication",
+    "matching recipients do not authorize a draft from another campaign, scene or source",
+    "revoking the original player source while looking up the channel prevents a draft claim",
+    "a failed original-message refresh prevents send and leaves the saved draft unclaimed",
+    "context visibility revoked during delivery preparation prevents a draft send claim",
+    "revoked native effect lineage prevents publication without another cost or send claim"
+  ],
+  "reason": "Owner requires autonomous narrative. Source/audience/context/receipt/replay behavior is replaced by R4 autonomous publication and migrated R7 cold-source/context suites; human approval behavior is deliberately removed."
+}

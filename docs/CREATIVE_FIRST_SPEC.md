@@ -18,7 +18,7 @@ Creative-First makes invention and independent fictional judgment central to Vei
 6. **Reward unexpected approaches.** Evaluate unusual declared intentions fairly and invent plausible world responses without requiring players to choose a prewritten option.
 7. **Use continuity as creative material.** Recur to established relationships, unresolved events, and weighted narrative memories when relevant; let emergent details gain significance through actual play.
 8. **Respect consequential limits.** No invented dice, unsupported powers, resource grants, combatants, secret knowledge, travel, canon overrides, or PC decisions merely because they would make a better scene.
-9. **Favor autonomous, timely play.** Ordinary world invention should not require routine human approval; genuine conflicts with existing authority are handled through the appropriate review path.
+9. **Favor autonomous, timely play.** Narrative, NPC portrayal and ordinary world invention have no Human-GM approval gate. Unknown or conflicting Daggerheart mechanics receive a temporary AI-GM call and post-session reconciliation. Native source, agency and consequence authority still apply. See [AI-GM Autonomy](AI_GM_AUTONOMY_SPEC.md).
 
 ## 1. Independent invention contract
 

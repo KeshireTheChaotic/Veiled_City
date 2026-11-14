@@ -1,8 +1,9 @@
 import {createHash} from 'node:crypto';
 import {createProseMaterialReview} from './prose-material-review.js';
+import {GM_CONVERSATION_INSTRUCTIONS} from './conversation-instructions.js';
 
 /** R1 no-send outbox. Queued prose remains unreviewed and cannot update recipient knowledge. */
-export function createOfflinePublicationQueue({gateway,contextAuthority,materialReview=createProseMaterialReview()}){
+export function createOfflinePublicationQueue({gateway,contextAuthority,materialReview=createProseMaterialReview(),repairProvider=null}){
   if(typeof gateway?.inspect!=='function'||typeof contextAuthority?.audience!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof materialReview?.review!=='function')throw new TypeError('Draft and audience authorities required');
   const rows=new Map();
   function queue(draft,{additionalGrants=[],receiptDependencies=[]}={}){
@@ -46,5 +47,11 @@ export function createOfflinePublicationQueue({gateway,contextAuthority,material
     if(saved&&typeof saved.then==='function'){Promise.resolve(saved).catch(()=>{});throw new Error('Synchronous native repair commit required');}
     row.retired.push(segment);row.fragments=next;return result;
   }
-  return Object.freeze({queue,inspect,review,repair});
+  async function proposeRepair(id,segmentId,{signal}={}){
+    if(typeof repairProvider?.generate!=='function')throw new Error('Scoped AI repair provider unavailable');signal?.throwIfAborted();const before=review(id),segment=before.segments.find(s=>s.id===segmentId&&s.status==='withheld');if(!segment)throw new Error('Current withheld fragment required');
+    const row=rows.get(id),value=gateway.inspect(row.draft),packet=contextAuthority.inspect(value.grant);
+    const result=await repairProvider.generate({instructions:GM_CONVERSATION_INSTRUCTIONS+'\nReplace only the supplied invalid fragment. Preserve compatible world/NPC material, remove unauthorized PC agency and unsupported results, and leave unresolved outcomes unresolved. Return one replacement paragraph, with no explanation or internal bookkeeping. Do not ask for Human-GM review.',context:{...packet,repair:{fragment:segment.text,issues:segment.issues.map(i=>({kind:i.kind,excerpt:i.excerpt}))}},signal});
+    signal?.throwIfAborted();inspect(id);if(JSON.stringify(review(id))!==JSON.stringify(before)||typeof result?.text!=='string'||!result.text.trim()||result.toolCalls?.length)throw new Error('Scoped AI repair invalid or stale');return result.text.trim();
+  }
+  return Object.freeze({queue,inspect,review,repair,proposeRepair});
 }

@@ -24,8 +24,6 @@ export function buildNativeCommands(){
     sub('register-character','Register an existing character to its owner in the active scene',string('character','Character id')),
     sub('rebind-character','Point a registered character at its current owner, in place',string('character','Character id')),
     sub('bootstrap-preview',"Privately preview a character's saved sheet before approving its native state",string('character','Character id')),
-    sub('bootstrap-review',"Approve the exact previewed sheet and create the character's native state",string('character','Character id'),string('snapshot','Snapshot hash shown by bootstrap-preview',true,true)),
-    sub('drafts','Privately list withheld GM drafts awaiting your review'),
-    sub('publish-draft','Send one reviewed draft once to its original audience',string('source','Draft source id from drafts'),string('fingerprint','Draft fingerprint from drafts',true,true)));
+    sub('bootstrap-review',"Approve the exact previewed sheet and create the character's native state",string('character','Character id'),string('snapshot','Snapshot hash shown by bootstrap-preview',true,true)));
   assertValidCommandSchema(commands);return commands;
 }

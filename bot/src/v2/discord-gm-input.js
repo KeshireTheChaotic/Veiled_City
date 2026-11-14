@@ -1,7 +1,6 @@
 ﻿const SUBCOMMANDS={
   'session-reopen':['session-reopen',{session:'session'}],'register-character':['pc-register',{actor:'character'}],'rebind-character':['pc-rebind',{actor:'character'}],
-  'bootstrap-preview':['pc-bootstrap-preview',{actor:'character'}],'bootstrap-review':['pc-bootstrap-review',{actor:'character',snapshotHash:'snapshot'}],
-  'drafts':['draft-list',{}],'publish-draft':['draft-publish',{source:'source',fingerprint:'fingerprint'}]
+  'bootstrap-preview':['pc-bootstrap-preview',{actor:'character'}],'bootstrap-review':['pc-bootstrap-review',{actor:'character',snapshotHash:'snapshot'}]
 };
 /** The typed `/vc-gm` subcommands a human GM may declare, as the closed native operation input
  * (`{op, ...fields}`) that the authority and the command service both verify. `/vc-roll` is

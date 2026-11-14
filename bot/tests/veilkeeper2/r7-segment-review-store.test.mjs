@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {mkdtempSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
@@ -37,7 +38,7 @@ test('forged dispositions, source substitution and final authorization failure c
   assert.throws(()=>f.store.saveReview({...f.claim,token:'forged'},f.review,{check:f.check}),/source-bound/);
   let checks=0;assert.throws(()=>f.store.saveReview(f.claim,f.review,{check:()=>{if(++checks===2)throw new Error('source revoked');}}),/source revoked/);assert.equal(f.store.inspectNative('c','source').data.review,undefined);
   f.store.saveReview(f.claim,f.review,{check:f.check});const row=f.store.inspectNative('c','source');
-  f.store.beginPublication('c','source',{approvedFingerprint:row.data.fingerprint,approval:{principal:'gm'},check:f.check});assert.throws(()=>f.store.saveReview(f.claim,f.review,{check:f.check}),/source-bound/);assert.equal(f.store.inspectNative('c','source').status,'publishing');
+  f.store.beginPublication('c','source',{expectedFingerprint:row.data.fingerprint,authorization:{authority:'native_ai_gm',kind:'system_notice',sourceRef:'source',sourceRevision:'1',traceId:'t',reviewHash:row.data.review.fingerprint,textHash:createHash('sha256').update(JSON.stringify("I couldn't finish that narration. Any confirmed dice or resource results still stand.")).digest('hex'),parts:["I couldn't finish that narration. Any confirmed dice or resource results still stand."]},check:f.check});assert.throws(()=>f.store.saveReview(f.claim,f.review,{check:f.check}),/source-bound/);assert.equal(f.store.inspectNative('c','source').status,'publishing');
 });
 
 test('text edits require one held-segment repair with exact ancestry, never an ordinary review update',t=>{

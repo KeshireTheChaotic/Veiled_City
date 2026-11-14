@@ -5,7 +5,7 @@ const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
 /** Fixed native engine bridge. A reference is not consent, a cost, or a state patch.
  * Resource receipt projections are owner-private; public disclosure needs its own authority.
  */
-export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null,onCommittedReceipt=null,onRecallError=()=>{}}){
+export function createNativeActionAuthority({sourceAuthority,readActor,actionStore,inspectBlazeCost,requestConsent=null,rulings=null,onCommittedReceipt=null,onRecallError=()=>{}}){
   if(typeof sourceAuthority?.inspectReference!=='function'||typeof sourceAuthority?.revalidate!=='function'||typeof readActor!=='function'||typeof actionStore?.readOutcome!=='function')throw new TypeError('Native source, actor and action store required');
   if(onCommittedReceipt!==null&&typeof onCommittedReceipt!=='function'||typeof onRecallError!=='function')throw new TypeError('Native receipt observer required');
   const costs=createAtomicHopeCostAuthority({sourceAuthority,readActor,readActionTerms:actionStore.readActionTerms,readConsent:actionStore.readConsent,actionStore,inspectBlazeCost});
@@ -16,12 +16,14 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
   }
   function privateSource(source){if(!sourceAuthority.revalidate(source)||source.recipients.length!==1||source.recipients[0]!==source.principal)throw new Error('Owner-private action inspection required');}
   function inspect(source,ref){
+    if(rulings&&typeof ref==='string'&&ref.startsWith('ruling:'))return rulings.inspect(source,ref);
     privateSource(source);if(!id(ref))throw new Error('Native receipt reference required');
     const action=actionStore.read(source.campaign,ref);owner(source,action);
     const result=inspectHopeReceipt({actionStore,campaignId:source.campaign,actionRef:ref,actorId:action.actorId,ownerUserId:source.principal,sceneId:action.sceneId});
     privateSource(source);return result;
   }
   function propose(source,input){
+    if(rulings&&input.action?.kind==='rules.provisional')return rulings.record(source,input);
     privateSource(source);
     if(input.action?.kind==='hope_cost.request_consent'){
       const p=input.action.parameters;if(typeof requestConsent!=='function'||!p||Object.keys(p).join(',')!=='action_ref'||!id(p.action_ref))throw new Error('Native cost request reference required');
@@ -51,6 +53,7 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
     return true;
   }
   function context(source){
+    if(rulings&&(source.recipients.length!==1||source.recipients[0]!==source.principal))return Object.freeze({status:'available',operations:[],adjudication:rulings.describe(source),effects_committed:false});
     privateSource(source);
     if(typeof actionStore.readyActionMetadata!=='function'||typeof actionStore.acceptedConsentRefs!=='function')throw new Error('Native action discovery unavailable');
     const rows=actionStore.readyActionMetadata(source.campaign,source.principal,source.scene);
@@ -74,7 +77,7 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
       for(const action of pending){if(action.sourceRef!==source.id||action.sourceRevision!==source.revision)continue;owner(source,action);operations.push(Object.freeze({source_ref:source.id,actor_ref:action.actorId,action:Object.freeze({kind:'hope_cost.request_consent',parameters:Object.freeze({action_ref:action.id})})}));}
       if(operations.length>16)throw new Error('Too many eligible native proposals');
     }
-    privateSource(source);return Object.freeze({status:'available',operations:Object.freeze(operations),effects_committed:false});
+    privateSource(source);return Object.freeze({status:'available',operations:Object.freeze(operations),...(rulings?{adjudication:rulings.describe(source)}:{}),effects_committed:false});
   }
   // Exact factual recap only. This is not approval of arbitrary prose or a new effect.
   function authorizeMaterial(candidate){
@@ -91,5 +94,5 @@ export function createNativeActionAuthority({sourceAuthority,readActor,actionSto
       return receipt.effects.length===1&&receipt.effects[0].kind==='resource_spent'&&receipt.effects[0].resource==='hope'&&receipt.effects[0].amount===Number(match[1]);
     }catch{return false;}
   }
-  return Object.freeze({context,authorizeMaterial,verifyDependencies,supports:kind=>kind==='hope_cost.commit'||typeof requestConsent==='function'&&kind==='hope_cost.request_consent',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'},...(requestConsent?[{kind:'hope_cost.request_consent',version:'1'}]:[])]});
+  return Object.freeze({context,authorizeMaterial,verifyDependencies,supports:kind=>Boolean(rulings)&&kind==='rules.provisional'||kind==='hope_cost.commit'||typeof requestConsent==='function'&&kind==='hope_cost.request_consent',propose,inspect,describe:()=>[{kind:'hope_cost.commit',version:'1'},...(rulings?[{kind:'rules.provisional',version:'1'}]:[]),...(requestConsent?[{kind:'hope_cost.request_consent',version:'1'}]:[])]});
 }

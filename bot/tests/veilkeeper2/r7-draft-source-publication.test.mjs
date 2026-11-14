@@ -10,7 +10,7 @@ import {createContextAuthority} from '../../src/v2/context-authority.js';
 import {createSourceAuthority} from '../../src/v2/source-authority.js';
 import {createDiscordTurnRunner} from '../../src/v2/discord-turn-runner.js';
 import {createDiscordIntake} from '../../src/v2/discord-intake.js';
-import {createNativeDraftPublication} from '../../src/v2/native-draft-publication.js';
+import {createAutonomousPublication} from '../../src/v2/autonomous-publication.js';
 
 async function fixture(t){
   const directory=mkdtempSync(join(tmpdir(),'vk2-publication-source-'));
@@ -37,13 +37,9 @@ async function fixture(t){
   const intake=createDiscordIntake({sceneStore:scenes,messageReader:{read:async()=>{live.reads++;if(live.error)throw new Error(live.error);return {messageRecord:live.message,audience:{channelRecord:records.find(r=>r.kind==='channel').data,fingerprint:'live-channel'},fingerprint:'live-message'};}}});
   assert.deepEqual(turns.inspectNative('c',saved.source).data.review.value,reviewed);
   const authority=createSourceAuthority({...scenes.readers,sourceRegistry:registry}),sent=[];
-  const publication=createNativeDraftPublication({sceneStore:scenes,gmAuthority:{check:()=>{}},drafts:{
-    inspectReceipts:(c,s,r,entries)=>{if(!Array.isArray(entries)||entries.length)throw new Error('Unexpected native receipt lineage');},
-    inspectContext:(c,s,r,manifests)=>{if(!Array.isArray(manifests)||!manifests.length)throw new Error('Saved context lineage required');const context=createContextAuthority({sourceAuthority:authority,readActor:scenes.readers.readActor,records:{metadata:()=>null,readText:()=>null}});for(const manifest of manifests)context.verifyDependencies(authority.inspectReference(s,r),manifest);},
-    refreshSource:async(c,s,r,{signal})=>{const event=authority.eventForReference(s);await intake.ingest({guildId:c,channelId:'channel',sceneId:'scene',messageId:event.messageId,userId:event.userId,actorId:event.actorId,mode:'private',ownerUserId:event.userId},{signal});},
-    inspectSource:(c,s,r)=>authority.inspectReference(s,r),recent:(c,n)=>turns.recentDrafts(c,n),begin:(c,s,o)=>turns.beginPublication(c,s,o),finish:(c,s,m)=>turns.finishPublication(c,s,m),uncertain:(c,s,r)=>turns.markPublicationUncertain(c,s,r)
-  },audiences:{read:async()=>({channelRecord:scenes.readers.readChannel('c','channel')})},resolveChannel:async()=>({id:'channel',guildId:'c',send:async payload=>{sent.push(payload);return {id:'sent'};}})});
-  const publish=()=>publication.publish({operation:'draft_publish',campaignId:'c',targetRef:saved.source,principal:'gm',sourceRef:'approval',sourceRevision:'1'},{fingerprint:saved.fingerprint});
+  const replay=createDiscordTurnRunner({intake,provider:{generate:async()=>{throw new Error('Cold replay must not infer');}},turnStore:turns,applicationOptions:{readers:{...scenes.readers,sourceRegistry:registry},records:{metadata:()=>null,readText:()=>null}}});
+  const publication=createAutonomousPublication({turns:replay,sceneStore:scenes,audiences:{read:async()=>({channelRecord:scenes.readers.readChannel('c','channel')})},resolveChannel:async()=>({id:'channel',guildId:'c',send:async value=>{sent.push(value);return {id:'sent'};}})});
+  const publish=async()=>{const resumed=await replay.resumePublication('c',saved.source);return publication.publish(resumed.publication.id);};
   let change=0;
   function update(kind,patch){
     const base=records.find(r=>r.kind===kind),current=scenes.readers[{scene:'readScene',session:'readSession',actor:'readActor',message:'readMessage',channel:'readChannel'}[kind]]('c',base.data.id);
@@ -53,7 +49,7 @@ async function fixture(t){
 }
 
 test('one-inference saved draft retains original source authority after reopening all stores',async t=>{
-  const f=await fixture(t);assert.deepEqual(await f.publish(),{messageId:'sent'});assert.equal(f.sent.length,1);assert.equal(f.live.reads,2);assert.equal(f.turns.inspectNative('c',f.saved.source).status,'published');await assert.rejects(f.publish(),/current saved draft/);assert.equal(f.sent.length,1);
+  const f=await fixture(t);assert.equal((await f.publish()).status,'published');assert.equal(f.sent.length,1);assert.ok(f.live.reads>=2);assert.equal(f.turns.inspectNative('c',f.saved.source).status,'published');await assert.rejects(f.publish(),/never-sent publication lineage/);assert.equal(f.sent.length,1);
 });
 
 test('persisted drafts reject message edits, ownership changes, absence and scene close/reopen',async t=>{

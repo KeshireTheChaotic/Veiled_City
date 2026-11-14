@@ -1,10 +1,10 @@
 import {createHash} from 'node:crypto';
 import {MessageFlags} from 'discord.js';
 import {createNativeSessionSetup} from './native-session-setup.js';
-import {createNativeDraftPublication} from './native-draft-publication.js';
+
 import {createNativeCharacterRegistration} from './native-character-registration.js';
 import {gmCommandInput} from './discord-gm-input.js';
-import {createDiscordAudienceReader} from './discord-audience-reader.js';
+
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 /** Routes observed human GM commands: `session start`, private `pc-bootstrap-preview`
  * exact `pc-bootstrap-review` and `session end`. Each uses a private acknowledgement, a durable closed
@@ -12,10 +12,9 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
-export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,drafts=null,audienceReader=null,readGmRoleId=()=>null,onError=()=>{}}){
-  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function'||drafts&&(typeof drafts.recent!=='function'||typeof drafts.begin!=='function'||typeof drafts.finish!=='function'||typeof drafts.uncertain!=='function'))throw new TypeError('Native GM session dependencies required');
-  const audiences=audienceReader??createDiscordAudienceReader({client}),setup=createNativeSessionSetup({sceneStore,gmAuthority}),registration=createNativeCharacterRegistration({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
-  const publication=drafts?createNativeDraftPublication({sceneStore,gmAuthority,drafts,audiences,readGmRoleId,resolveChannel:async(c,id)=>{const guild=await client.guilds.fetch({guild:c,force:true});return guild.channels.fetch(id,{force:true});}}):null;
+export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,readGmRoleId=()=>null,onError=()=>{}}){
+  if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function')throw new TypeError('Native GM session dependencies required');
+  const setup=createNativeSessionSetup({sceneStore,gmAuthority}),registration=createNativeCharacterRegistration({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
     /** Returns {kind, ref} for a claimed GM command, else null. */
   function route(e){
@@ -26,8 +25,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(input){
         const ref=`${input.op}:${input.actor??input.source??input.session??''}`;
         if(input.op==='session-reopen')return {kind:'reopen',ref,raw:input};
-        if(drafts&&input.op==='draft-publish')return {kind:'publish',ref,raw:input};
-        if(drafts&&input.op==='draft-list')return {kind:'drafts',ref,raw:input};
         if(characters&&(input.op==='pc-register'||input.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref,raw:input};
         if(bootstrap&&(input.op==='pc-bootstrap-preview'||input.op==='pc-bootstrap-review'))return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref,raw:input};
       }
@@ -46,8 +43,6 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
       if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
-      else if(r.kind==='publish'){if(proof.operation!=='draft_publish')throw new Error('Draft publication authority required');receipt=await publication.publish(proof,r.raw,{signal:controller.signal});text='Approved draft sent once to its original audience. It was not acknowledged as knowledge or canon.';}
-      else if(r.kind==='drafts'){if(proof.operation!=='draft_list')throw new Error('Draft review authority required');const rows=drafts.recent(c,5);receipt={count:rows.length};text=rows.length?`GM only. Withheld drafts, nothing was sent. Send one with /vc-gm publish-draft (source and fingerprint):\n${rows.map((d,i)=>`${i+1}) ${d.source} fingerprint ${d.fingerprint}: ${String(d.draft.text).slice(0,180)}`).join('\n').slice(0,1700)}`:'No withheld drafts yet.';}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}
       else if(r.kind==='rebind'){if(proof.operation!=='pc_rebind')throw new Error('Rebinding authority required');receipt=registration.register(proof,characters,true);text='Control rebound to the repository owner in place. Resources, position and attendance were not changed; earlier controller proofs are invalid.';}
