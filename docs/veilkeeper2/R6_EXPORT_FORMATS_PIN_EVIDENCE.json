@@ -1,0 +1,333 @@
+{
+  "scope": "Static pure serializer bodies with BOM/CRLF normalized, not rendered Word layout or runtime parity. Whole-file hashes retain exact bytes. gmHooksMarkdown deliberately adds imported hooks/source payloads omitted by the original Markdown/DOCX path.",
+  "revisions": [
+    {
+      "commit": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+      "path": "bot/src/character-export.js",
+      "sha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "functions": [
+        {
+          "name": "xmlEscape",
+          "line": 8,
+          "endLine": 11,
+          "sha256": "92d9b6345a9765dd8e380ccdc65a3078d7770df28aa495e6746b60ebb5eccde2"
+        },
+        {
+          "name": "mdValue",
+          "line": 12,
+          "endLine": 16,
+          "sha256": "aa6eccaf728927593ebf2db91e58c7b0392a2bfd259301991d4dd54fc0de4036"
+        },
+        {
+          "name": "normalizeExperiences",
+          "line": 17,
+          "endLine": 19,
+          "sha256": "2d35c1a6ea5bfea90553e48a5ad11253de75fd187d28e4d0824c665ca41492d8"
+        },
+        {
+          "name": "normalizeCards",
+          "line": 20,
+          "endLine": 22,
+          "sha256": "cb774bf432c69966f3fda8badb69be39e402f9216970c2e9aabe57803d8c803e"
+        },
+        {
+          "name": "section",
+          "line": 125,
+          "endLine": 128,
+          "sha256": "57cf524faf83e0b418cda6aeb44a34c469d02698902a3f13aac19a4ff93f467a"
+        },
+        {
+          "name": "objectBullets",
+          "line": 129,
+          "endLine": 131,
+          "sha256": "501f64f0202c01d577a00e11b276f827be8a824d6a570c60583a6c66da524b35"
+        },
+        {
+          "name": "playerMarkdown",
+          "line": 133,
+          "endLine": 171,
+          "sha256": "ba67b4474af242009006a5dfd5492b7c1225801c3ca3242106947496e13e5a7a"
+        },
+        {
+          "name": "gmHooksMarkdown",
+          "line": 173,
+          "endLine": 188,
+          "sha256": "0d088a74273aaf70f5af9c03610a7ccc4f3e8297a2eb64fda5ba075a59aec5b8"
+        },
+        {
+          "name": "gmPrivateMarkdown",
+          "line": 189,
+          "endLine": 199,
+          "sha256": "d014e22b973edf67590dfbcf032c0dca5d0919ce8a5505baf833e2a7812b83d8"
+        },
+        {
+          "name": "gmCanonMarkdown",
+          "line": 200,
+          "endLine": 208,
+          "sha256": "0f486e8ea2a9ca4258073458da964ded3002b0da2b651f6a70c7fdbd8e3aca79"
+        },
+        {
+          "name": "docxParagraph",
+          "line": 215,
+          "endLine": 221,
+          "sha256": "eb0188f9f96e039a7a5b304ce3c645bc0b57dc9bf0426ed109cfbf5bfc4d5a8e"
+        },
+        {
+          "name": "markdownToDocumentXml",
+          "line": 222,
+          "endLine": 234,
+          "sha256": "c92397a5ecb478141c2106fc996aa949a22f0b421d007fb8f33ee49738d14051"
+        },
+        {
+          "name": "markdownToDocx",
+          "line": 235,
+          "endLine": 245,
+          "sha256": "96f29ccb39bd19eb28849af6376b3f1cec6516084ed29e610b3ebbfbadb040e2"
+        }
+      ]
+    },
+    {
+      "commit": "15a8f44671f227c6bec69bf30744e03c5692809b",
+      "path": "bot/src/frameworks/character/character-export.js",
+      "sha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "functions": [
+        {
+          "name": "xmlEscape",
+          "line": 8,
+          "endLine": 11,
+          "sha256": "92d9b6345a9765dd8e380ccdc65a3078d7770df28aa495e6746b60ebb5eccde2"
+        },
+        {
+          "name": "mdValue",
+          "line": 12,
+          "endLine": 16,
+          "sha256": "aa6eccaf728927593ebf2db91e58c7b0392a2bfd259301991d4dd54fc0de4036"
+        },
+        {
+          "name": "normalizeExperiences",
+          "line": 17,
+          "endLine": 19,
+          "sha256": "2d35c1a6ea5bfea90553e48a5ad11253de75fd187d28e4d0824c665ca41492d8"
+        },
+        {
+          "name": "normalizeCards",
+          "line": 20,
+          "endLine": 22,
+          "sha256": "cb774bf432c69966f3fda8badb69be39e402f9216970c2e9aabe57803d8c803e"
+        },
+        {
+          "name": "section",
+          "line": 125,
+          "endLine": 128,
+          "sha256": "57cf524faf83e0b418cda6aeb44a34c469d02698902a3f13aac19a4ff93f467a"
+        },
+        {
+          "name": "objectBullets",
+          "line": 129,
+          "endLine": 131,
+          "sha256": "501f64f0202c01d577a00e11b276f827be8a824d6a570c60583a6c66da524b35"
+        },
+        {
+          "name": "playerMarkdown",
+          "line": 133,
+          "endLine": 171,
+          "sha256": "ba67b4474af242009006a5dfd5492b7c1225801c3ca3242106947496e13e5a7a"
+        },
+        {
+          "name": "gmHooksMarkdown",
+          "line": 173,
+          "endLine": 188,
+          "sha256": "0d088a74273aaf70f5af9c03610a7ccc4f3e8297a2eb64fda5ba075a59aec5b8"
+        },
+        {
+          "name": "gmPrivateMarkdown",
+          "line": 189,
+          "endLine": 199,
+          "sha256": "d014e22b973edf67590dfbcf032c0dca5d0919ce8a5505baf833e2a7812b83d8"
+        },
+        {
+          "name": "gmCanonMarkdown",
+          "line": 200,
+          "endLine": 208,
+          "sha256": "0f486e8ea2a9ca4258073458da964ded3002b0da2b651f6a70c7fdbd8e3aca79"
+        },
+        {
+          "name": "docxParagraph",
+          "line": 215,
+          "endLine": 221,
+          "sha256": "eb0188f9f96e039a7a5b304ce3c645bc0b57dc9bf0426ed109cfbf5bfc4d5a8e"
+        },
+        {
+          "name": "markdownToDocumentXml",
+          "line": 222,
+          "endLine": 234,
+          "sha256": "c92397a5ecb478141c2106fc996aa949a22f0b421d007fb8f33ee49738d14051"
+        },
+        {
+          "name": "markdownToDocx",
+          "line": 235,
+          "endLine": 245,
+          "sha256": "96f29ccb39bd19eb28849af6376b3f1cec6516084ed29e610b3ebbfbadb040e2"
+        }
+      ]
+    }
+  ],
+  "native": {
+    "path": "bot/src/v2/character-export-formats.js",
+    "sha256": "9d575d366cd64720010188adbcf478297384ac800b5b6199704a64f570b446cc",
+    "functions": [
+      {
+        "name": "xmlEscape",
+        "line": 4,
+        "endLine": 7,
+        "sha256": "92d9b6345a9765dd8e380ccdc65a3078d7770df28aa495e6746b60ebb5eccde2"
+      },
+      {
+        "name": "mdValue",
+        "line": 9,
+        "endLine": 13,
+        "sha256": "aa6eccaf728927593ebf2db91e58c7b0392a2bfd259301991d4dd54fc0de4036"
+      },
+      {
+        "name": "normalizeExperiences",
+        "line": 15,
+        "endLine": 17,
+        "sha256": "2d35c1a6ea5bfea90553e48a5ad11253de75fd187d28e4d0824c665ca41492d8"
+      },
+      {
+        "name": "normalizeCards",
+        "line": 19,
+        "endLine": 21,
+        "sha256": "cb774bf432c69966f3fda8badb69be39e402f9216970c2e9aabe57803d8c803e"
+      },
+      {
+        "name": "section",
+        "line": 23,
+        "endLine": 26,
+        "sha256": "57cf524faf83e0b418cda6aeb44a34c469d02698902a3f13aac19a4ff93f467a"
+      },
+      {
+        "name": "objectBullets",
+        "line": 28,
+        "endLine": 30,
+        "sha256": "501f64f0202c01d577a00e11b276f827be8a824d6a570c60583a6c66da524b35"
+      },
+      {
+        "name": "playerMarkdown",
+        "line": 32,
+        "endLine": 70,
+        "sha256": "ba67b4474af242009006a5dfd5492b7c1225801c3ca3242106947496e13e5a7a"
+      },
+      {
+        "name": "gmHooksMarkdown",
+        "line": 72,
+        "endLine": 88,
+        "sha256": "9eab7f64a54255a88a271881dc1be396b0e09d782c4cc16da5838408105086c5"
+      },
+      {
+        "name": "gmPrivateMarkdown",
+        "line": 90,
+        "endLine": 100,
+        "sha256": "d014e22b973edf67590dfbcf032c0dca5d0919ce8a5505baf833e2a7812b83d8"
+      },
+      {
+        "name": "gmCanonMarkdown",
+        "line": 102,
+        "endLine": 110,
+        "sha256": "0f486e8ea2a9ca4258073458da964ded3002b0da2b651f6a70c7fdbd8e3aca79"
+      },
+      {
+        "name": "docxParagraph",
+        "line": 112,
+        "endLine": 118,
+        "sha256": "eb0188f9f96e039a7a5b304ce3c645bc0b57dc9bf0426ed109cfbf5bfc4d5a8e"
+      },
+      {
+        "name": "markdownToDocumentXml",
+        "line": 120,
+        "endLine": 132,
+        "sha256": "c92397a5ecb478141c2106fc996aa949a22f0b421d007fb8f33ee49738d14051"
+      },
+      {
+        "name": "markdownToDocx",
+        "line": 134,
+        "endLine": 144,
+        "sha256": "96f29ccb39bd19eb28849af6376b3f1cec6516084ed29e610b3ebbfbadb040e2"
+      }
+    ]
+  },
+  "comparison": [
+    {
+      "name": "xmlEscape",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "mdValue",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "normalizeExperiences",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "normalizeCards",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "section",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "objectBullets",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "playerMarkdown",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "gmHooksMarkdown",
+      "pinToUpstreamUnchanged": true,
+      "portExact": false
+    },
+    {
+      "name": "gmPrivateMarkdown",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "gmCanonMarkdown",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "docxParagraph",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "markdownToDocumentXml",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    },
+    {
+      "name": "markdownToDocx",
+      "pinToUpstreamUnchanged": true,
+      "portExact": true
+    }
+  ],
+  "zip": {
+    "path": "bot/src/kernel/zip-store.js",
+    "sha256": "95819bb91a5fb9c4effeb728b458bd96d8bc0f1c51595171111c6443b063ee7f",
+    "upstreamSha256": "045fe02d75802d1fe8c21826edf518ffaa6c58c753f2f009b6a92b25c965f42e",
+    "exact": false,
+    "normalizedExact": true
+  }
+}

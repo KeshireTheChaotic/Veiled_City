@@ -33,8 +33,8 @@ test('unmaterialized legacy canon suggestions hold without backfill, acceptance 
  const before=f.db.prepare('SELECT count(*) n FROM canon_proposals').get().n;await f.dispatch(f.event('needs-migration'));assert.equal(attachments(f).length,0);assert.equal(f.db.prepare('SELECT count(*) n FROM canon_proposals').get().n,before);assert.equal(f.db.prepare("SELECT status FROM character_gm_hooks WHERE id='suggestion'").get().status,'active');
  f.db.exec("INSERT INTO canon_proposals(id,guild_id,character_id,canon_key,proposed_value,status) VALUES('materialized','c','pc','mira.secret','Stored canon','pending')");await f.dispatch(f.event('reviewed-existing-row'));const canon=JSON.parse(attachments(f)[2].attachment);assert.equal(canon.canon_proposals.find(x=>x.id==='materialized').status,'pending');
 });
-test('exact campaign character selection and explicit JSON route leave other formats unclaimed',async t=>{
- const f=gmCharacterExportFixture(t);await f.dispatch(f.event('docx',{format:'docx'}));assert.ok(f.fallback.includes('docx'));assert.equal(attachments(f).length,0);
+test('exact campaign character selection refuses ambiguous names while preserving explicit IDs',async t=>{
+ const f=gmCharacterExportFixture(t);
  f.character('same','someone','Mira');await f.dispatch(f.event('ambiguous',{query:'Mira'}));assert.equal(attachments(f).length,0);await f.dispatch(f.event('id',{query:'pc'}));assert.equal(attachments(f).length,3);
 });
 test('private readers reject foreign canon ancestry, duplicate current canon and corrupt hook payload',t=>{

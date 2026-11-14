@@ -3,7 +3,7 @@ import {MessageFlags} from 'discord.js';
 import {createOwnerCharacterExport} from './owner-character-export.js';
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id=value=>typeof value==='string'&&value.length>0&&value.length<=256;
-/** Owner-only JSON branch of the existing character export command. No inference,
+/** Owner-only branch of the existing character export command. No inference,
  * imports, GM export, resource changes, automatic retries or channel publication.
  */
 export function createDiscordCharacterExports({client,repository,readCharacter,interactionReceipts,wasObserved,clock=()=>Date.now(),onError=()=>{}}){
@@ -11,8 +11,8 @@ export function createDiscordCharacterExports({client,repository,readCharacter,i
  const exports=createOwnerCharacterExport({repository,...(readCharacter?{readCharacter}:{})}),pending=new Map(),controller=new AbortController();let closed=false;
  const report=(error,e,stage)=>{try{onError(error,{interactionId:e.id,stage});}catch{}};
  function parse(e){try{
-  if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-character'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='character')||e.options.getSubcommand()!=='export'||e.options.getString('format')!=='json')return null;
-  const query=e.options.getString('character')??'';return typeof query==='string'&&query.length<=256?{query,format:'json'}:null;
+  if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-character'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='character')||e.options.getSubcommand()!=='export')return null;
+  const query=e.options.getString('character')??'',format=e.options.getString('format')??'docx';return typeof query==='string'&&query.length<=256&&['json','markdown','docx','all'].includes(format)?{query,format}:null;
  }catch{return null;}}
  function select(campaign,owner,query){
   const all=repository.listCharacters(campaign,owner,{includeClosed:true}).filter(c=>c.guild_id===campaign&&c.owner_user_id===owner);
@@ -24,7 +24,7 @@ export function createDiscordCharacterExports({client,repository,readCharacter,i
   const source={id:e.id,campaign:e.guildId,channel:e.channelId,principal:e.user.id,command:e.commandName,parsed},characterId=select(source.campaign,source.principal,parsed.query),bookkeeping=()=>{};
   const alive=()=>{controller.signal.throwIfAborted();if(closed||e.client!==client||e.user?.bot!==false||hash({id:e.id,campaign:e.guildId,channel:e.channelId,principal:e.user.id,command:e.commandName,parsed:parse(e)})!==hash(source))throw new Error('Character export command changed');};
   const owned=()=>{alive();const c=repository.getCharacter(characterId);if(c?.guild_id!==source.campaign||c.owner_user_id!==source.principal||c.id!==characterId)throw new Error('Character export ownership changed');};
-  const binding={id:source.id,kind:'discord_command',campaignId:source.campaign,sceneId:'character-export',actorId:characterId,principal:source.principal,channelId:source.channel,requestRef:'player-json-export',commandHash:hash([source.command,parsed])};
+  const binding={id:source.id,kind:'discord_command',campaignId:source.campaign,sceneId:'character-export',actorId:characterId,principal:source.principal,channelId:source.channel,requestRef:`player-${parsed.format}-export`,commandHash:hash([source.command,parsed])};
   if(!interactionReceipts.claim(binding,{check:owned}).created)return {handled:true,status:'already_claimed'};
   let stage='defer',membershipExpires=0;
   const current=()=>{owned();if(clock()>membershipExpires||e.ephemeral!==true)throw new Error('Fresh private owner export authorization required');};
@@ -35,12 +35,12 @@ export function createDiscordCharacterExports({client,repository,readCharacter,i
   try{
    if(e.deferred||e.replied||typeof e.deferReply!=='function'||typeof e.editReply!=='function')throw new Error('Private export acknowledgement required');
    await e.deferReply({flags:MessageFlags.Ephemeral});interactionReceipts.acknowledge(source.id,'deferred',{check:bookkeeping});stage='source';
-   await refresh();current();const document=exports.prepare({campaignId:source.campaign,ownerUserId:source.principal,characterId},{check:current});
+   await refresh();current();const document=exports.prepare({campaignId:source.campaign,ownerUserId:source.principal,characterId,format:parsed.format},{check:current});
    await refresh();document.check();stage='receipt';
    interactionReceipts.complete(source.id,{id:`character-export:${source.id}`,hash:document.hash},{check:current});
    document.check();interactionReceipts.claimReply(source.id,{check:current});
    try{
-    await e.editReply({content:'Your player-safe character export.',files:[{attachment:Buffer.from(document.text,'utf8'),name:document.name}],allowedMentions:{parse:[]}});
+    await e.editReply({content:'Your player-safe character export.',files:document.files.map(f=>({attachment:Buffer.from(f.base64,'base64'),name:f.name})),allowedMentions:{parse:[]}});
     interactionReceipts.finishReply(source.id,'delivered',{check:bookkeeping});
    }catch(error){interactionReceipts.finishReply(source.id,'uncertain',{check:bookkeeping});report(error,e,'export_reply');}
    return {handled:true,status:'export_prepared'};

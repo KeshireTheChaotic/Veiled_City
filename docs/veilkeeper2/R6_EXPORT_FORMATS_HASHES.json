@@ -1,0 +1,149 @@
+{
+  "scope": "Exact export format source/test/probe bytes; native transport fixtures and independent ZIP/XML checks, not rendered Word/live acceptance.",
+  "files": [
+    {
+      "path": ".reports/export-formats-copy-20261113.json",
+      "sha256": "a602e1069b2ba4b94159990f30a7782e56c1c3d59f937bef43c6c56937aa9232"
+    },
+    {
+      "path": ".reports/export-formats-dependent-tests-20261113.txt",
+      "sha256": "327415fd94cb85cb08a874967ada6c3ae228678afe49b3280c264b1fe697e831"
+    },
+    {
+      "path": "bot/src/kernel/zip-store.js",
+      "sha256": "95819bb91a5fb9c4effeb728b458bd96d8bc0f1c51595171111c6443b063ee7f"
+    },
+    {
+      "path": "bot/src/v2/character-export-formats.js",
+      "sha256": "9d575d366cd64720010188adbcf478297384ac800b5b6199704a64f570b446cc"
+    },
+    {
+      "path": "bot/src/v2/discord-character-exports.js",
+      "sha256": "4fc3149973f4169b318c8bd2081f812fa5d487e5b49b98f463c0f619dbaba232"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-authority.js",
+      "sha256": "06484668e9e868c897580a821edfd6062aa375bb457ee16a2b2bd271a2e5ac1a"
+    },
+    {
+      "path": "bot/src/v2/discord-gm-character-exports.js",
+      "sha256": "f8b2a4b43d4edbb8bd4384ae2165f410a0eb9c5ba763344d53eade5fb3700dc7"
+    },
+    {
+      "path": "bot/src/v2/gm-character-export.js",
+      "sha256": "826175e5902ec9cb0b63a7c00b65ca41bd5b31143dc5f160931be9e562b6fded"
+    },
+    {
+      "path": "bot/src/v2/owner-character-export.js",
+      "sha256": "32f3c1c0f2acd2900b47e44aaf6fea35c047e0e863c432b4d6ba883df620f69e"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/helpers/character-export-fixture.mjs",
+      "sha256": "840c4ab26169490bd670412ea5172e3ea5f66d7e921ae064842b3935f959337b"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/helpers/gm-character-export-fixture.mjs",
+      "sha256": "bde07043952bc68177cf091224399dad46228934b5319eefc9c31e3e874700f7"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "f70f65d1cbc14d29ee3be6aa0c8ca48addc5e502de12dca021c1d4acfdb01aa5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+      "sha256": "c3f7ed6bb66292756cfd3ccd74eeec3ccb7e802e0c89a12fa32a3f69151f7cd6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs",
+      "sha256": "62ee35c453a94b5c0028cf08be10b8f0f44095b3e60dc40ce4dbce43553d606a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-receipt-recall.test.mjs",
+      "sha256": "8f6e2c708c6189ae24ba0ac9948aef1be3091f0f24b8474c3a3fd390d10e12b8"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-authorship.test.mjs",
+      "sha256": "ad5d1323da0ffb45cc6ea9020a0e4bbf50f0eefe559215eed8b27e6dd5bdfa8a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+      "sha256": "5ebaf1688762c67c44ff0164ab46e0709cdd3312069db9cc45f3a4502b480a21"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+      "sha256": "add83da2ea2d431175a7fd490a5f3cd898d54b6b931643b65aba721eaa460374"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-discord-death-decisions.test.mjs",
+      "sha256": "9e4d17ae28da2fbbb195ac7c507195e19bc9b2e2ec3a2d32097585a44f105d19"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r3-native-cost-workflow.test.mjs",
+      "sha256": "2cec1862a7c70ffcd403f81a3635bb940f7a2f1a76832b51c0722a24459614b9"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r4-scene-prose-review.test.mjs",
+      "sha256": "8669206715c0d7cbac8ab41393c46d9f6b6c89dcdac272da9119d817907b922a"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-campaign-adapters.test.mjs",
+      "sha256": "a90d3e113dbbebf54202a04096ce7f16b8a3f93fa976952520a1f64295cf4eb6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-character-export-formats.test.mjs",
+      "sha256": "463f76a58dfc98c54d0a09d2bffe471d2e8e0b3513864dc748c08404ee7d84d6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-character-exports.test.mjs",
+      "sha256": "1b6c42d0ebfee22d215edc2cf58cb9d0f05f594d128467344e4c33eb0a83b2c7"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs",
+      "sha256": "81265e5953a3622bd4295e86933f2dc9ec624ea0edc5c83106bfb89e780a28a4"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-discord-gm-authority.test.mjs",
+      "sha256": "02e0ac9d515525762985d683d292f7a028fd25f569bf1137727dec63a08cb891"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-gm-character-exports.test.mjs",
+      "sha256": "cadd02778e9e343a8b349005b083467f67bdcb8451a867d759eecbe58305e323"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-gm-session-command.test.mjs",
+      "sha256": "7d40f6c11c55e3be62aae4a680097f756569839a001df5cea625620c2cdbc5e4"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-root.test.mjs",
+      "sha256": "8ce1570d8a7519c898e6780e24c3e3c55f6eaad4ae6549e3e44b470f1a2f17b6"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-cost-reconciliation.test.mjs",
+      "sha256": "827fa23aabf70d92d3934de579ed17163b8ebb7a4ada53031ee2c8fcb6aaff43"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    },
+    {
+      "path": "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json",
+      "sha256": "f0a8b4c2fda476d985ad11e338d2c6745342d37d2c4328fcf40c931fda5b830f"
+    },
+    {
+      "path": "docs/veilkeeper2/R6_EXPORT_FORMATS_AFFECTED_TESTS.json",
+      "sha256": "2b51f443c7e77e56cd9f0c5b8c861055f1b36439ba6682d2a07cfb5dcfce72bd"
+    },
+    {
+      "path": "docs/veilkeeper2/R6_EXPORT_FORMATS_PIN_EVIDENCE.json",
+      "sha256": "480c6f6ddc1e820a1301d922299eb57e047072a6f2fa67207d632792e13a0a2b"
+    },
+    {
+      "path": "docs/veilkeeper2/R6_EXPORT_FORMATS_REPORT.md",
+      "sha256": "36d5534b8f51ad118877c8c689334c023a3c3abf055abe11142bb9c6381ee6eb"
+    }
+  ]
+}

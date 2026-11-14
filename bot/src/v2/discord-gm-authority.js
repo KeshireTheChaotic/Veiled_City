@@ -20,8 +20,8 @@ export function createDiscordGmAuthority({client,readPolicy,clock=()=>Date.now()
       const title=e.options.getString('title')??'',assembly=e.options.getString('assembly')??'auto';if(typeof title!=='string'||title.length>256||!assemblies.has(assembly))throw new Error('Native session title and assembly required');const payload={title,assembly};return {operation:'session_start',targetRef:`session:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};
     }
     if((e.commandName==='vc-session'||e.commandName==='vc'&&group==='session')&&sub==='end'){const payload={};return {operation:'session_end',targetRef:`session-end:${hash([e.guildId,e.id])}`,snapshotHash:hash(payload),payload};}
-    if((e.commandName==='vc-character'||e.commandName==='vc'&&group==='character')&&sub==='export-gm'&&e.options.getString('format')==='json'){
-      const character=e.options.getString('character',true);if(!id(character))throw new Error('Exact GM character export selection required');const payload={character,format:'json'};return {operation:'gm_character_export',targetRef:`character-export:${hash(payload)}`,snapshotHash:hash(payload),payload};
+    if((e.commandName==='vc-character'||e.commandName==='vc'&&group==='character')&&sub==='export-gm'){
+      const character=e.options.getString('character',true),format=e.options.getString('format')??'all';if(!id(character)||!['json','markdown','docx','all'].includes(format))throw new Error('Exact GM character export selection required');const payload={character,format};return {operation:'gm_character_export',targetRef:`character-export:${hash(payload)}`,snapshotHash:hash(payload),payload};
     }
     const input=gmCommandInput(e);if(input){
 
