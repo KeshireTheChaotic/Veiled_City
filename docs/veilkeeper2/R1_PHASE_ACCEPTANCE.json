@@ -1,0 +1,94 @@
+{
+  "phase": "R1",
+  "status": "complete",
+  "scope": "Offline skeleton and generic kernel; not live quality, complete game parity, migration or release",
+  "parentR0": "800cf762",
+  "sourceHead": "800cf762aeebc89309c5b4db77475bf54ceacecf",
+  "components": {
+    "offlineBoot": [
+      "bot/src/v2/index.js",
+      "bot/src/v2/rehearsal.js"
+    ],
+    "authenticatedEnvelope": [
+      "bot/src/v2/source-authority.js"
+    ],
+    "audienceResolver": [
+      "bot/src/v2/context-authority.js",
+      "bot/src/v2/discord-audience-reader.js"
+    ],
+    "sourceReceiptContract": [
+      "bot/src/v2/kernel.js",
+      "bot/src/v2/source-registry.js",
+      "bot/src/v2/turn-store.js"
+    ],
+    "versionedRegistry": [
+      "bot/src/v2/kernel.js"
+    ],
+    "modelGateway": [
+      "bot/src/v2/model-gateway.js",
+      "bot/src/v2/tool-contracts.js"
+    ],
+    "noSendOutbox": [
+      "bot/src/v2/publication-queue.js"
+    ]
+  },
+  "tools": [
+    "context_read",
+    "action_propose",
+    "state_inspect",
+    "knowledge_propose"
+  ],
+  "freshAcceptance": {
+    "checks": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "combinedRunChecks": 7,
+    "combinedRunDurationMs": 109.2619,
+    "provider": "synthetic",
+    "liveDiscordCalls": 0,
+    "modelNetworkCalls": 0,
+    "gameplayEffects": 0
+  },
+  "gates": [
+    {
+      "requirement": "CLI boots with no credentials, live client, rules or writes",
+      "status": "passed"
+    },
+    {
+      "requirement": "Native versioned pending handler registers",
+      "status": "passed"
+    },
+    {
+      "requirement": "Unknown operation, forged source/actor and stale revision blocked before preparation",
+      "status": "passed"
+    },
+    {
+      "requirement": "Accepted context only; GM canary body unread",
+      "status": "passed"
+    },
+    {
+      "requirement": "Trace and pending receipt survive exact replay/inspection",
+      "status": "passed"
+    },
+    {
+      "requirement": "Model damage prose invokes no rule and remains unsent",
+      "status": "passed"
+    },
+    {
+      "requirement": "Source, actor, audience and edited-message revocation invalidate calls/drafts",
+      "status": "passed"
+    }
+  ],
+  "deferredPhases": [
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "R6",
+    "R7",
+    "R8"
+  ],
+  "productionChanged": false,
+  "generatedAt": "2026-11-14T16:22:18.946Z"
+}

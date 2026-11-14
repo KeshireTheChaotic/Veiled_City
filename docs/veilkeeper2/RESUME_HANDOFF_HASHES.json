@@ -1,80 +1,14 @@
 {
-  "files": [
+  "checkpoint": "R0 and R1 complete; overall goal active",
+  "handoffSha256": "baa6110f8982b53846ca9b9bc1386382b6b283a618d8e4d4ade9f009e63c2903",
+  "phaseAcceptance": [
     {
-      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
-      "sha256": "d610e81bc7fcb4f2f407fea47db6958dcc2bce498735678257378b3c9d0089e9"
+      "phase": "R0",
+      "sha256": "4eb2435ce84feb8de8ce61dd88f1e55574a315643bcdc62d6b37c2f62808d2eb"
     },
     {
-      "path": "docs/veilkeeper2/LEDGER.md",
-      "sha256": "94c26d1bb101a21f89c15e5fc87d5f084229653c4b2100b9d8b12df2c88865f9"
-    },
-    {
-      "path": "docs/veilkeeper2/R6_NATIVE_SESSION_SETUP_REPORT.md",
-      "sha256": "70c21b67e1fc32989dc303093f4df6ceeba740908a675212ca1676e8bdb0d937"
-    },
-    {
-      "path": "bot/src/v2/kernel.js",
-      "sha256": "07e8870679bdd5f73cbdbfa9ae4d0c4623957468932abfde0e908ee068982636"
-    },
-    {
-      "path": "bot/src/v2/source-authority.js",
-      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588"
-    },
-    {
-      "path": "bot/src/v2/scene-store.js",
-      "sha256": "89a4c1089c4b39a75e5a1affcfa85d2f76b6ea7e2fab6471305f32e2aeaaed95"
-    },
-    {
-      "path": "bot/src/v2/rules/action-store.js",
-      "sha256": "b0dd32d59260fe53c1c2ff744e3dc0af7c49394d5380736530c92d643d407236"
-    },
-    {
-      "path": "bot/src/v2/rules/pc-life-state.js",
-      "sha256": "3daaa7c6be18feac2ad61864c6cf62d35c236f1cc53540d268c107e7a579ecc6"
-    },
-    {
-      "path": "bot/src/v2/rules/pc-bootstrap.js",
-      "sha256": "538b4cfbb4d4ab900dc13c74b10b82864312b5fcffc47b0d5d08b3a542ea2a9f"
-    },
-    {
-      "path": "bot/src/v2/native-death-workflow.js",
-      "sha256": "87562ea0d783dbcc89f1ba669d5b885978a3aa85b83b842a0511aac4100718bd"
-    },
-    {
-      "path": "bot/src/v2/discord-interaction-router.js",
-      "sha256": "220a54f73cc6065e78c204e8ec2c08d36872352b918ba65aef6929c2395c6448"
-    },
-    {
-      "path": "bot/src/v2/discord-session-attendance.js",
-      "sha256": "768333f90a18792dfafd0d29b25c4dfd42c7953571c6d5bb46dce2f2e1a4653a"
-    },
-    {
-      "path": "bot/src/v2/canonical-actor-readers.js",
-      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a"
-    },
-    {
-      "path": "bot/src/v2/discord-gm-authority.js",
-      "sha256": "902c7c983fa0160197dd692ec4517fbcfd545cbe6087804fdb92cf9b7d2764a7"
-    },
-    {
-      "path": "bot/src/v2/native-session-setup.js",
-      "sha256": "5b8bfba95b7c76a543672ace86f9ea883fdf5a225083a4fefc171af8828e7614"
-    },
-    {
-      "path": "bot/src/v2/session-occasions.js",
-      "sha256": "4c2f49cfccae9a1e7d8b6ec2a2267e6f326f27cf891b28c6fa75c08ed4069d12"
-    },
-    {
-      "path": "bot/tests/veilkeeper2/r6-discord-gm-authority.test.mjs",
-      "sha256": "01f1207b4fd7520cf4690e88053e51d013626fc45ab3f71ed5cc78fae8597a27"
-    },
-    {
-      "path": "bot/tests/veilkeeper2/r1-scene-store.test.mjs",
-      "sha256": "fe1d5d47157feb21b6180f1f24442188f5da6e2ca1c755ee9bc37678a44a3b6c"
+      "phase": "R1",
+      "sha256": "6262872ba59adf77e701fadf8a76039ac46871f313949574e52ea0fef2c9dc81"
     }
-  ],
-  "secondaryUsedPercent": 94,
-  "primaryUsedPercent": 98,
-  "checkpoint": "USAGE_PAUSE_2026_11_03",
-  "scope": "Current handoff snapshot, not aggregate phase test certification"
+  ]
 }

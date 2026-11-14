@@ -1,0 +1,107 @@
+{
+  "phase": "R1",
+  "status": "complete",
+  "scope": "Offline skeleton and generic kernel; not live quality, complete game parity, migration or release",
+  "files": [
+    {
+      "path": "bot/src/v2/context-authority.js",
+      "sha256": "718b243ab7c129c4d9d04ecdee09a7f7b3f385f704a799f957c0f445eea50996"
+    },
+    {
+      "path": "bot/src/v2/conversation-instructions.js",
+      "sha256": "b2b6e153a4c5e8205cef073d1b63cf9f977e004e6c8a151c23eb756b423c4416"
+    },
+    {
+      "path": "bot/src/v2/discord-audience-reader.js",
+      "sha256": "1dc9836be52285d8c744e6240284ec2790cbe95eab0eb6cd0f877235e9cc9be6"
+    },
+    {
+      "path": "bot/src/v2/index.js",
+      "sha256": "3329bec194e7d0aa050850a2556a1971fc4a77b7b08634103850dd37fd85991a"
+    },
+    {
+      "path": "bot/src/v2/kernel.js",
+      "sha256": "11f843645eb14ddf27bcf3d7cfd4339332a32e3aea32b9ce6f8441bf3bf9216c"
+    },
+    {
+      "path": "bot/src/v2/knowledge-authority.js",
+      "sha256": "e04a7e34d21c6d7a6dc0781f5c40ecc40f4d7e7dc406b547e5b13e8e7c212ee0"
+    },
+    {
+      "path": "bot/src/v2/knowledge-store.js",
+      "sha256": "6eb444a9048dbe4b1109bc3656c9487085b7820ccd34db68653a0b8a637e5e82"
+    },
+    {
+      "path": "bot/src/v2/model-gateway.js",
+      "sha256": "203b8d7ff0dd844800fd38156177100ba26245fa6b4f0368f763c252612910cb"
+    },
+    {
+      "path": "bot/src/v2/private-planner.js",
+      "sha256": "f13e8980816528b40900a7a9ae16820e65978557084d9a6642fc84063551c15d"
+    },
+    {
+      "path": "bot/src/v2/prose-material-review.js",
+      "sha256": "6e37773e3f0080ab095d04a8b8fe8217d70212fdcb12a62aec576b9d5b7bbd8c"
+    },
+    {
+      "path": "bot/src/v2/publication-queue.js",
+      "sha256": "a3357235c34034e363c3b87ed8d18bad2eaf25419ac72928770d8f755e8c96aa"
+    },
+    {
+      "path": "bot/src/v2/recall-planner.js",
+      "sha256": "33786b3967ece0addb81230cdd064991e115163d078c8be6e9a7963e00bffc21"
+    },
+    {
+      "path": "bot/src/v2/rehearsal.js",
+      "sha256": "9c7164bcf7ed33202da21041676162dc490c4335f90b78ab0288a0cb46f4d3fc"
+    },
+    {
+      "path": "bot/src/v2/source-authority.js",
+      "sha256": "c05bcf587d52216c4749a97c089797221d84bba48cbdd15139a0423a7813a588"
+    },
+    {
+      "path": "bot/src/v2/source-registry.js",
+      "sha256": "752b87b9125c17a81d798803d6b31962fa4a7d0497acb4e79e4e1b4da94dc6c7"
+    },
+    {
+      "path": "bot/src/v2/tool-contracts.js",
+      "sha256": "40d4fc7772be99009f312e23ff75995ec7df3cc31ff3c2bd39e1bfd0d28eb064"
+    },
+    {
+      "path": "bot/src/v2/turn-store.js",
+      "sha256": "20b62c00bc0283d4a3a6ccf68927a248505677aae35d75556cfd298ea9a32c9b"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-phase-acceptance.test.mjs",
+      "sha256": "03f70a315ad9bd11986d6e3b0fa55b4a94cbc34916c19f3f6f2b533e660a0063"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "562b6d445d81503ed8d1043584df8539550a1a29c4d9e90260695bfbaa05646a"
+    },
+    {
+      "path": "docs/veilkeeper2/NATIVE_DEPENDENCY_MAP.json",
+      "sha256": "a2e07ff4c183498793caa24b43f04894b8ca560e1ddfecb3555ab52cd4251087"
+    },
+    {
+      "path": "docs/veilkeeper2/PHASE_STATUS.md",
+      "sha256": "da8ff949dbcdf245aa05eb4426e56778cf2279961f7cc602b408ef656e0b5cc4"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_PHASE_ACCEPTANCE.json",
+      "sha256": "6262872ba59adf77e701fadf8a76039ac46871f313949574e52ea0fef2c9dc81"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_PHASE_REPORT.md",
+      "sha256": "4cf6269fdf47eecfbbe20144165daa5fd60786083ece31e1d21c6d87d1a0bd86"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_REPORT.md",
+      "sha256": "6b4fc3850f9fb4bbb7facb688afa41293eacef593b2e757d973215c1ed11950c"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "baa6110f8982b53846ca9b9bc1386382b6b283a618d8e4d4ade9f009e63c2903"
+    }
+  ]
+}
