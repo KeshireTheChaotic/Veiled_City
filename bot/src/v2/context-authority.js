@@ -15,7 +15,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     if(actorId===null)return null;
     const actor=readActor(source.campaign,actorId);
     if(!actor||actor.id!==actorId||actor.campaignId!==source.campaign||actor.sceneId!==source.scene
-      ||actor.kind!=='npc'||actor.status!=='active'||actor.controllerUserId!==null||actor.proxyAuthorized===true||!id(actor.controlRevision))fail();
+      ||actor.kind!=='npc'||actor.status!=='active'||actor.controllerUserId!==null||actor.controlRole!=null||actor.delegationRef!=null||actor.proxyAuthorized===true||!id(actor.controlRevision))fail();
     return hash(actor);
   }
   function eligible(row,source,actorId){

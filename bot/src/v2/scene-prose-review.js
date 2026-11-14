@@ -11,7 +11,7 @@ export function createSceneProseReview({sceneStore,characterRepository,authorize
    const actor=readers.readActor(audience.campaign,actorId);if(!actor||actor.id!==actorId||actor.campaignId!==audience.campaign||actor.sceneId!==audience.scene)throw new Error('Native prose actor identity required');
    const names=[];if(typeof actor.name==='string'&&actor.name.trim())names.push(actor.name);
    if(actor.kind==='pc'){const pc=characterRepository.getCharacter(actor.id);if(!pc||pc.guild_id!==audience.campaign||pc.id!==actor.id||typeof pc.name!=='string'||!pc.name.trim())throw new Error('Current prose PC identity required');names.push(pc.name);}
-   const target=actor.kind==='pc'||actor.controllerUserId?controlled:independent;
+   const target=actor.kind==='pc'||actor.controllerUserId||actor.controlRole!=null||actor.delegationRef!=null||actor.proxyAuthorized===true?controlled:independent;
    target.push(...names);
   }
   return {controlled:[...new Set(controlled)],independent:[...new Set(independent)]};

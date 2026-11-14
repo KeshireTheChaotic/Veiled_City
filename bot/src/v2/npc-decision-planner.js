@@ -11,7 +11,7 @@ Write a short private proposal in natural language. You may include a possible N
 export function createNpcDecisionPlanner({contextAuthority,provider}){
  if(typeof contextAuthority?.inspect!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof provider?.generate!=='function')throw new TypeError('Native NPC decision context and provider required');
  const plans=new WeakMap();
- function packet(grant){const p=contextAuthority.inspect(grant),lineage=contextAuthority.dependencyManifest(grant);if(p.portrayal?.kind!=='independent_npc'||p.portrayal.actor_ref!==p.actor_ref||typeof p.actor_ref!=='string'||!p.actor_ref||p.utterance!==''||lineage.version!==2||lineage.actorId!==p.actor_ref)throw new Error('Actor-limited NPC decision grant required');return p;}
+ function packet(grant){const p=contextAuthority.inspect(grant),lineage=contextAuthority.dependencyManifest(grant),privateView=p.visibility==='npc_private';if(p.portrayal?.kind!=='independent_npc'||p.portrayal.actor_ref!==p.actor_ref||typeof p.actor_ref!=='string'||!p.actor_ref||p.utterance!==''||lineage.version!==(privateView?1:2)||privateView&&lineage.visibility!=='npc_private'||lineage.actorId!==p.actor_ref)throw new Error('Actor-limited NPC decision grant required');return p;}
  async function plan(grant,{signal}={}){
   signal?.throwIfAborted();const context=packet(grant),started=performance.now();let result;
   try{result=await provider.generate({instructions,context,signal});}catch{throw new Error(signal?.aborted?'NPC decision aborted':'NPC decision generation failed');}

@@ -15,6 +15,7 @@ export function createModelGateway({contextAuthority,provider,clock=()=>performa
     signal?.throwIfAborted();
     if(typeof validateContext!=='function'||capabilities!==null&&(Object.keys(capabilities).sort().join(',')!==GENERIC_TOOL_CONTRACTS.map(t=>t.name).sort().join(',')||Object.values(capabilities).some(f=>typeof f!=='function')))throw new TypeError('Exactly four native capabilities required');
     const packet=contextAuthority.inspect(grant),started=clock();
+    if(packet.visibility==='npc_private'||packet.visibility==='gm_private')throw fail('private_context_is_not_audience_context');
     const validate=()=>{signal?.throwIfAborted();contextAuthority.inspect(grant);validateContext();};
     let result,continuation,modelCalls=0,toolCalls=0;const usage={},history=[],completed=new Map();
     while(modelCalls<6){

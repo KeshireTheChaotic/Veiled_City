@@ -1,5 +1,5 @@
 {
-  "head": "d22a36d284236bf9d2dc2415284288a3bb64b2fd",
+  "head": "1366fccb885b5a5d333287abedb26625f9f5a82b",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -13,7 +13,7 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 130,
+  "nativeModules": 131,
   "reachableNativeModules": 91,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
@@ -23,6 +23,7 @@
     "bot/src/v2/gm-hook-package.js",
     "bot/src/v2/index.js",
     "bot/src/v2/npc-decision-planner.js",
+    "bot/src/v2/npc-private-context.js",
     "bot/src/v2/private-hook-store.js",
     "bot/src/v2/private-planning-repository.js",
     "bot/src/v2/relationship-import.js",
@@ -657,7 +658,7 @@
     },
     {
       "file": "bot/src/v2/context-authority.js",
-      "sha256": "81e6172e151cc8699ace11e55fb255cb6df8c2168dab7bd7d9b23dc4b46d09b5",
+      "sha256": "718b243ab7c129c4d9d04ecdee09a7f7b3f385f704a799f957c0f445eea50996",
       "reachable": true,
       "exports": [
         {
@@ -2023,7 +2024,7 @@
     },
     {
       "file": "bot/src/v2/model-gateway.js",
-      "sha256": "1c687d89510c1a20e0821c805e0a2c2e228acf30c2f1c7c24c66adc8c33e33c7",
+      "sha256": "203b8d7ff0dd844800fd38156177100ba26245fa6b4f0368f763c252612910cb",
       "reachable": true,
       "exports": [
         {
@@ -2726,7 +2727,7 @@
     },
     {
       "file": "bot/src/v2/npc-decision-planner.js",
-      "sha256": "6edc3dce0478cb7e114e28c6e4080f35fc407f3513667498a764f1093c63f4d3",
+      "sha256": "fe8d8a4d097e3ec628e68bdc14636c8820cdece79917dbabdbe11c62038bbdaf",
       "reachable": false,
       "exports": [
         {
@@ -2746,6 +2747,30 @@
         }
       ],
       "functions": 4,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/npc-private-context.js",
+      "sha256": "3a2c86de2e359285221758b5f1b1844a9bd0881a3bc189b695e9aede4a98cd4d",
+      "reachable": false,
+      "exports": [
+        {
+          "line": 10,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createNpcPrivateContext({sourceAuthority,records,readActor}){\n if(typeof sourceAuthority?.revalidate!=='function'||typeof records?.metadata!=='function'||typeof records?.readText!=='function'||typeof readActor!=='function')throw new TypeError('Complete native private NPC readers requ"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        }
+      ],
+      "functions": 16,
       "sqlStatements": 0
     },
     {
@@ -4794,7 +4819,7 @@
     },
     {
       "file": "bot/src/v2/scene-prose-review.js",
-      "sha256": "190ae38aff72537a606f31c6f1e2da60ae639b9b6953730a5948a46fd171a6c4",
+      "sha256": "0aa2a4ad28e653a69d0fbc56ddf5800fa274806b9d20d5308689f8583b2e5b05",
       "reachable": true,
       "exports": [
         {
