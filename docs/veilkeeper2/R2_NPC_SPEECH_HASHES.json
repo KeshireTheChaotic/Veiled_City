@@ -1,0 +1,70 @@
+{
+  "parent": "483bc73ed4666857a431c411a2cbb4db9a766455",
+  "scope": "Exact owned checkout bytes; hash manifest excludes itself. Git may normalize line endings.",
+  "files": [
+    {
+      "path": "bot/src/v2/context-authority.js",
+      "sha256": "b83adad93d28fb65faf04d962d7d1157e3b1192a439e0cea3dfc5a8e6c8804f7"
+    },
+    {
+      "path": "bot/src/v2/conversation-instructions.js",
+      "sha256": "60532c2d042bd5cef822a8e2efcf828d90ab816c2280cf637f5338ce6993bcde"
+    },
+    {
+      "path": "bot/src/v2/knowledge-authority.js",
+      "sha256": "8c35d190c7ffd7f825c4b3a39e0ea382c37aa8e85b6fd7eeb6ecf3aa866635cd"
+    },
+    {
+      "path": "bot/src/v2/native-root.js",
+      "sha256": "9a861a1742fa93668caa859af064190a2ff9358c4e0e0a16f04c59e943f83da9"
+    },
+    {
+      "path": "bot/src/v2/npc-private-context.js",
+      "sha256": "bd951d250d3fbcc9fdea73760ea5d4f339d5b7f325bb26c31375573a7e503b42"
+    },
+    {
+      "path": "bot/src/v2/npc-speech-lineage.js",
+      "sha256": "3041a3113311cfd6c4acc02bcdfc2813c5bb86f6e5d0116e7715c9b16ae0b571"
+    },
+    {
+      "path": "bot/src/v2/statement-origin-refresh.js",
+      "sha256": "4d64af4bf3a0d4a1eb83bc89e04a60b94780b7b33ae6b2bd054fc16e9736ac6d"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-npc-speech-lineage.test.mjs",
+      "sha256": "8d9c7dece1c5640e2f07c3543333fc7c1fb3fc33cd8155e29865739b1cb6425b"
+    },
+    {
+      "path": "docs/veilkeeper2/LEDGER.md",
+      "sha256": "36cd65c23068c98894d86d342e254d1648dc7cd327d00884ea6af0cad780e63e"
+    },
+    {
+      "path": "docs/veilkeeper2/PHASE_STATUS.md",
+      "sha256": "c8c1bac747f71e3f3e5c70e40d610c80203edb04735d01e29680785f45b40b69"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_NPC_SPEECH_ACCEPTANCE.json",
+      "sha256": "3be9a5c78e924c6b55dcfe514529b67ee8f34b327bfefe968c10193ba4667d74"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_NPC_SPEECH_AFFECTED_TESTS.json",
+      "sha256": "c2e752cf8d313ffa63475c212b364e75e220d69cf4ba07bb42f74453be4fc59b"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_NPC_SPEECH_DEPENDENT_TEST_LOG.txt",
+      "sha256": "edb8b0f8a948aad02332be47cb10502c3cd0a23e785a7ac8d89ca4fb7a0b1594"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_NPC_SPEECH_REPORT.md",
+      "sha256": "c90bb38170784432b034e60c3c31903a5b2526c81360b5b95e24514514629c25"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_REMAINING_WORK.md",
+      "sha256": "2a1c816306189d7bd050f9a6401c987183fbe8e08c92b7190b4536d2e7a2a647"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "163529513788246e134d1ba22b1329c00b49e17f133aeb2b22bc17bde46cd5c6"
+    }
+  ]
+}

@@ -35,6 +35,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   function authorship(row,source){
     if(!Object.hasOwn(row,'origin'))return null;
     const value=typeof records.describeOrigin==='function'?records.describeOrigin(row,source):null;
+    if(value?.kind==='npc_statement'&&Object.keys(value).sort().join(',')==='kind,speaker_ref'&&id(value.speaker_ref))return {kind:value.kind,speaker_ref:value.speaker_ref};
     if(!value||Object.keys(value).sort().join(',')!=='kind,same_controller_view'||value.kind!=='human_statement'||typeof value.same_controller_view!=='boolean')fail();
     return {kind:value.kind,same_controller_view:value.same_controller_view};
   }

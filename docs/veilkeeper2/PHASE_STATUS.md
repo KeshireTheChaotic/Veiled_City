@@ -6,7 +6,7 @@ Updated2026-11-14. Production unchanged. Completed early gates do not qualify th
 |---|---|---|
 | R0 | Complete | R0_PHASE_REPORT.md; exhaustive inventory/dispositions at pin and current upstream. Opaque contracts remain explicit adoption/removal blockers; zero deletions. |
 | R1 | Complete | R1_PHASE_REPORT.md; offline boot, authenticated/scoped composition, four generic capabilities, native registry, gateway and no-send outbox. |
-| R2 | Incomplete | Commit-time correction/proposal authority slice complete; remaining blockers and acceptance work: R2_REMAINING_WORK.md. |
+| R2 | Incomplete | Commit-time correction/proposal authority and limited autonomous NPC self-speech provenance slices complete; remaining blockers and acceptance work: R2_REMAINING_WORK.md. |
 | R3 | Incomplete | Temporary unknown/conflicting-rule journal implemented; full Daggerheart/house-rule parity and authoritative action controller remain; ordinary rolls disabled. |
 | R4 | Incomplete | Autonomous publication/repair and session ruling journal implemented; sustained grounded human-quality conversation and independent evaluation remain. |
 | R5 | Incomplete | NPC/faction consequences, response opportunities, world pressure and sustained continuity. |

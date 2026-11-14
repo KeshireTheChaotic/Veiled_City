@@ -7,7 +7,7 @@ const types={testimony:'native_testimony',belief:'native_belief',observation:'na
 const boundary=row=>JSON.stringify([row.kind,row.scope,row.sceneId,row.visibility,row.recipientIds,row.knownBy,row.disclosure]);
 
 /** Native acceptance and model proposals are separate APIs. Only propose is model-callable. */
-export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,readCanonRequest=()=>null}){
+export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,readCanonRequest=()=>null,testimonyAuthor=null}){
   if(!store||typeof sourceAuthority?.revalidate!=='function'||typeof readEvidence!=='function'||typeof readCanonRequest!=='function')throw new TypeError('Knowledge store and native source/evidence readers required');
   function propose(source,input){
     if(!sourceAuthority.revalidate(source))return blocked('source_authority_changed');
@@ -15,6 +15,7 @@ export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,rea
       ||input.source_ref!==source.id||!['testimony','observation','identity','memory','fact','canon_proposal'].includes(input.kind)
       ||typeof input.claim!=='string'||!input.claim.trim()||input.claim.length>8000
       ||input.subject_ref!==undefined&&!id(input.subject_ref)||input.evidence_refs!==undefined&&!list(input.evidence_refs))return blocked('invalid_knowledge_proposal');
+    if(input.kind==='testimony'&&input.subject_ref&&testimonyAuthor){const authored=testimonyAuthor.propose(source,input);if(authored!==null)return authored;}
     let canonRequest=null;
     if(input.kind==='canon_proposal'){
       const request=readCanonRequest(source.id);

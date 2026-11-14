@@ -13,3 +13,5 @@ Binding constraints: exactly four generic AI capabilities; native rules own cons
 After qualified major phases, publish only the rebuild branch; no self-merge is needed in this worktree. Never merge into codex/clean-ai-gm-2026-10 or deploy production without separate authorization. At98% usage on either window, create a thorough handoff, set the active goal paused and stop until explicit resume. Full current handoff: RESUME_HANDOFF.md.
 
 Autonomy correction complete as a scoped R3/R4/R6/R7 slice: automatic validated publication, bounded scoped AI repair, durable part receipts/cold recovery, no Human-GM narrative commands, and provisional session mechanics journal. See R4_AUTONOMY_REPORT.md for actual test/model/online evidence and remaining holds; no additional whole phase completed.
+
+R2_NPC_SPEECH_REPORT.md records autonomous pending testimony authorship plus confirmed delivered self-memory, with324 distinct checks passing. Ordinary speech remains autonomous and unrestricted; unproposed/ambiguous/undelivered lines do not become utterance events, listener knowledge or truth. Full R2 remains incomplete.

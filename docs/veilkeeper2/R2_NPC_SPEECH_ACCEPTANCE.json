@@ -1,0 +1,30 @@
+{
+  "scope": "R2 autonomous NPC utterance slice; synthetic SDK/provider with real native code/SQLite",
+  "focused": {
+    "checks": 9,
+    "pass": 9,
+    "runs": [
+      {
+        "checks": 8,
+        "durationMs": 11964.3627
+      },
+      {
+        "checks": 1,
+        "durationMs": 1305.3759
+      }
+    ]
+  },
+  "dependent": {
+    "files": 47,
+    "checks": 315,
+    "pass": 315,
+    "fail": 0,
+    "durationMs": 39991.4923
+  },
+  "distinctChecks": 324,
+  "distinctFiles": 48,
+  "liveDiscordCalls": 0,
+  "modelCalls": 0,
+  "phaseComplete": false,
+  "hold": "R2 remaining work in R2_REMAINING_WORK.md; full R2-R8 incomplete"
+}

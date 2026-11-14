@@ -13,6 +13,7 @@ export function createStatementOriginRefresh({contextAuthority,records,sourceReg
   for(const row of rows.values()){
    signal?.throwIfAborted();if(!row.origin)continue;const o=row.origin,key=JSON.stringify(o);if(seen.has(key))continue;seen.add(key);
    if(records.validateOrigin?.(row)!==true)throw new Error('Current native statement origin required');
+   if(o.kind==='native_npc_speech')continue; // Delivered historical speech is validated by its immutable native receipt.
    const event=sourceRegistry.get(o.sourceRef)?.event,channel=sceneStore.readers.readChannel(source.campaign,o.channelId);if(!event||!channel)throw new Error('Native origin lookup unavailable');
    const before=normalized([row,channel]);
    const live=await messageReader.read({guildId:source.campaign,channelId:o.channelId,messageId:o.messageId,userId:event.userId,sceneId:o.sceneId,mode:channel.kind,ownerUserId:channel.ownerUserId??null,gmRoleId:readGmRoleId(source.campaign)??null,participantIds:channel.kind==='party'?channel.recipientIds:[]},{signal});
