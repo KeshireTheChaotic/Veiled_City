@@ -1,0 +1,38 @@
+{
+  "parent": "facc7a50dc9f36dc1d4b7831f99b90dbda8b8af1",
+  "scope": "Exact checkout bytes; manifest excludes itself",
+  "files": [
+    {
+      "path": "bot/src/v2/recall-planner.js",
+      "sha256": "a0f4d3b7b300c2dcd3c4590525b75e8cc7e0fa95c5738420845fad09f5f65c12"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-recall-long-history.test.mjs",
+      "sha256": "41041138412d4431ff687a9cd9de18882f8fa83829243ef4fdab3d80cdc30c51"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RECALL_WINDOW_ACCEPTANCE.json",
+      "sha256": "b3a60e753cd334a742dc1c9354a9444bffad883e05d380432bc7b2c33e978de7"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RECALL_WINDOW_AFFECTED_TESTS.json",
+      "sha256": "a7380f5496619234a4d85e4c204e06ae73b0ea42076c52286984f7335438025a"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RECALL_WINDOW_DEPENDENT_TEST_LOG.txt",
+      "sha256": "798e9c98e8569fd4b7bddece4c6fcd98c1696ec75880a46a602aa3445914d1a4"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_RECALL_WINDOW_REPORT.md",
+      "sha256": "72d9af26b1487b8edee736b2f011d93f1002e7fc89c84b88d7334c38eeb1c544"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_REMAINING_WORK.md",
+      "sha256": "979ecb65c55f71ded6b30a32a96efdc19c059ecfb79df0a459b9d8f3360c6ebd"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "13ffc9c3829c6fd036bbd1f77913f3f14d0cfe78217ec05ad860efd505d312c4"
+    }
+  ]
+}

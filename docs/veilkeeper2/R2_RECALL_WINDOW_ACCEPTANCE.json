@@ -1,0 +1,20 @@
+{
+  "distinctChecks": 252,
+  "files": 38,
+  "focused": {
+    "checks": 3,
+    "initialPass": 2,
+    "initialFail": 1,
+    "initialDurationMs": 3497.5642,
+    "correctedCasePass": 1,
+    "correctedDurationMs": 560.4088
+  },
+  "dependent": {
+    "checks": 249,
+    "pass": 249,
+    "fail": 0,
+    "durationMs": 42776.8155
+  },
+  "scope": "Real native root/SQLite; synthetic SDK/provider; zero online/model calls",
+  "phaseComplete": false
+}

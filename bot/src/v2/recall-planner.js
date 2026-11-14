@@ -19,7 +19,9 @@ export function createRecallPlanner({contextAuthority,readCandidates,readCauses,
     const current=readClock(source.campaign),candidates=readCandidates(source),causes=readCauses(source),pins=readPins(source);
     if(!tick(current)||!refs(candidates)||!Array.isArray(causes)||causes.length>4096||!Array.isArray(pins)||pins.length>4096)throw new Error('Recall snapshot unavailable');
     const entitled=ref=>contextAuthority.entitled(source,ref,{actorId});
-    const eligible=candidates.filter(entitled),scores=new Map(eligible.map(ref=>[ref,{score:0,last:null,pinned:false}]));
+    const scores=new Map(),considered=new Set();
+    function admit(ref){if(considered.has(ref))return scores.get(ref);if(considered.size>=16384)throw new Error('Recall candidates require native curation');considered.add(ref);if(!entitled(ref))return null;const row={score:0,last:null,pinned:false};scores.set(ref,row);return row;}
+    for(const ref of [...candidates,...focus])admit(ref);
     const seen=new Map();
     for(const cause of causes){
       if(!cause||!id(cause.id)||cause.campaignId!==source.campaign||cause.status!=='committed'||cause.authority!=='native_recall'
@@ -32,14 +34,14 @@ export function createRecallPlanner({contextAuthority,readCandidates,readCauses,
       }
       seen.set(cause.id,fingerprint);
       if(!cause.sourceRefs.every(entitled))continue;
-      for(const target of cause.targetRefs){const row=scores.get(target);if(!row)continue;
+      for(const target of cause.targetRefs){const row=admit(target);if(!row)continue;
         row.score+=decayedRecallWeight(weights[cause.kind],cause.tick,current);row.last=Math.max(row.last??0,cause.tick);
       }
     }
     for(const pin of pins){
       if(pin?.campaignId!==source.campaign||pin.status!=='active'||pin.authority!=='native_recall_pin'||!id(pin.id)
         ||!refs(pin.targetRefs)||!refs(pin.sourceRefs)||!pin.sourceRefs.length||!pin.sourceRefs.every(entitled))continue;
-      for(const target of pin.targetRefs){const row=scores.get(target);if(row)row.pinned=true;}
+      for(const target of pin.targetRefs){const row=admit(target);if(row)row.pinned=true;}
     }
     // Retirement removes only default prompt selection. Focus/pins restore recall;
     // the underlying identity/history and epistemic kind are never mutated.
