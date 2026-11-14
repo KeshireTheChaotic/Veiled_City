@@ -3,7 +3,7 @@ const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 /** Private thought only, once per native opening/reopening and NPC. No timers,
  * player source, speech publication, fictional time, consequences or AI tools.
  */
-export function createSceneOpeningDirector({sceneStore,store,provider,allowedGuildIds=null,onError=()=>{}}){
+export function createSceneOpeningDirector({sceneStore,store,provider,records=store,allowedGuildIds=null,onError=()=>{}}){
  if(['sceneNpcRefs','history'].some(k=>typeof sceneStore?.[k]!=='function')||['readScene','readSession','readActor'].some(k=>typeof sceneStore?.readers?.[k]!=='function')||['claimNpcSceneOpportunity','npcKnownRefs','npcOpportunityCount','propose','metadata','readText','append'].some(k=>typeof store?.[k]!=='function')||typeof provider?.generate!=='function')throw new TypeError('Native scene Director dependencies required');
  const pending=new Set(),controller=new AbortController();let closed=false;
  function sourceFor(campaign,sceneId){
@@ -12,7 +12,7 @@ export function createSceneOpeningDirector({sceneStore,store,provider,allowedGui
   if(scene?.campaignId!==campaign||scene.status!=='active'||session?.status!=='active'||opening?.record.status!=='active'||!opening.sourceRef)throw new Error('Current committed native scene opening required');
   return {id:'director-source:'+hash([campaign,sceneId,epoch,opening.sourceRef]),campaign,scene:sceneId,revision:hash([scene,session,opening]),principal:'native:scene-director',actors:[],recipients:[],text:'',kind:'private_scene_opening'};
  }
- const authority={revalidate(source){try{return JSON.stringify(sourceFor(source.campaign,source.scene))===JSON.stringify(source);}catch{return false;}}},context=createNpcPrivateContext({sourceAuthority:authority,records:store,readActor:sceneStore.readers.readActor});
+ const authority={revalidate(source){try{return JSON.stringify(sourceFor(source.campaign,source.scene))===JSON.stringify(source);}catch{return false;}}},context=createNpcPrivateContext({sourceAuthority:authority,records,readActor:sceneStore.readers.readActor});
  function considerScene(campaign,sceneId,{maxPlans=1,signal}={}){
   const work=(async()=>{if(!Number.isSafeInteger(maxPlans)||maxPlans<1||maxPlans>4)throw new Error('Bounded Director planning required');const combined=signal?AbortSignal.any([signal,controller.signal]):controller.signal;combined.throwIfAborted();const source=sourceFor(campaign,sceneId),results=[];let attempts=0;
    const actors=sceneStore.sceneNpcRefs(campaign,sceneId).map(id=>({id,count:store.npcOpportunityCount(campaign,id)})).sort((a,b)=>a.count-b.count||a.id.localeCompare(b.id));

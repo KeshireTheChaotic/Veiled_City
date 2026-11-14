@@ -1,0 +1,44 @@
+{
+  "scope": "Actual local model private NPC planning with native-confirmed self-utterance produced by a synthetic GM provider; fresh real SQLite and simulated Discord only. No live Discord writes.",
+  "model": "qwen3.5:27b",
+  "thinking": true,
+  "maxOutputTokens": 4096,
+  "timeoutMs": 90000,
+  "status": "private_planning_held",
+  "elapsedMs": 90025.9759,
+  "errors": [
+    {
+      "message": "NPC decision generation failed",
+      "stage": "native_scene_director",
+      "campaignId": "c",
+      "sceneId": "s",
+      "actorId": "clerk"
+    }
+  ],
+  "hope": 3,
+  "liveDiscordCalls": 0,
+  "actualModelPublicationCount": 0,
+  "syntheticPublications": [
+    "Ilex says, \"The parcel is harmless.\""
+  ],
+  "director": {
+    "status": "considered_private_opportunity",
+    "attempts": 1,
+    "results": [
+      {
+        "actorId": "clerk",
+        "status": "private_planning_held"
+      }
+    ],
+    "effectsCommitted": false,
+    "publicationAuthority": false
+  },
+  "calls": [
+    {
+      "elapsedMs": 90015.8716,
+      "error": "TimeoutError",
+      "response": null,
+      "requestSha256": "eadfe9ad30a98f1430238a200b3092cd3484a359c8c332bd63d548d0be8671a0"
+    }
+  ]
+}

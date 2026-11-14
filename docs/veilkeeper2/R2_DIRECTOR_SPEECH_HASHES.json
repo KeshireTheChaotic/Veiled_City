@@ -1,0 +1,42 @@
+{
+  "parent": "152cbaf5f2e9464fb74157db3151e6bed8998536",
+  "scope": "Exact owned checkout bytes; excludes hash manifest itself",
+  "files": [
+    {
+      "path": "bot/src/v2/native-root.js",
+      "sha256": "172bc794f415436aafe2a0740a7b9ceea51347075a4eea62851ba234690ea6cf"
+    },
+    {
+      "path": "bot/src/v2/scene-opening-director.js",
+      "sha256": "62ab86c0cb9f5bf019b11f4ae514832beaab67a62f464e76a024852a8d5963be"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r2-npc-speech-lineage.test.mjs",
+      "sha256": "256933628a8ae64b78e9919332b8c82b046a89c97bff75bc7254cc8887572537"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_DIRECTOR_SPEECH_27B_RESPONSE.json",
+      "sha256": "84da79e5f527d8318a69b66df93cc9962f8f671aed438a0338b7318041a10f32"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_DIRECTOR_SPEECH_ACCEPTANCE.json",
+      "sha256": "c30ff042c744ed2fd2d62cb9fdbba161a84bdb16f5f65c7167d911acd0a768a9"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_DIRECTOR_SPEECH_AFFECTED_TESTS.json",
+      "sha256": "06dc729b796decafddf73f3e46b27a011fd6e71038b42cfc62df76fa11520b32"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_DIRECTOR_SPEECH_DEPENDENT_TEST_LOG.txt",
+      "sha256": "a3acca4b0394efd939512ec923193147d40ab50f97882f7a8111d4316b06a30c"
+    },
+    {
+      "path": "docs/veilkeeper2/R2_DIRECTOR_SPEECH_REPORT.md",
+      "sha256": "694a456f320232c99372502935f46bb75383331f43f9474f9f7d52ff41acebea"
+    },
+    {
+      "path": "docs/veilkeeper2/RESUME_HANDOFF.md",
+      "sha256": "10f24ee5d1243c7bb4d419bdaf8ad260af620a665de6754b96b58198de13da22"
+    }
+  ]
+}

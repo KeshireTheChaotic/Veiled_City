@@ -1,0 +1,19 @@
+{
+  "distinctChecks": 176,
+  "files": 26,
+  "focused": {
+    "newCasePass": 1,
+    "durationMs": 1376.4209,
+    "speechDependentPass": 9,
+    "speechDependentDurationMs": 12959.8459
+  },
+  "otherDependent": {
+    "pass": 166,
+    "fail": 0,
+    "durationMs": 40134.7242
+  },
+  "actualModelCalls": 1,
+  "modelProbeStatus": "private_planning_held",
+  "liveDiscordCalls": 0,
+  "phaseComplete": false
+}
