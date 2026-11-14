@@ -1,5 +1,5 @@
 {
-  "head": "881e8fc11099cc8022f1e2a7add0adfb84495b0f",
+  "head": "c48350d5478c530ebc0fdd8cc2e3676c306dcaba",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -2036,7 +2036,7 @@
     },
     {
       "file": "bot/src/v2/knowledge-authority.js",
-      "sha256": "e04a7e34d21c6d7a6dc0781f5c40ecc40f4d7e7dc406b547e5b13e8e7c212ee0",
+      "sha256": "acab00877287658a042e0271ea73ef2ffe3ac1982271c260dbaf097f41c7ecfd",
       "reachable": true,
       "exports": [
         {
@@ -2055,12 +2055,12 @@
           "status": "resolved"
         }
       ],
-      "functions": 9,
+      "functions": 12,
       "sqlStatements": 0
     },
     {
       "file": "bot/src/v2/knowledge-store.js",
-      "sha256": "6eb444a9048dbe4b1109bc3656c9487085b7820ccd34db68653a0b8a637e5e82",
+      "sha256": "a12afd57ebe1df197acca97cc6c17ef1637925f9f729a9da88ab348e311b9c31",
       "reachable": true,
       "exports": [
         {
@@ -2092,7 +2092,7 @@
           "status": "external"
         }
       ],
-      "functions": 29,
+      "functions": 30,
       "sqlStatements": 18
     },
     {

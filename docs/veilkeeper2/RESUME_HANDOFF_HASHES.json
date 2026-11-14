@@ -1,14 +1,5 @@
 {
-  "checkpoint": "R0 and R1 complete; overall goal active",
-  "handoffSha256": "baa6110f8982b53846ca9b9bc1386382b6b283a618d8e4d4ade9f009e63c2903",
-  "phaseAcceptance": [
-    {
-      "phase": "R0",
-      "sha256": "4eb2435ce84feb8de8ce61dd88f1e55574a315643bcdc62d6b37c2f62808d2eb"
-    },
-    {
-      "phase": "R1",
-      "sha256": "6262872ba59adf77e701fadf8a76039ac46871f313949574e52ea0fef2c9dc81"
-    }
-  ]
+  "handoffSha256": "7d9b8658260302a37626abaa084da48fd786d4214ad59512a42350918928e8eb",
+  "checkpoint": "R2 commit-time authority slice complete; R2-R8 remain incomplete",
+  "reportSha256": "33b68f12f1a685fb08a448134aa03ae42ea2531d48d089ba389c1ded5f1eb52c"
 }

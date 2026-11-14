@@ -23,6 +23,8 @@ R1: R1_PHASE_REPORT/ACCEPTANCE/HASHES records completion of offline boot, depend
 
 ## Recent implementation checkpoints
 
+- Current R2 knowledge commit-boundary slice: knowledge-authority and knowledge-store recheck native evidence/source/private canon request inside actual SQLite transactions; failed corrections/retractions preserve the prior history and no partial proposal remains.244 distinct checks across37 files pass (six focused226.6628ms,238 affected40509.2313ms). R2_KNOWLEDGE_COMMIT_REPORT/HASHES/AFFECTED_TESTS retain evidence; R2_REMAINING_WORK.md is the current requested blocker checklist. No schema change, new model call, NPC hearing assumption or R2 phase completion. Prior R1 acceptance tests pass in the affected run; prior phase hashes remain historical checkpoints.
+
 - dc6e0945 R6 composed authenticated private GM imports;244 distinct checks across30 files passed, including real root/cold resume/export/snapshot/restore with simulated Discord/CDN. Prior881e8fc1 added atomic private narrative history;34 checks. gm-hook attachment preparation bda86db3 and failed-export receipt fix5689a22f remain supporting slices.
 - Existing import-gm-hooks privately defers, authenticates observed current GM before download, validates exact campaign character and commits hooks/connections/pending canon/narrative atomically. Character targets resolve exact current identities; NPC/faction/location/etc targets stay preserved holds. Durable claims prevent repeat import/reply across restart and uncertain outcomes. No PC control, canon approval, actor knowledge, fiction publication or game effects.
 - VK2_PRIVATE_IMPORTS=1 initializes private-hooks.sqlite only on a fresh runtime. Existing manifested store reopens automatically. Enabling on an older ready manifest holds before root/login without modifying sealed files. Older nine-table standalone stores also hold before DDL. Reviewed migration remains required.
@@ -57,7 +59,7 @@ Keep main/WAL/journal, source/origin/pin/recall/choice/interaction/uncertain-pub
 
 ## Remaining work and next exact phase
 
-R2 next: source-backed NPC perception/IC-speech/witness, correction/retraction and imported actor knowledge; complete weighted relevance/time issuers and protected-canon lifecycle. Never treat current player text as automatic NPC hearing or a planner thought as an event. Preserve R0 opaque contracts until each adoption proof exists.
+R2 next: see R2_REMAINING_WORK.md. Source-backed NPC perception/IC-speech/witness and separate historical actor belief/correction, imported actor knowledge, complete relevance/time/pin issuers and protected-canon lifecycle remain. Native world-knowledge acceptance still has no composed readEvidence issuer; private canon request/canonical review paths remain incomplete. Long-history selection must handle pins/focus outside the current256 candidate pool. Never treat current player text as automatic NPC hearing or a planner thought as an event. Preserve R0 opaque contracts until each adoption proof exists.
 
 R3: full current action terms/target/range/usage/cost/condition/owner readiness, Daggerheart2.0/house-rule parity and complete action controller. Root ordinary rolls remain disabled. Owner roll-choice evidence has executionAuthority:false. No supplied dice faces, invented target/range or scene-ID equivalence. Native UUID and legacy scene-composite mapping remains reviewed-migration work; scenePresence is descriptive, authoritative encounter ranges control rules.
 

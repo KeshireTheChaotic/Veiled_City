@@ -15,19 +15,27 @@ export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,rea
       ||input.source_ref!==source.id||!['testimony','observation','identity','memory','fact','canon_proposal'].includes(input.kind)
       ||typeof input.claim!=='string'||!input.claim.trim()||input.claim.length>8000
       ||input.subject_ref!==undefined&&!id(input.subject_ref)||input.evidence_refs!==undefined&&!list(input.evidence_refs))return blocked('invalid_knowledge_proposal');
+    let canonRequest=null;
     if(input.kind==='canon_proposal'){
       const request=readCanonRequest(source.id);
       if(!request||request.sourceRef!==source.id||request.principal!==source.principal||request.sourceRevision!==source.revision
         ||request.private!==true||request.ownerConfirmed!==true||request.claim!==input.claim||request.subjectRef!==(input.subject_ref??null)
         ||source.recipients.length!==1||source.recipients[0]!==source.principal)return blocked('explicit_private_owner_request_required');
+      canonRequest=JSON.stringify(request);
     }
     const proposal={campaignId:source.campaign,sourceRef:source.id,sourceRevision:source.revision,principal:source.principal,
       kind:input.kind,claim:input.claim,subjectRef:input.subject_ref??null,evidenceRefs:[...(input.evidence_refs??[])],
       status:'proposed',authorship:'model_proposal',visibility:'gm',effectsCommitted:false};
     proposal.id=`knowledge-proposal:${knowledgeHash(JSON.stringify(proposal))}`;
     if(!sourceAuthority.revalidate(source))return blocked('source_authority_changed');
-    const saved=store.propose(proposal);
-    return {status:'proposed',proposal_ref:saved.id,effects_committed:false};
+    const changed=code=>Object.assign(new Error('Current native knowledge proposal authority required'),{code});
+    try{
+      const saved=store.propose(proposal,{check(){
+        if(!sourceAuthority.revalidate(source))throw changed('source_authority_changed');
+        if(canonRequest!==null&&JSON.stringify(readCanonRequest(source.id))!==canonRequest)throw changed('explicit_private_owner_request_required');
+      }});
+      return {status:'proposed',proposal_ref:saved.id,effects_committed:false};
+    }catch(error){if(['source_authority_changed','explicit_private_owner_request_required'].includes(error?.code))return blocked(error.code);throw error;}
   }
   function establish(campaign,evidenceRef,expectedRevision=null){
     if(!id(campaign)||!id(evidenceRef)||expectedRevision!==null&&(typeof expectedRevision!=='string'||!/^[1-9][0-9]*$/.test(expectedRevision)))throw new Error('Native evidence reference and revision required');
@@ -54,9 +62,10 @@ export function createKnowledgeAuthority({store,sourceAuthority,readEvidence,rea
       if(prior?.status==='retracted'&&r.status!=='retracted')throw new Error('Retracted history requires a distinct supported claim');
       if(!prior&&r.status==='retracted')throw new Error('Cannot retract a missing record');
     }
-    // Re-read native evidence immediately before the atomic storage transition.
-    if(JSON.stringify(readEvidence(campaign,evidenceRef))!==JSON.stringify(event))throw new Error('Native evidence changed');
-    return store.append({campaignId:campaign,id:r.id,expectedRevision,evidenceRef,metadata:meta,body:r.body});
+    // Native evidence must remain exact at transaction entry and immediately
+    // before commit, including corrections, retractions and immutable replay.
+    const check=()=>{if(JSON.stringify(readEvidence(campaign,evidenceRef))!==JSON.stringify(event))throw new Error('Native evidence changed');};
+    check();return store.append({campaignId:campaign,id:r.id,expectedRevision,evidenceRef,metadata:meta,body:r.body},{check});
   }
   return Object.freeze({propose,establish});
 }

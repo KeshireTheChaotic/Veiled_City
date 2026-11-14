@@ -61,11 +61,14 @@ export function openKnowledgeStore(filename=':memory:'){
       return row?{revision:String(revision),text:row.body}:null;
     },
     history(campaign,id){return db.prepare('SELECT data,body FROM vk2_knowledge_history WHERE campaign=? AND id=? ORDER BY revision').all(campaign,id).map(row=>({...decode(row),body:row.body}));},
-    propose(proposal){
-      const old=decode(db.prepare('SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND id=?').get(proposal.campaignId,proposal.id));
-      if(old&&json(old)!==json(proposal))throw new Error('Immutable proposal conflict');
-      if(!old)db.prepare('INSERT INTO vk2_knowledge_proposals VALUES(?,?,?)').run(proposal.campaignId,proposal.id,json(proposal));
-      return old??structuredClone(proposal);
+    propose(proposal,{check}={}){
+      if(check!==undefined&&typeof check!=='function')throw new TypeError('Native knowledge proposal check required');
+      return transaction(()=>{
+        const old=decode(db.prepare('SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND id=?').get(proposal.campaignId,proposal.id));
+        if(old&&json(old)!==json(proposal))throw new Error('Immutable proposal conflict');
+        if(!old)db.prepare('INSERT INTO vk2_knowledge_proposals VALUES(?,?,?)').run(proposal.campaignId,proposal.id,json(proposal));
+        return old??structuredClone(proposal);
+      },check);
     },
     proposal(campaign,id){return decode(db.prepare('SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND id=?').get(campaign,id));},
     close:()=>db.close()
