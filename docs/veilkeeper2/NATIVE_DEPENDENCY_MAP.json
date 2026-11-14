@@ -1,5 +1,5 @@
 {
-  "head": "cc98a24d908e361ebdc7ad5d14ba067c9ad26dfb",
+  "head": "c2bf74e37b4412c5346e15a707cc280ed21698ea",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,11 +12,10 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 121,
-  "reachableNativeModules": 82,
+  "nativeModules": 123,
+  "reachableNativeModules": 85,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
-    "bot/src/v2/character-packages.js",
     "bot/src/v2/discord-fear-announcements.js",
     "bot/src/v2/discord-owner-roll-choices.js",
     "bot/src/v2/discord-roll-notices.js",
@@ -370,7 +369,7 @@
     },
     {
       "file": "bot/src/v2/canonical-actor-readers.js",
-      "sha256": "737a04c318255c604f3076dc0526cd5236382ccc22626bab9070baca03b79e2a",
+      "sha256": "2e6bce2bfe138ba945c7d6d9905fcb4e76091864869ee57b1b937376c8293308",
       "reachable": true,
       "exports": [
         {
@@ -389,7 +388,7 @@
           "status": "external"
         }
       ],
-      "functions": 7,
+      "functions": 9,
       "sqlStatements": 0
     },
     {
@@ -440,7 +439,7 @@
     {
       "file": "bot/src/v2/character-packages.js",
       "sha256": "bf53a18dd9f98b2530fb71d9979fa302771d09b63bb22de10938ff9c6ea74a31",
-      "reachable": false,
+      "reachable": true,
       "exports": [
         {
           "line": 2,
@@ -807,6 +806,44 @@
         }
       ],
       "functions": 9,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-character-exports.js",
+      "sha256": "3f61b38ab52018719bbbf6f5f7adb7695c0ef885a69b4302f50badf72b6ac9b2",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 9,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordCharacterExports({client,repository,readCharacter,interactionReceipts,wasObserved,clock=()=>Date.now(),onError=()=>{}}){\n if(typeof wasObserved!=='function'||typeof repository?.listCharacters!=='function'||typeof interactionReceipts?.claim!=='function')throw new TypeErro"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./owner-character-export.js",
+          "target": "bot/src/v2/owner-character-export.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 20,
       "sqlStatements": 0
     },
     {
@@ -1192,14 +1229,14 @@
     },
     {
       "file": "bot/src/v2/discord-interaction-router.js",
-      "sha256": "86ddf4df7d27c286b61c98e5cdd723c027dba6f0151e30677dff6cdb3bf7d41a",
+      "sha256": "eb800255dc03d15c425ea3a2f7f41b819dc34922d516d68b61023f726271e52e",
       "reachable": true,
       "exports": [
         {
-          "line": 14,
+          "line": 15,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof client?.off!=='function'||type"
+          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof cl"
         }
       ],
       "imports": [
@@ -1265,9 +1302,16 @@
           "specifier": "./discord-gm-authority.js",
           "target": "bot/src/v2/discord-gm-authority.js",
           "status": "resolved"
+        },
+        {
+          "line": 10,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-character-exports.js",
+          "target": "bot/src/v2/discord-character-exports.js",
+          "status": "resolved"
         }
       ],
-      "functions": 13,
+      "functions": 14,
       "sqlStatements": 0
     },
     {
@@ -1710,7 +1754,7 @@
     },
     {
       "file": "bot/src/v2/legacy-readonly-repository.js",
-      "sha256": "ffc2e3b84b1cd45e006b7ba4e30895c40b6bcc5b7491c8b9c7837f2298975b52",
+      "sha256": "da2d9ddbbe3b2a7fecb10a1a12ac9bcb35d3393659b730ff1f6a3748d78af3d1",
       "reachable": true,
       "exports": [
         {
@@ -1729,8 +1773,8 @@
           "status": "external"
         }
       ],
-      "functions": 20,
-      "sqlStatements": 10
+      "functions": 34,
+      "sqlStatements": 23
     },
     {
       "file": "bot/src/v2/model-gateway.js",
@@ -2074,7 +2118,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "7fcda402799ba414835d422d689ea1f52d6653b5118e4d175c2d49f78d7616fa",
+      "sha256": "29890168856f89f2d5b6fad8890110ec7fbc7a3ffd8ff6a34bf7e355c5e1e336",
       "reachable": true,
       "exports": [
         {
@@ -2282,7 +2326,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 32,
+      "functions": 33,
       "sqlStatements": 0
     },
     {
@@ -2311,7 +2355,7 @@
     },
     {
       "file": "bot/src/v2/native-start.js",
-      "sha256": "4f7819042ce58db1e6f43ec6c5f49b5d98dc1ed8d3231eb9cfc178a71f7ba113",
+      "sha256": "c32a1913bd037abe59aabbf57f5545b8b0c7a6fc00d07ea98fe7d61a49d542eb",
       "reachable": true,
       "exports": [
         {
@@ -2502,6 +2546,37 @@
         }
       ],
       "functions": 6,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/owner-character-export.js",
+      "sha256": "fb7aa0709e08404736b7f436573b51683532c146a7578845835bfd329a3a957a",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createOwnerCharacterExport({repository,readCharacter=(_campaign,actor)=>repository.getCharacter(actor)}){\n if([repository?.getCharacter,repository?.withValidationSnapshot,repository?.playerFactsFor,repository?.playerExportRelationships,readCharacter].some(fn=>typeof fn!=='function'))"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./character-packages.js",
+          "target": "bot/src/v2/character-packages.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 11,
       "sqlStatements": 0
     },
     {

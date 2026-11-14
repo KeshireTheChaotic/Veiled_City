@@ -53,6 +53,7 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     const messageReader=createDiscordMessageReader({client}),intake=createDiscordIntake({messageReader,sceneStore});
     const originRefresh=knowledgeStore?createStatementOriginRefresh({contextAuthority:conversationContext,records:knowledgeRecords,sourceRegistry:registry,sceneStore,messageReader,readGmRoleId:c=>readPolicy(c).gmRoleId}):null;
     router=createDiscordInteractionRouter({client,
+      nativeCharacterExports:['withValidationSnapshot','playerFactsFor','playerExportRelationships'].every(key=>typeof characterRepository[key]==='function')?{repository:characterRepository,readCharacter:canonical.readCharacterExport}:null,
       nativeCost:{actionStore,sceneStore,sourceAuthority,sourceRegistry:registry,readActor:canonical.readActor,readGmRoleId:c=>readPolicy(c).gmRoleId,readRoute:route,promptStore:costPrompts,decisionStore,interactionReceipts,nativeActions,clock},
       nativeDeath:{actionStore,sceneStore,sourceAuthority,readActorSnapshot:canonical.readActorSnapshot,readRoute:route,readOwnerRoute:route,promptStore,decisionStore,interactionReceipts,clock,rng},
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},

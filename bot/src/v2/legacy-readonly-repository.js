@@ -47,6 +47,25 @@ export function openLegacyReadOnlyRepository(filename){
       const sql=`SELECT * FROM characters WHERE guild_id=? AND owner_user_id=?${includeClosed?'':" AND status IN ('active','reserve','guest')"} ORDER BY CASE status WHEN 'active' THEN 0 WHEN 'reserve' THEN 1 WHEN 'guest' THEN 2 ELSE 3 END,name`;
       return db.prepare(sql).all(guildId,ownerUserId).map(parse);
     },
+    playerFactsFor(guildId,ownerUserId,{characterId,limit=200}={}){
+      required(guildId,ownerUserId,characterId);
+      if(!Number.isSafeInteger(limit)||limit<1||limit>200||!db.prepare('SELECT 1 FROM characters WHERE guild_id=? AND owner_user_id=? AND id=?').get(guildId,ownerUserId,characterId))throw new Error('Owned character fact export scope required');
+      return db.prepare("SELECT * FROM facts WHERE guild_id=? AND archived=0 AND (visibility IN ('public','party') OR visibility='player' AND subject_user_id=? OR visibility='character' AND subject_character_id=?) ORDER BY created_at DESC LIMIT ?").all(guildId,ownerUserId,characterId,limit);
+    },
+    playerExportRelationships(guildId,ownerUserId,characterId){
+      required(guildId,ownerUserId,characterId);
+      if(!db.prepare('SELECT 1 FROM characters WHERE guild_id=? AND owner_user_id=? AND id=?').get(guildId,ownerUserId,characterId))throw new Error('Owned character relationship export scope required');
+      const rows=db.prepare("SELECT * FROM relationships WHERE guild_id=? AND (from_key=? OR to_key=? OR source_character_id=?) AND (visibility IN ('public','party','character') OR visibility='player' AND instr(note,?)>0) ORDER BY updated_at DESC,id LIMIT 10001").all(guildId,characterId,characterId,characterId,`player:${ownerUserId}`);
+      if(rows.length>10000)throw new Error('Complete relationship export requires reconciliation');
+      // Legacy player tags must match the whole account id, not a prefix of another id.
+      return rows.filter(row=>{
+        if(row.visibility==='player')return [...String(row.note).matchAll(/(?:^|[^A-Za-z0-9_])player:([A-Za-z0-9_-]+)/g)].some(match=>match[1]===ownerUserId);
+        if(row.visibility!=='character')return true;
+        if(row.source_character_id)return row.source_character_id===characterId;
+        if(row.from_type==='character'&&row.from_key===characterId)return true;
+        throw new Error('Private relationship recipient requires reconciliation');
+      });
+    },
     withValidationSnapshot(inspect){
       if(typeof inspect!=='function'||/Async|Generator/.test(inspect.constructor?.name??''))throw new TypeError('Synchronous materialized native validation required');
       if(inSnapshot)throw new Error('Nested legacy validation snapshot unsupported');
