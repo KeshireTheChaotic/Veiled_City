@@ -1,0 +1,123 @@
+{
+  "scope": "Static original-source identities only. New native export readers do not call legacy backfill or approval, and conservatively hold unmigrated suggestions, malformed payloads and incomplete windows.",
+  "baseline": {
+    "commit": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "file": "bot/src/frameworks/persistence/database.js",
+    "fileHash": "49d75ce6f0dc30998b68846bab7f4ccd81a53eff240d33dbdfe0384bced3b47d",
+    "methods": [
+      {
+        "name": "characterPrivateFacts",
+        "line": 1609,
+        "endLine": 1617,
+        "sha256": "2950aba8c56784fac22e5c0a96b56600edc4b87dc324753edef7c132ce189ba5"
+      },
+      {
+        "name": "characterPrivateClocks",
+        "line": 1619,
+        "endLine": 1624,
+        "sha256": "b6ecc5d383ab23d1d4b88c03aad02aedd5adae03cf4f67a5bf50d627ea70634f"
+      },
+      {
+        "name": "characterPrivateThreads",
+        "line": 1626,
+        "endLine": 1631,
+        "sha256": "287bb84e777b8691037d01ae6965f74dab356eb9104b0132a59a0dbcf8a61bcc"
+      },
+      {
+        "name": "characterPrivateReferences",
+        "line": 1633,
+        "endLine": 1638,
+        "sha256": "516e22100fd85dcae0a385b0565c558c5d22c161cf7adc902a48d64a679ab14f"
+      },
+      {
+        "name": "listRelationships",
+        "line": 2079,
+        "endLine": 2083,
+        "sha256": "627188cad7bef7287f0a6a8c7d848b688bb596c7c8fc0f799ecdb45b49e44add"
+      },
+      {
+        "name": "listCharacterGmHooks",
+        "line": 2158,
+        "endLine": 2164,
+        "sha256": "ef90e40ea3a8d431ed44251a5041b055ae48c43eb4beecd7fb4fde6dc6609b89"
+      },
+      {
+        "name": "backfillLegacyCanonProposals",
+        "line": 2187,
+        "endLine": 2209,
+        "sha256": "8855bccc27d6484af7d8a93f77bc1702e4deb1bc9c20902bf16b6197d2ab237c"
+      },
+      {
+        "name": "listCanonProposals",
+        "line": 2211,
+        "endLine": 2219,
+        "sha256": "0310c97ec94f7e3db213ebdde0dd868077bd96e64730ff72685e8bda06a006a7"
+      }
+    ]
+  },
+  "current": {
+    "commit": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "file": "bot/src/frameworks/persistence/database.js",
+    "fileHash": "4733d1884ee20f5548a518a15299b077253b3cb952ac70af1388a7d66ee5827f",
+    "methods": [
+      {
+        "name": "characterPrivateFacts",
+        "line": 1606,
+        "endLine": 1614,
+        "sha256": "2950aba8c56784fac22e5c0a96b56600edc4b87dc324753edef7c132ce189ba5"
+      },
+      {
+        "name": "characterPrivateClocks",
+        "line": 1616,
+        "endLine": 1621,
+        "sha256": "b6ecc5d383ab23d1d4b88c03aad02aedd5adae03cf4f67a5bf50d627ea70634f"
+      },
+      {
+        "name": "characterPrivateThreads",
+        "line": 1623,
+        "endLine": 1628,
+        "sha256": "287bb84e777b8691037d01ae6965f74dab356eb9104b0132a59a0dbcf8a61bcc"
+      },
+      {
+        "name": "characterPrivateReferences",
+        "line": 1630,
+        "endLine": 1635,
+        "sha256": "516e22100fd85dcae0a385b0565c558c5d22c161cf7adc902a48d64a679ab14f"
+      },
+      {
+        "name": "listRelationships",
+        "line": 2076,
+        "endLine": 2080,
+        "sha256": "627188cad7bef7287f0a6a8c7d848b688bb596c7c8fc0f799ecdb45b49e44add"
+      },
+      {
+        "name": "listCharacterGmHooks",
+        "line": 2155,
+        "endLine": 2161,
+        "sha256": "ef90e40ea3a8d431ed44251a5041b055ae48c43eb4beecd7fb4fde6dc6609b89"
+      },
+      {
+        "name": "backfillLegacyCanonProposals",
+        "line": 2184,
+        "endLine": 2206,
+        "sha256": "8855bccc27d6484af7d8a93f77bc1702e4deb1bc9c20902bf16b6197d2ab237c"
+      },
+      {
+        "name": "listCanonProposals",
+        "line": 2208,
+        "endLine": 2216,
+        "sha256": "0310c97ec94f7e3db213ebdde0dd868077bd96e64730ff72685e8bda06a006a7"
+      }
+    ]
+  },
+  "unchanged": [
+    "characterPrivateFacts",
+    "characterPrivateClocks",
+    "characterPrivateThreads",
+    "characterPrivateReferences",
+    "listRelationships",
+    "listCharacterGmHooks",
+    "backfillLegacyCanonProposals",
+    "listCanonProposals"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "head": "c2bf74e37b4412c5346e15a707cc280ed21698ea",
+  "head": "10afa510cee3fc0fb1e8dbebe62209262ced8b88",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -12,8 +12,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 123,
-  "reachableNativeModules": 85,
+  "nativeModules": 126,
+  "reachableNativeModules": 88,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
@@ -1071,7 +1071,7 @@
     },
     {
       "file": "bot/src/v2/discord-gm-authority.js",
-      "sha256": "09171631735d18cb9408bc49151860d447ca356328942d0c4e284c7633d870b2",
+      "sha256": "4da27210a0c745cc25a723805bf2dfe9aa338b8aa3aa6d4ada756c392d2701d8",
       "reachable": true,
       "exports": [
         {
@@ -1112,6 +1112,44 @@
         }
       ],
       "functions": 16,
+      "sqlStatements": 0
+    },
+    {
+      "file": "bot/src/v2/discord-gm-character-exports.js",
+      "sha256": "a2243e6f7f977cc40eaa04f4131627373014631437e877b15dede3e358d5d87b",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 8,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createDiscordGmCharacterExports({client,repository,readCharacter,gmAuthority,interactionReceipts,onError=()=>{}}){\n if(typeof repository?.findExportCharacter!=='function'||typeof gmAuthority?.authorize!=='function'||typeof gmAuthority?.refresh!=='function'||typeof gmAuthority?.check!"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "discord.js",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 3,
+          "kind": "ImportDeclaration",
+          "specifier": "./gm-character-export.js",
+          "target": "bot/src/v2/gm-character-export.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 13,
       "sqlStatements": 0
     },
     {
@@ -1229,14 +1267,14 @@
     },
     {
       "file": "bot/src/v2/discord-interaction-router.js",
-      "sha256": "eb800255dc03d15c425ea3a2f7f41b819dc34922d516d68b61023f726271e52e",
+      "sha256": "95619feed6de4adfff03d0ecf37d0165e68c58a0293371dd16dcfc70d0167839",
       "reachable": true,
       "exports": [
         {
-          "line": 15,
+          "line": 16,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof client?.on!=='function'||typeof cl"
+          "text": "export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,nativeGmCharacterExports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){\r\n  if(typeof clie"
         }
       ],
       "imports": [
@@ -1308,6 +1346,13 @@
           "kind": "ImportDeclaration",
           "specifier": "./discord-character-exports.js",
           "target": "bot/src/v2/discord-character-exports.js",
+          "status": "resolved"
+        },
+        {
+          "line": 11,
+          "kind": "ImportDeclaration",
+          "specifier": "./discord-gm-character-exports.js",
+          "target": "bot/src/v2/discord-gm-character-exports.js",
           "status": "resolved"
         }
       ],
@@ -1564,6 +1609,37 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/gm-character-export.js",
+      "sha256": "82b811f158fb9f100b8dbbd34e1022716d465f64da77ab75650885b8c528b9d3",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createGmCharacterExport({repository,readCharacter=(_campaign,actor)=>repository.getCharacter(actor)}){\n if([repository?.getCharacter,repository?.withValidationSnapshot,repository?.readGmCharacterExportFacets,readCharacter].some(f=>typeof f!=='function'))throw new TypeError('Complete "
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./character-packages.js",
+          "target": "bot/src/v2/character-packages.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 20,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/gm-hook-package.js",
       "sha256": "202f5db9fd1921ea447411281c2b5a9a27be33ec3377cf0ef29b4b5f05722712",
       "reachable": false,
@@ -1753,12 +1829,28 @@
       "sqlStatements": 13
     },
     {
-      "file": "bot/src/v2/legacy-readonly-repository.js",
-      "sha256": "da2d9ddbbe3b2a7fecb10a1a12ac9bcb35d3393659b730ff1f6a3748d78af3d1",
+      "file": "bot/src/v2/legacy-gm-export-readers.js",
+      "sha256": "66d9dec9d7c93bb44648e023afbd88d80a467715d86aa7cc0a81c89a6d26b8d6",
       "reachable": true,
       "exports": [
         {
-          "line": 6,
+          "line": 4,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createLegacyGmExportReader(db){\n const bounded=(sql,args,max=10000)=>{const rows=db.prepare(sql+' LIMIT ?').all(...args,max+1);if(rows.length>max)throw new Error('Complete GM export source window requires reconciliation');return rows;};\n return function readGmCharacterExportFacets(gu"
+        }
+      ],
+      "imports": [],
+      "functions": 9,
+      "sqlStatements": 10
+    },
+    {
+      "file": "bot/src/v2/legacy-readonly-repository.js",
+      "sha256": "6ae24839f722f0e21fbfd213ed6b2e23d4354c232c61adb1aecb9365bcdd3ea8",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 7,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function openLegacyReadOnlyRepository(filename){\r\n  if(typeof filename!=='string'||!filename||filename===':memory:')throw new TypeError('Existing legacy database file required');\r\n  const db=new DatabaseSync(filename,{readOnly:true});\r\n  const character=db.prepare('SELECT * FROM characters WH"
@@ -1771,10 +1863,17 @@
           "specifier": "node:sqlite",
           "target": null,
           "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "./legacy-gm-export-readers.js",
+          "target": "bot/src/v2/legacy-gm-export-readers.js",
+          "status": "resolved"
         }
       ],
-      "functions": 34,
-      "sqlStatements": 23
+      "functions": 35,
+      "sqlStatements": 24
     },
     {
       "file": "bot/src/v2/model-gateway.js",
@@ -2118,7 +2217,7 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "29890168856f89f2d5b6fad8890110ec7fbc7a3ffd8ff6a34bf7e355c5e1e336",
+      "sha256": "cc45c89cc2102470fbd1c4bf58436277c40111fb0c21d91d875118429b021802",
       "reachable": true,
       "exports": [
         {
@@ -2326,7 +2425,7 @@
           "status": "resolved"
         }
       ],
-      "functions": 33,
+      "functions": 34,
       "sqlStatements": 0
     },
     {

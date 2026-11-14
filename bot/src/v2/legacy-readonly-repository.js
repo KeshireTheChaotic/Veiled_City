@@ -1,4 +1,5 @@
 ﻿import {DatabaseSync} from 'node:sqlite';
+import {createLegacyGmExportReader} from './legacy-gm-export-readers.js';
 /** Existing legacy rows for native identity and condition-ancestry validation.
  * Opens read-only, never creating/migrating tables or granting inference access.
  * Raw condition/event/ruling bodies are native validation input only.
@@ -18,6 +19,11 @@ export function openLegacyReadOnlyRepository(filename){
     return value;
   }
   return Object.freeze({
+    readGmCharacterExportFacets:createLegacyGmExportReader(db),
+    findExportCharacter(guildId,query){
+      required(guildId,query);const rows=db.prepare('SELECT * FROM characters WHERE guild_id=? AND (id=? OR name=?) LIMIT 2').all(guildId,query,query);
+      if(rows.length>1)throw new Error('One exact campaign character export selection required');return parse(rows[0]);
+    },
     getCharacter:id=>parse(character.get(id)),
     getCampaign:guildId=>campaign.get(guildId)??null,
     getSession(guildId,sessionId){

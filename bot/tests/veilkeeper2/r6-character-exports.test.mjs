@@ -34,7 +34,7 @@ test('ambiguous selection, wrong owner and spoofed transport cannot export; form
  const f=characterExportFixture(t);f.character('second');
  await f.dispatch(f.event('ambiguous',{query:''}));await f.dispatch(f.event('wrong-owner',{query:'other'}));await f.dispatch(f.event('spoofed',{client:{}}));
  assert.equal(files(f).length,0);
- await f.dispatch(f.event('docx',{format:'docx'}));await f.dispatch(f.event('gm',{sub:'export-gm'}));assert.deepEqual(f.fallback,['docx','gm']);
+ await f.dispatch(f.event('docx',{format:'docx'}));await f.dispatch(f.event('gm',{sub:'export-gm'}));assert.deepEqual(f.fallback,['docx']);assert.equal(files(f).length,0);
  await f.dispatch(f.event('exact',{query:'pc'}));assert.equal(files(f).length,1);
 });
 test('prepared exports reject changed inputs and unknown/unowned characters without a healthy fallback',t=>{

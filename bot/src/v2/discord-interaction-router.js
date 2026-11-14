@@ -8,14 +8,15 @@ import {createDiscordGmSession} from './discord-gm-session.js';
 import {createDiscordPlayerChannel} from './discord-player-channel.js';
 import {createDiscordGmAuthority} from './discord-gm-authority.js';
 import {createDiscordCharacterExports} from './discord-character-exports.js';
+import {createDiscordGmCharacterExports} from './discord-gm-character-exports.js';
 /** Owns the interaction surface on a fresh native client. The host must route
  * other native commands/components through the supplied callbacks, not install
  * additional peer listeners. Natural message intake is a separate GM surface.
  */
-export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
+export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,nativeGmCharacterExports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.listenerCount!=='function'||typeof handleOtherCommand!=='function'||typeof handleOtherComponent!=='function'||typeof onError!=='function'||typeof nativeDeath?.readOwnerRoute!=='function')throw new TypeError('Exclusive native interaction router dependencies required');
   if(client.listenerCount('interactionCreate')!==0)throw new Error('Native interaction router requires an unclaimed client; do not install alongside legacy handlers');
-  let workflow,costs,costCommands,commands,attendance,playerChannel,gmAuthority,gmSession,characterExports,closed=false;const pending=new Map(),denials=new Set(),observed=new WeakSet(),controller=new AbortController();
+  let workflow,costs,costCommands,commands,attendance,playerChannel,gmAuthority,gmSession,characterExports,gmCharacterExports,closed=false;const pending=new Map(),denials=new Set(),observed=new WeakSet(),controller=new AbortController();
   const report=(error,event,stage)=>{try{onError(error,{interactionId:event?.id??null,stage});}catch{}};
   try{
     workflow=createNativeDeathWorkflow({...nativeDeath,client,onError});
@@ -24,7 +25,8 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     if(nativeCost){costs=createNativeCostWorkflow({...nativeCost,client,allowedGuildIds,onError});costCommands=createDiscordCostCommands({...nativeCost,client,workflow:costs,onError});}
     if(nativeSession){attendance=createDiscordSessionAttendance({...nativeSession,client,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});playerChannel=createDiscordPlayerChannel({client,readOwnerSession:nativeSession.readOwnerSession,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
     if(nativeGm){const {readPolicy,clock,leaseMs,...services}=nativeGm;gmAuthority=createDiscordGmAuthority({client,readPolicy,...(clock?{clock}:{}),...(leaseMs?{leaseMs}:{})});gmSession=createDiscordGmSession({...services,readGmRoleId:c=>readPolicy(c).gmRoleId,client,gmAuthority,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
-  }catch(error){characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
+    if(nativeGmCharacterExports)gmCharacterExports=createDiscordGmCharacterExports({...nativeGmCharacterExports,client,gmAuthority,interactionReceipts:nativeDeath.interactionReceipts,onError});
+  }catch(error){gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
   async function deny(event){
     if(closed||denials.has(event.id))return;denials.add(event.id);if(denials.size>1024)denials.delete(denials.values().next().value);
     const content='This control is unavailable or needs native review. No new action was confirmed.';
@@ -37,6 +39,7 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     if(closed||event?.client!==client||event.user?.bot!==false||allowedGuildIds&&!allowedGuildIds.has(event.guildId))return;
     try{
       if(event.isChatInputCommand?.()===true){
+        if(gmCharacterExports?.claimsRoute(event)){await gmCharacterExports.handle(event);return;}
         if(characterExports?.claimsRoute(event)){await characterExports.handle(event);return;}
         const claimed=commands.claimsRoute(event),handled=await commands.handle(event);
         if(handled)return;if(claimed){await deny(event);return;}
@@ -58,6 +61,6 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     const key=event.id,job=route(event);pending.set(key,job);void job.catch(error=>report(error,event,'routing')).finally(()=>pending.delete(key));
   };
   client.on('interactionCreate',listener);
-  return Object.freeze({costs,async drain(){await Promise.allSettled([...pending.values()]);await costs?.drain();return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands.close();workflow.close();}});
+  return Object.freeze({costs,async drain(){await Promise.allSettled([...pending.values()]);await costs?.drain();return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands.close();workflow.close();}});
 }
 
