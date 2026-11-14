@@ -1,0 +1,4592 @@
+[
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 20
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 20,
+      "fileSha256": "ba02f062b5979b09f5df2a006d4b005d762b1d94d28e7aaacfdbbc4555fe3d4b",
+      "rangeSha256": "325ac3ed6e80cc27b80a10574e98b073f8afcb10a3058b2485171d5ba1876f88"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 52,
+      "end": 83
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 52,
+      "end": 83,
+      "fileSha256": "ba02f062b5979b09f5df2a006d4b005d762b1d94d28e7aaacfdbbc4555fe3d4b",
+      "rangeSha256": "450eb051d35e42c91d39a817df2ddd0dcabfefdf59adf8b038fac78a1e418a50"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/CREATIVE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 29
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/CREATIVE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 29,
+      "fileSha256": "17999e52ef9e68704b84eaf10dc45ab6e3e70642f1b2cbc722d7ada16b2fd0e1",
+      "rangeSha256": "90d25431581512b180f40d0c0b9734ac62962e525943f0465659454499615d4f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/AGENCY_PRESERVING_SPEC.md",
+      "start": 7,
+      "end": 31
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AGENCY_PRESERVING_SPEC.md",
+      "start": 7,
+      "end": 31,
+      "fileSha256": "8294c8cd2832a05bc8da86fbd670ac68fd8301cd6d6cfacd73268eb9e8436939",
+      "rangeSha256": "d4cfe61c1736dc481630b28e0762f0bce5f9fa93512e50137c7d5b601a402087"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 5,
+      "end": 33
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 5,
+      "end": 33,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "1bd8a549592766e91184f3c96345963d8c73cbba5cf865a42bc09eb569413520"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 50,
+      "end": 88
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 50,
+      "end": 88,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "2e64f54f937a51d3bfb84d0bc5827bb347d3ecc21849b8c7e3ee4565daa2216c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 146,
+      "end": 181
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 146,
+      "end": 181,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "9da3fafa9e6c45a122225c29d0076f3f4d0d0f6ffa0bc2267d25207493c45133"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 28,
+      "end": 52
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 28,
+      "end": 52,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "1081f197e98a6cd9c6de4552ae23d0498287c5080fa21ba588ed6bac1b7a81d7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 54,
+      "end": 64
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 54,
+      "end": 64,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "2cc2f9fa9e6633d9b8cdd984b064a3164edbc49b934970480ff6dc8a8b75c2e4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 66,
+      "end": 82
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 66,
+      "end": 82,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "d58edb98066e27ca20bb877e04eca7fc63a355c602d58d7abf7df4a1b1c61e71"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 7,
+      "end": 13
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 7,
+      "end": 13,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "452c7784ddbaa59434a8051b1b5f0e9fbb59d37e98b514048eca736521f38809"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 84,
+      "end": 93
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 84,
+      "end": 93,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "0adad57f9c85189f4900e874e01fff85175eebb0deebcd211ddd6bae2bae1f60"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "AGENTS.md",
+      "start": 15,
+      "end": 31
+    },
+    "verified": {
+      "file": "AGENTS.md",
+      "start": 15,
+      "end": 31,
+      "fileSha256": "2c2330366dbca805930bc81e0926f3da11b81121cfd3f412108f027659764580",
+      "rangeSha256": "3bf6409298359ba3c3feac5058ed34bb81f88f7eaa8f854c77e178c7bf7fb209"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 483,
+      "end": 548
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 483,
+      "end": 548,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "8c25609e47891634aadc541fa496337defaba733f7ac211888f10acd222b0c33"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 407,
+      "end": 565
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 407,
+      "end": 565,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "33e36e0bd0894fc21585f87c9ad3d41eda49c846f5c8e2a59da8c05e4f73ee2a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 167,
+      "end": 219
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 167,
+      "end": 219,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "559c4ed10ff69910e9d99199bd2d80abf5d657a285183031eeea5c6522306c51"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 623,
+      "end": 1020
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 623,
+      "end": 1020,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "b2a96d47a40efb14954a8a1cdbce466c26ccf77dcbe8f819067fd7070bdd6364"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/player-intent-contract.js",
+      "start": 2,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/player-intent-contract.js",
+      "start": 2,
+      "end": 65,
+      "fileSha256": "39a55b4d4a095df2981038037bb908dee2142560daaaa753068eb2f0838d045e",
+      "rangeSha256": "34631ccd9ba998e1f1ab9a4c80b4ae37fa3268886b639b5a65d6f413bf4cc5cc"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 64,
+      "end": 142
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 64,
+      "end": 142,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "8d20141516364920ec568a3e8e3ccf833226250678064c897859d4430b351021"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+      "start": 7,
+      "end": 50
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+      "start": 7,
+      "end": 49,
+      "fileSha256": "e2b0c6ba28c63535059ef713fc7ad10c660cce64cb38fc7615329062604adadb",
+      "rangeSha256": "091f7224d67d524c694e404522d83a23bd93cd3f92821b98d039ff670425a4a7"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 41
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 41,
+      "fileSha256": "eb77f18d0388b6fa00f701a0a9163427fefc3342bee44cbef574da5a66287d2c",
+      "rangeSha256": "f9e8b080c1d098266b36402edcca90b108e99e32858fac2a7814497a14f1fceb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 170,
+      "end": 216
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 170,
+      "end": 216,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "016a1b2aa391f72ad03fa3a612064b07cd429926e3a82e31af2a04fc55987db7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 374,
+      "end": 610
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 374,
+      "end": 610,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "5ed8e15c149f4c7a65fc76619808e2c12569e4516b03fbbac7e4cb0e7e929400"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 68,
+      "end": 159
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 68,
+      "end": 159,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "73d0b015bed2707cb01ae8f394a10ebef86ce4dd0e10e78611990f423e15dbf6"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 16,
+      "end": 35
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 16,
+      "end": 35,
+      "fileSha256": "0a9f17df95ff1713b1ea1829cf7a40c73ea6dfcd8478cafab76fe1772f44c500",
+      "rangeSha256": "0a26d30043e4a6518c1d94c18ef0647e1f74a9154f1c6c284b0405dee3a77583"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 7,
+      "end": 86
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 7,
+      "end": 86,
+      "fileSha256": "5b1180e932c76f04c31b0552f7efd83391dec27e9b2c853612b8e4b321111660",
+      "rangeSha256": "2c9f55d8728c1c089ad91b0ee09a65c4b09471ebc015becfa9a99206c99e0c1a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 9,
+      "end": 32
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 9,
+      "end": 32,
+      "fileSha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4",
+      "rangeSha256": "ed3ac318c6889ac696952551ddac131982dff0fcecd2bcbaa3b3b80fe5e4a9ed"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 1102,
+      "end": 1162
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 1102,
+      "end": 1162,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "79f88cb129e2e5cbbc343e14d9416500cebb0006448d9d915e5181f20107ade8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 418,
+      "end": 480
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 418,
+      "end": 480,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "19e3963f2fc16e2c17884c3eaf36362d2e9da78bc9e3b85ae6d7b7477d31a015"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 960,
+      "end": 1020
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 960,
+      "end": 1020,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "43f67103cee4878b4a4f7976207cbd85e0ee0fb35c5b6ab1c7827923b92fc9ee"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 26,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 26,
+      "end": 65,
+      "fileSha256": "387a2bbce3c898c86078639eebc5df5ac66b6b877aa53b9e810f4fcaafe13f44",
+      "rangeSha256": "9a6270ba1ae53ce8ff6fbddbc8b69d1bc781d89d1ba102baa1025d1e53dbaf2a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 311,
+      "end": 405
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 311,
+      "end": 405,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "3a845e2604c006927f21a1d21ee56e35fd9f2aa5116e3d08427a3b75a2d2b51c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 569,
+      "end": 620
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 569,
+      "end": 620,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "1af089ccf9c51d53ff4f12a05d2187e63d1f0609feb6eb5ddf275b744abea730"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 73,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 73,
+      "end": 88,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "dc38a56a81d3a98fb96059cf9eea622d903c481e2a26beed3aa60f921978d89e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 105,
+      "end": 110
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 105,
+      "end": 110,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "f72c14669187b30d32d2c4b31b676e91e615f0436b953226202509fd6b8c3c25"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 550,
+      "end": 622
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 550,
+      "end": 622,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "308df737e1d0eb5c76407d713c01fd4b1d1cdb6dbc4322bd1baa83c42c24ad02"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 157,
+      "end": 219
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 157,
+      "end": 219,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "9debd8d1c48aad40cdda1dd77e3919c537957ac9b019f2094fb765f095ab2ddb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 410,
+      "end": 413
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 410,
+      "end": 413,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "b8d2a54fd7f51ad384362f9e635a64e6ab04f326514e5c4afb2fe1024a0b7d9d"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/player-intent-validation.js",
+      "start": 1,
+      "end": 118
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/player-intent-validation.js",
+      "start": 1,
+      "end": 117,
+      "fileSha256": "a8757222e58a8cf78e521f6126fb8f1c35bcace8d618e59e3881425acd6f88ac",
+      "rangeSha256": "87e312aaf8506eabc1f5c1c27497ace3ac8fe39ac8a49344c8b78e41f940b374"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 143,
+      "end": 162
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 143,
+      "end": 162,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "2c6e1b9d95aee5a92737cf191f2fe11ddb9bebba21711d8b143e91d7c5cb6596"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 163,
+      "end": 208
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 163,
+      "end": 208,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "60fa6899bb6198746c93c9fc85cc5c4d0f7ee5b2d9ce8b1b329258f04f3c52e3"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 209,
+      "end": 236
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 209,
+      "end": 235,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "b1ba256341d73ad8690d54e82938dcb7bb1cd6c062530a7000afb0270fab5cd0"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/semantic-intake.js",
+      "start": 19,
+      "end": 143
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/semantic-intake.js",
+      "start": 19,
+      "end": 143,
+      "fileSha256": "1e377336401b7c7d69c61e2c271926b524e2c6e76445f50a2b8e290d11ea18d2",
+      "rangeSha256": "7ef983713118ad7ae03d2dc1c29b5095a4267e34cada70a1662b415b67a1bc5a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 9,
+      "end": 16
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 9,
+      "end": 16,
+      "fileSha256": "ed212494fa00d2c9c0560db5770f27bb11cc93c6babd451572ce47dccbf3d178",
+      "rangeSha256": "cceda036e0b2b339b4069a1e9d6a1eff9b59e8e3af8c08bc98bc836fd2d0f82c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 23,
+      "end": 39
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 23,
+      "end": 38,
+      "fileSha256": "ed212494fa00d2c9c0560db5770f27bb11cc93c6babd451572ce47dccbf3d178",
+      "rangeSha256": "36fd3546e65197c51f131163b32d630454efd6a352355bf2be8f79468f6c48f3"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 14,
+      "end": 34
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 14,
+      "end": 34,
+      "fileSha256": "24a0c219897f49afa231bec6cf52d8df605cbaf7a6ea1aee5489f7f30a94a9fb",
+      "rangeSha256": "1d40fb5e6ac62b70966fde87818cfe15fa00e2d3631db994801a9e4cfd0cc755"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 35,
+      "end": 50
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 35,
+      "end": 50,
+      "fileSha256": "24a0c219897f49afa231bec6cf52d8df605cbaf7a6ea1aee5489f7f30a94a9fb",
+      "rangeSha256": "b4fec34b7c45427b6da2cf40723cf738d4dc8d25240ce16532adbaef6d3b8df1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/interpretation-context.js",
+      "start": 74,
+      "end": 104
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/interpretation-context.js",
+      "start": 74,
+      "end": 104,
+      "fileSha256": "d963abe5ddc6c3377c9073a84ff4f645697918d2cf7b3db1632e5a1467d301ab",
+      "rangeSha256": "7692df020db0d0077b5b938497d80dd485242016f6f478e3658ece1e00f51125"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 2,
+      "end": 134
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 2,
+      "end": 134,
+      "fileSha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba",
+      "rangeSha256": "1d88969cff1520d22085ffa2a4642293a207c16523ad1d899dc66ffa8f7d1d76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 14,
+      "end": 46
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 14,
+      "end": 46,
+      "fileSha256": "32de2e6e3c5dd9a2a9dc155b40e1035cfe8479d33746db0901f5209e332c63cf",
+      "rangeSha256": "fc306bd07757211d3002f4393e54d41aad6b8436ee9bcb02621a4ce9ebf6a233"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 47,
+      "end": 55
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 47,
+      "end": 54,
+      "fileSha256": "32de2e6e3c5dd9a2a9dc155b40e1035cfe8479d33746db0901f5209e332c63cf",
+      "rangeSha256": "30607d870c8a85c6cd9c0bff97cbd045748a189f1611fc0fa79cde1265c8921e"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+      "start": 12,
+      "end": 38
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+      "start": 12,
+      "end": 38,
+      "fileSha256": "546441b39852a18a3b1c3067f0717e62ac50c3e4f06b74b80802de1027fcd0d2",
+      "rangeSha256": "8910fc2ff7283f7cd2533696e121b55f349fd965b679eb725de1a444df8f0e79"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/source-visibility.js",
+      "start": 2,
+      "end": 30
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/source-visibility.js",
+      "start": 2,
+      "end": 30,
+      "fileSha256": "b4fcbf453be6ef11e78b2fbbeeabb0f9a7022d24e6146525ca81effa332d30cb",
+      "rangeSha256": "75a486f6762fc232df5cd7291eb36b10ea09595d4d24c57472f82fcc6dfadea8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 79
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 79,
+      "fileSha256": "eb77f18d0388b6fa00f701a0a9163427fefc3342bee44cbef574da5a66287d2c",
+      "rangeSha256": "4d0225e889ceaffc30c426bf17f6bc4ea01e5a56f0c5ecf2ed91c2b70fa04014"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 8,
+      "end": 36
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 8,
+      "end": 35,
+      "fileSha256": "0a9f17df95ff1713b1ea1829cf7a40c73ea6dfcd8478cafab76fe1772f44c500",
+      "rangeSha256": "0224fb976651a8acb035e919e73b9b93c80bfbfc967651f96949be9c1443ad9d"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+      "start": 9,
+      "end": 36
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+      "start": 9,
+      "end": 36,
+      "fileSha256": "e659a40da3e4ab56b21cddca8a0211ba73707cd5e9f029f944018af912d76f51",
+      "rangeSha256": "692ec23f570d17c26f7f767b8c64cd13c00da26a65d19fa3809a1a751972c973"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+      "start": 14,
+      "end": 45
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+      "start": 14,
+      "end": 45,
+      "fileSha256": "b2d4923db2d4404bc3fdd4bfdcc255de329a9d98d3602ceaa5e38e61ca1ec3d1",
+      "rangeSha256": "07c68cdaa484debf8e229f4653821c3f37bca9408b66a40c44d53f952d68c0e1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 218,
+      "end": 299
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 218,
+      "end": 299,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "34b464ef0d849f6f5d1aef52447d9fa0b7de15a03414bac5677f972b6b6e5f20"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 300,
+      "end": 319
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 300,
+      "end": 319,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "54a462ba11e067a43c85a6153000763ddecd60080d5fd181cf1d7bc699306173"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+      "start": 13,
+      "end": 53
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+      "start": 13,
+      "end": 53,
+      "fileSha256": "a530ca6827f38cfdb569e404a5f81ade44ce471d12ecc65823e6e57bb4798e8d",
+      "rangeSha256": "fb212df159b4dd52ed39df919c437b8363d693ed24066754b078167c3e2e67a1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 123,
+      "end": 227
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 123,
+      "end": 227,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "82220f29c1a1a71b2674d909b65dd2fb627a72cb7fd8e8d5412c288cd2fcca74"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 367,
+      "end": 372
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 367,
+      "end": 372,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "f8b646d32274d651a65b75c7fcb285ea9d9b146c57f1aef4cce9a87d41861e42"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-completeness.js",
+      "start": 6,
+      "end": 45
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-completeness.js",
+      "start": 6,
+      "end": 45,
+      "fileSha256": "684918b4b09294d2e2e9b21b0c88aa76155c33e4c7c3c243c6e9ee9595c2ca68",
+      "rangeSha256": "50e822daec50a37d755f3475a5a607c0134eaee9f949a0925ab4f8763866594f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/narrative-integrity.js",
+      "start": 113,
+      "end": 145
+    },
+    "verified": {
+      "file": "bot/src/narrative-integrity.js",
+      "start": 113,
+      "end": 145,
+      "fileSha256": "80672acee25e7320927e84b11c8f68def6430a816fa83df88e5a5289ab03863a",
+      "rangeSha256": "edf4845ec2615fc9712cf8a9ec6f1803562b0ddf0d53475f217055ae93333325"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/material-paraphrases.js",
+      "start": 2,
+      "end": 28
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/material-paraphrases.js",
+      "start": 2,
+      "end": 27,
+      "fileSha256": "c0e9303d646b469e4020bacb216e7f4f227a35334f13518e49bf3276d330b03a",
+      "rangeSha256": "b062c2445b79ed87697a897075e7a3c57bad5e93d3af880eb0a8a7f9145c474b"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/adapter-registry.js",
+      "start": 2,
+      "end": 4
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/adapter-registry.js",
+      "start": 2,
+      "end": 3,
+      "fileSha256": "07670b85e9999a24556997e53f3472315748397ae2989923988cf5d24d0027fe",
+      "rangeSha256": "c2e85d35296ddb0f2698e526c098dfe194e4a79e207f77b0c97828c537360598"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/intent/native-preflight.js",
+      "start": 15,
+      "end": 58
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/native-preflight.js",
+      "start": 15,
+      "end": 58,
+      "fileSha256": "ac1a0893065fc748e770f0e3ed5d6dc1fe30a408d2b37430cdabfd3af6738f9e",
+      "rangeSha256": "69056ee7b45c83ec0390afd090c0cb006cab1d70db9362eb10dad22ab2a8ff4c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/ai-intents.js",
+      "start": 144,
+      "end": 173
+    },
+    "verified": {
+      "file": "bot/src/ai-intents.js",
+      "start": 144,
+      "end": 173,
+      "fileSha256": "bc9f502726bc0126ba56aa34ae423c4b37eaa043f3c5bf049637c0130bdc455e",
+      "rangeSha256": "db276265864c614783ddcbe33ca943072dd96250c553f2e70570d5b355aea5ae"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/ai-intents.js",
+      "start": 175,
+      "end": 299
+    },
+    "verified": {
+      "file": "bot/src/ai-intents.js",
+      "start": 175,
+      "end": 299,
+      "fileSha256": "bc9f502726bc0126ba56aa34ae423c4b37eaa043f3c5bf049637c0130bdc455e",
+      "rangeSha256": "d2a3f6072b7781337366fa95287f5ba51561c2cb6cc45a4a829ea8ef01a54424"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 4,
+      "end": 211
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 4,
+      "end": 211,
+      "fileSha256": "dc1a18e66da664511286eb27b88026661aff70c8a7e3556c408635a2e424f9b2",
+      "rangeSha256": "03313bbd8ad9594ca7b02edb83309d8b29b6acf60577e8aeaf3e03135bbe2cd4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 58,
+      "end": 104
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 58,
+      "end": 104,
+      "fileSha256": "dc1a18e66da664511286eb27b88026661aff70c8a7e3556c408635a2e424f9b2",
+      "rangeSha256": "64898d3267a01e57ef2209377f47f4c5cd3d265a0ca8e38fb07b6264a1a32ef0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/state.js",
+      "start": 78,
+      "end": 248
+    },
+    "verified": {
+      "file": "bot/src/state.js",
+      "start": 78,
+      "end": 248,
+      "fileSha256": "400ec856ed71dc9b3999d2fe4521f247e20cb2249520f7d261c162b62b77d622",
+      "rangeSha256": "d5b8ca820b5993ed8a5e73f94c69e9a66454c1485a5a670ecb9770cbc9ddf5d2"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/state.js",
+      "start": 249,
+      "end": 259
+    },
+    "verified": {
+      "file": "bot/src/state.js",
+      "start": 249,
+      "end": 259,
+      "fileSha256": "400ec856ed71dc9b3999d2fe4521f247e20cb2249520f7d261c162b62b77d622",
+      "rangeSha256": "38aef979c4cf99b8c5902720c5ecd3e018284dd450ad1b8300f7da7375840a76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 25,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 25,
+      "end": 95,
+      "fileSha256": "05c302f21e8d4d9030d7b1c2a2437b10dd1ba1cad72461735290f7536f06517d",
+      "rangeSha256": "36300dd57ed28ffde4ceac340370a05fe4fffcd5d61d8577f0b603ec0ac3e8d5"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 19,
+      "end": 24
+    },
+    "verified": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 19,
+      "end": 24,
+      "fileSha256": "05c302f21e8d4d9030d7b1c2a2437b10dd1ba1cad72461735290f7536f06517d",
+      "rangeSha256": "bbe3b50128dfcf97473d345b5f191dd85f2e9fe91d04d73602ea61fa9a2615df"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 5,
+      "end": 169
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 5,
+      "end": 169,
+      "fileSha256": "5b4f9088818ec8a25dfc249a1706cb562ad100c92ce9adddc339a0171f092c2f",
+      "rangeSha256": "9478d3b57d3986b01c145ce4b1b4ce353799c8c44eed214597dd854a3d78a66f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 198,
+      "end": 249
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 198,
+      "end": 249,
+      "fileSha256": "5b4f9088818ec8a25dfc249a1706cb562ad100c92ce9adddc339a0171f092c2f",
+      "rangeSha256": "461bb137c210dc8e1945433a8059e9aa3592784bdbc4ce02d9bf2abfc46e9f45"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 5,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 5,
+      "end": 65,
+      "fileSha256": "387a2bbce3c898c86078639eebc5df5ac66b6b877aa53b9e810f4fcaafe13f44",
+      "rangeSha256": "1f3c121b773e0317c5690432a09a901eef2aa6042cf78722c802366074d743b6"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+      "start": 7,
+      "end": 141
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+      "start": 7,
+      "end": 141,
+      "fileSha256": "1a9d5547dd37b72f4d0b9cda5c0dcd42f88209c1a8dcb883c0507cb70cd603db",
+      "rangeSha256": "eb37976e7981cf04c3a831fcee799f21cfa9ef3b9cb377e8f7cd1207c983c00b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+      "start": 7,
+      "end": 100
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+      "start": 7,
+      "end": 100,
+      "fileSha256": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
+      "rangeSha256": "0481f471f55242cdd3d1cba63be64d030eba6a0ac5dd9740ca1dd1f53b980de4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "start": 3,
+      "end": 22
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "start": 3,
+      "end": 22,
+      "fileSha256": "ad1504702894ce26a6d6f38015ec767fa60175ffd7abcf63dbf7f39e5ecaea97",
+      "rangeSha256": "c7564f2cf81e33bb7ebb2a2387f6eabfaf18cc6123fa12a9ee8084a552638da0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 17,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 17,
+      "end": 85,
+      "fileSha256": "19f1423754820a20df89ab7df12ac5c840696aa1109391dafe61d5f73d4166d6",
+      "rangeSha256": "b9536a21b05ae8cf9f79660721e6837202bd0337634a225fa524215940eaac43"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 95,
+      "end": 170
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 95,
+      "end": 170,
+      "fileSha256": "19f1423754820a20df89ab7df12ac5c840696aa1109391dafe61d5f73d4166d6",
+      "rangeSha256": "72878cf2180074ffa9f87a725d649b6ecb8d57d8e69a9d12e04b2735903cf0ea"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 32,
+      "end": 58
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 32,
+      "end": 58,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "a8840bd49671e6e9b58d32abd79ce9febdcb9a0b2ddaabb9505ca67f9a0226b2"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/autonomous-world.js",
+      "start": 120,
+      "end": 316
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/autonomous-world.js",
+      "start": 120,
+      "end": 316,
+      "fileSha256": "1064c8538de8d4a632e51a8c8a1f7ef1659177bed37c0869ffbd70b9745b299f",
+      "rangeSha256": "e41ed4c6241ba41fe4de4f5bb2ea4c96b8af74aef4ea494be5e12eb9aa8af59b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 15,
+      "end": 86
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 15,
+      "end": 86,
+      "fileSha256": "5b1180e932c76f04c31b0552f7efd83391dec27e9b2c853612b8e4b321111660",
+      "rangeSha256": "8dbb0f1c4e820e759abe726aa1ab43857a3edbd23768cbebe4b2db3217508b53"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 24,
+      "end": 74
+    },
+    "verified": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 24,
+      "end": 74,
+      "fileSha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+      "rangeSha256": "2cd7cab2bd80762f8b761c082687d730aa7fdac9f0236670c9d3aa9873b0c579"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 8,
+      "end": 79
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 8,
+      "end": 79,
+      "fileSha256": "c03dc01ceecaf3d17da7c6d3daeefa57026520dbcd8832eda8289ae0da491263",
+      "rangeSha256": "665fdf6f6dfc34d097ea3597176d7124978c200143d75dfa29ae0db387d77b87"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 80,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 80,
+      "end": 88,
+      "fileSha256": "c03dc01ceecaf3d17da7c6d3daeefa57026520dbcd8832eda8289ae0da491263",
+      "rangeSha256": "3e84296a06d115eaf45584d82f75f205d3ea495d50bb5b0d1dcfb440a71c8bd8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 5,
+      "end": 91
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 5,
+      "end": 91,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "2cedff37f8a6fedb352bbfb465d18f9dbc62815b91e18ec5d340c234145fbbc0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 92,
+      "end": 120
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 92,
+      "end": 120,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "7dfe60f2a82e2fc0f929d68a3919e53ecbab8bf441a65331892fab59d11bbe59"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 4,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 4,
+      "end": 96,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "c4aba2bc730cb6b403a39efbe52fd43ee7e6ca9ca8adf5587f9fd1d9d6da3d3e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 101,
+      "end": 128
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 101,
+      "end": 128,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "bf41657c41dbbcfec1d1c82e5baf49083887c308fc40bec4d6ca9f7535c1c6a3"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 3,
+      "end": 44
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 3,
+      "end": 44,
+      "fileSha256": "b20f9f815edc8dcc50336eaf4f45687b4c036038d7413d4849fd1306395d6823",
+      "rangeSha256": "02533d62a473de2e2cf4124e2fc1fedbdf133410d72021c2c29c664e9c4d12fb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "start": 2,
+      "end": 13
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "start": 2,
+      "end": 13,
+      "fileSha256": "23652d7c2e6047ef14fc53bb6befdfb83f50aa528721832c71db79884b5676cc",
+      "rangeSha256": "03c6bebde633dce287af96643d4191ee7e5f63c6cceb41e1c47974051e29ae71"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/npc/cognition.js",
+      "start": 65,
+      "end": 148
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/cognition.js",
+      "start": 65,
+      "end": 148,
+      "fileSha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841",
+      "rangeSha256": "5a87c565a96903b6ff81418b174fa879b4a092c3b238f10c887713ed82895d2b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/npc/cognition-drafts.js",
+      "start": 7,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/cognition-drafts.js",
+      "start": 7,
+      "end": 85,
+      "fileSha256": "b4ec28007226d5d1c91f03e56ec474cb5ae4ae993b72d1ad97aef7a9daac4be7",
+      "rangeSha256": "9045df007c7435d9131392d4c69269ca02fadaf777e7878bb5f23cdb6026a20e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/npc/motivation.js",
+      "start": 6,
+      "end": 41
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/motivation.js",
+      "start": 6,
+      "end": 41,
+      "fileSha256": "7c4c8706258fcb1ad1cca7e5453106cb027ee21d6398722afae466e51f9c35cb",
+      "rangeSha256": "7dd71709c3ca952f609fd8a7fc685b01dce9bfddaac2d658729fd086ca650159"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 6,
+      "end": 37
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 6,
+      "end": 37,
+      "fileSha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4",
+      "rangeSha256": "8c233752f3d38d7a56eba7e654f61aa9647e034720e81e8074f14bfdb0ba418e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+      "start": 16,
+      "end": 33
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+      "start": 16,
+      "end": 33,
+      "fileSha256": "751887c9e810c5f691fea93d853f5564081fa967dc8e7ac6f518b93afb23508b",
+      "rangeSha256": "012d15d1945408639f80b03a882f2591277bd17dba0ce16a849747fdf97ac5c4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/world/director-action-ranking.js",
+      "start": 6,
+      "end": 25
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-action-ranking.js",
+      "start": 6,
+      "end": 25,
+      "fileSha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f",
+      "rangeSha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 1184,
+      "end": 1225
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 1184,
+      "end": 1225,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "f054f4638129909853273aecea8960fffeecef8a5a59ae8b46eb6ab3cb1a289f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/persistence/database.js",
+      "start": 38,
+      "end": 126
+    },
+    "verified": {
+      "file": "bot/src/frameworks/persistence/database.js",
+      "start": 38,
+      "end": 126,
+      "fileSha256": "49d75ce6f0dc30998b68846bab7f4ccd81a53eff240d33dbdfe0384bced3b47d",
+      "rangeSha256": "a69807ef196b9d6990ca912ccbae866b5fc6a8339c827f6bf6d5688a3b0bd5c3"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 39,
+      "end": 42
+    },
+    "verified": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 39,
+      "end": 42,
+      "fileSha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+      "rangeSha256": "8a82105d2d26ef7d69dc6c98cf1da055862a2d034f8328674c8856a4231f2095"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/discord/privacy.js",
+      "start": 35,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/privacy.js",
+      "start": 35,
+      "end": 84,
+      "fileSha256": "f5af9915e2c35051fb05114ea41c18e481ea47b09616b852c6fca30b4f2f3096",
+      "rangeSha256": "901f214a3b0feb2469bfa56ea8c4d31e284ad864ebee3f332e0703e7e284dd7c"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/discord/client-factory.js",
+      "start": 3,
+      "end": 7
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/client-factory.js",
+      "start": 3,
+      "end": 6,
+      "fileSha256": "5c9d2dc3f30316dcb528c9852c23f7a2553a6aa4f2abbc64fa7f00ae8c742729",
+      "rangeSha256": "a6bbf9293d5c752d5eed04e38d982c902a25e4e804b27a721a83ba7efd88df24"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/discord/chunking.js",
+      "start": 17,
+      "end": 73
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/chunking.js",
+      "start": 17,
+      "end": 73,
+      "fileSha256": "80619a583b08b9fc54d9ad96f89f73af67acf8d24a71858aac0ab903c6e5e147",
+      "rangeSha256": "15e8102a641c157886b26cad0505a1161cbfa7dae95b53411e4861bc943cb96f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/discord/delivery.js",
+      "start": 2,
+      "end": 13
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/delivery.js",
+      "start": 2,
+      "end": 13,
+      "fileSha256": "f559a13b80bc822e306fb94d6220129607a0372e219349d574517b2a3795c554",
+      "rangeSha256": "3a0f908fbe1b9a69a5f878de61c035843bc60237cf06dd23a21e6ba03b67bb7c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 42,
+      "end": 72
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 42,
+      "end": 72,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "3da5ccd4a8d464449ed8ffb3470485f7772cd0da6c312ec03994f5b5d5ff1e76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 92,
+      "end": 143
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 92,
+      "end": 143,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "ac812e14e65e226c15c9fd79bd6ef261c9ec0fcf522fc47071869a8b567a706b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 144,
+      "end": 169
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 144,
+      "end": 169,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "06132b935c727ca3284810239e8d69a81ebab73bc15d472cfec58de4beaa7870"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/publishing.js",
+      "start": 115,
+      "end": 150
+    },
+    "verified": {
+      "file": "bot/src/publishing.js",
+      "start": 115,
+      "end": 150,
+      "fileSha256": "7d362de84462496318fb2d79e20afa59c8cde89a6d9d15021af89c8917936d94",
+      "rangeSha256": "86294be6c43e769d48e4917200c78a3bc6ca6b826f361a0a256c234aa77082ce"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/bootstrap/config.js",
+      "start": 29,
+      "end": 97
+    },
+    "verified": {
+      "file": "bot/src/bootstrap/config.js",
+      "start": 29,
+      "end": 97,
+      "fileSha256": "b7234435fcc3008847cd32e0ff1da49b69ad43ac988b92eb8d4ea6c7664fcbf7",
+      "rangeSha256": "822db1462b22934ee9818f45f9ce9e4a1d843a0f8736341a77054b1d2ab49c9b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/ai-provider/model-transport.js",
+      "start": 8,
+      "end": 43
+    },
+    "verified": {
+      "file": "bot/src/frameworks/ai-provider/model-transport.js",
+      "start": 8,
+      "end": 43,
+      "fileSha256": "d3f6d0035e6c16af0312b85fd6c047a24a563f2035e54b27ea37903dec6ff9ea",
+      "rangeSha256": "982ba9a60537f37a7165a163a95298de8184d49d7890bb5d9bfaeb3cab91bda0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "start": 2,
+      "end": 16
+    },
+    "verified": {
+      "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "start": 2,
+      "end": 16,
+      "fileSha256": "36f798fd0d08c5e1dd851d0b60a4e8ed43d0e423c1ed9b7e53bcd19db217fbbf",
+      "rangeSha256": "db939ab52aab4af5d1bcda3d659aa194e358aa19a84e903a1f351969b9ac617b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 6,
+      "end": 177
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 6,
+      "end": 177,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "a0b1e8673dbfef8e2e9e4432ea048d9b4ffd738bfc395dfff4587924e9820a8f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 624,
+      "end": 887
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 624,
+      "end": 887,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "7c7ff5eda43dc2aee64c088d37b55bcf19a329a1e3d37188a693a3d2ae8ea348"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 921,
+      "end": 962
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 921,
+      "end": 962,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "18ddf44946ee7c72a96bddda45a7cc5a5be706b53dd4db759e73ed4a15ab99f7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 31,
+      "end": 40
+    },
+    "verified": {
+      "file": "bot/src/character-export.js",
+      "start": 31,
+      "end": 40,
+      "fileSha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "rangeSha256": "a394ab3fa10a2b1ff7f850269e2fe0b930f37e6dcd16627f556480ea5a0107a7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 41,
+      "end": 59
+    },
+    "verified": {
+      "file": "bot/src/character-export.js",
+      "start": 41,
+      "end": 59,
+      "fileSha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "rangeSha256": "86a5f311526fca5211593802fc3a532cf0af27422a2ab60be5e3be900b1528e8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 60,
+      "end": 81
+    },
+    "verified": {
+      "file": "bot/src/character-export.js",
+      "start": 60,
+      "end": 81,
+      "fileSha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "rangeSha256": "2529357f44f30dc39a6a0d85d236f170bf75e4ed29ac9e0c05a06aab8ce5b809"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 82,
+      "end": 98
+    },
+    "verified": {
+      "file": "bot/src/character-export.js",
+      "start": 82,
+      "end": 98,
+      "fileSha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "rangeSha256": "c4cab4e907a8bfe23705669cd5778e5f34a9ec6d95362b5aaacfbc12c34d5227"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 108,
+      "end": 124
+    },
+    "verified": {
+      "file": "bot/src/character-export.js",
+      "start": 108,
+      "end": 124,
+      "fileSha256": "4e0e3a3a7dda7d38e5f752cd44bf56daecc7c172a61a004c09952df1963c3619",
+      "rangeSha256": "ec12a08746dea190fb5264e1298e97d778e32eff9251a47d95b6e8037661eefc"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/gm-hook-import.js",
+      "start": 5,
+      "end": 32
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/gm-hook-import.js",
+      "start": 5,
+      "end": 32,
+      "fileSha256": "14fbf825b4c2d40e8ffcb5159fd1da27849d27076bc747520cd5645aa33808d9",
+      "rangeSha256": "b75ed822b294cb54d8bc0a61fa495ee85537fce29f00a53fba05075e4bc8914d"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/discord/command-definitions.js",
+      "start": 9,
+      "end": 640
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/command-definitions.js",
+      "start": 9,
+      "end": 640,
+      "fileSha256": "7975c61ff057677f676bc41eaad8c004a1019537379f0e4c69ce26dba5640eed",
+      "rangeSha256": "c848237c386edcbe068e81ac21d9a88119c2d83fb8cca75d0a5dc193612554a8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/commands.js",
+      "start": 1,
+      "end": 77
+    },
+    "verified": {
+      "file": "bot/src/commands.js",
+      "start": 1,
+      "end": 77,
+      "fileSha256": "a17292c6d335ae9e8e4b2d64b9df2d48b4c3b8cdffd2585d7c7d9cf24a436f0e",
+      "rangeSha256": "176f3126ae80ec98c316babebca863e1ce3d0edadd695ceab8490e6a2d659e9b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 30,
+      "end": 249
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 30,
+      "end": 249,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "e1413a17a8165fd93cdad80da0479cb061903a76be9e614923836c5598c6f04f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 380,
+      "end": 620
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 380,
+      "end": 620,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "9b675cf14f9948c857c5bebf519674ba775e64a42638f83588337222691644ef"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 19,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 19,
+      "end": 88,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "2567a426ab75a0c3b0cf163ffb48a18c36e7fefab80cf3e4aa57d21a51cf4f1b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 21,
+      "end": 145
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 21,
+      "end": 145,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "bd5fb3ab249e369b34625bd00be3d6b3f26603b4e036cd1fb8195830efaf8e54"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 58,
+      "end": 128
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 58,
+      "end": 128,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "46efdbdd5b1eadfef61f68d0d1762cacd64d4e557edd43626bb92f92400ca311"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 19,
+      "end": 26
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 19,
+      "end": 26,
+      "fileSha256": "b20f9f815edc8dcc50336eaf4f45687b4c036038d7413d4849fd1306395d6823",
+      "rangeSha256": "98d65281591c49d75f89bf0b965a600999b438bb4fdaf2eac51aab65ef27f4e8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 76,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 76,
+      "end": 96,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "5657224f93edd1a4dc63dbd5a19089879f1af326ffd44f9d798fbdaefda86e4c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 11,
+      "end": 134
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 11,
+      "end": 134,
+      "fileSha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba",
+      "rangeSha256": "4304980ac2c6390135680b4bbf414e50a21462e905fe5b6ea8ca40cf8bda8d7a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "original": {
+      "file": "docs/Implementation_Plans/TEST_PROTOCOL.md",
+      "start": 1,
+      "end": 10
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/TEST_PROTOCOL.md",
+      "start": 1,
+      "end": 9,
+      "fileSha256": "91dc9d9d4de38ad6b139d6faea5e68b12c078877271bd17ba8de21e7d0f224b7",
+      "rangeSha256": "74085267689877d18c674a6d85eb6b96f29729f1564932b52be154fcc1e0a5e3"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 20
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 20,
+      "fileSha256": "ba02f062b5979b09f5df2a006d4b005d762b1d94d28e7aaacfdbbc4555fe3d4b",
+      "rangeSha256": "325ac3ed6e80cc27b80a10574e98b073f8afcb10a3058b2485171d5ba1876f88"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 52,
+      "end": 83
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AUDIENCE_FIRST_SPEC.md",
+      "start": 52,
+      "end": 83,
+      "fileSha256": "ba02f062b5979b09f5df2a006d4b005d762b1d94d28e7aaacfdbbc4555fe3d4b",
+      "rangeSha256": "450eb051d35e42c91d39a817df2ddd0dcabfefdf59adf8b038fac78a1e418a50"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/CREATIVE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 29
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/CREATIVE_FIRST_SPEC.md",
+      "start": 5,
+      "end": 29,
+      "fileSha256": "17999e52ef9e68704b84eaf10dc45ab6e3e70642f1b2cbc722d7ada16b2fd0e1",
+      "rangeSha256": "90d25431581512b180f40d0c0b9734ac62962e525943f0465659454499615d4f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/AGENCY_PRESERVING_SPEC.md",
+      "start": 7,
+      "end": 31
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/AGENCY_PRESERVING_SPEC.md",
+      "start": 7,
+      "end": 31,
+      "fileSha256": "8294c8cd2832a05bc8da86fbd670ac68fd8301cd6d6cfacd73268eb9e8436939",
+      "rangeSha256": "d4cfe61c1736dc481630b28e0762f0bce5f9fa93512e50137c7d5b601a402087"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 5,
+      "end": 33
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 5,
+      "end": 33,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "1bd8a549592766e91184f3c96345963d8c73cbba5cf865a42bc09eb569413520"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 50,
+      "end": 88
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 50,
+      "end": 88,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "2e64f54f937a51d3bfb84d0bc5827bb347d3ecc21849b8c7e3ee4565daa2216c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 146,
+      "end": 181
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/WEIGHTED_LORE_FRAMEWORK.md",
+      "start": 146,
+      "end": 181,
+      "fileSha256": "a54522528750c16b08db9e732850dcbf46696e456293cf8a95ecf0b01cedf2fb",
+      "rangeSha256": "9da3fafa9e6c45a122225c29d0076f3f4d0d0f6ffa0bc2267d25207493c45133"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 28,
+      "end": 52
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 28,
+      "end": 52,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "1081f197e98a6cd9c6de4552ae23d0498287c5080fa21ba588ed6bac1b7a81d7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 54,
+      "end": 64
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 54,
+      "end": 64,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "2cc2f9fa9e6633d9b8cdd984b064a3164edbc49b934970480ff6dc8a8b75c2e4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 66,
+      "end": 82
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 66,
+      "end": 82,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "d58edb98066e27ca20bb877e04eca7fc63a355c602d58d7abf7df4a1b1c61e71"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 7,
+      "end": 13
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 7,
+      "end": 13,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "452c7784ddbaa59434a8051b1b5f0e9fbb59d37e98b514048eca736521f38809"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 84,
+      "end": 93
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/OWNER_AI_GM_BEHAVIOR_SPEC.md",
+      "start": 84,
+      "end": 93,
+      "fileSha256": "53374798323c41cb35ec22e495680a59c1911a36ffcf43df0cec264277a7ddea",
+      "rangeSha256": "0adad57f9c85189f4900e874e01fff85175eebb0deebcd211ddd6bae2bae1f60"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "AGENTS.md",
+      "start": 15,
+      "end": 31
+    },
+    "verified": {
+      "file": "AGENTS.md",
+      "start": 15,
+      "end": 31,
+      "fileSha256": "2c2330366dbca805930bc81e0926f3da11b81121cfd3f412108f027659764580",
+      "rangeSha256": "3bf6409298359ba3c3feac5058ed34bb81f88f7eaa8f854c77e178c7bf7fb209"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 483,
+      "end": 548
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 483,
+      "end": 548,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "8c25609e47891634aadc541fa496337defaba733f7ac211888f10acd222b0c33"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 407,
+      "end": 565
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 407,
+      "end": 565,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "33e36e0bd0894fc21585f87c9ad3d41eda49c846f5c8e2a59da8c05e4f73ee2a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 167,
+      "end": 219
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 167,
+      "end": 219,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "559c4ed10ff69910e9d99199bd2d80abf5d657a285183031eeea5c6522306c51"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 623,
+      "end": 1020
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 623,
+      "end": 1020,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "b2a96d47a40efb14954a8a1cdbce466c26ccf77dcbe8f819067fd7070bdd6364"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/player-intent-contract.js",
+      "start": 2,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/player-intent-contract.js",
+      "start": 2,
+      "end": 65,
+      "fileSha256": "39a55b4d4a095df2981038037bb908dee2142560daaaa753068eb2f0838d045e",
+      "rangeSha256": "34631ccd9ba998e1f1ab9a4c80b4ae37fa3268886b639b5a65d6f413bf4cc5cc"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 64,
+      "end": 142
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 64,
+      "end": 142,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "8d20141516364920ec568a3e8e3ccf833226250678064c897859d4430b351021"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+      "start": 7,
+      "end": 50
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-delegation.js",
+      "start": 7,
+      "end": 49,
+      "fileSha256": "e2b0c6ba28c63535059ef713fc7ad10c660cce64cb38fc7615329062604adadb",
+      "rangeSha256": "091f7224d67d524c694e404522d83a23bd93cd3f92821b98d039ff670425a4a7"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 41
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 41,
+      "fileSha256": "eb77f18d0388b6fa00f701a0a9163427fefc3342bee44cbef574da5a66287d2c",
+      "rangeSha256": "f9e8b080c1d098266b36402edcca90b108e99e32858fac2a7814497a14f1fceb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 170,
+      "end": 216
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 170,
+      "end": 216,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "016a1b2aa391f72ad03fa3a612064b07cd429926e3a82e31af2a04fc55987db7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 374,
+      "end": 610
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 374,
+      "end": 610,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "5ed8e15c149f4c7a65fc76619808e2c12569e4516b03fbbac7e4cb0e7e929400"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 68,
+      "end": 159
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 68,
+      "end": 159,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "73d0b015bed2707cb01ae8f394a10ebef86ce4dd0e10e78611990f423e15dbf6"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 16,
+      "end": 35
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 16,
+      "end": 35,
+      "fileSha256": "0a9f17df95ff1713b1ea1829cf7a40c73ea6dfcd8478cafab76fe1772f44c500",
+      "rangeSha256": "0a26d30043e4a6518c1d94c18ef0647e1f74a9154f1c6c284b0405dee3a77583"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 7,
+      "end": 86
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 7,
+      "end": 86,
+      "fileSha256": "5b1180e932c76f04c31b0552f7efd83391dec27e9b2c853612b8e4b321111660",
+      "rangeSha256": "2c9f55d8728c1c089ad91b0ee09a65c4b09471ebc015becfa9a99206c99e0c1a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 9,
+      "end": 32
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 9,
+      "end": 32,
+      "fileSha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4",
+      "rangeSha256": "ed3ac318c6889ac696952551ddac131982dff0fcecd2bcbaa3b3b80fe5e4a9ed"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 1102,
+      "end": 1162
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 1102,
+      "end": 1162,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "79f88cb129e2e5cbbc343e14d9416500cebb0006448d9d915e5181f20107ade8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 418,
+      "end": 480
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 418,
+      "end": 480,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "19e3963f2fc16e2c17884c3eaf36362d2e9da78bc9e3b85ae6d7b7477d31a015"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 960,
+      "end": 1020
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 960,
+      "end": 1020,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "43f67103cee4878b4a4f7976207cbd85e0ee0fb35c5b6ab1c7827923b92fc9ee"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 26,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 26,
+      "end": 65,
+      "fileSha256": "569af5cd3b591897174d9a0511506c7c26002bd68936427f595cc775f84735cb",
+      "rangeSha256": "a19a504efed369780ca3b494d70592f188fca067063ff27979b898045d9a4ab5"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 311,
+      "end": 405
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 311,
+      "end": 405,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "3a845e2604c006927f21a1d21ee56e35fd9f2aa5116e3d08427a3b75a2d2b51c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 569,
+      "end": 620
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 569,
+      "end": 620,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "1af089ccf9c51d53ff4f12a05d2187e63d1f0609feb6eb5ddf275b744abea730"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 73,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 73,
+      "end": 88,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "dc38a56a81d3a98fb96059cf9eea622d903c481e2a26beed3aa60f921978d89e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/index.js",
+      "start": 105,
+      "end": 110
+    },
+    "verified": {
+      "file": "bot/src/index.js",
+      "start": 105,
+      "end": 110,
+      "fileSha256": "b4a14b2ed06cb40fc16a0686ad1fff1e4936924bfbf9b27854c38328c685f0fb",
+      "rangeSha256": "f72c14669187b30d32d2c4b31b676e91e615f0436b953226202509fd6b8c3c25"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 550,
+      "end": 622
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 550,
+      "end": 622,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "308df737e1d0eb5c76407d713c01fd4b1d1cdb6dbc4322bd1baa83c42c24ad02"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 157,
+      "end": 219
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 157,
+      "end": 219,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "9debd8d1c48aad40cdda1dd77e3919c537957ac9b019f2094fb765f095ab2ddb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 410,
+      "end": 413
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 410,
+      "end": 413,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "b8d2a54fd7f51ad384362f9e635a64e6ab04f326514e5c4afb2fe1024a0b7d9d"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/player-intent-validation.js",
+      "start": 1,
+      "end": 118
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/player-intent-validation.js",
+      "start": 1,
+      "end": 117,
+      "fileSha256": "a8757222e58a8cf78e521f6126fb8f1c35bcace8d618e59e3881425acd6f88ac",
+      "rangeSha256": "87e312aaf8506eabc1f5c1c27497ace3ac8fe39ac8a49344c8b78e41f940b374"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 143,
+      "end": 162
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 143,
+      "end": 162,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "2c6e1b9d95aee5a92737cf191f2fe11ddb9bebba21711d8b143e91d7c5cb6596"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 163,
+      "end": 208
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 163,
+      "end": 208,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "60fa6899bb6198746c93c9fc85cc5c4d0f7ee5b2d9ce8b1b329258f04f3c52e3"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 209,
+      "end": 236
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/typed-intent-persistence.js",
+      "start": 209,
+      "end": 235,
+      "fileSha256": "5f4027991644dca45ae1e3eb7ac4de1600771304bde0400dbb460fd099f85913",
+      "rangeSha256": "b1ba256341d73ad8690d54e82938dcb7bb1cd6c062530a7000afb0270fab5cd0"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/semantic-intake.js",
+      "start": 19,
+      "end": 143
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/semantic-intake.js",
+      "start": 19,
+      "end": 143,
+      "fileSha256": "1e377336401b7c7d69c61e2c271926b524e2c6e76445f50a2b8e290d11ea18d2",
+      "rangeSha256": "7ef983713118ad7ae03d2dc1c29b5095a4267e34cada70a1662b415b67a1bc5a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 9,
+      "end": 16
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 9,
+      "end": 16,
+      "fileSha256": "ed212494fa00d2c9c0560db5770f27bb11cc93c6babd451572ce47dccbf3d178",
+      "rangeSha256": "cceda036e0b2b339b4069a1e9d6a1eff9b59e8e3af8c08bc98bc836fd2d0f82c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 23,
+      "end": 39
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/gameplay-intake.js",
+      "start": 23,
+      "end": 38,
+      "fileSha256": "ed212494fa00d2c9c0560db5770f27bb11cc93c6babd451572ce47dccbf3d178",
+      "rangeSha256": "36fd3546e65197c51f131163b32d630454efd6a352355bf2be8f79468f6c48f3"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 14,
+      "end": 34
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 14,
+      "end": 34,
+      "fileSha256": "24a0c219897f49afa231bec6cf52d8df605cbaf7a6ea1aee5489f7f30a94a9fb",
+      "rangeSha256": "1d40fb5e6ac62b70966fde87818cfe15fa00e2d3631db994801a9e4cfd0cc755"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 35,
+      "end": 50
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/authored-turn-envelope.js",
+      "start": 35,
+      "end": 50,
+      "fileSha256": "24a0c219897f49afa231bec6cf52d8df605cbaf7a6ea1aee5489f7f30a94a9fb",
+      "rangeSha256": "b4fec34b7c45427b6da2cf40723cf738d4dc8d25240ce16532adbaef6d3b8df1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/interpretation-context.js",
+      "start": 74,
+      "end": 104
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/interpretation-context.js",
+      "start": 74,
+      "end": 104,
+      "fileSha256": "d963abe5ddc6c3377c9073a84ff4f645697918d2cf7b3db1632e5a1467d301ab",
+      "rangeSha256": "7692df020db0d0077b5b938497d80dd485242016f6f478e3658ece1e00f51125"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 2,
+      "end": 134
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 2,
+      "end": 134,
+      "fileSha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba",
+      "rangeSha256": "1d88969cff1520d22085ffa2a4642293a207c16523ad1d899dc66ffa8f7d1d76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 14,
+      "end": 46
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 14,
+      "end": 46,
+      "fileSha256": "32de2e6e3c5dd9a2a9dc155b40e1035cfe8479d33746db0901f5209e332c63cf",
+      "rangeSha256": "fc306bd07757211d3002f4393e54d41aad6b8436ee9bcb02621a4ce9ebf6a233"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 47,
+      "end": 55
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/audience-authority.js",
+      "start": 47,
+      "end": 54,
+      "fileSha256": "32de2e6e3c5dd9a2a9dc155b40e1035cfe8479d33746db0901f5209e332c63cf",
+      "rangeSha256": "30607d870c8a85c6cd9c0bff97cbd045748a189f1611fc0fa79cde1265c8921e"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+      "start": 12,
+      "end": 38
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/native-audience-grant.js",
+      "start": 12,
+      "end": 38,
+      "fileSha256": "546441b39852a18a3b1c3067f0717e62ac50c3e4f06b74b80802de1027fcd0d2",
+      "rangeSha256": "8910fc2ff7283f7cd2533696e121b55f349fd965b679eb725de1a444df8f0e79"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/source-visibility.js",
+      "start": 2,
+      "end": 30
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/source-visibility.js",
+      "start": 2,
+      "end": 30,
+      "fileSha256": "b4fcbf453be6ef11e78b2fbbeeabb0f9a7022d24e6146525ca81effa332d30cb",
+      "rangeSha256": "75a486f6762fc232df5cd7291eb36b10ea09595d4d24c57472f82fcc6dfadea8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 79
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-tasks.js",
+      "start": 8,
+      "end": 79,
+      "fileSha256": "eb77f18d0388b6fa00f701a0a9163427fefc3342bee44cbef574da5a66287d2c",
+      "rangeSha256": "4d0225e889ceaffc30c426bf17f6bc4ea01e5a56f0c5ecf2ed91c2b70fa04014"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 8,
+      "end": 36
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/writer-contract-v9.js",
+      "start": 8,
+      "end": 35,
+      "fileSha256": "0a9f17df95ff1713b1ea1829cf7a40c73ea6dfcd8478cafab76fe1772f44c500",
+      "rangeSha256": "0224fb976651a8acb035e919e73b9b93c80bfbfc967651f96949be9c1443ad9d"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+      "start": 9,
+      "end": 36
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-writer-v9.js",
+      "start": 9,
+      "end": 36,
+      "fileSha256": "e659a40da3e4ab56b21cddca8a0211ba73707cd5e9f029f944018af912d76f51",
+      "rangeSha256": "692ec23f570d17c26f7f767b8c64cd13c00da26a65d19fa3809a1a751972c973"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+      "start": 14,
+      "end": 45
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-acts-v9.js",
+      "start": 14,
+      "end": 45,
+      "fileSha256": "b2d4923db2d4404bc3fdd4bfdcc255de329a9d98d3602ceaa5e38e61ca1ec3d1",
+      "rangeSha256": "07c68cdaa484debf8e229f4653821c3f37bca9408b66a40c44d53f952d68c0e1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 218,
+      "end": 299
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 218,
+      "end": 299,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "34b464ef0d849f6f5d1aef52447d9fa0b7de15a03414bac5677f972b6b6e5f20"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 300,
+      "end": 319
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-authority.js",
+      "start": 300,
+      "end": 319,
+      "fileSha256": "1e7214f443dac1089cf67c7754324a421408792d8502b56f58d960a9d6d6f36a",
+      "rangeSha256": "54a462ba11e067a43c85a6153000763ddecd60080d5fd181cf1d7bc699306173"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+      "start": 13,
+      "end": 53
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-speakers.js",
+      "start": 13,
+      "end": 53,
+      "fileSha256": "a530ca6827f38cfdb569e404a5f81ade44ce471d12ecc65823e6e57bb4798e8d",
+      "rangeSha256": "fb212df159b4dd52ed39df919c437b8363d693ed24066754b078167c3e2e67a1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 123,
+      "end": 227
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 123,
+      "end": 227,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "82220f29c1a1a71b2674d909b65dd2fb627a72cb7fd8e8d5412c288cd2fcca74"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/pvp-output.js",
+      "start": 367,
+      "end": 372
+    },
+    "verified": {
+      "file": "bot/src/pvp-output.js",
+      "start": 367,
+      "end": 372,
+      "fileSha256": "3ee2a14bbccecb7b8724cd4a65ec0ddebe94aa959d387f969279fde50c1f1c66",
+      "rangeSha256": "f8b646d32274d651a65b75c7fcb285ea9d9b146c57f1aef4cce9a87d41861e42"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-completeness.js",
+      "start": 6,
+      "end": 45
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-completeness.js",
+      "start": 6,
+      "end": 45,
+      "fileSha256": "684918b4b09294d2e2e9b21b0c88aa76155c33e4c7c3c243c6e9ee9595c2ca68",
+      "rangeSha256": "50e822daec50a37d755f3475a5a607c0134eaee9f949a0925ab4f8763866594f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/narrative-integrity.js",
+      "start": 113,
+      "end": 145
+    },
+    "verified": {
+      "file": "bot/src/narrative-integrity.js",
+      "start": 113,
+      "end": 145,
+      "fileSha256": "80672acee25e7320927e84b11c8f68def6430a816fa83df88e5a5289ab03863a",
+      "rangeSha256": "edf4845ec2615fc9712cf8a9ec6f1803562b0ddf0d53475f217055ae93333325"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/material-paraphrases.js",
+      "start": 2,
+      "end": 28
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/material-paraphrases.js",
+      "start": 2,
+      "end": 27,
+      "fileSha256": "c0e9303d646b469e4020bacb216e7f4f227a35334f13518e49bf3276d330b03a",
+      "rangeSha256": "b062c2445b79ed87697a897075e7a3c57bad5e93d3af880eb0a8a7f9145c474b"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/adapter-registry.js",
+      "start": 2,
+      "end": 4
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/adapter-registry.js",
+      "start": 2,
+      "end": 3,
+      "fileSha256": "07670b85e9999a24556997e53f3472315748397ae2989923988cf5d24d0027fe",
+      "rangeSha256": "c2e85d35296ddb0f2698e526c098dfe194e4a79e207f77b0c97828c537360598"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/intent/native-preflight.js",
+      "start": 15,
+      "end": 58
+    },
+    "verified": {
+      "file": "bot/src/frameworks/intent/native-preflight.js",
+      "start": 15,
+      "end": 58,
+      "fileSha256": "ac1a0893065fc748e770f0e3ed5d6dc1fe30a408d2b37430cdabfd3af6738f9e",
+      "rangeSha256": "69056ee7b45c83ec0390afd090c0cb006cab1d70db9362eb10dad22ab2a8ff4c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/ai-intents.js",
+      "start": 144,
+      "end": 173
+    },
+    "verified": {
+      "file": "bot/src/ai-intents.js",
+      "start": 144,
+      "end": 173,
+      "fileSha256": "2639a507f343fbdb6086a3b7ab6d00ab98b316d525b1e373e2bc0024526a1a7f",
+      "rangeSha256": "3d688db366bb4ccfa34253690651022ade5a47e0db69aed846ec74d8b5a43adc"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/ai-intents.js",
+      "start": 175,
+      "end": 299
+    },
+    "verified": {
+      "file": "bot/src/ai-intents.js",
+      "start": 175,
+      "end": 299,
+      "fileSha256": "2639a507f343fbdb6086a3b7ab6d00ab98b316d525b1e373e2bc0024526a1a7f",
+      "rangeSha256": "3d9117c4633c6c235b9e31ef52d143503041b8ce7ed5098209b479b5441e2b6b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 4,
+      "end": 211
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 4,
+      "end": 211,
+      "fileSha256": "dc1a18e66da664511286eb27b88026661aff70c8a7e3556c408635a2e424f9b2",
+      "rangeSha256": "03313bbd8ad9594ca7b02edb83309d8b29b6acf60577e8aeaf3e03135bbe2cd4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 58,
+      "end": 104
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/operation-authority.js",
+      "start": 58,
+      "end": 104,
+      "fileSha256": "dc1a18e66da664511286eb27b88026661aff70c8a7e3556c408635a2e424f9b2",
+      "rangeSha256": "64898d3267a01e57ef2209377f47f4c5cd3d265a0ca8e38fb07b6264a1a32ef0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/state.js",
+      "start": 78,
+      "end": 248
+    },
+    "verified": {
+      "file": "bot/src/state.js",
+      "start": 78,
+      "end": 248,
+      "fileSha256": "400ec856ed71dc9b3999d2fe4521f247e20cb2249520f7d261c162b62b77d622",
+      "rangeSha256": "d5b8ca820b5993ed8a5e73f94c69e9a66454c1485a5a670ecb9770cbc9ddf5d2"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/state.js",
+      "start": 249,
+      "end": 259
+    },
+    "verified": {
+      "file": "bot/src/state.js",
+      "start": 249,
+      "end": 259,
+      "fileSha256": "400ec856ed71dc9b3999d2fe4521f247e20cb2249520f7d261c162b62b77d622",
+      "rangeSha256": "38aef979c4cf99b8c5902720c5ecd3e018284dd450ad1b8300f7da7375840a76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 25,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 25,
+      "end": 95,
+      "fileSha256": "05c302f21e8d4d9030d7b1c2a2437b10dd1ba1cad72461735290f7536f06517d",
+      "rangeSha256": "36300dd57ed28ffde4ceac340370a05fe4fffcd5d61d8577f0b603ec0ac3e8d5"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 19,
+      "end": 24
+    },
+    "verified": {
+      "file": "bot/src/turn-orchestration.js",
+      "start": 19,
+      "end": 24,
+      "fileSha256": "05c302f21e8d4d9030d7b1c2a2437b10dd1ba1cad72461735290f7536f06517d",
+      "rangeSha256": "bbe3b50128dfcf97473d345b5f191dd85f2e9fe91d04d73602ea61fa9a2615df"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 5,
+      "end": 169
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 5,
+      "end": 169,
+      "fileSha256": "2995dff1be8ed5db32e6a4ff32187b246c28e9e5edd5fdb2bf0dce85c50e3262",
+      "rangeSha256": "e631ba37ddeb7b13c704a2e804631ae3813ca67c80151b00024cd835f301a95b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 198,
+      "end": 249
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/unified-adjudication.js",
+      "start": 198,
+      "end": 249,
+      "fileSha256": "2995dff1be8ed5db32e6a4ff32187b246c28e9e5edd5fdb2bf0dce85c50e3262",
+      "rangeSha256": "6d38d8a15809d52fe7a001284e43f858d71462c48bdc39a81b7803cbe1bb60c9"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 5,
+      "end": 65
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/gm-execution-rules.js",
+      "start": 5,
+      "end": 65,
+      "fileSha256": "569af5cd3b591897174d9a0511506c7c26002bd68936427f595cc775f84735cb",
+      "rangeSha256": "dee22e08c71512c485dd77ce44b3692398330f73d34171ed69fb57823480a777"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+      "start": 7,
+      "end": 141
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/roll-request-rules.js",
+      "start": 7,
+      "end": 141,
+      "fileSha256": "b21579b5db54c598a71b9d8fe81d30a68d115c06e960e0ad2daca58ba1a4c9d6",
+      "rangeSha256": "efb1535c887ad3f1f7e666e6d976ca998d6a7700583c5ad22e4984815be2f961"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+      "start": 7,
+      "end": 100
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/pc-death-rules.js",
+      "start": 7,
+      "end": 100,
+      "fileSha256": "d539828ef86c24ab4472cc19ebf70e6bb8d0a1135c5aa887960dc18aaa020dc6",
+      "rangeSha256": "0481f471f55242cdd3d1cba63be64d030eba6a0ac5dd9740ca1dd1f53b980de4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "start": 3,
+      "end": 22
+    },
+    "verified": {
+      "file": "bot/src/frameworks/daggerheart/pvp-authority.js",
+      "start": 3,
+      "end": 22,
+      "fileSha256": "ad1504702894ce26a6d6f38015ec767fa60175ffd7abcf63dbf7f39e5ecaea97",
+      "rangeSha256": "c7564f2cf81e33bb7ebb2a2387f6eabfaf18cc6123fa12a9ee8084a552638da0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 17,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 17,
+      "end": 85,
+      "fileSha256": "19f1423754820a20df89ab7df12ac5c840696aa1109391dafe61d5f73d4166d6",
+      "rangeSha256": "b9536a21b05ae8cf9f79660721e6837202bd0337634a225fa524215940eaac43"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 95,
+      "end": 170
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-action-window.js",
+      "start": 95,
+      "end": 170,
+      "fileSha256": "19f1423754820a20df89ab7df12ac5c840696aa1109391dafe61d5f73d4166d6",
+      "rangeSha256": "72878cf2180074ffa9f87a725d649b6ecb8d57d8e69a9d12e04b2735903cf0ea"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 32,
+      "end": 58
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 32,
+      "end": 58,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "a8840bd49671e6e9b58d32abd79ce9febdcb9a0b2ddaabb9505ca67f9a0226b2"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/autonomous-world.js",
+      "start": 120,
+      "end": 316
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/autonomous-world.js",
+      "start": 120,
+      "end": 316,
+      "fileSha256": "1064c8538de8d4a632e51a8c8a1f7ef1659177bed37c0869ffbd70b9745b299f",
+      "rangeSha256": "e41ed4c6241ba41fe4de4f5bb2ea4c96b8af74aef4ea494be5e12eb9aa8af59b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 15,
+      "end": 86
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/identity-rules.js",
+      "start": 15,
+      "end": 86,
+      "fileSha256": "5b1180e932c76f04c31b0552f7efd83391dec27e9b2c853612b8e4b321111660",
+      "rangeSha256": "8dbb0f1c4e820e759abe726aa1ab43857a3edbd23768cbebe4b2db3217508b53"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 24,
+      "end": 74
+    },
+    "verified": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 24,
+      "end": 74,
+      "fileSha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+      "rangeSha256": "2cd7cab2bd80762f8b761c082687d730aa7fdac9f0236670c9d3aa9873b0c579"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 8,
+      "end": 79
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 8,
+      "end": 79,
+      "fileSha256": "c03dc01ceecaf3d17da7c6d3daeefa57026520dbcd8832eda8289ae0da491263",
+      "rangeSha256": "665fdf6f6dfc34d097ea3597176d7124978c200143d75dfa29ae0db387d77b87"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 80,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/context-planner.js",
+      "start": 80,
+      "end": 88,
+      "fileSha256": "c03dc01ceecaf3d17da7c6d3daeefa57026520dbcd8832eda8289ae0da491263",
+      "rangeSha256": "3e84296a06d115eaf45584d82f75f205d3ea495d50bb5b0d1dcfb440a71c8bd8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 5,
+      "end": 91
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 5,
+      "end": 91,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "2cedff37f8a6fedb352bbfb465d18f9dbc62815b91e18ec5d340c234145fbbc0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 92,
+      "end": 120
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 92,
+      "end": 120,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "7dfe60f2a82e2fc0f929d68a3919e53ecbab8bf441a65331892fab59d11bbe59"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 4,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 4,
+      "end": 96,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "c4aba2bc730cb6b403a39efbe52fd43ee7e6ca9ca8adf5587f9fd1d9d6da3d3e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 101,
+      "end": 128
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 101,
+      "end": 128,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "bf41657c41dbbcfec1d1c82e5baf49083887c308fc40bec4d6ca9f7535c1c6a3"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 3,
+      "end": 44
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 3,
+      "end": 44,
+      "fileSha256": "b20f9f815edc8dcc50336eaf4f45687b4c036038d7413d4849fd1306395d6823",
+      "rangeSha256": "02533d62a473de2e2cf4124e2fc1fedbdf133410d72021c2c29c664e9c4d12fb"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "start": 2,
+      "end": 13
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/disclosure-authority.js",
+      "start": 2,
+      "end": 13,
+      "fileSha256": "23652d7c2e6047ef14fc53bb6befdfb83f50aa528721832c71db79884b5676cc",
+      "rangeSha256": "03c6bebde633dce287af96643d4191ee7e5f63c6cceb41e1c47974051e29ae71"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/npc/cognition.js",
+      "start": 65,
+      "end": 148
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/cognition.js",
+      "start": 65,
+      "end": 148,
+      "fileSha256": "75f0cf80c5cc45b5fb7df1ef9712c87f74cc3c4a9461d3808f8acf6a77c5a841",
+      "rangeSha256": "5a87c565a96903b6ff81418b174fa879b4a092c3b238f10c887713ed82895d2b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/npc/cognition-drafts.js",
+      "start": 7,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/cognition-drafts.js",
+      "start": 7,
+      "end": 85,
+      "fileSha256": "b4ec28007226d5d1c91f03e56ec474cb5ae4ae993b72d1ad97aef7a9daac4be7",
+      "rangeSha256": "9045df007c7435d9131392d4c69269ca02fadaf777e7878bb5f23cdb6026a20e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/npc/motivation.js",
+      "start": 6,
+      "end": 41
+    },
+    "verified": {
+      "file": "bot/src/frameworks/npc/motivation.js",
+      "start": 6,
+      "end": 41,
+      "fileSha256": "7c4c8706258fcb1ad1cca7e5453106cb027ee21d6398722afae466e51f9c35cb",
+      "rangeSha256": "7dd71709c3ca952f609fd8a7fc685b01dce9bfddaac2d658729fd086ca650159"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 6,
+      "end": 37
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-cadence.js",
+      "start": 6,
+      "end": 37,
+      "fileSha256": "e29039e631fd02e0c0da8ad1823de2479d26977987d1df7dfe8a31fc5df46cf4",
+      "rangeSha256": "8c233752f3d38d7a56eba7e654f61aa9647e034720e81e8074f14bfdb0ba418e"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+      "start": 16,
+      "end": 33
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/narrative-opportunity-policy.js",
+      "start": 16,
+      "end": 33,
+      "fileSha256": "751887c9e810c5f691fea93d853f5564081fa967dc8e7ac6f518b93afb23508b",
+      "rangeSha256": "012d15d1945408639f80b03a882f2591277bd17dba0ce16a849747fdf97ac5c4"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/world/director-action-ranking.js",
+      "start": 6,
+      "end": 25
+    },
+    "verified": {
+      "file": "bot/src/frameworks/world/director-action-ranking.js",
+      "start": 6,
+      "end": 25,
+      "fileSha256": "55e50032770c31e30c2526a17ff6f5db1d693f9c8442c71588dcd98a211f5f7f",
+      "rangeSha256": "7f546b82a943742b41d8318647ecf010c36558994c7b0dc0d6e93072f259a9d1"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/gm.js",
+      "start": 1184,
+      "end": 1225
+    },
+    "verified": {
+      "file": "bot/src/gm.js",
+      "start": 1184,
+      "end": 1225,
+      "fileSha256": "84e4232b44715a18c3f58bc5ae9d70f303e82ef267d1a45008cb2104b3b24aec",
+      "rangeSha256": "f054f4638129909853273aecea8960fffeecef8a5a59ae8b46eb6ab3cb1a289f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/persistence/database.js",
+      "start": 38,
+      "end": 126
+    },
+    "verified": {
+      "file": "bot/src/frameworks/persistence/database.js",
+      "start": 38,
+      "end": 126,
+      "fileSha256": "4733d1884ee20f5548a518a15299b077253b3cb952ac70af1388a7d66ee5827f",
+      "rangeSha256": "d02bd87fee98708ba6f5cae36e57f9daf4ac184e77e9dc95097e8ef20cdfe079"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 39,
+      "end": 42
+    },
+    "verified": {
+      "file": "bot/src/frameworks/content/content.js",
+      "start": 39,
+      "end": 42,
+      "fileSha256": "86875dc9ae71e3ac43fba93e9b6eba597d5ff41a9d1e2c4f843294b964e12855",
+      "rangeSha256": "8a82105d2d26ef7d69dc6c98cf1da055862a2d034f8328674c8856a4231f2095"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/discord/privacy.js",
+      "start": 35,
+      "end": 85
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/privacy.js",
+      "start": 35,
+      "end": 84,
+      "fileSha256": "f5af9915e2c35051fb05114ea41c18e481ea47b09616b852c6fca30b4f2f3096",
+      "rangeSha256": "901f214a3b0feb2469bfa56ea8c4d31e284ad864ebee3f332e0703e7e284dd7c"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/discord/client-factory.js",
+      "start": 3,
+      "end": 7
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/client-factory.js",
+      "start": 3,
+      "end": 6,
+      "fileSha256": "5c9d2dc3f30316dcb528c9852c23f7a2553a6aa4f2abbc64fa7f00ae8c742729",
+      "rangeSha256": "a6bbf9293d5c752d5eed04e38d982c902a25e4e804b27a721a83ba7efd88df24"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/discord/chunking.js",
+      "start": 17,
+      "end": 73
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/chunking.js",
+      "start": 17,
+      "end": 73,
+      "fileSha256": "80619a583b08b9fc54d9ad96f89f73af67acf8d24a71858aac0ab903c6e5e147",
+      "rangeSha256": "15e8102a641c157886b26cad0505a1161cbfa7dae95b53411e4861bc943cb96f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/discord/delivery.js",
+      "start": 2,
+      "end": 13
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/delivery.js",
+      "start": 2,
+      "end": 13,
+      "fileSha256": "f559a13b80bc822e306fb94d6220129607a0372e219349d574517b2a3795c554",
+      "rangeSha256": "3a0f908fbe1b9a69a5f878de61c035843bc60237cf06dd23a21e6ba03b67bb7c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 42,
+      "end": 72
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 42,
+      "end": 72,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "3da5ccd4a8d464449ed8ffb3470485f7772cd0da6c312ec03994f5b5d5ff1e76"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 92,
+      "end": 143
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 92,
+      "end": 143,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "ac812e14e65e226c15c9fd79bd6ef261c9ec0fcf522fc47071869a8b567a706b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 144,
+      "end": 169
+    },
+    "verified": {
+      "file": "bot/src/publication-outbox.js",
+      "start": 144,
+      "end": 169,
+      "fileSha256": "1591a1d855d2baf9c0de51112b758db7d3ee4aebf54aa0a280fa7e10c6288f94",
+      "rangeSha256": "06132b935c727ca3284810239e8d69a81ebab73bc15d472cfec58de4beaa7870"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/publishing.js",
+      "start": 115,
+      "end": 150
+    },
+    "verified": {
+      "file": "bot/src/publishing.js",
+      "start": 115,
+      "end": 150,
+      "fileSha256": "7d362de84462496318fb2d79e20afa59c8cde89a6d9d15021af89c8917936d94",
+      "rangeSha256": "86294be6c43e769d48e4917200c78a3bc6ca6b826f361a0a256c234aa77082ce"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/bootstrap/config.js",
+      "start": 29,
+      "end": 97
+    },
+    "verified": {
+      "file": "bot/src/bootstrap/config.js",
+      "start": 29,
+      "end": 97,
+      "fileSha256": "b7234435fcc3008847cd32e0ff1da49b69ad43ac988b92eb8d4ea6c7664fcbf7",
+      "rangeSha256": "822db1462b22934ee9818f45f9ce9e4a1d843a0f8736341a77054b1d2ab49c9b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/ai-provider/model-transport.js",
+      "start": 8,
+      "end": 43
+    },
+    "verified": {
+      "file": "bot/src/frameworks/ai-provider/model-transport.js",
+      "start": 8,
+      "end": 43,
+      "fileSha256": "d3f6d0035e6c16af0312b85fd6c047a24a563f2035e54b27ea37903dec6ff9ea",
+      "rangeSha256": "982ba9a60537f37a7165a163a95298de8184d49d7890bb5d9bfaeb3cab91bda0"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "start": 2,
+      "end": 16
+    },
+    "verified": {
+      "file": "bot/src/frameworks/ai-provider/generation-feedback.js",
+      "start": 2,
+      "end": 16,
+      "fileSha256": "36f798fd0d08c5e1dd851d0b60a4e8ed43d0e423c1ed9b7e53bcd19db217fbbf",
+      "rangeSha256": "db939ab52aab4af5d1bcda3d659aa194e358aa19a84e903a1f351969b9ac617b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 6,
+      "end": 177
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 6,
+      "end": 177,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "a0b1e8673dbfef8e2e9e4432ea048d9b4ffd738bfc395dfff4587924e9820a8f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 624,
+      "end": 887
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 624,
+      "end": 887,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "7c7ff5eda43dc2aee64c088d37b55bcf19a329a1e3d37188a693a3d2ae8ea348"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 921,
+      "end": 962
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 921,
+      "end": 962,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "18ddf44946ee7c72a96bddda45a7cc5a5be706b53dd4db759e73ed4a15ab99f7"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 31,
+      "end": 40
+    },
+    "verified": {
+      "file": "bot/src/frameworks/character/character-export.js",
+      "start": 33,
+      "end": 39,
+      "fileSha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "rangeSha256": "f402739d4d59fb29b483438d2e22457a297294068d2136fd0e986324b0b9f982"
+    },
+    "correction": "Source-identical functions moved behind the character-export facade",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 41,
+      "end": 59
+    },
+    "verified": {
+      "file": "bot/src/frameworks/character/character-export.js",
+      "start": 41,
+      "end": 58,
+      "fileSha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "rangeSha256": "66fba634019a9b526fa8b45705f49fd329ac84672ce521b1165d61ff07b02ff2"
+    },
+    "correction": "Source-identical functions moved behind the character-export facade",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 60,
+      "end": 81
+    },
+    "verified": {
+      "file": "bot/src/frameworks/character/character-export.js",
+      "start": 60,
+      "end": 80,
+      "fileSha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "rangeSha256": "18e358376edc02077fdf705845965a15073a99648fdf2536e86c29c87aa62083"
+    },
+    "correction": "Source-identical functions moved behind the character-export facade",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 82,
+      "end": 98
+    },
+    "verified": {
+      "file": "bot/src/frameworks/character/character-export.js",
+      "start": 82,
+      "end": 97,
+      "fileSha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "rangeSha256": "1b47c5ec23ed28bb30b9d0b62ddb0b0580609d7a7bec4ca85bc3de94a874f0ea"
+    },
+    "correction": "Source-identical functions moved behind the character-export facade",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/character-export.js",
+      "start": 108,
+      "end": 124
+    },
+    "verified": {
+      "file": "bot/src/frameworks/character/character-export.js",
+      "start": 108,
+      "end": 123,
+      "fileSha256": "ec84ae87b17788dc8e65fbdee22c13a848ed7b40c4d2bbf0dff19abbca4bdb72",
+      "rangeSha256": "c8f9bb4aee543f941c3bb1f122e7c445b0824eb0537e1aa5fc26521492e79b7e"
+    },
+    "correction": "Source-identical functions moved behind the character-export facade",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/gm-hook-import.js",
+      "start": 5,
+      "end": 32
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/gm-hook-import.js",
+      "start": 5,
+      "end": 32,
+      "fileSha256": "14fbf825b4c2d40e8ffcb5159fd1da27849d27076bc747520cd5645aa33808d9",
+      "rangeSha256": "b75ed822b294cb54d8bc0a61fa495ee85537fce29f00a53fba05075e4bc8914d"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/discord/command-definitions.js",
+      "start": 9,
+      "end": 640
+    },
+    "verified": {
+      "file": "bot/src/frameworks/discord/command-definitions.js",
+      "start": 9,
+      "end": 640,
+      "fileSha256": "7975c61ff057677f676bc41eaad8c004a1019537379f0e4c69ce26dba5640eed",
+      "rangeSha256": "c848237c386edcbe068e81ac21d9a88119c2d83fb8cca75d0a5dc193612554a8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/commands.js",
+      "start": 1,
+      "end": 77
+    },
+    "verified": {
+      "file": "bot/src/commands.js",
+      "start": 1,
+      "end": 77,
+      "fileSha256": "d4e680a5f02b1a37e6c0b72f9bce36063bddc81e524a014b400551a39dd86090",
+      "rangeSha256": "ca6e15dac7ccf58c60379e67dbb49dcfd04a9967fd7d0af010822bb04d934770"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 30,
+      "end": 249
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 30,
+      "end": 249,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "e1413a17a8165fd93cdad80da0479cb061903a76be9e614923836c5598c6f04f"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/sql/schema.sql",
+      "start": 380,
+      "end": 620
+    },
+    "verified": {
+      "file": "bot/sql/schema.sql",
+      "start": 380,
+      "end": 620,
+      "fileSha256": "d3a69c4c55a876b087556ab7f291265a684c4287233b1651b1692be34781e374",
+      "rangeSha256": "9b675cf14f9948c857c5bebf519674ba775e64a42638f83588337222691644ef"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 19,
+      "end": 88
+    },
+    "verified": {
+      "file": "bot/src/frameworks/session/scene-continuity.js",
+      "start": 19,
+      "end": 88,
+      "fileSha256": "a1346a5a62f962942e9bad9ecc0ec21a6abb2c0391bbe81948edbba575e63038",
+      "rangeSha256": "2567a426ab75a0c3b0cf163ffb48a18c36e7fefab80cf3e4aa57d21a51cf4f1b"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 21,
+      "end": 145
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/memory-lifecycle.js",
+      "start": 21,
+      "end": 145,
+      "fileSha256": "ebf4539ee023c22d50298d4635f968fa50f09b5b60b64c90e284404387e8aee2",
+      "rangeSha256": "bd5fb3ab249e369b34625bd00be3d6b3f26603b4e036cd1fb8195830efaf8e54"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 58,
+      "end": 128
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 58,
+      "end": 128,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "46efdbdd5b1eadfef61f68d0d1762cacd64d4e557edd43626bb92f92400ca311"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 19,
+      "end": 26
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/canon-proposal-drafts.js",
+      "start": 19,
+      "end": 26,
+      "fileSha256": "b20f9f815edc8dcc50336eaf4f45687b4c036038d7413d4849fd1306395d6823",
+      "rangeSha256": "98d65281591c49d75f89bf0b965a600999b438bb4fdaf2eac51aab65ef27f4e8"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 76,
+      "end": 96
+    },
+    "verified": {
+      "file": "bot/src/frameworks/knowledge/narrative-memory.js",
+      "start": 76,
+      "end": 96,
+      "fileSha256": "aeeb601db639c4c626004becbdc25a6a5ee75b0ce68ac23f1fadeae77d9681a0",
+      "rangeSha256": "5657224f93edd1a4dc63dbd5a19089879f1af326ffd44f9d798fbdaefda86e4c"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 11,
+      "end": 134
+    },
+    "verified": {
+      "file": "bot/src/frameworks/narrative/context-builder.js",
+      "start": 11,
+      "end": 134,
+      "fileSha256": "110360d7fca918315d980c2583f33aa695dfecf14914c0073deecbaeaa625fba",
+      "rangeSha256": "4304980ac2c6390135680b4bbf414e50a21462e905fe5b6ea8ca40cf8bda8d7a"
+    },
+    "correction": null,
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  },
+  {
+    "revision": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "original": {
+      "file": "docs/Implementation_Plans/TEST_PROTOCOL.md",
+      "start": 1,
+      "end": 10
+    },
+    "verified": {
+      "file": "docs/Implementation_Plans/TEST_PROTOCOL.md",
+      "start": 1,
+      "end": 9,
+      "fileSha256": "91dc9d9d4de38ad6b139d6faea5e68b12c078877271bd17ba8de21e7d0f224b7",
+      "rangeSha256": "74085267689877d18c674a6d85eb6b96f29729f1564932b52be154fcc1e0a5e3"
+    },
+    "correction": "Original citation extended one line beyond end of file; exact source boundary retained",
+    "scope": "Source bytes and exact location; semantic parity remains assigned to replacement phase"
+  }
+]

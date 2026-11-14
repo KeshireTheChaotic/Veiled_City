@@ -1,6 +1,6 @@
 # Discord compatibility obligations
 
-24 top-level commands, 219 leaf paths. Full option types, choices and required fields: COMMAND_SCHEMA.json. All await R6 implementation and fresh behavior coverage.
+R0 inventory/disposition complete,2026-11-14:24 top-level commands,219 leaf paths, exact source branches at both audited revisions and unchanged declarative schema. Current source-bound command destinations are in R0_PHASE_PRESERVATION_MAP.json and R0_SOURCE_RECEIPT_GRAPH.json. Full options remain in COMMAND_SCHEMA.json. The table below is the original structural backlog; current partial native implementations have individual R6 reports. Full command behavior/privacy parity remains R6 work.
 
 | Command | Destination | Status |
 |---|---|---|

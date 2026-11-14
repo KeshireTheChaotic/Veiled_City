@@ -1,5 +1,7 @@
 # State migration obligations
 
+R0 inventory/disposition complete,2026-11-14. R0_SOURCE_RECEIPT_GRAPH.json supplies freshly verified effective schemas, all source/receipt call expressions and explicit adoption blockers at both pin and upstream. Every table has a source-bound migration-only preservation destination. This is not R7 data-conversion acceptance. The structural rows below are historical obligations; current partial readers/imports have their own slice reports.
+
 This is the original R0 structural snapshot; current partial adapters are reported in RESUME_HANDOFF.md. Upstream 15a8f adds `native_roll_conditions` and `native_mixed_condition_clear` city-record/evidence obligations and `npc_spotlight_condition_clear` mutation ancestry; SQL schema files are unchanged. Preserve original IDs, source/owner scope, pending odds revisions, paid spotlight receipts and already committed release history. These are explicit R7 migration holds, not implemented projections. See UPSTREAM_15A8F_REPORT.md.
 
 Baseline schema inspection used an isolated in-memory SQLite database only. STATE_SCHEMA.json retains full column/default/foreign-key definitions and statically found migration/SQL sites. Dynamic ALTER calls and JavaScript backfills require individual review; schema execution alone is not a migration dry run.

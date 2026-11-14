@@ -1,0 +1,74 @@
+{
+  "skipped": 0,
+  "failed": 0,
+  "scope": "Inventory and exact preservation/disposition gate; opaque contracts remain adoption/removal blockers",
+  "freshTests": 7,
+  "artifactRun": {
+    "checks": 3,
+    "durationMs": 275.2803
+  },
+  "files": [
+    {
+      "sha256": "be471e4d72e8eb91c9287f03e28b3b7e98710baef7b1237338a5f3a5eb1750f7",
+      "path": "bot/tooling/veilkeeper2/r0-phase-audit.mjs"
+    },
+    {
+      "sha256": "b5b505e7484729ae3cb021053d3e42517449193883f26a0ad3ab7770ca791572",
+      "path": "bot/tooling/veilkeeper2/r0-phase-contract.mjs"
+    },
+    {
+      "sha256": "3c25131bdd20aa6aab679de99faa0628c583b29f57c44382eaa365bc9e04bfbf",
+      "path": "bot/tests/veilkeeper2/r0-phase-contract.test.mjs"
+    },
+    {
+      "sha256": "50130f4ef727e117a8035ffc460af6da6e095bcf783d7435daeaa25d8b2dbd02",
+      "path": "bot/tests/veilkeeper2/r0-phase-artifacts.test.mjs"
+    },
+    {
+      "sha256": "4eb2435ce84feb8de8ce61dd88f1e55574a315643bcdc62d6b37c2f62808d2eb",
+      "path": "docs/veilkeeper2/R0_PHASE_ACCEPTANCE.json"
+    },
+    {
+      "sha256": "367df4a544d8645ec7ec7d88c8b11cd456f8723bf94d540530f6b45865f6eb23",
+      "path": "docs/veilkeeper2/R0_PHASE_PRESERVATION_MAP.json"
+    },
+    {
+      "sha256": "c9dc15a7d4d6cc387231384ea926b3f94eec1bc1a6a46756da2139a6e5f8f3e3",
+      "path": "docs/veilkeeper2/R0_SOURCE_RECEIPT_GRAPH.json"
+    },
+    {
+      "sha256": "ac604702ef8633c708acc7c493dfd3baf312dd2ad12f25ca945d9cfc3810a254",
+      "path": "docs/veilkeeper2/R0_VERIFIED_REFERENCES.json"
+    },
+    {
+      "sha256": "24ca9d4439a4ee6f2171b669a83581b6609efde3d1fb7d931de9ac8bef830763",
+      "path": "docs/veilkeeper2/R0_PHASE_REPORT.md"
+    },
+    {
+      "sha256": "b5f1b693bd82dd677d119c09902769fab62235ea080640bd5d5e7ed17e8a316a",
+      "path": "docs/veilkeeper2/REBUILD_INVENTORY.md"
+    },
+    {
+      "sha256": "b8da193b1d6275f5c979af49b53f792426f196cde688d8128f98e8a6ef958d3e",
+      "path": "docs/veilkeeper2/STATE_MIGRATION_MAP.md"
+    },
+    {
+      "sha256": "fe490f90bcbea382be13f492e1e6c58722607c73ee60dd15c71c548e74fa3114",
+      "path": "docs/veilkeeper2/COMMAND_COMPATIBILITY.md"
+    },
+    {
+      "sha256": "7a2b7c5f8ba699119e4631a2feb9a449a8ae0c32c4acd890c7fca3b24ec780ea",
+      "path": "docs/veilkeeper2/RULE_PARITY_MATRIX.md"
+    },
+    {
+      "sha256": "5611c4764f25c1a0c56e913c96e9e18538e9b756aa621426b2825207c34a2f28",
+      "path": "docs/veilkeeper2/REMOVE_LIST.md"
+    }
+  ],
+  "status": "complete",
+  "phase": "R0",
+  "contractRun": {
+    "durationMs": 109.2619,
+    "combinedR0R1Checks": 7
+  }
+}

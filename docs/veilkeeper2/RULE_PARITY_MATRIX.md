@@ -1,5 +1,7 @@
 # Rule parity obligations
 
+R0 inventory/disposition complete,2026-11-14. Fresh source-bound rule definitions, house rules, registration sites and all exported mechanics at both revisions are preserved in R0_SOURCE_RECEIPT_GRAPH.json and R0_PHASE_PRESERVATION_MAP.json. This completes catalog coverage only; every R3 mechanical parity and adoption hold remains binding. Historical per-module obligations below are not claims that ports have passed.
+
 Upstream refresh at `15a8f44671f227c6bec69bf30744e03c5692809b`: see [source delta audit](UPSTREAM_15A8F_REPORT.md) and its complete source/hash map. The original catalog remains pinned to `1ba6c7e`; no parity gate is released by this refresh. Additional mandatory coverage includes explicit source-qualified Spellcast identity, compulsory native condition odds, no-dice/no-spend pending odds amendments, immutable saved-condition ancestry and AI-world NPC condition release paid through spotlight/Fear authority. All remain unported/unqualified in the composed native runtime.
 
 RULE_CATALOG.json preserves complete native-feature definitions and registration callsites, plus every parsed Daggerheart module/function/export. A catalog entry is not proof of mechanical parity. No legacy tests or fixtures may be reused. Each port needs fresh fixed-native-RNG cases, authenticated owner/consent/source checks, no-effect previews, replay and concurrency checks.
