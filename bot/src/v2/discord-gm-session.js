@@ -12,7 +12,7 @@ const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex
  * and nothing is retried after an uncertain effect or reply.
  * `bootstrap` ({readSource, actionStore}) is optional; without it those ops are not claimed.
  */
-export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,readGmRoleId=()=>null,onError=()=>{}}){
+export function createDiscordGmSession({client,sceneStore,gmAuthority,interactionReceipts,bootstrap=null,characters=null,canonStore=null,onCanonCommitted=null,readGmRoleId=()=>null,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof interactionReceipts?.claim!=='function'||typeof gmAuthority?.authorize!=='function'||bootstrap&&(typeof bootstrap.readSource!=='function'||typeof bootstrap.actionStore?.initializePcFromReviewedSource!=='function')||characters&&typeof characters.getCharacter!=='function')throw new TypeError('Native GM session dependencies required');
   const setup=createNativeSessionSetup({sceneStore,gmAuthority}),registration=createNativeCharacterRegistration({sceneStore,gmAuthority}),pending=new Map(),controller=new AbortController();let closed=false;
   const report=(error,id,stage)=>{try{onError(error,{interactionId:id,stage});}catch{}};
@@ -24,6 +24,7 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       const input=gmCommandInput(e);
       if(input){
         const ref=`${input.op}:${input.actor??input.source??input.session??''}`;
+        if(canonStore&&input.op==='canon-review')return {kind:'canon',ref:'canon-review:'+input.proposal,raw:input};
         if(input.op==='session-reopen')return {kind:'reopen',ref,raw:input};
         if(characters&&(input.op==='pc-register'||input.op==='pc-rebind'))return {kind:input.op==='pc-rebind'?'rebind':'register',ref,raw:input};
         if(bootstrap&&(input.op==='pc-bootstrap-preview'||input.op==='pc-bootstrap-review'))return {kind:input.op==='pc-bootstrap-preview'?'preview':'review',ref,raw:input};
@@ -41,7 +42,12 @@ export function createDiscordGmSession({client,sceneStore,gmAuthority,interactio
       if(e.deferred||e.replied||typeof e.deferReply!=='function'||typeof e.editReply!=='function')throw new Error('Native private acknowledgement required');
       await e.deferReply({flags:MessageFlags.Ephemeral});interactionReceipts.acknowledge(id,'deferred',{check:bookkeeping});alive();stage='decision';
       const proof=await gmAuthority.authorize(e,{signal:controller.signal}),c=proof.campaignId,actor=proof.targetRef;let receipt,text;stage='effects';
-      if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
+      if(r.kind==='canon'){
+        const declaration=gmAuthority.readDeclaration(proof),input=declaration.payload,character=characters?.getCharacter(input.character);
+        if(proof.operation!=='canon_review'||proof.snapshotHash!==hash(r.raw)||hash(input)!==hash(r.raw)||character?.id!==input.character||character.guild_id!==c)throw new Error('Exact protected canon administration authority required');
+        receipt=canonStore.reviewCanon({campaignId:c,characterId:input.character,proposalId:input.proposal,sourceRef:proof.sourceRef,sourceRevision:proof.sourceRevision,principal:proof.principal,resolution:input.resolution,expectedRevision:input.expectedRevision,customValue:input.value,note:input.note,visibility:input.visibility,replaceExisting:input.replace},{check:()=>gmAuthority.check(proof)});onCanonCommitted?.(receipt);text=`Protected canon review saved: ${receipt.status}. No narration, player knowledge or character state was changed.`;
+      }
+      else if(r.kind==='session'){const created=setup.start(proof);receipt=created.receipt;text='Session saved. Nothing was announced; owner attendance and opening prose are separate steps.';}
       else if(r.kind==='end'){const ended=setup.end(proof);receipt=ended.receipt;text=`Session ended and ${ended.closedScenes.length} scene(s) closed. Nothing was deleted or announced; pending actions await native review.`;}
 
       else if(r.kind==='reopen'){const reopened=setup.reopen(proof);receipt=reopened.receipt;text=`Session reopened with ${reopened.reopenedScenes.length} scene(s). Earlier withheld proofs stay withheld pending native review; nothing was announced.`;}

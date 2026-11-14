@@ -4,11 +4,12 @@ import {SESSION_ASSEMBLIES} from './session-occasions.js';
 const hash=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=256;
 const ids=v=>Array.isArray(v)&&v.length<=256&&v.every(id)&&new Set(v).size===v.length;
-const fields={message:['id','campaignId','userId','channelId','deleted','text','origin'],channel:['id','campaignId','sceneId','kind','permissionsVerified','recipientIds','writerIds','ownerUserId'],
+const fields={perception:['id','campaignId','sceneId','actorRevision','auditoryZone','presence','canHear','canSpeak'],message:['id','campaignId','userId','channelId','deleted','text','origin'],channel:['id','campaignId','sceneId','kind','permissionsVerified','recipientIds','writerIds','ownerUserId'],
   scene:['id','campaignId','sessionId','status','participants'],session:['id','campaignId','status','title','assembly','setup'],actor:['id','campaignId','sceneId','status','kind','ownerUserId','controllerUserId','controlRole','proxyAuthorized','delegationRef','name']};
 const decode=r=>r?JSON.parse(r.data):null;
 function valid(kind,d){
   if(!d||typeof d!=='object'||Array.isArray(d)||!fields[kind]||Object.keys(d).some(k=>!fields[kind].includes(k))||!id(d.id)||!id(d.campaignId))return false;
+  if(kind==='perception')return id(d.sceneId)&&id(d.actorRevision)&&id(d.auditoryZone)&&['present','absent'].includes(d.presence)&&typeof d.canHear==='boolean'&&typeof d.canSpeak==='boolean';
   if(kind==='message')return id(d.userId)&&id(d.channelId)&&typeof d.deleted==='boolean'&&typeof d.text==='string'&&d.text.length<=16000&&(d.origin===undefined||['discord_message','discord_component'].includes(d.origin));
   if(kind==='channel')return id(d.sceneId)&&['party','private'].includes(d.kind)&&typeof d.permissionsVerified==='boolean'&&ids(d.recipientIds)&&ids(d.writerIds)&&(d.ownerUserId==null||id(d.ownerUserId));
   if(kind==='session')return ['active','ended'].includes(d.status)&&(d.title===undefined||typeof d.title==='string'&&d.title.length<=256)&&(d.assembly===undefined||SESSION_ASSEMBLIES.includes(d.assembly))&&(d.setup===undefined||d.setup&&Object.keys(d.setup).sort().join(',')==='interactionId,principal,snapshotHash,sourceRef,sourceRevision'&&Object.values(d.setup).every(id)&&/^[a-f0-9]{64}$/.test(d.setup.snapshotHash));
@@ -45,6 +46,7 @@ export function openSceneStore(filename=':memory:',{onCommitted}={}){
       const records=[];
       for(const {kind,data,expectedRevision} of snapshot.records){
         const current=read(kind,snapshot.campaignId,data.id);
+        if(kind==='perception'){const actor=read('actor',snapshot.campaignId,data.id);if(!actor||actor.controlRevision!==data.actorRevision||actor.sceneId!==data.sceneId||actor.status!=='active')throw new Error('Current native perception actor frame required');}
         if((current?Number(current.revision):null)!==expectedRevision)throw new Error('Native scene revision conflict');
         const revision=(expectedRevision??0)+1,row={...data,revision:String(revision),...(kind==='actor'?{controlRevision:String(revision)}:{})};
         if(kind==='scene'){
@@ -60,6 +62,6 @@ export function openSceneStore(filename=':memory:',{onCommitted}={}){
       if(onCommitted)try{const result=onCommitted(structuredClone(receipt));if(result&&typeof result.then==='function')Promise.resolve(result).catch(()=>{});}catch{}return receipt;
     }catch(e){db.exec('ROLLBACK');throw e;}
   }
-  const readers=Object.freeze({readMessage:(c,id)=>read('message',c,id),readChannel:(c,id)=>read('channel',c,id),readScene:(c,id)=>read('scene',c,id),readSession:(c,id)=>read('session',c,id),readActor:(c,id)=>read('actor',c,id)});
+  const readers=Object.freeze({readPerception:(c,id)=>read('perception',c,id),readMessage:(c,id)=>read('message',c,id),readChannel:(c,id)=>read('channel',c,id),readScene:(c,id)=>read('scene',c,id),readSession:(c,id)=>read('session',c,id),readActor:(c,id)=>read('actor',c,id)});
   return Object.freeze({readers,commitSnapshot,sceneNpcRefs(campaign,scene){const rows=db.prepare("SELECT r.id FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='actor' AND json_extract(r.data,'$.sceneId')=? AND json_extract(r.data,'$.kind')='npc' AND json_extract(r.data,'$.status')='active' ORDER BY r.id LIMIT 257").all(campaign,scene);if(rows.length>256)throw new Error('Native NPC scene roster requires curation');return rows.map(r=>r.id);},activeSessions:campaign=>db.prepare("SELECT r.data FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='session' AND json_extract(r.data,'$.status')='active'").all(campaign).map(decode),activeScenes:(campaign,sessionId)=>db.prepare("SELECT r.data FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='scene' AND json_extract(r.data,'$.sessionId')=? AND json_extract(r.data,'$.status')='active'").all(campaign,sessionId).map(decode),sessionScenes:(campaign,sessionId)=>db.prepare("SELECT r.data FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='scene' AND json_extract(r.data,'$.sessionId')=?").all(campaign,sessionId).map(decode),ownerPrivateChannel:(campaign,sceneId,ownerUserId)=>{const rows=db.prepare("SELECT r.data FROM vk2_scene_history r JOIN vk2_scene_heads h USING(campaign,kind,id,revision) WHERE r.campaign=? AND r.kind='channel' AND json_extract(r.data,'$.sceneId')=? AND json_extract(r.data,'$.kind')='private' AND json_extract(r.data,'$.ownerUserId')=?").all(campaign,sceneId,ownerUserId).map(decode);return rows.length===1&&rows[0].permissionsVerified===true?rows[0]:null;},history:(campaign,kind,id)=>db.prepare('SELECT data,source FROM vk2_scene_history WHERE campaign=? AND kind=? AND id=? ORDER BY revision').all(campaign,kind,id).map(r=>({record:decode(r),sourceRef:r.source})),close:()=>db.close()});
 }

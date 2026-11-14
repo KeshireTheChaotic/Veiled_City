@@ -75,6 +75,11 @@ export function openPrivateHookStore(filename=':memory:'){
       check();db.exec('COMMIT');return receipt;
     }catch(error){db.exec('ROLLBACK');throw error;}
   }
+  function proposeCanon(input,{check}){
+    const r=structuredClone(input);if(typeof check!=='function'||Object.keys(r).sort().join(',')!=='campaignId,characterId,key,principal,sourceRef,sourceRevision,value'||!['campaignId','characterId','principal','sourceRef','sourceRevision','key'].every(k=>typeof r[k]==='string'&&r[k].length>0&&r[k].length<=256)||typeof r.value!=='string'||!r.value.trim()||r.value.length>4000)throw new Error('Native private owner canon request required');
+    const row={id:'owner-canon-proposal:'+hash(r),character_id:r.characterId,canon_key:r.key,proposed_value:r.value,proposed_visibility:'gm',visibility:'gm',status:'pending',reason:'Explicit private owner request',source_ref:r.sourceRef,source_revision:r.sourceRevision,proposed_by:r.principal,source_type:'private_owner_request',canon_authority:false};
+    db.exec('BEGIN IMMEDIATE');try{check();const old=decode(db.prepare('SELECT data FROM vk2_hook_canon WHERE campaign=? AND character=? AND id=?').get(r.campaignId,r.characterId,row.id));if(old&&old.source_ref!==r.sourceRef)throw new Error('Owner canon source conflict');if(!old)db.prepare('INSERT INTO vk2_hook_canon VALUES(?,?,?,?)').run(r.campaignId,r.characterId,row.id,JSON.stringify(row));check();db.exec('COMMIT');return old??row;}catch(error){db.exec('ROLLBACK');throw error;}
+  }
   function listCharacterGmHooks(campaign,character,{includeResolved=false,includeCanonSuggestions=false}={}){
     return db.prepare('SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND r.character=? ORDER BY r.key').all(campaign,character).map(decode)
       .filter(r=>(includeResolved||r.status==='active')&&(includeCanonSuggestions||r.hook_type!=='canon_suggestion'));
@@ -96,6 +101,7 @@ export function openPrivateHookStore(filename=':memory:'){
       if(db.prepare('SELECT 1 FROM vk2_hook_imports WHERE campaign=? AND source=?').get(r.campaignId,r.sourceRef))throw new Error('Separate human review source required');
       const proposal=decode(db.prepare('SELECT data FROM vk2_hook_canon WHERE campaign=? AND character=? AND id=?').get(r.campaignId,r.characterId,r.proposalId));
       if(!proposal||!['pending','conflict'].includes(proposal.status))throw new Error('Pending character canon proposal required');
+      if(proposal.source_ref===r.sourceRef)throw new Error('Separate protected canon review source required');
       const current=currentCanon(r.campaignId,proposal.canon_key);
       if((current?.revision??null)!==r.expectedRevision)throw new Error('Canon revision conflict');
       const value=r.resolution==='custom'?r.customValue.trim():proposal.proposed_value;
@@ -118,7 +124,7 @@ export function openPrivateHookStore(filename=':memory:'){
       check();db.exec('COMMIT');return receipt;
     }catch(error){db.exec('ROLLBACK');throw error;}
   }
-  return Object.freeze({commitImport,listCharacterGmHooks,reviewCanon,currentCanon,readNarrative,narrativeHistory:(campaign,character)=>db.prepare('SELECT data FROM vk2_private_narratives WHERE campaign=? AND character=? ORDER BY revision').all(campaign,character).map(decode),
+  return Object.freeze({commitImport,proposeCanon,listCharacterGmHooks,reviewCanon,currentCanon,readNarrative,narrativeHistory:(campaign,character)=>db.prepare('SELECT data FROM vk2_private_narratives WHERE campaign=? AND character=? ORDER BY revision').all(campaign,character).map(decode),
     readPlanningRecord(campaign,ref){
       // Only current committed rows. Proposals and historical versions are excluded.
       const hook=decode(db.prepare("SELECT r.data FROM vk2_hook_history r JOIN vk2_hook_heads h USING(campaign,character,key,revision) WHERE r.campaign=? AND json_extract(r.data,'$.id')=?").get(campaign,ref));

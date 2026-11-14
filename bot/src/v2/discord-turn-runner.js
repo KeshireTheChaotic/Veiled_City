@@ -25,7 +25,7 @@ export function createDiscordTurnRunner({intake,provider,applicationOptions,crea
     if(onSource){await onSource(source,{signal});signal?.throwIfAborted();validate();}
     const refresh=()=>intake.ingest(nativeRequest,{signal});
     const app=createApplication({...applicationOptions,provider:{async generate(input){
-      const refs=refreshContext?inputRefs(input):[];await refresh();validate();await refreshContext?.(source,refs,{signal});validate();const result=await provider.generate(input);await refresh();validate();await refreshContext?.(source,refs,{signal});validate();return result;
+      const refs=refreshContext?(typeof app.contextReferences==='function'?app.contextReferences():inputRefs(input)):[];await refresh();validate();await refreshContext?.(source,refs,{signal});validate();const result=await provider.generate(input);await refresh();validate();await refreshContext?.(source,refs,{signal});validate();return result;
     }}});
     const result=await app.respond(event,{signal});
     await refresh();const publication=app.inspectPublication(result.publication.id);

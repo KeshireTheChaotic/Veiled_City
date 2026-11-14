@@ -15,6 +15,7 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
   const context=createContextAuthority({sourceAuthority:authority,records:records??knowledgeConfig?.store,readActor:readers.readActor});
   const recall=recallConfig?createRecallPlanner({...recallConfig,contextAuthority:context}):null;
   const knowledge=knowledgeConfig?createKnowledgeAuthority({...knowledgeConfig,sourceAuthority:authority}):null;
+  let contextGrants=()=>[];
   const receiptReads=new Map();
   function rememberReceipt(source,result){
     if(result?.effects_committed===true||result?.receipt_hash!==undefined){
@@ -42,10 +43,11 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
   }
   async function respond(event,{signal}={}){
     const proof=authority.authenticate(event),handle=kernel.intake(event),source=journal.source(proof.id);
-    let references;
-    try{references=recall?recall.select(source):await selectContext(source);}catch{references=[];}
-    const grant=context.issue(source,references);
-    const extraGrants=[];
+    let selection;
+    try{selection=recall?recall.select(source):await selectContext(source);}catch{selection=[];}
+    const references=Array.isArray(selection)?selection:selection.references,provenance=Array.isArray(selection)?[]:selection.provenance??[];
+    const grant=context.issue(source,references,{provenance});
+    const extraGrants=[];contextGrants=()=>[grant,...extraGrants];
     const capabilities=kernel.bind(handle,{contextReader:{read(nativeSource,ref){
       const extra=context.issue(nativeSource,[ref]);extraGrants.push(extra);return context.inspect(extra);
     }}});
@@ -54,6 +56,6 @@ export function createRehearsal({readers,records,provider,selectContext=()=>[],r
     const {traceId,modelCalls,toolCalls,elapsedMs,usage}=gateway.inspect(draft);
     return Object.freeze({publication,sourceHandle:handle,metrics:Object.freeze({traceId,modelCalls,toolCalls,elapsedMs,usage})});
   }
-  return Object.freeze({respond,plan,inspectPlan:handle=>{if(!planner)throw new Error('Private planner not installed');return planner.inspect(handle);},
+  return Object.freeze({respond,plan,contextReferences:()=>[...new Set(contextGrants().flatMap(grant=>context.dependencyManifest(grant).records.map(r=>r.ref)))],inspectPlan:handle=>{if(!planner)throw new Error('Private planner not installed');return planner.inspect(handle);},
     inspectPublication:publications.inspect,reviewPublication:publications.review,repairPublication:publications.repair,proposeRepairPublication:publications.proposeRepair,capabilities:kernel.bind,describe:kernel.describe});
 }

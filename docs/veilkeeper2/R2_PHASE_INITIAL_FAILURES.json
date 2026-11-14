@@ -1,0 +1,41 @@
+{
+  "scope": "Intermediate checkpoints, not final qualified source; counts overlap and must not be summed.",
+  "runs": [
+    {
+      "log": ".reports/r2-phase-final-dependent-tests.txt",
+      "tests": 514,
+      "pass": 513,
+      "fail": 1,
+      "durationMs": 94703.8929,
+      "resolution": "Explicit native command overlay whitelist updated for new canon options; baseline commands preserved."
+    },
+    {
+      "log": ".reports/r2-phase-qualified-dependent-tests.txt",
+      "tests": 382,
+      "pass": 375,
+      "fail": 7,
+      "durationMs": 62289.0031,
+      "resolution": "Three old alphabetical expectations updated to native recency; hidden causal tests now target older records to retain material privacy assertions. Four stale edit/unavailable-history expectations replaced with auditable source revisions and independently safe fallback context; stale pending grants still fail."
+    }
+  ],
+  "otherFindings": [
+    "Initial canon fixture lacked findExportCharacter; fixture corrected before current acceptance.",
+    "Initial delivered-GM history test revealed old-human-source refresh blocked independent history; native confirmed-edit and unavailable-source handling corrected.",
+    "Old tool source test could pass via its own assertion under new recency; seeding/order and actual SDK-read assertions corrected."
+  ],
+  "final": "R2_PHASE_TEST_RESULT.json",
+  "logArchival": {
+    "R2_PHASE_INITIAL_382_TEST_OUTPUT.txt": {
+      "originalRawSha256": "2db047f658f968730afd28be395b209a18e5e6fa8745f903c5d342bec7551368",
+      "normalization": "Trimmed trailing whitespace and extra EOF blank lines in committed copy; original ignored .reports log unchanged."
+    },
+    "R2_PHASE_INITIAL_514_TEST_OUTPUT.txt": {
+      "originalRawSha256": "e54bf9d0585041e54780d35989931349f049d8d23b75de236efa6bdad7ab24b5",
+      "normalization": "Trimmed trailing whitespace and extra EOF blank lines in committed copy; original ignored .reports log unchanged."
+    },
+    "R2_PHASE_TEST_OUTPUT.txt": {
+      "originalRawSha256": "b10007600bc41a1b5d5ff394a3db356f3a87121d0ca38bba735d723dd7a2e4e9",
+      "normalization": "Trimmed trailing whitespace and extra EOF blank lines in committed copy; original ignored .reports log unchanged."
+    }
+  }
+}

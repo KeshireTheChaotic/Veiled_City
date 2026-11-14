@@ -35,6 +35,7 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
   function authorship(row,source){
     if(!Object.hasOwn(row,'origin'))return null;
     const value=typeof records.describeOrigin==='function'?records.describeOrigin(row,source):null;
+    if(value?.kind==='gm_statement'&&Object.keys(value).join(',')==='kind')return {kind:'gm_statement'};
     if(value?.kind==='npc_statement'&&Object.keys(value).sort().join(',')==='kind,speaker_ref'&&id(value.speaker_ref))return {kind:value.kind,speaker_ref:value.speaker_ref};
     if(!value||Object.keys(value).sort().join(',')!=='kind,same_controller_view'||value.kind!=='human_statement'||typeof value.same_controller_view!=='boolean')fail();
     return {kind:value.kind,same_controller_view:value.same_controller_view};
@@ -56,17 +57,22 @@ export function createContextAuthority({sourceAuthority,records,readActor}){
     const next=new Set([...visiting,ref]);
     return row.sourceRefs.every(parent=>closure(parent,source,actorId,metadata,next))&&originValid(row);
   }
-  function issue(source,references,{actorId=null}={}){
+  function issue(source,references,{actorId=null,provenance=[]}={}){
+    if(!list(provenance)||provenance.length>16384)fail();
     if(!sourceAuthority.revalidate(source)||!list(references)||references.length>64||actorId!==null&&!id(actorId))fail();
     if(source.actors!==undefined&&!list(source.actors))fail();
     const nativeSource=structuredClone(source),actorRevision=actorProof(nativeSource,actorId);
     const dependencies=new Map(),selected=[];
+    const remember=(key,row)=>{const fingerprint=hash(row);if(dependencies.has(key)&&dependencies.get(key)!==fingerprint)fail();dependencies.set(key,fingerprint);if(dependencies.size>16384)fail();};
+    // Ranking evidence participates in revocation without reading or disclosing its body.
+    for(const ref of provenance){const rows=new Map();if(!closure(ref,nativeSource,actorId,rows))fail();for(const [key,row]of rows)remember(key,row);}
+    if(dependencies.size>16384)fail();
     for(const ref of references){
       const metadata=new Map();
       if(!closure(ref,nativeSource,actorId,metadata))continue;
       const row=metadata.get(ref),attribution=authorship(row,nativeSource),body=records.readText(nativeSource.campaign,ref,row.revision);
       if(!body||body.revision!==row.revision||typeof body.text!=='string'||body.text.length>16000||textHash(body.text)!==row.contentHash)fail();
-      for(const [key,value] of metadata)dependencies.set(key,hash(value));
+      for(const [key,value] of metadata)remember(key,value);
       selected.push({ref,revision:row.revision,kind:row.kind,text:body.text,...(attribution?{authorship:attribution}:{})});
     }
     // A player's current message is GM input, not evidence that this NPC heard

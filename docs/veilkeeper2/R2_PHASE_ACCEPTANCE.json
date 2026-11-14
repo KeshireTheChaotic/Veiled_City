@@ -1,0 +1,243 @@
+{
+  "phase": "R2",
+  "status": "complete",
+  "scope": "Mandatory handoff phase R2 substrate and gate; not R3-R8 or release qualification.",
+  "baseline": {
+    "pin": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
+    "latestRemoteBaseline": "15a8f44671f227c6bec69bf30744e03c5692809b",
+    "remoteRebuildBefore": "c48350d5478c530ebc0fdd8cc2e3676c306dcaba",
+    "checkedAt": "2026-11-14T22:11Z"
+  },
+  "finalBatch": {
+    "finishedAt": "2026-11-14T22:12:16.855Z",
+    "files": 80,
+    "status": 0,
+    "inputsUnchanged": true,
+    "summary": [
+      "ℹ tests 572",
+      "ℹ pass 572",
+      "ℹ fail 0",
+      "ℹ skipped 0",
+      "ℹ duration_ms 98562.1081"
+    ],
+    "failures": []
+  },
+  "separatelyCompleted": [
+    {
+      "file": "r2-recall-provenance.test.mjs",
+      "tests": 3,
+      "pass": 3,
+      "durationMs": 59.5325
+    },
+    {
+      "file": "r2-snapshot-acceptance.test.mjs",
+      "tests": 1,
+      "pass": 1,
+      "durationMs": 4241.0565
+    },
+    {
+      "file": "r2-statement-lineage.test.mjs",
+      "pattern": "^tool-retrieved statement",
+      "tests": 1,
+      "pass": 1,
+      "durationMs": 2167.1778
+    }
+  ],
+  "uniqueChecks": 577,
+  "uniqueFiles": 82,
+  "separateCheckEvidence": "Actual tool results recorded at completion; current source/test bytes frozen in R2_PHASE_TEST_INPUTS.json. These checks were not repeated unchanged.",
+  "gates": [
+    {
+      "id": "audience_authority",
+      "status": "pass",
+      "acceptance": "Exact source/principal/scene/recipient/view binding; no task_id required.",
+      "sources": [
+        "bot/src/v2/source-authority.js",
+        "bot/src/v2/context-authority.js",
+        "bot/src/v2/discord-audience-reader.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r1-discord-intake.test.mjs",
+        "bot/tests/veilkeeper2/r1-discord-chain.test.mjs",
+        "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+        "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs"
+      ]
+    },
+    {
+      "id": "source_closure",
+      "status": "pass",
+      "acceptance": "Authorize recursive metadata before bodies; hashes/revisions reject changed, cyclic, missing or private ancestors.",
+      "sources": [
+        "bot/src/v2/context-authority.js",
+        "bot/src/v2/npc-private-context.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+        "bot/tests/veilkeeper2/r2-recall-provenance.test.mjs",
+        "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs"
+      ]
+    },
+    {
+      "id": "actor_cognition",
+      "status": "pass",
+      "acceptance": "Audience view intersects actor knowledge; separate private NPC planning reads only independently known sources, never the current human utterance.",
+      "sources": [
+        "bot/src/v2/npc-private-context.js",
+        "bot/src/v2/npc-planning-service.js",
+        "bot/src/v2/model-gateway.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs",
+        "bot/tests/veilkeeper2/r5-npc-private-context.test.mjs",
+        "bot/tests/veilkeeper2/r5-native-npc-planning.test.mjs",
+        "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs"
+      ]
+    },
+    {
+      "id": "history",
+      "status": "pass",
+      "acceptance": "Human statements and confirmed complete GM publications retain attributed testimony, recipients, source revision and exact delivery proof; no truth/effect promotion.",
+      "sources": [
+        "bot/src/v2/statement-lineage.js",
+        "bot/src/v2/publication-memory.js",
+        "bot/src/v2/statement-origin-refresh.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+        "bot/tests/veilkeeper2/r2-statement-capture.test.mjs",
+        "bot/tests/veilkeeper2/r2-publication-memory.test.mjs"
+      ]
+    },
+    {
+      "id": "npc_learning",
+      "status": "pass",
+      "acceptance": "Delivered authored NPC quotes retain native speaker, fictional tick and historical memory; independently proven hearing issues listener testimony. No inference from channel or co-presence alone.",
+      "sources": [
+        "bot/src/v2/npc-speech-lineage.js",
+        "bot/src/v2/scene-store.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-npc-speech-lineage.test.mjs",
+        "bot/tests/veilkeeper2/r2-snapshot-acceptance.test.mjs"
+      ]
+    },
+    {
+      "id": "belief_correction",
+      "status": "pass",
+      "acceptance": "Current evidence retraction invalidates dependent grants; independent historical listener belief survives correction of another record. No omniscient belief update.",
+      "sources": [
+        "bot/src/v2/knowledge-authority.js",
+        "bot/src/v2/knowledge-store.js",
+        "bot/src/v2/npc-speech-lineage.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-knowledge-commit-authority.test.mjs",
+        "bot/tests/veilkeeper2/r2-npc-speech-lineage.test.mjs"
+      ]
+    },
+    {
+      "id": "weighted_recall",
+      "status": "pass",
+      "acceptance": "Native causes/pins/fictional decay precede metadata curation; discover up to16384 candidates before64-record prompts, prioritize known goals/identities and retain full history. Source revocation binds ranking-only evidence without reading its body.",
+      "sources": [
+        "bot/src/v2/recall-planner.js",
+        "bot/src/v2/knowledge-store.js",
+        "bot/src/v2/native-root.js",
+        "bot/src/v2/context-authority.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-recall.test.mjs",
+        "bot/tests/veilkeeper2/r2-recall-long-history.test.mjs",
+        "bot/tests/veilkeeper2/r2-recall-pin-lifecycle.test.mjs",
+        "bot/tests/veilkeeper2/r2-durable-recall.test.mjs",
+        "bot/tests/veilkeeper2/r2-npc-memory-curation.test.mjs",
+        "bot/tests/veilkeeper2/r2-recall-provenance.test.mjs",
+        "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs"
+      ]
+    },
+    {
+      "id": "protected_canon",
+      "status": "pass",
+      "acceptance": "Private explicit owner suggestions/imports stay pending. Fresh independent GM administration reviews exact key/proposal/revision, conflict/replacement and immutable replay; accepted knowledge projection remains GM-only even with public classification. Never gates narrative.",
+      "sources": [
+        "bot/src/v2/discord-canon-requests.js",
+        "bot/src/v2/discord-gm-authority.js",
+        "bot/src/v2/private-hook-store.js",
+        "bot/src/v2/canon-knowledge-evidence.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-private-canon-request.test.mjs",
+        "bot/tests/veilkeeper2/r2-canon-administration.test.mjs",
+        "bot/tests/veilkeeper2/r2-canon-review.test.mjs",
+        "bot/tests/veilkeeper2/r2-knowledge-commit-authority.test.mjs"
+      ]
+    },
+    {
+      "id": "private_exports",
+      "status": "pass",
+      "acceptance": "Private hooks, connections, pending canon and GM narrative remain absent from player packages; scope/owner authorization precedes export.",
+      "sources": [
+        "bot/src/v2/character-package-service.js",
+        "bot/src/v2/private-hook-store.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs",
+        "bot/tests/veilkeeper2/r6-character-exports.test.mjs",
+        "bot/tests/veilkeeper2/r6-character-export-formats.test.mjs",
+        "bot/tests/veilkeeper2/r6-gm-character-exports.test.mjs",
+        "bot/tests/veilkeeper2/r6-discord-gm-hook-imports.test.mjs"
+      ]
+    },
+    {
+      "id": "stale_and_cached",
+      "status": "pass",
+      "acceptance": "Revoked source, control, scene or audience invalidates cached/main/tool/private grants and cold publication manifests; actual tool and ranking sources are refreshed around inference. Confirmed edits preserve source revisions; unavailable history is omitted per selection without invented deletion.",
+      "sources": [
+        "bot/src/v2/context-authority.js",
+        "bot/src/v2/statement-origin-refresh.js",
+        "bot/src/v2/rehearsal.js",
+        "bot/src/v2/discord-turn-runner.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-context-authority.test.mjs",
+        "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs",
+        "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs",
+        "bot/tests/veilkeeper2/r2-npc-memory-curation.test.mjs"
+      ]
+    },
+    {
+      "id": "generic_interface",
+      "status": "pass",
+      "acceptance": "Exactly context_read, action_propose, state_inspect, knowledge_propose. No model-facing specific speech/canon/roll tool or generic state patch.",
+      "sources": [
+        "bot/src/v2/tool-contracts.js",
+        "bot/src/v2/kernel.js",
+        "bot/src/v2/rehearsal.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs",
+        "bot/tests/veilkeeper2/r2-tool-loop.test.mjs",
+        "bot/tests/veilkeeper2/r3-native-action-authority.test.mjs"
+      ]
+    },
+    {
+      "id": "rollback_replay",
+      "status": "pass",
+      "acceptance": "Sealed populated native snapshot/restore preserves original run identity, legacy bytes, private pending canon, delivered conversation and historical listener proof; replay sends and infers nothing.",
+      "sources": [
+        "bot/src/v2/runtime-snapshots.js",
+        "bot/src/v2/native-root.js"
+      ],
+      "testFiles": [
+        "bot/tests/veilkeeper2/r2-snapshot-acceptance.test.mjs",
+        "bot/tests/veilkeeper2/r7-runtime-snapshots.test.mjs"
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic providers/SDK and real native SQLite; no live model-quality proof.",
+    "Test-guild REST command registration/readback only, no bot login or messages.",
+    "Bounded native snapshot test is not populated legacy migration or cross-DB crash qualification.",
+    "No production cutover, legacy deletion or full Daggerheart parity."
+  ]
+}

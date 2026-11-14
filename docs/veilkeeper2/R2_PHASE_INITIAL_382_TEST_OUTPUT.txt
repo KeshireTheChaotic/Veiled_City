@@ -1,0 +1,525 @@
+✔ complete native chain preserves ordinary one-call speech and keeps publication unsent (20.0494ms)
+✔ unsafe audience appearing before provider dispatch prevents any inference (4.1718ms)
+✔ audience changed while inference is pending prevents releasing the draft (3.633ms)
+✔ edited messages after generation invalidate asynchronous publication inspection (6.9958ms)
+✔ durable claims resume never-sent prose across runner instances without duplicate inference (9.8276ms)
+✔ failed inference retains an uncertain durable claim and cannot be silently retried (4.027ms)
+✔ refreshes before and after inference and again before publication inspection (0.9141ms)
+✔ changed evidence during inference prevents releasing the publication handle (0.2814ms)
+✔ later permission changes invalidate inspection and unknown publications cannot trigger intake (0.1348ms)
+✔ unknown or revoked publications cannot produce native review diagnostics (0.1646ms)
+✔ local transport preserves natural prose, four generic tools and usage (1.5765ms)
+✔ tool continuation is bound to its packet and exact native results (0.741ms)
+✔ errors, truncated output, unknown tools and cancellation do not retry or fall back (0.4897ms)
+✔ native backend defaults to local Ollama without an API key and retains the call cap (0.5679ms)
+✔ the opt-in backend dispatches to the owner-approved 27B thinking profile and cannot exceed its call budget (0.6273ms)
+✔ installed SDK emits the exact scoped Responses request without storage or implicit tool inventory (13.3512ms)
+✔ tool continuation replays reasoning and exact call outputs through the installed SDK (1.1164ms)
+✔ continuations cannot cross context, native instructions, or forged call results (1.326ms)
+✔ truncation, refusal and malformed tool arguments cannot become prose or executable calls (2.3479ms)
+✔ transport errors are sanitized, bounded request options disable retries, and abort skips dispatch (0.2282ms)
+✔ real gateway passes opaque provider continuation without exposing it to tools or the final draft (1.2045ms)
+✔ R1 offline CLI boots without credentials and declares no transport or current game execution (36.5868ms)
+✔ R1 composition reads only accepted packets, preserves traces and keeps model prose out of game execution (7.5064ms)
+✔ R1 refuses a substituted actor or invalid audience before inference and expires pending context on edits (0.8039ms)
+✔ ordinary conversation reaches one scoped inference with no typed intent or action receipt (4.836ms)
+✔ optional retrieval failure keeps current utterance available without fabricating remembered facts (0.3971ms)
+✔ audience revocation during inference prevents queueing and later inspection (0.8782ms)
+✔ provider errors reveal no private diagnostics and abort before inference makes zero calls (0.707ms)
+✔ duplicate identical drafts reuse the offline publication identity and remain undelivered (0.9165ms)
+✔ optional generic retrieval checks guessed references and current audience before reading bodies (1.2841ms)
+✔ persisted knowledge feeds scoped rehearsal while proposals remain separate and corrections invalidate drafts (3.3991ms)
+✔ native weighted recall composes before one inference and retirement does not delete records (0.9107ms)
+✔ optional private planning stays separate and is not invoked for ordinary audience response (1.3669ms)
+✔ provider retrieval retains extra source grants through queued publication inspection (0.738ms)
+✔ extra lookup is revalidated after tool continuation and never grants hidden context (0.8257ms)
+✔ native segment review and local repair preserve one inference and never grant publication (2.6048ms)
+✔ rehearsal actually applies its supplied native control, speaker and material policy (2.9771ms)
+✔ identical prose with changed context lineage receives a new publication identity (0.5407ms)
+✔ persisted native records authenticate a late arrival after database reopening (28.3491ms)
+✔ source invalidation follows durable ownership, attendance, message and permission revisions (4.1594ms)
+✔ identical replay does not replace later records; altered replay and stale writers fail (1.3331ms)
+✔ multi-record updates and final authorization failure roll back atomically (0.9782ms)
+✔ native snapshot schema rejects gameplay patches, cross-campaign records and supplied revisions (0.718ms)
+✔ durable readers compose into rehearsal without exposing a mutation capability (6.2371ms)
+✔ current observed GM administers imported canon privately, with cold replay protection and no table effects (286.1291ms)
+✔ conflict cannot overwrite canon without exact current revision and explicit replacement; history remains (645.6892ms)
+✔ revoked GM membership, wrong character and stale revision cannot commit protected canon (521.3682ms)
+✔ protected administration input is closed and never restores narrative approval options (11.403ms)
+✔ a second accepted review of the same canonical value replays the native evidence instead of rewriting it (403.537ms)
+✔ only a separate human-GM command can accept an imported proposal; approval grants no delivery (3.2599ms)
+✔ conflicting value or broader visibility requires explicit replacement against the current revision (1.4925ms)
+✔ stale review and altered replay cannot update canon; exact replay preserves original receipt (1.2286ms)
+✔ reject and custom resolution preserve source proposal and synchronized review state (1.0471ms)
+✔ revoked authority at transaction completion rolls back ledger, proposal state and review receipt (0.7495ms)
+✔ closed review arguments and target campaign/character bindings reject forged escalation (0.6647ms)
+✔ GM, cross-PC, other campaign/scene and pending disclosures never have their body read (1.6162ms)
+✔ an apparently shared paraphrase with a private source ancestor is excluded before inference (0.1399ms)
+✔ source closure accepts shared ancestry but rejects cycles and missing ancestors (0.279ms)
+✔ NPC knowledge intersects audience entitlement, and human proxy portrayal is refused (0.3206ms)
+✔ current GM-directed speech is not NPC hearing, including a private thought or OOC secret (0.3835ms)
+✔ revoked source, changed ancestors and changed actor control invalidate issued packets (0.1629ms)
+✔ testimony stays testimony and forged or edited capabilities cannot supply model context (0.1827ms)
+✔ stale or substituted body under a current revision cannot enter a prompt packet (0.1096ms)
+✔ audience packets explicitly separate human-controlled roles from native NPC portrayal without full actor data (0.214ms)
+✔ human-controlled NPC source refs remain protected rather than becoming an independent portrayal grant (0.1422ms)
+✔ durable dependency manifests contain complete ancestry hashes and revalidate without body reads (0.2373ms)
+✔ persisted context lineage cannot change source/recipients or portray a newly human-controlled NPC (0.1647ms)
+✔ forged cyclic lineage is rejected even when its metadata hashes and ACLs are current (0.1163ms)
+✔ canonical causes and fictional time survive reopen, replay once and reject conflicting identities (26.6726ms)
+✔ unauthorized or future causes cannot become scores and final authorization rollback preserves clock (0.3986ms)
+✔ composed root ranks a durable native lead above ID order without promoting testimony (2077.0268ms)
+✖ a cause backed only by another recipient private source cannot influence audience ranking or leak its body (340.1006ms)
+✔ native evidence revoked at transaction entry cannot become accepted knowledge (20.5289ms)
+✔ native evidence changed at final commit check rolls back head history and evidence receipt together (21.2838ms)
+✔ failed correction or retraction preserves the original testimony instead of silently replacing memory (67.7382ms)
+✔ source revocation during proposal transaction returns blocked and leaves no private proposal (46.3961ms)
+✔ owner withdrawal of a private canon request during persistence leaves no suggestion (20.827ms)
+✔ stable native evidence and private proposals still replay once without stronger epistemic authority (29.0596ms)
+✔ native revisions survive reopening and replay cannot roll back a correction or retraction (49.0196ms)
+✔ competing stores enforce revision comparison and immutable native evidence (42.3048ms)
+✔ a legacy database is refused without creating v2 tables (19.588ms)
+✔ generic model proposals persist separately and never establish truth or expose native acceptance (2.5644ms)
+✔ canon suggestions require exact private owner authorship and acceptance requires separate human review (0.5414ms)
+✔ identity, disclosure acknowledgement and native evidence authority fail closed (0.5113ms)
+✔ corrections cannot promote testimony, broaden its audience or revive retracted claims (0.8357ms)
+✔ evidence changing between validation and append leaves no accepted record (0.3896ms)
+✔ seventy known records are curated before bodies, retain motive/pin/causal memory and preserve all history (20.7653ms)
+✔ metadata entitlement rejects hidden ancestry and pending grants revoke with actor/source/evidence changes (1.428ms)
+✔ composed Director and private planning continue after cold reopen with more than64 known memories (2062.4184ms)
+✔ delivered autonomous NPC quote becomes attributed self-memory, never truth or bystander hearing (1145.8874ms)
+✔ shadow and uncertain publication do not create NPC utterance evidence (1066.304ms)
+✔ hypothetical, recollected, unattributed and ambiguous-name quotes publish without false NPC memory (8387.0631ms)
+✔ historical delivered speech survives source edits and restart, retains private actor scope and rejects tampering (3059.5369ms)
+✔ next audience context recalls delivered NPC words with explicit authorship and no original-source body refresh (2313.8143ms)
+✔ private NPC planning recalls its own attributed speech, without teaching another NPC or receiving player text (3560.3208ms)
+✔ human-controlled NPC proxies and PC-name collisions never become autonomous speaker evidence (2249.814ms)
+✔ native speech origin cannot launder body, scope or identity and historical speaker rename preserves testimony (3042.5301ms)
+✔ an OOC example with an exact NPC dialogue format has no speech event without native authorship intent (877.3556ms)
+✔ autonomous scene Director receives validated historical self-speech through composed private origin readers (1104.8384ms)
+✔ native audible perception proves listener learning separately from truth and human audience (3457.0138ms)
+✔ scene co-presence, blocked sound, absent listeners and stale perception never grant hearing (10823.1192ms)
+✔ historical listener memory survives original recall retraction and restart without rewriting belief (1099.9598ms)
+✔ anonymous native observers retain attributed speech at the actual fictional tick without acquiring identity or truth (1113.639ms)
+✔ R2 gate: actual audience packets and actor cognition enforce both entitlement and known-source closure (452.149ms)
+✔ R2 gate: revoking an indirect ancestor during inference invalidates pending publication before any send (244.5116ms)
+✔ R2 gate: private NPC plans cannot be used as audience publication or leak through later tool context (510.5267ms)
+✔ R2 gate: imported private hooks, relationships and canon suggestions remain absent from owner export (355.0774ms)
+✔ R2 gate: only four generic AI capabilities remain; no task binding or arbitrary canon/state operation exists (0.1392ms)
+✔ R2 gate: default metadata discovery covers old256 window and ranks real native causes without truth promotion (9227.5227ms)
+✔ stored hooks feed private planning as optional seeds, without raw imported payload or pending canon (3.5382ms)
+✔ human-reviewed canon and native connections retain kind but never become audience-entitled via this adapter (3.2175ms)
+✔ changed or resolved stored hook invalidates a previously generated private plan (1.8274ms)
+✔ superseded canon cannot be read as current private planning evidence (1.4001ms)
+✖ actual root isolates private histories when one account switches between two PCs (661.3332ms)
+✔ explicit private owner proposal preserves exact source, stays pending and is reviewed independently by current GM (507.2697ms)
+✔ another owner or live private-audience expansion cannot submit a canon request (335.1189ms)
+✔ owner revocation while Discord audience is refreshed leaves no protected proposal (294.1155ms)
+✔ private hooks and pending canon survive reopening and identical command replay adds nothing (119.1877ms)
+✔ altered command replay conflicts while a new authorized import keeps immutable prior versions (1.3448ms)
+✔ bad final canon suggestion rolls back hooks, proposals and receipt together (0.5897ms)
+✔ role revocation at final transaction check rolls back every private write (0.627ms)
+✔ players cannot import private hooks and canon suggestions are excluded from default seed reads (1.8799ms)
+✔ colliding normalized keys abort rather than silently overwrite distinct imported hooks (0.5893ms)
+✔ private planning uses explicit native scope and returns a frozen non-publishable proposal (1.4603ms)
+✔ wrong native principal/campaign/source grants fail before bodies or inference (0.2631ms)
+✔ private closure must explicitly authorize every ancestor and excludes pending canon proposals (0.1779ms)
+✔ body substitution, changed scope during inference and later correction invalidate private plans (0.329ms)
+✔ private plan handles cannot enter the audience gateway or publication queue (1.1026ms)
+✔ aborted planning makes zero calls and source revocation prevents later private inspection (0.2068ms)
+✔ ordinary one-call GM replies are recalled as delivered conversation after source edit and cold reopen (5452.1602ms)
+✔ uncertain delivery and system notices never create world conversation memory (3948.1175ms)
+✔ cinematic conversation memory preserves exact multipart delivery in bounded independently verified fragments (1876.2798ms)
+✔ composed cold root recalls an authorized native pin across its full bounded metadata window without promoting testimony (10409.8047ms)
+✔ focus, pin and authenticated causal targets admit authorized records outside default pool with correct weighting (0.2265ms)
+✔ large authenticated target windows hold for explicit curation instead of silently truncating or reading bodies (5.3001ms)
+✔ fictional decay preserves established six-tick cadence and rejects invalid time (0.6143ms)
+✔ canonical causes are deduplicated and model echoes cannot outweigh independent interaction (1.869ms)
+✔ private sources, hidden ancestors and actor-unknown records cannot affect scoped recall (0.3017ms)
+✔ retirement is reversible through entitled focus or active native pin and never deletes history (0.2714ms)
+✔ revocation and malformed native snapshots fail closed; ranking does not read bodies (0.1395ms)
+✔ actual committed owner expense issues one durable private interaction cause while its declaration stays testimony (571.5143ms)
+✔ declined native cost and OOC speech issue no gameplay engagement cause (491.0148ms)
+✔ optional recall storage failure cannot undo a committed expense or turn its confirmation into another spend (508.7894ms)
+✔ verified receipt observer replay retains the original causal tick and rejects fabricated receipt hashes (503.1526ms)
+✔ authorized target creates one directional GM-private connection with bounded score and no PC authority (3.2653ms)
+✔ same command replay is inert; later authorized update preserves connection history (1.3573ms)
+✔ unresolved and canon-suggestion targets are preserved as holds without invented entities or relationships (1.0209ms)
+✔ wrong campaign or changed target at transaction completion leaves no import or partial relationship (0.9343ms)
+✔ invalid relationship targets abort atomically and duplicates use the final supplied connection without duplicate rows (0.7554ms)
+✔ player cannot import a private relationship even when it names their own PC (0.593ms)
+✔ composed party history distinguishes the original human-controlled view without revealing role IDs (590.8642ms)
+✔ real composed intake archives exact private testimony once and retrieves it in a later turn (3108.7949ms)
+✔ a provider failure preserves only the authenticated utterance and does not replay inference on redelivery (283.8087ms)
+✔ mechanical claims in real player speech are archived as testimony without granting the claimed effects (390.3012ms)
+✔ failed authenticated intake cannot archive an unavailable message or invoke inference (315.1433ms)
+✔ actual sealed Discord statement becomes recipient-bound testimony and remains historical after scene closure (281.5948ms)
+✔ message edits/deletion invalidate existing grants and cold publication dependencies before body rereads (2818.5366ms)
+✔ audience entitlement precedes source-body validation and unknown origin validators cannot grant disclosure (190.2741ms)
+✔ widened recipients and promoted epistemic kind cannot reuse the statement origin proof (175.9516ms)
+✔ an unauthorized ancestor prevents origin reads even when the selected record itself is entitled (234.1847ms)
+✔ composed root reads origin-bound testimony and later source edits revoke saved draft context (538.8348ms)
+✔ native channel authorization revocation invalidates statement origin and its pending grant (173.8522ms)
+✖ fresh Discord origin changes before inference block without sending or silently updating native history (370.4561ms)
+✖ fresh Discord origin changes during inference block without sending or silently updating native history (486.4914ms)
+✖ fresh Discord origin changes review inference block without sending or silently updating native history (514.1943ms)
+✔ another recipient origin is excluded before any historical Discord fetch (2438.1523ms)
+✔ tool-retrieved statement origin is refreshed before the next inference call (1413.0806ms)
+✖ unavailable historical Discord evidence blocks inference without inventing deletion (449.4649ms)
+✔ origin refresh bounds unique external proofs before performing any Discord reads (0.4478ms)
+✔ same-account different-PC view cannot read private origin text or use its causal weight (180.3703ms)
+✔ explicit native actor-view scopes protect non-transport knowledge before any body read (171.0841ms)
+✔ private statement attribution exposes only verified human authorship and matching controller view (155.2775ms)
+✔ unrecognized attribution fields cannot reach a packet or trigger its knowledge-body read (181.511ms)
+✔ a native component-choice source cannot be relabeled as authored statement text (331.2079ms)
+✔ ordinary response remains one call while advertising exactly four generic contracts (0.9497ms)
+✔ optional tool results continue the conversation, retain call IDs and accumulate usage (0.1873ms)
+✔ duplicate call IDs replay once and altered arguments under one ID abort (0.4307ms)
+✔ unknown capabilities are rejected without invoking native code; unbounded tool requests terminate (0.3734ms)
+✔ native exceptions are bounded and context is revalidated before continuing or inspecting (0.2186ms)
+✔ generic action proposal commits exact owner-consented native Hope once and inspection returns only receipt projection (29.5335ms)
+✔ model amounts, fake consent, wrong actor and arbitrary patch kinds cannot spend Hope (19.2061ms)
+✔ a party-origin action can use its exact private owner-choice source, without disclosing resource receipts to party inference (12.5672ms)
+✔ rejected consent or revoked owner source cannot become a native effect (10.1504ms)
+✔ real rehearsal exposes the generic native bridge and returns engine results before prose without a rewrite call (29.2679ms)
+✔ final native engine authorization failure rolls back the debit and terminal receipt (9.6149ms)
+✔ receipt inspection checks ownership before accessing full outcome or consent bodies (4.0354ms)
+✔ a fresh native verifier checks saved receipt hashes and denies changed hashes, duplicates and party disclosure (14.6823ms)
+✔ asynchronous native handler results are held and rejected promises do not escape the generic boundary (4.1954ms)
+✔ saved native effect dependencies revalidate after resource-store reopen without spending again (2624.4139ms)
+✔ ordinary party speech remains one inference with no cost or native receipt dependency (7.7173ms)
+✔ receipt-proof drift during continuation holds prose but preserves the already legitimate native cost (17.7972ms)
+✔ only an exact private Hope recap backed by this draft tool receipt clears material screening (36.3538ms)
+✔ native factual authorization rejects absent, forged, duplicated, wrong-scope or mismatched receipt evidence (19.0997ms)
+✔ a true historical spend that was not observed by this draft tools grants no material authorization (15.8929ms)
+✔ generic context discovery returns only exact current owner-consented proposals and never spends (15.0778ms)
+✔ ready discovery excludes rejected, unrelated-owner and other-source actions before private terms access (9.7814ms)
+✔ natural consequence speech can discover and execute a native proposal without internal player references (38.327ms)
+✔ composed native root delivers exact cost, observes owner button, commits once and rejects repeated expense (662.772ms)
+✔ actual owner decline cancels the action without any Hope cost (441.9505ms)
+✔ wrong owner and altered observed cost payload cannot supply consent (875.9056ms)
+✔ lost send acknowledgement is durable uncertainty and repeated requests never resend or spend (2331.1512ms)
+✔ changed readback and a newly shared audience prevent delivery acknowledgement and native spending (765.8695ms)
+✔ generic tools discover an unaccepted native cost and request consent without inventing acceptance or spending (790.2995ms)
+✔ concurrent accept and decline decisions cannot both apply or charge twice (641.4264ms)
+✔ uncertain interaction confirmation preserves the real expense and replay does not send or charge again (479.0363ms)
+✔ an uncertain defer acknowledgement cannot record consent or create a native expense (449.559ms)
+✔ AI-GM temporary calls persist once as session decisions without native effects or human approval (416.6864ms)
+✔ a temporary call cannot be an arbitrary patch, supplied dice, an implementation gap or another actor decision (256.2618ms)
+✔ ruling replay cannot silently change an interpretation and receipts remain source scoped (311.9066ms)
+✔ reconciliation waits until after the session and preserves original outcomes and decisions (2283.2788ms)
+✔ a real conversational tool loop can make and narrate a temporary call autonomously through the same four capabilities (1276.1367ms)
+✔ ordinary speech autonomously publishes with one scoped model call and no Human-GM interaction (995.3093ms)
+✔ explicit shadow mode remains no-send and offers no narrative approval commands (484.7604ms)
+✔ source revocation during inference prevents automatic publication (219.8586ms)
+✔ cinematic multipart narration preserves exact text and once-only durable part receipts (4863.3527ms)
+✔ uncertain send retains publication state and cold replay does not rerun inference or resend (805.384ms)
+✔ a detected PC-agency violation is repaired by the AI within the same audience and then published (2118.6716ms)
+✔ repeated invalid prose produces an honest system notice instead of approval requests or invented effects (1064.784ms)
+✔ confirmed never-sent drafts resume autonomously after restart without another model call (1043.1406ms)
+✔ partial delivery preserves acknowledged parts and stops when the original source changes (3429.0025ms)
+✔ party narrative uses the exact live recipient scope without private owner-only inference (880.1774ms)
+✔ an independent NPC may address or make an attributed allegation about a PC without becoming PC authority (959.1981ms)
+✔ changed live audiences and closed scenes cannot authorize a saved narrative or a forged native grant (785.6154ms)
+✔ all conversation scenarios traverse scoped native intake with one inference and no mandatory operation (8.0779ms)
+✔ formatting preserves exact untrusted content in user data without fabricating assistant history (0.1603ms)
+✔ source revocation still rejects a fluent conversation draft (0.5057ms)
+✔ observed unsupported PC and proxy blocking and emotion are held; harmless siblings survive (2.2477ms)
+✔ an independent NPC can make a false allegation with either speech attribution order (2.5195ms)
+✔ punctuation in actual actor names is literal, never a regex expression or an exemption (1.5285ms)
+✔ direct address, sensory second person, NPC counteroffers and open choices are not agency theft (5.4882ms)
+✔ explicit PC choices, inner states, invented dice and material expenditures are held individually (0.5095ms)
+✔ independent NPC testimony can lie without establishing an objective PC choice or effect (0.2718ms)
+✔ each material assertion needs its own native authorization; thrown and asynchronous decisions grant nothing (0.1943ms)
+✔ withholding one material paragraph preserves independent siblings without a publication grant (0.4455ms)
+✔ local repair replaces only the held paragraph, retaining sibling identities and private original diagnostics (0.6152ms)
+✔ revoked audiences cannot inspect or repair segments and unresolved replacements remain held (0.2359ms)
+✔ failure reviewing the complete repaired result preserves original fragments and retirement history (0.2546ms)
+✔ failed or asynchronous native repair commits cannot replace a candidate (0.764ms)
+✔ actual scene PC names and aliases screen unauthorized choices even while absent (5.1015ms)
+✔ human-controlled NPC proxies retain agency while independent NPC testimony and direct address remain allowed (1.8466ms)
+✔ foreign character identity or missing scene cannot supply native screening names (0.916ms)
+✔ composed root supplies current PC names to durable paragraph review with one model call and no send (3165.6357ms)
+✔ actual native root refreshes private NPC planning and retention, cold reopens it, and keeps ordinary inference separate (2834.5123ms)
+✔ live message changes during private inference revoke the result before a plan can be retained (1592.1096ms)
+✔ an unavailable guild is rejected before any transport read or inference (0.1796ms)
+✔ a stale proxy assignment is held before private inference (229.045ms)
+✔ closing the root aborts an in-flight private plan without retaining it or publishing anything (361.2903ms)
+✔ one-call independent NPC decision sees known testimony and portrayal but no private or unheard message (7.0581ms)
+✔ GM grants, forged handles and human-controlled NPCs cannot enter the independent decision model (2.7361ms)
+✔ changed actor knowledge during inference invalidates the proposal rather than leaking a stale decision (3.2639ms)
+✔ source edits and proxy reassignment invalidate saved in-memory NPC decisions (4.2759ms)
+✔ provider failure, unsupported tools and abort are not retried or converted to successful action (11.2628ms)
+✔ NPC proposals persist across a genuine SQLite reopen as private unexecuted plans, never audience knowledge or actions (1511.685ms)
+✔ a failed final native check rolls back proposal history and its head atomically (9.435ms)
+✔ retracted source knowledge prevents retaining or reusing a pending proposal without erasing its historical record (6.9621ms)
+✔ public portrayal handles and oversized proposals cannot mint private thought history (7.1123ms)
+✔ a private plan known to another NPC does not become that NPCs own proposed intention (6.2685ms)
+✔ oversized active plan history holds for curation rather than silently losing older intentions (13.8521ms)
+✔ private cognition reads only actor-known source closure while ordinary audience packets exclude the NPC secret (7.1652ms)
+✔ a private actor grant cannot enter the audience model gateway even through a wrongly configured context adapter (4.5148ms)
+✔ unknown/private ancestry, cycles, unproven human statement origins and cross-scene records are excluded before body reads (2.4826ms)
+✔ revoked NPC knowledge invalidates private plans after generation and future inspection (3.4102ms)
+✔ residual proxy role or delegation cannot turn a human-owned portrayal into an independent NPC (4.6158ms)
+✔ opt-in root Director plans on an actual reopening with no present players or valid player message, once across restart (260.3544ms)
+✔ private attention favors less-considered NPCs without imposing player initiative (1263.6972ms)
+✔ failed private inference is not blindly retried on a repeated opportunity or cold restart (402.7861ms)
+✔ attendance metadata and wall time do not become new scene-opening opportunities (232.4458ms)
+✔ human proxy reservations and closed scenes cannot drive private independent decisions (256.9848ms)
+✔ an optional Director failure cannot roll back committed scene setup or manufacture a public reply (406.0395ms)
+✔ omitted owner format delivers DOCX with current resources and no private fields (1624.8947ms)
+✔ owner all formats have exact names and independently valid ZIP/XML without raw GM canaries (401.9305ms)
+✔ GM default all formats retain private hooks, source payloads and pending suggestions across all nine attachments (659.1469ms)
+✔ explicit Markdown and DOCX variants preserve per-command scopes (1044.8565ms)
+✔ lost all-format upload response cannot resend nine private attachments on cold replay (394.3766ms)
+✔ format substitution during final GM refresh suppresses delivery (3007.9334ms)
+✔ serializer escapes XML metacharacters and drops forbidden control characters while refusing unsupported formats (77.2322ms)
+✔ composed JSON export uses current native resources, private delivery and the actual owner-safe SQL scope (420.4262ms)
+✔ a lost upload response and cold replay cannot attempt another export (379.5192ms)
+✔ ownership or package input changes during the final membership refresh withhold the attachment (694.415ms)
+✔ membership revocation, foreign membership and non-private defer never disclose an attachment (3323.083ms)
+✔ ambiguous selection, wrong owner and spoofed transport cannot export; GM scope remains separate (418.9027ms)
+✔ prepared exports reject changed inputs and unknown/unowned characters without a healthy fallback (246.9803ms)
+✔ unobserved direct calls cannot mint an owner export command (370.7726ms)
+✔ reserve, guest and retired exports preserve their status without reviving live actor authority (510.8943ms)
+✔ oversize packages and relationship windows hold instead of sending partial or truncated exports (469.7645ms)
+✔ an ambiguous private relationship recipient holds instead of granting access from a mere mention (361.8373ms)
+✔ another PC on the same account does not donate its private facts or relationship notes to this export (218.002ms)
+✔ canonical native death revokes existing conversation drafts and prevents new inference despite stale active registration (511.6737ms)
+✔ missing canonical migration and changed repository owner cannot create conversational actor grants (667.4052ms)
+✖ native root selects entitled established knowledge with testimony labels and excludes private ancestry before bodies (515.8376ms)
+✔ native root retains model testimony proposals privately without truth promotion or unauthorized canon (449.9986ms)
+✔ observed current GM imports private hooks, held targets, pending canon and normalized narrative once (9.0929ms)
+✔ unobserved or unauthorized humans cannot download or write private material (3.5249ms)
+✔ fresh role revocation during attachment download aborts all private writes (1.4527ms)
+✔ ambiguous character selection and changed command declaration do not import (2.9923ms)
+✔ lost reply never reimports after controller restart and does not publish private bodies (2.6084ms)
+✔ failure after private commit retains import evidence and holds receipt without retry (2.0821ms)
+✔ optional narrative can be omitted, and closed command cannot start a download (1.8599ms)
+✔ observed configured GM receives three private legacy-schema JSON exports without effects or inference (308.4465ms)
+✔ cached administrator permissions do not replace configured current GM membership (3030.3107ms)
+✔ fresh role loss, foreign member and nonprivate acknowledgement suppress GM files (601.3111ms)
+✔ input changes during refreshed GM membership suppress an already prepared package (479.3685ms)
+✔ lost GM upload response has one attempt across process restart and replay (445.6758ms)
+✔ unmaterialized legacy canon suggestions hold without backfill, acceptance or lost source (544.8691ms)
+✔ exact campaign character selection refuses ambiguous names while preserving explicit IDs (503.7439ms)
+✔ private readers reject foreign canon ancestry, duplicate current canon and corrupt hook payload (2959.2686ms)
+✔ prepared GM exports recheck authority, character inputs and package bounds (510.3182ms)
+✔ GM facets share a coherent WAL validation snapshot and never select unowned account-wide rows (421.2315ms)
+✔ missing private source tables hold without silently creating schema (462.2535ms)
+✔ GM source window overflow holds instead of truncating private records (450.3449ms)
+✔ native root opens its dedicated stores and takes exclusive ownership of interactions (140.9783ms)
+✔ owner route comes from the verified private channel of the registered PC, never a guess (199.8387ms)
+✔ a provider adds a durable turn store and a withheld-draft runner without changing the other stores (2770.0974ms)
+✔ without a provider no turn runner or turn store exists (205.8219ms)
+✔ native start requires explicit opt-in and complete configuration (2.6074ms)
+✔ automatic private Director cadence is separately opt-in and its flag is passed to native composition (115.736ms)
+✔ native start refuses an existing store directory with content (66.9465ms)
+✔ native start composes read-only repository, root and login, then closes in reverse order once (63.2025ms)
+✔ a failed login closes everything it opened (2561.9833ms)
+✔ inference is a second opt-in and receives only the environment, never defaults (142.2053ms)
+✔ the real provider factory refuses missing keys, models and unbounded budgets (0.2477ms)
+✔ only the named guild is served and a legacy env file is loaded by path without being read here (75.1791ms)
+✔ ChatGPT mode needs a model but no API key, and keeps the call budget (3.1873ms)
+✔ explicit GM configuration comes only from opt-in variables and is passed to the root (68.8319ms)
+✔ native import route commits and cold resume exports private source in all formats without player disclosure (4286.1959ms)
+✔ enabling imports on an old manifested runtime holds before root login and leaves the sealed files unchanged (1362.7646ms)
+✔ snapshot and restore preserve committed private hooks narrative canon proposals and import receipts (4365.0547ms)
+✔ hooks, pending suggestions and private narrative survive cold reopen and exact replay (150.2206ms)
+✔ changed narrative conflicts on the same source; a new source keeps immutable history (161.9826ms)
+✔ final authority revocation rolls back narrative, hooks, suggestions and import receipt together (119.2293ms)
+✔ imports without narrative preserve the current narrative and malformed documents make no writes (138.0339ms)
+✔ older private store schema is held before any schema or data mutation (151.0432ms)
+✔ cold publication revalidates complete context ancestry without reading bodies or repeating inference (474.2402ms)
+✔ native knowledge correction or retraction after restart withholds the old draft without a send claim (486.6316ms)
+✔ tool-only context dependencies survive restart and still revoke publication when their ancestor changes (215.1537ms)
+✔ historical drafts without context lineage remain private rather than assuming an empty context (237.3483ms)
+✔ revoked native receipt lineage prevents autonomous cold publication without replaying effects (230.3041ms)
+✔ owner can check a unique uncertain cost after cold reopen without re-sending or spending (763.4296ms)
+✔ canonical expense repairs injected missing transport bookkeeping with the original reply withheld (3260.0679ms)
+✔ a rejected decision reconciles as a cancelled action and never incurs its cost (715.4694ms)
+✔ an accepted choice without a committed expense is held without retrying even when resources become available (718.6562ms)
+✔ wrong owner cannot reconcile another owner expense or receive private cost details (566.5096ms)
+✔ expired controls and later text edits cannot erase an already committed cost, or grant a new action (571.5216ms)
+✔ unobserved command objects cannot query owner state or repair a receipt (2846.5891ms)
+✔ source identity corruption and fresh audience drift hold reconciliation without altering the expense (1178.7959ms)
+✔ multiple unresolved owned costs require explicit selection and never infer a different expense (810.5241ms)
+✔ historical recipient can reconcile after a scene closes and PC control ends without gaining new control (473.6456ms)
+✔ contradictory stored transport receipts are held rather than overwritten or replayed (391.7974ms)
+✔ one-inference saved draft retains original source authority after reopening all stores (391.4759ms)
+✔ persisted drafts reject message edits, ownership changes, absence and scene close/reopen (3329.1252ms)
+✔ unobserved live edits, deletions and unavailable original messages stay withheld (586.3029ms)
+✔ same guild is exclusive across runtime directories while other guilds remain independent (76.3769ms)
+✔ worktrees resolve the same default lease directory without writing to Git metadata (8.7891ms)
+✔ invalid guild and mismatched/foreign lease schemas are held without replacing data (27.4194ms)
+✔ a future lease version is held rather than silently adopted (39.69ms)
+✔ owned process crash releases its guild lease without deleting or timing out lease records (83.474ms)
+✔ two native launchers with different store directories cannot create a second client or login (125.6961ms)
+✔ startup preflight failure releases the shared lease before another directory is attempted (20.7868ms)
+✔ explicit native resume reopens real stores and preserves pending state without inventing a healthy actor (312.9541ms)
+✔ a live runtime keeps the directory exclusively claimed across manifest commits (271.6105ms)
+✔ changed source, guild and manifest version are held before another client or root is created (2987.5199ms)
+✔ missing native state is not replaced with a new empty database on resume (271.5926ms)
+✔ unknown files, unexpected schema and historical unmarked directories require migration review (496.721ms)
+✔ failed inference initialization releases the lock and can retry only with explicit resume (219.8736ms)
+✔ an abrupt owned-process exit releases the OS lock and retains committed pending records (172.3551ms)
+✔ whole-host resume preserves issued owner proofs, exact native consent and one committed expense (403.7457ms)
+✔ read-only opening of a WAL-mode legacy copy may create empty sidecars without changing its source (221.5271ms)
+✔ nonempty legacy WAL evidence still prevents startup sealing and never reaches login (47.601ms)
+✔ offline snapshot preserves populated native and legacy bytes and cannot run while the native guild is live (489.7351ms)
+✔ restoration to a new bundle preserves game identity pending state secrets and historical rolls, and needs explicit startup review (2970.8538ms)
+✔ corrupt or incomplete snapshots and wrong expected hashes never create restored game directories (424.5581ms)
+✔ snapshot creation and restoration refuse existing data and source-overlapping destinations (440.758ms)
+✔ an interrupted restoration with no copied game files cannot resume as a fresh healthy runtime (105.509ms)
+✔ restart preserves private review, original raw draft and no publication grant (39.4833ms)
+✔ identical review replay is idempotent and changed reviews use compare-and-swap with immutable history (37.4489ms)
+✔ forged dispositions, source substitution and final authorization failure cannot overwrite reviews (33.7459ms)
+✔ text edits require one held-segment repair with exact ancestry, never an ordinary review update (25.667ms)
+✔ a repair cannot silently rewrite an independent sibling even with well-formed segment hashes (19.0523ms)
+✔ one native local repair persists before replacing memory and survives reopening without another inference (55.3412ms)
+✔ a final transactional failure rolls back storage and leaves the original in-memory candidate intact (75.0086ms)
+✔ a stale repair writer cannot overwrite peer review, and explicit fresh review permits a later local repair (82.624ms)
+✔ source revocation during refresh and unknown handles cannot reach repair storage (46.04ms)
+ℹ tests 382
+ℹ suites 0
+ℹ pass 375
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62289.0031
+
+✖ failing tests:
+
+test at bot\tests\veilkeeper2\r2-durable-recall.test.mjs:7:1
+✖ a cause backed only by another recipient private source cannot influence audience ranking or leak its body (340.1006ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   'z',
+      'a00',
+  -   'z'
+    ]
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-durable-recall.test.mjs:7:895)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'z', 'a00' ],
+    expected: [ 'a00', 'z' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r2-private-actor-view.test.mjs:2:1
+✖ actual root isolates private histories when one account switches between two PCs (661.3332ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   'public-z',
+      'public-a',
+  -   'public-z'
+    ]
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-private-actor-view.test.mjs:8:668)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'public-z', 'public-a' ],
+    expected: [ 'public-a', 'public-z' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r2-statement-lineage.test.mjs:15:49
+✖ fresh Discord origin changes before inference block without sending or silently updating native history (370.4561ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-statement-lineage.test.mjs:15:1209)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /generation_failed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r2-statement-lineage.test.mjs:15:49
+✖ fresh Discord origin changes during inference block without sending or silently updating native history (486.4914ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'Remote edit not yet in native snapshots'
+  - 'I use the ability.'
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-statement-lineage.test.mjs:15:1329)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Remote edit not yet in native snapshots',
+    expected: 'I use the ability.',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r2-statement-lineage.test.mjs:15:49
+✖ fresh Discord origin changes review inference block without sending or silently updating native history (514.1943ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'Remote edit not yet in native snapshots'
+  - 'I use the ability.'
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-statement-lineage.test.mjs:15:1329)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Remote edit not yet in native snapshots',
+    expected: 'I use the ability.',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r2-statement-lineage.test.mjs:21:1
+✖ unavailable historical Discord evidence blocks inference without inventing deletion (449.4649ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r2-statement-lineage.test.mjs:21:605)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /generation_failed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at bot\tests\veilkeeper2\r6-conversation-lifecycle.test.mjs:56:1
+✖ native root selects entitled established knowledge with testimony labels and excludes private ancestry before bodies (515.8376ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      'private',
+  +   'rumor',
+      'public',
+  -   'rumor'
+    ]
+
+      at TestContext.<anonymous> (file:///D:/Library/Development/Veiled_City_2/rebuild/bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs:62:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'private', 'rumor', 'public' ],
+    expected: [ 'private', 'public', 'rumor' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,5 +1,5 @@
 {
-  "handoffSha256": "7d9b8658260302a37626abaa084da48fd786d4214ad59512a42350918928e8eb",
-  "checkpoint": "R2 commit-time authority slice complete; R2-R8 remain incomplete",
-  "reportSha256": "33b68f12f1a685fb08a448134aa03ae42ea2531d48d089ba389c1ded5f1eb52c"
+  "handoffSha256": "5238b9c51cf1cc69ce1d2c4f58b33892ffdafe84b02d28f8025e7cedf0f934a3",
+  "checkpoint": "R0/R1/R2 complete; R3-R8 incomplete",
+  "reportSha256": "c84fc1c5aa7e04036af32d6cd96a7ba72d02cdf1197cfecca949d4eecc402bd5"
 }

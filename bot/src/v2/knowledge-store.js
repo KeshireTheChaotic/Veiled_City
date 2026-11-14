@@ -35,10 +35,10 @@ export function openKnowledgeStore(filename=':memory:'){
       return row;
     },check);
   }
-  return Object.freeze({metadata,append,
+  return Object.freeze({metadata,append,metadataVersion:(campaign,id,revision)=>decode(db.prepare('SELECT data FROM vk2_knowledge_history WHERE campaign=? AND id=? AND revision=?').get(campaign,id,Number(revision))),
     npcKnownRefs(campaign,scene,actor){
       if([campaign,scene,actor].some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Exact native NPC context scope required');
-      const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) AND EXISTS(SELECT 1 FROM json_each(r.data,'$.knownBy') k WHERE k.value=?) ORDER BY r.id LIMIT 65").all(campaign,scene,actor);if(rows.length>64)throw new Error('NPC private context requires native curation');return rows.map(r=>r.id);
+      const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) AND EXISTS(SELECT 1 FROM json_each(r.data,'$.knownBy') k WHERE k.value=?) ORDER BY CASE WHEN json_extract(r.data,'$.kind') IN ('goal','identity') THEN 0 ELSE 1 END,r.rowid DESC,r.id LIMIT 16385").all(campaign,scene,actor);if(rows.length>16384)throw new Error('NPC private context requires native curation');return rows.map(r=>r.id);
     },
     npcOpportunityCount(campaign,actor){return db.prepare("SELECT count(*) n FROM vk2_knowledge_proposals WHERE campaign=? AND json_extract(data,'$.kind')='native_npc_scene_opportunity' AND json_extract(data,'$.actorId')=?").get(campaign,actor).n;},
     claimNpcSceneOpportunity(input,{check}){
@@ -53,7 +53,7 @@ export function openKnowledgeStore(filename=':memory:'){
     candidateRefs(campaign,scene){
       if(typeof campaign!=='string'||!campaign||typeof scene!=='string'||!scene)throw new Error('Native knowledge candidate scope required');
       // Metadata references only. Entitlement/complete ancestry must still precede every body read.
-      return db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND json_extract(r.data,'$.visibility') IN ('public','recipients') AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) ORDER BY r.id LIMIT 256").all(campaign,scene).map(row=>row.id);
+      const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND json_extract(r.data,'$.visibility') IN ('public','recipients') AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) ORDER BY r.rowid DESC,r.id LIMIT 16385").all(campaign,scene);if(rows.length>16384)throw new Error('Knowledge candidates require native curation');return rows.map(row=>row.id);
     },
     evidence(campaign,ref){return decode(db.prepare('SELECT data FROM vk2_knowledge_history WHERE campaign=? AND evidence_ref=?').get(campaign,ref));},
     readText(campaign,id,revision){

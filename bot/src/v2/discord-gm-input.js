@@ -1,3 +1,4 @@
+import {canonReviewInput} from './canon-review-input.js';
 ﻿const SUBCOMMANDS={
   'session-reopen':['session-reopen',{session:'session'}],'register-character':['pc-register',{actor:'character'}],'rebind-character':['pc-rebind',{actor:'character'}],
   'bootstrap-preview':['pc-bootstrap-preview',{actor:'character'}],'bootstrap-review':['pc-bootstrap-review',{actor:'character',snapshotHash:'snapshot'}]
@@ -9,6 +10,7 @@
 export function gmCommandInput(e){
   try{
     if(e?.isChatInputCommand?.()!==true||!(e.commandName==='vc-gm'||e.commandName==='vc'&&e.options.getSubcommandGroup(false)==='gm'))return null;
+    if(e.options.getSubcommand()==='canon-review')return canonReviewInput(e);
     const spec=SUBCOMMANDS[e.options.getSubcommand()];if(!spec)return null;
     const input={op:spec[0]};
     for(const [field,option] of Object.entries(spec[1])){const value=e.options.getString(option,true);if(typeof value!=='string'||!value||value.length>256)return null;input[field]=value;}

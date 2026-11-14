@@ -1,6 +1,7 @@
 const normalized=v=>JSON.stringify(Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)).map(([k,value])=>[k,Array.isArray(value)?[...value].sort():value])));
-/** Fresh read-only Discord proof for already-entitled statement origins. No source issuance or state mutation. */
-export function createStatementOriginRefresh({contextAuthority,records,sourceRegistry,sceneStore,messageReader,readGmRoleId}){
+/** Fresh Discord proof for already-entitled statement origins. An optional native
+ * callback can refresh confirmed source edits; no control or audience grant is issued. */
+export function createStatementOriginRefresh({contextAuthority,records,sourceRegistry,sceneStore,messageReader,readGmRoleId,onObservedEdit=null}){
  if(typeof contextAuthority?.entitled!=='function'||typeof records?.metadata!=='function'||typeof sourceRegistry?.get!=='function'||typeof sceneStore?.readers?.readChannel!=='function'||typeof messageReader?.read!=='function'||typeof readGmRoleId!=='function')throw new TypeError('Native origin refresh authorities required');
  async function refresh(source,references,{signal}={}){
   if(!Array.isArray(references)||references.length>16384||references.some(r=>typeof r!=='string'||!r||r.length>256))throw new Error('Bounded native origin references required');
@@ -13,14 +14,15 @@ export function createStatementOriginRefresh({contextAuthority,records,sourceReg
   for(const row of rows.values()){
    signal?.throwIfAborted();if(!row.origin)continue;const o=row.origin,key=JSON.stringify(o);if(seen.has(key))continue;seen.add(key);
    if(records.validateOrigin?.(row)!==true)throw new Error('Current native statement origin required');
-   if(o.kind==='native_npc_speech')continue; // Delivered historical speech is validated by its immutable native receipt.
+   if(['native_npc_speech','native_npc_hearing','native_gm_statement'].includes(o.kind))continue; // Delivered historical speech is validated by its immutable native receipt.
    const event=sourceRegistry.get(o.sourceRef)?.event,channel=sceneStore.readers.readChannel(source.campaign,o.channelId);if(!event||!channel)throw new Error('Native origin lookup unavailable');
    const before=normalized([row,channel]);
    const live=await messageReader.read({guildId:source.campaign,channelId:o.channelId,messageId:o.messageId,userId:event.userId,sceneId:o.sceneId,mode:channel.kind,ownerUserId:channel.ownerUserId??null,gmRoleId:readGmRoleId(source.campaign)??null,participantIds:channel.kind==='party'?channel.recipientIds:[]},{signal});
    signal?.throwIfAborted();const current=records.metadata(source.campaign,row.id),currentChannel=sceneStore.readers.readChannel(source.campaign,o.channelId);
    if(!contextAuthority.entitled(source,row.id)||!current||!currentChannel||normalized([current,currentChannel])!==before||records.validateOrigin(current)!==true)throw new Error('Statement origin changed during refresh');
    const expectedMessage=sceneStore.readers.readMessage(source.campaign,o.messageId),{revision:mr,...message}=expectedMessage,{revision:cr,...channelRecord}=channel;
-   if(normalized(live.messageRecord)!==normalized(message)||normalized(live.audience.channelRecord)!==normalized(channelRecord))throw new Error('Live statement origin differs from native lineage');
+   if(normalized(live.audience.channelRecord)!==normalized(channelRecord))throw new Error('Live statement origin differs from native lineage');
+   if(normalized(live.messageRecord)!==normalized(message)){onObservedEdit?.({campaignId:source.campaign,expectedMessage,channel,observedMessage:live.messageRecord});throw new Error('Live statement origin differs from native lineage');}
   }
  }
  return Object.freeze({refresh});

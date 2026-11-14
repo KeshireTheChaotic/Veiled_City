@@ -12,6 +12,7 @@ export function buildNativeCommands(){
     if(!row||row.options.some(o=>o.name==='character'))throw new Error('Unexpected baseline attendance schema');
     row.options.push(string('character','Owned character name; defaults to your only active character',false));
   }
+  command('vc-player').options.push(sub('canon-propose','Privately suggest character canon; does not establish world truth',string('key','Canonical proposition key'),{...string('value','Your exact proposed value'),max_length:4000},string('character','Owned character; defaults to your only active character',false)));
   const player=command('vc-player'),privateIndex=player.options.findIndex(s=>s.name==='private-channel');
   if(privateIndex<0)throw new Error('Missing baseline owner private-channel command');
   player.options.splice(privateIndex+1,0,
@@ -25,5 +26,6 @@ export function buildNativeCommands(){
     sub('rebind-character','Point a registered character at its current owner, in place',string('character','Character id')),
     sub('bootstrap-preview',"Privately preview a character's saved sheet before approving its native state",string('character','Character id')),
     sub('bootstrap-review',"Approve the exact previewed sheet and create the character's native state",string('character','Character id'),string('snapshot','Snapshot hash shown by bootstrap-preview',true,true)));
+  command('vc-gm').options.push(sub('canon-review','Administer an imported protected canon proposal; never narrative approval',string('character','Character id'),string('proposal','Pending canon proposal id'),{...string('resolution','Protected proposal decision'),choices:['accept','reject','custom'].map(name=>({name,value:name}))},string('revision','Current canon revision; use 0 if no entry exists'),{...string('value','Custom value for a custom resolution',false),max_length:4000},{...string('note','Administrative decision note',false),max_length:4000},{...string('visibility','Stored canon classification; does not publish it',false),choices:['gm','party','public'].map(name=>({name,value:name}))},{type:5,name:'replace',description:'Explicitly replace a conflicting existing canonical value',required:false}));
   assertValidCommandSchema(commands);return commands;
 }

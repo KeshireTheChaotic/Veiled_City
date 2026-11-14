@@ -1,3 +1,6 @@
+import {createHash} from 'node:crypto';
+import {createPublicationMemory} from './publication-memory.js';
+import {createCanonKnowledgeEvidence} from './canon-knowledge-evidence.js';
 import {join} from 'node:path';
 import {createReceiptRecall} from './receipt-recall.js';
 import {createStatementOriginRefresh} from './statement-origin-refresh.js';
@@ -54,19 +57,45 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     const route=(campaignId,actorId)=>{const actor=sceneStore.readers.readActor(campaignId,actorId),channel=actor?.kind==='pc'&&actor.ownerUserId?sceneStore.ownerPrivateChannel(campaignId,actor.sceneId,actor.ownerUserId):null;if(!channel)throw new Error('Verified owner private channel required');return {guildId:campaignId,channelId:channel.id,sceneId:actor.sceneId,ownerUserId:actor.ownerUserId};};
     const conversationReaders={...canonical.readers,sourceRegistry:registry},conversationAuthority=createSourceAuthority(conversationReaders);
     const turnStore=provider?open(openTurnStore,join(directory,'turns.sqlite')):null,knowledgeStore=provider?open(openKnowledgeStore,join(directory,'knowledge.sqlite')):null;
+    const canonEvidence=knowledgeStore&&privateHookStore?createCanonKnowledgeEvidence({hookStore:privateHookStore,knowledgeStore,sourceAuthority:conversationAuthority}):null;
     const recallStore=provider?open(openRecallStore,join(directory,'recall.sqlite')):null;
     const statementLineage=createStatementLineage({sourceAuthority:conversationAuthority,sourceRegistry:registry,...sceneStore.readers});
-    const npcSpeech=knowledgeStore?createNpcSpeechLineage({turnStore,store:knowledgeStore,sceneStore,sourceRegistry:registry,characterRepository,sourceAuthority:conversationAuthority}):null;
-    const isSpeech=row=>row.origin?.kind==='native_npc_speech';
-    const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:row=>(isSpeech(row)?npcSpeech:statementLineage).validate(row),entitledOrigin:(row,source)=>(isSpeech(row)?npcSpeech:statementLineage).entitled(row,source),describeOrigin:(row,source)=>(isSpeech(row)?npcSpeech:statementLineage).describe(row,source),validateNpcOrigin:(row,actorId)=>npcSpeech.knownOrigin(row,actorId)}:null;
+    const npcSpeech=knowledgeStore?createNpcSpeechLineage({turnStore,store:knowledgeStore,sceneStore,sourceRegistry:registry,characterRepository,sourceAuthority:conversationAuthority,readClock:recallStore.readClock}):null;
+    const publicationMemory=knowledgeStore?createPublicationMemory({turnStore,store:knowledgeStore,sourceRegistry:registry}):null;
+    const isSpeech=row=>['native_npc_speech','native_npc_hearing'].includes(row.origin?.kind);
+    const knowledgeRecords=knowledgeStore?{...knowledgeStore,validateOrigin:row=>(row.origin?.kind==='native_gm_statement'?publicationMemory:isSpeech(row)?npcSpeech:statementLineage).validate(row),entitledOrigin:(row,source)=>(row.origin?.kind==='native_gm_statement'?publicationMemory:isSpeech(row)?npcSpeech:statementLineage).entitled(row,source),describeOrigin:(row,source)=>(row.origin?.kind==='native_gm_statement'?publicationMemory:isSpeech(row)?npcSpeech:statementLineage).describe(row,source),validateNpcOrigin:(row,actorId)=>npcSpeech.knownOrigin(row,actorId),describeNpcOrigin:(row,actorId)=>npcSpeech.describeKnown(row,actorId)}:null;
     const conversationContext=knowledgeStore?createContextAuthority({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}):null;
-    const recall=recallStore?createRecallPlanner({contextAuthority:conversationContext,readCandidates:s=>knowledgeStore.candidateRefs(s.campaign,s.scene).filter(ref=>ref!==statementReference(s)),readCauses:s=>recallStore.readCauses(s.campaign),readPins:s=>recallStore.readPins(s.campaign),readClock:recallStore.readClock}):null;
+    const candidateOrder=new Map();
+    const recallConfig=recallStore?{contextAuthority:conversationContext,readCandidates:s=>{const refs=knowledgeStore.candidateRefs(s.campaign,s.scene).filter(ref=>ref!==statementReference(s));candidateOrder.clear();refs.forEach((ref,i)=>candidateOrder.set(ref,i));return refs;},compareCandidates:(a,b)=>(candidateOrder.get(a)??16384)-(candidateOrder.get(b)??16384)||a.localeCompare(b),readCauses:s=>recallStore.readCauses(s.campaign),readPins:s=>recallStore.readPins(s.campaign),readClock:recallStore.readClock}:null;
+    const recall=recallConfig?createRecallPlanner(recallConfig):null;
+    function transportFree(campaign,ref,path=new Set()){
+      if(path.has(ref)||path.size>=64)return false;const row=knowledgeStore.metadata(campaign,ref);if(!row)return false;
+      if(row.origin&&!['native_gm_statement','native_npc_speech','native_npc_hearing'].includes(row.origin.kind))return false;
+      return row.sourceRefs.every(parent=>transportFree(campaign,parent,new Set([...path,ref])));
+    }
+    function recallProvenance(source,refs,withoutTransport=false){
+      const visible=new Set(refs),result=new Set(),allowed=ref=>(!withoutTransport||transportFree(source.campaign,ref))&&conversationContext.entitled(source,ref);
+      const evidence=[...recallStore.readCauses(source.campaign).filter(c=>c.status==='committed'&&c.authority==='native_recall'&&c.independentlyAuthenticated===true),...recallStore.readPins(source.campaign).filter(p=>p.status==='active'&&p.authority==='native_recall_pin')];
+      for(const e of evidence)if(e.targetRefs.some(ref=>visible.has(ref))&&e.sourceRefs.every(allowed))for(const ref of e.sourceRefs){result.add(ref);if(result.size>16384)throw new Error('Recall proof window requires curation');}
+      return [...result];
+    }
+    async function selectKnowledge(source){
+      let references=recall.select(source,{limit:64}),provenance=recallProvenance(source,references);
+      try{await originRefresh.refresh(source,[...new Set([...references,...provenance])]);return {references,provenance};}catch{
+        const updated=recall.select(source,{limit:64});if(JSON.stringify(updated)!==JSON.stringify(references)){references=updated;provenance=recallProvenance(source,references);try{await originRefresh.refresh(source,[...new Set([...references,...provenance])]);return {references,provenance};}catch{}}
+        const filtered=createRecallPlanner({...recallConfig,contextAuthority:{entitled:(s,ref,options)=>transportFree(s.campaign,ref)&&conversationContext.entitled(s,ref,options)}});
+        references=filtered.select(source,{limit:64});provenance=recallProvenance(source,references,true);await originRefresh.refresh(source,[...new Set([...references,...provenance])]);return {references,provenance};
+      }
+    }
     const receiptRecall=recallStore?createReceiptRecall({sourceAuthority:conversationAuthority,statementLineage,knowledgeStore,recallStore,inspectReceipt:(source,ref)=>nativeActions.inspect(source,ref)}):null;
     const rulings=knowledgeStore?createProvisionalRulings({store:knowledgeStore,sourceAuthority:conversationAuthority,readScene:sceneStore.readers.readScene,readSession:sceneStore.readers.readSession}):null;
     const nativeActions=createNativeActionAuthority({sourceAuthority:conversationAuthority,readActor:conversationReaders.readActor,actionStore,rulings,requestConsent:(source,ref)=>router.costs.request(source,ref),onCommittedReceipt:receiptRecall?(source,receipt)=>receiptRecall.record(source,receipt):null,onRecallError:error=>onError?.(error,{stage:'native_receipt_recall'})});
     const readOwnerSession=createOwnerSessionReader({sceneStore,repository:characterRepository,readPolicy});
     const messageReader=createDiscordMessageReader({client}),intake=createDiscordIntake({messageReader,sceneStore});
-    const originRefresh=knowledgeStore?createStatementOriginRefresh({contextAuthority:conversationContext,records:knowledgeRecords,sourceRegistry:registry,sceneStore,messageReader,readGmRoleId:c=>readPolicy(c).gmRoleId}):null;
+    const originRefresh=knowledgeStore?createStatementOriginRefresh({contextAuthority:conversationContext,records:knowledgeRecords,sourceRegistry:registry,sceneStore,messageReader,readGmRoleId:c=>readPolicy(c).gmRoleId,onObservedEdit:({campaignId,expectedMessage,channel,observedMessage})=>{
+      const fingerprint=v=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
+      sceneStore.commitSnapshot({campaignId,principal:'native:observed-source-refresh',sourceRef:'observed-edit:'+fingerprint([campaignId,expectedMessage,observedMessage]),records:[{kind:'message',expectedRevision:Number(expectedMessage.revision),data:observedMessage}]},{check(){if(fingerprint(sceneStore.readers.readChannel(campaignId,channel.id))!==fingerprint(channel))throw new Error('Historical source scope changed');}});
+    }}):null;
     router=createDiscordInteractionRouter({client,
       nativeGmHookImports:privateHookStore?{repository:characterRepository,readCharacter:canonical.readCharacterExport,hookStore:privateHookStore,fetchImpl:gmImportFetch}:null,
       nativeGmCharacterExports:['withValidationSnapshot','findExportCharacter','readGmCharacterExportFacets'].every(key=>typeof characterRepository[key]==='function')?{repository:characterRepository,readCharacter:canonical.readCharacterExport,hookStore:privateHookStore}:null,
@@ -74,16 +103,16 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
       nativeCost:{actionStore,sceneStore,sourceAuthority,sourceRegistry:registry,readActor:canonical.readActor,readGmRoleId:c=>readPolicy(c).gmRoleId,readRoute:route,promptStore:costPrompts,decisionStore,interactionReceipts,nativeActions,clock},
       nativeDeath:{actionStore,sceneStore,sourceAuthority,readActorSnapshot:canonical.readActorSnapshot,readRoute:route,readOwnerRoute:route,promptStore,decisionStore,interactionReceipts,clock,rng},
       nativeSession:{readOwnerSession,readCharacter:createCharacterIdentityReader({repository:characterRepository})},
-      nativeGm:{readPolicy,bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
+      nativeGm:{readPolicy,canonStore:privateHookStore,onCanonCommitted:receipt=>canonEvidence?.project(receipt),bootstrap:{readSource:createPcBootstrapSource({sceneStore,characterRepository}),actionStore},characters:characterRepository},
       allowedGuildIds,handleOtherCommand,handleOtherComponent,onError});
     // Weighted metadata-only recall. Gameplay cause issuers and commitment pin lifecycle remain uncomposed.
     // Entitlement includes complete ancestry before any selected body reaches inference.
     // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
-    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,readGmRoleId:c=>readPolicy(c).gmRoleId,onSource:source=>{const statement=statementLineage.capture(source),ref=statementReference(source);knowledgeStore.append({campaignId:source.campaign,id:ref,expectedRevision:null,evidenceRef:ref,...statement});if(!conversationAuthority.revalidate(source))throw new Error('Statement source changed during capture');},refreshContext:(source,refs,options)=>originRefresh.refresh(source,refs,options),applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeRecords,knowledge:{store:knowledgeStore,readEvidence:()=>null,testimonyAuthor:npcSpeech},selectContext:source=>recall.select(source,{limit:64}),actionAuthority:nativeActions}}):null;
-    npcPlanning=provider?createNpcPlanningService({intake,provider,store:knowledgeStore,sourceAuthority:conversationAuthority,contextAuthority:createNpcPrivateContext({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}),allowedGuildIds}):null;
-    director=provider?createSceneOpeningDirector({sceneStore,store:knowledgeStore,provider,records:knowledgeRecords,allowedGuildIds,onError}):null;
+    const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,readGmRoleId:c=>readPolicy(c).gmRoleId,onSource:source=>{const statement=statementLineage.capture(source),ref=statementReference(source);knowledgeStore.append({campaignId:source.campaign,id:ref,expectedRevision:null,evidenceRef:ref,...statement});if(!conversationAuthority.revalidate(source))throw new Error('Statement source changed during capture');},refreshContext:(source,refs,options)=>originRefresh.refresh(source,refs,options),applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeRecords,knowledge:{store:knowledgeStore,readEvidence:(campaign,ref)=>canonEvidence?.readEvidence(campaign,ref)??null,testimonyAuthor:npcSpeech},selectContext:selectKnowledge,actionAuthority:nativeActions}}):null;
+    npcPlanning=provider?createNpcPlanningService({intake,provider,store:knowledgeStore,recallStore,sourceAuthority:conversationAuthority,contextAuthority:createNpcPrivateContext({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}),allowedGuildIds}):null;
+    director=provider?createSceneOpeningDirector({sceneStore,store:knowledgeStore,provider,records:knowledgeRecords,recallStore,allowedGuildIds,onError}):null;
     publisher=turns&&publicationEnabled?createAutonomousPublication({turns,sceneStore,audiences:createDiscordAudienceReader({client}),readGmRoleId:c=>readPolicy(c).gmRoleId,resolveChannel:async(c,id)=>{const guild=await client.guilds.fetch({guild:c,force:true});return guild.channels.fetch(id,{force:true});}}):null;
-    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft:async(result,request,{signal}={})=>{const delivery=publisher&&result.publication?await publisher.publish(result.publication.id,{signal}):null;if(delivery?.status==='published')npcSpeech.capture(request.guildId,delivery.sourceRef);await onDraft?.({...result,...(delivery?{delivery}:{})},request);},onError});
-    return Object.freeze({router,costs:router.costs,turns,npcPlanning,director,publisher,rulings,npcSpeech,knowledgeStore,recallStore,privateHookStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();await npcPlanning?.drain();const result=await router.drain();await director?.drain();await publisher?.drain();return result;},close(){if(closed)return;closed=true;observer.close();publisher?.close();router.close();npcPlanning?.close();director?.close();for(const store of opened.reverse())store.close();}});
+    observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft:async(result,request,{signal}={})=>{const delivery=publisher&&result.publication?await publisher.publish(result.publication.id,{signal}):null;if(delivery?.status==='published'){publicationMemory.capture(request.guildId,delivery.sourceRef);npcSpeech.capture(request.guildId,delivery.sourceRef);}await onDraft?.({...result,...(delivery?{delivery}:{})},request);},onError});
+    return Object.freeze({router,costs:router.costs,turns,npcPlanning,director,publisher,rulings,npcSpeech,publicationMemory,knowledgeStore,recallStore,privateHookStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();await npcPlanning?.drain();const result=await router.drain();await director?.drain();await publisher?.drain();return result;},close(){if(closed)return;closed=true;observer.close();publisher?.close();router.close();npcPlanning?.close();director?.close();for(const store of opened.reverse())store.close();}});
   }catch(error){observer?.close();publisher?.close();router?.close();npcPlanning?.close();director?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
 }

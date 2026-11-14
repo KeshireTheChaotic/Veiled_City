@@ -1,0 +1,227 @@
+{
+  "phase": "R2",
+  "testedInputManifest": "R2_PHASE_TEST_INPUTS.json",
+  "note": "Raw and LF hashes of tested inputs are frozen separately; this manifest hashes final implementation/test/deliverable bytes and excludes itself.",
+  "files": {
+    "bot/src/v2/canon-knowledge-evidence.js": {
+      "sha256": "9164dcd02b7ff01dc457e43aa1dfadbc86128895dfd2f743ae4c5d818c372a69",
+      "lfSha256": "44cc3dcd4f92a45352b94647a7e9b079a564f8019905b6c3fb6237b5f7ed472d"
+    },
+    "bot/src/v2/canon-review-input.js": {
+      "sha256": "58cebf8c482662c199aca0273d20626e6b8856911b8f5e4c955b168a6bc96df6",
+      "lfSha256": "0be6a1dfc0c5c2f7123f5148e97682dbd6bc44ba95cb9dee60f77cdaff9f12fe"
+    },
+    "bot/src/v2/command-definitions.js": {
+      "sha256": "e98cc5e205b6b94cd54fe244a67da5e61de606d5910b044347893a2dbfcdf054",
+      "lfSha256": "5ae977106c2fa6a22b7c373b68dc0cac3c30cdf5f7311d77e97593270bc4259a"
+    },
+    "bot/src/v2/context-authority.js": {
+      "sha256": "de07ed970528c823ffbb5454e8772226a427b2334116ea45d255888649e29eea",
+      "lfSha256": "43f0bfab693db89c7953be32d57d1740b00ae736b760ecb424cdabb3ebfd4d7b"
+    },
+    "bot/src/v2/conversation-instructions.js": {
+      "sha256": "f21b3e341c8db289e121c158e2ea1719954b15767185c4048118264ecf6463c0",
+      "lfSha256": "02f407795c65d6e854368e40d3c92e25d654cd89011ab146f32e4f9c889ef4da"
+    },
+    "bot/src/v2/discord-canon-requests.js": {
+      "sha256": "8f5dc7c3c269d4c0996a6d8102b4b630b35afeca05dbff9e1cd047b39f275015",
+      "lfSha256": "9607a45df517d90e242da1db89d7d679c58cc8f494e50464a1dc1087bc462fc1"
+    },
+    "bot/src/v2/discord-gm-authority.js": {
+      "sha256": "a5cb6a7a94bb627f99459f80d3fedb2aea5609fbce02f74857bc8a433f735dba",
+      "lfSha256": "100bb763ad2949fd404efa49ccc40939aade2ec31ca2315eecadedb9de47e4e5"
+    },
+    "bot/src/v2/discord-gm-input.js": {
+      "sha256": "951d5810bae1926392659ddae9db6286404ba4afe8da0bd7af474e4e471e3da8",
+      "lfSha256": "17883158db0853a357b6f8dbe89e5884be67865789b9963036474703c626eb4b"
+    },
+    "bot/src/v2/discord-gm-session.js": {
+      "sha256": "8bc926be101f69528b70c44f54db8931a1919d5e1c8ed07d4c286ea9453a4f31",
+      "lfSha256": "31ab58d6c38c2a72860d7f996087eb343c90a051ed748b8a0d6c5d64112975d4"
+    },
+    "bot/src/v2/discord-interaction-router.js": {
+      "sha256": "fa420b7893f44598f088017308b235dee4e78fa3461101aa7463b3e37a261432",
+      "lfSha256": "0500d67652dcebbbe4d833d3021f8205e79b0fb63fce76d16c855b32367fbaaf"
+    },
+    "bot/src/v2/discord-turn-runner.js": {
+      "sha256": "05d6a469c75319f2ff385f007b6f4eb58ccfdf820e7a846f8ac44f1709bf000a",
+      "lfSha256": "606c1833c85ec0b580df50f98c4a89bd677f3cd81ffb2c50d23101255bd4c803"
+    },
+    "bot/src/v2/knowledge-store.js": {
+      "sha256": "99e390012c7e6f64a2c054c0e165bfd6ba727368bb1b0a48287db953f900c66f",
+      "lfSha256": "76a22dc9fcc5d82dc1d1ad427da2cb7929f945aad65a63927d0cfa4e790fda1e"
+    },
+    "bot/src/v2/native-root.js": {
+      "sha256": "2be2e42c0358065a07b2637e43d4b10d472693444511ab39d979a4d26a58e5b0",
+      "lfSha256": "3b757f911355c4bac7dd1db8347697db582786c156d48364a75455d860c4d306"
+    },
+    "bot/src/v2/npc-planning-service.js": {
+      "sha256": "39d7ab03879e0eb25533583f4b95b7d94050130137ebb8f0b2aa112d175248bc",
+      "lfSha256": "0cc7b926d41e4f59e02b7ba6b211e9359132aadc1d0b287f2c717385aeca7cf7"
+    },
+    "bot/src/v2/npc-private-context.js": {
+      "sha256": "36968e720b1883d85fc070820d12d185f32d3827b09184d90e7666e1b322e789",
+      "lfSha256": "bcce40626549c33d449fe66e4cba51c6d7d364001f5eea84b945ad1924985ce9"
+    },
+    "bot/src/v2/npc-speech-lineage.js": {
+      "sha256": "0fa6ad99e8c25f5f3dd9ce8c9881a0b1f8c7fb2559e0d8d8fa29bb013cf0057a",
+      "lfSha256": "c6773354d927d66211806a3326c1499f6436c60378032d6a8233aa64a981c8a0"
+    },
+    "bot/src/v2/private-hook-store.js": {
+      "sha256": "f67b5d5577f58dfe74ac57328c449d2d02227aa5dcdf1c9924677d070bf7f1c9",
+      "lfSha256": "ec37b23651a346aaa9bb2625ecbd3b5e24384d9e22b3eb9769f7dc811fd72c80"
+    },
+    "bot/src/v2/publication-memory.js": {
+      "sha256": "04950c3a2ffee67f956233d18a81e3ba8f1751e919a3474f0318c44bbf4885e2",
+      "lfSha256": "416ec4749c5133014456e42338f99568c7492312f872d682279e7b904230394e"
+    },
+    "bot/src/v2/recall-planner.js": {
+      "sha256": "cddd1308a14c6f2e2dd4197eb684752b2af509dea12cbcabb02c7df7561bdb20",
+      "lfSha256": "243427d713cf80ed189a9bc0153e81d67d7db493744541eb3f3064ee54c524bf"
+    },
+    "bot/src/v2/rehearsal.js": {
+      "sha256": "d738654da03ff028b4174c0a2ed21b03b1add4130443591971689fc3185aa230",
+      "lfSha256": "4c99bf590e37a0c094e35300a72f2ef402f1bda0a155189696ab20d3d54e5259"
+    },
+    "bot/src/v2/scene-opening-director.js": {
+      "sha256": "af4514d7d0c04dae7c521e60c4d16e7d23386e67ee34bf794c3d70440bdb13c5",
+      "lfSha256": "0cd0ec3e389c07b033a3766589e497b8a89d5dbe306e2817a1592903401c31ed"
+    },
+    "bot/src/v2/scene-store.js": {
+      "sha256": "18f8865693ae1e543525c298f29ae86bd0137d13fda67e4260977421efad37a5",
+      "lfSha256": "7894a11c57980460b40d7c4de2951d577469bfc4f5777d0b1747a44d1f974999"
+    },
+    "bot/src/v2/statement-origin-refresh.js": {
+      "sha256": "6a513ce489d1e8e0c671a31f2c4eeb151cea05c7ca2ca8468552bca1da6f9e98",
+      "lfSha256": "b8e52475590f9e2634ff7b1b0287a4e1dcf52876452dd846b9ea5680c62573e0"
+    },
+    "bot/tests/veilkeeper2/helpers/native-cost-root-fixture.mjs": {
+      "sha256": "b4a2ce2cfce902719be95ba54a74d150666d05c89d87687f0627f73e5ac8c995",
+      "lfSha256": "89f229bf149967864363e233b476ed2d0e2b73742467449386317e1cea7536e5"
+    },
+    "bot/tests/veilkeeper2/r2-canon-administration.test.mjs": {
+      "sha256": "22b3df6cbdeec8d78d7cf692dc1750aebd1106f3f23768b63fabd5cda97ee055",
+      "lfSha256": "8de0ec5608ccc8eed7881447e932b57dbba1db4c4b8d914232d0a4815accaeb1"
+    },
+    "bot/tests/veilkeeper2/r2-durable-recall.test.mjs": {
+      "sha256": "60cd6abf9f5931ae18dcd36ee0b31542d4b14c08bba0ede2ed38cdb50aa01331",
+      "lfSha256": "7a46c9aaaf54b7e6dd09c36b0c6c1cffe0fd5623e3f8830bceacb25dd62b5e94"
+    },
+    "bot/tests/veilkeeper2/r2-npc-memory-curation.test.mjs": {
+      "sha256": "7b6aabf5a1541da869de041b141d0ab38ced3ed02b62ce6d063ef734c0a4674f",
+      "lfSha256": "364311b2a2454f8d9015c23e758b7db3e100cb3925a116fa26838d356bd96da6"
+    },
+    "bot/tests/veilkeeper2/r2-npc-speech-lineage.test.mjs": {
+      "sha256": "3bc6b69f76ebe37eb41b3b986d2864e6fe18d9a4f5ae1b4661333891882eaad6",
+      "lfSha256": "4c8ead794f393c611ddec2944e34a9135e3de02e95fc8dfc06df67f1f483e5d1"
+    },
+    "bot/tests/veilkeeper2/r2-phase-acceptance.test.mjs": {
+      "sha256": "e9ba97ae7e0d74ce9b88c98b2fcfb33ceab1b4db138c1040d7e9622786663350",
+      "lfSha256": "3b215e6f0155dbd5e9a73deef130d385439fc06c641bbd17a5c76f4ed5443801"
+    },
+    "bot/tests/veilkeeper2/r2-private-actor-view.test.mjs": {
+      "sha256": "e52902a5a2f12840c500417e213590753c7d02670f5046e8968a9496efad0903",
+      "lfSha256": "8791b2a1243258059380c8f722187039960a5056e3b7cec6969473f15fc8158a"
+    },
+    "bot/tests/veilkeeper2/r2-private-canon-request.test.mjs": {
+      "sha256": "d3a829e8bfd52d9ae435ca9538046d8bca7eb120f13090bb9e0d58ec18167ead",
+      "lfSha256": "5e971d000c41c7ddcb661bb231460a669b147b36ceebc215b9ec4d5d33c01810"
+    },
+    "bot/tests/veilkeeper2/r2-publication-memory.test.mjs": {
+      "sha256": "e40b04172adc8ff0727ae2ec63f0015d6150e7b7abee80835897d7a6fd47bf90",
+      "lfSha256": "2d4f26142e5586fe12c60b67756b19343b9e7a8e7dfbdf44ea847d5d9da4062f"
+    },
+    "bot/tests/veilkeeper2/r2-recall-long-history.test.mjs": {
+      "sha256": "b1d1b8fc4d071ba4c68c54c428f3ab10f0fda2ed949baab0aed70464d45b94ad",
+      "lfSha256": "c270513d8a455a896034ce7bdad9e3619aa10b207d38c68d3915a669a8119a79"
+    },
+    "bot/tests/veilkeeper2/r2-recall-provenance.test.mjs": {
+      "sha256": "7084a242e8216373c593524a128280295361dca64ba289a6f398fdef548ac143",
+      "lfSha256": "aaea7668303bc96fcbe827fb6e56e1f6ccd47fe361fa77d4dea0ca30b5d1cb0c"
+    },
+    "bot/tests/veilkeeper2/r2-snapshot-acceptance.test.mjs": {
+      "sha256": "2bb4b0a07a0a7ab84a7753830908a6361c73a534b0884064b19c1087d9495b22",
+      "lfSha256": "221f21ca55654c454cabbeae81f7d71e2c8c8ef452fda2e2b4f3bd84789ce556"
+    },
+    "bot/tests/veilkeeper2/r2-statement-lineage.test.mjs": {
+      "sha256": "53d9f0996f3f292c0c79635783d2b215c46dc7c9bb89fd7ff01553b1a752dcf9",
+      "lfSha256": "53d9f0996f3f292c0c79635783d2b215c46dc7c9bb89fd7ff01553b1a752dcf9"
+    },
+    "bot/tests/veilkeeper2/r6-conversation-lifecycle.test.mjs": {
+      "sha256": "28bb1f21a4911e6243d6a0d8f6eab52364ba7e42bc17a5a7bb2b4f20cb8ad4f7",
+      "lfSha256": "c614b231f0128438c9f9a5045dbba0cc6094dc7204d5c445127adac3f03a7ee7"
+    },
+    "bot/tests/veilkeeper2/r6-native-command-boundary.test.mjs": {
+      "sha256": "0e5c8bb650ab843acf7071f464b2d3d87262347c2347912c6d7c92f7699e9958",
+      "lfSha256": "1e6f08e59513e546213278400ac18b3ec1156011b72df1b12db2906b01d00d4a"
+    },
+    "docs/veilkeeper2/LEDGER.md": {
+      "sha256": "5a5098d278bcafefff40bce1b982f18889369649cae163ed25aa748bd7e3d639",
+      "lfSha256": "5a5098d278bcafefff40bce1b982f18889369649cae163ed25aa748bd7e3d639"
+    },
+    "docs/veilkeeper2/PHASE_STATUS.md": {
+      "sha256": "85bc8328e7d9ec3f84c41612459451d826d3115b0e3cc435a8c55bae7dd6bcf0",
+      "lfSha256": "ac9fe45545a81f8efac5dd6883ca158ffe64b167b467608f4e5a8df83aa3077b"
+    },
+    "docs/veilkeeper2/R2_PHASE_ACCEPTANCE.json": {
+      "sha256": "070fb8a57171d2669fdd94c7c1b6e172cf867408e19309fec97ca93f957f0f8c",
+      "lfSha256": "070fb8a57171d2669fdd94c7c1b6e172cf867408e19309fec97ca93f957f0f8c"
+    },
+    "docs/veilkeeper2/R2_PHASE_CHECK_RUNNER.mjs": {
+      "sha256": "4ad2f86e2ab4abedb3a6afb3e4feea96aa876207d4b5fee41b42962c185fbe53",
+      "lfSha256": "33204b6d97bed6a8fb2f7016595ceb523c07c32c11a07b8a2619b4d54b92d176"
+    },
+    "docs/veilkeeper2/R2_PHASE_DISCORD_RESULT.json": {
+      "sha256": "252abbabcbfa080655f0be28532f18a5a728f4125dff14e9e6021a999ff9120c",
+      "lfSha256": "252abbabcbfa080655f0be28532f18a5a728f4125dff14e9e6021a999ff9120c"
+    },
+    "docs/veilkeeper2/R2_PHASE_INITIAL_382_TEST_OUTPUT.txt": {
+      "sha256": "19280303d9efe397c9857d1126b8d22de883fefed9e579db3ab54351e0c9ec78",
+      "lfSha256": "19280303d9efe397c9857d1126b8d22de883fefed9e579db3ab54351e0c9ec78"
+    },
+    "docs/veilkeeper2/R2_PHASE_INITIAL_514_TEST_OUTPUT.txt": {
+      "sha256": "6af468c0f0c2c067f9b91aa35eba7103811f4c2bbe2b4f14d23a395835a464a0",
+      "lfSha256": "6af468c0f0c2c067f9b91aa35eba7103811f4c2bbe2b4f14d23a395835a464a0"
+    },
+    "docs/veilkeeper2/R2_PHASE_INITIAL_FAILURES.json": {
+      "sha256": "0703f697e96531d163ce6acd6c60fe12530df038d146282784223ce3e1532994",
+      "lfSha256": "0703f697e96531d163ce6acd6c60fe12530df038d146282784223ce3e1532994"
+    },
+    "docs/veilkeeper2/R2_PHASE_MODIFIED_FILES.json": {
+      "sha256": "8bc176503fc48f3e399e342bd40ab364601462d6bd9f2fa2ff9526e7397ca414",
+      "lfSha256": "8bc176503fc48f3e399e342bd40ab364601462d6bd9f2fa2ff9526e7397ca414"
+    },
+    "docs/veilkeeper2/R2_PHASE_REPORT.md": {
+      "sha256": "c84fc1c5aa7e04036af32d6cd96a7ba72d02cdf1197cfecca949d4eecc402bd5",
+      "lfSha256": "c84fc1c5aa7e04036af32d6cd96a7ba72d02cdf1197cfecca949d4eecc402bd5"
+    },
+    "docs/veilkeeper2/R2_PHASE_TEST_INPUTS.json": {
+      "sha256": "e2f5407e6bef20895da21876807b43cc9ec013334d9c40937fbdbdd971d86d62",
+      "lfSha256": "e2f5407e6bef20895da21876807b43cc9ec013334d9c40937fbdbdd971d86d62"
+    },
+    "docs/veilkeeper2/R2_PHASE_TEST_OUTPUT.txt": {
+      "sha256": "004fdac209eed248905dfeff6b9bde6c6ff294b427a0e4f530b6d3fba406de08",
+      "lfSha256": "004fdac209eed248905dfeff6b9bde6c6ff294b427a0e4f530b6d3fba406de08"
+    },
+    "docs/veilkeeper2/R2_PHASE_TEST_RESULT.json": {
+      "sha256": "692757eed32acd746bc715bfc5e2970633c9572113ed9128fbc7947035072ef5",
+      "lfSha256": "692757eed32acd746bc715bfc5e2970633c9572113ed9128fbc7947035072ef5"
+    },
+    "docs/veilkeeper2/R2_REMAINING_WORK.md": {
+      "sha256": "adb8f433d102c9b6175095fa324a56e9a2029a57a3a35dbff4c11f2885f303d6",
+      "lfSha256": "adb8f433d102c9b6175095fa324a56e9a2029a57a3a35dbff4c11f2885f303d6"
+    },
+    "docs/veilkeeper2/RESUME_HANDOFF.md": {
+      "sha256": "5238b9c51cf1cc69ce1d2c4f58b33892ffdafe84b02d28f8025e7cedf0f934a3",
+      "lfSha256": "5238b9c51cf1cc69ce1d2c4f58b33892ffdafe84b02d28f8025e7cedf0f934a3"
+    },
+    "docs/veilkeeper2/RESUME_HANDOFF_HASHES.json": {
+      "sha256": "7505c9d02785c4ffcbed400997ee0e47793ad4cc65726e47788755a0c01be2d2",
+      "lfSha256": "7505c9d02785c4ffcbed400997ee0e47793ad4cc65726e47788755a0c01be2d2"
+    },
+    "docs/veilkeeper2/USAGE_HANDOFF_20261114.md": {
+      "sha256": "3b82acbd52f1a0a2ce862a7328f24c5ef695d939e5456a707bdcefa9f3964cbe",
+      "lfSha256": "5cc5427238b0874dc207e4593cb30c7a1089f04697d1525bcd51b3e94cd2bd84"
+    }
+  }
+}

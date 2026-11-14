@@ -1,4 +1,6 @@
-# Veilkeeper rebuild — usage handoff,2026-11-14
+# Veilkeeper rebuild — historical usage handoff,2026-11-14
+
+Superseded after explicit resume by R2_PHASE_REPORT.md and RESUME_HANDOFF.md. R2 is now complete; the remaining text records the earlier pause and its evidence.
 
 ## Goal and pause rule
 

@@ -1,0 +1,14 @@
+{
+  "finishedAt": "2026-11-14T22:12:16.855Z",
+  "files": 80,
+  "status": 0,
+  "inputsUnchanged": true,
+  "summary": [
+    "ℹ tests 572",
+    "ℹ pass 572",
+    "ℹ fail 0",
+    "ℹ skipped 0",
+    "ℹ duration_ms 98562.1081"
+  ],
+  "failures": []
+}

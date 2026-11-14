@@ -1,3 +1,4 @@
+import {createDiscordCanonRequests} from './discord-canon-requests.js';
 import {createDiscordCostCommands} from './discord-cost-commands.js';
 import {createNativeCostWorkflow} from './native-cost-workflow.js';
 import {MessageFlags} from 'discord.js';
@@ -17,7 +18,7 @@ import {createDiscordGmHookImports} from './discord-gm-hook-imports.js';
 export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=null,nativeSession=null,nativeGm=null,nativeCharacterExports=null,nativeGmCharacterExports=null,nativeGmHookImports=null,allowedGuildIds=null,handleOtherCommand=async()=>false,handleOtherComponent=async()=>false,onError=()=>{}}){
   if(typeof client?.on!=='function'||typeof client?.off!=='function'||typeof client?.listenerCount!=='function'||typeof handleOtherCommand!=='function'||typeof handleOtherComponent!=='function'||typeof onError!=='function'||typeof nativeDeath?.readOwnerRoute!=='function')throw new TypeError('Exclusive native interaction router dependencies required');
   if(client.listenerCount('interactionCreate')!==0)throw new Error('Native interaction router requires an unclaimed client; do not install alongside legacy handlers');
-  let workflow,costs,costCommands,commands,attendance,playerChannel,gmAuthority,gmSession,characterExports,gmCharacterExports,gmHookImports,closed=false;const pending=new Map(),denials=new Set(),observed=new WeakSet(),controller=new AbortController();
+  let workflow,costs,costCommands,commands,attendance,playerChannel,gmAuthority,gmSession,characterExports,gmCharacterExports,gmHookImports,canonRequests,closed=false;const pending=new Map(),denials=new Set(),observed=new WeakSet(),controller=new AbortController();
   const report=(error,event,stage)=>{try{onError(error,{interactionId:event?.id??null,stage});}catch{}};
   try{
     workflow=createNativeDeathWorkflow({...nativeDeath,client,onError});
@@ -25,10 +26,11 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     if(nativeCharacterExports)characterExports=createDiscordCharacterExports({...nativeCharacterExports,client,interactionReceipts:nativeDeath.interactionReceipts,wasObserved:e=>observed.has(e),onError});
     if(nativeCost){costs=createNativeCostWorkflow({...nativeCost,client,allowedGuildIds,onError});costCommands=createDiscordCostCommands({...nativeCost,client,workflow:costs,onError});}
     if(nativeSession){attendance=createDiscordSessionAttendance({...nativeSession,client,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});playerChannel=createDiscordPlayerChannel({client,readOwnerSession:nativeSession.readOwnerSession,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
+    if(nativeGm?.canonStore&&nativeSession)canonRequests=createDiscordCanonRequests({client,sceneStore:nativeDeath.sceneStore,readOwnerSession:nativeSession.readOwnerSession,hookStore:nativeGm.canonStore,wasObserved:e=>observed.has(e),interactionReceipts:nativeDeath.interactionReceipts,onError});
     if(nativeGm){const {readPolicy,clock,leaseMs,...services}=nativeGm;gmAuthority=createDiscordGmAuthority({client,readPolicy,...(clock?{clock}:{}),...(leaseMs?{leaseMs}:{})});gmSession=createDiscordGmSession({...services,readGmRoleId:c=>readPolicy(c).gmRoleId,client,gmAuthority,sceneStore:nativeDeath.sceneStore,interactionReceipts:nativeDeath.interactionReceipts,onError});}
     if(nativeGmCharacterExports)gmCharacterExports=createDiscordGmCharacterExports({...nativeGmCharacterExports,client,gmAuthority,interactionReceipts:nativeDeath.interactionReceipts,onError});
     if(nativeGmHookImports)gmHookImports=createDiscordGmHookImports({...nativeGmHookImports,client,gmAuthority,interactionReceipts:nativeDeath.interactionReceipts,onError});
-  }catch(error){gmHookImports?.close();gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
+  }catch(error){canonRequests?.close();gmHookImports?.close();gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands?.close();workflow?.close();throw error;}
   async function deny(event){
     if(closed||denials.has(event.id))return;denials.add(event.id);if(denials.size>1024)denials.delete(denials.values().next().value);
     const content='This control is unavailable or needs native review. No new action was confirmed.';
@@ -41,6 +43,7 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     if(closed||event?.client!==client||event.user?.bot!==false||allowedGuildIds&&!allowedGuildIds.has(event.guildId))return;
     try{
       if(event.isChatInputCommand?.()===true){
+        if(canonRequests?.claimsRoute(event)){await canonRequests.handle(event);return;}
         if(gmHookImports?.claimsRoute(event)){await gmHookImports.handle(event);return;}
         if(gmCharacterExports?.claimsRoute(event)){await gmCharacterExports.handle(event);return;}
         if(characterExports?.claimsRoute(event)){await characterExports.handle(event);return;}
@@ -64,6 +67,6 @@ export function createDiscordInteractionRouter({client,nativeDeath,nativeCost=nu
     const key=event.id,job=route(event);pending.set(key,job);void job.catch(error=>report(error,event,'routing')).finally(()=>pending.delete(key));
   };
   client.on('interactionCreate',listener);
-  return Object.freeze({costs,async drain(){await Promise.allSettled([...pending.values()]);await costs?.drain();return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);gmHookImports?.close();gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands.close();workflow.close();}});
+  return Object.freeze({costs,async drain(){await Promise.allSettled([...pending.values()]);await costs?.drain();return workflow.drain();},close(){if(closed)return;closed=true;controller.abort();client.off('interactionCreate',listener);canonRequests?.close();gmHookImports?.close();gmCharacterExports?.close();characterExports?.close();costCommands?.close();costs?.close();gmSession?.close();gmAuthority?.close();playerChannel?.close();attendance?.close();commands.close();workflow.close();}});
 }
 

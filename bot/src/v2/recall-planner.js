@@ -12,12 +12,12 @@ export function decayedRecallWeight(weight,created,current){
  * A cause has one immutable ID/tick; all audience projections use that same ID.
  * Native adapters must authenticate owner interaction or independent GM origin.
  */
-export function createRecallPlanner({contextAuthority,readCandidates,readCauses,readPins,readClock}){
-  if(typeof contextAuthority?.entitled!=='function'||[readCandidates,readCauses,readPins,readClock].some(fn=>typeof fn!=='function'))throw new TypeError('Native recall readers required');
+export function createRecallPlanner({contextAuthority,readCandidates,readCauses,readPins,readClock,compareCandidates=(a,b)=>a.localeCompare(b)}){
+  if(typeof compareCandidates!=='function'||typeof contextAuthority?.entitled!=='function'||[readCandidates,readCauses,readPins,readClock].some(fn=>typeof fn!=='function'))throw new TypeError('Native recall readers required');
   function select(source,{focus=[],actorId=null,limit=32}={}){
     if(!refs(focus)||!Number.isSafeInteger(limit)||limit<1||limit>64)throw new TypeError('Bounded recall selection required');
     const current=readClock(source.campaign),candidates=readCandidates(source),causes=readCauses(source),pins=readPins(source);
-    if(!tick(current)||!refs(candidates)||!Array.isArray(causes)||causes.length>4096||!Array.isArray(pins)||pins.length>4096)throw new Error('Recall snapshot unavailable');
+    if(!tick(current)||!Array.isArray(candidates)||candidates.length>16384||candidates.some(r=>!id(r))||new Set(candidates).size!==candidates.length||!Array.isArray(causes)||causes.length>4096||!Array.isArray(pins)||pins.length>4096)throw new Error('Recall snapshot unavailable');
     const entitled=ref=>contextAuthority.entitled(source,ref,{actorId});
     const scores=new Map(),considered=new Set();
     function admit(ref){if(considered.has(ref))return scores.get(ref);if(considered.size>=16384)throw new Error('Recall candidates require native curation');considered.add(ref);if(!entitled(ref))return null;const row={score:0,last:null,pinned:false};scores.set(ref,row);return row;}
@@ -46,7 +46,7 @@ export function createRecallPlanner({contextAuthority,readCandidates,readCauses,
     // Retirement removes only default prompt selection. Focus/pins restore recall;
     // the underlying identity/history and epistemic kind are never mutated.
     return [...scores].filter(([ref,row])=>focus.includes(ref)||row.pinned||row.last===null||current-row.last<6||row.score>=3)
-      .sort(([a,x],[b,y])=>Number(focus.includes(b))-Number(focus.includes(a))||Number(y.pinned)-Number(x.pinned)||y.score-x.score||(y.last??-1)-(x.last??-1)||a.localeCompare(b))
+      .sort(([a,x],[b,y])=>Number(focus.includes(b))-Number(focus.includes(a))||Number(y.pinned)-Number(x.pinned)||y.score-x.score||(y.last??-1)-(x.last??-1)||compareCandidates(a,b))
       .slice(0,limit).map(([ref])=>ref);
   }
   return Object.freeze({select});
