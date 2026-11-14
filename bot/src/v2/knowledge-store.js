@@ -19,8 +19,9 @@ export function openKnowledgeStore(filename=':memory:'){
   function metadata(campaign,id){
     return decode(db.prepare('SELECT r.data FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND r.id=?').get(campaign,id));
   }
-  function transaction(fn){db.exec('BEGIN IMMEDIATE');try{const value=fn();db.exec('COMMIT');return value;}catch(error){db.exec('ROLLBACK');throw error;}}
-  function append({campaignId,id,expectedRevision,evidenceRef,metadata:input,body}){
+  function transaction(fn,check=()=>{}){db.exec('BEGIN IMMEDIATE');try{check();const value=fn();check();db.exec('COMMIT');return value;}catch(error){db.exec('ROLLBACK');throw error;}}
+  function append({campaignId,id,expectedRevision,evidenceRef,metadata:input,body},{check}={}){
+    if(check!==undefined&&typeof check!=='function')throw new TypeError('Native knowledge append check required');
     return transaction(()=>{
       const replay=db.prepare('SELECT data,body FROM vk2_knowledge_history WHERE campaign=? AND evidence_ref=?').get(campaignId,evidenceRef);
       const payloadHash=knowledgeHash(json([id,expectedRevision,input,body]));
@@ -32,9 +33,14 @@ export function openKnowledgeStore(filename=':memory:'){
       db.prepare('INSERT INTO vk2_knowledge_history VALUES(?,?,?,?,?,?)').run(campaignId,id,Number(revision),evidenceRef,json(row),body);
       db.prepare('INSERT INTO vk2_knowledge_heads VALUES(?,?,?) ON CONFLICT(campaign,id) DO UPDATE SET revision=excluded.revision').run(campaignId,id,Number(revision));
       return row;
-    });
+    },check);
   }
   return Object.freeze({metadata,append,
+    npcPlanRefs(campaign,scene,actor){
+      if([campaign,scene,actor].some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Exact native NPC plan scope required');
+      const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND json_extract(r.data,'$.kind')='plan' AND json_extract(r.data,'$.authorship')='native_npc_proposal' AND json_extract(r.data,'$.disposition')='unexecuted' AND json_extract(r.data,'$.visibility')='gm' AND json_extract(r.data,'$.disclosure')='private' AND json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=? AND json_extract(r.data,'$.decisionManifest.actorId')=? AND EXISTS(SELECT 1 FROM json_each(r.data,'$.knownBy') k WHERE k.value=?) ORDER BY r.id LIMIT 257").all(campaign,scene,actor,actor);
+      if(rows.length>256)throw new Error('NPC private plan history requires curation');return rows.map(r=>r.id);
+    },
     candidateRefs(campaign,scene){
       if(typeof campaign!=='string'||!campaign||typeof scene!=='string'||!scene)throw new Error('Native knowledge candidate scope required');
       // Metadata references only. Entitlement/complete ancestry must still precede every body read.

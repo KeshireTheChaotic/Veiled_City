@@ -1,5 +1,5 @@
 {
-  "head": "1366fccb885b5a5d333287abedb26625f9f5a82b",
+  "head": "cd9fdbdc5156c9e3e3412c0e92949740999131e9",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -1940,7 +1940,7 @@
     },
     {
       "file": "bot/src/v2/knowledge-store.js",
-      "sha256": "88c30d886131fd767bb198ec69da5b0c72418e2e42a40afe1da1e34ff8cecb4e",
+      "sha256": "ca85bfddd390c3717015482fead7e5b51dcb268372ecac5b04f484151f314be0",
       "reachable": true,
       "exports": [
         {
@@ -1972,8 +1972,8 @@
           "status": "external"
         }
       ],
-      "functions": 18,
-      "sqlStatements": 13
+      "functions": 22,
+      "sqlStatements": 14
     },
     {
       "file": "bot/src/v2/legacy-gm-export-readers.js",
@@ -2727,11 +2727,11 @@
     },
     {
       "file": "bot/src/v2/npc-decision-planner.js",
-      "sha256": "fe8d8a4d097e3ec628e68bdc14636c8820cdece79917dbabdbe11c62038bbdaf",
+      "sha256": "bf84ec391edb8d36223167d84c132e27b0b5582cf0725d2cd04da21ffc211230",
       "reachable": false,
       "exports": [
         {
-          "line": 11,
+          "line": 14,
           "kind": "ExportNamedDeclaration",
           "source": null,
           "text": "export function createNpcDecisionPlanner({contextAuthority,provider}){\n if(typeof contextAuthority?.inspect!=='function'||typeof contextAuthority?.dependencyManifest!=='function'||typeof provider?.generate!=='function')throw new TypeError('Native NPC decision context and provider required');\n const "
@@ -2744,9 +2744,16 @@
           "specifier": "node:perf_hooks",
           "target": null,
           "status": "external"
+        },
+        {
+          "line": 2,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
         }
       ],
-      "functions": 4,
+      "functions": 8,
       "sqlStatements": 0
     },
     {

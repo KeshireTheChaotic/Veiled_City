@@ -2,8 +2,8 @@ import {openSceneStore} from '../../../src/v2/scene-store.js';
 import {openKnowledgeStore} from '../../../src/v2/knowledge-store.js';
 import {createSourceAuthority} from '../../../src/v2/source-authority.js';
 import {createContextAuthority} from '../../../src/v2/context-authority.js';
-export function npcDecisionFixture(){
- const sceneStore=openSceneStore(),knowledge=openKnowledgeStore(),check=()=>{},reads=[];
+export function npcDecisionFixture({sceneFile=':memory:',knowledgeFile=':memory:'}={}){
+ const sceneStore=openSceneStore(sceneFile),knowledge=openKnowledgeStore(knowledgeFile),check=()=>{},reads=[];let closed=false;
  sceneStore.commitSnapshot({campaignId:'c',principal:'gm',sourceRef:'native-fixture',records:[
   {kind:'session',data:{id:'session',campaignId:'c',status:'active'}},
   {kind:'scene',data:{id:'scene',campaignId:'c',sessionId:'session',status:'active',participants:[{userId:'u',actorId:'pc',presence:'present'}]}},
@@ -21,5 +21,5 @@ export function npcDecisionFixture(){
  add('gm-secret','The parcel is actually an occult decoy. GM-MYSTERY-CANARY',{visibility:'gm',disclosure:'private',recipientIds:[]});
  add('other-pc-secret','OTHER-PLAYER-CANARY',{recipientIds:['v'],knownBy:[]});
  add('unheard','UNHEARD-CANARY: secret whispered elsewhere.',{knownBy:[]});
- return {sceneStore,knowledge,authority,source,context,reads,add,grant:()=>context.issue(source,['clerk-portrait','observed-scene','heard-rumor','gm-secret','other-pc-secret','unheard'],{actorId:'clerk'}),close(){knowledge.close();sceneStore.close();}};
+ return {sceneStore,knowledge,authority,source,context,reads,add,grant:()=>context.issue(source,['clerk-portrait','observed-scene','heard-rumor','gm-secret','other-pc-secret','unheard'],{actorId:'clerk'}),close(){if(closed)return;closed=true;knowledge.close();sceneStore.close();}};
 }

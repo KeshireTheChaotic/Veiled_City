@@ -1,0 +1,21 @@
+# R5 — durable private NPC proposal history
+
+Completed slice, 2026-11-14. All major phases remain incomplete.
+
+The private NPC planner can now retain an issued, currently valid private decision in the existing knowledge store as an **unexecuted plan**, with actor/source/dependency provenance and no execution, publication or knowledge authority. Retention is a native method, never an AI tool. Current player speech is not added as NPC knowledge or source ancestry. Identical retention replays deduplicate. A supplied native check runs inside the SQLite append transaction before and after the write; failed final validation rolls back history and its head together.
+
+Actor/scene-specific metadata discovery returns an NPC's own active proposals, not every intention it happens to know. Plans remain GM-private, outside audience candidate recall and audience context. They carry an explicit unexecuted prefix and preserve source references; revoked source knowledge prevents reuse without deleting historical intentions. Mental proposal history is not memory of a delivered event, speech, effect or elapsed time, and requires no fictional audience acknowledgement. It mints no recall cause, observation, canon, resource expense or time advance.
+
+Changed files: `npc-decision-planner.js`, `knowledge-store.js`, persistent-capable native NPC fixture, new `r5-npc-plan-history.test.mjs`, graph and evidence. No new table/schema or store was added. Optional append checks preserve old callers' behavior; private history uses the checked native path.
+
+220 distinct checks across32 affected files pass: four focused cases (222.0612ms), two additional changed/new cases (78.7015ms),214 dependent checks (33060.2922ms, concurrency4). Coverage includes actual SQLite close/reopen, immutable replay, rollback on final-check failure, source retraction, public-grant rejection, bounded retention and history overflow, actor/scene scoping and unchanged audience knowledge. SDK/model transport is simulated in these checks.
+
+Two actual qwen3.5:27b non-thinking calls, separated by SQLite close/reopen, returned/retained private proposals in40470.2204ms and27025.5244ms. The second prompt included the first as `kind:plan` with the explicit unexecuted prefix. Full requests, responses, timings and hashes: R5_NPC_PLAN_HISTORY_RESPONSE.json; raw `.reports/npc-plan-continuity-27b-2026-11-14T06-25-11-329Z-6a2b1e8a/result.json`. Zero retries, unauthorized body reads, audience inference, Discord/cloud calls, sends, effects or fictional time advances. Backend default remains27B thinking=true; this is a separate diagnostic.
+
+The second response still frames moving the parcel as an intention rather than claiming it happened. However, both responses distinguish “Mira or the player,” invent signature/closing conditions and largely repeat the proposed line. Retaining a plan does not validate those claims or qualify human-like continuity. This negative quality evidence is preserved; automatic release remains held. The next prompt/integration work must clarify that a player is not an extra physical person and improve meaningful response to real fictional opportunities.
+
+Static graph remains131 native modules/91 reachable/40 uncomposed/eight legacy imports/zero missing imports/four generic tools. These native services are still uncomposed in the root; no extra ordinary inference, NPC action or publication is enabled.
+
+Rollback keeps the knowledge database and immutable plan rows. Older audience readers exclude their GM-private visibility/plan kind; older code should not reinterpret them as facts or executed events. No data rewrite, legacy retirement, major-phase merge/push or production change occurred. Private plan history is capped at256 active entries per actor/scene; overflow holds for native curation instead of truncating. Long-history relevance and plan lifecycle remain unqualified.
+
+Next R5: compose the private planning/retention service with refreshed native intake and source/actor checks, then actual fictional opportunity/response-window scheduling. Fix the demonstrated player/character distinction in the private prompt. Only independently validated native consequences or authorized observable beats may later reach an audience writer. R3/R4/R8 gates remain independent.
