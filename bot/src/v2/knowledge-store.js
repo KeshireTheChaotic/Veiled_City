@@ -36,6 +36,15 @@ export function openKnowledgeStore(filename=':memory:'){
     },check);
   }
   return Object.freeze({metadata,append,
+    npcKnownRefs(campaign,scene,actor){
+      if([campaign,scene,actor].some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Exact native NPC context scope required');
+      const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND (json_extract(r.data,'$.scope')='campaign' OR json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=?) AND EXISTS(SELECT 1 FROM json_each(r.data,'$.knownBy') k WHERE k.value=?) ORDER BY r.id LIMIT 65").all(campaign,scene,actor);if(rows.length>64)throw new Error('NPC private context requires native curation');return rows.map(r=>r.id);
+    },
+    npcOpportunityCount(campaign,actor){return db.prepare("SELECT count(*) n FROM vk2_knowledge_proposals WHERE campaign=? AND json_extract(data,'$.kind')='native_npc_scene_opportunity' AND json_extract(data,'$.actorId')=?").get(campaign,actor).n;},
+    claimNpcSceneOpportunity(input,{check}){
+      if(typeof check!=='function'||!input||Object.keys(input).sort().join(',')!=='actorId,actorRevision,campaignId,sceneId,sourceRef,sourceRevision'||Object.values(input).some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Native scene opportunity required');
+      return transaction(()=>{const ref='npc-scene-opportunity:'+knowledgeHash(json([input.sourceRef,input.actorId])),old=decode(db.prepare('SELECT data FROM vk2_knowledge_proposals WHERE campaign=? AND id=?').get(input.campaignId,ref));if(old){if(old.kind!=='native_npc_scene_opportunity'||old.sourceRef!==input.sourceRef||old.actorId!==input.actorId)throw new Error('Native opportunity identity conflict');return {created:false,ref};}const row={id:ref,kind:'native_npc_scene_opportunity',...input,status:'claimed',executionAuthority:false,publicationAuthority:false};db.prepare('INSERT INTO vk2_knowledge_proposals VALUES(?,?,?)').run(input.campaignId,ref,json(row));return {created:true,ref};},check);
+    },
     npcPlanRefs(campaign,scene,actor){
       if([campaign,scene,actor].some(v=>typeof v!=='string'||!v||v.length>256))throw new Error('Exact native NPC plan scope required');
       const rows=db.prepare("SELECT r.id FROM vk2_knowledge_history r JOIN vk2_knowledge_heads h USING(campaign,id,revision) WHERE r.campaign=? AND json_extract(r.data,'$.status')='active' AND json_extract(r.data,'$.kind')='plan' AND json_extract(r.data,'$.authorship')='native_npc_proposal' AND json_extract(r.data,'$.disposition')='unexecuted' AND json_extract(r.data,'$.visibility')='gm' AND json_extract(r.data,'$.disclosure')='private' AND json_extract(r.data,'$.scope')='scene' AND json_extract(r.data,'$.sceneId')=? AND json_extract(r.data,'$.decisionManifest.actorId')=? AND EXISTS(SELECT 1 FROM json_each(r.data,'$.knownBy') k WHERE k.value=?) ORDER BY r.id LIMIT 257").all(campaign,scene,actor,actor);

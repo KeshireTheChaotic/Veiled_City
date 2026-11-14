@@ -28,17 +28,19 @@ import {openTurnStore} from './turn-store.js';
 import {openKnowledgeStore} from './knowledge-store.js';
 import {createNpcPrivateContext} from './npc-private-context.js';
 import {createNpcPlanningService} from './npc-planning-service.js';
+import {createSceneOpeningDirector} from './scene-opening-director.js';
 /** Composes the dedicated native stores, adapters and exclusive interaction router.
  * `directory` must be a new directory for these stores, never a production database.
  * The caller supplies the client, the existing character/campaign repositories, an RNG and
  * the callbacks for commands/components the native router does not own.
  */
-export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){
+export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,directorEnabled=false,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){
   if(typeof directory!=='string'||!directory||typeof rng!=='function')throw new TypeError('Native store directory and RNG required');
-  const opened=[];let router,observer,npcPlanning,closed=false;
+  if(typeof directorEnabled!=='boolean')throw new TypeError('Explicit native Director opt-in required');
+  const opened=[];let router,observer,npcPlanning,director,closed=false;
   const open=(factory,...args)=>{const store=factory(...args);opened.push(store);return store;};
   try{
-    const sceneStore=open(openSceneStore,join(directory,'scenes.sqlite')),registry=open(openSourceRegistry,join(directory,'sources.sqlite')),actionStore=open(openActionStore,join(directory,'actions.sqlite')),
+    const sceneStore=open(openSceneStore,join(directory,'scenes.sqlite'),{onCommitted:receipt=>{if(!directorEnabled||!director)return;for(const r of receipt.records.filter(r=>r.kind==='scene')){const s=sceneStore.readers.readScene(receipt.campaignId,r.id);if(s?.status==='active'&&s.authorityRevision===String(r.revision))void director.considerScene(receipt.campaignId,r.id).catch(error=>{try{onError?.(error,{stage:'native_scene_director'});}catch{}});}}}),registry=open(openSourceRegistry,join(directory,'sources.sqlite')),actionStore=open(openActionStore,join(directory,'actions.sqlite')),
       costPrompts=open(openCostPromptStore,join(directory,'cost-prompts.sqlite'),{clock}),promptStore=open(openDeathPromptStore,join(directory,'prompts.sqlite'),{clock}),decisionStore=open(openComponentDecisionStore,join(directory,'decisions.sqlite')),interactionReceipts=open(openInteractionReceipts,join(directory,'interactions.sqlite'));
     const canonical=createCanonicalActorReaders({sceneStore,actionStore,characterRepository}),sourceAuthority=createSourceAuthority({...canonical.readers,sourceRegistry:registry}),readPolicy=createCampaignGmPolicyReader({repository:campaignRepository,...gmPolicy});
     const route=(campaignId,actorId)=>{const actor=sceneStore.readers.readActor(campaignId,actorId),channel=actor?.kind==='pc'&&actor.ownerUserId?sceneStore.ownerPrivateChannel(campaignId,actor.sceneId,actor.ownerUserId):null;if(!channel)throw new Error('Verified owner private channel required');return {guildId:campaignId,channelId:channel.id,sceneId:actor.sceneId,ownerUserId:actor.ownerUserId};};
@@ -67,7 +69,8 @@ export function createNativeRoot({client,directory,characterRepository,campaignR
     // Model knowledge proposals are retained privately; native establishment has no evidence adapter yet.
     const turns=provider?createDiscordTurnRunner({intake,provider,turnStore,onSource:source=>{const statement=statementLineage.capture(source),ref=statementReference(source);knowledgeStore.append({campaignId:source.campaign,id:ref,expectedRevision:null,evidenceRef:ref,...statement});if(!conversationAuthority.revalidate(source))throw new Error('Statement source changed during capture');},refreshContext:(source,refs,options)=>originRefresh.refresh(source,refs,options),applicationOptions:{readers:conversationReaders,proseReview:createSceneProseReview({sceneStore,characterRepository,authorizeMaterial:candidate=>nativeActions.authorizeMaterial(candidate)}),records:knowledgeRecords,knowledge:{store:knowledgeStore,readEvidence:()=>null},selectContext:source=>recall.select(source,{limit:64}),actionAuthority:nativeActions}}):null;
     npcPlanning=provider?createNpcPlanningService({intake,provider,store:knowledgeStore,sourceAuthority:conversationAuthority,contextAuthority:createNpcPrivateContext({sourceAuthority:conversationAuthority,records:knowledgeRecords,readActor:conversationReaders.readActor}),allowedGuildIds}):null;
+    director=provider?createSceneOpeningDirector({sceneStore,store:knowledgeStore,provider,allowedGuildIds,onError}):null;
     observer=createDiscordMessageObserver({client,sceneStore,readOwnerSession,intake,turns,allowedGuildIds,onDraft,onError});
-    return Object.freeze({router,costs:router.costs,turns,npcPlanning,knowledgeStore,recallStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();await npcPlanning?.drain();return router.drain();},close(){if(closed)return;closed=true;observer.close();router.close();npcPlanning?.close();for(const store of opened.reverse())store.close();}});
-  }catch(error){observer?.close();router?.close();npcPlanning?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
+    return Object.freeze({router,costs:router.costs,turns,npcPlanning,director,knowledgeStore,recallStore,readOwnerRoute:route,sceneStore,actionStore,async drain(){await observer.drain();await npcPlanning?.drain();const result=await router.drain();await director?.drain();return result;},close(){if(closed)return;closed=true;observer.close();router.close();npcPlanning?.close();director?.close();for(const store of opened.reverse())store.close();}});
+  }catch(error){observer?.close();router?.close();npcPlanning?.close();director?.close();for(const store of opened.reverse())try{store.close();}catch{}throw error;}
 }

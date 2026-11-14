@@ -1,5 +1,5 @@
 {
-  "head": "7c767b314458caba0242864d0604aa490b25af22",
+  "head": "fc679143b53b9e2c31797af89fec72062373db30",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -13,8 +13,8 @@
     "state_inspect",
     "knowledge_propose"
   ],
-  "nativeModules": 132,
-  "reachableNativeModules": 94,
+  "nativeModules": 133,
+  "reachableNativeModules": 95,
   "uncomposedNativeModules": [
     "bot/src/v2/character-package-service.js",
     "bot/src/v2/discord-fear-announcements.js",
@@ -1938,7 +1938,7 @@
     },
     {
       "file": "bot/src/v2/knowledge-store.js",
-      "sha256": "ca85bfddd390c3717015482fead7e5b51dcb268372ecac5b04f484151f314be0",
+      "sha256": "6eb444a9048dbe4b1109bc3656c9487085b7820ccd34db68653a0b8a637e5e82",
       "reachable": true,
       "exports": [
         {
@@ -1970,8 +1970,8 @@
           "status": "external"
         }
       ],
-      "functions": 22,
-      "sqlStatements": 14
+      "functions": 29,
+      "sqlStatements": 18
     },
     {
       "file": "bot/src/v2/legacy-gm-export-readers.js",
@@ -2362,14 +2362,14 @@
     },
     {
       "file": "bot/src/v2/native-root.js",
-      "sha256": "17a3281d8150f33314f66e2dbb814285d9be003356c0452b981f8e5d8d5a823a",
+      "sha256": "39077928f31f817e745c0d13e58cc6b297627eeb2a6ef72af16f2cd3565a0433",
       "reachable": true,
       "exports": [
         {
-          "line": 36,
+          "line": 37,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng!=='function')throw ne"
+          "text": "export function createNativeRoot({client,directory,characterRepository,campaignRepository,rng,clock=()=>Date.now(),provider=null,directorEnabled=false,allowedGuildIds=null,gmPolicy={},onDraft,handleOtherCommand,handleOtherComponent,onError}){\r\n  if(typeof directory!=='string'||!directory||typeof rng"
         }
       ],
       "imports": [
@@ -2582,9 +2582,16 @@
           "specifier": "./npc-planning-service.js",
           "target": "bot/src/v2/npc-planning-service.js",
           "status": "resolved"
+        },
+        {
+          "line": 31,
+          "kind": "ImportDeclaration",
+          "specifier": "./scene-opening-director.js",
+          "target": "bot/src/v2/scene-opening-director.js",
+          "status": "resolved"
         }
       ],
-      "functions": 34,
+      "functions": 37,
       "sqlStatements": 0
     },
     {
@@ -2613,7 +2620,7 @@
     },
     {
       "file": "bot/src/v2/native-start.js",
-      "sha256": "ae9193db040860af49e3d3b0045f56e77a68feecd2a3c5ef3a4e0a715956f331",
+      "sha256": "0e50375df5d1efae63f15a10a6594c4de55c516eea8eaefbd3d886366a1a8caa",
       "reachable": true,
       "exports": [
         {
@@ -4861,6 +4868,44 @@
       "sqlStatements": 0
     },
     {
+      "file": "bot/src/v2/scene-opening-director.js",
+      "sha256": "7db98b10e411577a919ffc9287e9e7d37dce217e944e0abe70a3cc4b930db74d",
+      "reachable": true,
+      "exports": [
+        {
+          "line": 6,
+          "kind": "ExportNamedDeclaration",
+          "source": null,
+          "text": "export function createSceneOpeningDirector({sceneStore,store,provider,allowedGuildIds=null,onError=()=>{}}){\n if(['sceneNpcRefs','history'].some(k=>typeof sceneStore?.[k]!=='function')||['readScene','readSession','readActor'].some(k=>typeof sceneStore?.readers?.[k]!=='function')||['claimNpcSceneOppo"
+        }
+      ],
+      "imports": [
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "node:crypto",
+          "target": null,
+          "status": "external"
+        },
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-private-context.js",
+          "target": "bot/src/v2/npc-private-context.js",
+          "status": "resolved"
+        },
+        {
+          "line": 1,
+          "kind": "ImportDeclaration",
+          "specifier": "./npc-decision-planner.js",
+          "target": "bot/src/v2/npc-decision-planner.js",
+          "status": "resolved"
+        }
+      ],
+      "functions": 17,
+      "sqlStatements": 0
+    },
+    {
       "file": "bot/src/v2/scene-prose-review.js",
       "sha256": "0aa2a4ad28e653a69d0fbc56ddf5800fa274806b9d20d5308689f8583b2e5b05",
       "reachable": true,
@@ -4886,14 +4931,14 @@
     },
     {
       "file": "bot/src/v2/scene-store.js",
-      "sha256": "be5a07f33162339b39ea6ab98c5c0b26de38347069d993c6118cf0b54845e5fb",
+      "sha256": "0d977617a09b4585f1400c3fc3c84dfa1340c4c48c73c3b44ce7028b9056a553",
       "reachable": true,
       "exports": [
         {
           "line": 22,
           "kind": "ExportNamedDeclaration",
           "source": null,
-          "text": "export function openSceneStore(filename=':memory:'){\n  const db=new DatabaseSync(filename);\n  try{\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'\").all().some(r=>!['vk2_scene_heads','vk2_scene_history','vk2_scene_receipts'].includes(r.name)))throw n"
+          "text": "export function openSceneStore(filename=':memory:',{onCommitted}={}){\n  if(onCommitted!==undefined&&typeof onCommitted!=='function')throw new TypeError('Native post-commit callback required');\n  const db=new DatabaseSync(filename);\n  try{\n    if(db.prepare(\"SELECT name FROM sqlite_master WHERE type="
         }
       ],
       "imports": [
@@ -4919,8 +4964,8 @@
           "status": "resolved"
         }
       ],
-      "functions": 27,
-      "sqlStatements": 12
+      "functions": 30,
+      "sqlStatements": 13
     },
     {
       "file": "bot/src/v2/session-occasions.js",

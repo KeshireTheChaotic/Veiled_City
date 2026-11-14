@@ -12,6 +12,9 @@ function setup(t){const base=mkdtempSync(join(tmpdir(),'vk3-start-')),log=[];t.a
 test('native start requires explicit opt-in and complete configuration',async t=>{
   const s=setup(t);await assert.rejects(startNative({...s.options,env:{...s.env,VK2_NATIVE:undefined}}),/VK2_NATIVE=1/);await assert.rejects(startNative({...s.options,env:{...s.env,DISCORD_TOKEN:''}}),/required/);assert.deepEqual(s.log,[]);assert.equal(existsSync(s.env.VK2_NATIVE_DIR),false);
 });
+test('automatic private Director cadence is separately opt-in and its flag is passed to native composition',async t=>{
+ for(const enabled of [false,true]){const f=setup(t);let received;const app=await startNative({...f.options,env:{...f.env,...(enabled?{VK2_DIRECTOR:'1'}:{})},createRoot:o=>{received=o.directorEnabled;return {close(){}};}});await app.close();assert.equal(received,enabled);}
+});
 test('native start refuses an existing store directory with content',async t=>{
   const s=setup(t);await startNative(s.options).then(a=>a.close());writeFileSync(join(s.env.VK2_NATIVE_DIR,'scenes.sqlite'),'x');s.log.length=0;await assert.rejects(startNative(s.options),/new or empty directory/);assert.deepEqual(s.log,[]);
 });

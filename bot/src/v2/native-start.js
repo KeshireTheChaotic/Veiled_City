@@ -61,7 +61,7 @@ export async function startNative({env=process.env,createClient=()=>new Client({
   try{
     const provider=env.VK2_INFERENCE==='1'?await createProvider(env):null;
     repository=openRepository(legacyDb);client=createClient();
-    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
+    root=createRoot({client,directory:runtime.directory,characterRepository:repository,campaignRepository:repository,rng,provider,directorEnabled:env.VK2_DIRECTOR==='1',allowedGuildIds:new Set([guildId]),gmPolicy:gmPolicyFromEnv(env),onDraft:(draft,request)=>console.log('native-draft-withheld',request.messageId),onError,handleOtherCommand:async()=>false,handleOtherComponent:async()=>false});
     runtime.seal();await client.login(token);
   }catch(error){await closeResources();throw error;}
   let closed=false;
