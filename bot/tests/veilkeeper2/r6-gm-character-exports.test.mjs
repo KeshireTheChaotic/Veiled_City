@@ -3,6 +3,7 @@ import {PermissionsBitField,PermissionFlagsBits as P} from 'discord.js';
 import {DatabaseSync} from 'node:sqlite';import {join} from 'node:path';
 import {createGmCharacterExport} from '../../src/v2/gm-character-export.js';
 import {gmCharacterExportFixture} from './helpers/gm-character-export-fixture.mjs';
+import {openInteractionReceipts} from '../../src/v2/interaction-receipts.js';
 const attachments=f=>f.replies.filter(r=>r.files).flatMap(r=>r.files);
 test('observed configured GM receives three private legacy-schema JSON exports without effects or inference',async t=>{
  const f=gmCharacterExportFixture(t);await f.dispatch(f.event('gm-export'));const files=attachments(f);assert.deepEqual(files.map(x=>x.name),['GM_HOOKS_Mira.json','GM_PRIVATE_Mira.json','GM_CANON_Mira.json']);
@@ -16,6 +17,7 @@ test('observed configured GM receives three private legacy-schema JSON exports w
 });
 test('cached administrator permissions do not replace configured current GM membership',async t=>{
  const f=gmCharacterExportFixture(t);f.member.roles.cache.clear();f.member.permissions=new PermissionsBitField(P.Administrator);await f.dispatch(f.event('not-gm',{member:{permissions:new PermissionsBitField(P.Administrator)}}));assert.equal(attachments(f).length,0);assert.ok(f.errors.some(e=>/Configured current/.test(e.message)));
+ const journal=openInteractionReceipts(join(f.directory,'interactions.sqlite'));try{const receipt=journal.read('not-gm');assert.equal(receipt.processing,'held');assert.equal(receipt.hold,'source');assert.equal(receipt.reply,'delivered');}finally{journal.close();}assert.ok(f.replies.some(r=>r.id==='not-gm'&&r.content?.includes('could not be confirmed')));
 });
 test('fresh role loss, foreign member and nonprivate acknowledgement suppress GM files',async t=>{
  const f=gmCharacterExportFixture(t);f.gmHook(n=>{if(n===2)f.member.roles.cache.clear();});await f.dispatch(f.event('revoked'));assert.equal(attachments(f).length,0);

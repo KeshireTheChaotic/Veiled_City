@@ -1,5 +1,5 @@
 {
-  "head": "12320bba777c70fcc756f81c81d79375e14c12e6",
+  "head": "bda86db3559383045fc217c867a829df4c68b93c",
   "baseline": "1ba6c7e15db1a66ba34b36336f31437beffe44d6",
   "scope": "Current native runtime static imports, including literal dynamic imports; not runtime call binding, mechanical parity or retirement proof.",
   "entries": [
@@ -1211,7 +1211,7 @@
     },
     {
       "file": "bot/src/v2/discord-gm-character-exports.js",
-      "sha256": "f8b2a4b43d4edbb8bd4384ae2165f410a0eb9c5ba763344d53eade5fb3700dc7",
+      "sha256": "de831641e4feab06f7ba3b0de74e6305a409857101c9e2a982f10123165726f1",
       "reachable": true,
       "exports": [
         {

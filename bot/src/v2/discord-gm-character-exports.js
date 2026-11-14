@@ -21,7 +21,7 @@ export function createDiscordGmCharacterExports({client,repository,readCharacter
   const current=()=>{alive();if(e.ephemeral!==true)throw new Error('Private GM export required');gmAuthority.check(proof);};
   try{
    if(e.deferred||e.replied||typeof e.deferReply!=='function'||typeof e.editReply!=='function')throw new Error('Private GM export acknowledgement required');
-   await e.deferReply({flags:MessageFlags.Ephemeral});interactionReceipts.acknowledge(eventId,'deferred',{check:bookkeeping});stage='authority';
+   await e.deferReply({flags:MessageFlags.Ephemeral});interactionReceipts.acknowledge(eventId,'deferred',{check:bookkeeping});stage='source';
    proof=await gmAuthority.authorize(e,{signal:controller.signal});current();if(proof.operation!=='gm_character_export'||proof.campaignId!==campaignId||proof.principal!==e.user.id)throw new Error('Exact GM export operation authority required');
    stage='source';const document=exports.prepare({campaignId,characterId,format:parsed.format},{check:current});
    proof=await gmAuthority.refresh(proof,{signal:controller.signal});document.check();stage='receipt';
