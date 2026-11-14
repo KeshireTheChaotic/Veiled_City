@@ -1,0 +1,41 @@
+{
+  "scope": "Exact working-file bytes for the completed focused and changed-import checks; not major-phase or live qualification.",
+  "files": [
+    {
+      "path": "bot/src/v2/model-config.json",
+      "sha256": "318c77d27a6f6b28b1e95ca9d960b9941c3819b0cbfaa38dbc3c4c65863d0624"
+    },
+    {
+      "path": "bot/src/v2/native-start.js",
+      "sha256": "c32a1913bd037abe59aabbf57f5545b8b0c7a6fc00d07ea98fe7d61a49d542eb"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r1-ollama-provider.test.mjs",
+      "sha256": "f70f65d1cbc14d29ee3be6aa0c8ca48addc5e502de12dca021c1d4acfdb01aa5"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r6-native-start.test.mjs",
+      "sha256": "c2da2e396a5d826d68f7a4888529075be90064dec8fab2673f08b8f4660f311e"
+    },
+    {
+      "path": "bot/tests/veilkeeper2/r7-runtime-resume.test.mjs",
+      "sha256": "19e26c00ae1976f18ceb8eb133e8def6a7248838fe6e76a99f844bb37f03914e"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_27B_PROFILE_REPORT.md",
+      "sha256": "41ca4169489ddca9c31dda8e1bea68c1db19e7a054b1959bddd681b05a9c6df7"
+    },
+    {
+      "path": "docs/veilkeeper2/R1_27B_PROFILE_AFFECTED_TESTS.json",
+      "sha256": "097da216d2132969585d64e48dce27adcd7d6e9bd076f281d58eec432f7b7ebc"
+    }
+  ],
+  "sharedDependencyLog": {
+    "path": ".reports/resume-dependency-tests-20261113.txt",
+    "sha256": "6235ce55a36cdaa45a61d74d15037107988d3e48fc65edcd92cc7abbd6a0123d",
+    "tests": 129,
+    "pass": 129,
+    "fail": 0,
+    "durationMs": 43019.0876
+  }
+}

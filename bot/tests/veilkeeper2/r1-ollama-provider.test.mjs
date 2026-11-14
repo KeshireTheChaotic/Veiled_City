@@ -38,3 +38,14 @@ test('native backend defaults to local Ollama without an API key and retains the
   const p=await createProviderFromEnv({VK2_MAX_TURNS:'2',AI_AUTH_MODE:'chatgpt',OPENAI_GM_MODEL:'ignored-legacy-model'});assert.equal(p.remaining,2);assert.equal(typeof p.generate,'function');
   await assert.rejects(createProviderFromEnv({VK2_PROVIDER:'unknown'}),/VK2_PROVIDER/);await assert.rejects(createProviderFromEnv({VK2_MAX_TURNS:'101'}),/VK2_MAX_TURNS/);
 });
+
+test('the opt-in backend dispatches to the owner-approved 27B thinking profile and cannot exceed its call budget',async t=>{
+  let calls=0;t.mock.method(globalThis,'fetch',async(url,options)=>{
+    calls++;assert.equal(String(url),'http://localhost:11434/api/chat');const body=JSON.parse(options.body);
+    assert.equal(body.model,'qwen3.5:27b');assert.equal(body.think,true);assert.equal(body.options.num_predict,4096);
+    return {ok:true,json:async()=>({done:true,message:{role:'assistant',content:'The clerk waits.'}})};
+  });
+  const p=await createProviderFromEnv({VK2_MAX_TURNS:'1'});
+  assert.equal((await p.generate(input)).text,'The clerk waits.');assert.equal(p.remaining,0);
+  await assert.rejects(p.generate(input),/budget/);assert.equal(calls,1);
+});

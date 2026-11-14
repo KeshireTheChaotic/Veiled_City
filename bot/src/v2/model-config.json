@@ -1,5 +1,8 @@
 {
   "provider": "ollama",
-  "model": "qwen3.5:4b",
-  "baseUrl": "http://localhost:11434"
+  "model": "qwen3.5:27b",
+  "baseUrl": "http://localhost:11434",
+  "thinking": true,
+  "maxOutputTokens": 4096,
+  "timeoutMs": 90000
 }

@@ -28,7 +28,7 @@ export async function createProviderFromEnv(env){
   if(provider!=='ollama')throw new Error('VK2_PROVIDER must be ollama or openai');
   const maxCalls=Number(env.VK2_MAX_TURNS??10);
   if(!Number.isSafeInteger(maxCalls)||maxCalls<1||maxCalls>100)throw new Error('VK2_MAX_TURNS must be 1-100');
-  return createCallBudget(createOllamaProvider({model:env.VK2_MODEL||env.OLLAMA_MODEL||config.model,baseUrl:env.OLLAMA_HOST||config.baseUrl}),{maxCalls});
+  return createCallBudget(createOllamaProvider({model:env.VK2_MODEL||env.OLLAMA_MODEL||config.model,baseUrl:env.OLLAMA_HOST||config.baseUrl,thinking:config.thinking??false,maxOutputTokens:config.maxOutputTokens??1024,timeoutMs:config.timeoutMs??120000}),{maxCalls});
 }
 /** Explicit GM configuration for campaigns whose record names no GM role: VK2_GM_ROLE_ID, VK2_GM_USER_IDS
  * (comma-separated user ids) and/or VK2_GM_ALLOW_ADMINISTRATORS=1. All are opt-in; none is inferred.
